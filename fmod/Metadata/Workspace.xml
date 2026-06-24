@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<objects serializationModel="Studio.02.03.00">
+	<object class="Workspace" id="{73727c1a-692b-4d51-b594-244ceb8c1ca9}">
+		<property name="builtBanksOutputDirectory">
+			<value>../tank-game/Assets/StreamingAssets/FMOD</value>
+		</property>
+		<relationship name="masterEventFolder">
+			<destination>{81e6555a-3289-4f81-a945-587c712ff4b0}</destination>
+		</relationship>
+		<relationship name="masterTagFolder">
+			<destination>{0cfaa918-b8b6-48a5-b256-73c2aa23f8be}</destination>
+		</relationship>
+		<relationship name="masterEffectPresetFolder">
+			<destination>{cbdcfd07-7946-462b-9a02-144150738045}</destination>
+		</relationship>
+		<relationship name="masterParameterPresetFolder">
+			<destination>{171434a0-f1e9-451e-bc60-9de3ffc45b95}</destination>
+		</relationship>
+		<relationship name="masterBankFolder">
+			<destination>{babb239b-5004-41aa-9822-4de63da161ee}</destination>
+		</relationship>
+		<relationship name="masterSandboxFolder">
+			<destination>{301171b8-debe-45dc-a992-8957e7b5e965}</destination>
+		</relationship>
+		<relationship name="masterAssetFolder">
+			<destination>{7d808c64-ed2c-4260-95b8-2316dffdcfce}</destination>
+		</relationship>
+		<relationship name="mixer">
+			<destination>{4e455228-0a01-41ae-80e8-2d12d35ee65e}</destination>
+		</relationship>
+		<relationship name="profilerSessionFolder">
+			<destination>{cbaeed87-5e24-49e1-9d0e-781161dcfdea}</destination>
+		</relationship>
+		<relationship name="platforms">
+			<destination>{15059197-07f6-4f30-8995-666045382faf}</destination>
+		</relationship>
+	</object>
+</objects>
