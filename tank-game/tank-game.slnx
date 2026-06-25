@@ -3,5 +3,8 @@
   <Project Path="FMODUnityEditor.csproj" />
   <Project Path="FMODUnity.csproj" />
   <Project Path="FMODUnityHaptics.csproj" />
+  <Project Path="Tanks.Shared.csproj" />
+  <Project Path="Tanks.Shared.Tests.csproj" />
   <Project Path="FMODUnityResonance.csproj" />
+  <Project Path="Tanks.Utils.csproj" />
 </Solution>
