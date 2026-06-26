@@ -1,10 +1,18 @@
 using NUnit.Framework;
 using System;
+using Tanks.Shared.Adapters;
 
 namespace Tanks.Shared.Tests
 {
-    public class CarBehaviour : INetworkBehaviourExtended { }
-    public class PersonBehaviour : INetworkBehaviourExtended { }
+    public class CarBehaviour : INetworkBehaviourExtended
+    {
+        public ITransform Transform { get; }
+    }
+
+    public class PersonBehaviour : INetworkBehaviourExtended
+    {
+        public ITransform Transform { get; }
+    }
 
     public class EngineComponent : INetworkComponent<CarBehaviour>
     {

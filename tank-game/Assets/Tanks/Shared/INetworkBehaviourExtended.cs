@@ -1,12 +1,17 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using Tanks.Shared.Adapters;
 using Unity.Netcode;
 using UnityEngine;
 
 namespace Tanks.Shared
 {
-    public interface INetworkBehaviourExtended { }
+    public interface INetworkBehaviourExtended
+    {
+        ITransform Transform { get; }
+    }
+
     public interface INetworkMessageHandler { }
     public interface INetworkMessageHandler<T> : INetworkMessageHandler
     {
@@ -15,6 +20,8 @@ namespace Tanks.Shared
 
     public abstract class NetworkBehaviourExtended : NetworkBehaviour, INetworkBehaviourExtended
     {
+        public ITransform Transform { get; private set; }
+
         private readonly Dictionary<Type, List<INetworkMessageHandler>> _handlers = new();
         private readonly List<INetworkComponent> _components = new();
 
@@ -81,6 +88,11 @@ namespace Tanks.Shared
         public override void OnNetworkDespawn()
         {
             NetworkManager.NetworkTickSystem.Tick -= OnTick;
+        }
+
+        private void Awake()
+        {
+            Transform = new UnityTransform(transform);
         }
 
         private void OnTick()
