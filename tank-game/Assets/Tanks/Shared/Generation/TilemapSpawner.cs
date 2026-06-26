@@ -1,41 +1,30 @@
 ﻿using NaughtyAttributes;
 using System;
+using System.Runtime.CompilerServices;
 using Tanks.Shared.Generation.Mazes;
 using Unity.Mathematics;
 using UnityEngine;
 using UnityEngine.Tilemaps;
+using VContainer;
 
 namespace Tanks.Shared.Generation
 {
     [RequireComponent(typeof(Tilemap), typeof(Grid), typeof(TilemapCollider2D))]
-    public sealed class TilemapSpawner : NetworkBehaviourExtended
+    public sealed class TilemapSpawner : MonoBehaviour
     {
         [Required]
         [SerializeField]
         private TilemapThemeConfig _config;
 
-        [SerializeField]
-        private Vector2Int _resolution = new Vector2Int(12, 8);
+        [Inject] private readonly IMazeGenerator _mazeGenerator;
+        [Inject] private readonly ITilemapGenerator _tilemapGenerator;
 
-        [Range(1, 5)]
-        [SerializeField]
-        private int _wallWidth = 1;
-
-        private readonly IMazeGenerator _mazeGenerator = new DFSGenerator();
-        private readonly ITilemapGenerator _tilemapGenerator = new TilemapGenerator();
-
-        private void Start()
+        public void Spawn(TilemapGenerationSettings settings, Vector2Int resolution)
         {
-            uint seed = (uint)Environment.TickCount;
-            int2 resolution = new int2(_resolution.x, _resolution.y);
+            int2 newResolution = Unsafe.As<Vector2Int, int2>(ref resolution);
 
-            using var cells = _mazeGenerator.Generate(seed, resolution);
-            using var tiles = _tilemapGenerator.Generate(cells.Value, new TilemapGenerationSettings
-            {
-                Seed = seed,
-                TileSpacing = 1,
-                WallWidth = _wallWidth
-            });
+            using var cells = _mazeGenerator.Generate(settings.Seed, newResolution);
+            using var tiles = _tilemapGenerator.Generate(cells.Value, settings);
 
             Tilemap tilemap = GetComponent<Tilemap>();
 

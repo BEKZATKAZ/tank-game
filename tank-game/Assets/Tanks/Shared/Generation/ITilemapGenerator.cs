@@ -2,6 +2,7 @@ using System;
 using Tanks.Shared.Generation.Mazes;
 using Tanks.Utils;
 using Unity.Mathematics;
+using Unity.Netcode;
 
 namespace Tanks.Shared.Generation
 {
@@ -17,11 +18,18 @@ namespace Tanks.Shared.Generation
         public readonly DirectionFlags Directions;
     }
 
-    public struct TilemapGenerationSettings
+    public struct TilemapGenerationSettings : INetworkSerializable
     {
         public uint Seed;
         public int WallWidth;
         public int TileSpacing;
+
+        public void NetworkSerialize<T>(BufferSerializer<T> serializer) where T : IReaderWriter
+        {
+            serializer.SerializeValue(ref Seed);
+            serializer.SerializeValue(ref WallWidth);
+            serializer.SerializeValue(ref TileSpacing);
+        }
     }
 
     public interface ITilemapGenerator

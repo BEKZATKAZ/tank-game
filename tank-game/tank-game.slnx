@@ -6,5 +6,6 @@
   <Project Path="Tanks.Shared.csproj" />
   <Project Path="Tanks.Shared.Tests.csproj" />
   <Project Path="FMODUnityResonance.csproj" />
+  <Project Path="Tanks.Server.csproj" />
   <Project Path="Tanks.Utils.csproj" />
 </Solution>
