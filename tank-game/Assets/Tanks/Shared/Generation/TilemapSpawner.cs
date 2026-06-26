@@ -1,5 +1,6 @@
 ﻿using NaughtyAttributes;
 using System;
+using System.Collections.Generic;
 using System.Runtime.CompilerServices;
 using Tanks.Shared.Generation.Mazes;
 using Unity.Mathematics;
@@ -19,6 +20,8 @@ namespace Tanks.Shared.Generation
         [Inject] private readonly IMazeGenerator _mazeGenerator;
         [Inject] private readonly ITilemapGenerator _tilemapGenerator;
 
+        private readonly Dictionary<DirectionFlags, Tile> _cachedTileAssets = new();
+
         public void Spawn(TilemapGenerationSettings settings, Vector2Int resolution)
         {
             int2 newResolution = Unsafe.As<Vector2Int, int2>(ref resolution);
@@ -30,10 +33,21 @@ namespace Tanks.Shared.Generation
 
             foreach (ref GeneratedTile tile in tiles.Value.AsSpan())
             {
-                Tile unityTile = ScriptableObject.CreateInstance<Tile>();
-                unityTile.sprite = _config.GetTileSpriteFromDirections(tile.Directions).Sprite;
-                tilemap.SetTile(new Vector3Int(tile.Position.x, tile.Position.y), unityTile);
+                if (_cachedTileAssets.TryGetValue(tile.Directions, out Tile unityTile) == false)
+                {
+                    unityTile = ScriptableObject.CreateInstance<Tile>();
+                    unityTile.sprite = _config.GetTileSpriteFromDirections(tile.Directions).Sprite;
+                }
+
+                Vector3Int position = new Vector3Int(tile.Position.x, tile.Position.y);
+                tilemap.SetTile(position, unityTile);
             }
+        }
+
+        private void OnDestroy()
+        {
+            foreach (Tile tile in _cachedTileAssets.Values) Destroy(tile);
+            _cachedTileAssets.Clear();
         }
     }
 }
