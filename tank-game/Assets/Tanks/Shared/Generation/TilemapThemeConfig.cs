@@ -7,7 +7,7 @@ using UnityEngine;
 namespace Tanks.Shared.Generation
 {
     [Serializable]
-    public struct TileSprite
+    public class TileSprite
     {
         [Required]
         [SerializeField]
@@ -16,19 +16,27 @@ namespace Tanks.Shared.Generation
         [SerializeField]
         private DirectionFlags _directions;
 
-        public readonly Sprite Sprite => _sprite;
+        [SerializeField]
+        private Color _tint = Color.white;
 
-        public readonly DirectionFlags Directions => (int)_directions is -1
+        public Sprite Sprite => _sprite;
+
+        public DirectionFlags Directions => (int)_directions is -1
             ? (DirectionFlags)0b1111 // Include all
             : _directions;
+
+        public Color Tint => _tint;
     }
 
     [CreateAssetMenu(fileName = "TilemapTheme", menuName = "Scriptable Objects/Tilemap Theme")]
     public sealed class TilemapThemeConfig : ScriptableObject
     {
+        [SerializeField] private TileSprite _background;
         [SerializeField] private TileSprite[] _parts;
 
         private readonly Dictionary<DirectionFlags, TileSprite> _cached = new();
+
+        public TileSprite GetBackground() => _background;
 
         public TileSprite GetTileSpriteFromDirections(DirectionFlags directions)
         {

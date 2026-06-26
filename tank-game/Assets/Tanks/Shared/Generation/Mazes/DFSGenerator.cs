@@ -93,8 +93,8 @@ namespace Tanks.Shared.Generation.Mazes
                 }
 
                 ref MazeCell last = ref GetRef(resolution.x, resolution.y);
-                last.SetWallLeft(true);
-                last.SetWallBottom(true);
+                last.SetWallLeft(false);
+                last.SetWallBottom(false);
 
                 return result;
             }

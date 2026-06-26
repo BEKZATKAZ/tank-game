@@ -29,7 +29,7 @@ namespace Tanks.Shared.Tests.Generation
             Assert.AreEqual((sizeX + 1) * (sizeY + 1), expected.Value.Count,
                 "Resolution and result do not match");
 
-            for (int x = 0; x <= resolution.x; x++)
+            for (int x = 0; x < resolution.x; x++)
             {
                 int2 position = new int2(x, resolution.y);
                 MazeCell edge = expected.Value.FirstOrDefault(x => math.all(x.Position == position));
@@ -38,7 +38,7 @@ namespace Tanks.Shared.Tests.Generation
                 Assert.True(edge.WallBottom, $"Unsealed top at {position}");
             }
 
-            for (int y = 0; y <= resolution.y; y++)
+            for (int y = 0; y < resolution.y; y++)
             {
                 int2 position = new int2(resolution.x, y);
                 MazeCell edge = expected.Value.FirstOrDefault(x => math.all(x.Position == position));

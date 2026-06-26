@@ -12,34 +12,53 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2c36abbe6ab49364caf23587ced20b23, type: 3}
   m_Name: TilemapTheme
   m_EditorClassIdentifier: Tanks.Shared::Tanks.Shared.Generation.TilemapThemeConfig
+  _background:
+    _sprite: {fileID: 300040418721006742, guid: 5800b9f40a2b01a40b17b0d9ceb14a20, type: 3}
+    _directions: 0
+    _tint: {r: 0.2830189, g: 0.2830189, b: 0.2830189, a: 1}
   _parts:
   - _sprite: {fileID: 842455669, guid: 5800b9f40a2b01a40b17b0d9ceb14a20, type: 3}
     _directions: -1
+    _tint: {r: 0.9, g: 0.9, b: 0.9, a: 1}
   - _sprite: {fileID: 300040418721006742, guid: 5800b9f40a2b01a40b17b0d9ceb14a20, type: 3}
     _directions: 4
+    _tint: {r: 1, g: 1, b: 1, a: 1}
   - _sprite: {fileID: 300040418721006742, guid: 5800b9f40a2b01a40b17b0d9ceb14a20, type: 3}
     _directions: 12
+    _tint: {r: 1, g: 1, b: 1, a: 1}
   - _sprite: {fileID: 300040418721006742, guid: 5800b9f40a2b01a40b17b0d9ceb14a20, type: 3}
     _directions: 7
+    _tint: {r: 1, g: 1, b: 1, a: 1}
   - _sprite: {fileID: 300040418721006742, guid: 5800b9f40a2b01a40b17b0d9ceb14a20, type: 3}
     _directions: 13
+    _tint: {r: 1, g: 1, b: 1, a: 1}
   - _sprite: {fileID: 300040418721006742, guid: 5800b9f40a2b01a40b17b0d9ceb14a20, type: 3}
     _directions: 14
+    _tint: {r: 1, g: 1, b: 1, a: 1}
   - _sprite: {fileID: 300040418721006742, guid: 5800b9f40a2b01a40b17b0d9ceb14a20, type: 3}
     _directions: 5
+    _tint: {r: 1, g: 1, b: 1, a: 1}
   - _sprite: {fileID: 300040418721006742, guid: 5800b9f40a2b01a40b17b0d9ceb14a20, type: 3}
     _directions: 6
+    _tint: {r: 1, g: 1, b: 1, a: 1}
   - _sprite: {fileID: 300040418721006742, guid: 5800b9f40a2b01a40b17b0d9ceb14a20, type: 3}
     _directions: 8
+    _tint: {r: 1, g: 1, b: 1, a: 1}
   - _sprite: {fileID: 300040418721006742, guid: 5800b9f40a2b01a40b17b0d9ceb14a20, type: 3}
     _directions: 1
+    _tint: {r: 1, g: 1, b: 1, a: 1}
   - _sprite: {fileID: 300040418721006742, guid: 5800b9f40a2b01a40b17b0d9ceb14a20, type: 3}
     _directions: 2
+    _tint: {r: 1, g: 1, b: 1, a: 1}
   - _sprite: {fileID: 300040418721006742, guid: 5800b9f40a2b01a40b17b0d9ceb14a20, type: 3}
     _directions: 3
+    _tint: {r: 1, g: 1, b: 1, a: 1}
   - _sprite: {fileID: 300040418721006742, guid: 5800b9f40a2b01a40b17b0d9ceb14a20, type: 3}
     _directions: 11
+    _tint: {r: 1, g: 1, b: 1, a: 1}
   - _sprite: {fileID: 300040418721006742, guid: 5800b9f40a2b01a40b17b0d9ceb14a20, type: 3}
     _directions: 9
+    _tint: {r: 1, g: 1, b: 1, a: 1}
   - _sprite: {fileID: 300040418721006742, guid: 5800b9f40a2b01a40b17b0d9ceb14a20, type: 3}
     _directions: 10
+    _tint: {r: 1, g: 1, b: 1, a: 1}
