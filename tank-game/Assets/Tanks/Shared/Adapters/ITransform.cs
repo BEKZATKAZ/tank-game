@@ -1,20 +1,75 @@
+using System;
 using Unity.Mathematics;
 using UnityEngine;
-using UnityEngine.UIElements;
 
 namespace Tanks.Shared.Adapters
 {
-    public readonly struct Angle
+    public readonly struct Angle : IEquatable<Angle>
     {
-        private Angle(float value) => _value = value;
+        private Angle(float value) => _value = value % 360;
 
         public float Radians => math.radians(_value);
-        public float Degrees => math.degrees(_value);
+        public float Degrees => _value;
 
         private readonly float _value;
 
+        public static Angle operator +(in Angle lhs, in Angle rhs)
+        {
+            return new Angle(lhs._value + rhs._value);
+        }
+
+        public static Angle operator -(in Angle lhs, in Angle rhs)
+        {
+            return new Angle(lhs._value - rhs._value);
+        }
+
+        public static Angle operator *(in Angle lhs, in Angle rhs)
+        {
+            return new Angle(lhs._value * rhs._value);
+        }
+
+        public static Angle operator /(in Angle lhs, in Angle rhs)
+        {
+            return new Angle(lhs._value / rhs._value);
+        }
+
+        public static Angle operator %(in Angle lhs, in Angle rhs)
+        {
+            return new Angle(lhs._value % rhs._value);
+        }
+
+        public static bool operator ==(in Angle lhs, in Angle rhs)
+        {
+            return lhs._value == rhs._value;
+        }
+
+        public static bool operator !=(in Angle lhs, in Angle rhs)
+        {
+            return lhs._value != rhs._value;
+        }
+
         public static Angle FromDegrees(float degrees) => new(degrees);
         public static Angle FromRadians(float radians) => new(math.degrees(radians));
+
+        public readonly bool Equals(Angle other)
+        {
+            return _value == other._value;
+        }
+
+        public override readonly int GetHashCode()
+        {
+            return _value.GetHashCode();
+        }
+
+        public override readonly string ToString()
+        {
+            return $"{{ Degrees: {Degrees}, Radians: {Radians} }}";
+        }
+
+        public override readonly bool Equals(object obj)
+        {
+            return obj is Angle other && Equals(other);
+        }
     }
 
     public interface ITransform
