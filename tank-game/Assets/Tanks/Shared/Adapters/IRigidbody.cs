@@ -5,9 +5,6 @@ namespace Tanks.Shared.Adapters
 {
     public interface IRigidbody
     {
-        float2 LinearVelocity { get; set; }
-        Angle AngularVelocity { get; set; }
-
         void Move(float2 delta);
         void Rotate(Angle angle);
     }
@@ -17,18 +14,6 @@ namespace Tanks.Shared.Adapters
         public UnityRigidbody(Rigidbody2D rigidbody) => Rigidbody = rigidbody;
 
         public Rigidbody2D Rigidbody { get; }
-
-        public float2 LinearVelocity
-        {
-            get => Rigidbody.linearVelocity;
-            set => Rigidbody.linearVelocity = value;
-        }
-
-        public Angle AngularVelocity
-        {
-            get => Angle.FromDegrees(Rigidbody.angularVelocity);
-            set => Rigidbody.angularVelocity = value.Degrees;
-        }
 
         public void Move(float2 delta)
         {
