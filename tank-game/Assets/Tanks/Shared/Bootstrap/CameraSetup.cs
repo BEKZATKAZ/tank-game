@@ -1,9 +1,7 @@
-using Tanks.Shared;
-using Tanks.Shared.Bootstrap;
-using Unity.Mathematics;
+﻿using Unity.Mathematics;
 using UnityEngine;
 
-namespace Tanks.Client.Bootstrap
+namespace Tanks.Shared.Bootstrap
 {
     public sealed class CameraSetup :
         NetworkComponent<GameStartBehaviour>,
@@ -21,6 +19,14 @@ namespace Tanks.Client.Bootstrap
         protected override void Awake()
         {
             base.Awake();
+
+            // This is kept in the editor for testing
+            if (NetworkManager.IsServer && Application.isEditor == false)
+            {
+                enabled = false;
+                return;
+            }
+
             Behaviour.RegisterMessageHandler(this);
         }
     }
