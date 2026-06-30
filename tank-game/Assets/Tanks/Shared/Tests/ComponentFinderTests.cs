@@ -50,24 +50,32 @@ namespace Tanks.Shared.Tests
         [Test]
         public void FindFor_LooksForTargetType_ReturnsTypeArray()
         {
-            Type[] carActual = NetworkComponentFinder.FindFor(_carBehaviour, out bool cache);
+            Type abstractionType = typeof(INetworkComponent<>);
+
+            Type[] carActual = SplitComponentFinder.FindFor(
+                _carBehaviour, abstractionType, out bool cache);
+
             Type[] carExpected = { typeof(TransmissionComponent), typeof(EngineComponent), };
 
             ContainsTypes(carExpected, carActual);
             Assert.False(cache, "Unexisting data cannot be cached");
 
-            Type[] personActual = NetworkComponentFinder.FindFor(_personBehaviour, out cache);
+            Type[] personActual = SplitComponentFinder.FindFor(
+                _personBehaviour, abstractionType, out cache);
+
             Type[] personExpected = { typeof(LifeStyleComponent) };
 
             ContainsTypes(personExpected, personActual);
             Assert.False(cache, "Unexisting data cannot be cached");
 
             // In case caching breaks
-            carActual = NetworkComponentFinder.FindFor(_carBehaviour, out cache);
+            carActual = SplitComponentFinder.FindFor(_carBehaviour, abstractionType, out cache);
             Assert.True(cache, "Reflection should not be called twice");
             ContainsTypes(carExpected, carActual);
 
-            personActual = NetworkComponentFinder.FindFor(_personBehaviour, out cache);
+            personActual = SplitComponentFinder.FindFor(
+                _personBehaviour, abstractionType, out cache);
+
             Assert.True(cache, "Reflection should not be called twice");
             ContainsTypes(personExpected, personActual);
         }

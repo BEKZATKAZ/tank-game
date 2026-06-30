@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
+using System.Text.RegularExpressions;
 using Tanks.Shared.Adapters;
 using Unity.Netcode;
 using UnityEngine;
@@ -58,18 +60,20 @@ namespace Tanks.Shared
         public override void OnNetworkSpawn()
         {
             NetworkManager.NetworkTickSystem.Tick += OnTick;
-            IEnumerable<Type> types = NetworkComponentFinder.FindFor(this);
+
+            IEnumerable<Type> types = SplitComponentFinder.FindFor(
+                this, typeof(INetworkComponent<>));
 
 #if UNITY_EDITOR
             // Filtering since all assemblies are loaded in the editor
             // This logic is not necessary in builds
             if (NetworkManager.IsServer)
             {
-                types = types.Where(x => x.Assembly.FullName.Contains("Server"));
+                types = types.Where(x => IsSharedOr(x.Assembly, "server"));
             }
             else
             {
-                types = types.Where(x => x.Assembly.FullName.Contains("Client"));
+                types = types.Where(x => IsSharedOr(x.Assembly, "client"));
             }
 #endif
 
@@ -90,7 +94,7 @@ namespace Tanks.Shared
             NetworkManager.NetworkTickSystem.Tick -= OnTick;
         }
 
-        private void Awake()
+        protected virtual void Awake()
         {
             Transform = new UnityTransform(transform);
         }
@@ -104,6 +108,12 @@ namespace Tanks.Shared
             {
                 component.OnTick(tick, tickDelta);
             }
+        }
+
+        private static bool IsSharedOr(Assembly assembly, string expectedName)
+        {
+            string pattern = $"shared|{expectedName}";
+            return Regex.IsMatch(assembly.FullName, pattern, RegexOptions.IgnoreCase);
         }
     }
 }

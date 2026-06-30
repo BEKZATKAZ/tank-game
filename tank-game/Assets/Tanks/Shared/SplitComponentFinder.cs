@@ -5,9 +5,9 @@ using System.Reflection;
 
 namespace Tanks.Shared
 {
-	public static class NetworkComponentFinder
+	public static class SplitComponentFinder
 	{
-        static NetworkComponentFinder()
+        static SplitComponentFinder()
         {
             _baseTypes = AppDomain.CurrentDomain
                 .GetAssemblies()
@@ -24,12 +24,12 @@ namespace Tanks.Shared
         private static readonly Type[] _baseTypes;
         private static readonly Dictionary<Type, Type[]> _componentTypes = new();
 
-        public static Type[] FindFor(INetworkBehaviourExtended behaviour)
+        public static Type[] FindFor(object behaviour, Type abstractionType)
         {
-            return FindFor(behaviour, out _);
+            return FindFor(behaviour, abstractionType, out _);
         }
 
-        public static Type[] FindFor(INetworkBehaviourExtended behaviour, out bool fromCache)
+        public static Type[] FindFor(object behaviour, Type abstractionType, out bool fromCache)
         {
             Type behaviourType = behaviour.GetType();
 
@@ -37,7 +37,7 @@ namespace Tanks.Shared
             {
                 fromCache = false;
                 _componentTypes[behaviourType] = result = _baseTypes
-                   .Where(x => IsNetworkComponentFor(x, behaviourType))
+                   .Where(x => IsComponentFor(x, behaviourType, abstractionType))
                    .ToArray();
             }
             else fromCache = true;
@@ -45,11 +45,11 @@ namespace Tanks.Shared
             return result;
         }
 
-        private static bool IsNetworkComponentFor(Type candidate, Type targetType)
+        private static bool IsComponentFor(Type candidate, Type targetType, Type abstractionType)
         {
             return candidate.GetInterfaces().Any(i =>
                 i.IsGenericType &&
-                i.GetGenericTypeDefinition() == typeof(INetworkComponent<>) &&
+                i.GetGenericTypeDefinition() == abstractionType &&
                 i.GetGenericArguments()[0] == targetType);
         }
     }
