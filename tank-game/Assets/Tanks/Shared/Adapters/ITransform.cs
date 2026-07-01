@@ -4,9 +4,9 @@ using UnityEngine;
 
 namespace Tanks.Shared.Adapters
 {
-    public readonly struct Angle : IEquatable<Angle>
+    public readonly struct Angle : IEquatable<Angle>, IComparable<Angle>
     {
-        private Angle(float value) => _value = value % 360;
+        private Angle(float value) => _value = value;
 
         public float Radians => math.radians(_value);
         public float Degrees => _value;
@@ -54,6 +54,11 @@ namespace Tanks.Shared.Adapters
         public readonly bool Equals(Angle other)
         {
             return _value == other._value;
+        }
+
+        public readonly int CompareTo(Angle other)
+        {
+            return _value.CompareTo(other._value);
         }
 
         public override readonly int GetHashCode()

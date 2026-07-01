@@ -28,7 +28,7 @@ namespace Tanks.Shared.Tests.Adapters
         [TestCase(0, 0)]
         [TestCase(90, math.PIHALF)]
         [TestCase(180, math.PI)]
-        [TestCase(0, math.PI2)]
+        [TestCase(360, math.PI2)]
         public void Comparison_IdenticalAngles_ShouldReturnTrue(float deg, float rad)
         {
             Angle a = Angle.FromDegrees(deg);
