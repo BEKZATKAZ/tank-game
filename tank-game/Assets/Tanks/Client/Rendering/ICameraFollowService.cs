@@ -7,7 +7,7 @@ namespace Tanks.Client.Rendering
 {
     public interface ICameraFollowService
     {
-        void SetDefault(float2 defaultPosition, float defaultOrthographicSize);
+        void SetDefault(float2 defaultPosition, float defaultOrthographicSize, bool forceOverride);
 
         void SetFollowTarget(ITransform target, float orthographicSize);
     }
@@ -22,10 +22,16 @@ namespace Tanks.Client.Rendering
         private float2 _defaultPosition;
         private float _defaultOrthographicSize = 5;
 
-        public void SetDefault(float2 defaultPosition, float defaultOrthographicSize)
+        public void SetDefault(
+            float2 defaultPosition, float defaultOrthographicSize, bool forceOverride)
         {
             _defaultPosition = defaultPosition;
             _defaultOrthographicSize = defaultOrthographicSize;
+
+            if (forceOverride == false) return;
+
+            ICamera camera = _cameraMain.Get();
+            camera.Transform.WorldPosition = defaultPosition;
         }
 
         public void SetFollowTarget(ITransform target, float orthographicSize)
@@ -41,13 +47,6 @@ namespace Tanks.Client.Rendering
 
             camera.Transform.WorldPosition = new float2(position.x, position.y);
             camera.OrthographicSize = math.lerp(camera.OrthographicSize, size, t);
-        }
-
-        private void Start()
-        {
-            ICamera camera = _cameraMain.Get();
-            camera.Transform.WorldPosition = _defaultPosition;
-            camera.OrthographicSize = _defaultOrthographicSize;
         }
 
         private void LateUpdate()

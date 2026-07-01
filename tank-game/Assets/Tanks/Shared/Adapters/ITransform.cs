@@ -111,13 +111,13 @@ namespace Tanks.Shared.Adapters
         public float2 WorldPosition
         {
             get => ((float3)Transform.position).xy;
-            set => Transform.position = (Vector2)value;
+            set => Transform.position = new Vector3(value.x, value.y, Transform.position.z);
         }
 
         public float2 LocalPosition
         {
             get => ((float3)Transform.localPosition).xy;
-            set => Transform.localPosition = (Vector2)value;
+            set => Transform.localPosition = new Vector3(value.x, value.y, Transform.localPosition.z);
         }
 
         public Angle WorldRotation
@@ -140,7 +140,7 @@ namespace Tanks.Shared.Adapters
         public float2 LocalScale
         {
             get => ((float3)Transform.localScale).xy;
-            set => Transform.localScale = (Vector2)value;
+            set => Transform.localScale = new Vector3(value.x, value.y, Transform.localScale.z);
         }
 
         public override int GetHashCode() => Transform.GetHashCode();
