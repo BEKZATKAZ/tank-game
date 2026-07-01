@@ -1,7 +1,9 @@
-﻿using Unity.Mathematics;
+﻿using Tanks.Shared;
+using Tanks.Shared.Bootstrap;
+using Unity.Mathematics;
 using UnityEngine;
 
-namespace Tanks.Shared.Bootstrap
+namespace Tanks.Server.Bootstrap
 {
     public sealed class CameraSetup :
         NetworkComponent<GameStartBehaviour>,
@@ -21,7 +23,7 @@ namespace Tanks.Shared.Bootstrap
             base.Awake();
 
             // This is kept in the editor for testing
-            if (NetworkManager.IsServer && Application.isEditor == false)
+            if (Application.isEditor == false)
             {
                 enabled = false;
                 return;

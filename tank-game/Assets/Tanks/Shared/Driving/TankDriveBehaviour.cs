@@ -1,0 +1,65 @@
+using Tanks.Shared.Adapters;
+using Unity.Mathematics;
+using UnityEngine;
+
+namespace Tanks.Shared.Driving
+{
+    [RequireComponent(typeof(Rigidbody2D))]
+    public sealed class TankDriveBehaviour : NetworkBehaviourExtended
+    {
+        private readonly RaycastHit2D[] _hitBuffer = new RaycastHit2D[1];
+        private ArcadeDriver _driver;
+
+        public Rigidbody2D Rigidbody { get; private set; }
+        public IVelocity Velocity { get; private set; }
+
+        protected override void Awake()
+        {
+            base.Awake();
+
+            Rigidbody = GetComponent<Rigidbody2D>();
+            Velocity = new UnityVelocity(Rigidbody);
+
+            _driver = new ArcadeDriver(new ArcadeDriverSettings
+            {
+                AccelerationTime = 0.3f,
+                MaxSpeed = 10,
+                ReverseSpeed = 7,
+                SteeringSpeed = Angle.FromDegrees(240)
+            });
+        }
+
+        public void Tick(float throttle, float steering, float deltaTime)
+        {
+            Velocity.Angular = _driver.Steer(steering);
+            float2 linear = _driver.Drive(Transform.Right, throttle, deltaTime);
+
+            if (math.lengthsq(linear) < 0.01f)
+            {
+                Velocity.Linear = default;
+                return;
+            }
+
+            ContactFilter2D filter = new ContactFilter2D
+            {
+                layerMask = ~(1 << gameObject.layer),
+                useTriggers = false
+            };
+
+            float2 direction = math.normalizesafe(linear);
+            float distance = math.length(linear) * deltaTime;
+
+            if (Rigidbody.Cast(direction, filter, _hitBuffer, distance) > 0)
+            {
+                float2 normal = _hitBuffer[0].normal;
+                float minDrop = 0.5f;
+                float drop = 1 - math.abs(math.dot(direction, normal));
+
+                linear -= math.dot(linear, normal) * normal;
+                _driver.SetMaxAcceleration(math.max(drop, minDrop));
+            }
+
+            Velocity.Linear = linear;
+        }
+    }
+}

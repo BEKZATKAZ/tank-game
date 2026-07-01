@@ -4,6 +4,7 @@ using System.Security.Cryptography;
 using Tanks.Shared;
 using Tanks.Shared.Bootstrap;
 using Tanks.Shared.Generation;
+using Unity.Mathematics;
 using Unity.Netcode;
 using UnityEngine;
 
@@ -15,14 +16,12 @@ namespace Tanks.Server.Bootstrap
 
         private void Start()
         {
-            NetworkManager.Singleton.OnClientConnectedCallback += OnClientConnected;
+            NetworkManager.ConnectionApprovalCallback += ApprovalCheck;
+            NetworkManager.OnClientConnectedCallback += OnClientConnected;
         }
 
-        private void OnClientConnected(ulong clientId)
+        private void StartGame()
         {
-            int currentCount = NetworkManager.Singleton.ConnectedClients.Count;
-            if (currentCount < _desiredCount) return;
-
             Span<byte> seedBuffer = stackalloc byte[sizeof(uint)];
             RandomNumberGenerator.Fill(seedBuffer);
 
@@ -33,6 +32,31 @@ namespace Tanks.Server.Bootstrap
                 WallWidth = 5
             },
             resolution: new Vector2Int(6, 4));
+
+            GameObject playerPrefab = NetworkManager.NetworkConfig.PlayerPrefab;
+
+            foreach (ulong clientId in NetworkManager.ConnectedClientsIds)
+            {
+                GameObject player = Instantiate(
+                    playerPrefab, new float3(8, 8, 0), quaternion.identity);
+
+                player.GetComponent<NetworkObject>().SpawnAsPlayerObject(clientId, true);
+            }
+        }
+
+        private void ApprovalCheck(
+            NetworkManager.ConnectionApprovalRequest request,
+            NetworkManager.ConnectionApprovalResponse response)
+        {
+            response.CreatePlayerObject = false;
+            response.Approved = true;
+        }
+
+        private void OnClientConnected(ulong clientId)
+        {
+            int currentCount = NetworkManager.ConnectedClients.Count;
+            if (currentCount < _desiredCount) return;
+            StartGame();
         }
     }
 }

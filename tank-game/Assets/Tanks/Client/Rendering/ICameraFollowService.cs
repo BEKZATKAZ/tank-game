@@ -29,9 +29,10 @@ namespace Tanks.Client.Rendering
             _defaultOrthographicSize = defaultOrthographicSize;
 
             if (forceOverride == false) return;
-
             ICamera camera = _cameraMain.Get();
+
             camera.Transform.WorldPosition = defaultPosition;
+            camera.OrthographicSize = defaultOrthographicSize;
         }
 
         public void SetFollowTarget(ITransform target, float orthographicSize)
@@ -42,11 +43,17 @@ namespace Tanks.Client.Rendering
 
         private void LerpTo(ICamera camera, float2 target, float size)
         {
-            float t = 5 * Time.deltaTime;
-            float2 position = math.lerp(camera.Transform.WorldPosition, target, t);
+            // Limit delta time to prevent overshooting during stutters
+            float deltaTime = math.min(Time.deltaTime, 0.05f);
+            float positionSpeed = 5;
+            float sizeSpeed = 1;
 
-            camera.Transform.WorldPosition = new float2(position.x, position.y);
-            camera.OrthographicSize = math.lerp(camera.OrthographicSize, size, t);
+            float2 currentPosition = camera.Transform.WorldPosition;
+            float2 position = math.lerp(currentPosition, target, deltaTime * positionSpeed);
+            float currentSize = camera.OrthographicSize;
+
+            camera.Transform.WorldPosition = position;
+            camera.OrthographicSize = math.lerp(currentSize, size, deltaTime * sizeSpeed);
         }
 
         private void LateUpdate()

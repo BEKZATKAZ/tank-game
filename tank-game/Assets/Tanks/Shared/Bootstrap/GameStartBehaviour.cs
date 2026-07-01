@@ -20,7 +20,7 @@ namespace Tanks.Shared.Bootstrap
 		{
 			Bounds bounds = _tilemap.Spawn(settings, resolution);
 
-			if (IsClient) EmitMessage(new TilemapGenerated
+			EmitMessage(new TilemapGenerated
 			{
 				Bounds = bounds,
 				Settings = settings
