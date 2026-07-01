@@ -1,4 +1,5 @@
 ﻿<Solution>
+  <Project Path="Tanks.Client.csproj" />
   <Project Path="Tanks.Shared.Tests.csproj" />
   <Project Path="FMODUnityResonanceEditor.csproj" />
   <Project Path="FMODUnityEditor.csproj" />
@@ -6,7 +7,7 @@
   <Project Path="FMODUnityHaptics.csproj" />
   <Project Path="Tanks.Shared.csproj" />
   <Project Path="FMODUnityResonance.csproj" />
-  <Project Path="Tanks.Client.csproj" />
+  <Project Path="Tanks.Client.Tests.csproj" />
   <Project Path="Tanks.Utils.csproj" />
   <Project Path="Tanks.Server.csproj" />
 </Solution>

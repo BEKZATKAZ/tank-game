@@ -6,6 +6,8 @@ using System.Text.RegularExpressions;
 using Tanks.Shared.Adapters;
 using Unity.Netcode;
 using UnityEngine;
+using VContainer;
+using VContainer.Unity;
 
 namespace Tanks.Shared
 {
@@ -87,6 +89,9 @@ namespace Tanks.Shared
                 // Safe cast
                 _components.Add(component as INetworkComponent);
             }
+
+            IObjectResolver container = LifetimeScope.Find<LifetimeScope>().Container;
+            container.InjectGameObject(gameObject);
         }
 
         public override void OnNetworkDespawn()
