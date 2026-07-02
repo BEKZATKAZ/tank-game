@@ -13,7 +13,7 @@ namespace Tanks.Shared.Driving
             _rotation = new TankTurretRotation(Transform, Angle.FromDegrees(1200));
         }
 
-        public void Tick(float2 lookAtDirection, bool fire, float deltaTime)
+        public void Tick(float2 lookAtDirection, float deltaTime)
         {
             if (math.length(lookAtDirection) >= 0.01f)
             {

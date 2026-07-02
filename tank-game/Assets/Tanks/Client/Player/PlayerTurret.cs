@@ -13,7 +13,7 @@ namespace Tanks.Client.Player
         private void Update()
         {
             TurretInput input = _input.Read();
-            Behaviour.Tick(input.LookAtDirection, input.Fire, Time.deltaTime);
+            Behaviour.Tick(input.LookAtDirection, Time.deltaTime);
         }
 
         protected override void Awake()

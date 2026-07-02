@@ -91,6 +91,37 @@ SpriteRenderer:
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
   m_SpriteSortPoint: 0
+--- !u!1 &6278805005820137996
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 7816664068059968979}
+  m_Layer: 3
+  m_Name: MuzzlePoint
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &7816664068059968979
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6278805005820137996}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0.5, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 8233834358206558972}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &6365904690334269285
 GameObject:
   m_ObjectHideFlags: 0
@@ -200,6 +231,7 @@ GameObject:
   - component: {fileID: -5868504751458930755}
   - component: {fileID: 4726866452998294922}
   - component: {fileID: 7554069972906333062}
+  - component: {fileID: 9163817232548363890}
   m_Layer: 3
   m_Name: Player
   m_TagString: Untagged
@@ -309,7 +341,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d5a57f767e5e46a458fc5d3c628d0cbb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Unity.Netcode.Runtime::Unity.Netcode.NetworkObject
-  GlobalObjectIdHash: 3075119985
+  GlobalObjectIdHash: 2482318861
   InScenePlacedSourceGlobalObjectIdHash: 0
   DeferredDespawnTick: 0
   Ownership: 1
@@ -399,6 +431,20 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Tanks.Shared::Tanks.Shared.Player.PlayerMovementBehaviour
   ShowTopMostFoldoutHeaderGroup: 1
+--- !u!114 &9163817232548363890
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7983979346145053049}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 276b81082c9e26840aafbd43344e944d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Tanks.Shared::Tanks.Shared.Weapons.WeaponHolder
+  ShowTopMostFoldoutHeaderGroup: 1
+  _muzzlePoint: {fileID: 7816664068059968979}
 --- !u!1 &7996111267294727115
 GameObject:
   m_ObjectHideFlags: 0
@@ -428,7 +474,8 @@ Transform:
   m_LocalPosition: {x: 0.9, y: 0, z: 0}
   m_LocalScale: {x: 2, y: 0.1, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children: []
+  m_Children:
+  - {fileID: 7816664068059968979}
   m_Father: {fileID: 3292918371251932073}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &958814736866091293
