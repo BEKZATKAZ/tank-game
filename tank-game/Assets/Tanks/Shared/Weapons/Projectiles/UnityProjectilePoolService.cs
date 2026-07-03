@@ -27,9 +27,11 @@ namespace Tanks.Shared.Weapons.Projectiles
             float2 worldPosition, Angle worldRotation, LaunchSettings settings)
         {
             ProjectileComponent instance = _pool.Get();
+
             instance.Transform.WorldPosition = worldPosition;
             instance.Transform.WorldRotation = worldRotation;
-            instance.Launch(settings);
+
+            instance.Launch(settings, new LaunchCallbacks { OnDone = Release });
         }
 
         public void Release(IProjectile instance)

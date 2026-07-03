@@ -5,20 +5,21 @@ using UnityEngine;
 
 namespace Tanks.Shared.Weapons.Projectiles
 {
-    public delegate void DamageableHitCallback(IDamageable damageable);
-
-    public class ProjectileComponent : MonoBehaviour, IProjectile
+    public class ProjectileComponent : MonoBehaviour, IProjectile, IDamageDealer
     {
         public ITransform Transform { get; private set; }
         public LaunchSettings Settings { get; private set; }
 
+        private LaunchCallbacks _callbacks;
         private float _startTime;
         private int _richochetedTimes;
 
-        public void Launch(LaunchSettings settings)
+        public void Launch(LaunchSettings settings, LaunchCallbacks callbacks)
         {
             Settings = settings;
+            _callbacks = callbacks;
             _startTime = Time.time;
+            _richochetedTimes = 0;
         }
 
         private void Awake()
@@ -28,11 +29,11 @@ namespace Tanks.Shared.Weapons.Projectiles
 
         private void Update()
         {
-            float now = Time.time;
+            float elapsed = Time.time - _startTime;
 
-            if (_startTime + Settings.LifeTimeSeconds <= now)
+            if (elapsed >= Settings.LifeTimeSeconds)
             {
-                Settings.OnDone?.Invoke(this);
+                _callbacks.OnDone?.Invoke(this);
                 return;
             }
 
@@ -53,13 +54,16 @@ namespace Tanks.Shared.Weapons.Projectiles
 
             if (hit.collider.TryGetComponent(out IDamageable damageable))
             {
-                Settings.OnDone?.Invoke(this);
+                float damage = Settings.Damage.Evaluate(elapsed);
+                damageable.Damage(damage, this);
+
+                _callbacks.OnDone?.Invoke(this);
                 return;
             }
 
             if (++_richochetedTimes > Settings.RicochetCount)
             {
-                Settings.OnDone?.Invoke(this);
+                _callbacks.OnDone?.Invoke(this);
                 return;
             }
 

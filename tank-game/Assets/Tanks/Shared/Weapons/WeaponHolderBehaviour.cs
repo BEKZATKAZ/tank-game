@@ -1,4 +1,5 @@
 ﻿using Tanks.Shared.Adapters;
+using Tanks.Shared.Health;
 using Tanks.Shared.Weapons.Actions;
 using Tanks.Shared.Weapons.Projectiles;
 using Unity.Netcode;
@@ -7,7 +8,12 @@ using VContainer;
 
 namespace Tanks.Shared.Weapons
 {
-    public sealed class WeaponHolder : NetworkBehaviourExtended, IWeaponOwner
+    public struct WeaponUsed
+    {
+        public IReadOnlyWeapon Weapon;
+    }
+
+    public sealed class WeaponHolderBehaviour : NetworkBehaviourExtended, IWeaponOwner
     {
         [SerializeField] private Transform _muzzlePoint;
 
@@ -29,8 +35,18 @@ namespace Tanks.Shared.Weapons
         public void StartUsing() => _currentWeapon.StartUsing();
         public void StopUsing() => _currentWeapon.StopUsing();
 
-        public void SwitchTo(Weapon weapon) => _currentWeapon = weapon;
-        public void SwitchToDefault() => _currentWeapon = _defaultWeapon;
+        public void SwitchToDefault() => SwitchTo(_defaultWeapon);
+        public void SwitchTo(Weapon weapon)
+        {
+            if (_currentWeapon != null) _currentWeapon.Used -= OnWeaponUsed;
+            _currentWeapon = weapon;
+            _currentWeapon.Used += OnWeaponUsed;
+        }
+
+        private void OnWeaponUsed()
+        {
+            EmitMessage(new WeaponUsed { Weapon = _currentWeapon });
+        }
 
         private void Start()
         {
@@ -41,9 +57,11 @@ namespace Tanks.Shared.Weapons
                 cooldown: new Cooldown(0.2f),
                 useMode: new FullAutomaticUseMode(),
                 useAction: new ProjectileLaunchAction(
-                    _projectilePool, new UnityTransform(_muzzlePoint)));
+                    _projectilePool,
+                    new UnityTransform(_muzzlePoint),
+                    new NearFarDamage(24, 8, 2, 15)));
 
-            _currentWeapon = _defaultWeapon;
+            SwitchToDefault();
         }
 
         private void LateUpdate()

@@ -232,6 +232,7 @@ GameObject:
   - component: {fileID: 4726866452998294922}
   - component: {fileID: 7554069972906333062}
   - component: {fileID: 9163817232548363890}
+  - component: {fileID: 4951854778658437301}
   m_Layer: 3
   m_Name: Player
   m_TagString: Untagged
@@ -445,6 +446,19 @@ MonoBehaviour:
   m_EditorClassIdentifier: Tanks.Shared::Tanks.Shared.Weapons.WeaponHolder
   ShowTopMostFoldoutHeaderGroup: 1
   _muzzlePoint: {fileID: 7816664068059968979}
+--- !u!114 &4951854778658437301
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7983979346145053049}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7ce553728616b4d46930934411b56281, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Tanks.Shared::Tanks.Shared.Health.HealthBehaviour
+  ShowTopMostFoldoutHeaderGroup: 1
 --- !u!1 &7996111267294727115
 GameObject:
   m_ObjectHideFlags: 0

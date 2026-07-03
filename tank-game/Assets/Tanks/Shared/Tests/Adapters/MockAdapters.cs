@@ -5,6 +5,8 @@ namespace Tanks.Shared.Tests.Adapters
 {
     public sealed class MockTransform : ITransform
     {
+        public bool IsValid { get; set; } = true;
+
         public float2 WorldPosition { get; set;}
         public Angle WorldRotation { get; set; }
         public float2 WorldScale { get; }

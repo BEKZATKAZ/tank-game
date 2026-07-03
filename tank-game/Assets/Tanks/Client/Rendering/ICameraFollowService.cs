@@ -60,7 +60,7 @@ namespace Tanks.Client.Rendering
         {
             ICamera camera = _cameraMain.Get();
 
-            if (_target is null)
+            if (_target is null || _target.IsValid == false)
             {
                 LerpTo(camera, _defaultPosition, _defaultOrthographicSize);
                 return;

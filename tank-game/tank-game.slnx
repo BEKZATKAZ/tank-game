@@ -6,8 +6,8 @@
   <Project Path="FMODUnityEditor.csproj" />
   <Project Path="FMODUnity.csproj" />
   <Project Path="FMODUnityHaptics.csproj" />
+  <Project Path="Tanks.Server.csproj" />
   <Project Path="FMODUnityResonance.csproj" />
   <Project Path="Tanks.Client.Tests.csproj" />
   <Project Path="Tanks.Utils.csproj" />
-  <Project Path="Tanks.Server.csproj" />
 </Solution>

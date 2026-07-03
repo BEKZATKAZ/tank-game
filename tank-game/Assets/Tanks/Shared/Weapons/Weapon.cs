@@ -1,9 +1,12 @@
-﻿using Tanks.Shared.Weapons.Actions;
+﻿using System;
+using Tanks.Shared.Weapons.Actions;
 
 namespace Tanks.Shared.Weapons
 {
     public interface IReadOnlyWeapon
     {
+        event Action Used;
+
         IReadOnlyAmmo Ammo { get; }
         IReadOnlyCooldown Cooldown { get; }
         IReadOnlyUseMode UseMode { get; }
@@ -11,6 +14,8 @@ namespace Tanks.Shared.Weapons
 
     public class Weapon : IReadOnlyWeapon
     {
+        public event Action Used;
+
         public IReadOnlyAmmo Ammo => _ammo;
         public IReadOnlyCooldown Cooldown => _cooldown;
         public IReadOnlyUseMode UseMode => _useMode;
@@ -46,6 +51,7 @@ namespace Tanks.Shared.Weapons
                 _ammo.Consume();
                 _cooldown.Use();
                 _useAction.Use();
+                Used?.Invoke();
             }
 
             _cooldown.Tick(deltaTime);

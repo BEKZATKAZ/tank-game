@@ -5,7 +5,7 @@ using VContainer;
 
 namespace Tanks.Client.Weapons
 {
-    public sealed class WeaponFirePrediction : NetworkComponent<WeaponHolder>
+    public sealed class WeaponFirePrediction : NetworkComponent<WeaponHolderBehaviour>
     {
         [Inject] private readonly IInputService<TurretInput> _input;
 

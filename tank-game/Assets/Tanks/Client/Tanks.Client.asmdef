@@ -2,6 +2,7 @@
     "name": "Tanks.Client",
     "rootNamespace": "",
     "references": [
+        "GUID:0c752da273b17c547ae705acf0f2adf2",
         "GUID:3b570a5146f9d4f0fa107ed4559471a3",
         "GUID:776d03a35f1b52c4a9aed9f56d7b4229",
         "GUID:062f5e808b278a541b6489e12da12d22",

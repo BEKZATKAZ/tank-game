@@ -79,6 +79,8 @@ namespace Tanks.Shared.Adapters
 
     public interface ITransform
     {
+        bool IsValid { get; }
+
         float2 WorldPosition { get; set; }
         Angle WorldRotation { get; set; }
         float2 WorldScale { get; }
@@ -107,6 +109,7 @@ namespace Tanks.Shared.Adapters
         }
 
         public Transform Transform { get; }
+        public bool IsValid => Transform;
 
         public float2 WorldPosition
         {
