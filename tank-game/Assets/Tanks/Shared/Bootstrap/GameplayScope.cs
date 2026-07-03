@@ -1,5 +1,6 @@
 ﻿using Tanks.Shared.Generation;
 using Tanks.Shared.Generation.Mazes;
+using Tanks.Shared.Messaging;
 using Tanks.Shared.Weapons.Projectiles;
 using UnityEngine;
 using VContainer;
@@ -17,6 +18,7 @@ namespace Tanks.Shared.Bootstrap
 
             builder.Register<IMazeGenerator, DFSGenerator>(Lifetime.Scoped);
             builder.Register<ITilemapGenerator, TilemapGenerator>(Lifetime.Scoped);
+            builder.Register<IMessageBus, MessageBus>(Lifetime.Scoped);
 
             builder.RegisterComponent(_projectilePool).As<IProjectilePoolService>();
         }
