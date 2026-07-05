@@ -31,5 +31,11 @@ namespace Tanks.Client.Weapons
 
             _isFireDown = input.Fire;
         }
+
+        protected override void Awake()
+        {
+            base.Awake();
+            if (Behaviour.IsOwner == false) enabled = false;
+        }
     }
 }

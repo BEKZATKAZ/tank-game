@@ -40,7 +40,9 @@ namespace Tanks.Client.Player
             {
                 float2 currentPosition = Behaviour.Transform.WorldPosition;
                 float distance = math.distance(currentPosition, _lastPosition);
+
                 target = distance > Time.deltaTime * 2 ? 1 : 0;
+                _lastPosition = currentPosition;
             }
 
             _intensity = math.lerp(_intensity, target, Time.deltaTime * speed);

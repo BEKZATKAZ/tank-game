@@ -12,7 +12,8 @@ namespace Tanks.Server.Bootstrap
 {
     public sealed class GameStarter : NetworkComponent<GameStartBehaviour>
     {
-        private readonly int _desiredCount = 1; // ! Testing purposes
+        private readonly int _desiredCount = 2; // ! Testing purposes
+        private bool _isGameStarted;
 
         private void Start()
         {
@@ -22,25 +23,42 @@ namespace Tanks.Server.Bootstrap
 
         private void StartGame()
         {
+            if (_isGameStarted) return;
+            _isGameStarted = true;
+
             Span<byte> seedBuffer = stackalloc byte[sizeof(uint)];
             RandomNumberGenerator.Fill(seedBuffer);
 
-            Behaviour.GenerateTilemapEveryoneRpc(new TilemapGenerationSettings
+            int tileSpacing = 1;
+            int wallWidth = 5;
+
+            TilemapGenerationSettings settings = new TilemapGenerationSettings
             {
                 Seed = MemoryMarshal.Read<uint>(seedBuffer),
-                TileSpacing = 1,
-                WallWidth = 5
-            },
-            resolution: new Vector2Int(6, 4));
+                TileSpacing = tileSpacing,
+                WallWidth = wallWidth
+            };
 
+            Vector2Int resolution = new Vector2Int(6, 4);
+            Behaviour.GenerateTilemapEveryoneRpc(settings, resolution);
+
+            Span<byte> positionSeedBuffer = stackalloc byte[sizeof(uint)];
+            RandomNumberGenerator.Fill(positionSeedBuffer);
+
+            uint positionSeed = MemoryMarshal.Read<uint>(positionSeedBuffer);
+            var positionRandom = Unity.Mathematics.Random.CreateFromIndex(positionSeed);
             GameObject playerPrefab = NetworkManager.NetworkConfig.PlayerPrefab;
 
             foreach (ulong clientId in NetworkManager.ConnectedClientsIds)
             {
-                GameObject player = Instantiate(
-                    playerPrefab, new float3(8, 8, 0), quaternion.identity);
+                float2 coords = positionRandom.NextInt2(0, new int2(resolution.x, resolution.y));
 
-                player.GetComponent<NetworkObject>().SpawnAsPlayerObject(clientId, true);
+                float2 position = coords * (wallWidth * 2) + wallWidth * 1.5f;
+                float3 position3D = new float3(position, 0);
+
+                GameObject player = Instantiate(playerPrefab, position3D, quaternion.identity);
+                NetworkObject networkObject = player.GetComponent<NetworkObject>();
+                networkObject.SpawnAsPlayerObject(clientId, destroyWithScene: true);
             }
         }
 
@@ -49,7 +67,7 @@ namespace Tanks.Server.Bootstrap
             NetworkManager.ConnectionApprovalResponse response)
         {
             response.CreatePlayerObject = false;
-            response.Approved = true;
+            response.Approved = _isGameStarted == false;
         }
 
         private void OnClientConnected(ulong clientId)

@@ -27,10 +27,17 @@ namespace Tanks.Shared.Weapons
 
 
         [Rpc(SendTo.Server, InvokePermission = RpcInvokePermission.Owner)]
-        public void StartUsingServerRpc() => StartUsing();
+        public void StartUsingServerRpc() => StartUsingNotOwnerRpc();
 
         [Rpc(SendTo.Server, InvokePermission = RpcInvokePermission.Owner)]
-        public void StopUsingServerRpc() => StopUsing();
+        public void StopUsingServerRpc() => StopUsingNotOwnerRpc();
+
+
+        [Rpc(SendTo.NotOwner, InvokePermission = RpcInvokePermission.Server)]
+        public void StartUsingNotOwnerRpc() => StartUsing();
+
+        [Rpc(SendTo.NotOwner, InvokePermission = RpcInvokePermission.Server)]
+        public void StopUsingNotOwnerRpc() => StopUsing();
 
         public void StartUsing() => _currentWeapon.StartUsing();
         public void StopUsing() => _currentWeapon.StopUsing();

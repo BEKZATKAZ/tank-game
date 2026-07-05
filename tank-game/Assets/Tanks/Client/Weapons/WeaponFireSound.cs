@@ -1,6 +1,7 @@
 ﻿using FMODUnity;
 using Tanks.Shared;
 using Tanks.Shared.Weapons;
+using UnityEngine;
 
 namespace Tanks.Client.Weapons
 {
@@ -9,11 +10,11 @@ namespace Tanks.Client.Weapons
         INetworkMessageHandler<WeaponUsed>
     {
         private static readonly EventReference _reference = RuntimeManager
-            .PathToEventReference("event:/SFX/DamageTaken");
+            .PathToEventReference("event:/SFX/Shoot");
 
         public void Handle(WeaponUsed message)
         {
-            RuntimeManager.PlayOneShot(_reference);
+            RuntimeManager.PlayOneShot(_reference, (Vector2)Behaviour.Transform.WorldPosition);
         }
 
         protected override void Awake()

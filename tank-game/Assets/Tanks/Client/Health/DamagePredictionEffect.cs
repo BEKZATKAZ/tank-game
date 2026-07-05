@@ -1,4 +1,5 @@
 using Cysharp.Threading.Tasks;
+using FMODUnity;
 using System.Collections.Generic;
 using System.Linq;
 using Tanks.Shared;
@@ -11,6 +12,9 @@ namespace Tanks.Client.Health
         NetworkComponent<HealthBehaviour>,
         INetworkMessageHandler<DamageTaken>
     {
+        private static readonly EventReference _reference = RuntimeManager
+            .PathToEventReference("event:/SFX/DamageTaken");
+
         private Dictionary<SpriteRenderer, Color> _sprites;
         private float _lastTime;
 
@@ -24,6 +28,8 @@ namespace Tanks.Client.Health
             {
                 renderer.color = Color.Lerp(Color.red, color, 0.5f);
             }
+
+            RuntimeManager.PlayOneShot(_reference, (Vector2)Behaviour.Transform.WorldPosition);
 
             await UniTask.Delay(150);
 

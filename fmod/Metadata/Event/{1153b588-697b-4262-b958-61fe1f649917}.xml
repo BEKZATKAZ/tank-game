@@ -2,7 +2,7 @@
 <objects serializationModel="Studio.02.03.00">
 	<object class="Event" id="{1153b588-697b-4262-b958-61fe1f649917}">
 		<property name="name">
-			<value>DamageTaken</value>
+			<value>Shoot</value>
 		</property>
 		<property name="outputFormat">
 			<value>1</value>
@@ -96,6 +96,7 @@
 	<object class="MixerBusEffectChain" id="{cda2d8e8-5e07-4676-9f81-bf3364529537}">
 		<relationship name="effects">
 			<destination>{15a39a04-f857-4040-89b6-1027cb116ebe}</destination>
+			<destination>{a57ce872-f723-402c-bc3c-bc6841670899}</destination>
 		</relationship>
 	</object>
 	<object class="MixerBusPanner" id="{0f7cbbc2-9974-49ef-8a47-6d2ceb1322dc}" />
@@ -106,4 +107,15 @@
 	</object>
 	<object class="MixerBusFader" id="{3bf5022f-8c68-415f-8de0-e5b83b289fc8}" />
 	<object class="MixerBusFader" id="{15a39a04-f857-4040-89b6-1027cb116ebe}" />
+	<object class="ObjectSpatialiserEffect" id="{a57ce872-f723-402c-bc3c-bc6841670899}">
+		<property name="minimumDistance">
+			<value>8.19999981</value>
+		</property>
+		<property name="maximumDistance">
+			<value>45</value>
+		</property>
+		<property name="overrideRange">
+			<value>true</value>
+		</property>
+	</object>
 </objects>
