@@ -2,6 +2,7 @@
 using Tanks.Shared.Generation.Mazes;
 using Tanks.Shared.Messaging;
 using Tanks.Shared.Weapons.Projectiles;
+using Tanks.Infrastructure;
 using UnityEngine;
 using VContainer;
 using VContainer.Unity;
@@ -15,6 +16,8 @@ namespace Tanks.Shared.Bootstrap
         protected override void Configure(IContainerBuilder builder)
         {
             base.Configure(builder);
+
+            builder.RegisterInfrastructure();
 
             builder.Register<IMazeGenerator, DFSGenerator>(Lifetime.Scoped);
             builder.Register<ITilemapGenerator, TilemapGenerator>(Lifetime.Scoped);
