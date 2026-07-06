@@ -1,17 +1,18 @@
-﻿using Unity.Mathematics;
+﻿using Tanks.Core.Helpers;
+using Unity.Mathematics;
 
 namespace Tanks.Shared.Health
 {
     public interface IDamage
     {
-        float Evaluate(float distance);
+        PositiveFloat Evaluate(PositiveFloatOrZero distance);
     }
 
     public sealed class NearFarDamage : IDamage
     {
         public NearFarDamage(
-            float nearAmount, float farAmount,
-            float minDistance, float maxDistance)
+            PositiveFloat nearAmount, PositiveFloat farAmount,
+            PositiveFloat minDistance, PositiveFloat maxDistance)
         {
             _nearAmount = nearAmount;
             _farAmount = farAmount;
@@ -20,13 +21,13 @@ namespace Tanks.Shared.Health
             _maxDistance = maxDistance;
         }
 
-        private readonly float _nearAmount;
-        private readonly float _farAmount;
+        private readonly PositiveFloat _nearAmount;
+        private readonly PositiveFloat _farAmount;
 
-        private readonly float _minDistance;
-        private readonly float _maxDistance;
+        private readonly PositiveFloat _minDistance;
+        private readonly PositiveFloat _maxDistance;
 
-        public float Evaluate(float distance)
+        public PositiveFloat Evaluate(PositiveFloatOrZero distance)
         {
             float alpha = math.saturate(math.unlerp(_minDistance, _maxDistance, distance));
             return math.lerp(_nearAmount, _farAmount, alpha);

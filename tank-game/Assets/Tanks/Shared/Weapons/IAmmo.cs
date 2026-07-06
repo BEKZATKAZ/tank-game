@@ -1,4 +1,5 @@
 ﻿using System;
+using Tanks.Core.Helpers;
 using Unity.Mathematics;
 
 namespace Tanks.Shared.Weapons
@@ -34,8 +35,10 @@ namespace Tanks.Shared.Weapons
     public sealed class RegeneratingAmmo : FixedAmmo
     {
         public RegeneratingAmmo(
-            int current, int max,
-            float regenerationDuration, float regenerationDelay) : base(current)
+            int current,
+            int max,
+            PositiveFloatOrZero regenerationDuration,
+            PositiveFloatOrZero regenerationDelay) : base(current)
         {
             Max = max;
             RegenerationDuration = regenerationDuration;
@@ -43,10 +46,10 @@ namespace Tanks.Shared.Weapons
         }
 
         public int Max { get; }
-        public float RegenerationDuration { get; }
-        public float RegenerationDelay { get; }
+        public PositiveFloatOrZero RegenerationDuration { get; }
+        public PositiveFloatOrZero RegenerationDelay { get; }
 
-        private float _regenerationElapsed;
+        private PositiveFloatOrZero _regenerationElapsed;
 
         public override void Tick(float deltaTime)
         {

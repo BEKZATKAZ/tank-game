@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
+using Tanks.Core.Helpers;
 
 namespace Tanks.Shared
 {
@@ -24,12 +25,16 @@ namespace Tanks.Shared
         private static readonly Type[] _baseTypes;
         private static readonly Dictionary<Type, Type[]> _componentTypes = new();
 
-        public static Type[] FindFor(object behaviour, Type abstractionType)
+        public static void ClearCache() => _componentTypes.Clear();
+
+        public static Type[] FindFor(
+            object behaviour, Required<Type> abstractionType)
         {
             return FindFor(behaviour, abstractionType, out _);
         }
 
-        public static Type[] FindFor(object behaviour, Type abstractionType, out bool fromCache)
+        public static Type[] FindFor(
+            object behaviour, Required<Type> abstractionType, out bool fromCache)
         {
             Type behaviourType = behaviour.GetType();
 
@@ -45,12 +50,13 @@ namespace Tanks.Shared
             return result;
         }
 
-        private static bool IsComponentFor(Type candidate, Type targetType, Type abstractionType)
+        private static bool IsComponentFor(
+            Required<Type> candidate, Required<Type> targetType, Required<Type> abstractionType)
         {
-            return candidate.GetInterfaces().Any(i =>
+            return candidate.Value.GetInterfaces().Any(i =>
                 i.IsGenericType &&
-                i.GetGenericTypeDefinition() == abstractionType &&
-                i.GetGenericArguments()[0] == targetType);
+                i.GetGenericTypeDefinition() == abstractionType.Value &&
+                i.GetGenericArguments()[0] == targetType.Value);
         }
     }
 }

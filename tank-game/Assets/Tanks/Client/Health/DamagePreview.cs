@@ -1,5 +1,6 @@
 ﻿using Cysharp.Threading.Tasks;
 using LitMotion;
+using Tanks.Core.Helpers;
 using Tanks.Shared.Adapters;
 using Unity.Mathematics;
 using UnityEngine;
@@ -13,7 +14,7 @@ namespace Tanks.Client.Health
 
         public ITransform Transform { get; private set; }
 
-        public void Initialize(float damage, ITransform at)
+        public void Initialize(PositiveFloat damage, ITransform at)
         {
             float maxOffset = 2;
 
@@ -26,7 +27,7 @@ namespace Tanks.Client.Health
             Transform.WorldPosition = at.WorldPosition + new float2(x, y);
         }
 
-        public UniTask Animate(float duration = 0.5f)
+        public UniTask Animate(PositiveFloatOrZero duration)
         {
             float2 lastPosition = Transform.WorldPosition;
 

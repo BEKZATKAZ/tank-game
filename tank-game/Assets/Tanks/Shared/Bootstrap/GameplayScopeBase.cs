@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using System.Text.RegularExpressions;
+using Tanks.Core.Helpers;
 using Unity.Multiplayer.PlayMode;
 using UnityEngine;
 using VContainer;
@@ -24,10 +25,8 @@ namespace Tanks.Shared.Bootstrap
     {
         protected override void Configure(IContainerBuilder builder)
         {
-            Type[] scopes = SplitComponentFinder.FindFor(this, typeof(IGameplayScope<>));
-
             IEnumerable<Type> types = SplitComponentFinder.FindFor(
-                this, typeof(INetworkComponent<>));
+                this, typeof(IGameplayScope<>));
 
 #if UNITY_EDITOR
             // Filtering since all assemblies are loaded in the editor
@@ -56,10 +55,10 @@ namespace Tanks.Shared.Bootstrap
             }
         }
 
-        private static bool IsSharedOr(Assembly assembly, string expectedName)
+        private static bool IsSharedOr(Required<Assembly> assembly, string expectedName)
         {
             string pattern = $"shared|{expectedName}";
-            return Regex.IsMatch(assembly.FullName, pattern, RegexOptions.IgnoreCase);
+            return Regex.IsMatch(assembly.Value.FullName, pattern, RegexOptions.IgnoreCase);
         }
     }
 }

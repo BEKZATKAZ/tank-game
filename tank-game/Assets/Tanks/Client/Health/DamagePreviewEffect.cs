@@ -22,7 +22,7 @@ namespace Tanks.Client.Health
             DamagePreview preview = _pool.Get();
 
             preview.Initialize(message.Amount, Behaviour.Transform);
-            await preview.Animate();
+            await preview.Animate(duration: 0.5f);
 
             if (this) _pool.Release(preview);
         }

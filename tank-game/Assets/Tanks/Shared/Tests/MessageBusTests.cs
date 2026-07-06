@@ -73,18 +73,18 @@ namespace Tanks.Shared.Tests
             _sender = new InventoryMessageSender();
             _bus = new MessageBus();
 
-            _bus.RegisterHandler(new ItemAddedHandler(_inventory));
-            _bus.RegisterHandler(new ItemRemovedHandler(_inventory));
+            _bus.RegisterHandler<ItemAdded>(new ItemAddedHandler(_inventory));
+            _bus.RegisterHandler<ItemRemoved>(new ItemRemovedHandler(_inventory));
         }
 
         [Test]
         public void Register_DuplicateHandlers_Throws()
         {
             Assert.Throws<ArgumentException>(() =>
-                _bus.RegisterHandler(new ItemAddedHandler(_inventory)));
+                _bus.RegisterHandler<ItemAdded>(new ItemAddedHandler(_inventory)));
 
             Assert.Throws<ArgumentException>(() =>
-                _bus.RegisterHandler(new ItemRemovedHandler(_inventory)));
+                _bus.RegisterHandler<ItemRemoved>(new ItemRemovedHandler(_inventory)));
         }
 
         [Test]

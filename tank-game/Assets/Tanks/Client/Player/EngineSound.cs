@@ -1,6 +1,7 @@
 ﻿using FMOD.Studio;
 using FMODUnity;
 using Tanks.Client.Input;
+using Tanks.Core.Helpers;
 using Tanks.Shared;
 using Tanks.Shared.Driving;
 using Unity.Mathematics;
@@ -15,7 +16,7 @@ namespace Tanks.Client.Player
 
         private EventInstance _instance;
         private float2 _lastPosition;
-        private float _intensity;
+        private PositiveFloatOrZero _intensity;
 
         private void Start()
         {
@@ -28,13 +29,13 @@ namespace Tanks.Client.Player
 
         private void Update()
         {
-            float target;
+            PositiveFloatOrZero target;
             float speed = 2;
 
             if (Behaviour.IsLocalPlayer)
             {
                 ManualDriveInput input = _input.Read();
-                target = input.Throttle;
+                target = math.abs(input.Throttle);
             }
             else
             {

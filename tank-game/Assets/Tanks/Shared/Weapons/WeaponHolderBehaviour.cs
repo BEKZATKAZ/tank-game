@@ -1,4 +1,5 @@
-﻿using Tanks.Shared.Adapters;
+﻿using Tanks.Core.Helpers;
+using Tanks.Shared.Adapters;
 using Tanks.Shared.Health;
 using Tanks.Shared.Weapons.Actions;
 using Tanks.Shared.Weapons.Projectiles;
@@ -10,7 +11,7 @@ namespace Tanks.Shared.Weapons
 {
     public struct WeaponUsed
     {
-        public IReadOnlyWeapon Weapon;
+        public Required<IReadOnlyWeapon> Weapon;
     }
 
     public sealed class WeaponHolderBehaviour : NetworkBehaviourExtended, IWeaponOwner
@@ -43,7 +44,7 @@ namespace Tanks.Shared.Weapons
         public void StopUsing() => _currentWeapon.StopUsing();
 
         public void SwitchToDefault() => SwitchTo(_defaultWeapon);
-        public void SwitchTo(Weapon weapon)
+        public void SwitchTo(Required<Weapon> weapon)
         {
             if (_currentWeapon != null) _currentWeapon.Used -= OnWeaponUsed;
             _currentWeapon = weapon;

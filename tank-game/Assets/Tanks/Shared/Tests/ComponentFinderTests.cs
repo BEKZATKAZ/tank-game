@@ -45,6 +45,7 @@ namespace Tanks.Shared.Tests
         {
             _carBehaviour = new CarBehaviour();
             _personBehaviour = new PersonBehaviour();
+            SplitComponentFinder.ClearCache();
         }
 
         [Test]

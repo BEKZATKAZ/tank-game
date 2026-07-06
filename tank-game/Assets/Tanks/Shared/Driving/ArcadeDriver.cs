@@ -1,13 +1,14 @@
-﻿using Tanks.Shared.Adapters;
+﻿using Tanks.Core.Helpers;
+using Tanks.Shared.Adapters;
 using Unity.Mathematics;
 
 namespace Tanks.Shared.Driving
 {
     public struct ArcadeDriverSettings
     {
-        public float AccelerationTime;
-        public float MaxSpeed;
-        public float ReverseSpeed;
+        public PositiveFloat AccelerationTime;
+        public PositiveFloat MaxSpeed;
+        public PositiveFloat ReverseSpeed;
         public Angle SteeringSpeed;
     }
 
@@ -18,7 +19,7 @@ namespace Tanks.Shared.Driving
         private readonly ArcadeDriverSettings _settings;
         private float _acceleration;
 
-        public void SetMaxAcceleration(float limit)
+        public void SetMaxAcceleration(PositiveFloatOrZero limit)
         {
             limit = math.saturate(limit);
 

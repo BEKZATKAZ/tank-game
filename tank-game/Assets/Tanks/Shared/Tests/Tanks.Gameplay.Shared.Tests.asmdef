@@ -2,6 +2,7 @@
     "name": "Tanks.Shared.Tests",
     "rootNamespace": "",
     "references": [
+        "GUID:2d8ca1202255a4243a9ebca3a433072c",
         "GUID:062f5e808b278a541b6489e12da12d22",
         "GUID:3f93f6c48cdbd804796618c781f92e56",
         "GUID:e0cd26848372d4e5c891c569017e11f1",

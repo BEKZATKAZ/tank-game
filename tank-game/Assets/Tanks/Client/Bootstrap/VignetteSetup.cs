@@ -1,4 +1,5 @@
-﻿using Tanks.Shared;
+﻿using Tanks.Core.Helpers;
+using Tanks.Shared;
 using Tanks.Shared.Bootstrap;
 using Unity.Collections;
 using Unity.Mathematics;
@@ -26,11 +27,11 @@ namespace Tanks.Client.Bootstrap
 
         public void Handle(TilemapGenerated message)
         {
-            float width = message.Settings.WallWidth + 2;
+            PositiveFloat width = message.Settings.WallWidth + 2;
             RecalculateVignette(default, message.Bounds.max, width);
         }
 
-        private void RecalculateVignette(float3 min, float3 max, float width)
+        private void RecalculateVignette(float3 min, float3 max, PositiveFloat width)
         {
             float3 blO = min;
             float3 tlO = new float3(min.x, max.y, 0);

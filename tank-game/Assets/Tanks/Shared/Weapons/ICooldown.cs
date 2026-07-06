@@ -1,4 +1,6 @@
-﻿namespace Tanks.Shared.Weapons
+﻿using Tanks.Core.Helpers;
+
+namespace Tanks.Shared.Weapons
 {
     public interface IReadOnlyCooldown
     {
@@ -13,14 +15,14 @@
 
     public sealed class Cooldown : ICooldown
     {
-        public Cooldown(float durationSeconds)
+        public Cooldown(PositiveFloatOrZero durationSeconds)
         {
             _durationSeconds = durationSeconds;
             _elapsed = durationSeconds;
         }
 
-        private readonly float _durationSeconds;
-        private float _elapsed;
+        private readonly PositiveFloatOrZero _durationSeconds;
+        private PositiveFloatOrZero _elapsed;
         
         public bool CanUse() => _elapsed >= _durationSeconds;
         public void Use() => _elapsed = 0;

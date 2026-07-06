@@ -1,0 +1,22 @@
+{
+    "name": "Tanks.Core.Tests",
+    "rootNamespace": "",
+    "references": [
+        "GUID:2d8ca1202255a4243a9ebca3a433072c",
+        "GUID:3f93f6c48cdbd804796618c781f92e56",
+        "GUID:f51ebe6a0ceec4240a699833d6309b23",
+        "GUID:e0cd26848372d4e5c891c569017e11f1",
+        "GUID:d8b63aba1907145bea998dd612889d6b"
+    ],
+    "includePlatforms": [
+        "Editor"
+    ],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": false,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

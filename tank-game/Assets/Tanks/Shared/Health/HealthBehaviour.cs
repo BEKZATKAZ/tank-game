@@ -1,17 +1,18 @@
-﻿using Unity.Netcode;
+﻿using Tanks.Core.Helpers;
+using Unity.Netcode;
 using UnityEngine;
 
 namespace Tanks.Shared.Health
 {
     public struct DamageTaken
     {
-        public float Amount;
+        public PositiveFloat Amount;
         public IDamageDealer From;
     }
 
     public struct HPHealed
     {
-        public float Amount;
+        public PositiveFloat Amount;
     }
 
     [RequireComponent(typeof(NetworkObject))]
@@ -22,14 +23,14 @@ namespace Tanks.Shared.Health
         private float _maxHealth = 100;
 
         public NetworkVariable<float> Health { get; } = new(100);
-        public float MaxHealth => _maxHealth;
+        public PositiveFloatOrZero MaxHealth => _maxHealth;
 
-        public void Damage(float amount, IDamageDealer from)
+        public void Damage(PositiveFloat amount, IDamageDealer from)
         {
             EmitMessage(new DamageTaken { Amount = amount, From = from });
         }
 
-        public void Heal(float amount)
+        public void Heal(PositiveFloat amount)
         {
             EmitMessage(new HPHealed { Amount = amount });
         }

@@ -1,13 +1,14 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Tanks.Core.Helpers;
 using UnityEngine;
 
 namespace Tanks.Shared.Messaging
 {
     public interface IMessageBus
     {
-        void RegisterHandler<T>(IMessageHandler<T> handler);
+        void RegisterHandler<T>(Required<IMessageHandler<T>> handler);
 
         void Publish<T>(T message, IMessageSender sender);
     }
@@ -42,7 +43,7 @@ namespace Tanks.Shared.Messaging
             }
         }
 
-        public void RegisterHandler<T>(IMessageHandler<T> handler)
+        public void RegisterHandler<T>(Required<IMessageHandler<T>> handler)
         {
             Type type = typeof(T);
 
@@ -52,7 +53,7 @@ namespace Tanks.Shared.Messaging
                 _handlers[type] = list;
             }
 
-            Type handlerType = handler.GetType();
+            Type handlerType = handler.Value.GetType();
 
             if (list.Any(x => x.GetType() == handlerType))
             {
@@ -60,7 +61,7 @@ namespace Tanks.Shared.Messaging
                 throw new ArgumentException($"Handler '{name}' already registered");
             }
 
-            list.Add(handler);
+            list.Add(handler.Value);
         }
     }
 }

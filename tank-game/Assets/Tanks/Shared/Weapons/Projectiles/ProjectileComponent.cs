@@ -1,4 +1,5 @@
-﻿using Tanks.Shared.Adapters;
+﻿using Tanks.Core.Helpers;
+using Tanks.Shared.Adapters;
 using Tanks.Shared.Health;
 using Unity.Mathematics;
 using UnityEngine;
@@ -11,7 +12,7 @@ namespace Tanks.Shared.Weapons.Projectiles
         public LaunchSettings Settings { get; private set; }
 
         private LaunchCallbacks _callbacks;
-        private float _startTime;
+        private PositiveFloatOrZero _startTime;
         private int _richochetedTimes;
 
         public void Launch(LaunchSettings settings, LaunchCallbacks callbacks)
@@ -29,7 +30,7 @@ namespace Tanks.Shared.Weapons.Projectiles
 
         private void Update()
         {
-            float elapsed = Time.time - _startTime;
+            PositiveFloatOrZero elapsed = Time.time - _startTime;
 
             if (elapsed >= Settings.LifeTimeSeconds)
             {

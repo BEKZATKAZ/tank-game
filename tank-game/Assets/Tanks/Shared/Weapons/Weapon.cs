@@ -1,4 +1,5 @@
 ﻿using System;
+using Tanks.Core.Helpers;
 using Tanks.Shared.Weapons.Actions;
 
 namespace Tanks.Shared.Weapons
@@ -26,12 +27,15 @@ namespace Tanks.Shared.Weapons
         private IUseAction _useAction;
 
         public void Initialize(
-            IAmmo ammo, ICooldown cooldown, IUseMode useMode, IUseAction useAction)
+            Required<IAmmo> ammo,
+            Required<ICooldown> cooldown,
+            Required<IUseMode> useMode,
+            Required<IUseAction> useAction)
         {
-            _ammo = ammo;
-            _cooldown = cooldown;
-            _useMode = useMode;
-            _useAction = useAction;
+            _ammo = ammo.Value;
+            _cooldown = cooldown.Value;
+            _useMode = useMode.Value;
+            _useAction = useAction.Value;
         }
 
         public void StartUsing()

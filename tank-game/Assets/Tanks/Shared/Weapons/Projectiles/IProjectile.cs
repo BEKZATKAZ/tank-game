@@ -1,4 +1,5 @@
 ﻿using System;
+using Tanks.Core.Helpers;
 using Tanks.Shared.Adapters;
 using Tanks.Shared.Health;
 
@@ -9,7 +10,7 @@ namespace Tanks.Shared.Weapons.Projectiles
     public struct LaunchSettings
     {
         public float Speed;
-        public float LifeTimeSeconds;
+        public PositiveFloat LifeTimeSeconds;
 
         public int RicochetCount;
         public IDamage Damage;

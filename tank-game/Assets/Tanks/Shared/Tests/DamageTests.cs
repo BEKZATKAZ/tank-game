@@ -6,7 +6,7 @@ namespace Tanks.Shared.Tests
     public sealed class DamageTests
     {
         [TestCase(50, 10)]
-        [TestCase(1, 0)]
+        [TestCase(1, 0.1f)]
         [TestCase(100, 200)]
         public void NearFar_EvaluatesCorrectly(float near, float far)
         {

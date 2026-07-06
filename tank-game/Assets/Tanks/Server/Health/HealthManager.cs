@@ -1,3 +1,4 @@
+using Tanks.Core.Helpers;
 using Tanks.Shared;
 using Tanks.Shared.Health;
 using Unity.Mathematics;
@@ -14,8 +15,8 @@ namespace Tanks.Server.Health
     {
         public void Handle(DamageTaken message)
         {
-            float oldValue = Behaviour.Health.Value;
-            float maxHealth = Behaviour.MaxHealth;
+            PositiveFloatOrZero oldValue = Behaviour.Health.Value;
+            PositiveFloatOrZero maxHealth = Behaviour.MaxHealth;
 
             Behaviour.Health.Value = math.clamp(oldValue - message.Amount, 0, maxHealth);
             if (Behaviour.Health.Value > 0) return;
@@ -25,8 +26,8 @@ namespace Tanks.Server.Health
 
         public void Handle(HPHealed message)
         {
-            float oldValue = Behaviour.Health.Value;
-            float maxHealth = Behaviour.MaxHealth;
+            PositiveFloatOrZero oldValue = Behaviour.Health.Value;
+            PositiveFloatOrZero maxHealth = Behaviour.MaxHealth;
 
             Behaviour.Health.Value = math.clamp(oldValue + message.Amount, 0, maxHealth);
         }
