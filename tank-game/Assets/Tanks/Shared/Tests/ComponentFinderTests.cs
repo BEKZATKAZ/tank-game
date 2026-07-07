@@ -54,7 +54,7 @@ namespace Tanks.Shared.Tests
             Type abstractionType = typeof(INetworkComponent<>);
 
             Type[] carActual = SplitComponentFinder.FindFor(
-                _carBehaviour, abstractionType, out bool cache);
+                _carBehaviour, abstractionType, isServer: false, out bool cache);
 
             Type[] carExpected = { typeof(TransmissionComponent), typeof(EngineComponent), };
 

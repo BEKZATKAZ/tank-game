@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Reflection;
-using System.Text.RegularExpressions;
 using Tanks.Shared.Adapters;
 using Unity.Netcode;
 using UnityEngine;
@@ -63,33 +61,15 @@ namespace Tanks.Shared
         {
             NetworkManager.NetworkTickSystem.Tick += OnTick;
 
-            IEnumerable<Type> types = SplitComponentFinder.FindFor(
-                this, typeof(INetworkComponent<>));
+            IEnumerable<Type> types = SplitComponentFinder
+                .FindFor(this, typeof(INetworkComponent<>), IsServer);
 
-#if UNITY_EDITOR
-            // Filtering since all assemblies are loaded in the editor
-            // This logic is not necessary in builds
-            if (NetworkManager.IsServer)
+            foreach (Type componentType in types)
             {
-                types = types.Where(x => IsSharedOr(x.Assembly, "server"));
-            }
-            else
-            {
-                types = types.Where(x => IsSharedOr(x.Assembly, "client"));
-            }
-#endif
-
-            foreach (Type type in types)
-            {
-                if (gameObject.TryGetComponent(type, out Component component) == false)
-                {
-                    component = gameObject.AddComponent(type);
-                }
-
-                // Safe cast
+                Component component = gameObject.AddComponent(componentType);
                 _components.Add(component as INetworkComponent);
             }
-
+            
             IObjectResolver container = LifetimeScope.Find<LifetimeScope>().Container;
             container.InjectGameObject(gameObject);
         }
@@ -113,12 +93,6 @@ namespace Tanks.Shared
             {
                 component.OnTick(tick, tickDelta);
             }
-        }
-
-        private static bool IsSharedOr(Assembly assembly, string expectedName)
-        {
-            string pattern = $"shared|{expectedName}";
-            return Regex.IsMatch(assembly.FullName, pattern, RegexOptions.IgnoreCase);
         }
     }
 }

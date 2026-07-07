@@ -1,8 +1,8 @@
 ﻿<Solution>
   <Project Path="Tanks.Client.csproj" />
   <Project Path="Tanks.Shared.Tests.csproj" />
-  <Project Path="FMODUnityResonanceEditor.csproj" />
   <Project Path="Tanks.Shared.csproj" />
+  <Project Path="FMODUnityResonanceEditor.csproj" />
   <Project Path="FMODUnityEditor.csproj" />
   <Project Path="FMODUnity.csproj" />
   <Project Path="FMODUnityHaptics.csproj" />

@@ -1,9 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Reflection;
-using System.Text.RegularExpressions;
-using Tanks.Core.Helpers;
 using Unity.Multiplayer.PlayMode;
 using UnityEngine;
 using VContainer;
@@ -25,21 +22,11 @@ namespace Tanks.Shared.Bootstrap
     {
         protected override void Configure(IContainerBuilder builder)
         {
-            IEnumerable<Type> types = SplitComponentFinder.FindFor(
-                this, typeof(IGameplayScope<>));
+            bool isServer = CurrentPlayer.Tags
+                .Any(x => x.Equals("server", StringComparison.OrdinalIgnoreCase));
 
-#if UNITY_EDITOR
-            // Filtering since all assemblies are loaded in the editor
-            // This logic is not necessary in builds
-            if (CurrentPlayer.Tags.Any(x => x.Equals("server", StringComparison.OrdinalIgnoreCase)))
-            {
-                types = types.Where(x => IsSharedOr(x.Assembly, "server"));
-            }
-            else
-            {
-                types = types.Where(x => IsSharedOr(x.Assembly, "client"));
-            }
-#endif
+            IEnumerable<Type> types = SplitComponentFinder.FindFor(
+                this, typeof(IGameplayScope<>), isServer);
 
             foreach (Type type in types)
             {
@@ -53,12 +40,6 @@ namespace Tanks.Shared.Bootstrap
                     Debug.LogException(ex);
                 }
             }
-        }
-
-        private static bool IsSharedOr(Required<Assembly> assembly, string expectedName)
-        {
-            string pattern = $"shared|{expectedName}";
-            return Regex.IsMatch(assembly.Value.FullName, pattern, RegexOptions.IgnoreCase);
         }
     }
 }
