@@ -18,7 +18,6 @@ namespace Tanks.Shared.Weapons.Projectiles
 
     public struct LaunchCallbacks
     {
-        public DamageableHitCallback OnHit;
         public Action<IProjectile> OnDone;
     }
 

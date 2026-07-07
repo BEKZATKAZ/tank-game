@@ -3,6 +3,8 @@ using Tanks.Shared.Adapters;
 using Unity.Mathematics;
 using UnityEngine;
 using UnityEngine.Pool;
+using VContainer;
+using VContainer.Unity;
 
 namespace Tanks.Shared.Weapons.Projectiles
 {
@@ -19,6 +21,9 @@ namespace Tanks.Shared.Weapons.Projectiles
         [Range(200, 10000)]
         [SerializeField]
         private int _maxPoolSize = 1000;
+
+        [Inject]
+        private readonly IObjectResolver _resolver;
 
         private ObjectPool<ProjectileComponent> _pool;
         private Transform _transform;
@@ -39,11 +44,16 @@ namespace Tanks.Shared.Weapons.Projectiles
             _pool.Release(instance as ProjectileComponent);
         }
 
-        private void Awake()
+        private void Start()
         {
             _transform = transform;
             _pool = new ObjectPool<ProjectileComponent>(
-                createFunc: () => Instantiate(_prefab, _transform),
+                createFunc: () =>
+                {
+                    var instance = Instantiate(_prefab, _transform);
+                    _resolver.InjectGameObject(instance.gameObject);
+                    return instance;
+                },
                 actionOnGet: x => x.gameObject.SetActive(true),
                 actionOnRelease: x => x.gameObject.SetActive(false),
                 actionOnDestroy: x => Destroy(x),

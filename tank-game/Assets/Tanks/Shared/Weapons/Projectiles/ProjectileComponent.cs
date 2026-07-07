@@ -1,13 +1,22 @@
 ﻿using Tanks.Core.Helpers;
 using Tanks.Shared.Adapters;
 using Tanks.Shared.Health;
+using Tanks.Shared.Messaging;
 using Unity.Mathematics;
 using UnityEngine;
+using VContainer;
 
 namespace Tanks.Shared.Weapons.Projectiles
 {
-    public class ProjectileComponent : MonoBehaviour, IProjectile, IDamageDealer
+    public struct ProjectileRicocheted
     {
+        public float2 HitPoint;
+    }
+
+    public class ProjectileComponent : MonoBehaviour, IProjectile, IDamageDealer, IMessageSender
+    {
+        [Inject] private readonly IMessageBus _bus;
+
         public ITransform Transform { get; private set; }
         public LaunchSettings Settings { get; private set; }
 
@@ -81,7 +90,9 @@ namespace Tanks.Shared.Weapons.Projectiles
 
             float remaining = math.max(0, distance - travel);
             result += Transform.Right * remaining;
+
             Transform.WorldPosition = result;
+            _bus.Publish(new ProjectileRicocheted { HitPoint = hit.point }, this);
         }
     }
 }

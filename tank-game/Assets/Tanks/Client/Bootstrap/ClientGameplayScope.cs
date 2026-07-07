@@ -1,6 +1,9 @@
 ﻿using Tanks.Client.Input;
 using Tanks.Client.Rendering;
+using Tanks.Client.Weapons;
 using Tanks.Shared.Bootstrap;
+using Tanks.Shared.Messaging;
+using Tanks.Shared.Weapons.Projectiles;
 using VContainer;
 using VContainer.Unity;
 
@@ -22,6 +25,12 @@ namespace Tanks.Client.Bootstrap
 
             builder.RegisterComponentOnNewGameObject<CameraFollowService>(Lifetime.Scoped)
                 .As<ICameraFollowService>();
+
+            builder.RegisterBuildCallback(resolver =>
+            {
+                IMessageBus bus = resolver.Resolve<IMessageBus>();
+                bus.RegisterHandler<ProjectileRicocheted>(new ProjectileRicochetSound());
+            });
         }
     }
 }
