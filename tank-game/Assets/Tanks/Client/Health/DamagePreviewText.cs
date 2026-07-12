@@ -8,7 +8,7 @@ using UnityEngine.UI;
 
 namespace Tanks.Client.Health
 {
-    public sealed class DamagePreview : MonoBehaviour
+    public sealed class DamagePreviewText : MonoBehaviour
     {
         [SerializeField] private Text _text;
 

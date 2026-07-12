@@ -7,7 +7,6 @@ namespace Tanks.Shared.Health
     public struct DamageTaken
     {
         public PositiveFloat Amount;
-        public IDamageDealer From;
     }
 
     public struct HPHealed
@@ -25,9 +24,9 @@ namespace Tanks.Shared.Health
         public NetworkVariable<float> Health { get; } = new(100);
         public PositiveFloatOrZero MaxHealth => _maxHealth;
 
-        public void Damage(PositiveFloat amount, IDamageDealer from)
+        public void Damage(PositiveFloat amount)
         {
-            EmitMessage(new DamageTaken { Amount = amount, From = from });
+            EmitMessage(new DamageTaken { Amount = amount });
         }
 
         public void Heal(PositiveFloat amount)

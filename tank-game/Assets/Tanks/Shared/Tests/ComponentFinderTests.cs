@@ -6,16 +6,19 @@ namespace Tanks.Shared.Tests
 {
     public class CarBehaviour : INetworkBehaviourExtended
     {
+        public bool IsEnabled => true;
         public ITransform Transform { get; }
     }
 
     public class PersonBehaviour : INetworkBehaviourExtended
     {
+        public bool IsEnabled => true;
         public ITransform Transform { get; }
     }
 
     public class EngineComponent : INetworkComponent<CarBehaviour>
     {
+        public bool IsEnabled => true;
         public CarBehaviour Behaviour { get; private set; }
 
         public void OnTick(int tick, float tickDelta) { }
@@ -23,6 +26,7 @@ namespace Tanks.Shared.Tests
 
     public class TransmissionComponent : INetworkComponent<CarBehaviour>
     {
+        public bool IsEnabled => true;
         public CarBehaviour Behaviour { get; private set; }
 
         public void OnTick(int tick, float tickDelta) { }
@@ -30,6 +34,7 @@ namespace Tanks.Shared.Tests
 
     public class LifeStyleComponent : INetworkComponent<PersonBehaviour>
     {
+        public bool IsEnabled => true;
         public PersonBehaviour Behaviour { get; private set; }
 
         public void OnTick(int tick, float tickDelta) { }

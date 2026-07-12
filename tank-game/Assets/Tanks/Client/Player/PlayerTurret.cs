@@ -16,10 +16,9 @@ namespace Tanks.Client.Player
             Behaviour.Tick(input.LookAtDirection, Time.deltaTime);
         }
 
-        protected override void Awake()
+        private void Start()
         {
-            base.Awake();
-            if (Behaviour.IsOwner == false) enabled = false;
+            if (Behaviour.IsLocalPlayer == false) enabled = false;
         }
 
         public override void OnDestroy()

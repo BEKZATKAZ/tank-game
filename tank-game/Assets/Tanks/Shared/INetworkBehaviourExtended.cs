@@ -26,6 +26,7 @@ namespace Tanks.Shared
 
         private readonly Dictionary<Type, List<INetworkMessageHandler>> _handlers = new();
         private readonly List<INetworkComponent> _components = new();
+        private bool _isInitialized;
 
         protected void EmitMessage<T>(T message)
         {
@@ -33,7 +34,7 @@ namespace Tanks.Shared
 
             if (_handlers.TryGetValue(type, out List<INetworkMessageHandler> handlers) == false)
             {
-                Debug.LogWarningFormat("No message handler found for '{0}'", type.Name);
+                //Debug.LogWarningFormat("No message handler found for '{0}'", type.Name);
                 return;
             }
 
@@ -57,25 +58,11 @@ namespace Tanks.Shared
             handlers.Add(handler);
         }
 
-        public override void OnNetworkSpawn()
-        {
-            NetworkManager.NetworkTickSystem.Tick += OnTick;
-
-            IEnumerable<Type> types = SplitComponentFinder
-                .FindFor(this, typeof(INetworkComponent<>), IsServer);
-
-            foreach (Type componentType in types)
-            {
-                Component component = gameObject.AddComponent(componentType);
-                _components.Add(component as INetworkComponent);
-            }
-            
-            IObjectResolver container = LifetimeScope.Find<LifetimeScope>().Container;
-            container.InjectGameObject(gameObject);
-        }
+        public override void OnNetworkSpawn() => Initialize();
 
         public override void OnNetworkDespawn()
         {
+            if (_isInitialized == false) return;
             NetworkManager.NetworkTickSystem.Tick -= OnTick;
         }
 
@@ -84,13 +71,40 @@ namespace Tanks.Shared
             Transform = new UnityTransform(transform);
         }
 
+        protected void ForceInitialize() => Initialize();
+
+        private void Initialize()
+        {
+            if (_isInitialized) return;
+
+            _isInitialized = true;
+
+            NetworkManager.NetworkTickSystem.Tick += OnTick;
+
+            IEnumerable<Type> types = SplitComponentFinder
+                .FindFor(this, typeof(INetworkComponent<>), NetworkManager.IsServer);
+
+            foreach (Type componentType in types)
+            {
+                Component component = gameObject.AddComponent(componentType);
+                _components.Add(component as INetworkComponent);
+            }
+
+            IObjectResolver container = LifetimeScope.Find<LifetimeScope>().Container;
+            container.InjectGameObject(gameObject);
+        }
+
         private void OnTick()
         {
+            if (gameObject.activeInHierarchy == false) return;
+            if (enabled == false) return;
+
             int tick = NetworkManager.NetworkTickSystem.LocalTime.Tick;
             float tickDelta = 1f / NetworkManager.NetworkTickSystem.TickRate;
 
             foreach (INetworkComponent component in _components)
             {
+                if (component.IsEnabled == false) continue;
                 component.OnTick(tick, tickDelta);
             }
         }

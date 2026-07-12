@@ -1,12 +1,11 @@
 ﻿using System;
 using Tanks.Core.Helpers;
-using Tanks.Shared.Weapons.Actions;
 
 namespace Tanks.Shared.Weapons
 {
     public interface IReadOnlyWeapon
     {
-        event Action Used;
+        event Action<ShotId> Used;
 
         IReadOnlyAmmo Ammo { get; }
         IReadOnlyCooldown Cooldown { get; }
@@ -15,7 +14,7 @@ namespace Tanks.Shared.Weapons
 
     public class Weapon : IReadOnlyWeapon
     {
-        public event Action Used;
+        public event Action<ShotId> Used;
 
         public IReadOnlyAmmo Ammo => _ammo;
         public IReadOnlyCooldown Cooldown => _cooldown;
@@ -38,29 +37,22 @@ namespace Tanks.Shared.Weapons
             _useAction = useAction.Value;
         }
 
-        public void StartUsing()
+        public bool Tick(IWeaponOwner owner, bool isHoldingDown, float deltaTime, ShotId id)
         {
-            _useMode.StartUsing();
-        }
-
-        public void StopUsing()
-        {
-            _useMode.StopUsing();
-        }
-
-        public void Tick(float deltaTime)
-        {
-            if (_useMode.IsUsing && _ammo.CanConsume() && _cooldown.CanUse())
-            {
-                _ammo.Consume();
-                _cooldown.Use();
-                _useAction.Use();
-                Used?.Invoke();
-            }
-
+            _useMode.Tick(isHoldingDown);
             _cooldown.Tick(deltaTime);
             _ammo.Tick(deltaTime);
-            _useMode.Tick();
+
+            if (_useMode.IsUsing == false) return false;
+            if (_cooldown.CanUse() == false) return false;
+            if (_ammo.CanConsume() == false) return false;
+
+            _ammo.Consume();
+            _cooldown.Use();
+            _useAction.Use(owner, id);
+            Used?.Invoke(id);
+
+            return true;
         }
     }
 }

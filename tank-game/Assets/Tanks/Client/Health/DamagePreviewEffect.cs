@@ -15,11 +15,11 @@ namespace Tanks.Client.Health
         [Inject] private readonly IResourceLoader _loader;
 
         private static readonly string _address = "UI/DamagePreview";
-        private ObjectPool<DamagePreview> _pool;
+        private ObjectPool<DamagePreviewText> _pool;
 
         public async void Handle(DamageTaken message)
         {
-            DamagePreview preview = _pool.Get();
+            DamagePreviewText preview = _pool.Get();
 
             preview.Initialize(message.Amount, Behaviour.Transform);
             await preview.Animate(duration: 0.5f);
@@ -29,20 +29,20 @@ namespace Tanks.Client.Health
 
         private async void Start()
         {
-            if (Behaviour.IsOwner)
+            if (Behaviour.IsLocalPlayer)
             {
                 enabled = false;
                 return;
             }
 
-            DamagePreview prefab = null;
+            DamagePreviewText prefab = null;
 
             try
             {
                 GameObject resource = await _loader.LoadAsync<GameObject>(_address);
-                prefab = resource.GetComponent<DamagePreview>();
+                prefab = resource.GetComponent<DamagePreviewText>();
 
-                _pool = new ObjectPool<DamagePreview>(
+                _pool = new ObjectPool<DamagePreviewText>(
                     createFunc: () => Instantiate(prefab),
                     actionOnGet: x => x.gameObject.SetActive(true),
                     actionOnRelease: x => x.gameObject.SetActive(false),

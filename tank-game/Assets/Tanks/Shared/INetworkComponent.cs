@@ -4,6 +4,7 @@ namespace Tanks.Shared
 {
     public interface INetworkComponent
     {
+        bool IsEnabled { get; }
         void OnTick(int tick, float tickDelta);
     }
 
@@ -16,6 +17,7 @@ namespace Tanks.Shared
         where T : NetworkBehaviourExtended
     {
         public T Behaviour { get; private set; }
+        public bool IsEnabled => enabled;
 
         public virtual void OnTick(int tick, float tickDelta) { }
 

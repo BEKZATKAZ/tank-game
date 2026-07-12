@@ -1,16 +1,10 @@
 using Tanks.Core.Helpers;
-using Tanks.Shared.Adapters;
 
 namespace Tanks.Shared.Health
 {
-    public interface IDamageDealer
-    {
-        ITransform Transform { get; }
-    }
-
     public interface IDamageable
     {
-        void Damage(PositiveFloat amount, IDamageDealer from);
+        void Damage(PositiveFloat amount);
     }
 
     public interface IHealable

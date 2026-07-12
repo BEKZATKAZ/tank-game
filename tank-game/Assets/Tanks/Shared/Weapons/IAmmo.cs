@@ -1,5 +1,6 @@
 ﻿using System;
 using Tanks.Core.Helpers;
+using Tanks.Shared.Weapons.Data;
 using Unity.Mathematics;
 
 namespace Tanks.Shared.Weapons
@@ -34,34 +35,26 @@ namespace Tanks.Shared.Weapons
 
     public sealed class RegeneratingAmmo : FixedAmmo
     {
-        public RegeneratingAmmo(
-            int current,
-            int max,
-            PositiveFloatOrZero regenerationDuration,
-            PositiveFloatOrZero regenerationDelay) : base(current)
+        public RegeneratingAmmo(IAmmoConfig config) : base(config.DefaultAmount)
         {
-            Max = max;
-            RegenerationDuration = regenerationDuration;
-            RegenerationDelay = regenerationDelay;
+            _config = config;
         }
 
-        public int Max { get; }
-        public PositiveFloatOrZero RegenerationDuration { get; }
-        public PositiveFloatOrZero RegenerationDelay { get; }
-
+        private readonly IAmmoConfig _config;
         private PositiveFloatOrZero _regenerationElapsed;
 
         public override void Tick(float deltaTime)
         {
-            if (Current >= Max) return;
+            if (Current >= _config.MaxAmount) return;
 
             _regenerationElapsed += deltaTime;
 
-            if (_regenerationElapsed <= RegenerationDelay) return;
+            if (_regenerationElapsed <= _config.RegenerationDelay) return;
 
-            float time = _regenerationElapsed - RegenerationDelay;
-            float alpha = math.saturate(time / RegenerationDuration);
-            Current = (int)(alpha * Max);
+            float time = _regenerationElapsed - _config.RegenerationDelay;
+            float alpha = math.saturate(time / _config.RegenerationDuration);
+
+            Current = (int)(alpha * _config.MaxAmount);
         }
 
         public override void Consume(int amount = 1)

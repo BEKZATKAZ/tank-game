@@ -1,10 +1,23 @@
 using NUnit.Framework;
 using System;
 using Tanks.Shared.Weapons;
-using UnityEngine;
+using Tanks.Shared.Weapons.Data;
 
 namespace Tanks.Shared.Tests.Weapons
 {
+    class MockAmmoConfig : IAmmoConfig
+    {
+        public AmmoType Type { get; set; }
+
+        public int DefaultAmount { get; set; }
+        public int MaxAmount { get; set; }
+
+        public float RegenerationDelay { get; set; }
+        public float RegenerationDuration { get; set; }
+
+        public IAmmo Create() { throw new NotImplementedException(); }
+    }
+
     public class AmmoTests
     {
         [TestCase(int.MinValue)]
@@ -47,9 +60,14 @@ namespace Tanks.Shared.Tests.Weapons
         [Test]
         public void RegeneratingAmmo_RegeneratesOverTime()
         {
-            IAmmo ammo = new RegeneratingAmmo(
-                current: 0, max: 10,
-                regenerationDuration: 5, regenerationDelay: 2);
+            IAmmo ammo = new RegeneratingAmmo(new MockAmmoConfig
+            {
+                Type = AmmoType.Regenerating,
+                DefaultAmount = 0,
+                MaxAmount = 10,
+                RegenerationDuration = 5,
+                RegenerationDelay = 2
+            });
 
             Assert.IsFalse(ammo.CanConsume(1),
                 "Should not be able to consume any more ammo");

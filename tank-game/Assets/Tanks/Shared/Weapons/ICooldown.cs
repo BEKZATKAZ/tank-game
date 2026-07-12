@@ -1,9 +1,12 @@
 ﻿using Tanks.Core.Helpers;
+using Unity.Mathematics;
 
 namespace Tanks.Shared.Weapons
 {
     public interface IReadOnlyCooldown
     {
+        float DurationSeconds { get; }
+
         bool CanUse();
     }
 
@@ -15,22 +18,24 @@ namespace Tanks.Shared.Weapons
 
     public sealed class Cooldown : ICooldown
     {
-        public Cooldown(PositiveFloatOrZero durationSeconds)
+        public Cooldown(PositiveFloat durationSeconds)
         {
-            _durationSeconds = durationSeconds;
-            _elapsed = durationSeconds;
+            DurationSeconds = durationSeconds;
+            Elapsed = durationSeconds.Value;
         }
 
-        private readonly PositiveFloatOrZero _durationSeconds;
-        private PositiveFloatOrZero _elapsed;
-        
-        public bool CanUse() => _elapsed >= _durationSeconds;
-        public void Use() => _elapsed = 0;
-        public void Tick(float deltaTime) => _elapsed += deltaTime;
+        public PositiveFloatOrZero Elapsed { get; private set; }
+        public float DurationSeconds { get; }
+
+        public bool CanUse() => Elapsed >= DurationSeconds - math.EPSILON;
+        public void Use() => Elapsed = 0;
+        public void Tick(float deltaTime) => Elapsed += deltaTime;
     }
 
     public sealed class NoCooldown : ICooldown
     {
+        public float DurationSeconds => 0;
+
         public bool CanUse() => true;
         public void Use() { }
         public void Tick(float deltaTime) { }

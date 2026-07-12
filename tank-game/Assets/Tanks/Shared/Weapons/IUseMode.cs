@@ -7,26 +7,31 @@
 
     public interface IUseMode : IReadOnlyUseMode
     {
-        void StartUsing();
-        void StopUsing();
-        void Tick();
+        void Tick(bool isHoldingDown);
     }
 
     public class SemiAutomaticUseMode : IUseMode
     {
         public bool IsUsing { get; private set; }
 
-        public void StartUsing() => IsUsing = true;
-        public void StopUsing() => IsUsing = false;
-        public void Tick() => IsUsing = false;
+        private bool _isPressed;
+
+        public void Tick(bool isHoldingDown)
+        {
+            if (isHoldingDown && _isPressed == false)
+            {
+                IsUsing = true;
+            }
+            else IsUsing = false;
+
+            _isPressed = isHoldingDown;
+        }
     }
 
     public class FullAutomaticUseMode : IUseMode
     {
         public bool IsUsing { get; private set; }
 
-        public void StartUsing() => IsUsing = true;
-        public void StopUsing() => IsUsing = false;
-        public void Tick() { }
+        public void Tick(bool isHoldingDown) => IsUsing = isHoldingDown;
     }
 }

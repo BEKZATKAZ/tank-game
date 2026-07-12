@@ -1,29 +1,31 @@
 ﻿using Tanks.Shared.Generation;
 using Tanks.Shared.Generation.Mazes;
 using Tanks.Shared.Messaging;
-using Tanks.Shared.Weapons.Projectiles;
 using Tanks.Infrastructure;
+using Tanks.Shared.Weapons.Projectiles;
 using UnityEngine;
 using VContainer;
 using VContainer.Unity;
+using Tanks.Shared.Weapons;
 
 namespace Tanks.Shared.Bootstrap
 {
     public sealed class GameplayScope : GameplayScopeBase
     {
-        [SerializeField] private UnityProjectilePoolService _projectilePool;
+        [SerializeField] private SharedProjectilePoolService _projectilePool;
 
         protected override void Configure(IContainerBuilder builder)
         {
             base.Configure(builder);
 
             builder.RegisterInfrastructure();
+            builder.RegisterComponent(_projectilePool).As<IProjectilePoolService>();
 
             builder.Register<IMazeGenerator, DFSGenerator>(Lifetime.Scoped);
             builder.Register<ITilemapGenerator, TilemapGenerator>(Lifetime.Scoped);
-            builder.Register<IMessageBus, MessageBus>(Lifetime.Scoped);
 
-            builder.RegisterComponent(_projectilePool).As<IProjectilePoolService>();
+            builder.Register<IMessageBus, MessageBus>(Lifetime.Scoped);
+            builder.Register<IWeaponFactory, WeaponFactory>(Lifetime.Scoped);
         }
     }
 }

@@ -1,11 +1,10 @@
 ﻿using NUnit.Framework;
 using System;
 using Tanks.Core.Helpers;
-using UnityEngine;
 
 namespace Tanks.Core.Tests.Helpers
 {
-    public class PositiveFloatTests : MonoBehaviour
+    public class PositiveFloatTests
     {
         [TestCase(float.Epsilon)]
         [TestCase(1)]

@@ -1,30 +1,24 @@
 ﻿using System;
-using Tanks.Core.Helpers;
 using Tanks.Shared.Adapters;
 using Tanks.Shared.Health;
+using Tanks.Shared.Weapons.Data;
+using Unity.Mathematics;
 
 namespace Tanks.Shared.Weapons.Projectiles
 {
-    public delegate void DamageableHitCallback(IDamageable target, float distance);
-
-    public struct LaunchSettings
-    {
-        public float Speed;
-        public PositiveFloat LifeTimeSeconds;
-
-        public int RicochetCount;
-        public IDamage Damage;
-    }
-
     public struct LaunchCallbacks
     {
-        public Action<IProjectile> OnDone;
+        public Action<float2> OnRicochet;
+        public Action<IDamageable> OnDamageableHit;
     }
 
     public interface IProjectile
     {
         ITransform Transform { get; }
+        IProjectileConfig Config { get; }
 
-        void Launch(LaunchSettings settings, LaunchCallbacks callbacks);
+        void Launch();
+        void Reconcile(ProjectileSnapshotFromServer snapshot);
+        void Simulate(LaunchCallbacks callbacks, ITransform transform, float deltaTime);
     }
 }
