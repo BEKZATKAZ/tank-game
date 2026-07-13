@@ -64,16 +64,20 @@ namespace Tanks.Client.Bootstrap
             _gradient = new Texture2D(1, 128, TextureFormat.RGBA32, mipChain: false)
             {
                 wrapMode = TextureWrapMode.Clamp,
-                filterMode = FilterMode.Bilinear
+                filterMode = FilterMode.Bilinear,
+                anisoLevel = 0
             };
+
+            Color32[] pixels = new Color32[128];
 
             for (int i = 0; i < 128; i++)
             {
                 float t = i / 127f;
                 float alpha = math.cos(t * math.PIHALF);
-                _gradient.SetPixel(0, i, new Color(0, 0, 0, alpha));
+                pixels[i] = new Color32(0, 0, 0, (byte)math.round(alpha * 255));
             }
 
+            _gradient.SetPixelData(pixels, mipLevel: 0);
             _gradient.Apply(false, false);
         }
 
@@ -152,9 +156,8 @@ namespace Tanks.Client.Bootstrap
             _vignetteMesh.SetSubMesh(0, new SubMeshDescriptor(0, _indices.Length));
         }
 
-        protected override void Awake()
+        private void Start()
         {
-            base.Awake();
             CreateVignette();
             Behaviour.RegisterMessageHandler(this);
         }
