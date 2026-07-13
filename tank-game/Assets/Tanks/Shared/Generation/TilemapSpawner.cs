@@ -1,7 +1,6 @@
 ﻿using NaughtyAttributes;
 using System;
 using System.Collections.Generic;
-using System.Runtime.CompilerServices;
 using Tanks.Shared.Generation.Mazes;
 using Unity.Mathematics;
 using UnityEngine;
@@ -25,17 +24,15 @@ namespace Tanks.Shared.Generation
 
         public Tilemap Tilemap { get; private set; }
 
-        public Bounds Spawn(TilemapGenerationSettings settings, Vector2Int resolution)
+        public Bounds Spawn(TilemapGenerationSettings settings, int2 resolution)
         {
-            int2 newResolution = Unsafe.As<Vector2Int, int2>(ref resolution);
-
-            using var cells = _mazeGenerator.Generate(settings.Seed, newResolution);
+            using var cells = _mazeGenerator.Generate(settings.Seed, resolution);
             using var tiles = _tilemapGenerator.Generate(cells.Value, settings);
 
-            int2 gridResolution = newResolution * (settings.WallWidth * 2);
+            int2 gridResolution = resolution * (settings.WallWidth * 2);
 
-            FillBackground(gridResolution, Tilemap);
-            FillForeground(tiles.Value.AsSpan(), Tilemap);
+            FillBackground(gridResolution);
+            FillForeground(tiles.Value.AsSpan());
 
             // Should end at the very top right corner
             // Not at the very last tile origin
@@ -47,7 +44,24 @@ namespace Tanks.Shared.Generation
             return new Bounds(center, size + math.forward());
         }
 
-        private void FillBackground(int2 gridResolution, Tilemap tilemap)
+        public void Clear(TilemapGenerationSettings settings, int2 resolution)
+        {
+            int2 gridResolution = resolution * (settings.WallWidth * 2);
+
+            for (int y = 0; y < gridResolution.y; y++)
+            {
+                for (int x = 0; x < gridResolution.x; x++)
+                {
+                    // Foreground
+                    Tilemap.SetTile(new Vector3Int(x, y), null);
+
+                    // Background
+                    Tilemap.SetTile(new Vector3Int(x, y, -1), null);
+                }
+            }
+        }
+
+        private void FillBackground(int2 gridResolution)
         {
             TileSprite sprite = _config.GetBackground();
 
@@ -66,12 +80,12 @@ namespace Tanks.Shared.Generation
                 for (int x = 1; x < gridResolution.x; x++)
                 {
                     Vector3Int position = new Vector3Int(x, y, -1);
-                    tilemap.SetTile(position, _backgroundTileAsset);
+                    Tilemap.SetTile(position, _backgroundTileAsset);
                 }
             }
         }
 
-        private void FillForeground(Span<GeneratedTile> tiles, Tilemap tilemap)
+        private void FillForeground(Span<GeneratedTile> tiles)
         {
             foreach (ref GeneratedTile tile in tiles)
             {
@@ -84,7 +98,7 @@ namespace Tanks.Shared.Generation
                 }
 
                 Vector3Int position = new Vector3Int(tile.Position.x, tile.Position.y);
-                tilemap.SetTile(position, unityTile);
+                Tilemap.SetTile(position, unityTile);
             }
         }
 

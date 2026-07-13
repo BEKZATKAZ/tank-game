@@ -11,38 +11,45 @@ using UnityEngine;
 
 namespace Tanks.Server.Bootstrap
 {
-    public sealed class GameStarter : NetworkComponent<GameStartBehaviour>
+    public sealed class GamePreparer :
+        NetworkComponent<GameStartBehaviour>,
+        INetworkMessageHandler<PrepareGameRequested>
     {
-        private readonly int _desiredCount = 2; // ! Testing purposes
-        private bool _isGameStarted;
-
-        private void Start()
+        public void Handle(PrepareGameRequested message)
         {
-            NetworkManager.ConnectionApprovalCallback += ApprovalCheck;
-            NetworkManager.OnClientConnectedCallback += OnClientConnected;
+            foreach (var client in NetworkManager.ConnectedClients.Values)
+            {
+                if (client.PlayerObject == false) continue;
+
+                client.PlayerObject.Despawn(destroy: true);
+            }
+
+            Vector2Int resolution = new Vector2Int(6, 4);
+            int wallWidth = 5;
+
+            GenerateMap(wallWidth, resolution);
+            SpawnPlayers(wallWidth, resolution);
+
+            Behaviour.WaitForPlayers();
         }
 
-        private void StartGame()
+        private void GenerateMap(int wallWidth, Vector2Int resolution)
         {
-            if (_isGameStarted) return;
-            _isGameStarted = true;
-
             Span<byte> seedBuffer = stackalloc byte[sizeof(uint)];
             RandomNumberGenerator.Fill(seedBuffer);
-
-            int tileSpacing = 1;
-            int wallWidth = 5;
 
             TilemapGenerationSettings settings = new TilemapGenerationSettings
             {
                 Seed = MemoryMarshal.Read<uint>(seedBuffer),
-                TileSpacing = tileSpacing,
+                TileSpacing = 1,
                 WallWidth = wallWidth
             };
 
-            Vector2Int resolution = new Vector2Int(6, 4);
             Behaviour.GenerateTilemapEveryoneRpc(settings, resolution);
+        }
 
+        private void SpawnPlayers(int wallWidth, Vector2Int resolution)
+        {
             Span<byte> positionSeedBuffer = stackalloc byte[sizeof(uint)];
             RandomNumberGenerator.Fill(positionSeedBuffer);
 
@@ -53,7 +60,6 @@ namespace Tanks.Server.Bootstrap
             foreach (ulong clientId in NetworkManager.ConnectedClientsIds)
             {
                 float2 coords = positionRandom.NextInt2(0, new int2(resolution.x, resolution.y));
-
                 float2 position = coords * (wallWidth * 2) + wallWidth * 1.5f;
                 float3 position3D = new float3(position, 0);
 
@@ -63,19 +69,10 @@ namespace Tanks.Server.Bootstrap
             }
         }
 
-        private void ApprovalCheck(
-            NetworkManager.ConnectionApprovalRequest request,
-            NetworkManager.ConnectionApprovalResponse response)
+        protected override void Awake()
         {
-            response.CreatePlayerObject = false;
-            response.Approved = _isGameStarted == false;
-        }
-
-        private void OnClientConnected(ulong clientId)
-        {
-            int currentCount = NetworkManager.ConnectedClients.Count;
-            if (currentCount < _desiredCount) return;
-            StartGame();
+            base.Awake();
+            Behaviour.RegisterMessageHandler(this);
         }
     }
 }

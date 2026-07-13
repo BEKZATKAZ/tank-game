@@ -26,14 +26,20 @@ namespace Tanks.Client.Input
         public void Enable()
         {
             if (IsEnabled) return;
+
             Controls.Enable();
+            IsEnabled = true;
+
             InputSystem.onActionChange += OnActionChanged;
         }
 
         public void Disable()
         {
             if (IsEnabled == false) return;
+
             Controls.Disable();
+            IsEnabled = false;
+
             InputSystem.onActionChange -= OnActionChanged;
         }
 

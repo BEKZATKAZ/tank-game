@@ -21,6 +21,12 @@ namespace Tanks.Server.Health
             Behaviour.Health.Value = math.clamp(oldValue - message.Amount, 0, maxHealth);
             if (Behaviour.Health.Value > 0) return;
 
+            BaseRpcTarget target = Behaviour.RpcTarget
+                .Single(Behaviour.OwnerClientId, RpcTargetUse.Temp);
+
+            Behaviour.SendDiedEveryoneRpc();
+            Behaviour.SendDiedLocalClientRpc(target);
+
             GetComponent<NetworkObject>().Despawn();
         }
 

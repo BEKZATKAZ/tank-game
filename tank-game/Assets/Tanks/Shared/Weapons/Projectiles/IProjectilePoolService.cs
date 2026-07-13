@@ -39,6 +39,7 @@ namespace Tanks.Shared.Weapons.Projectiles
         bool TryInitializePool(IProjectileConfig config);
 
         bool TryRent(IProjectileConfig config, ProjectileId id, out IProjectile instance);
-        void Return(IProjectile instance);
+        void Return(IProjectile instance, bool removeHandle = true);
+        void ReturnAll();
     }
 }

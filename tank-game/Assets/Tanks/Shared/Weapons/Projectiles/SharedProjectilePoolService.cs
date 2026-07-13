@@ -92,11 +92,24 @@ namespace Tanks.Shared.Weapons.Projectiles
             return true;
         }
 
-        public void Return(IProjectile instance)
+        public void Return(IProjectile instance, bool removeHandle = true)
         {
             _pools[instance.Config].Release(instance as ProjectileBehaviour);
+            if (removeHandle == false) return;
+
             _projectilesToId.Remove(instance, out ProjectileId id);
             _idToProjectiles.Remove(id);
+        }
+
+        public void ReturnAll()
+        {
+            foreach (IProjectile projectile in _projectilesToId.Keys)
+            {
+                Return(projectile, removeHandle: false);
+            }
+
+            _projectilesToId.Clear();
+            _idToProjectiles.Clear();
         }
 
         public override void OnDestroy()

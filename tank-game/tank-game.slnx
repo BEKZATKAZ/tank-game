@@ -1,8 +1,10 @@
 ﻿<Solution>
+  <Project Path="Tanks.UI.csproj" />
   <Project Path="Tanks.Client.csproj" />
   <Project Path="Tanks.Shared.Tests.csproj" />
   <Project Path="Tanks.Shared.csproj" />
   <Project Path="FMODUnityResonanceEditor.csproj" />
+  <Project Path="Tank.Server.Bootstrap.csproj" />
   <Project Path="FMODUnityEditor.csproj" />
   <Project Path="FMODUnity.csproj" />
   <Project Path="Tanks.Server.csproj" />
@@ -15,7 +17,6 @@
   <Project Path="FMODUnityResonance.csproj" />
   <Project Path="Tanks.Utils.Tests.csproj" />
   <Project Path="Tanks.Infrastructure.csproj" />
-  <Project Path="Tank.Server.Bootstrap.csproj" />
   <Project Path="Tanks.Core.Tests.csproj" />
   <Project Path="Tank.Shared.Bootstrap.csproj" />
   <Project Path="Tanks.Infrastructure.Tests.csproj" />
