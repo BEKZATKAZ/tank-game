@@ -24,7 +24,7 @@ namespace Tanks.Server.Bootstrap
 
             if (_pendingConfirmations.Count > 0) return;
 
-            Behaviour.StartGameClientRpc(new GameStarted
+            Behaviour.StartGameEveryoneRpc(new GameStarted
             {
                 StartDelaySeconds = 2
             });

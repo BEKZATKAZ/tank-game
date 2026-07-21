@@ -2,7 +2,7 @@ using Cysharp.Threading.Tasks;
 using FMOD.Studio;
 using FMODUnity;
 using System;
-using Tanks.Shared.Bootstrap;
+using Tanks.Shared;
 using Tanks.Shared.Messaging;
 using UnityEngine.UIElements;
 using VContainer;

@@ -2,6 +2,7 @@
 using System.Runtime.InteropServices;
 using Tanks.Core.Helpers;
 using Tanks.Shared.Adapters;
+using Tanks.Shared.Stats;
 using Tanks.Utils;
 using Unity.Netcode;
 using UnityEngine;
@@ -41,6 +42,7 @@ namespace Tanks.Shared.Weapons
         public RingBuffer8<ClientShot> FireBuffer;
     }
 
+    [RequireComponent(typeof(StatOwnerBehaviour))]
     public sealed class WeaponHolderBehaviour : NetworkBehaviourExtended, IWeaponOwner
     {
         [SerializeField] private Transform _muzzlePoint;
@@ -48,6 +50,7 @@ namespace Tanks.Shared.Weapons
         public IReadOnlyWeapon CurrentWeapon => _currentWeapon;
         public IReadOnlyWeapon DefaultWeapon => _defaultWeapon;
         public ITransform MuzzlePoint { get; private set; }
+        public IStatOwner EffectOwner { get; private set; }
 
         private Weapon _currentWeapon;
         private Weapon _defaultWeapon;
@@ -76,9 +79,14 @@ namespace Tanks.Shared.Weapons
 
             // Unless we want 2 ticks on our current weapon
             if (_defaultWeapon == _currentWeapon) return used;
+
+            // Switch to default if all ammo is consumed
+            if (_currentWeapon.Ammo.CanConsume() == false)
+            {
+                SwitchToDefault();
+            }
             
             _defaultWeapon.Tick(this, isHoldingDown: false, deltaTime, id);
-
             return used;
         }
 
@@ -91,6 +99,7 @@ namespace Tanks.Shared.Weapons
         {
             base.Awake();
             MuzzlePoint = new UnityTransform(_muzzlePoint);
+            EffectOwner = GetComponent<StatOwnerBehaviour>();
         }
     }
 }

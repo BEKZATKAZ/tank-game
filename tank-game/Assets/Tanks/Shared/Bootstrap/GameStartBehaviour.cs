@@ -1,4 +1,5 @@
 ﻿using Tanks.Shared.Generation;
+using Tanks.Shared.Items;
 using Tanks.Shared.Messaging;
 using Unity.Mathematics;
 using Unity.Netcode;
@@ -10,12 +11,6 @@ namespace Tanks.Shared.Bootstrap
 	public struct WaitingForPlayersRequested { }
 	public struct PrepareGameRequested { }
 
-    public struct TilemapGenerated
-	{
-		public TilemapGenerationSettings Settings;
-		public Bounds Bounds;
-	}
-
 	public struct PlayerReadyConfirmed
 	{
 		public int SecretHandle;
@@ -26,16 +21,15 @@ namespace Tanks.Shared.Bootstrap
         public int SecretHandle;
     }
 
-    public struct GameStarted : INetworkSerializeByMemcpy
-    {
-        public float StartDelaySeconds;
-    }
-
 	public sealed class GameStartBehaviour : NetworkBehaviourExtended, IMessageSender
 	{
 		[SerializeField] private TilemapSpawner _tilemap;
+		[SerializeField] private int _desiredPlayerCount = 1;
 
 		[Inject] private readonly IMessageBus _bus;
+		[Inject] private readonly IItemDatabase _itemDatabase;
+
+		public int DesiredPlayerCount => _desiredPlayerCount;
 
 		[Rpc(SendTo.Everyone, InvokePermission = RpcInvokePermission.Server)]
 		public void GenerateTilemapEveryoneRpc(
@@ -46,11 +40,15 @@ namespace Tanks.Shared.Bootstrap
 			_tilemap.Clear(settings, newResolution);
 			Bounds bounds = _tilemap.Spawn(settings, newResolution);
 
-			EmitMessage(new TilemapGenerated
+			TilemapGenerated message = new TilemapGenerated
 			{
 				Bounds = bounds,
-				Settings = settings
-			});
+				Settings = settings,
+				Resolution = newResolution
+			};
+
+            EmitMessage(message);
+			_bus.Publish(message, this);
         }
 
 		[Rpc(SendTo.Server)]
@@ -65,8 +63,8 @@ namespace Tanks.Shared.Bootstrap
             EmitMessage(new PlayerReadyRequested { SecretHandle = secretHandle });
         }
 
-        [Rpc(SendTo.NotServer, InvokePermission = RpcInvokePermission.Server)]
-		public void StartGameClientRpc(GameStarted message)
+        [Rpc(SendTo.Everyone, InvokePermission = RpcInvokePermission.Server)]
+		public void StartGameEveryoneRpc(GameStarted message)
 		{
             EmitMessage(message);
             _bus.Publish(message, this);
@@ -74,5 +72,11 @@ namespace Tanks.Shared.Bootstrap
 
 		public void PrepareGame() => EmitMessage(new PrepareGameRequested());
 		public void WaitForPlayers() => EmitMessage(new WaitingForPlayersRequested());
+
+		public override void OnNetworkSpawn()
+		{
+			base.OnNetworkSpawn();
+			_itemDatabase.TryInitializeAsync(IsServer);
+		}
 	}
 }

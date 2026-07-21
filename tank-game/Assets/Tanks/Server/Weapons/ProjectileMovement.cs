@@ -1,4 +1,5 @@
 ﻿using Tanks.Shared;
+using Tanks.Shared.Stats;
 using Tanks.Shared.Health;
 using Tanks.Shared.Weapons.Projectiles;
 using VContainer;
@@ -57,6 +58,8 @@ namespace Tanks.Server.Weapons
         private void DealDamage(IProjectile projectile, IDamageable damageable)
         {
             float amount = _damage.Evaluate(_elapsed);
+            amount = Behaviour.Owner.EffectOwner.GetStat(StatType.Damage, amount);
+
             damageable.Damage(amount);
             _pool.Return(projectile);
         }

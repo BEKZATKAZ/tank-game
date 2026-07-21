@@ -9,6 +9,13 @@ using VContainer;
 
 namespace Tanks.Shared.Generation
 {
+    public struct TilemapGenerated
+    {
+        public TilemapGenerationSettings Settings;
+        public int2 Resolution;
+        public Bounds Bounds;
+    }
+
     [RequireComponent(typeof(Tilemap), typeof(Grid), typeof(TilemapCollider2D))]
     public sealed class TilemapSpawner : MonoBehaviour
     {

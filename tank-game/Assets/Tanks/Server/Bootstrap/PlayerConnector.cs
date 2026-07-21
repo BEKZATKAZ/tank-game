@@ -6,7 +6,6 @@ namespace Tanks.Server.Bootstrap
 {
     public sealed class PlayerConnector : NetworkComponent<GameStartBehaviour>
     {
-        private readonly int _desiredCount = 2; // ! Testing purposes
         private bool _allPlayersConnected;
 
         private void Start()
@@ -28,7 +27,7 @@ namespace Tanks.Server.Bootstrap
         private void OnClientConnected(ulong clientId)
         {
             int currentCount = NetworkManager.ConnectedClients.Count;
-            if (currentCount < _desiredCount) return;
+            if (currentCount < Behaviour.DesiredPlayerCount) return;
 
             _allPlayersConnected = true;
             Behaviour.PrepareGame();

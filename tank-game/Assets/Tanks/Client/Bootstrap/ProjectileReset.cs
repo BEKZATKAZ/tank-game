@@ -1,5 +1,6 @@
 ﻿using Tanks.Shared;
 using Tanks.Shared.Bootstrap;
+using Tanks.Shared.Generation;
 using Tanks.Shared.Weapons.Projectiles;
 using VContainer;
 

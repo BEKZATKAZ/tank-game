@@ -29,7 +29,7 @@ namespace Tanks.Shared.Health
 
     [RequireComponent(typeof(NetworkObject))]
     public class HealthBehaviour :
-        NetworkBehaviourExtended, IDamageable, IHealable, IMessageSender
+        NetworkBehaviourExtended, IHealth, IDamageable, IHealable, IMessageSender
     {
         [Range(10, 200)]
         [SerializeField]
@@ -40,6 +40,7 @@ namespace Tanks.Shared.Health
 
         public NetworkVariable<float> Health { get; } = new(100);
         public PositiveFloatOrZero MaxHealth => _maxHealth;
+        public float Value => Health.Value;
 
         [Rpc(SendTo.Everyone, InvokePermission = RpcInvokePermission.Server)]
         public void SendDiedEveryoneRpc()
@@ -53,6 +54,15 @@ namespace Tanks.Shared.Health
         {
             EmitMessage(new DiedLocal());
             _bus.Publish(new DiedLocal(), this);
+        }
+
+        public void SetMaxHealth(PositiveFloat value)
+        {
+            _maxHealth = value;
+            float remainder = Health.Value - _maxHealth;
+
+            // Damage to compensate max health
+            if (remainder > 0) Damage(remainder);
         }
 
         public void Damage(PositiveFloat amount)

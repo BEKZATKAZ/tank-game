@@ -1,0 +1,18 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e65df12e201a90d46a5e80278588ce45, type: 3}
+  m_Name: MachineGun
+  m_EditorClassIdentifier: Tanks.Shared::Tanks.Shared.Weapons.Data.WeaponConfig
+  _useMode: 1
+  _ammo: {fileID: 11400000, guid: 899f2f2afa705ae41bcf3ab20ae3a35f, type: 2}
+  _cooldown: {fileID: 11400000, guid: cbc43096844c14e4d9c9fd5d7d245314, type: 2}
+  _useAction: {fileID: 11400000, guid: c446650e569952f449beeeb380547ab8, type: 2}

@@ -1,4 +1,5 @@
 ﻿using Tanks.Client.Input;
+using Tanks.Client.Items;
 using Tanks.Client.Rendering;
 using Tanks.Client.Weapons;
 using Tanks.Shared.Bootstrap;
@@ -21,6 +22,7 @@ namespace Tanks.Client.Bootstrap
 
             builder.Register<ICameraMainService, CameraMainService>(Lifetime.Scoped);
             builder.Register<IShotIdGenerator, ShotIdGenerator>(Lifetime.Scoped);
+            builder.Register<IClientItemDatabase, ClientItemDatabase>(Lifetime.Scoped);
 
             builder.RegisterComponentOnNewGameObject<CameraFollowService>(Lifetime.Scoped)
                 .As<ICameraFollowService>();

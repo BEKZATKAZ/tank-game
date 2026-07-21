@@ -5,6 +5,7 @@ using Tanks.Client.Rendering;
 using Tanks.Shared;
 using Tanks.Shared.Adapters;
 using Tanks.Shared.Bootstrap;
+using Tanks.Shared.Generation;
 using Unity.Mathematics;
 using UnityEngine;
 using VContainer;

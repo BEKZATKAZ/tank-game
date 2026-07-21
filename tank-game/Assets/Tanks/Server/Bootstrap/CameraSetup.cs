@@ -1,6 +1,7 @@
 ﻿using Tanks.Core.Helpers;
 using Tanks.Shared;
 using Tanks.Shared.Bootstrap;
+using Tanks.Shared.Generation;
 using Unity.Mathematics;
 using UnityEngine;
 

@@ -1,6 +1,7 @@
 ﻿using System;
 using Tanks.Shared;
 using Tanks.Shared.Adapters;
+using Tanks.Shared.Stats;
 using Tanks.Shared.Health;
 using Tanks.Shared.Weapons.Projectiles;
 using Unity.Mathematics;
@@ -139,6 +140,8 @@ namespace Tanks.Client.Weapons
         private void DamagePrediction(IDamageable damageable)
         {
             float amount = Behaviour.Damage.Evaluate(_elapsed);
+            amount = Behaviour.Owner.EffectOwner.GetStat(StatType.Damage, amount);
+
             damageable.Damage(amount);
             _pool.Return(Behaviour);
         }

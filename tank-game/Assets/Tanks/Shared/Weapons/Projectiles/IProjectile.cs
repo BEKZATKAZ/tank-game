@@ -17,7 +17,7 @@ namespace Tanks.Shared.Weapons.Projectiles
         ITransform Transform { get; }
         IProjectileConfig Config { get; }
 
-        void Launch();
+        void Launch(IWeaponOwner owner);
         void Reconcile(ProjectileSnapshotFromServer snapshot);
         void Simulate(LaunchCallbacks callbacks, ITransform transform, float deltaTime);
     }

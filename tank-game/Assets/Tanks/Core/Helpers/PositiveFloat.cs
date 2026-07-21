@@ -30,7 +30,12 @@ namespace Tanks.Core.Helpers
 
         public override string ToString() => Value.ToString();
         public override int GetHashCode() => Value.GetHashCode();
-        public override bool Equals(object obj) => Value.Equals(obj);
+        public override bool Equals(object obj) => obj switch
+        {
+            PositiveFloat other => Equals(other),
+            float other => Equals(other),
+            _ => false
+        };
 
         public bool Equals(float other) => Value == other;
         public bool Equals(PositiveFloat other) => Value == other.Value;
@@ -63,7 +68,12 @@ namespace Tanks.Core.Helpers
 
         public override string ToString() => Value.ToString();
         public override int GetHashCode() => Value.GetHashCode();
-        public override bool Equals(object obj) => Value.Equals(obj);
+        public override bool Equals(object obj) => obj switch
+        {
+            PositiveFloatOrZero other => Equals(other),
+            float other => Equals(other),
+            _ => false
+        };
 
         public bool Equals(float other) => Value == other;
         public bool Equals(PositiveFloatOrZero other) => Value == other.Value;

@@ -35,26 +35,17 @@ namespace Tanks.Client.Health
                 return;
             }
 
-            DamagePreviewText prefab = null;
+            GameObject resource = await _loader.LoadAsync<GameObject>(_address);
+            DamagePreviewText prefab = resource.GetComponent<DamagePreviewText>();
 
-            try
-            {
-                GameObject resource = await _loader.LoadAsync<GameObject>(_address);
-                prefab = resource.GetComponent<DamagePreviewText>();
-
-                _pool = new ObjectPool<DamagePreviewText>(
-                    createFunc: () => Instantiate(prefab),
-                    actionOnGet: x => x.gameObject.SetActive(true),
-                    actionOnRelease: x => x.gameObject.SetActive(false),
-                    actionOnDestroy: x => Destroy(x.gameObject),
-                    collectionCheck: false,
-                    defaultCapacity: 5,
-                    maxSize: 50);
-            }
-            finally
-            {
-                if (prefab) _loader.ReleaseFromResource(prefab.gameObject);
-            }
+            _pool = new ObjectPool<DamagePreviewText>(
+                createFunc: () => Instantiate(prefab),
+                actionOnGet: x => x.gameObject.SetActive(true),
+                actionOnRelease: x => x.gameObject.SetActive(false),
+                actionOnDestroy: x => Destroy(x.gameObject),
+                collectionCheck: false,
+                defaultCapacity: 5,
+                maxSize: 50);
 
             Behaviour.RegisterMessageHandler(this);
         }

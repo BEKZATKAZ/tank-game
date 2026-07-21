@@ -34,7 +34,7 @@ namespace Tanks.Server.Weapons.Projectiles
 
             projectile.Transform.WorldPosition = _muzzlePoint.WorldPosition;
             projectile.Transform.WorldRotation = _muzzlePoint.WorldRotation;
-            projectile.Launch();
+            projectile.Launch(owner);
         }
     }
 }

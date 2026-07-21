@@ -1,0 +1,105 @@
+﻿using NaughtyAttributes;
+using System.Buffers;
+using System.Collections.Generic;
+using Tanks.Shared.Generation;
+using Tanks.Shared.Messaging;
+using Unity.Mathematics;
+using Unity.Netcode;
+using UnityEngine;
+using UnityEngine.Pool;
+using VContainer;
+
+namespace Tanks.Shared.Items.Pickups
+{
+    public struct PickupSpawned : INetworkSerializeByMemcpy
+    {
+        public PickupId PickupId;
+        public ItemIdentifier ItemId;
+        public float2 WorldPosition;
+    }
+
+    public sealed class PickupSpawnBehaviour :
+        NetworkBehaviourExtended,
+        IMessageHandler<TilemapGenerated>
+    {
+        [MinMaxSlider(0, 120)]
+        [SerializeField]
+        private Vector2 _cooldownMinMax;
+
+        [Range(1, 5)]
+        [SerializeField]
+        private float _minDistanceToPlayers = 2;
+
+        [Inject]
+        private readonly IMessageBus _bus;
+
+        private readonly Dictionary<PickupId, PickupBehaviour> _pickups = new();
+        private ObjectPool<PickupBehaviour> _pool;
+
+        public float MinCooldown => _cooldownMinMax.x;
+        public float MaxCooldown => _cooldownMinMax.y;
+        public float MinDistanceToPlayers => _minDistanceToPlayers;
+
+        [Rpc(SendTo.Everyone, InvokePermission = RpcInvokePermission.Server)]
+        public void SpawnEveryoneRpc(PickupSpawned payload)
+        {
+            PickupBehaviour instance = _pool.Get();
+            _pickups[payload.PickupId] = instance;
+
+            instance.Transform.WorldPosition = payload.WorldPosition;
+            instance.Initialize(payload, this);
+        }
+
+        [Rpc(SendTo.Everyone, InvokePermission = RpcInvokePermission.Server)]
+        public void DespawnEveryoneRpc(PickupId id)
+        {
+            if (_pickups.Remove(id, out PickupBehaviour instance) == false) return;
+            _pool.Release(instance);
+        }
+
+        public void Handle(TilemapGenerated message, IMessageSender sender)
+        {
+            // Must reset each new round
+            foreach (PickupBehaviour pickup in _pickups.Values) _pool.Release(pickup);
+            _pickups.Clear();
+        }
+
+        public override void OnDestroy()
+        {
+            base.OnDestroy();
+        }
+
+        public override void OnNetworkSpawn()
+        {
+            base.OnNetworkSpawn();
+
+            _pool = new ObjectPool<PickupBehaviour>(
+                createFunc: CreatePickup,
+                actionOnGet: x => x.gameObject.SetActive(true),
+                actionOnRelease: x => x.gameObject.SetActive(false),
+                actionOnDestroy: x => Destroy(x.gameObject)
+            );
+
+            // Prevent stutters during gameplay
+            int initialSize = 10;
+            PickupBehaviour[] warmup = ArrayPool<PickupBehaviour>.Shared.Rent(initialSize);
+
+            try
+            {
+                for (int i = 0; i < initialSize; i++) warmup[i] = _pool.Get();
+                for (int i = 0; i < initialSize; i++) _pool.Release(warmup[i]);
+            }
+            finally
+            {
+                ArrayPool<PickupBehaviour>.Shared.Return(warmup);
+            }
+
+            _bus.RegisterHandler<TilemapGenerated>(this);
+        }
+
+        private PickupBehaviour CreatePickup()
+        {
+            return new GameObject("pickup").AddComponent<PickupBehaviour>();
+        }
+    }
+}

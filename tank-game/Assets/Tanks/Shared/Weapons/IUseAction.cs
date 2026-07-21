@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace Tanks.Shared.Weapons
+﻿namespace Tanks.Shared.Weapons
 {
     public interface IUseAction
     {

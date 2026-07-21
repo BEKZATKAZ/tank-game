@@ -1,13 +1,15 @@
 using Tanks.Shared.Adapters;
+using Tanks.Shared.Stats;
 using Unity.Mathematics;
 using UnityEngine;
 
 namespace Tanks.Shared.Driving
 {
-    [RequireComponent(typeof(Rigidbody2D))]
+    [RequireComponent(typeof(Rigidbody2D), typeof(StatOwnerBehaviour))]
     public sealed class TankDriveBehaviour : NetworkBehaviourExtended
     {
         private readonly RaycastHit2D[] _hitBuffer = new RaycastHit2D[1];
+        private StatOwnerBehaviour _statOwner;
         private ArcadeDriver _driver;
 
         public Rigidbody2D Rigidbody { get; private set; }
@@ -19,6 +21,7 @@ namespace Tanks.Shared.Driving
 
             Rigidbody = GetComponent<Rigidbody2D>();
             Velocity = new UnityVelocity(Rigidbody);
+            _statOwner = GetComponent<StatOwnerBehaviour>();
 
             _driver = new ArcadeDriver(new ArcadeDriverSettings
             {
@@ -32,13 +35,19 @@ namespace Tanks.Shared.Driving
         public void Tick(float throttle, float steering, float deltaTime)
         {
             Velocity.Angular = _driver.Steer(steering);
-            float2 linear = _driver.Drive(Transform.Right, throttle, deltaTime);
 
-            if (math.lengthsq(linear) < 0.01f)
+            float2 linear = _driver.Drive(Transform.Right, throttle, deltaTime);
+            float length = math.length(linear);
+
+            if (length < 0.01f)
             {
                 Velocity.Linear = default;
                 return;
             }
+            
+            // Apply stats
+            float newLength = _statOwner.GetStat(StatType.Speed, baseValue: length);
+            linear = math.normalize(linear) * newLength;
 
             ContactFilter2D filter = new ContactFilter2D
             {

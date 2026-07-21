@@ -1,0 +1,152 @@
+﻿using System.Collections.Generic;
+using System.Linq;
+using System.Security.Cryptography;
+using Tanks.Core.Helpers;
+using Tanks.Shared;
+using Tanks.Shared.Adapters;
+using Tanks.Shared.Generation;
+using Tanks.Shared.Items;
+using Tanks.Shared.Items.Data;
+using Tanks.Shared.Items.Pickups;
+using Tanks.Shared.Messaging;
+using Unity.Mathematics;
+using VContainer;
+
+namespace Tanks.Server.Items.Pickups
+{
+    public sealed class PickupSpawner :
+        NetworkComponent<PickupSpawnBehaviour>,
+        IMessageHandler<TilemapGenerated>,
+        IMessageHandler<GameStarted>,
+        IMessageHandler<ItemPickedUp>
+    {
+        [Inject] private readonly IItemDatabase _items;
+        [Inject] private readonly IMessageBus _bus;
+
+        private readonly Dictionary<PickupId, int2> _activePickups = new();
+        private readonly HashSet<int2> _occupiedCoords = new();
+
+        private ITransform[] _players;
+        private ItemChooser _chooser;
+        private Random _random;
+        private PickupId _lastPickupId;
+        private TilemapGenerated? _lastTilemapGeneratedMessage;
+
+        private float _elapsed;
+        private float _currentCooldown;
+        private bool _isGameStarted;
+
+        private void TryInitialize()
+        {
+            if (_chooser != null) return;
+
+            Dictionary<ItemTier, PositiveFloat> chanceRatios = new()
+            {
+                [ItemTier.Uncommon] = 50,
+                [ItemTier.Rare] = 30,
+                [ItemTier.Epic] = 12,
+                [ItemTier.Unstable] = 6,
+                [ItemTier.Legendary] = 2
+            };
+
+            uint seed = (uint)RandomNumberGenerator.GetInt32(0, int.MaxValue);
+            _chooser = new ItemChooser(_items.Items, chanceRatios, seed);
+
+            _random = Random.CreateFromIndex(seed ^ 23);
+            _currentCooldown = _random.NextFloat(Behaviour.MinCooldown, Behaviour.MaxCooldown);
+        }
+
+        private void Start()
+        {
+            _bus.RegisterHandler<TilemapGenerated>(this);
+            _bus.RegisterHandler<GameStarted>(this);
+            _bus.RegisterHandler<ItemPickedUp>(this);
+        }
+
+        public override void OnTick(int tick, float tickDelta)
+        {
+            if (_isGameStarted == false) return;
+
+            if (_items.IsReady) TryInitialize();
+            else return;
+
+            _elapsed += tickDelta;
+            if (_elapsed < _currentCooldown) return;
+
+            _elapsed = 0;
+            _currentCooldown = _random.NextFloat(Behaviour.MinCooldown, Behaviour.MaxCooldown);
+            _lastPickupId = new PickupId(_lastPickupId.Value + 1);
+
+            IItemConfig item = _chooser.ChooseRandomItem(_random.NextFloat(0, 1f));
+            TilemapGenerated message = _lastTilemapGeneratedMessage.Value;
+
+            int wallWidth = message.Settings.WallWidth;
+            int attempts = 0;
+            int2 coords;
+
+            while (true)
+            {
+                coords = _random.NextInt2(0, message.Resolution - 1);
+
+                // Prevent infinite loops
+                if (attempts++ > 100) return;
+
+                // Search for a free spot
+                if (_occupiedCoords.Contains(coords)) continue;
+
+                float minDistance = float.PositiveInfinity;
+
+                foreach (ITransform player in _players)
+                {
+                    float2 playerPosition = player.WorldPosition;
+
+                    int2 playerCoords = (int2)math.round(
+                        (playerPosition - wallWidth * 1.5f) / (wallWidth * 2));
+
+                    float distance = math.distance(playerCoords, coords);
+                    if (distance < minDistance) minDistance = distance;
+                }
+
+                // Prevent spawning right on players
+                if (minDistance >= Behaviour.MinDistanceToPlayers) break;
+            }
+
+            float2 position = (float2)coords * (wallWidth * 2) + wallWidth * 1.5f;
+
+            Behaviour.SpawnEveryoneRpc(new PickupSpawned
+            {
+                ItemId = item.Identifier,
+                PickupId = _lastPickupId,
+                WorldPosition = position
+            });
+
+            _activePickups.Add(_lastPickupId, coords);
+            _occupiedCoords.Add(coords);
+        }
+
+        public void Handle(TilemapGenerated message, IMessageSender sender)
+        {
+            _lastTilemapGeneratedMessage = message;
+        }
+
+        public void Handle(GameStarted message, IMessageSender sender)
+        {
+            // Reset after the previous round
+            _occupiedCoords.Clear();
+            _activePickups.Clear();
+
+            _players = NetworkManager.SpawnManager.PlayerObjects
+                .Select(x => new UnityTransform(x.transform))
+                .ToArray();
+
+            _elapsed = 0;
+            _isGameStarted = true;
+        }
+
+        public void Handle(ItemPickedUp message, IMessageSender sender)
+        {
+            if (_activePickups.Remove(message.PickupId, out int2 coords) == false) return;
+            _occupiedCoords.Remove(coords);
+        }
+    }
+}

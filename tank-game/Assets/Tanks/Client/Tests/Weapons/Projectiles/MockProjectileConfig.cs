@@ -1,5 +1,6 @@
 ﻿using Tanks.Client.Weapons;
 using Tanks.Shared.Adapters;
+using Tanks.Shared.Weapons;
 using Tanks.Shared.Weapons.Data;
 using Tanks.Shared.Weapons.Projectiles;
 
@@ -27,7 +28,7 @@ namespace Tanks.Client.Tests.Weapons.Projectiles
 
         private readonly ProjectileMover _mover;
 
-        public void Launch()
+        public void Launch(IWeaponOwner owner)
         {
             throw new System.NotImplementedException();
         }

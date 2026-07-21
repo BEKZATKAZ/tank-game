@@ -40,8 +40,15 @@ namespace Tanks.Shared
 
             foreach (INetworkMessageHandler handler in handlers)
             {
-                // Safe cast
-                ((INetworkMessageHandler<T>)handler).Handle(message);
+                try
+                {
+                    // Safe cast
+                    ((INetworkMessageHandler<T>)handler).Handle(message);
+                }
+                catch (Exception ex)
+                {
+                    Debug.LogException(ex);
+                }
             }
         }
 
@@ -63,7 +70,7 @@ namespace Tanks.Shared
         public override void OnNetworkDespawn()
         {
             if (_isInitialized == false) return;
-            NetworkManager.NetworkTickSystem.Tick -= OnTick;
+            NetworkManager.NetworkTickSystem.Tick -= Tick;
         }
 
         protected virtual void Awake()
@@ -73,13 +80,15 @@ namespace Tanks.Shared
 
         protected void ForceInitialize() => Initialize();
 
+        protected virtual void OnTick(int tick, float tickDelta) { }
+
         private void Initialize()
         {
             if (_isInitialized) return;
 
             _isInitialized = true;
 
-            NetworkManager.NetworkTickSystem.Tick += OnTick;
+            NetworkManager.NetworkTickSystem.Tick += Tick;
 
             IEnumerable<Type> types = SplitComponentFinder
                 .FindFor(this, typeof(INetworkComponent<>), NetworkManager.IsServer);
@@ -94,13 +103,15 @@ namespace Tanks.Shared
             container.InjectGameObject(gameObject);
         }
 
-        private void OnTick()
+        private void Tick()
         {
             if (gameObject.activeInHierarchy == false) return;
             if (enabled == false) return;
 
             int tick = NetworkManager.NetworkTickSystem.LocalTime.Tick;
             float tickDelta = 1f / NetworkManager.NetworkTickSystem.TickRate;
+
+            OnTick(tick, tickDelta);
 
             foreach (INetworkComponent component in _components)
             {

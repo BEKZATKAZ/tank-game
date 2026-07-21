@@ -1,8 +1,10 @@
 ﻿using Cysharp.Threading.Tasks;
+using Tanks.Client.Items;
 using Tanks.Shared;
 using Tanks.Shared.Bootstrap;
 using Unity.Netcode;
 using UnityEngine;
+using VContainer;
 
 namespace Tanks.Client.Bootstrap
 {
@@ -10,8 +12,12 @@ namespace Tanks.Client.Bootstrap
         NetworkComponent<GameStartBehaviour>,
         INetworkMessageHandler<PlayerReadyRequested>
     {
+        [Inject] private readonly IClientItemDatabase _itemDatabase;
+
         public async void Handle(PlayerReadyRequested message)
         {
+            await _itemDatabase.TryInitializeAsync();
+
             while (NetworkManager.LocalClient.PlayerObject == false)
             {
                 await UniTask.Delay(500);
