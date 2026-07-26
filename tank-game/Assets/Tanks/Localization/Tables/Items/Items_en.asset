@@ -1,0 +1,92 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e9620f8c34305754d8cc9a7e49e852d9, type: 3}
+  m_Name: Items_en
+  m_EditorClassIdentifier: Unity.Localization::UnityEngine.Localization.Tables.StringTable
+  m_LocaleId:
+    m_Code: en
+  m_SharedData: {fileID: 11400000, guid: 72df8041cb1f65b40958c98981ef1561, type: 2}
+  m_Metadata:
+    m_Items: []
+  m_TableData:
+  - m_Id: 1898613006336
+    m_Localized: No Room For Error
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2067794452480
+    m_Localized: You deal an absurd amount of damage, but a single hit could be your
+      undoing.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 70567816814592
+    m_Localized: Health Up
+    m_Metadata:
+      m_Items: []
+  - m_Id: 70680580677632
+    m_Localized: You restore a bit of HP.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 71017257459712
+    m_Localized: Random Teleport
+    m_Metadata:
+      m_Items: []
+  - m_Id: 71319167655936
+    m_Localized: You teleport to a random spot on the map.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 71503196938240
+    m_Localized: Weapon - Machine Gun
+    m_Metadata:
+      m_Items: []
+  - m_Id: 71606984990720
+    m_Localized: You get a weapon with a higher rate of fire but lower damage.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 73022222852096
+    m_Localized: There's no point of return
+    m_Metadata:
+      m_Items: []
+  - m_Id: 74361057271808
+    m_Localized: Little Health Up
+    m_Metadata:
+      m_Items: []
+  - m_Id: 74540846112768
+    m_Localized: Flee with a lil twist
+    m_Metadata:
+      m_Items: []
+  - m_Id: 75199460892672
+    m_Localized: Just be careful
+    m_Metadata:
+      m_Items: []
+  - m_Id: 75812378730496
+    m_Localized: Uncommon
+    m_Metadata:
+      m_Items: []
+  - m_Id: 75907253886976
+    m_Localized: Rare
+    m_Metadata:
+      m_Items: []
+  - m_Id: 75961305882624
+    m_Localized: Epic
+    m_Metadata:
+      m_Items: []
+  - m_Id: 76011700445184
+    m_Localized: Unstable
+    m_Metadata:
+      m_Items: []
+  - m_Id: 76081032290304
+    m_Localized: Legendary
+    m_Metadata:
+      m_Items: []
+  references:
+    version: 2
+    RefIds: []

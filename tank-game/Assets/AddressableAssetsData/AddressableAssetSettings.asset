@@ -62,8 +62,12 @@ MonoBehaviour:
   m_overridePlayerVersion: '[UnityEditor.PlayerSettings.bundleVersion]'
   m_GroupAssets:
   - {fileID: 11400000, guid: e3e1f09d30f3321498335f0890b28922, type: 2}
+  - {fileID: 11400000, guid: 8fe33c13d65a5704ba5aaa71cd727b4c, type: 2}
+  - {fileID: 11400000, guid: 8fc341f0d39f32a4da5068fe041ed004, type: 2}
+  - {fileID: 11400000, guid: 316818a46a361d546aef668c5912bf89, type: 2}
   - {fileID: 11400000, guid: ec806872184ba7949b055fc483f194e3, type: 2}
   - {fileID: 11400000, guid: fad4b56018f09ae4a96c9f91d82e1ac9, type: 2}
+  - {fileID: 11400000, guid: 01beba3df2b244e4383f235e5d825b40, type: 2}
   m_BuildSettings:
     m_LogResourceManagerExceptions: 1
     m_BundleBuildPath: Temp/com.unity.addressables/AssetBundles
@@ -103,6 +107,9 @@ MonoBehaviour:
   m_LabelTable:
     m_LabelNames:
     - default
+    - Locale
+    - Locale-en
+    - Locale-ru
   m_SchemaTemplates: []
   m_GroupTemplateObjects:
   - {fileID: 11400000, guid: f42f23691588c4840ab32051e09700b9, type: 2}

@@ -2,6 +2,7 @@
 using Tanks.Client.Items;
 using Tanks.Client.Rendering;
 using Tanks.Client.Weapons;
+using Tanks.Localization;
 using Tanks.Shared.Bootstrap;
 using VContainer;
 using VContainer.Unity;
@@ -12,6 +13,8 @@ namespace Tanks.Client.Bootstrap
     {
         public void Configure(IContainerBuilder builder)
         {
+            builder.RegisterLocalization(Lifetime.Scoped);
+
             builder.Register<
                 IInputService<ManualDriveInput>,
                 ManualMovementInputService>(Lifetime.Scoped);

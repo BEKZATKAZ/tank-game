@@ -1,0 +1,96 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5b11a58205ec3474ca216360e9fa74a8, type: 3}
+  m_Name: Items Shared Data
+  m_EditorClassIdentifier: Unity.Localization::UnityEngine.Localization.Tables.SharedTableData
+  m_TableCollectionName: Items
+  m_TableCollectionNameGuidString: 72df8041cb1f65b40958c98981ef1561
+  m_Entries:
+  - m_Id: 1898613006336
+    m_Key: item.no_room_for_error.name
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2067794452480
+    m_Key: item.no_room_for_error.description
+    m_Metadata:
+      m_Items: []
+  - m_Id: 73022222852096
+    m_Key: item.no_room_for_error.tagline
+    m_Metadata:
+      m_Items: []
+  - m_Id: 70567816814592
+    m_Key: item.health_up.name
+    m_Metadata:
+      m_Items: []
+  - m_Id: 70680580677632
+    m_Key: item.health_up.description
+    m_Metadata:
+      m_Items: []
+  - m_Id: 74361057271808
+    m_Key: item.health_up.tagline
+    m_Metadata:
+      m_Items: []
+  - m_Id: 71017257459712
+    m_Key: item.random_teleport.name
+    m_Metadata:
+      m_Items: []
+  - m_Id: 71319167655936
+    m_Key: item.random_teleport.description
+    m_Metadata:
+      m_Items: []
+  - m_Id: 74540846112768
+    m_Key: item.random_teleport.tagline
+    m_Metadata:
+      m_Items: []
+  - m_Id: 71503196938240
+    m_Key: item.weapon_machine-gun.name
+    m_Metadata:
+      m_Items: []
+  - m_Id: 71606984990720
+    m_Key: item.weapon_machine-gun.description
+    m_Metadata:
+      m_Items: []
+  - m_Id: 75199460892672
+    m_Key: item.weapon_machine-gun.tagline
+    m_Metadata:
+      m_Items: []
+  - m_Id: 75812378730496
+    m_Key: item.tier.uncommon
+    m_Metadata:
+      m_Items: []
+  - m_Id: 75907253886976
+    m_Key: item.tier.rare
+    m_Metadata:
+      m_Items: []
+  - m_Id: 75961305882624
+    m_Key: item.tier.epic
+    m_Metadata:
+      m_Items: []
+  - m_Id: 76011700445184
+    m_Key: item.tier.unstable
+    m_Metadata:
+      m_Items: []
+  - m_Id: 76081032290304
+    m_Key: item.tier.legendary
+    m_Metadata:
+      m_Items: []
+  m_Metadata:
+    m_Items: []
+  m_KeyGenerator:
+    rid: 5098954891418402874
+  references:
+    version: 2
+    RefIds:
+    - rid: 5098954891418402874
+      type: {class: DistributedUIDGenerator, ns: UnityEngine.Localization.Tables, asm: Unity.Localization}
+      data:
+        m_CustomEpoch: 1784700524297
