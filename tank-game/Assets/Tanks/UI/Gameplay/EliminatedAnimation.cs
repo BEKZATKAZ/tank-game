@@ -4,7 +4,6 @@ using Tanks.Shared.Health;
 using Tanks.Shared.Messaging;
 using UnityEngine;
 using UnityEngine.UIElements;
-using VContainer;
 
 namespace Tanks.UI.Gameplay
 {
@@ -13,7 +12,12 @@ namespace Tanks.UI.Gameplay
         IDocumentInitialize,
         IMessageHandler<DiedLocal>
     {
-        [Inject] private readonly IMessageBus _bus;
+        public EliminatedAnimation(IMessageBus bus)
+        {
+            _bus = bus;
+        }
+
+        private readonly IMessageBus _bus;
 
         private VisualElement _container;
         private Label _reason;

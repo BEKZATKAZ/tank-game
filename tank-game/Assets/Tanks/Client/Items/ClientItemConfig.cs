@@ -1,11 +1,7 @@
 using FMODUnity;
 using NaughtyAttributes;
-using System;
 using Tanks.Shared.Items;
-using Tanks.Shared.Items.Data;
 using UnityEngine;
-using UnityEngine.Localization;
-using UnityEngine.Localization.Settings;
 
 namespace Tanks.Client.Items
 {

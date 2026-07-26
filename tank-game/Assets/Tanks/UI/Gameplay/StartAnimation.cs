@@ -5,7 +5,6 @@ using System;
 using Tanks.Shared;
 using Tanks.Shared.Messaging;
 using UnityEngine.UIElements;
-using VContainer;
 
 namespace Tanks.UI.Gameplay
 {
@@ -15,10 +14,14 @@ namespace Tanks.UI.Gameplay
         IDocumentDestroy,
         IMessageHandler<GameStarted>
     {
-        [Inject] private readonly IMessageBus _bus;
+        public StartAnimation(IMessageBus bus)
+        {
+            _bus = bus;
+            _counter = RuntimeManager.CreateInstance("event:/SFX/StartCounter");
+        }
 
-        private readonly EventInstance _counter = RuntimeManager
-            .CreateInstance("event:/SFX/StartCounter");
+        private readonly IMessageBus _bus;
+        private readonly EventInstance _counter;
 
         private static readonly string[] _text = { "3", "2", "1", "GO!" };
         private Label _label;

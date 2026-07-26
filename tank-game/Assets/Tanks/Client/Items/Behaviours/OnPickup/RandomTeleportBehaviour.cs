@@ -3,7 +3,6 @@ using Tanks.Shared.Items;
 using Tanks.Shared.Items.Behaviours;
 using Tanks.Shared.Messaging;
 using Unity.Mathematics;
-using VContainer;
 
 namespace Tanks.Client.Items.Behaviours.OnPickup
 {
@@ -12,15 +11,14 @@ namespace Tanks.Client.Items.Behaviours.OnPickup
         ItemBehaviourBase,
         IMessageHandler<TilemapGenerated>
     {
-        private IMessageBus _bus;
-        private TilemapGenerated _generated;
-
-        [Inject]
-        public void Initialize(IMessageBus bus)
+        public RandomTeleportBehaviour(IMessageBus bus)
         {
             _bus = bus;
             _bus.RegisterHandler<TilemapGenerated>(this);
         }
+
+        private IMessageBus _bus;
+        private TilemapGenerated _generated;
 
         public void Handle(TilemapGenerated message, IMessageSender sender)
         {

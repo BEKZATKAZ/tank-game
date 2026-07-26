@@ -7,6 +7,8 @@ using Tanks.Core.Helpers;
 using Tanks.Core.Repositories;
 using Tanks.Shared.Items.Behaviours;
 using Tanks.Shared.Items.Data;
+using Tanks.Utils;
+using UnityEngine.Rendering.VirtualTexturing;
 using VContainer;
 
 namespace Tanks.Shared.Items
@@ -70,12 +72,10 @@ namespace Tanks.Shared.Items
                 .ToDictionary(k => k.Key, v => v
                     .Select(x =>
                     {
-                        var behaviour = Activator.CreateInstance(x) as ItemBehaviourBase;
-                        _resolver.Inject(behaviour);
-
+                        var behaviour = _resolver.CreateInjected(x) as ItemBehaviourBase;
                         IItemConfig targetConfig = _items[v.Key];
-                        behaviour.Initialize(targetConfig);
 
+                        behaviour.Initialize(targetConfig);
                         return behaviour;
                     })
                     .ToArray());

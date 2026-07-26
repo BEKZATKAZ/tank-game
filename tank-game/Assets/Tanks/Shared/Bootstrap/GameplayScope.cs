@@ -19,7 +19,7 @@ namespace Tanks.Shared.Bootstrap
         {
             base.Configure(builder);
 
-            builder.RegisterInfrastructure();
+            builder.RegisterInfrastructure(Lifetime.Scoped);
             builder.RegisterComponent(_projectilePool).As<IProjectilePoolService>();
 
             builder.Register<IMazeGenerator, DFSGenerator>(Lifetime.Scoped);

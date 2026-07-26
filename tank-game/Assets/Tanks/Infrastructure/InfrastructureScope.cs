@@ -6,9 +6,10 @@ namespace Tanks.Infrastructure
 {
     public static class InfrastructureScope
     {
-        public static RegistrationBuilder RegisterInfrastructure(this IContainerBuilder builder)
+        public static RegistrationBuilder RegisterInfrastructure(
+            this IContainerBuilder builder, Lifetime lifetime)
         {
-            return builder.Register<IResourceLoader, AddressablesLoader>(Lifetime.Scoped);
+            return builder.Register<IResourceLoader, AddressablesLoader>(lifetime);
         }
     }
 }

@@ -1,6 +1,6 @@
-using System;
 using System.Linq;
 using Tanks.Shared;
+using Tanks.Utils;
 using UnityEngine;
 using UnityEngine.UIElements;
 using VContainer;
@@ -46,12 +46,7 @@ namespace Tanks.UI
 
             IDocumentController[] controllers = SplitComponentFinder
                 .FindFor(this, typeof(IDocumentController<>))
-                .Select(x =>
-                {
-                    object instance = Activator.CreateInstance(x);
-                    resolver.Inject(instance);
-                    return instance as IDocumentController;
-                })
+                .Select(x => resolver.CreateInjected(x) as IDocumentController)
                 .ToArray();
 
             _updates = controllers.OfType<IDocumentUpdate>().ToArray();
