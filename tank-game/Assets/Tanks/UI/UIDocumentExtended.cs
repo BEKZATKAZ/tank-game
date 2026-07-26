@@ -1,3 +1,4 @@
+using System;
 using System.Linq;
 using Tanks.Shared;
 using Tanks.Utils;
@@ -8,72 +9,48 @@ using VContainer.Unity;
 
 namespace Tanks.UI
 {
-    public interface IDocumentController { }
-    public interface IDocumentController<T> : IDocumentController where T : IDocument { }
     public interface IDocument { }
-
-    public interface IDocumentInitialize
-    {
-        void Initialize(VisualElement root);
-    }
-
-    public interface IDocumentUpdate
-    {
-        void OnUpdate(float deltaTime);
-    }
-
-    public interface IDocumentLateUpdate
-    {
-        void OnLateUpdate(float deltaTime);
-    }
-
-    public interface IDocumentDestroy
-    {
-        void OnDestroy();
-    }
 
     [RequireComponent(typeof(UIDocument))]
     public class UIDocumentExtended : MonoBehaviour, IDocument
     {
-        private IDocumentUpdate[] _updates;
-        private IDocumentLateUpdate[] _lateUpdates;
-        private IDocumentDestroy[] _destroys;
+        private PresenterBase[] _presenters;
 
         protected virtual void Awake()
         {
             IObjectResolver resolver = LifetimeScope.Find<LifetimeScope>().Container;
             VisualElement root = GetComponent<UIDocument>().rootVisualElement;
 
-            IDocumentController[] controllers = SplitComponentFinder
-                .FindFor(this, typeof(IDocumentController<>))
-                .Select(x => resolver.CreateInjected(x) as IDocumentController)
+            _presenters = SplitComponentFinder
+                .FindFor(this, typeof(IDocumentPresenter<>))
+                .Select(x => resolver.CreateInjected(x) as PresenterBase)
                 .ToArray();
 
-            _updates = controllers.OfType<IDocumentUpdate>().ToArray();
-            _lateUpdates = controllers.OfType<IDocumentLateUpdate>().ToArray();
-            _destroys = controllers.OfType<IDocumentDestroy>().ToArray();
-
-            foreach (var initialize in controllers.OfType<IDocumentInitialize>())
+            foreach (PresenterBase presenter in _presenters)
             {
-                initialize.Initialize(root);
+                IView view = presenter.CreateAndInitializeView();
+                view.Initialize(root);
             }
         }
 
         protected virtual void Update()
         {
             float deltaTime = Time.deltaTime;
-            for (int i = 0; i < _updates.Length; i++) _updates[i].OnUpdate(deltaTime);
+            foreach (PresenterBase presenter in _presenters) presenter.OnUpdate(deltaTime);
         }
 
         protected virtual void LateUpdate()
         {
             float deltaTime = Time.deltaTime;
-            for (int i = 0; i < _lateUpdates.Length; i++) _lateUpdates[i].OnLateUpdate(deltaTime);
+            foreach (PresenterBase presenter in _presenters) presenter.OnLateUpdate(deltaTime);
         }
 
         protected virtual void OnDestroy()
         {
-            for (int i = 0; i < _destroys.Length; i++) _destroys[i].OnDestroy();
+            foreach (IDisposable disposable in _presenters.OfType<IDisposable>())
+            {
+                disposable.Dispose();
+            }
         }
     }
 }
