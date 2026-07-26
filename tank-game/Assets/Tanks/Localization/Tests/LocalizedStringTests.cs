@@ -6,20 +6,13 @@ namespace Tanks.Localization.Tests
     public class LocalizedStringTests
     {
         private ILocalizationDatabase _database;
-        private ILocalizationLoader _loader;
-
-        [OneTimeSetUp]
-        public async Task OneTimeSetup()
-        {
-            _loader = new UnityLocalizationLoader();
-            await _loader.WaitForInitializationAsync();
-        }
 
         [SetUp]
-        public void Setup()
+        public async Task Setup()
         {
-            _loader.SetLocale("en");
             _database = new UnityLocalizationDatabase();
+            await _database.WaitForInitializationAsync();
+            _database.SetLocale("en");
         }
 
         [TestCase("Items", "invalid-test")]
@@ -60,11 +53,11 @@ namespace Tanks.Localization.Tests
             string stringFromCallback = null;
             result.StringChanged += x => stringFromCallback = x;
 
-            _loader.SetLocale("ru");
+            _database.SetLocale("ru");
             Assert.AreEqual(expectedRu, result.Get(), "Should switch from 'en' to 'ru'");
             Assert.AreEqual(expectedRu, stringFromCallback, "Callback not called");
 
-            _loader.SetLocale("en");
+            _database.SetLocale("en");
             Assert.AreEqual(expectedEn, result.Get(), "Should switch from 'ru' to 'en'");
             Assert.AreEqual(expectedEn, stringFromCallback, "Callback not called");
         }

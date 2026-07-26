@@ -1,3 +1,5 @@
+using Cysharp.Threading.Tasks;
+using System;
 using UnityEngine.Localization;
 using UnityEngine.Localization.Settings;
 using UnityEngine.Localization.Tables;
@@ -14,8 +16,15 @@ namespace Tanks.Localization
         public string EntryName;
     }
 
+    public delegate void LocaleChangedEventHandler(string locale);
+
     public interface ILocalizationDatabase
     {
+        event LocaleChangedEventHandler LocaleChanged;
+
+        void SetLocale(string locale);
+        UniTask WaitForInitializationAsync();
+
         bool TryGet(
             string tableName, string entryName, out ILocalizedString result);
 
@@ -23,9 +32,37 @@ namespace Tanks.Localization
             string tableName, string entryName, out ILocalizedString result, out bool fromCache);
     }
 
-    public sealed class UnityLocalizationDatabase : ILocalizationDatabase
+    public sealed class UnityLocalizationDatabase : ILocalizationDatabase, IDisposable
     {
+        public UnityLocalizationDatabase()
+        {
+            LocalizationSettings.SelectedLocaleChanged += OnLocaleChanged;
+        }
+
+        public event LocaleChangedEventHandler LocaleChanged;
+
         private readonly CachedLookups _cached = new();
+
+        private void OnLocaleChanged(Locale locale)
+        {
+            LocaleChanged?.Invoke(locale.LocaleName);
+        }
+
+        public void Dispose()
+        {
+            LocalizationSettings.SelectedLocaleChanged -= OnLocaleChanged;
+        }
+
+        public void SetLocale(string locale)
+        {
+            LocalizationSettings.SelectedLocale =
+                LocalizationSettings.AvailableLocales.GetLocale(locale);
+        }
+
+        public UniTask WaitForInitializationAsync()
+        {
+            return LocalizationSettings.InitializationOperation.ToUniTask();
+        }
 
         public bool TryGet(string tableName, string entryName, out ILocalizedString result)
         {

@@ -14,7 +14,7 @@ namespace Tanks.Client.Bootstrap
         INetworkMessageHandler<PlayerReadyRequested>
     {
         [Inject] private readonly IClientItemDatabase _itemDatabase;
-        [Inject] private readonly ILocalizationLoader _localizationLoader;
+        [Inject] private readonly ILocalizationDatabase _localization;
 
         private bool _isInitialized;
 
@@ -24,7 +24,7 @@ namespace Tanks.Client.Bootstrap
             {
                 await UniTask.WhenAll(
                     _itemDatabase.TryInitializeAsync(),
-                    _localizationLoader.WaitForInitializationAsync());
+                    _localization.WaitForInitializationAsync());
 
                 _isInitialized = true;
             }
