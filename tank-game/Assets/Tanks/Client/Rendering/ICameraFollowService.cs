@@ -7,7 +7,7 @@ namespace Tanks.Client.Rendering
 {
     public interface ICameraFollowService
     {
-        void SetDefault(float2 defaultPosition, float defaultOrthographicSize, bool forceOverride);
+        void SetDefault(Bounds mapBounds, bool forceOverride);
 
         void SetFollowTarget(ITransform target, float orthographicSize);
     }
@@ -18,21 +18,28 @@ namespace Tanks.Client.Rendering
 
         private ITransform _target;
         private float _targetOrthographicSize;
+        private Bounds _mapBounds;
 
         private float2 _defaultPosition;
         private float _defaultOrthographicSize = 5;
 
-        public void SetDefault(
-            float2 defaultPosition, float defaultOrthographicSize, bool forceOverride)
+        public void SetDefault(Bounds mapBounds, bool forceOverride)
         {
-            _defaultPosition = defaultPosition;
-            _defaultOrthographicSize = defaultOrthographicSize;
+            ICamera camera = _cameraMain.Get();
+            float width = mapBounds.size.x;
+            float height = mapBounds.size.y;
+
+            float aspect = camera.Aspect;
+            float verticalSize = height * 0.5f;
+            float horizontalSize = width / aspect * 0.5f;
+
+            _mapBounds = mapBounds;
+            _defaultPosition = ((float3)mapBounds.center).xy;
+            _defaultOrthographicSize = math.max(verticalSize, horizontalSize);
 
             if (forceOverride == false) return;
-            ICamera camera = _cameraMain.Get();
-
-            camera.Transform.WorldPosition = defaultPosition;
-            camera.OrthographicSize = defaultOrthographicSize;
+            camera.Transform.WorldPosition = _defaultPosition;
+            camera.OrthographicSize = _defaultOrthographicSize;
         }
 
         public void SetFollowTarget(ITransform target, float orthographicSize)
@@ -56,6 +63,21 @@ namespace Tanks.Client.Rendering
             camera.OrthographicSize = math.lerp(currentSize, size, deltaTime * sizeSpeed);
         }
 
+        private float2 ClampToBounds(float2 target, ICamera camera)
+        {
+            float halfHeight = camera.OrthographicSize;
+            float halfWidth = halfHeight * camera.Aspect;
+
+            float minX = _mapBounds.min.x + halfWidth;
+            float maxX = _mapBounds.max.x - halfWidth;
+            float minY = _mapBounds.min.y + halfHeight;
+            float maxY = _mapBounds.max.y - halfHeight;
+
+            return new float2(
+                math.clamp(target.x, minX, maxX),
+                math.clamp(target.y, minY, maxY));
+        }
+
         private void LateUpdate()
         {
             ICamera camera = _cameraMain.Get();
@@ -66,7 +88,8 @@ namespace Tanks.Client.Rendering
                 return;
             }
 
-            LerpTo(camera, _target.WorldPosition, _targetOrthographicSize);
+            float2 targetPosition = ClampToBounds(_target.WorldPosition, camera);
+            LerpTo(camera, targetPosition, _targetOrthographicSize);
         }
     }
 }

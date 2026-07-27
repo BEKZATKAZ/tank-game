@@ -32,10 +32,7 @@ namespace Tanks.Client.Bootstrap
 
         public async void Handle(GameStarted message)
         {
-            float3 size = _mapBounds.size;
-            float3 center = _mapBounds.center;
-
-            _follow.SetDefault(center.xy, math.cmin(size.xy) * 0.5f, forceOverride: true);
+            _follow.SetDefault(_mapBounds, forceOverride: true);
             await UniTask.Delay(TimeSpan.FromSeconds(message.StartDelaySeconds));
 
             var player = NetworkManager.LocalClient.PlayerObject;

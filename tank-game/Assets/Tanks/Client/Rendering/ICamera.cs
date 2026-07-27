@@ -7,6 +7,7 @@ namespace Tanks.Client.Rendering
     {
         ITransform Transform { get; }
         float OrthographicSize { get; set; }
+        float Aspect { get; }
     }
 
     public sealed class UnityCamera : ICamera
@@ -19,6 +20,7 @@ namespace Tanks.Client.Rendering
 
         public Camera OriginalCamera { get; }
         public ITransform Transform { get; }
+        public float Aspect => OriginalCamera.aspect;
 
         public float OrthographicSize
         {
