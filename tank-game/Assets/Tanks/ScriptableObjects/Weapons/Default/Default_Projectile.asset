@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Default_Projectile
   m_EditorClassIdentifier: Tanks.Shared::Tanks.Shared.Weapons.Data.ProjectileConfig
   _prefab: {fileID: 5180612007738186379, guid: 49875ef025b799a468527ffd34132dc2, type: 3}
-  _damage: {fileID: 11400000, guid: 7cd758260130f6d4ca654f246e1ed369, type: 2}
+  _damage: {fileID: 11400000, guid: e4b866fa8408a83478a54f605506866f, type: 2}
   _speed: 15
   _lifeTime: 10
   _maxRicochetCount: 10

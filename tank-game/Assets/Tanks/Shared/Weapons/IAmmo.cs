@@ -51,10 +51,13 @@ namespace Tanks.Shared.Weapons
 
             if (_regenerationElapsed <= _config.RegenerationDelay) return;
 
-            float time = _regenerationElapsed - _config.RegenerationDelay;
-            float alpha = math.saturate(time / _config.RegenerationDuration);
+            float regenTime = _regenerationElapsed - _config.RegenerationDelay;
+            float alpha = math.saturate(regenTime / _config.RegenerationDuration);
 
-            Current = (int)(alpha * _config.MaxAmount);
+            int missing = _config.MaxAmount - Current;
+            Current += (int)(missing * alpha);
+
+            if (Current >= _config.MaxAmount) Current = _config.MaxAmount;
         }
 
         public override void Consume(int amount = 1)
