@@ -21,6 +21,7 @@
   <Project Path="Tanks.UI.Tests.csproj" />
   <Project Path="Tanks.Utils.Tests.csproj" />
   <Project Path="Tanks.Infrastructure.csproj" />
+  <Project Path="Tanks.Audio.csproj" />
   <Project Path="Tanks.Core.Tests.csproj" />
   <Project Path="Tank.Shared.Bootstrap.csproj" />
   <Project Path="Tanks.Infrastructure.Tests.csproj" />

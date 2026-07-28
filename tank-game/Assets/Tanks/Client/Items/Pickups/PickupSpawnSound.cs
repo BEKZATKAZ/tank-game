@@ -1,5 +1,4 @@
-﻿using FMOD.Studio;
-using FMODUnity;
+﻿using Tanks.Audio;
 using Tanks.Shared;
 using Tanks.Shared.Items.Pickups;
 using VContainer;
@@ -11,25 +10,25 @@ namespace Tanks.Client.Items.Pickups
         INetworkMessageHandler<PickupSpawned>
     {
         [Inject] private readonly IClientItemDatabase _database;
+        [Inject] private readonly IAudioFactory _audioFactory;
 
-        private EventInstance _instance;
+        private IAudioInstance _instance;
 
         public void Handle(PickupSpawned message)
         {
             IClientItemConfig config = _database.Get(message.ItemId);
 
-            if (_instance.isValid())
+            if (_instance != null)
             {
-                _instance.stop(FMOD.Studio.STOP_MODE.IMMEDIATE);
-                _instance.release();
+                _instance.Stop(fadeOut: false);
+                _instance.Dispose();
             }
 
-            if (config.OnSpawnSound.IsNull) return;
+            if (string.IsNullOrEmpty(config.OnSpawnSound)) return;
 
-            _instance = RuntimeManager.CreateInstance(config.OnSpawnSound);
-            RuntimeManager.AttachInstanceToGameObject(_instance, gameObject);
-
-            _instance.start();
+            _instance = _audioFactory.CreateInstance(config.OnSpawnSound);
+            _instance.AttachTo(Behaviour.Transform);
+            _instance.Play();
         }
 
         protected override void Awake()
@@ -40,9 +39,9 @@ namespace Tanks.Client.Items.Pickups
 
         private void OnDisable()
         {
-            if (_instance.isValid() == false) return;
-            _instance.stop(FMOD.Studio.STOP_MODE.ALLOWFADEOUT);
-            _instance.release();
+            if (_instance is null) return;
+            _instance.Stop(fadeOut: true);
+            _instance.Dispose();
         }
     }
 }

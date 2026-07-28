@@ -2,6 +2,7 @@
     "name": "Tank.Client.Bootstrap",
     "rootNamespace": "",
     "references": [
+        "GUID:709c0c0f80bdb3546acf88cce1ca1376",
         "GUID:0d8f1684e64ea0f43b8a5b3bc55e15eb",
         "GUID:2d8ca1202255a4243a9ebca3a433072c",
         "GUID:f90840d67f64e4f4498e2cc0ee633b30",

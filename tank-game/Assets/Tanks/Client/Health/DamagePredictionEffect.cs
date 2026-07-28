@@ -1,10 +1,11 @@
 using Cysharp.Threading.Tasks;
-using FMODUnity;
 using System.Collections.Generic;
 using System.Linq;
+using Tanks.Audio;
 using Tanks.Shared;
 using Tanks.Shared.Health;
 using UnityEngine;
+using VContainer;
 
 namespace Tanks.Client.Health
 {
@@ -12,8 +13,7 @@ namespace Tanks.Client.Health
         NetworkComponent<HealthBehaviour>,
         INetworkMessageHandler<DamageTaken>
     {
-        private static readonly EventReference _reference = RuntimeManager
-            .PathToEventReference("event:/SFX/DamageTaken");
+        [Inject] private readonly IAudioPlayer _audioPlayer;
 
         private Dictionary<SpriteRenderer, Color> _sprites;
         private float _lastTime;
@@ -29,7 +29,10 @@ namespace Tanks.Client.Health
                 renderer.color = Color.Lerp(Color.red, color, 0.5f);
             }
 
-            RuntimeManager.PlayOneShot(_reference, (Vector2)Behaviour.Transform.WorldPosition);
+            _audioPlayer.PlayOneShotAttached(
+                path: "event:/SFX/DamageTaken",
+                target: Behaviour.Transform,
+                useDefault: Behaviour.IsLocalPlayer);
 
             await UniTask.Delay(150);
 

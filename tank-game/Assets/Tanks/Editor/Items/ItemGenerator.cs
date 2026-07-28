@@ -57,8 +57,8 @@ namespace Tanks.Editor.Items
                     editorConfig.AccentColor);
 
                 clientConfig.InitializeAudioFromEditor(
-                    editorConfig.OnSpawnSound,
-                    editorConfig.OnPickUpSound);
+                    editorConfig.OnSpawnSound.Path,
+                    editorConfig.OnPickUpSound.Path);
 
                 string sharedConfigName = $"{editorConfig.Identifier}.asset";
                 string clientConfigName = $"{editorConfig.Identifier} (Client).asset";

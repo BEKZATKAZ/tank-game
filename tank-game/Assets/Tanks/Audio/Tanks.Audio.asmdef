@@ -1,0 +1,24 @@
+{
+    "name": "Tanks.Audio",
+    "rootNamespace": "",
+    "references": [
+        "GUID:0c752da273b17c547ae705acf0f2adf2",
+        "GUID:062f5e808b278a541b6489e12da12d22",
+        "GUID:3f93f6c48cdbd804796618c781f92e56",
+        "GUID:d8b63aba1907145bea998dd612889d6b",
+        "GUID:b0214a6008ed146ff8f122a6a9c2f6cc"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [
+        "LinuxStandalone64Server",
+        "WindowsStandalone32Server",
+        "WindowsStandalone64Server"
+    ],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": false,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

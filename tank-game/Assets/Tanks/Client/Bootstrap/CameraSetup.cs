@@ -1,12 +1,12 @@
 ﻿using Cysharp.Threading.Tasks;
 using System;
+using Tanks.Audio;
 using Tanks.Client.Input;
 using Tanks.Client.Rendering;
 using Tanks.Shared;
 using Tanks.Shared.Adapters;
 using Tanks.Shared.Bootstrap;
 using Tanks.Shared.Generation;
-using Unity.Mathematics;
 using UnityEngine;
 using VContainer;
 
@@ -17,6 +17,8 @@ namespace Tanks.Client.Bootstrap
         INetworkMessageHandler<TilemapGenerated>,
         INetworkMessageHandler<GameStarted>
     {
+        [Inject] private readonly IAudioPlayer _audioPlayer;
+        [Inject] private readonly ICameraMainService _camera;
         [Inject] private readonly ICameraFollowService _follow;
         [Inject] private readonly IInputService<ManualDriveInput> _driveInput;
         [Inject] private readonly IInputService<TurretInput> _turretInput;
@@ -33,6 +35,8 @@ namespace Tanks.Client.Bootstrap
         public async void Handle(GameStarted message)
         {
             _follow.SetDefault(_mapBounds, forceOverride: true);
+            _audioPlayer.SetDefault(_camera.Get().Transform);
+
             await UniTask.Delay(TimeSpan.FromSeconds(message.StartDelaySeconds));
 
             var player = NetworkManager.LocalClient.PlayerObject;

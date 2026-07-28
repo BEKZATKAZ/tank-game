@@ -1,7 +1,7 @@
-﻿using FMODUnity;
+﻿using Tanks.Audio;
 using Tanks.Shared;
 using Tanks.Shared.Weapons;
-using UnityEngine;
+using VContainer;
 
 namespace Tanks.Client.Weapons
 {
@@ -9,12 +9,14 @@ namespace Tanks.Client.Weapons
         NetworkComponent<WeaponHolderBehaviour>,
         INetworkMessageHandler<WeaponUsed>
     {
-        private static readonly EventReference _reference = RuntimeManager
-            .PathToEventReference("event:/SFX/Shoot");
+        [Inject] private readonly IAudioPlayer _audioPlayer;
 
         public void Handle(WeaponUsed message)
         {
-            RuntimeManager.PlayOneShot(_reference, (Vector2)Behaviour.Transform.WorldPosition);
+            _audioPlayer.PlayOneShotAttached(
+                path: "event:/SFX/Shoot",
+                target: Behaviour.Transform,
+                useDefault: Behaviour.IsLocalPlayer);
         }
 
         protected override void Awake()

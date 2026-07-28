@@ -1,6 +1,6 @@
-﻿using FMOD.Studio;
-using FMODUnity;
+﻿using Tanks.Audio;
 using Tanks.Client.Input;
+using Tanks.Client.Rendering;
 using Tanks.Core.Helpers;
 using Tanks.Shared;
 using Tanks.Shared.Driving;
@@ -13,18 +13,23 @@ namespace Tanks.Client.Player
     public sealed class EngineSound : NetworkComponent<TankDriveBehaviour>
     {
         [Inject] private readonly IInputService<ManualDriveInput> _input;
+        [Inject] private readonly IAudioFactory _audioFactory;
+        [Inject] private readonly ICameraMainService _cameraService;
 
-        private EventInstance _instance;
+        private IAudioInstance _instance;
         private float2 _lastPosition;
         private PositiveFloatOrZero _intensity;
 
         private void Start()
         {
-            _instance = RuntimeManager.CreateInstance("event:/SFX/Engine/Engine_Default");
-            _instance.setVolume(0.5f);
+            _instance = _audioFactory.CreateInstance("event:/SFX/Engine/Engine_Default");
+            _instance.SetVolume(0.5f);
 
-            RuntimeManager.AttachInstanceToGameObject(_instance, gameObject);
-            _instance.start();
+            _instance.AttachTo(Behaviour.IsLocalPlayer
+                ? _cameraService.Get().Transform
+                : Behaviour.Transform);
+
+            _instance.Play();
         }
 
         private void Update()
@@ -47,14 +52,14 @@ namespace Tanks.Client.Player
             }
 
             _intensity = math.lerp(_intensity, target, Time.deltaTime * speed);
-            _instance.setParameterByName("EngineIntensity", _intensity);
+            _instance.SetParameter("EngineIntensity", _intensity);
         }
 
         public override void OnDestroy()
         {
             base.OnDestroy();
-            _instance.stop(FMOD.Studio.STOP_MODE.ALLOWFADEOUT);
-            _instance.release();
+            _instance.Stop(fadeOut: true);
+            _instance.Dispose();
         }
     }
 }

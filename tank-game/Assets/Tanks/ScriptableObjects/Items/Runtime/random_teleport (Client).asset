@@ -17,18 +17,6 @@ MonoBehaviour:
   _iconMaterial: {fileID: -876546973899608171, guid: 9680fbb573735774aaa7e0c722f9aad3, type: 3}
   _glowMaterial: {fileID: -876546973899608171, guid: 854e9148940c8d64ea6929e8ef0edb9a, type: 3}
   _icon: {fileID: -777151460, guid: 1c10ab560e7afed43991be2cabaf3733, type: 3}
-  _onPickUpSound:
-    Guid:
-      Data1: -793655039
-      Data2: 1102610235
-      Data3: -417058888
-      Data4: -724461717
-    Path: event:/SFX/Items/PickUp/Teleport
-  _onSpawnSound:
-    Guid:
-      Data1: -116597637
-      Data2: 1106414896
-      Data3: -1318326339
-      Data4: -567283307
-    Path: event:/SFX/Items/Spawn/Rare
+  _onPickUpSound: event:/SFX/Items/PickUp/Teleport
+  _onSpawnSound: event:/SFX/Items/Spawn/Rare
   _accentColor: {r: 0.25490198, g: 0.4392157, b: 1, a: 1}

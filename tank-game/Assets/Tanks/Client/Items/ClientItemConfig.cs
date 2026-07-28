@@ -1,4 +1,3 @@
-using FMODUnity;
 using NaughtyAttributes;
 using Tanks.Shared.Items;
 using UnityEngine;
@@ -14,8 +13,8 @@ namespace Tanks.Client.Items
         Material GlowMaterial { get; }
         Sprite Icon { get; }
 
-        EventReference OnSpawnSound { get; }
-        EventReference OnPickUpSound { get; }
+        string OnSpawnSound { get; }
+        string OnPickUpSound { get; }
         Color AccentColor { get; }
     }
 
@@ -49,11 +48,11 @@ namespace Tanks.Client.Items
 
         [ReadOnly]
         [SerializeField]
-        private EventReference _onPickUpSound;
+        private string _onPickUpSound;
 
         [ReadOnly]
         [SerializeField]
-        private EventReference _onSpawnSound;
+        private string _onSpawnSound;
 
         [ReadOnly]
         [SerializeField]
@@ -65,8 +64,8 @@ namespace Tanks.Client.Items
         public Material IconMaterial => _iconMaterial;
         public Material GlowMaterial => _glowMaterial;
         public Sprite Icon => _icon;
-        public EventReference OnSpawnSound => _onSpawnSound;
-        public EventReference OnPickUpSound => _onPickUpSound;
+        public string OnSpawnSound => _onSpawnSound;
+        public string OnPickUpSound => _onPickUpSound;
         public Color AccentColor => _accentColor;
 
 #if UNITY_EDITOR
@@ -87,8 +86,7 @@ namespace Tanks.Client.Items
             _accentColor = accentColor;
         }
 
-        public void InitializeAudioFromEditor(
-            EventReference onSpawnSound, EventReference onPickUpSound)
+        public void InitializeAudioFromEditor(string onSpawnSound, string onPickUpSound)
         {
             _onSpawnSound = onSpawnSound;
             _onPickUpSound = onPickUpSound;

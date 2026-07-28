@@ -1,7 +1,8 @@
-﻿using FMODUnity;
+﻿using Tanks.Audio;
 using Tanks.Shared;
 using Tanks.Shared.Weapons.Projectiles;
 using Unity.Mathematics;
+using VContainer;
 
 namespace Tanks.Client.Weapons
 {
@@ -9,13 +10,12 @@ namespace Tanks.Client.Weapons
         NetworkComponent<ProjectileBehaviour>,
         INetworkMessageHandler<ProjectileRicocheted>
     {
-        private static readonly EventReference _reference = RuntimeManager
-            .PathToEventReference("event:/SFX/Ricochet");
+        [Inject] private readonly IAudioPlayer _audioPlayer;
 
         public void Handle(ProjectileRicocheted message)
         {
             float2 hitPoint = message.HitPoint;
-            RuntimeManager.PlayOneShot(_reference, new float3(hitPoint.x, hitPoint.y, 0));
+            _audioPlayer.PlayOneShot("event:/SFX/Ricochet", hitPoint);
         }
 
         protected override void Awake()

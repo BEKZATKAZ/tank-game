@@ -1,4 +1,4 @@
-﻿using FMODUnity;
+﻿using Tanks.Audio;
 using Tanks.Shared;
 using Tanks.Shared.Items;
 using VContainer;
@@ -10,14 +10,16 @@ namespace Tanks.Client.Items.Pickups
         INetworkMessageHandler<ItemPickedUp>
     {
         [Inject] private readonly IClientItemDatabase _database;
+        [Inject] private readonly IAudioPlayer _audioPlayer;
 
         public void Handle(ItemPickedUp message)
         {
             IClientItemConfig config = _database.Get(message.ItemId);
 
-            if (config.OnPickUpSound.IsNull) return;
-
-            RuntimeManager.PlayOneShotAttached(config.OnPickUpSound, gameObject);
+            _audioPlayer.PlayOneShotAttached(
+                path: config.OnPickUpSound,
+                target: Behaviour.Transform,
+                useDefault: Behaviour.IsLocalPlayer);
         }
 
         protected override void Awake()

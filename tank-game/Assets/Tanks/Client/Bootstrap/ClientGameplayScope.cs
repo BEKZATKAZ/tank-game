@@ -1,4 +1,5 @@
-﻿using Tanks.Client.Input;
+﻿using Tanks.Audio;
+using Tanks.Client.Input;
 using Tanks.Client.Items;
 using Tanks.Client.Rendering;
 using Tanks.Client.Weapons;
@@ -13,6 +14,7 @@ namespace Tanks.Client.Bootstrap
     {
         public void Configure(IContainerBuilder builder)
         {
+            builder.RegisterAudio(Lifetime.Scoped);
             builder.RegisterLocalization(Lifetime.Scoped);
 
             builder.Register<
