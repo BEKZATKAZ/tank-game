@@ -5,6 +5,7 @@ using Tanks.Client.Rendering;
 using Tanks.Client.Weapons;
 using Tanks.Localization;
 using Tanks.Shared.Bootstrap;
+using Tanks.UI.Gameplay;
 using VContainer;
 using VContainer.Unity;
 
@@ -31,6 +32,8 @@ namespace Tanks.Client.Bootstrap
 
             builder.RegisterComponentOnNewGameObject<CameraFollowService>(Lifetime.Scoped)
                 .As<ICameraFollowService>();
+
+            builder.RegisterGameplayUI();
         }
     }
 }

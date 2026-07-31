@@ -1,6 +1,5 @@
 ﻿using NSubstitute;
 using NUnit.Framework;
-using System;
 using Tanks.Client.Items;
 using Tanks.Client.Items.Pickups;
 using Tanks.Localization;
@@ -13,22 +12,21 @@ using UnityEngine;
 
 namespace Tanks.UI.Tests.Gameplay
 {
-    public sealed class ItemDescriptionTests :
-        PresenterTestBase<ItemDescriptionPresenter, ItemDescriptionModel>
+    public sealed class ItemDescriptionTests : ViewModelTestBase<ItemDescriptionViewModel>
     {
         private ILocalizationDatabase _localization;
         private IClientItemDatabase _clientDatabase;
         private IItemDatabase _sharedDatabase;
         private IMessageBus _bus;
 
-        protected override ItemDescriptionPresenter CreatePresenter()
+        protected override ItemDescriptionViewModel CreateViewModel()
         {
             _localization = Substitute.For<ILocalizationDatabase>();
             _clientDatabase = Substitute.For<IClientItemDatabase>();
             _sharedDatabase = Substitute.For<IItemDatabase>();
             _bus = Substitute.For<IMessageBus>();
 
-            return new ItemDescriptionPresenter(
+            return new ItemDescriptionViewModel(
                 _localization, _clientDatabase, _sharedDatabase, _bus);
         }
 
@@ -80,12 +78,12 @@ namespace Tanks.UI.Tests.Gameplay
             Color accentColor = Color.red;
 
             RegisterMockItem(id, name, description, tier, accentColor);
-            Presenter.Handle(new PickupAreaEntered { ItemId = id }, null);
+            ViewModel.Handle(new PickupAreaEntered { ItemId = id }, null);
 
-            Assert.AreEqual(name ?? "", LatestShownModel.Name);
-            Assert.AreEqual(description ?? "", LatestShownModel.Description);
-            Assert.AreEqual(tier.ToString(), LatestShownModel.Tier);
-            Assert.AreEqual(accentColor, LatestShownModel.AccentColor);
+            Assert.AreEqual(name ?? "", ViewModel.Name.Value);
+            Assert.AreEqual(description ?? "", ViewModel.Description.Value);
+            Assert.AreEqual(tier.ToString(), ViewModel.TierName.Value);
+            Assert.AreEqual(accentColor, ViewModel.AccentColor.Value);
 
             _clientDatabase.Received(1).Get(Arg.Any<ItemIdentifier>());
             _sharedDatabase.Received(1).Get(Arg.Any<ItemIdentifier>());
@@ -106,27 +104,31 @@ namespace Tanks.UI.Tests.Gameplay
             RegisterMockItem(id1, "item-1", "", ItemTier.Epic, Color.red);
             RegisterMockItem(id2, "item-2", "", ItemTier.Legendary, Color.yellow);
 
-            Presenter.Handle(new PickupAreaEntered { ItemId = id1, PickupId = new(1) }, null);
-            Presenter.Handle(new PickupAreaEntered { ItemId = id2, PickupId = new(2) }, null);
+            ViewModel.Handle(new PickupAreaEntered { ItemId = id1, PickupId = new(1) }, null);
+            ViewModel.Handle(new PickupAreaEntered { ItemId = id2, PickupId = new(2) }, null);
 
-            Assert.False(IsHidden, "Should be shown now");
-            Assert.AreEqual("item-2", LatestShownModel.Name, "Should show the second item");
+            Assert.AreEqual(100, ViewModel.Opacity.Value);
+            Assert.AreEqual("item-2", ViewModel.Name.Value,
+                "Should show the second item");
 
-            Presenter.Handle(new PickupAreaLeft { PickupId = new PickupId(2) }, null);
+            ViewModel.Handle(new PickupAreaLeft { PickupId = new PickupId(2) }, null);
 
-            Assert.False(IsHidden, "Should be shown now");
-            Assert.AreEqual("item-1", LatestShownModel.Name,
+            Assert.AreEqual(100, ViewModel.Opacity.Value, "Should be shown now");
+            Assert.AreEqual("item-1", ViewModel.Name.Value,
                 "Should show the previous item from the history");
 
-            Presenter.Handle(new PickupAreaLeft { PickupId = new PickupId(1) }, null);
-            Assert.True(IsHidden, "No pick-ups left, the view should be hidden now");
+            ViewModel.Handle(new PickupAreaLeft { PickupId = new PickupId(1) }, null);
+            Assert.AreEqual(0, ViewModel.Opacity.Value,
+                "No pick-ups left, the view should be hidden now");
         }
 
         [Test]
         public void Exit_NoHistory_HidesView()
         {
-            Presenter.Handle(new PickupAreaLeft { PickupId = new PickupId(1) }, null);
-            Assert.True(IsHidden, "No pick-ups were registered before, the view should be hidden");
+            ViewModel.Handle(new PickupAreaLeft { PickupId = new PickupId(1) }, null);
+
+            Assert.AreEqual(0, ViewModel.Opacity.Value,
+                "No pick-ups were registered before, the view should be hidden");
         }
     }
 }

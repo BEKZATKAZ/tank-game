@@ -8,16 +8,17 @@ using Tanks.Shared.Items;
 using Tanks.Shared.Items.Data;
 using Tanks.Shared.Items.Pickups;
 using Tanks.Shared.Messaging;
+using UnityEngine;
 
 namespace Tanks.UI.Gameplay.ItemDescription
 {
-    public sealed class ItemDescriptionPresenter :
-        PresenterBase<GameplayDocument, ItemDescriptionView, ItemDescriptionModel>,
+    public sealed class ItemDescriptionViewModel :
+        IViewModel,
         IMessageHandler<PickupAreaEntered>,
         IMessageHandler<PickupAreaLeft>,
         IDisposable
     {
-        public ItemDescriptionPresenter(
+        public ItemDescriptionViewModel(
             ILocalizationDatabase localization,
             IClientItemDatabase clientItemDatabase,
             IItemDatabase itemDatabase,
@@ -34,6 +35,13 @@ namespace Tanks.UI.Gameplay.ItemDescription
             _sharedDatabase = itemDatabase;
             _enteredPickups = new Dictionary<PickupId, ItemIdentifier>();
         }
+
+        public BindableProperty<string> Name { get; } = new();
+        public BindableProperty<string> Description { get; } = new();
+        public BindableProperty<string> TierName { get; } = new();
+        public BindableProperty<Sprite> Icon { get; } = new();
+        public BindableProperty<Color> AccentColor { get; } = new();
+        public BindableProperty<float> Opacity { get; } = new();
 
         private readonly Dictionary<PickupId, ItemIdentifier> _enteredPickups;
         private readonly ILocalizationDatabase _localization;
@@ -65,14 +73,13 @@ namespace Tanks.UI.Gameplay.ItemDescription
             bool tierExists = _localization.TryGet(
                 "Items", $"item.tier.{tierString}", out ILocalizedString tier);
 
-            View.Show(new ItemDescriptionModel
-            {
-                Name = nameExists ? name.Get() : "",
-                Description = descriptionExists ? description.Get() : "",
-                Tier = tierExists ? tier.Get() : "",
-                Icon = clientConfig.Icon,
-                AccentColor = clientConfig.AccentColor
-            });
+            Name.Value = nameExists ? name.Get() : "";
+            Description.Value = descriptionExists ? description.Get() : "";
+            TierName.Value = tierExists ? tier.Get() : "";
+
+            Icon.Value = clientConfig.Icon;
+            AccentColor.Value = clientConfig.AccentColor;
+            Opacity.Value = 1;
         }
 
         public void Handle(PickupAreaLeft message, IMessageSender sender)
@@ -86,7 +93,7 @@ namespace Tanks.UI.Gameplay.ItemDescription
                 return;
             }
 
-            View.Hide();
+            Opacity.Value = 0;
         }
 
         public void Handle(PickupAreaEntered message, IMessageSender sender)

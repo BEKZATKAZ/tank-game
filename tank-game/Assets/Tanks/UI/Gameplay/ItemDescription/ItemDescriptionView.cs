@@ -2,7 +2,7 @@
 
 namespace Tanks.UI.Gameplay.ItemDescription
 {
-    public sealed class ItemDescriptionView : IView<ItemDescriptionModel>
+    public sealed class ItemDescriptionView : ViewBase<ItemDescriptionViewModel>
     {
         private VisualElement _container;
         private VisualElement _icon;
@@ -10,32 +10,26 @@ namespace Tanks.UI.Gameplay.ItemDescription
         private Label _description;
         private Label _tier;
 
-        public void Initialize(VisualElement root)
+        protected override VisualElement GetRootElement() => _container;
+
+        protected override void Initialize(VisualElement root)
         {
             _container = root.Q("ItemDescriptionContainer");
-            _container.style.opacity = 0;
-
             _icon = root.Q("ItemIcon");
             _name = _container.Q<Label>("ItemName");
             _description = _container.Q<Label>("ItemDescription");
             _tier = _container.Q<Label>("ItemTier");
         }
 
-        public void Hide()
+        protected override void Bind(ItemDescriptionViewModel viewModel)
         {
-            _container.style.opacity = 0;
-        }
+            viewModel.Name.BindToTarget(x => _name.text = x);
+            viewModel.Description.BindToTarget(x => _description.text = x);
+            viewModel.TierName.BindToTarget(x => _tier.text = x);
 
-        public void Show(ItemDescriptionModel data)
-        {
-            _icon.style.backgroundImage = new StyleBackground(data.Icon);
-            _name.text = data.Name;
-            _description.text = data.Description;
-
-            _tier.text = data.Tier;
-            _tier.style.color = data.AccentColor;
-
-            _container.style.opacity = 1;
+            viewModel.AccentColor.BindToTarget(x => _icon.style.color = x);
+            viewModel.Icon.BindToTarget(x => _icon.style.backgroundImage = new StyleBackground(x));
+            viewModel.Opacity.BindToTarget(x => _container.style.opacity = x);
         }
     }
 }

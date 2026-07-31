@@ -818,6 +818,7 @@ MonoBehaviour:
   autoRun: 1
   autoInjectGameObjects:
   - {fileID: 1563795402}
+  - {fileID: 1288937377}
   _projectilePool: {fileID: 315083342}
 --- !u!4 &1201526859
 Transform:
@@ -844,7 +845,9 @@ GameObject:
   m_Component:
   - component: {fileID: 1288937380}
   - component: {fileID: 1288937379}
-  - component: {fileID: 1288937378}
+  - component: {fileID: 1288937383}
+  - component: {fileID: 1288937382}
+  - component: {fileID: 1288937381}
   m_Layer: 0
   m_Name: UI
   m_TagString: Untagged
@@ -852,18 +855,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &1288937378
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1288937377}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 00bca2810d5458b43ae018442a0b222e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Tanks.UI::Tanks.UI.Gameplay.GameplayDocument
 --- !u!114 &1288937379
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -902,6 +893,52 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1288937381
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1288937377}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c2ea54ecc592b6f4286cc26eb91c46fc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Tanks.UI::Tanks.UI.Gameplay.StartCountdown.StartCountdownView
+  _showOnPlay: 1
+  _countdownSound:
+    Guid:
+      Data1: 276148699
+      Data2: 1159777229
+      Data3: -681566323
+      Data4: 1586396916
+    Path: event:/SFX/StartCounter
+--- !u!114 &1288937382
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1288937377}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 18f5a146d2910714fad1d9e0bad83043, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Tanks.UI::Tanks.UI.Gameplay.Eliminated.EliminatedView
+  _showOnPlay: 1
+--- !u!114 &1288937383
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1288937377}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b418bb896d95ac7459de86148210fef1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Tanks.UI::Tanks.UI.Gameplay.ItemDescription.ItemDescriptionView
+  _showOnPlay: 1
 --- !u!1 &1563795402
 GameObject:
   m_ObjectHideFlags: 0

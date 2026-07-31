@@ -1,26 +1,44 @@
-﻿using UnityEngine.UIElements;
+﻿using FMODUnity;
+using Tanks.Audio;
+using UnityEngine;
+using UnityEngine.UIElements;
+using VContainer;
 
 namespace Tanks.UI.Gameplay.StartCountdown
 {
-    public sealed class StartCountdownView : IView<StartCountdownModel>
+    public sealed class StartCountdownView : ViewBase<StartCountdownViewModel>
     {
+        [SerializeField] private EventReference _countdownSound;
+
+        [Inject] private readonly IAudioFactory _audioFactory;
+
+        private IAudioInstance _instance;
         private Label _label;
 
-        public void Hide()
-        {
-            _label.style.display = DisplayStyle.None;
-        }
+        protected override VisualElement GetRootElement() => _label;
 
-        public void Initialize(VisualElement root)
+        protected override void Initialize(VisualElement root)
         {
             _label = root.Q<Label>("StartText");
-            _label.style.display = DisplayStyle.None;
+            _label.style.display = DisplayStyle.Flex;
         }
 
-        public void Show(StartCountdownModel data)
+        protected override void Bind(StartCountdownViewModel viewModel)
         {
-            _label.style.display = DisplayStyle.Flex;
-            _label.text = data.Text;
+            _instance ??= _audioFactory.CreateInstance(_countdownSound.Path);
+
+            viewModel.Title.BindToTarget(x =>
+            {
+                _label.text = x;
+                if (string.IsNullOrEmpty(x) == false) _instance.Play();
+            });
+        }
+
+        private void OnDestroy()
+        {
+            if (_instance is null) return;
+            _instance.Stop(false);
+            _instance.Dispose();
         }
     }
 }

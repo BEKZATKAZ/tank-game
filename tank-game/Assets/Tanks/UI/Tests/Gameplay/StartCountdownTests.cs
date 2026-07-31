@@ -8,12 +8,11 @@ using Tanks.UI.Gameplay.StartCountdown;
 
 namespace Tanks.UI.Tests.Gameplay
 {
-    public class StartCountdownTests :
-        PresenterTestBase<StartCountdownPresenter, StartCountdownModel>
+    public class StartCountdownTests : ViewModelTestBase<StartCountdownViewModel>
     {
-        protected override StartCountdownPresenter CreatePresenter()
+        protected override StartCountdownViewModel CreateViewModel()
         {
-            return new StartCountdownPresenter(Substitute.For<IMessageBus>());
+            return new StartCountdownViewModel(Substitute.For<IMessageBus>());
         }
 
         [TestCase(0.3f)]
@@ -21,21 +20,19 @@ namespace Tanks.UI.Tests.Gameplay
         [TestCase(1.5f)]
         public async Task Start_RunsCountdown(float duration)
         {
-            Presenter.Handle(new GameStarted { StartDelaySeconds = duration }, null);
+            ViewModel.Handle(new GameStarted { StartDelaySeconds = duration }, null);
 
             int intervalMillis = (int)(1000 * (duration / 3));
             await UniTask.Yield();
 
             for (int i = 0; i < 4; i++)
             {
-                Assert.False(IsHidden, "Should be shown during the countdown");
-                Assert.AreEqual(Presenter.CountdownText[i], LatestShownModel.Text);
-
+                Assert.AreEqual(ViewModel.CountdownText[i], ViewModel.Title.Value);
                 await UniTask.Delay(intervalMillis);
                 await UniTask.Yield();
             }
 
-            Assert.True(IsHidden, "Should hide after the countdown");
+            Assert.IsEmpty(ViewModel.Title.Value, "Should hide after the countdown");
         }
     }
 }
