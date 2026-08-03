@@ -1,0 +1,14 @@
+<Solution>
+  <Folder Name="/Application/">
+    <Project Path="Application/Tanks.Application/Tanks.Application.csproj" Id="fcd4d405-abbc-4f8b-b28b-8f6e0b76db81" />
+  </Folder>
+  <Folder Name="/Domain/">
+    <Project Path="Domain/Tanks.Domain/Tanks.Domain.csproj" Id="65d3fd09-9028-4102-8771-f377bf93a394" />
+  </Folder>
+  <Folder Name="/Functions/">
+    <Project Path="Functions/Tanks.Functions/Tanks.Functions.csproj" Id="6a62f38b-1c80-4fda-a0f2-44ecd230d00d" />
+  </Folder>
+  <Folder Name="/Infrastructure/">
+    <Project Path="Infrastructure/Tanks.Infrastructure/Tanks.Infrastructure.csproj" Id="110a61f1-a27c-4e79-8d96-f73efcbdf0a7" />
+  </Folder>
+</Solution>
