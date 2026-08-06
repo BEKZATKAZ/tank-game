@@ -1,10 +1,13 @@
-﻿using Tanks.Shared.Generation;
+﻿using Cysharp.Threading.Tasks;
+using Tanks.Shared.Generation;
 using Tanks.Shared.Items;
 using Tanks.Shared.Messaging;
 using Unity.Mathematics;
 using Unity.Netcode;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using VContainer;
+using VContainer.Unity;
 
 namespace Tanks.Shared.Bootstrap
 {
@@ -26,12 +29,36 @@ namespace Tanks.Shared.Bootstrap
 		[SerializeField] private TilemapSpawner _tilemap;
 		[SerializeField] private int _desiredPlayerCount = 1;
 
+		[SerializeField] private string _serverSceneName = "Gameplay_Server";
+		[SerializeField] private string _clientSceneName = "Gameplay_Client";
+
 		[Inject] private readonly IMessageBus _bus;
 		[Inject] private readonly IItemDatabase _itemDatabase;
+        [Inject] private readonly LifetimeScope _scope;
 
-		public int DesiredPlayerCount => _desiredPlayerCount;
+		private bool _isSceneLoaded;
 
-		[Rpc(SendTo.Everyone, InvokePermission = RpcInvokePermission.Server)]
+        public int DesiredPlayerCount => _desiredPlayerCount;
+
+        protected override void OnInitialize()
+        {
+            _itemDatabase.TryInitializeAsync(IsServer);
+        }
+
+		public async UniTask TryLoadSceneAsync()
+		{
+			if (_isSceneLoaded) return;
+
+			string sceneName = IsServer ? _serverSceneName : _clientSceneName;
+            _isSceneLoaded = true;
+
+            using (LifetimeScope.EnqueueParent(_scope))
+            {
+                await SceneManager.LoadSceneAsync(sceneName, LoadSceneMode.Additive);
+            }
+        }
+
+        [Rpc(SendTo.Everyone, InvokePermission = RpcInvokePermission.Server)]
 		public void GenerateTilemapEveryoneRpc(
 			TilemapGenerationSettings settings, Vector2Int resolution)
 		{
@@ -70,13 +97,7 @@ namespace Tanks.Shared.Bootstrap
             _bus.Publish(message, this);
         }
 
-		public void PrepareGame() => EmitMessage(new PrepareGameRequested());
+        public void PrepareGame() => EmitMessage(new PrepareGameRequested());
 		public void WaitForPlayers() => EmitMessage(new WaitingForPlayersRequested());
-
-		public override void OnNetworkSpawn()
-		{
-			base.OnNetworkSpawn();
-			_itemDatabase.TryInitializeAsync(IsServer);
-		}
 	}
 }

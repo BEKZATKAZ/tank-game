@@ -8,6 +8,7 @@ using Unity.Netcode;
 using UnityEngine;
 using UnityEngine.Pool;
 using VContainer;
+using VContainer.Unity;
 
 namespace Tanks.Shared.Items.Pickups
 {
@@ -19,8 +20,7 @@ namespace Tanks.Shared.Items.Pickups
     }
 
     public sealed class PickupSpawnBehaviour :
-        NetworkBehaviourExtended,
-        IMessageHandler<TilemapGenerated>
+        NetworkBehaviourExtended, IMessageHandler<TilemapGenerated>
     {
         [MinMaxSlider(0, 120)]
         [SerializeField]
@@ -30,8 +30,8 @@ namespace Tanks.Shared.Items.Pickups
         [SerializeField]
         private float _minDistanceToPlayers = 2;
 
-        [Inject]
-        private readonly IMessageBus _bus;
+        [Inject] private readonly IMessageBus _bus;
+        [Inject] private readonly IObjectResolver _container;
 
         private readonly Dictionary<PickupId, PickupBehaviour> _pickups = new();
         private ObjectPool<PickupBehaviour> _pool;
@@ -67,17 +67,16 @@ namespace Tanks.Shared.Items.Pickups
         public override void OnDestroy()
         {
             base.OnDestroy();
+            _pool?.Dispose();
         }
 
-        public override void OnNetworkSpawn()
+        protected override void OnInitialize()
         {
-            base.OnNetworkSpawn();
-
             _pool = new ObjectPool<PickupBehaviour>(
                 createFunc: CreatePickup,
                 actionOnGet: x => x.gameObject.SetActive(true),
                 actionOnRelease: x => x.gameObject.SetActive(false),
-                actionOnDestroy: x => Destroy(x.gameObject)
+                actionOnDestroy: DestroyPickup
             );
 
             // Prevent stutters during gameplay
@@ -99,7 +98,14 @@ namespace Tanks.Shared.Items.Pickups
 
         private PickupBehaviour CreatePickup()
         {
-            return new GameObject("pickup").AddComponent<PickupBehaviour>();
+            PickupBehaviour instance = new GameObject("pickup").AddComponent<PickupBehaviour>();
+            _container.InjectGameObject(instance.gameObject);
+            return instance;
+        }
+
+        private void DestroyPickup(PickupBehaviour instance)
+        {
+            if (instance) Destroy(instance);
         }
     }
 }

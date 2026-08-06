@@ -4,12 +4,16 @@ using Tanks.Shared.Weapons.Data;
 using Unity.Netcode;
 using UnityEngine;
 using UnityEngine.Pool;
+using VContainer;
+using VContainer.Unity;
 
 namespace Tanks.Shared.Weapons.Projectiles
 {
     public sealed class SharedProjectilePoolService :
         NetworkBehaviourExtended, IProjectilePoolService
     {
+        [Inject] private readonly IObjectResolver _container;
+
         public IEnumerable<KeyValuePair<ProjectileId, IProjectile>> ActiveProjectiles => _idToProjectiles;
 
         private readonly Dictionary<IProjectileConfig, ObjectPool<ProjectileBehaviour>> _pools = new();
@@ -19,6 +23,13 @@ namespace Tanks.Shared.Weapons.Projectiles
         private void DestroyProjectile(ProjectileBehaviour instance)
         {
             if (instance) Destroy(instance.gameObject);
+        }
+
+        private ProjectileBehaviour CreateProjectile(IProjectileConfig config)
+        {
+            ProjectileBehaviour instance = config.Create() as ProjectileBehaviour;
+            _container?.InjectGameObject(instance.gameObject);
+            return instance;
         }
 
         [Rpc(SendTo.NotServer,
@@ -51,7 +62,7 @@ namespace Tanks.Shared.Weapons.Projectiles
             int maxSize = 1000;
 
             ObjectPool<ProjectileBehaviour> pool = new ObjectPool<ProjectileBehaviour>(
-                createFunc: () => config.Create() as ProjectileBehaviour,
+                createFunc: () => CreateProjectile(config),
                 actionOnGet: x => x.gameObject.SetActive(true),
                 actionOnRelease: x => x.gameObject.SetActive(false),
                 actionOnDestroy: DestroyProjectile,

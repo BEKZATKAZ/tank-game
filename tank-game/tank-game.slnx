@@ -1,12 +1,14 @@
 ﻿<Solution>
+  <Project Path="PlayFab.csproj" />
   <Project Path="Tanks.UI.csproj" />
   <Project Path="Tanks.Server.csproj" />
   <Project Path="Tanks.Client.csproj" />
+  <Project Path="PlayFabEditorExtensions.csproj" />
   <Project Path="Tanks.Shared.Tests.csproj" />
   <Project Path="Tanks.Shared.csproj" />
+  <Project Path="Tanks.Infrastructure.csproj" />
   <Project Path="Tanks.Localization.csproj" />
   <Project Path="FMODUnityResonanceEditor.csproj" />
-  <Project Path="Tank.Server.Bootstrap.csproj" />
   <Project Path="FMODUnityEditor.csproj" />
   <Project Path="FMODUnity.csproj" />
   <Project Path="Tanks.Localization.Tests.csproj" />
@@ -15,14 +17,13 @@
   <Project Path="Tanks.Client.Tests.csproj" />
   <Project Path="Tanks.Core.csproj" />
   <Project Path="Tanks.Server.Tests.csproj" />
-  <Project Path="Tank.Client.Bootstrap.csproj" />
+  <Project Path="Tanks.Core.Bootstrap.csproj" />
   <Project Path="FMODUnityResonance.csproj" />
   <Project Path="Tanks.UI.Tests.csproj" />
   <Project Path="Tanks.Editor.csproj" />
   <Project Path="Tanks.Utils.Tests.csproj" />
-  <Project Path="Tanks.Infrastructure.csproj" />
   <Project Path="Tanks.Audio.csproj" />
   <Project Path="Tanks.Core.Tests.csproj" />
-  <Project Path="Tank.Shared.Bootstrap.csproj" />
+  <Project Path="PlayFabSDKEditor.csproj" />
   <Project Path="Tanks.Infrastructure.Tests.csproj" />
 </Solution>

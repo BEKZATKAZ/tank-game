@@ -2,6 +2,7 @@
 using Tanks.Core.Helpers;
 using Tanks.Server.Weapons.Projectiles;
 using Tanks.Shared.Adapters;
+using Tanks.Shared.Bootstrap;
 using Tanks.Shared.Weapons.Projectiles;
 using UnityEngine;
 using VContainer;
@@ -23,7 +24,7 @@ namespace Tanks.Shared.Weapons.Data.Actions
         public override IUseAction Create(ITransform muzzlePoint)
         {
             IProjectilePoolService pool = LifetimeScope
-                .Find<LifetimeScope>().Container
+                .Find<GameplayScope>().Container
                 .Resolve<IProjectilePoolService>();
 
             return new ProjectileLaunchAction(pool.AsRequired(), _projectile, muzzlePoint);

@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using Tanks.Shared.Adapters;
 using Unity.Netcode;
 using UnityEngine;
@@ -26,7 +25,19 @@ namespace Tanks.Shared
 
         private readonly Dictionary<Type, List<INetworkMessageHandler>> _handlers = new();
         private readonly List<INetworkComponent> _components = new();
+        private IObjectResolver _container;
+
+        private bool _isInjected;
+        private bool _isSpawned;
         private bool _isInitialized;
+
+        [Inject]
+        public void Inject(IObjectResolver container)
+        {
+            _isInjected = true;
+            _container = container;
+            TryInitializeBehaviour();
+        }
 
         protected void EmitMessage<T>(T message)
         {
@@ -52,6 +63,27 @@ namespace Tanks.Shared
             }
         }
 
+        private void TryInitializeBehaviour()
+        {
+            if (_isInitialized) return;
+            if (_isSpawned == false || _isInjected == false) return;
+
+            _isInitialized = true;
+            NetworkManager.NetworkTickSystem.Tick += Tick;
+
+            IEnumerable<Type> types = SplitComponentFinder
+                .FindFor(this, typeof(INetworkComponent<>), NetworkManager.IsServer);
+
+            foreach (Type componentType in types)
+            {
+                Component component = gameObject.AddComponent(componentType);
+                _components.Add(component as INetworkComponent);
+            }
+
+            _container.InjectGameObject(gameObject);
+            OnInitialize();
+        }
+
         public void RegisterMessageHandler<T>(INetworkMessageHandler<T> handler)
         {
             Type messageType = typeof(T);
@@ -65,42 +97,20 @@ namespace Tanks.Shared
             handlers.Add(handler);
         }
 
-        public override void OnNetworkSpawn() => Initialize();
-
-        public override void OnNetworkDespawn()
+        public override void OnNetworkSpawn()
         {
-            if (_isInitialized == false) return;
+            _isSpawned = true;
+            TryInitializeBehaviour();
+        }
+
+        public override void OnDestroy()
+        {
+            base.OnDestroy();
+
+            if (_isInitialized == false || NetworkManager == false) return;
+            if (NetworkManager.NetworkTickSystem is null) return;
+
             NetworkManager.NetworkTickSystem.Tick -= Tick;
-        }
-
-        protected virtual void Awake()
-        {
-            Transform = new UnityTransform(transform);
-        }
-
-        protected void ForceInitialize() => Initialize();
-
-        protected virtual void OnTick(int tick, float tickDelta) { }
-
-        private void Initialize()
-        {
-            if (_isInitialized) return;
-
-            _isInitialized = true;
-
-            NetworkManager.NetworkTickSystem.Tick += Tick;
-
-            IEnumerable<Type> types = SplitComponentFinder
-                .FindFor(this, typeof(INetworkComponent<>), NetworkManager.IsServer);
-
-            foreach (Type componentType in types)
-            {
-                Component component = gameObject.AddComponent(componentType);
-                _components.Add(component as INetworkComponent);
-            }
-
-            IObjectResolver container = LifetimeScope.Find<LifetimeScope>().Container;
-            container.InjectGameObject(gameObject);
         }
 
         private void Tick()
@@ -119,5 +129,10 @@ namespace Tanks.Shared
                 component.OnTick(tick, tickDelta);
             }
         }
+
+        protected void ForceInitialize() => OnNetworkSpawn();
+        protected virtual void Awake() => Transform = new UnityTransform(transform);
+        protected virtual void OnTick(int tick, float tickDelta) { }
+        protected virtual void OnInitialize() { }
     }
 }

@@ -51,6 +51,7 @@ namespace Tanks.Shared.Messaging
             {
                 list = new List<IMessageHandler>();
                 _handlers[type] = list;
+                Debug.Log($"New type entry '{type.Name}'");
             }
 
             Type handlerType = handler.Value.GetType();
@@ -62,6 +63,7 @@ namespace Tanks.Shared.Messaging
             }
 
             list.Add(handler.Value);
+            Debug.Log($"New handler '{handlerType.Name}' of type '{type.Name}'");
         }
     }
 }

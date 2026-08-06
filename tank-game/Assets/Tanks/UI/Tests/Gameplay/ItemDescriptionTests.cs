@@ -107,13 +107,13 @@ namespace Tanks.UI.Tests.Gameplay
             ViewModel.Handle(new PickupAreaEntered { ItemId = id1, PickupId = new(1) }, null);
             ViewModel.Handle(new PickupAreaEntered { ItemId = id2, PickupId = new(2) }, null);
 
-            Assert.AreEqual(100, ViewModel.Opacity.Value);
+            Assert.AreEqual(1, ViewModel.Opacity.Value);
             Assert.AreEqual("item-2", ViewModel.Name.Value,
                 "Should show the second item");
 
             ViewModel.Handle(new PickupAreaLeft { PickupId = new PickupId(2) }, null);
 
-            Assert.AreEqual(100, ViewModel.Opacity.Value, "Should be shown now");
+            Assert.AreEqual(1, ViewModel.Opacity.Value, "Should be shown now");
             Assert.AreEqual("item-1", ViewModel.Name.Value,
                 "Should show the previous item from the history");
 

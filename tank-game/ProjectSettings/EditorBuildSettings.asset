@@ -6,8 +6,20 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
+    path: Assets/Tanks/Scenes/ClientBoot.unity
+    guid: 5c4dd58a3e5379b4f959bf81675f617b
+  - enabled: 1
+    path: Assets/Tanks/Scenes/Menus.unity
+    guid: 440a5ef3c489e7544bb22ba51f5ab99e
+  - enabled: 1
     path: Assets/Tanks/Scenes/Gameplay.unity
     guid: 8c9cfa26abfee488c85f1582747f6a02
+  - enabled: 1
+    path: Assets/Tanks/Scenes/Gameplay_Server.unity
+    guid: 609de1ae4b3c2a248907930400fe871c
+  - enabled: 1
+    path: Assets/Tanks/Scenes/Gameplay_Client.unity
+    guid: f75900165d08826449b13a445cd9d201
   m_configObjects:
     com.unity.addressableassets: {fileID: 11400000, guid: 137c14a4a164e3f42906f8a408fe16af, type: 2}
     com.unity.localization.addressable-group-rules: {fileID: 11400000, guid: 58465c160088f484d98e02e67d2c8c8b, type: 2}

@@ -6,6 +6,7 @@ using Tanks.Shared.Bootstrap;
 using Unity.Netcode;
 using UnityEngine;
 using VContainer;
+using VContainer.Unity;
 
 namespace Tanks.Client.Bootstrap
 {
@@ -15,6 +16,7 @@ namespace Tanks.Client.Bootstrap
     {
         [Inject] private readonly IClientItemDatabase _itemDatabase;
         [Inject] private readonly ILocalizationDatabase _localization;
+        [Inject] private readonly IObjectResolver _container;
 
         private bool _isInitialized;
 
@@ -23,6 +25,7 @@ namespace Tanks.Client.Bootstrap
             if (_isInitialized == false)
             {
                 await UniTask.WhenAll(
+                    Behaviour.TryLoadSceneAsync(),
                     _itemDatabase.TryInitializeAsync(),
                     _localization.WaitForInitializationAsync());
 
@@ -36,6 +39,9 @@ namespace Tanks.Client.Bootstrap
                 // Stop if playmode stopped
                 if (Application.isPlaying == false) return;
             }
+
+            GameObject player = NetworkManager.LocalClient.PlayerObject.gameObject;
+            _container.InjectGameObject(player);
 
             Behaviour.SendReadyConfirmationServerRpc(message.SecretHandle);
         }

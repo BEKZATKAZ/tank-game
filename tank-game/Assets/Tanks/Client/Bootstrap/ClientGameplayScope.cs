@@ -5,7 +5,6 @@ using Tanks.Client.Rendering;
 using Tanks.Client.Weapons;
 using Tanks.Localization;
 using Tanks.Shared.Bootstrap;
-using Tanks.UI.Gameplay;
 using VContainer;
 using VContainer.Unity;
 
@@ -15,25 +14,23 @@ namespace Tanks.Client.Bootstrap
     {
         public void Configure(IContainerBuilder builder)
         {
-            builder.RegisterAudio(Lifetime.Scoped);
-            builder.RegisterLocalization(Lifetime.Scoped);
+            builder.RegisterAudio(Lifetime.Singleton);
+            builder.RegisterLocalization(Lifetime.Singleton);
 
             builder.Register<
                 IInputService<ManualDriveInput>,
-                ManualMovementInputService>(Lifetime.Scoped);
+                ManualMovementInputService>(Lifetime.Singleton);
 
             builder.Register<
                 IInputService<TurretInput>,
-                TurretInputService>(Lifetime.Scoped);
+                TurretInputService>(Lifetime.Singleton);
 
-            builder.Register<ICameraMainService, CameraMainService>(Lifetime.Scoped);
-            builder.Register<IShotIdGenerator, ShotIdGenerator>(Lifetime.Scoped);
-            builder.Register<IClientItemDatabase, ClientItemDatabase>(Lifetime.Scoped);
+            builder.Register<ICameraMainService, CameraMainService>(Lifetime.Singleton);
+            builder.Register<IShotIdGenerator, ShotIdGenerator>(Lifetime.Singleton);
+            builder.Register<IClientItemDatabase, ClientItemDatabase>(Lifetime.Singleton);
 
-            builder.RegisterComponentOnNewGameObject<CameraFollowService>(Lifetime.Scoped)
+            builder.RegisterComponentOnNewGameObject<CameraFollowService>(Lifetime.Singleton)
                 .As<ICameraFollowService>();
-
-            builder.RegisterGameplayUI();
         }
     }
 }

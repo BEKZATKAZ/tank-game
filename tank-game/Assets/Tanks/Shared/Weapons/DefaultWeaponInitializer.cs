@@ -6,15 +6,16 @@ using VContainer;
 namespace Tanks.Shared.Weapons
 {
     [RequireComponent(typeof(WeaponHolderBehaviour))]
-    public sealed class DefaultWeaponInitializer : MonoBehaviour
+    public sealed class DefaultWeaponInitializer : NetworkBehaviourExtended
     {
         [Required]
         [SerializeField]
         private WeaponConfig _defaultWeaponConfig;
 
-        [Inject] private readonly IWeaponFactory _factory;
+        [Inject]
+        private readonly IWeaponFactory _factory;
 
-        private void Start()
+        protected override void OnInitialize()
         {
             WeaponHolderBehaviour behaviour = GetComponent<WeaponHolderBehaviour>();
             behaviour.SetDefault(_factory.Create(_defaultWeaponConfig, behaviour.MuzzlePoint));

@@ -8,6 +8,8 @@ using Tanks.Shared.Generation;
 using Unity.Mathematics;
 using Unity.Netcode;
 using UnityEngine;
+using VContainer;
+using VContainer.Unity;
 
 namespace Tanks.Server.Bootstrap
 {
@@ -15,17 +17,20 @@ namespace Tanks.Server.Bootstrap
         NetworkComponent<GameStartBehaviour>,
         INetworkMessageHandler<PrepareGameRequested>
     {
-        public void Handle(PrepareGameRequested message)
+        [Inject] private readonly IObjectResolver _container;
+
+        public async void Handle(PrepareGameRequested message)
         {
             foreach (var client in NetworkManager.ConnectedClients.Values)
             {
                 if (client.PlayerObject == false) continue;
-
                 client.PlayerObject.Despawn(destroy: true);
             }
 
             Vector2Int resolution = new Vector2Int(6, 4);
             int wallWidth = 5;
+
+            await Behaviour.TryLoadSceneAsync();
 
             GenerateMap(wallWidth, resolution);
             SpawnPlayers(wallWidth, resolution);
@@ -64,6 +69,8 @@ namespace Tanks.Server.Bootstrap
                 float3 position3D = new float3(position, 0);
 
                 GameObject player = Instantiate(playerPrefab.Value, position3D, quaternion.identity);
+                _container.InjectGameObject(player);
+
                 NetworkObject networkObject = player.GetComponent<NetworkObject>();
                 networkObject.SpawnAsPlayerObject(clientId, destroyWithScene: true);
             }

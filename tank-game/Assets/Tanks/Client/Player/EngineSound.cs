@@ -32,6 +32,15 @@ namespace Tanks.Client.Player
             _instance.Play();
         }
 
+        public override void OnDestroy()
+        {
+            base.OnDestroy();
+            if (_instance is null) return;
+
+            _instance.Stop(fadeOut: true);
+            _instance.Dispose();
+        }
+
         private void Update()
         {
             PositiveFloatOrZero target;
@@ -53,13 +62,6 @@ namespace Tanks.Client.Player
 
             _intensity = math.lerp(_intensity, target, Time.deltaTime * speed);
             _instance.SetParameter("EngineIntensity", _intensity);
-        }
-
-        public override void OnDestroy()
-        {
-            base.OnDestroy();
-            _instance.Stop(fadeOut: true);
-            _instance.Dispose();
         }
     }
 }
