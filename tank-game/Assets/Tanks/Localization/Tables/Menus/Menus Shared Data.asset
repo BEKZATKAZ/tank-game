@@ -1,0 +1,64 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5b11a58205ec3474ca216360e9fa74a8, type: 3}
+  m_Name: Menus Shared Data
+  m_EditorClassIdentifier: Unity.Localization::UnityEngine.Localization.Tables.SharedTableData
+  m_TableCollectionName: Menus
+  m_TableCollectionNameGuidString: 34510603f8b6d1a44b1b2ffa9aa551c9
+  m_Entries:
+  - m_Id: 27659821056
+    m_Key: menu.main.quit
+    m_Metadata:
+      m_Items: []
+  - m_Id: 289292115968
+    m_Key: menu.main.settings
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3244510153236480
+    m_Key: menu.main.tutorial
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3244736305913856
+    m_Key: menu.main.find-lobby
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3245362964291584
+    m_Key: menu.main.host-lobby
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3337205144051712
+    m_Key: menu.settings.master-volume
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3337490075705344
+    m_Key: menu.settings.music-volume
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3337645382393856
+    m_Key: menu.settings.sfx-volume
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3337773761650688
+    m_Key: menu.settings.ui-volume
+    m_Metadata:
+      m_Items: []
+  m_Metadata:
+    m_Items: []
+  m_KeyGenerator:
+    rid: 5098955050416865457
+  references:
+    version: 2
+    RefIds:
+    - rid: 5098955050416865457
+      type: {class: DistributedUIDGenerator, ns: UnityEngine.Localization.Tables, asm: Unity.Localization}
+      data:
+        m_CustomEpoch: 1785307732641

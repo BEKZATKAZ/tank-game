@@ -1,0 +1,135 @@
+* {
+	--text-color: rgb(245, 245, 245);
+	--text-secondary-color: rgb(205, 205, 205);
+	--accent-color: #7AE2CF;
+	--secondary-color: #FDEB9E;
+	--bg: rgba(0, 0, 0, 0.75);
+	--bg-dark: rgba(0, 0, 0, 0.85);
+	--border-color: rgba(255, 255, 255, 0.1);
+
+	margin: 0;
+	padding: 0;
+	color: var(--text-color);
+	border-color: var(--border-color);
+}
+
+#Header {
+	flex-grow: 0;
+	background-color: var(--bg-dark);
+	margin: 10px;
+	border-radius: 10px;
+	border-width: 4px;
+}
+
+#Header .unity-label {
+	padding: 16px 32px 16px 32px;
+	margin: 0;
+	font-size: 32px;
+	-unity-font-style: bold;
+}
+
+#Content {
+	flex-direction: row;
+	padding: 120px;
+}
+
+#Buttons {
+	justify-content: flex-end;
+	margin-right: 120px;
+}
+
+#Buttons .unity-button {
+	-unity-text-align: middle-right;
+	-unity-background-scale-mode: scale-to-fit;
+	-unity-background-image-tint-color: var(--accent-color);
+	background-color: var(--bg);
+	background-position-x: 2px;
+	font-size: 32px;
+	border-width: 4px;
+	border-radius: 10px;
+	margin: 0;
+	margin-top: 20px;
+	padding: 16px 24px 16px 24px;
+}
+
+#Buttons .unity-button:hover {
+	background-color: white;
+	border-color: white;
+	color: black;
+	-unity-background-image-tint-color: black;
+}
+
+#GameTitle {
+	margin-bottom: 40px;
+	font-size: 96px;
+	-unity-text-align: middle-center;
+}
+
+#Copyright {
+	color: rgba(255, 255, 255, 0.5);
+	margin-top: 40px;
+	font-size: 24px;
+	-unity-text-align: middle-center;
+}
+
+#Menu {
+	background-color: var(--bg);
+	border-radius: 10px;
+	border-width: 4px;
+	overflow: hidden;
+}
+
+.menu-header {
+	font-size: 36px;
+	letter-spacing: 2px;
+	padding: 20px;
+	background-color: rgba(0, 0, 0, 0.75);
+	-unity-text-align: middle-center;
+}
+
+.menu-content {
+	padding: 12px;
+}
+
+.setting {
+	font-size: 32px;
+	-unity-text-align: middle-left;
+	padding: 16px 32px 16px 32px;
+}
+
+.setting .unity-base-field__label {
+	margin-right: 40px;
+	min-width: 350px;
+}
+
+.setting .unity-base-field__input {
+	align-items: center;
+}
+
+.setting .unity-base-slider__drag-container {
+	height: 64px;
+}
+
+.setting .unity-base-slider__tracker {
+	height: 100%;
+	position: relative;
+	top: auto;
+	background-color: rgba(0, 0, 0, 0.5);
+}
+
+.setting .unity-base-slider__dragger {
+	top: auto;
+	width: 10px;
+	height: 100%;
+	background-color: var(--accent-color);
+}
+
+.unity-scroller .unity-base-slider__tracker {
+	background-color: var(--bg-dark);
+	border-width: 0;
+}
+
+.unity-scroller .unity-base-slider__dragger {
+	background-color: var(--secondary-color);
+	border-width: 0;
+}

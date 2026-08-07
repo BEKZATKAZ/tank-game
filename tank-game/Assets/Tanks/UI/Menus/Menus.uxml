@@ -1,0 +1,76 @@
+<ui:UXML xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
+    <Style src="project://database/Assets/Tanks/UI/Menus/Styles/MainMenu.uss?fileID=7433441132597879392&amp;guid=e77348697c99f3b4795a79682c5e1415&amp;type=3#MainMenu"/>
+    <ui:VisualElement name="Header">
+        <ui:Label text="USERNAME" enable-rich-text="false" style="-unity-font-definition: resource(&quot;FlatSkin/Font/Roboto-Bold&quot;);"/>
+    </ui:VisualElement>
+    <ui:VisualElement name="Content" style="flex-grow: 1;">
+        <ui:VisualElement name="Buttons">
+            <ui:Label text="T.A.N.K.S." name="GameTitle" style="-unity-font-definition: url(&quot;project://database/Assets/Plugins/PlayFabEditorExtensions/Editor/UI/Fonts/Avalon%20Bold.ttf?fileID=12800000&amp;guid=96e17474f840a01459f0cc936c5d4d9b&amp;type=3#Avalon Bold&quot;);"/>
+            <Tanks.UI.Elements.CustomButton name="HostLobbyButton" style="background-image: url(&quot;project://database/Assets/Plugins/Layer%20Lab/2D%20Icons-PictoIconPack01/PictoIcon_256/Icon_PictoIcon_Control_Play.Png?fileID=21300000&amp;guid=89a5ae9f9ca3648d99ebe68370a1de31&amp;type=3#Icon_PictoIcon_Control_Play&quot;);">
+                <Bindings>
+                    <UnityEngine.Localization.LocalizedString property="text" table="GUID:34510603f8b6d1a44b1b2ffa9aa551c9" entry="Id(3245362964291584)"/>
+                </Bindings>
+            </Tanks.UI.Elements.CustomButton>
+            <Tanks.UI.Elements.CustomButton name="JoinLobbyButton" style="background-image: url(&quot;project://database/Assets/Plugins/Layer%20Lab/2D%20Icons-PictoIconPack01/PictoIcon_256/Icon_PictoIcon_Globe.Png?fileID=21300000&amp;guid=d5bf4177867634cfcbba66115df16d52&amp;type=3#Icon_PictoIcon_Globe&quot;);">
+                <Bindings>
+                    <UnityEngine.Localization.LocalizedString property="text" table="GUID:34510603f8b6d1a44b1b2ffa9aa551c9" entry="Id(3244736305913856)"/>
+                </Bindings>
+            </Tanks.UI.Elements.CustomButton>
+            <Tanks.UI.Elements.CustomButton name="TutorialButton" style="background-image: url(&quot;project://database/Assets/Plugins/Layer%20Lab/2D%20Icons-PictoIconPack01/PictoIcon_256/Icon_PictoIcon_Book.Png?fileID=21300000&amp;guid=4288c61bb11e34bcc94e22f519a12edf&amp;type=3#Icon_PictoIcon_Book&quot;);">
+                <Bindings>
+                    <UnityEngine.Localization.LocalizedString property="text" table="GUID:34510603f8b6d1a44b1b2ffa9aa551c9" entry="Id(3244510153236480)"/>
+                </Bindings>
+            </Tanks.UI.Elements.CustomButton>
+            <Tanks.UI.Elements.CustomButton name="SettingsButton" style="background-image: url(&quot;project://database/Assets/Plugins/Layer%20Lab/2D%20Icons-PictoIconPack01/PictoIcon_256/Icon_PictoIcon_Setting_1.Png?fileID=21300000&amp;guid=a8e1509e3881943cbafc9ee0bf954e81&amp;type=3#Icon_PictoIcon_Setting_1&quot;);">
+                <Bindings>
+                    <UnityEngine.Localization.LocalizedString property="text" table="GUID:34510603f8b6d1a44b1b2ffa9aa551c9" entry="Id(289292115968)"/>
+                </Bindings>
+            </Tanks.UI.Elements.CustomButton>
+            <Tanks.UI.Elements.CustomButton name="QuitGame" text="" style="background-image: url(&quot;project://database/Assets/Plugins/Layer%20Lab/2D%20Icons-PictoIconPack01/PictoIcon_256/Icon_PictoIcon_Quit.Png?fileID=21300000&amp;guid=eff50cd7d22a34292bdd2d83400f3312&amp;type=3#Icon_PictoIcon_Quit&quot;);">
+                <Bindings>
+                    <UnityEngine.Localization.LocalizedString property="text" table="GUID:34510603f8b6d1a44b1b2ffa9aa551c9" entry="Id(27659821056)"/>
+                </Bindings>
+            </Tanks.UI.Elements.CustomButton>
+            <ui:Label text="© 2026 BEKZATKAZ" name="Copyright" style="-unity-font-definition: resource(&quot;FlatSkin/Font/Roboto-Light&quot;);"/>
+        </ui:VisualElement>
+        <ui:VisualElement name="Menu" style="flex-grow: 1;">
+            <ui:VisualElement name="SettingsMenu" style="flex-grow: 1;">
+                <ui:Label name="" class="menu-header" style="-unity-font-definition: resource(&quot;FlatSkin/Font/Roboto-Black&quot;);">
+                    <Bindings>
+                        <UnityEngine.Localization.LocalizedString property="text" table="GUID:34510603f8b6d1a44b1b2ffa9aa551c9" entry="Id(289292115968)"/>
+                    </Bindings>
+                </ui:Label>
+                <ui:ScrollView horizontal-scroller-visibility="Hidden" name="" class="menu-content">
+                    <ui:VisualElement name="MasterVolume" class="setting">
+                        <ui:Slider value="63.3" high-value="100" style="-unity-font-definition: resource(&quot;FlatSkin/Font/Roboto-Medium&quot;); -unity-font-style: normal;">
+                            <Bindings>
+                                <UnityEngine.Localization.LocalizedString property="label" table="GUID:34510603f8b6d1a44b1b2ffa9aa551c9" entry="Id(3337205144051712)"/>
+                            </Bindings>
+                        </ui:Slider>
+                    </ui:VisualElement>
+                    <ui:VisualElement name="MusicVolume" class="setting">
+                        <ui:Slider value="63.3" high-value="100" style="-unity-font-definition: resource(&quot;FlatSkin/Font/Roboto-Medium&quot;); -unity-font-style: normal;">
+                            <Bindings>
+                                <UnityEngine.Localization.LocalizedString property="label" table="GUID:34510603f8b6d1a44b1b2ffa9aa551c9" entry="Id(3337490075705344)"/>
+                            </Bindings>
+                        </ui:Slider>
+                    </ui:VisualElement>
+                    <ui:VisualElement name="SFXVolume" class="setting">
+                        <ui:Slider value="63.3" high-value="100" style="-unity-font-definition: resource(&quot;FlatSkin/Font/Roboto-Medium&quot;); -unity-font-style: normal;">
+                            <Bindings>
+                                <UnityEngine.Localization.LocalizedString property="label" table="GUID:34510603f8b6d1a44b1b2ffa9aa551c9" entry="Id(3337645382393856)"/>
+                            </Bindings>
+                        </ui:Slider>
+                    </ui:VisualElement>
+                    <ui:VisualElement name="UIVolume" class="setting">
+                        <ui:Slider value="63.3" high-value="100" name="Slider" style="-unity-font-definition: resource(&quot;FlatSkin/Font/Roboto-Medium&quot;); -unity-font-style: normal;">
+                            <Bindings>
+                                <UnityEngine.Localization.LocalizedString property="label" table="GUID:34510603f8b6d1a44b1b2ffa9aa551c9" entry="Id(3337773761650688)"/>
+                            </Bindings>
+                        </ui:Slider>
+                    </ui:VisualElement>
+                </ui:ScrollView>
+            </ui:VisualElement>
+        </ui:VisualElement>
+    </ui:VisualElement>
+</ui:UXML>

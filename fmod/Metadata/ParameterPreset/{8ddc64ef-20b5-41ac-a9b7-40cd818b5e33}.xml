@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<objects serializationModel="Studio.02.03.00">
+	<object class="ParameterPreset" id="{8ddc64ef-20b5-41ac-a9b7-40cd818b5e33}">
+		<property name="name">
+			<value>MainMenuMusicCutoff</value>
+		</property>
+		<relationship name="folder">
+			<destination>{171434a0-f1e9-451e-bc60-9de3ffc45b95}</destination>
+		</relationship>
+		<relationship name="parameter">
+			<destination>{3c360926-58af-4bd5-a424-c7ac03c3ef97}</destination>
+		</relationship>
+	</object>
+	<object class="GameParameter" id="{3c360926-58af-4bd5-a424-c7ac03c3ef97}">
+		<property name="initialValue">
+			<value>0</value>
+		</property>
+		<relationship name="modulators">
+			<destination>{dc29f70e-1dbf-4444-93f7-ea3047fd0301}</destination>
+		</relationship>
+	</object>
+	<object class="SeekModulator" id="{dc29f70e-1dbf-4444-93f7-ea3047fd0301}">
+		<property name="nameOfPropertyBeingModulated">
+			<value>cursorPosition</value>
+		</property>
+		<property name="speedAscending">
+			<value>1</value>
+		</property>
+	</object>
+</objects>
