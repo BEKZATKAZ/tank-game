@@ -8,6 +8,7 @@ using Tanks.Shared.Items;
 using Tanks.Shared.Items.Data;
 using Tanks.Shared.Items.Pickups;
 using Tanks.Shared.Messaging;
+using Tanks.Utils;
 using UnityEngine;
 
 namespace Tanks.UI.Gameplay.ItemDescription

@@ -33,12 +33,7 @@
 	padding: 120px;
 }
 
-#Buttons {
-	justify-content: flex-end;
-	margin-right: 120px;
-}
-
-#Buttons .unity-button {
+.unity-button {
 	-unity-text-align: middle-right;
 	-unity-background-scale-mode: scale-to-fit;
 	-unity-background-image-tint-color: var(--accent-color);
@@ -47,16 +42,23 @@
 	font-size: 32px;
 	border-width: 4px;
 	border-radius: 10px;
-	margin: 0;
-	margin-top: 20px;
-	padding: 16px 24px 16px 24px;
+	padding: 16px 24px 16px 120px;
 }
 
-#Buttons .unity-button:hover {
+.unity-button:hover {
 	background-color: white;
 	border-color: white;
 	color: black;
 	-unity-background-image-tint-color: black;
+}
+
+#Buttons {
+	justify-content: flex-end;
+	margin-right: 120px;
+}
+
+#Buttons .unity-button {
+	margin-top: 20px;
 }
 
 #GameTitle {
@@ -91,6 +93,20 @@
 	padding: 12px;
 }
 
+#SettingsButtons {
+	flex-shrink: 0;
+	flex-direction: row;
+	justify-content: flex-end;
+	padding: 20px;
+	margin-top: 8px;
+}
+
+#SettingsButtons * {
+	flex-shrink: 1;
+	flex-grow: 1;
+	margin: 0 8px 0 8px;
+}
+
 .setting {
 	font-size: 32px;
 	-unity-text-align: middle-left;
@@ -104,6 +120,24 @@
 
 .setting .unity-base-field__input {
 	align-items: center;
+	height: 64px;
+}
+
+.setting .unity-base-popup-field__input {
+	align-items: center;
+	background-color: rgba(0, 0, 0, 0.5);
+}
+
+.setting .unity-base-popup-field__text {
+	-unity-text-align: middle-center;
+}
+
+.setting .unity-base-popup-field__arrow {
+	position: absolute;
+	right: 0;
+	-unity-background-scale-mode: scale-to-fit;
+	-unity-background-image-tint-color: var(--text-color);
+	min-width: 48px;
 }
 
 .setting .unity-base-slider__drag-container {

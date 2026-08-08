@@ -1,10 +1,17 @@
 ﻿using System;
 using System.Collections.Generic;
-using UnityEngine;
 
-namespace Tanks.UI
+namespace Tanks.Utils
 {
-    public sealed class BindableProperty<T>
+    public interface IReadOnlyBindableProperty<T>
+    {
+        T Value { get; }
+
+        void Bind(Action<T> callback);
+        void Unbind(Action<T> callback);
+    }
+
+    public sealed class BindableProperty<T> : IReadOnlyBindableProperty<T>
     {
         public BindableProperty(T value = default)
         {
@@ -25,10 +32,15 @@ namespace Tanks.UI
             }
         }
 
-        public void BindToTarget(Action<T> callback)
+        public void Bind(Action<T> callback)
         {
             callback(_value);
             _toTargetBindings.Add(callback);
+        }
+
+        public void Unbind(Action<T> callback)
+        {
+            _toTargetBindings.Remove(callback);
         }
     }
 }

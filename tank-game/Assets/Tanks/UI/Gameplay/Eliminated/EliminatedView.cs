@@ -20,7 +20,7 @@ namespace Tanks.UI.Gameplay.Eliminated
 
         protected override void Bind(EliminatedViewModel viewModel)
         {
-            viewModel.Title.BindToTarget(x =>
+            viewModel.Title.Bind(x =>
             {
                 _title.text = x;
 
@@ -32,7 +32,7 @@ namespace Tanks.UI.Gameplay.Eliminated
                     .Bind(x => _container.style.opacity = x);
             });
 
-            viewModel.Subtitle.BindToTarget(x => _subtitle.text = x);
+            viewModel.Subtitle.Bind(x => _subtitle.text = x);
         }
     }
 }

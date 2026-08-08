@@ -35,6 +35,26 @@ MonoBehaviour:
     m_Key: menu.main.host-lobby
     m_Metadata:
       m_Items: []
+  - m_Id: 3701799150641152
+    m_Key: menu.settings.on
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3706300725157888
+    m_Key: menu.settings.off
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3638632466833408
+    m_Key: menu.settings.apply
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3641288212045824
+    m_Key: menu.settings.revert
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3638901065867264
+    m_Key: menu.settings.reset-to-defaults
+    m_Metadata:
+      m_Items: []
   - m_Id: 3337205144051712
     m_Key: menu.settings.master-volume
     m_Metadata:
@@ -49,6 +69,38 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 3337773761650688
     m_Key: menu.settings.ui-volume
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3701267455500288
+    m_Key: menu.settings.vsync
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3713258257604608
+    m_Key: menu.settings.frame-rate
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3714690427871232
+    m_Key: menu.settings.screen-mode
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3715105701715968
+    m_Key: menu.settings.screen-fullscreen
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3715168490446848
+    m_Key: menu.settings.screen-fullscreen-windowed
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3715272152670208
+    m_Key: menu.settings.screen-windowed
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3717298093776896
+    m_Key: menu.settings.screen-resolution
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4793871635013632
+    m_Key: menu.settings.language
     m_Metadata:
       m_Items: []
   m_Metadata:

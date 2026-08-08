@@ -54,6 +54,58 @@ MonoBehaviour:
     m_Localized: UI Volume
     m_Metadata:
       m_Items: []
+  - m_Id: 3638632466833408
+    m_Localized: APPLY
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3638901065867264
+    m_Localized: RESET TO DEFAULTS
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3641288212045824
+    m_Localized: REVERT
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3701267455500288
+    m_Localized: Vertical Sync
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3701799150641152
+    m_Localized: On
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3706300725157888
+    m_Localized: Off
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3713258257604608
+    m_Localized: Frame Rate Limit
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3714690427871232
+    m_Localized: Screen Mode
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3715105701715968
+    m_Localized: Fullscreen
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3715168490446848
+    m_Localized: Fullscreen WIndowed
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3715272152670208
+    m_Localized: WIndowed
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3717298093776896
+    m_Localized: Screen Resolution
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4793871635013632
+    m_Localized: Language
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds: []

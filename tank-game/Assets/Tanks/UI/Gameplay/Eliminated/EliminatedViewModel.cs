@@ -1,6 +1,7 @@
 ﻿using Tanks.Localization;
 using Tanks.Shared.Health;
 using Tanks.Shared.Messaging;
+using Tanks.Utils;
 
 namespace Tanks.UI.Gameplay.Eliminated
 {

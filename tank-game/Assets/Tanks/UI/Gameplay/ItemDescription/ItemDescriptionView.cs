@@ -23,13 +23,13 @@ namespace Tanks.UI.Gameplay.ItemDescription
 
         protected override void Bind(ItemDescriptionViewModel viewModel)
         {
-            viewModel.Name.BindToTarget(x => _name.text = x);
-            viewModel.Description.BindToTarget(x => _description.text = x);
-            viewModel.TierName.BindToTarget(x => _tier.text = x);
+            viewModel.Name.Bind(x => _name.text = x);
+            viewModel.Description.Bind(x => _description.text = x);
+            viewModel.TierName.Bind(x => _tier.text = x);
 
-            viewModel.AccentColor.BindToTarget(x => _icon.style.color = x);
-            viewModel.Icon.BindToTarget(x => _icon.style.backgroundImage = new StyleBackground(x));
-            viewModel.Opacity.BindToTarget(x => _container.style.opacity = x);
+            viewModel.AccentColor.Bind(x => _icon.style.color = x);
+            viewModel.Icon.Bind(x => _icon.style.backgroundImage = new StyleBackground(x));
+            viewModel.Opacity.Bind(x => _container.style.opacity = x);
         }
     }
 }

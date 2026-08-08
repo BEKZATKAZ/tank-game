@@ -27,7 +27,7 @@ namespace Tanks.UI.Gameplay.StartCountdown
         {
             _instance ??= _audioFactory.CreateInstance(_countdownSound.Path);
 
-            viewModel.Title.BindToTarget(x =>
+            viewModel.Title.Bind(x =>
             {
                 _label.text = x;
                 if (string.IsNullOrEmpty(x) == false) _instance.Play();

@@ -9,7 +9,7 @@ namespace Tanks.UI.Elements
         public CustomButton()
         {
             RegisterCallback<PointerEnterEvent>(OnButtonHover);
-            RegisterCallback<ClickEvent>(OnButtonClicked);
+            clicked += OnButtonClicked;
         }
 
         [UxmlAttribute] public string HoverSoundPath { get; set; } = "event:/UI/Button/Hover";
@@ -21,7 +21,7 @@ namespace Tanks.UI.Elements
             RuntimeManager.PlayOneShot(HoverSoundPath);
         }
 
-        private void OnButtonClicked(ClickEvent e)
+        private void OnButtonClicked()
         {
             if (string.IsNullOrWhiteSpace(ClickSoundPath)) return;
             RuntimeManager.PlayOneShot(ClickSoundPath);

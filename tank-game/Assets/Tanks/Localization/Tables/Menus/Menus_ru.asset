@@ -54,6 +54,60 @@ MonoBehaviour:
     m_Localized: "\u0413\u0440\u043E\u043C\u043A\u043E\u0441\u0442\u044C UI"
     m_Metadata:
       m_Items: []
+  - m_Id: 3638632466833408
+    m_Localized: "\u041F\u0420\u0418\u041C\u0415\u041D\u0418\u0422\u042C"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3638901065867264
+    m_Localized: "\u041F\u041E \u0423\u041C\u041E\u041B\u0427\u0410\u041D\u0418\u042E"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3641288212045824
+    m_Localized: "\u0421\u0411\u0420\u041E\u0421\u0418\u0422\u042C"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3701267455500288
+    m_Localized: "\u0412\u0435\u0440\u0442. \u0421\u0438\u043D\u0445\u0440\u043E\u043D\u0438\u0437\u0430\u0446\u0438\u044F"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3701799150641152
+    m_Localized: "\u0412\u043A\u043B"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3706300725157888
+    m_Localized: "\u0412\u044B\u043A\u043B"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3713258257604608
+    m_Localized: "\u041B\u0438\u043C\u0438\u0442 \u043A\u0430\u0434\u0440\u043E\u0432
+      \u0432/\u0441\u0435\u043A"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3714690427871232
+    m_Localized: "\u0420\u0435\u0436\u0438\u043C \u042D\u043A\u0440\u0430\u043D\u0430"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3715105701715968
+    m_Localized: "\u041F\u043E\u043B\u043D\u044B\u0439 \u042D\u043A\u0440\u0430\u043D"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3715168490446848
+    m_Localized: "\u041F\u043E\u043B\u043D\u044B\u0439 \u042D\u043A\u0440\u0430\u043D
+      \u0432 \u041E\u043A\u043D\u0435"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3715272152670208
+    m_Localized: "\u041E\u043A\u043E\u043D\u043D\u044B\u0439"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3717298093776896
+    m_Localized: "\u0420\u0430\u0437\u0440\u0435\u0448\u0435\u043D\u0438\u0435 \u042D\u043A\u0440\u0430\u043D\u0430"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4793871635013632
+    m_Localized: "\u042F\u0437\u044B\u043A"
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds: []
