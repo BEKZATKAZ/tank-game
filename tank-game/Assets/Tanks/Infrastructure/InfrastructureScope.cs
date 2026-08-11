@@ -9,16 +9,16 @@ namespace Tanks.Infrastructure
 {
     public static class InfrastructureScope
     {
-        public static void RegisterInfrastructure(this IContainerBuilder builder, Lifetime lifetime)
+        public static void RegisterInfrastructure(this IContainerBuilder builder)
         {
-            builder.Register<IFileSystem, DriveFileSystem>(lifetime);
-            builder.Register<IResourceLoader, AddressablesLoader>(lifetime);
+            builder.Register<IFileSystem, DriveFileSystem>(Lifetime.Singleton);
+            builder.Register<IResourceLoader, AddressablesLoader>(Lifetime.Singleton);
 
-            builder.Register<IPlayFabCaller, PlayFabCaller>(lifetime);
-            builder.Register<IAuthService, PlayFabAuthService>(lifetime);
+            builder.Register<IPlayFabCaller, PlayFabCaller>(Lifetime.Singleton);
+            builder.Register<IAuthService, PlayFabAuthService>(Lifetime.Singleton);
 
-            builder.Register<ISettingsLoader, JsonSettingsLoader>(lifetime);
-            builder.Register<ISettingsService, JsonSettingsService>(lifetime);
+            builder.Register<ISettingsLoader, JsonSettingsLoader>(Lifetime.Singleton);
+            builder.Register<ISettingsService, JsonSettingsService>(Lifetime.Singleton);
 
             builder.RegisterBuildCallback(resolver =>
             {

@@ -8,7 +8,7 @@ namespace Tanks.Core.Bootstrap
     {
         protected override void Configure(IContainerBuilder builder)
         {
-            builder.RegisterInfrastructure(Lifetime.Singleton);
+            builder.RegisterInfrastructure();
         }
     }
 }

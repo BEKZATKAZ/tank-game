@@ -9,6 +9,7 @@ namespace Tanks.Audio
         {
             builder.Register<IAudioFactory, FMODAudioFactory>(lifetime);
             builder.Register<IAudioPlayer, FMODAudioPlayer>(lifetime);
+            builder.Register<IAudioMixer, FMODAudioMixer>(lifetime);
         }
     }
 }
