@@ -1,0 +1,46 @@
+<ui:UXML xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
+    <Style src="project://database/Assets/Tanks/UI/Menus/Styles/MainMenu.uss?fileID=7433441132597879392&amp;guid=e77348697c99f3b4795a79682c5e1415&amp;type=3#MainMenu"/>
+    <Style src="project://database/Assets/Tanks/UI/Menus/Styles/Lobby.uss?fileID=7433441132597879392&amp;guid=3e4178b502b4d3d43b0a5c081c7d2e76&amp;type=3#Lobby"/>
+    <ui:VisualElement name="Root" style="background-color: rgba(0, 0, 0, 0.749);">
+        <ui:VisualElement name="PlayerList" class="window">
+            <ui:VisualElement name="PlayerListHeader" class="window-header">
+                <ui:TextField label="" placeholder-text="" name="LobbyNameField" max-length="30" is-delayed="true" value="Username&apos;s Lobby" style="-unity-font-definition: resource(&quot;FlatSkin/Font/Roboto-Black&quot;);"/>
+                <ui:Button text="" name="LobbyNameEditButton" style="background-image: url(&quot;project://database/Assets/Plugins/Layer%20Lab/2D%20Icons-PictoIconPack01/PictoIcon_256/Icon_PictoIcon_Pencil.Png?fileID=21300000&amp;guid=2e626f9b7e8f74b19838796cb3e2bc3d&amp;type=3#Icon_PictoIcon_Pencil&quot;);"/>
+                <ui:Label text="1 / 8" name="PlayerCount" style="-unity-font-definition: resource(&quot;FlatSkin/Font/Roboto-Black&quot;);"/>
+            </ui:VisualElement>
+            <ui:ScrollView name="PlayerListContent"/>
+        </ui:VisualElement>
+        <ui:VisualElement name="RightSide" style="flex-grow: 1;">
+            <ui:VisualElement name="Chat" class="window">
+                <ui:VisualElement name="ChatHeader" class="window-header">
+                    <ui:Label name="LobbyName" enable-rich-text="false" style="-unity-font-definition: resource(&quot;FlatSkin/Font/Roboto-Bold&quot;);">
+                        <Bindings>
+                            <UnityEngine.Localization.LocalizedString property="text" table="GUID:34510603f8b6d1a44b1b2ffa9aa551c9" entry="Id(5085350316171264)"/>
+                        </Bindings>
+                    </ui:Label>
+                </ui:VisualElement>
+                <ui:ScrollView name="ChatMessages"/>
+                <ui:VisualElement name="ChatFieldContainer">
+                    <ui:TextField label="" name="ChatField" max-length="250">
+                        <Bindings>
+                            <UnityEngine.Localization.LocalizedString property="placeholderText" table="GUID:34510603f8b6d1a44b1b2ffa9aa551c9" entry="Id(5219211482193920)"/>
+                        </Bindings>
+                    </ui:TextField>
+                    <Tanks.UI.Elements.CustomButton name="ChatSendButton" style="background-image: url(&quot;project://database/Assets/Plugins/Layer%20Lab/2D%20Icons-PictoIconPack01/PictoIcon_256/Icon_PictoIcon_Send_1.Png?fileID=21300000&amp;guid=5488ea9efc75a409f9dfa625d0574c04&amp;type=3#Icon_PictoIcon_Send_1&quot;);"/>
+                </ui:VisualElement>
+            </ui:VisualElement>
+            <ui:VisualElement name="LobbyButtons">
+                <Tanks.UI.Elements.CustomButton name="LeaveButton" style="background-image: url(&quot;project://database/Assets/Plugins/Layer%20Lab/2D%20Icons-PictoIconPack01/PictoIcon_256/Icon_PictoIcon_Back.Png?fileID=21300000&amp;guid=ab31ece68847a4ee795dde79c8617c80&amp;type=3#Icon_PictoIcon_Back&quot;);">
+                    <Bindings>
+                        <UnityEngine.Localization.LocalizedString property="text" table="GUID:34510603f8b6d1a44b1b2ffa9aa551c9" entry="Id(5099162528342016)"/>
+                    </Bindings>
+                </Tanks.UI.Elements.CustomButton>
+                <Tanks.UI.Elements.CustomButton name="StartButton" style="background-image: url(&quot;project://database/Assets/Plugins/Layer%20Lab/2D%20Icons-PictoIconPack01/PictoIcon_256/Icon_PictoIcon_Control_Play.Png?fileID=21300000&amp;guid=89a5ae9f9ca3648d99ebe68370a1de31&amp;type=3#Icon_PictoIcon_Control_Play&quot;);">
+                    <Bindings>
+                        <UnityEngine.Localization.LocalizedString property="text" table="GUID:34510603f8b6d1a44b1b2ffa9aa551c9" entry="Id(5068842412236800)"/>
+                    </Bindings>
+                </Tanks.UI.Elements.CustomButton>
+            </ui:VisualElement>
+        </ui:VisualElement>
+    </ui:VisualElement>
+</ui:UXML>

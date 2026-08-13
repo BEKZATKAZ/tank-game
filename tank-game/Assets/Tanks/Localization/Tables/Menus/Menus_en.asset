@@ -16,7 +16,8 @@ MonoBehaviour:
     m_Code: en
   m_SharedData: {fileID: 11400000, guid: 34510603f8b6d1a44b1b2ffa9aa551c9, type: 2}
   m_Metadata:
-    m_Items: []
+    m_Items:
+    - rid: 6704992630869852538
   m_TableData:
   - m_Id: 3245362964291584
     m_Localized: HOST LOBBY
@@ -106,6 +107,45 @@ MonoBehaviour:
     m_Localized: Language
     m_Metadata:
       m_Items: []
+  - m_Id: 5068842412236800
+    m_Localized: START
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5085350316171264
+    m_Localized: Chat
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5086135213056000
+    m_Localized: Send
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5099162528342016
+    m_Localized: LEAVE LOBBY
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5219211482193920
+    m_Localized: Message
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5429100515123200
+    m_Localized: '{0} has joined the lobby'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5429284712177664
+    m_Localized: '{0} has disconnected from the lobby'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5433757098532864
+    m_Localized: '{0}''s Lobby'
+    m_Metadata:
+      m_Items:
+      - rid: 6704992630869852538
   references:
     version: 2
-    RefIds: []
+    RefIds:
+    - rid: 6704992630869852538
+      type: {class: SmartFormatTag, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_Entries: 
+        m_SharedEntries:
+        - id: 5433757098532864

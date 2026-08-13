@@ -103,6 +103,38 @@ MonoBehaviour:
     m_Key: menu.settings.language
     m_Metadata:
       m_Items: []
+  - m_Id: 5068842412236800
+    m_Key: menu.lobby.start
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5099162528342016
+    m_Key: menu.lobby.leave
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5085350316171264
+    m_Key: menu.lobby.chat
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5086135213056000
+    m_Key: menu.lobby.chat-send
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5219211482193920
+    m_Key: menu.lobby.chat-placeholder
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5433757098532864
+    m_Key: menu.lobby.default-name
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5429100515123200
+    m_Key: menu.lobby.chat-player-joined
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5429284712177664
+    m_Key: menu.lobby.chat-player-disconnected
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:
