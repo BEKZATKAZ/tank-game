@@ -130,13 +130,14 @@ GameObject:
   - component: {fileID: 391095527}
   - component: {fileID: 391095526}
   - component: {fileID: 391095528}
+  - component: {fileID: 391095529}
   m_Layer: 5
   m_Name: Menus
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &391095526
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -187,7 +188,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0203a551b86897641814a8303ecd3b91, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Tanks.UI::Tanks.UI.Menus.Settings.SettingsView
+  _showOnPlay: 0
+--- !u!114 &391095529
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 391095525}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 58d6f563ce0d4f24588f15ee6ba2945d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Tanks.UI::Tanks.UI.Menus.Main.MainMenuSectionsView
   _showOnPlay: 1
+  _settingsView: {fileID: 391095528}
 --- !u!1 &500221674
 GameObject:
   m_ObjectHideFlags: 0
@@ -197,7 +212,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 500221676}
-  - component: {fileID: 500221675}
+  - component: {fileID: 500221677}
   m_Layer: 0
   m_Name: Scope
   m_TagString: Untagged
@@ -205,23 +220,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &500221675
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 500221674}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a8d56e7e45ecc434fbab1e3f927d6cec, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Tanks.UI::Tanks.UI.Menus.MenuScope
-  parentReference:
-    TypeName: Tanks.Core.Bootstrap.CoreScope
-  autoRun: 1
-  autoInjectGameObjects:
-  - {fileID: 391095525}
 --- !u!4 &500221676
 Transform:
   m_ObjectHideFlags: 0
@@ -237,6 +235,25 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &500221677
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 500221674}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b4587c93787c9e44295e343e18447f24, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Tanks.UI::Tanks.UI.Menus.MenuScope
+  parentReference:
+    TypeName: Tanks.Core.Bootstrap.CoreScope
+  autoRun: 1
+  autoInjectGameObjects:
+  - {fileID: 391095525}
+  - {fileID: 1926667007}
+  _menuNavigation: {fileID: 1357816862}
 --- !u!1 &614007407
 GameObject:
   m_ObjectHideFlags: 0
@@ -443,6 +460,52 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1357816860
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1357816861}
+  - component: {fileID: 1357816862}
+  m_Layer: 0
+  m_Name: Navigation
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1357816861
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1357816860}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1357816862
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1357816860}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9981d25816e9f414ea5e24a4e0b1b665, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Tanks.UI::Tanks.UI.Menus.MenuNavigation
+  _mainMenu: {fileID: 391095525}
+  _lobbyMenu: {fileID: 1926667007}
 --- !u!1 &1483654864
 GameObject:
   m_ObjectHideFlags: 0
@@ -33463,7 +33526,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &1926667008
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -33509,6 +33572,7 @@ SceneRoots:
   - {fileID: 614007410}
   - {fileID: 500221676}
   - {fileID: 1483654868}
+  - {fileID: 1357816861}
   - {fileID: 391095527}
   - {fileID: 1926667009}
   - {fileID: 928619102}

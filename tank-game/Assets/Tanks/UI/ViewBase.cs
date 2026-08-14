@@ -17,10 +17,19 @@ namespace Tanks.UI
     }
 
     [RequireComponent(typeof(UIDocument))]
-    public abstract class ViewBase<T> : MonoBehaviour, IView<T> where T : IViewModel
+    public abstract class ViewBase : MonoBehaviour, IView
     {
         [SerializeField] private bool _showOnPlay = true;
 
+        public bool ShowOnPlay => _showOnPlay;
+
+        public abstract void Show();
+        public abstract void Hide();
+    }
+
+    [RequireComponent(typeof(UIDocument))]
+    public abstract class ViewBase<T> : ViewBase, IView<T> where T : IViewModel
+    {
         [Inject] private readonly IObjectResolver _resolver;
 
         public T ViewModel { get; private set; }
@@ -31,14 +40,14 @@ namespace Tanks.UI
         protected virtual void Bind(T viewModel) { }
         protected virtual void Unbind(T viewModel) { }
 
-        public void Show()
+        public override sealed void Show()
         {
             ViewModel = _resolver.Resolve<T>();
             Bind(ViewModel);
             GetRootElement().style.display = DisplayStyle.Flex;
         }
 
-        public void Hide()
+        public override sealed void Hide()
         {
             GetRootElement().style.display = DisplayStyle.None;
             if (ViewModel is null) return;
@@ -52,10 +61,15 @@ namespace Tanks.UI
             Hide();
         }
 
-        private void Start()
+        protected virtual void Start()
+        {
+            if (ShowOnPlay) Show();
+            else Hide();
+        }
+
+        private void Awake()
         {
             Initialize(GetComponent<UIDocument>().rootVisualElement);
-            if (_showOnPlay) Show();
         }
     }
 }

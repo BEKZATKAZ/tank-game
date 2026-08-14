@@ -26,7 +26,7 @@
                     <UnityEngine.Localization.LocalizedString property="text" table="GUID:34510603f8b6d1a44b1b2ffa9aa551c9" entry="Id(289292115968)"/>
                 </Bindings>
             </Tanks.UI.Elements.CustomButton>
-            <Tanks.UI.Elements.CustomButton name="QuitGame" text="" style="background-image: url(&quot;project://database/Assets/Plugins/Layer%20Lab/2D%20Icons-PictoIconPack01/PictoIcon_256/Icon_PictoIcon_Quit.Png?fileID=21300000&amp;guid=eff50cd7d22a34292bdd2d83400f3312&amp;type=3#Icon_PictoIcon_Quit&quot;);">
+            <Tanks.UI.Elements.CustomButton name="QuitButton" text="" style="background-image: url(&quot;project://database/Assets/Plugins/Layer%20Lab/2D%20Icons-PictoIconPack01/PictoIcon_256/Icon_PictoIcon_Quit.Png?fileID=21300000&amp;guid=eff50cd7d22a34292bdd2d83400f3312&amp;type=3#Icon_PictoIcon_Quit&quot;);">
                 <Bindings>
                     <UnityEngine.Localization.LocalizedString property="text" table="GUID:34510603f8b6d1a44b1b2ffa9aa551c9" entry="Id(27659821056)"/>
                 </Bindings>
