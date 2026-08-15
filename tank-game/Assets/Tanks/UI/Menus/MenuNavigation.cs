@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using UnityEngine;
 
 namespace Tanks.UI.Menus
@@ -8,11 +9,12 @@ namespace Tanks.UI.Menus
         [SerializeField] private GameObject _mainMenu;
         [SerializeField] private GameObject _lobbyMenu;
 
+        private readonly Dictionary<GameObject, ViewBase[]> _allMenuViews = new();
         private GameObject _currentMenu;
 
         public void Navigate(MenuType type)
         {
-            if (_currentMenu) _currentMenu.SetActive(false);
+            if (_currentMenu) HideCurrentMenu();
 
             _currentMenu = type switch
             {
@@ -22,12 +24,24 @@ namespace Tanks.UI.Menus
             };
 
             _currentMenu.SetActive(true);
+            ShowCurrentMenu();
+        }
+
+        private void ShowCurrentMenu()
+        {
+            foreach (ViewBase view in _allMenuViews[_currentMenu]) view.Show();
+        }
+
+        private void HideCurrentMenu()
+        {
+            foreach (ViewBase view in _allMenuViews[_currentMenu]) view.Hide();
         }
 
         private void Awake()
         {
-            _mainMenu.SetActive(true);
-            _lobbyMenu.SetActive(false);
+            _allMenuViews[_mainMenu] = _mainMenu.GetComponents<ViewBase>();
+            _allMenuViews[_lobbyMenu] = _lobbyMenu.GetComponents<ViewBase>();
+            Navigate(MenuType.Main);
         }
     }
 }

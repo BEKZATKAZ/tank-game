@@ -135,6 +135,10 @@ MonoBehaviour:
     m_Key: menu.lobby.chat-player-disconnected
     m_Metadata:
       m_Items: []
+  - m_Id: 6152229935865856
+    m_Key: menu.lobby.creating
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:

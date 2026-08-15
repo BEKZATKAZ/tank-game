@@ -1,0 +1,46 @@
+#Root {
+	background-color: rgba(0, 0, 0, 0.99);
+	flex-grow: 1;
+	justify-content: center;
+	align-items: center;
+}
+
+.dialog {
+	background-color: black;
+	border-width: 2px;
+	border-color: red;
+	border-radius: 20px;
+	min-width: 700px;
+	overflow: hidden;
+}
+
+.dialog-header {
+	font-size: 32px;
+	background-color: red;
+	padding: 10px 30px;
+}
+
+.dialog-message {
+	font-size: 24px;
+	padding: 30px;
+}
+
+.unity-button {
+	font-size: 24px;
+	padding: 10px 20px;
+	border-width: 2px;
+	border-color: rgba(255, 255, 255, 0.02);
+	flex-grow: 1;
+	flex-shrink: 0;
+}
+
+.dialog-buttons {
+	margin: 20px;
+	flex-direction: row;
+	justify-content: flex-end;
+}
+
+#YesButton, #NoButton {
+	flex: 0 0 100px;
+	margin-left: 10px;
+}

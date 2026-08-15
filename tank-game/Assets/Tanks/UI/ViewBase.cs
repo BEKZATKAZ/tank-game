@@ -33,6 +33,7 @@ namespace Tanks.UI
         [Inject] private readonly IObjectResolver _resolver;
 
         public T ViewModel { get; private set; }
+        public bool IsVisible => GetRootElement().style.display != DisplayStyle.None;
 
         protected abstract VisualElement GetRootElement();
         protected abstract void Initialize(VisualElement root);
@@ -42,6 +43,12 @@ namespace Tanks.UI
 
         public override sealed void Show()
         {
+            if (ViewModel != null)
+            {
+                Unbind(ViewModel);
+                if (ViewModel is IDisposable disposable) disposable.Dispose();
+            }
+
             ViewModel = _resolver.Resolve<T>();
             Bind(ViewModel);
             GetRootElement().style.display = DisplayStyle.Flex;
@@ -50,15 +57,26 @@ namespace Tanks.UI
         public override sealed void Hide()
         {
             GetRootElement().style.display = DisplayStyle.None;
-            if (ViewModel is null) return;
 
+            if (ViewModel is null) return;
             Unbind(ViewModel);
+
             if (ViewModel is IDisposable disposable) disposable.Dispose();
+            ViewModel = default;
         }
 
         protected virtual void OnDisable()
         {
             Hide();
+        }
+
+        protected virtual void OnEnable()
+        {
+            // Stop too early initialization
+            if (didStart == false) return;
+
+            if (ShowOnPlay) Show();
+            else Hide();
         }
 
         protected virtual void Start()

@@ -1,6 +1,7 @@
 using Cysharp.Threading.Tasks;
 using PlayFab;
 using PlayFab.ClientModels;
+using PlayFab.Multiplayer;
 using Tanks.Core;
 using UnityEngine;
 
@@ -20,8 +21,15 @@ namespace Tanks.Infrastructure
                 CreateAccount = true
             };
 
-            return await _caller.CallAsync<LoginWithCustomIDRequest, LoginResult>(
+            var result = await _caller.CallAsync<LoginWithCustomIDRequest, LoginResult>(
                 PlayFabClientAPI.LoginWithCustomID, request);
+
+            if (result.IsSuccess && PlayFabMultiplayer.IsInitialized == false)
+            {
+                PlayFabMultiplayer.Initialize();
+            }
+
+            return result;
         }
     }
 }

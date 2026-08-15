@@ -21,13 +21,15 @@ namespace Tanks.Infrastructure
             TRequest request,
             object customData = null,
             Dictionary<string, string> extraHeaders = null);
+
+        string ErrorToCode<TEnum>(TEnum error) where TEnum : Enum;
     }
 
     public sealed class PlayFabCaller : IPlayFabCaller
     {
-        private static string ToKebabCase(string input)
+        public string ErrorToCode<TEnum>(TEnum error) where TEnum : Enum
         {
-            return Regex.Replace(input, "(?<!^)([A-Z])", "-$1").ToLowerInvariant();
+            return Regex.Replace(error.ToString(), "(?<!^)([A-Z])", "-$1").ToLowerInvariant();
         }
 
         public async UniTask<ResultType<TResult>> CallAsync<TRequest, TResult>(
@@ -45,7 +47,7 @@ namespace Tanks.Infrastructure
 
             void ErrorCallback(PlayFabError error)
             {
-                string errorCode = ToKebabCase(error.Error.ToString());
+                string errorCode = ErrorToCode(error.Error);
                 tcs.TrySetResult(Result.Failure<TResult>(errorCode));
             }
 

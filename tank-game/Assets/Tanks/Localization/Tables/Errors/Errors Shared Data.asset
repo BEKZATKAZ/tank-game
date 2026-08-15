@@ -1,0 +1,52 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5b11a58205ec3474ca216360e9fa74a8, type: 3}
+  m_Name: Errors Shared Data
+  m_EditorClassIdentifier: Unity.Localization::UnityEngine.Localization.Tables.SharedTableData
+  m_TableCollectionName: Errors
+  m_TableCollectionNameGuidString: 034deb129b9dd5842973b131521ca8de
+  m_Entries:
+  - m_Id: 214359618314240
+    m_Key: error.header
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5444695711744
+    m_Key: error.ok
+    m_Metadata:
+      m_Items: []
+  - m_Id: 8684789760
+    m_Key: error.lobby.default
+    m_Metadata:
+      m_Items: []
+  - m_Id: 632541372416
+    m_Key: error.lobby.lobby-not-found
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1071924076544
+    m_Key: error.lobby.lobby-not-joinable
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1378158600192
+    m_Key: error.lobby.not-member
+    m_Metadata:
+      m_Items: []
+  m_Metadata:
+    m_Items: []
+  m_KeyGenerator:
+    rid: 6704992661834301691
+  references:
+    version: 2
+    RefIds:
+    - rid: 6704992661834301691
+      type: {class: DistributedUIDGenerator, ns: UnityEngine.Localization.Tables, asm: Unity.Localization}
+      data:
+        m_CustomEpoch: 1786723232852

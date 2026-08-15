@@ -1,4 +1,6 @@
-﻿namespace Tanks.Core
+﻿using System;
+
+namespace Tanks.Core
 {
     public readonly struct ResultType
     {
@@ -43,5 +45,12 @@
 
         public static ResultType<T> Success<T>(T value) => new(value, null, true);
         public static ResultType<T> Failure<T>(string errorCode) => new (default, errorCode, false);
+
+        public static ResultType<TTo> Map<TFrom, TTo>(
+            ResultType<TFrom> from, Func<TFrom, TTo> map)
+        {
+            if (from.IsSuccess == false) return Failure<TTo>(from.ErrorCode);
+            return map(from.Value);
+        }
     }
 }

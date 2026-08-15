@@ -8,13 +8,15 @@ namespace Tanks.UI.Menus.Main
         [SerializeField] private ViewBase _settingsView;
 
         private VisualElement _root;
+        private VisualElement _menuContainer;
         private ViewBase _currentSection;
 
         protected override VisualElement GetRootElement() => _root;
 
         protected override void Initialize(VisualElement root)
         {
-            _root = root.Q("Menu");
+            _root = root;
+            _menuContainer = root.Q("Menu");
 
             Button hostLobbyButton = root.Q<Button>("HostLobbyButton");
             Button findLobbyButton = root.Q<Button>("JoinLobbyButton");
@@ -29,19 +31,14 @@ namespace Tanks.UI.Menus.Main
 
         protected override void Bind(MainMenuSectionsViewModel viewModel)
         {
+            _menuContainer.style.display = DisplayStyle.None;
             viewModel.Section.Bind(OnSectionOpened);
         }
 
-        private void Start()
-        {
-            // Hide to prevent open menus on start
-            _root.style.display = DisplayStyle.None;
-        }
-
-        private void OpenLobby() => ViewModel.OpenMenu(MenuType.Lobby);
+        private void OpenLobby() => ViewModel.CreateLobby().Forget();
         private void OpenFindLobby() => ViewModel.OpenSection(MainMenuSection.FindLobby);
         private void OpenSettings() => ViewModel.OpenSection(MainMenuSection.Settings);
-        private void QuitGame() => Application.Quit();
+        private void QuitGame() => ViewModel.ShowQuitGameConfirmation();
 
         private void OnSectionOpened(MainMenuSection section)
         {
@@ -56,7 +53,8 @@ namespace Tanks.UI.Menus.Main
             };
 
             // Flip flop effect
-            if (previousMenu == _currentSection)
+            // Check not null to prevent stack overflows (null == null is true)
+            if (previousMenu != null && previousMenu == _currentSection)
             {
                 ViewModel.OpenSection(MainMenuSection.None);
                 return;
@@ -64,7 +62,7 @@ namespace Tanks.UI.Menus.Main
 
             if (_currentSection != null) _currentSection.Show();
 
-            _root.style.display = _currentSection ? DisplayStyle.Flex : DisplayStyle.None;
+            _menuContainer.style.display = _currentSection ? DisplayStyle.Flex : DisplayStyle.None;
         }
     }
 }

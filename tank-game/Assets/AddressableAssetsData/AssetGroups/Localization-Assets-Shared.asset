@@ -15,8 +15,19 @@ MonoBehaviour:
   m_GroupName: Localization-Assets-Shared
   m_GUID: 6f9a3ac95548f9340a2098f4d489dcd0
   m_SerializeEntries:
+  - m_GUID: 034deb129b9dd5842973b131521ca8de
+    m_Address: Assets/Tanks/Localization/Tables/Errors/Errors Shared Data.asset
+    m_ReadOnly: 1
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 34510603f8b6d1a44b1b2ffa9aa551c9
     m_Address: Assets/Tanks/Localization/Tables/MainMenu/MainMenu Shared Data.asset
+    m_ReadOnly: 1
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 55ca1aef952d294408a5931b93c5118f
+    m_Address: Assets/Tanks/Localization/Tables/Confirmations/Confirmations Shared
+      Data.asset
     m_ReadOnly: 1
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0

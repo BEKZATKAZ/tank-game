@@ -1,0 +1,39 @@
+<ui:UXML xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
+    <Style src="project://database/Assets/Tanks/UI/Menus/Styles/MainMenu.uss?fileID=7433441132597879392&amp;guid=e77348697c99f3b4795a79682c5e1415&amp;type=3#MainMenu"/>
+    <Style src="project://database/Assets/Tanks/UI/Menus/Dialogs/Dialog.uss?fileID=7433441132597879392&amp;guid=503c81716a673734aa76c5f5cb54921e&amp;type=3#Dialog"/>
+    <ui:VisualElement name="Root">
+        <ui:VisualElement name="Error" class="dialog">
+            <ui:Label name="ErrorHeader" class="dialog-header" style="-unity-font-definition: resource(&quot;FlatSkin/Font/Roboto-Black&quot;);">
+                <Bindings>
+                    <UnityEngine.Localization.LocalizedString property="text" table="GUID:034deb129b9dd5842973b131521ca8de" entry="Id(214359618314240)"/>
+                </Bindings>
+            </ui:Label>
+            <ui:Label text="Something went wrong. Please try again." name="ErrorMessage" class="dialog-message"/>
+            <Tanks.UI.Elements.CustomButton text="Button" name="ErrorOkButton" class="dialog-buttons">
+                <Bindings>
+                    <UnityEngine.Localization.LocalizedString property="text" table="GUID:034deb129b9dd5842973b131521ca8de" entry="Id(5444695711744)"/>
+                </Bindings>
+            </Tanks.UI.Elements.CustomButton>
+        </ui:VisualElement>
+        <ui:VisualElement name="Confirmation" class="dialog">
+            <ui:Label name="ConfirmationHeader" text="QUIT GAME" class="dialog-header" style="-unity-font-definition: resource(&quot;FlatSkin/Font/Roboto-Black&quot;);"/>
+            <ui:Label name="ConfirmationMessage" class="dialog-message">
+                <Bindings>
+                    <UnityEngine.Localization.LocalizedString property="text" table="GUID:55ca1aef952d294408a5931b93c5118f" entry="Id(27588517888)"/>
+                </Bindings>
+            </ui:Label>
+            <ui:VisualElement name="ConfirmationButtons" class="dialog-buttons">
+                <Tanks.UI.Elements.CustomButton text="Button" name="YesButton">
+                    <Bindings>
+                        <UnityEngine.Localization.LocalizedString property="text" table="GUID:55ca1aef952d294408a5931b93c5118f" entry="Id(724589568000)"/>
+                    </Bindings>
+                </Tanks.UI.Elements.CustomButton>
+                <Tanks.UI.Elements.CustomButton text="Button" name="NoButton">
+                    <Bindings>
+                        <UnityEngine.Localization.LocalizedString property="text" table="GUID:55ca1aef952d294408a5931b93c5118f" entry="Id(792826699776)"/>
+                    </Bindings>
+                </Tanks.UI.Elements.CustomButton>
+            </ui:VisualElement>
+        </ui:VisualElement>
+    </ui:VisualElement>
+</ui:UXML>

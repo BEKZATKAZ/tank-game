@@ -136,10 +136,14 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 5433757098532864
-    m_Localized: '{0}''s Lobby'
+    m_Localized: '{name}''s Lobby'
     m_Metadata:
       m_Items:
       - rid: 6704992630869852538
+  - m_Id: 6152229935865856
+    m_Localized: Creating lobby
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:

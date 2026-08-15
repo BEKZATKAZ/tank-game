@@ -1,0 +1,52 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5b11a58205ec3474ca216360e9fa74a8, type: 3}
+  m_Name: Confirmations Shared Data
+  m_EditorClassIdentifier: Unity.Localization::UnityEngine.Localization.Tables.SharedTableData
+  m_TableCollectionName: Confirmations
+  m_TableCollectionNameGuidString: 55ca1aef952d294408a5931b93c5118f
+  m_Entries:
+  - m_Id: 724589568000
+    m_Key: confirm.yes
+    m_Metadata:
+      m_Items: []
+  - m_Id: 792826699776
+    m_Key: confirm.no
+    m_Metadata:
+      m_Items: []
+  - m_Id: 27588517888
+    m_Key: confirm.quit.message
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3545661661184
+    m_Key: confirm.quit.header
+    m_Metadata:
+      m_Items: []
+  - m_Id: 92120440856576
+    m_Key: confirm.leave-lobby.message
+    m_Metadata:
+      m_Items: []
+  - m_Id: 92268600451072
+    m_Key: confirm.leave-lobby.header
+    m_Metadata:
+      m_Items: []
+  m_Metadata:
+    m_Items: []
+  m_KeyGenerator:
+    rid: 6704992675881812227
+  references:
+    version: 2
+    RefIds:
+    - rid: 6704992675881812227
+      type: {class: DistributedUIDGenerator, ns: UnityEngine.Localization.Tables, asm: Unity.Localization}
+      data:
+        m_CustomEpoch: 1786779637930

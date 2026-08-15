@@ -1,0 +1,48 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e9620f8c34305754d8cc9a7e49e852d9, type: 3}
+  m_Name: Errors_en
+  m_EditorClassIdentifier: Unity.Localization::UnityEngine.Localization.Tables.StringTable
+  m_LocaleId:
+    m_Code: en
+  m_SharedData: {fileID: 11400000, guid: 034deb129b9dd5842973b131521ca8de, type: 2}
+  m_Metadata:
+    m_Items: []
+  m_TableData:
+  - m_Id: 8684789760
+    m_Localized: Something went wrong. Please try again.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 632541372416
+    m_Localized: Lobby not found. It may have been closed or no longer exists.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1071924076544
+    m_Localized: Lobby is no longer available.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1378158600192
+    m_Localized: You cannot perform this action because you are no longer in the
+      lobby.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5444695711744
+    m_Localized: OK
+    m_Metadata:
+      m_Items: []
+  - m_Id: 214359618314240
+    m_Localized: ERROR
+    m_Metadata:
+      m_Items: []
+  references:
+    version: 2
+    RefIds: []
