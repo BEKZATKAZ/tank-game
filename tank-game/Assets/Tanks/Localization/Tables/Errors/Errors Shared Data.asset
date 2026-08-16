@@ -39,6 +39,10 @@ MonoBehaviour:
     m_Key: error.lobby.not-member
     m_Metadata:
       m_Items: []
+  - m_Id: 675254177849344
+    m_Key: error.lobby.too-many-requests
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:

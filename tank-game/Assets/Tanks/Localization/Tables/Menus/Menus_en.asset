@@ -144,6 +144,27 @@ MonoBehaviour:
     m_Localized: Creating lobby
     m_Metadata:
       m_Items: []
+  - m_Id: 6516982222905344
+    m_Localized: No lobbies were found
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6520909764976640
+    m_Localized: Searching...
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6608185362702336
+    m_Localized: Search for lobby
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6608482260705280
+    m_Localized: Found {count} lobbies!
+    m_Metadata:
+      m_Items:
+      - rid: 6704992630869852538
+  - m_Id: 6610305478516736
+    m_Localized: JOIN
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:
@@ -153,3 +174,4 @@ MonoBehaviour:
         m_Entries: 
         m_SharedEntries:
         - id: 5433757098532864
+        - id: 6608482260705280

@@ -27,7 +27,7 @@ namespace Tanks.Infrastructure.Lobbies
             string localPlayerId = PlayFabSettings.staticPlayer.EntityId;
 
             lobby.GetSearchProperties()
-                .TryGetValue(LobbyConstants.LOBBY_NAME_KEY, out string name);
+                .TryGetValue(LobbyConstants.LOBBY_NAME_REGULAR_KEY, out string name);
 
             destination.Id.Value = new LobbyId(lobby.Id);
             destination.Address.Value = new LobbyAddress(lobby.ConnectionString);
@@ -40,6 +40,22 @@ namespace Tanks.Infrastructure.Lobbies
             destination.Players.Value = MapPlayers(lobby);
 
             return destination;
+        }
+
+        public static LobbySearchState MapLobbySearch(LobbySearchResult lobby)
+        {
+            lobby.SearchProperties
+                .TryGetValue(LobbyConstants.LOBBY_NAME_REGULAR_KEY, out string name);
+
+            return new LobbySearchState
+            {
+                Id = new LobbyId(lobby.LobbyId),
+                Address = new LobbyAddress(lobby.ConnectionString),
+                Name = name ?? "",
+
+                MaxPlayerCount = (int)lobby.MaxMemberCount,
+                PlayerCount = (int)lobby.CurrentMemberCount
+            };
         }
     }
 }

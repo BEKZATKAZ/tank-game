@@ -43,6 +43,10 @@ MonoBehaviour:
     m_Localized: ERROR
     m_Metadata:
       m_Items: []
+  - m_Id: 675254177849344
+    m_Localized: Oh chill, chill! You are making too many requests!
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds: []

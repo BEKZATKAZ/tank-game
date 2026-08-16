@@ -5,6 +5,7 @@ namespace Tanks.UI.Menus.Main
 {
     public sealed class MainMenuSectionsView : ViewBase<MainMenuSectionsViewModel>
     {
+        [SerializeField] private ViewBase _findLobbyView;
         [SerializeField] private ViewBase _settingsView;
 
         private VisualElement _root;
@@ -48,6 +49,7 @@ namespace Tanks.UI.Menus.Main
 
             _currentSection = section switch
             {
+                MainMenuSection.FindLobby => _findLobbyView,
                 MainMenuSection.Settings => _settingsView,
                 _ => null
             };

@@ -3,6 +3,7 @@ using PlayFab;
 using PlayFab.Multiplayer;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using Tanks.Core;
 using Tanks.Core.Lobbies;
 using UnityEngine;
@@ -76,6 +77,45 @@ namespace Tanks.Infrastructure.Lobbies
             PlayFabMultiplayer.OnLobbyUpdated -= OnLobbyUpdated;
         }
 
+        public UniTask<ResultType<IEnumerable<LobbySearchState>>> FindLobbiesAsync(string name = null)
+        {
+            var tcs = new UniTaskCompletionSource<ResultType<IEnumerable<LobbySearchState>>>();
+
+            void OnFound(IList<LobbySearchResult> lobbies, PFEntityKey searcher, int result)
+            {
+                PlayFabMultiplayer.OnLobbyFindLobbiesCompleted -= OnFound;
+
+                if (LobbyError.SUCCEEDED(result))
+                {
+                    tcs.TrySetResult(Result.Success(lobbies.Select(LobbyMapper.MapLobbySearch)));
+                    return;
+                }
+
+                string errorCode = _caller.ErrorToCode((PlayFabLobbyError)result);
+                tcs.TrySetResult(Result.Failure<IEnumerable<LobbySearchState>>(errorCode));
+            }
+
+            // Ignore full lobbies
+            string filterString = "lobby/memberCountRemaining gt 0";
+
+            if (string.IsNullOrWhiteSpace(name) == false)
+            {
+                name = name.ToLowerInvariant();
+                filterString += $" and {LobbyConstants.LOBBY_NAME_LOWER_KEY} eq '{name}'";
+            }
+
+            PlayFabMultiplayer.OnLobbyFindLobbiesCompleted += OnFound;
+
+            PlayFabMultiplayer.FindLobbies(PlayFabSettings.staticPlayer, new LobbySearchConfiguration
+            {
+                ClientSearchResultCount = 20,
+                SortString = "lobby/memberCountRemaining desc",
+                FilterString = filterString
+            });
+
+            return tcs.Task;
+        }
+
         public async UniTask<ResultType<LobbyState>> HostLobbyAsync(string name, uint maxPlayers)
         {
             var tcs = new UniTaskCompletionSource<ResultType<Lobby>>();
@@ -93,7 +133,8 @@ namespace Tanks.Infrastructure.Lobbies
                 MaxMemberCount = maxPlayers,
                 SearchProperties = new Dictionary<string, string>()
                 {
-                    [LobbyConstants.LOBBY_NAME_KEY] = name
+                    [LobbyConstants.LOBBY_NAME_REGULAR_KEY] = name,
+                    [LobbyConstants.LOBBY_NAME_LOWER_KEY] = name.ToLowerInvariant()
                 }
             };
 
@@ -132,7 +173,8 @@ namespace Tanks.Infrastructure.Lobbies
             {
                 SearchProperties = new Dictionary<string, string>()
                 {
-                    [LobbyConstants.LOBBY_NAME_KEY] = newName
+                    [LobbyConstants.LOBBY_NAME_REGULAR_KEY] = newName,
+                    [LobbyConstants.LOBBY_NAME_LOWER_KEY] = newName.ToLowerInvariant()
                 }
             });
         }

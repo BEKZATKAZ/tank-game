@@ -15,80 +15,16 @@ MonoBehaviour:
   m_TableCollectionName: Menus
   m_TableCollectionNameGuidString: 34510603f8b6d1a44b1b2ffa9aa551c9
   m_Entries:
-  - m_Id: 27659821056
-    m_Key: menu.main.quit
-    m_Metadata:
-      m_Items: []
-  - m_Id: 289292115968
-    m_Key: menu.main.settings
-    m_Metadata:
-      m_Items: []
-  - m_Id: 3244510153236480
-    m_Key: menu.main.tutorial
-    m_Metadata:
-      m_Items: []
-  - m_Id: 3244736305913856
-    m_Key: menu.main.find-lobby
-    m_Metadata:
-      m_Items: []
-  - m_Id: 3245362964291584
-    m_Key: menu.main.host-lobby
-    m_Metadata:
-      m_Items: []
-  - m_Id: 3701799150641152
-    m_Key: menu.settings.on
-    m_Metadata:
-      m_Items: []
-  - m_Id: 3706300725157888
-    m_Key: menu.settings.off
-    m_Metadata:
-      m_Items: []
-  - m_Id: 3638632466833408
-    m_Key: menu.settings.apply
-    m_Metadata:
-      m_Items: []
-  - m_Id: 3641288212045824
-    m_Key: menu.settings.revert
-    m_Metadata:
-      m_Items: []
-  - m_Id: 3638901065867264
-    m_Key: menu.settings.reset-to-defaults
-    m_Metadata:
-      m_Items: []
-  - m_Id: 3337205144051712
-    m_Key: menu.settings.master-volume
-    m_Metadata:
-      m_Items: []
-  - m_Id: 3337490075705344
-    m_Key: menu.settings.music-volume
-    m_Metadata:
-      m_Items: []
-  - m_Id: 3337645382393856
-    m_Key: menu.settings.sfx-volume
+  - m_Id: 3701267455500288
+    m_Key: menu.settings.vsync
     m_Metadata:
       m_Items: []
   - m_Id: 3337773761650688
     m_Key: menu.settings.ui-volume
     m_Metadata:
       m_Items: []
-  - m_Id: 3701267455500288
-    m_Key: menu.settings.vsync
-    m_Metadata:
-      m_Items: []
-  - m_Id: 3713258257604608
-    m_Key: menu.settings.frame-rate
-    m_Metadata:
-      m_Items: []
-  - m_Id: 3714690427871232
-    m_Key: menu.settings.screen-mode
-    m_Metadata:
-      m_Items: []
-  - m_Id: 3715105701715968
-    m_Key: menu.settings.screen-fullscreen
-    m_Metadata:
-      m_Items: []
-  - m_Id: 3715168490446848
-    m_Key: menu.settings.screen-fullscreen-windowed
+  - m_Id: 3337645382393856
+    m_Key: menu.settings.sfx-volume
     m_Metadata:
       m_Items: []
   - m_Id: 3715272152670208
@@ -99,8 +35,72 @@ MonoBehaviour:
     m_Key: menu.settings.screen-resolution
     m_Metadata:
       m_Items: []
+  - m_Id: 3714690427871232
+    m_Key: menu.settings.screen-mode
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3715168490446848
+    m_Key: menu.settings.screen-fullscreen-windowed
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3715105701715968
+    m_Key: menu.settings.screen-fullscreen
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3641288212045824
+    m_Key: menu.settings.revert
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3638901065867264
+    m_Key: menu.settings.reset-to-defaults
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3701799150641152
+    m_Key: menu.settings.on
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3706300725157888
+    m_Key: menu.settings.off
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3337490075705344
+    m_Key: menu.settings.music-volume
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3337205144051712
+    m_Key: menu.settings.master-volume
+    m_Metadata:
+      m_Items: []
   - m_Id: 4793871635013632
     m_Key: menu.settings.language
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3713258257604608
+    m_Key: menu.settings.frame-rate
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3638632466833408
+    m_Key: menu.settings.apply
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3244510153236480
+    m_Key: menu.main.tutorial
+    m_Metadata:
+      m_Items: []
+  - m_Id: 289292115968
+    m_Key: menu.main.settings
+    m_Metadata:
+      m_Items: []
+  - m_Id: 27659821056
+    m_Key: menu.main.quit
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3245362964291584
+    m_Key: menu.main.host-lobby
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3244736305913856
+    m_Key: menu.main.find-lobby
     m_Metadata:
       m_Items: []
   - m_Id: 5068842412236800
@@ -111,20 +111,16 @@ MonoBehaviour:
     m_Key: menu.lobby.leave
     m_Metadata:
       m_Items: []
-  - m_Id: 5085350316171264
-    m_Key: menu.lobby.chat
+  - m_Id: 5433757098532864
+    m_Key: menu.lobby.default-name
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6152229935865856
+    m_Key: menu.lobby.creating
     m_Metadata:
       m_Items: []
   - m_Id: 5086135213056000
     m_Key: menu.lobby.chat-send
-    m_Metadata:
-      m_Items: []
-  - m_Id: 5219211482193920
-    m_Key: menu.lobby.chat-placeholder
-    m_Metadata:
-      m_Items: []
-  - m_Id: 5433757098532864
-    m_Key: menu.lobby.default-name
     m_Metadata:
       m_Items: []
   - m_Id: 5429100515123200
@@ -135,8 +131,32 @@ MonoBehaviour:
     m_Key: menu.lobby.chat-player-disconnected
     m_Metadata:
       m_Items: []
-  - m_Id: 6152229935865856
-    m_Key: menu.lobby.creating
+  - m_Id: 5219211482193920
+    m_Key: menu.lobby.chat-placeholder
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5085350316171264
+    m_Key: menu.lobby.chat
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6608185362702336
+    m_Key: menu.find-lobby.search
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6610305478516736
+    m_Key: menu.find-lobby.join
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6520909764976640
+    m_Key: menu.find-lobby.searching
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6516982222905344
+    m_Key: menu.find-lobby.not-found
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6608482260705280
+    m_Key: menu.find-lobby.found
     m_Metadata:
       m_Items: []
   m_Metadata:

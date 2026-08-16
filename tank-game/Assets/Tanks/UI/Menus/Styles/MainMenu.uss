@@ -167,3 +167,61 @@
 	background-color: var(--secondary-color);
 	border-width: 0;
 }
+
+#LobbyControls {
+	flex-direction: row;
+	margin: 20px;
+	flex: 0 0 auto;
+}
+
+#LobbySearchStatus {
+	font-size: 24px;
+	color: var(--text-secondary-color);
+	-unity-text-align: middle-center;
+}
+
+#LobbySearchField {
+	-unity-background-scale-mode: scale-to-fit;
+	background-position-x: 0;
+	flex: 1 0 0;
+}
+
+#LobbySearchField .unity-base-field__input {
+	-unity-text-align: middle-center;
+	background-color: var(--bg);
+	font-size: 32px;
+	padding: 20px 60px;
+	border-radius: 5px;
+}
+
+#LobbyRefreshButton {
+	background-position-x: 50%;
+	flex: 0 1 0;
+	border-width: 2px;
+	border-radius: 5px;
+	padding: 10px 50px;
+	margin-left: 10px;
+}
+
+#LobbyList {
+	flex: 1 0 auto;
+}
+
+.lobby {
+	flex-direction: row;
+	flex: 1 0 0;
+	font-size: 32px;
+	padding: 10px 20px;
+	-unity-text-align: middle-left;
+}
+
+.lobby-name {
+	flex-grow: 1;
+	padding: 10px 20px;
+}
+
+.lobby .unity-button {
+	margin-left: 30px;
+	padding: 10px 20px;
+	border-width: 2px;
+}

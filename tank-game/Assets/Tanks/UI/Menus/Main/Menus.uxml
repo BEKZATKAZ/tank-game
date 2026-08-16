@@ -34,7 +34,24 @@
             <ui:Label text="© 2026 BEKZATKAZ" name="Copyright" style="-unity-font-definition: resource(&quot;FlatSkin/Font/Roboto-Light&quot;);"/>
         </ui:VisualElement>
         <ui:VisualElement name="Menu" style="flex-grow: 1;">
-            <ui:VisualElement name="SettingsMenu" style="flex-grow: 1;">
+            <ui:VisualElement name="LobbyBrowser" style="flex-grow: 1;">
+                <ui:Label name="" class="menu-header" style="-unity-font-definition: resource(&quot;FlatSkin/Font/Roboto-Black&quot;);">
+                    <Bindings>
+                        <UnityEngine.Localization.LocalizedString property="text" table="GUID:34510603f8b6d1a44b1b2ffa9aa551c9" entry="Id(3244736305913856)"/>
+                    </Bindings>
+                </ui:Label>
+                <ui:VisualElement name="LobbyControls">
+                    <ui:TextField label="" placeholder-text="" name="LobbySearchField" max-length="30" is-delayed="true" style="background-image: url(&quot;project://database/Assets/Plugins/Layer%20Lab/2D%20Icons-PictoIconPack01/PictoIcon_256/Icon_PictoIcon_Search.Png?fileID=21300000&amp;guid=686e26c65d94f488aacb51d1726afb7c&amp;type=3#Icon_PictoIcon_Search&quot;);">
+                        <Bindings>
+                            <UnityEngine.Localization.LocalizedString property="placeholderText" table="GUID:34510603f8b6d1a44b1b2ffa9aa551c9" entry="Id(6608185362702336)"/>
+                        </Bindings>
+                    </ui:TextField>
+                    <Tanks.UI.Elements.CustomButton name="LobbyRefreshButton" style="background-image: url(&quot;project://database/Assets/Plugins/Layer%20Lab/2D%20Icons-PictoIconPack01/PictoIcon_256/Icon_PictoIcon_Refresh.Png?fileID=21300000&amp;guid=26c10253a6da24c3aac87d276db33ac8&amp;type=3#Icon_PictoIcon_Refresh&quot;);"/>
+                </ui:VisualElement>
+                <ui:Label text="Searching..." name="LobbySearchStatus"/>
+                <ui:ScrollView name="LobbyList"/>
+            </ui:VisualElement>
+            <ui:VisualElement name="SettingsMenu" style="flex-grow: 1; display: none;">
                 <ui:Label name="" class="menu-header" style="-unity-font-definition: resource(&quot;FlatSkin/Font/Roboto-Black&quot;);">
                     <Bindings>
                         <UnityEngine.Localization.LocalizedString property="text" table="GUID:34510603f8b6d1a44b1b2ffa9aa551c9" entry="Id(289292115968)"/>

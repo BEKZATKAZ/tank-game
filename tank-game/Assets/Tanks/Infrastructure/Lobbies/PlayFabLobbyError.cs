@@ -2,6 +2,7 @@
 {
     public enum PlayFabLobbyError
     {
+        TooManyRequests = unchecked((int)0x801901AD),
         InvalidParameter = unchecked((int)0x8923620B),
         EntityTokenExpired = unchecked((int)0x8923620D),
         Unauthorized = unchecked((int)0x8923620E),
