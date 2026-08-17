@@ -33,6 +33,8 @@ namespace Tanks.UI.Menus.Main
         protected override void Bind(MainMenuSectionsViewModel viewModel)
         {
             _menuContainer.style.display = DisplayStyle.None;
+            _settingsView.Hide();
+            _findLobbyView.Hide();
             viewModel.Section.Bind(OnSectionOpened);
         }
 
@@ -45,7 +47,7 @@ namespace Tanks.UI.Menus.Main
         {
             ViewBase previousMenu = _currentSection;
 
-            if (_currentSection != null) _currentSection.Hide();
+            if (_currentSection) _currentSection.Hide();
 
             _currentSection = section switch
             {
@@ -56,13 +58,13 @@ namespace Tanks.UI.Menus.Main
 
             // Flip flop effect
             // Check not null to prevent stack overflows (null == null is true)
-            if (previousMenu != null && previousMenu == _currentSection)
+            if (previousMenu && previousMenu == _currentSection)
             {
                 ViewModel.OpenSection(MainMenuSection.None);
                 return;
             }
 
-            if (_currentSection != null) _currentSection.Show();
+            if (_currentSection) _currentSection.Show();
 
             _menuContainer.style.display = _currentSection ? DisplayStyle.Flex : DisplayStyle.None;
         }

@@ -35,6 +35,8 @@ namespace Tanks.UI
         public T ViewModel { get; private set; }
         public bool IsVisible => GetRootElement().style.display != DisplayStyle.None;
 
+        private bool _hasInitialized;
+
         protected abstract VisualElement GetRootElement();
         protected abstract void Initialize(VisualElement root);
 
@@ -43,6 +45,8 @@ namespace Tanks.UI
 
         public override sealed void Show()
         {
+            _hasInitialized = true;
+
             if (ViewModel != null)
             {
                 Unbind(ViewModel);
@@ -56,6 +60,7 @@ namespace Tanks.UI
 
         public override sealed void Hide()
         {
+            _hasInitialized = true;
             GetRootElement().style.display = DisplayStyle.None;
 
             if (ViewModel is null) return;
@@ -81,6 +86,7 @@ namespace Tanks.UI
 
         protected virtual void Start()
         {
+            if (_hasInitialized) return;
             if (ShowOnPlay) Show();
             else Hide();
         }

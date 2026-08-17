@@ -29,7 +29,10 @@ namespace Tanks.UI.Menus
 
         private void ShowCurrentMenu()
         {
-            foreach (ViewBase view in _allMenuViews[_currentMenu]) view.Show();
+            foreach (ViewBase view in _allMenuViews[_currentMenu])
+            {
+                if (view.ShowOnPlay) view.Show();
+            }
         }
 
         private void HideCurrentMenu()
