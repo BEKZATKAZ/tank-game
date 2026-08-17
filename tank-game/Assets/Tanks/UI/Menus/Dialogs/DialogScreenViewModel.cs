@@ -61,8 +61,10 @@ namespace Tanks.UI.Menus.Dialogs
             if (_localization.TryGet(
                 "Errors", $"{prefix}.{errorCode}", out ILocalizedString text) == false)
             {
+                Debug.LogWarningFormat("Invalid error entry '{0}'", $"{prefix}.{errorCode}");
+
                 // Fallback to default
-                _localization.TryGet("Errors", $"{prefix}.default", out text);
+                _localization.TryGet("Errors", $"error.default", out text);
             }
 
             Type.Value = DialogType.Error;

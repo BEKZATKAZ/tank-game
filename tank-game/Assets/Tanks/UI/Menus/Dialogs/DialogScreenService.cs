@@ -24,7 +24,7 @@ namespace Tanks.UI.Menus.Dialogs
             _view.ViewModel.ShowErrorFromCode(prefix, errorCode);
 
             RuntimeManager.PlayOneShot(_errorSound);
-            MusicCutoffAsync().Forget();
+            if (_music) MusicCutoffAsync().Forget();
         }
 
         private async UniTaskVoid MusicCutoffAsync()

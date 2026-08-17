@@ -15,6 +15,18 @@ MonoBehaviour:
   m_TableCollectionName: Errors
   m_TableCollectionNameGuidString: 034deb129b9dd5842973b131521ca8de
   m_Entries:
+  - m_Id: 1051715732725760
+    m_Key: error.entry.name-not-available
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1049871174295552
+    m_Key: error.entry.too-short-username
+    m_Metadata:
+      m_Items: []
+  - m_Id: 675254177849344
+    m_Key: error.lobby.too-many-requests
+    m_Metadata:
+      m_Items: []
   - m_Id: 214359618314240
     m_Key: error.header
     m_Metadata:
@@ -23,24 +35,20 @@ MonoBehaviour:
     m_Key: error.ok
     m_Metadata:
       m_Items: []
-  - m_Id: 8684789760
-    m_Key: error.lobby.default
-    m_Metadata:
-      m_Items: []
-  - m_Id: 632541372416
-    m_Key: error.lobby.lobby-not-found
+  - m_Id: 1378158600192
+    m_Key: error.lobby.not-member
     m_Metadata:
       m_Items: []
   - m_Id: 1071924076544
     m_Key: error.lobby.lobby-not-joinable
     m_Metadata:
       m_Items: []
-  - m_Id: 1378158600192
-    m_Key: error.lobby.not-member
+  - m_Id: 632541372416
+    m_Key: error.lobby.lobby-not-found
     m_Metadata:
       m_Items: []
-  - m_Id: 675254177849344
-    m_Key: error.lobby.too-many-requests
+  - m_Id: 8684789760
+    m_Key: error.default
     m_Metadata:
       m_Items: []
   m_Metadata:

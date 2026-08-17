@@ -37,14 +37,14 @@ namespace Tanks.UI.Menus.Lobbies
         private void OnPlayerJoined(LobbyPlayerState player)
         {
             _localization.TryGet("Menus", "menu.lobby.chat-player-joined", out var text);
-            text?.AddVariable("username", player.UserId);
+            text?.AddVariable("username", player.DisplayName);
             CurrentServerMessage.Value = text?.Get() ?? "";
         }
 
         private void OnPlayerLeft(LobbyPlayerState player)
         {
             _localization.TryGet("Menus", "menu.lobby.chat-player-disconnected", out var text);
-            text?.AddVariable("username", player.UserId);
+            text?.AddVariable("username", player.DisplayName);
             CurrentServerMessage.Value = text?.Get() ?? "";
         }
     }

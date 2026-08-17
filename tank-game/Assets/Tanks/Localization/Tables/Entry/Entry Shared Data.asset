@@ -1,0 +1,40 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5b11a58205ec3474ca216360e9fa74a8, type: 3}
+  m_Name: Entry Shared Data
+  m_EditorClassIdentifier: Unity.Localization::UnityEngine.Localization.Tables.SharedTableData
+  m_TableCollectionName: Entry
+  m_TableCollectionNameGuidString: c65a4f9d9da4a46468c02bed143a7960
+  m_Entries:
+  - m_Id: 22173671424
+    m_Key: entry.username.confirm
+    m_Metadata:
+      m_Items: []
+  - m_Id: 286872002560
+    m_Key: entry.username.placeholder
+    m_Metadata:
+      m_Items: []
+  - m_Id: 979284484096
+    m_Key: entry.username.header
+    m_Metadata:
+      m_Items: []
+  m_Metadata:
+    m_Items: []
+  m_KeyGenerator:
+    rid: 6704992726650716617
+  references:
+    version: 2
+    RefIds:
+    - rid: 6704992726650716617
+      type: {class: DistributedUIDGenerator, ns: UnityEngine.Localization.Tables, asm: Unity.Localization}
+      data:
+        m_CustomEpoch: 1786971535581

@@ -47,6 +47,14 @@ MonoBehaviour:
     m_Localized: Oh chill, chill! You are making too many requests!
     m_Metadata:
       m_Items: []
+  - m_Id: 1049871174295552
+    m_Localized: Too short username. Make sure it's 3 characters or longer.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1051715732725760
+    m_Localized: Username already taken.
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds: []

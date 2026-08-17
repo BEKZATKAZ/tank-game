@@ -12,9 +12,10 @@ namespace Tanks.Infrastructure.Lobbies
 {
     public sealed class PlayFabLobbyService : ILobbyService, IDisposable
     {
-        public PlayFabLobbyService(IPlayFabCaller caller)
+        public PlayFabLobbyService(IPlayFabCaller caller, IAuthService auth)
         {
             _caller = caller;
+            _auth = auth;
 
             PlayFabMultiplayer.OnLobbyMemberAdded += OnPlayerJoined;
             PlayFabMultiplayer.OnLobbyMemberRemoved += OnPlayerLeft;
@@ -29,6 +30,8 @@ namespace Tanks.Infrastructure.Lobbies
         public LobbyState CurrentLobbyState { get; private set; } = new LobbyState();
 
         private readonly IPlayFabCaller _caller;
+        private readonly IAuthService _auth;
+
         private UniTaskCompletionSource<ResultType<IEnumerable<LobbySearchState>>> _searchTcs;
         private Lobby _currentLobby;
         private bool _isDisposed;
@@ -158,6 +161,9 @@ namespace Tanks.Infrastructure.Lobbies
             LobbyJoinConfiguration join = new LobbyJoinConfiguration
             {
                 MemberProperties = new Dictionary<string, string>()
+                {
+                    ["username"] = _auth.CurrentProfile.DisplayName.Value
+                }
             };
 
             PlayFabMultiplayer.OnLobbyCreateAndJoinCompleted += OnHosted;
@@ -177,8 +183,13 @@ namespace Tanks.Infrastructure.Lobbies
                 LobbyCodeToResult(tcs, lobby, result);
             }
 
+            Dictionary<string, string> playerData = new Dictionary<string, string>()
+            {
+                ["username"] = _auth.CurrentProfile.DisplayName.Value
+            };
+
             PlayFabMultiplayer.OnLobbyJoinCompleted += OnJoined;
-            PlayFabMultiplayer.JoinLobby(PlayFabSettings.staticPlayer, address.Value, null);
+            PlayFabMultiplayer.JoinLobby(PlayFabSettings.staticPlayer, address.Value, playerData);
 
             ResultType<Lobby> result = await tcs.Task;
             return Result.Map(result, l => LobbyMapper.MapLobby(l, CurrentLobbyState));

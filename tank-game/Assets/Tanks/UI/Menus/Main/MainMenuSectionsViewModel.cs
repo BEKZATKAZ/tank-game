@@ -12,12 +12,14 @@ namespace Tanks.UI.Menus.Main
     public sealed class MainMenuSectionsViewModel : IViewModel
     {
         public MainMenuSectionsViewModel(
+            IAuthService auth,
             ILobbyService lobbyService,
             ILocalizationDatabase localization,
             ILoadingScreenService loading,
             IDialogScreenService dialog,
             IMenuNavigation navigation)
         {
+            _auth = auth;
             _lobbyService = lobbyService;
             _localization = localization;
             _loading = loading;
@@ -27,6 +29,7 @@ namespace Tanks.UI.Menus.Main
 
         public BindableProperty<MainMenuSection> Section { get; } = new();
 
+        private readonly IAuthService _auth;
         private readonly ILobbyService _lobbyService;
         private readonly ILocalizationDatabase _localization;
         private readonly ILoadingScreenService _loading;
@@ -50,7 +53,7 @@ namespace Tanks.UI.Menus.Main
             if (_localization.TryGet(
                 "Menus", "menu.lobby.default-name", out ILocalizedString defaultName))
             {
-                defaultName.AddVariable("name", "Username");
+                defaultName.AddVariable("name", _auth.CurrentProfile.DisplayName.Value);
                 lobbyName = defaultName.Get();
             }
 

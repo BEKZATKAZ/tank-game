@@ -1,0 +1,34 @@
+#EntryRoot {
+	flex-grow: 1;
+	justify-content: center;
+	align-items: center;
+}
+
+#AccountSetup {
+	padding: 30px;
+	border-width: 2px;
+}
+
+#AccountSetupHeader {
+	font-size: 42px;
+	-unity-text-align: middle-center;
+	margin-bottom: 20px;
+}
+
+.unity-text-field {
+	font-size: 32px;
+	margin-bottom: 20px;
+	border-width: 2px;
+}
+
+.unity-text-field .unity-base-field__input {
+	padding: 10px 20px;
+}
+
+.unity-text-field .unity-text-element {
+	color: black;
+}
+
+.unity-button {
+	border-width: 2px;
+}

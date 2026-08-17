@@ -5,6 +5,11 @@ namespace Tanks.Core.Lobbies
 {
     public struct LobbyPlayerState
     {
+        public readonly string DisplayName
+        {
+            get => Data.TryGetValue("username", out string username) ? username : UserId;
+        }
+
         public string UserId;
         public IDictionary<string, string> Data;
     }

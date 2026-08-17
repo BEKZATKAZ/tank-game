@@ -54,7 +54,7 @@ namespace Tanks.UI.Menus.Lobbies
             {
                 LobbyPlayer playerView = new LobbyPlayer
                 {
-                    Username = player.UserId
+                    Username = player.DisplayName
                 };
 
                 _playerList.Add(playerView);
