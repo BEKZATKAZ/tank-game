@@ -40,11 +40,11 @@ namespace Tanks.Core
 
     public static class Result
     {
-        public static ResultType Success() => new("", true);
+        public static ResultType Success() => new(null, true);
         public static ResultType Failure(string errorCode) => new(errorCode, false);
 
         public static ResultType<T> Success<T>(T value) => new(value, null, true);
-        public static ResultType<T> Failure<T>(string errorCode) => new (default, errorCode, false);
+        public static ResultType<T> Failure<T>(string errorCode) => new(default, errorCode, false);
 
         public static ResultType<TTo> Map<TFrom, TTo>(
             ResultType<TFrom> from, Func<TFrom, TTo> map)

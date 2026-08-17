@@ -1,6 +1,8 @@
 {
   "PlayerTags": [
-    "Server"
+    "Server",
+    "Player2",
+    "Player3"
   ],
   "version": "6000.4.9f1"
 }

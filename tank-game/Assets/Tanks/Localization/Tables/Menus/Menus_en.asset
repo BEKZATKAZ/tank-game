@@ -165,6 +165,10 @@ MonoBehaviour:
     m_Localized: JOIN
     m_Metadata:
       m_Items: []
+  - m_Id: 6894076769558528
+    m_Localized: Joining lobby
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:

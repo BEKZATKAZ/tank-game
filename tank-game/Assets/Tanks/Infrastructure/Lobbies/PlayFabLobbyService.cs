@@ -150,7 +150,7 @@ namespace Tanks.Infrastructure.Lobbies
             return Result.Map(result, l => LobbyMapper.MapLobby(l, CurrentLobbyState));
         }
 
-        public async UniTask<ResultType<LobbyState>> JoinLobbyAsync(string address)
+        public async UniTask<ResultType<LobbyState>> JoinLobbyAsync(LobbyAddress address)
         {
             var tcs = new UniTaskCompletionSource<ResultType<Lobby>>();
 
@@ -161,7 +161,7 @@ namespace Tanks.Infrastructure.Lobbies
             }
 
             PlayFabMultiplayer.OnLobbyJoinCompleted += OnJoined;
-            PlayFabMultiplayer.JoinLobby(PlayFabSettings.staticPlayer, address, null);
+            PlayFabMultiplayer.JoinLobby(PlayFabSettings.staticPlayer, address.Value, null);
 
             ResultType<Lobby> result = await tcs.Task;
             return Result.Map(result, l => LobbyMapper.MapLobby(l, CurrentLobbyState));

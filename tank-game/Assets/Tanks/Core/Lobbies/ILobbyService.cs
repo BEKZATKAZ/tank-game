@@ -9,7 +9,7 @@ namespace Tanks.Core.Lobbies
 
         UniTask<ResultType<IEnumerable<LobbySearchState>>> FindLobbiesAsync(string name = null);
         UniTask<ResultType<LobbyState>> HostLobbyAsync(string name, uint maxPlayers);
-        UniTask<ResultType<LobbyState>> JoinLobbyAsync(string address);
+        UniTask<ResultType<LobbyState>> JoinLobbyAsync(LobbyAddress address);
 
         void RenameLobby(string newName);
         void LeaveLobby();

@@ -1,4 +1,5 @@
-﻿using Tanks.Core.Lobbies;
+﻿using Cysharp.Threading.Tasks;
+using Tanks.Core.Lobbies;
 using Tanks.UI.Menus.Lobbies.Elements;
 using UnityEngine.UIElements;
 
@@ -42,7 +43,7 @@ namespace Tanks.UI.Menus.Lobbies
 
             foreach (LobbySearchState lobby in lobbies)
             {
-                _list.Add(new JoinableLobby
+                _list.Add(new JoinableLobby(OnJoined)
                 {
                     Address = lobby.Address.Value,
                     Name = lobby.Name,
@@ -50,6 +51,11 @@ namespace Tanks.UI.Menus.Lobbies
                     MaxMemberCount = lobby.MaxPlayerCount
                 });
             }
+        }
+
+        private void OnJoined(LobbyAddress address)
+        {
+            ViewModel.JoinLobbyAsync(address).Forget();
         }
 
         private void OnRefreshed()

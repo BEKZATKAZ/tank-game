@@ -119,6 +119,10 @@ MonoBehaviour:
     m_Key: menu.lobby.creating
     m_Metadata:
       m_Items: []
+  - m_Id: 6894076769558528
+    m_Key: menu.lobby.joining
+    m_Metadata:
+      m_Items: []
   - m_Id: 5086135213056000
     m_Key: menu.lobby.chat-send
     m_Metadata:
