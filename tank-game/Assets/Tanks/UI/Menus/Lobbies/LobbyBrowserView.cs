@@ -11,6 +11,7 @@ namespace Tanks.UI.Menus.Lobbies
         private ScrollView _list;
         private TextField _searchField;
         private Label _status;
+        private Button _refreshButton;
 
         protected override VisualElement GetRootElement() => _root;
 
@@ -23,8 +24,8 @@ namespace Tanks.UI.Menus.Lobbies
             _searchField = _root.Q<TextField>("LobbySearchField");
             _searchField.RegisterValueChangedCallback(OnSearchValueChanged);
 
-            Button refresh = _root.Q<Button>("LobbyRefreshButton");
-            refresh.clicked += OnRefreshed;
+            _refreshButton = _root.Q<Button>("LobbyRefreshButton");
+            _refreshButton.clicked += OnRefreshed;
         }
 
         protected override void Bind(LobbyBrowserViewModel viewModel)
@@ -32,6 +33,10 @@ namespace Tanks.UI.Menus.Lobbies
             viewModel.QueryName.Bind(_searchField.SetValueWithoutNotify);
             viewModel.FoundLobbies.Bind(OnFoundLobbiesChanged);
             viewModel.Status.Bind(x => _status.text = x);
+
+            viewModel.IsLoading.Bind(x => _refreshButton.enabledSelf = !x);
+            viewModel.IsLoading.Bind(x => _searchField.enabledSelf = !x);
+
             OnRefreshed();
         }
 

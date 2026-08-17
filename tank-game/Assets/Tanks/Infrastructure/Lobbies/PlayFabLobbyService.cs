@@ -23,9 +23,13 @@ namespace Tanks.Infrastructure.Lobbies
             Updater().Forget();
         }
 
+        public event Action<LobbyPlayerState> PlayerJoined;
+        public event Action<LobbyPlayerState> PlayerLeft;
+
         public LobbyState CurrentLobbyState { get; private set; } = new LobbyState();
 
         private readonly IPlayFabCaller _caller;
+        private UniTaskCompletionSource<ResultType<IEnumerable<LobbySearchState>>> _searchTcs;
         private Lobby _currentLobby;
         private bool _isDisposed;
 
@@ -42,14 +46,18 @@ namespace Tanks.Infrastructure.Lobbies
         {
             if (_currentLobby is null) return;
             _currentLobby = lobby;
+
             LobbyMapper.MapLobby(_currentLobby, CurrentLobbyState);
+            PlayerJoined?.Invoke(LobbyMapper.MapPlayer(lobby, member));
         }
 
         private void OnPlayerLeft(Lobby lobby, PFEntityKey member, LobbyMemberRemovedReason reason)
         {
             if (_currentLobby is null) return;
             _currentLobby = lobby;
+
             LobbyMapper.MapLobby(_currentLobby, CurrentLobbyState);
+            PlayerLeft?.Invoke(LobbyMapper.MapPlayer(lobby, member));
         }
 
         private void OnLobbyUpdated(
@@ -79,7 +87,10 @@ namespace Tanks.Infrastructure.Lobbies
 
         public UniTask<ResultType<IEnumerable<LobbySearchState>>> FindLobbiesAsync(string name = null)
         {
-            var tcs = new UniTaskCompletionSource<ResultType<IEnumerable<LobbySearchState>>>();
+            // Block new requests if already searching
+            if (_searchTcs != null) return _searchTcs.Task;
+
+            _searchTcs = new UniTaskCompletionSource<ResultType<IEnumerable<LobbySearchState>>>();
 
             void OnFound(IList<LobbySearchResult> lobbies, PFEntityKey searcher, int result)
             {
@@ -87,12 +98,18 @@ namespace Tanks.Infrastructure.Lobbies
 
                 if (LobbyError.SUCCEEDED(result))
                 {
-                    tcs.TrySetResult(Result.Success(lobbies.Select(LobbyMapper.MapLobbySearch)));
+                    IEnumerable<LobbySearchState> collection = lobbies
+                        .Select(LobbyMapper.MapLobbySearch);
+
+                    _searchTcs.TrySetResult(Result.Success(collection));
+                    _searchTcs = null;
+
                     return;
                 }
 
                 string errorCode = _caller.ErrorToCode((PlayFabLobbyError)result);
-                tcs.TrySetResult(Result.Failure<IEnumerable<LobbySearchState>>(errorCode));
+                _searchTcs.TrySetResult(Result.Failure<IEnumerable<LobbySearchState>>(errorCode));
+                _searchTcs = null;
             }
 
             // Ignore full lobbies
@@ -113,7 +130,7 @@ namespace Tanks.Infrastructure.Lobbies
                 FilterString = filterString
             });
 
-            return tcs.Task;
+            return _searchTcs.Task;
         }
 
         public async UniTask<ResultType<LobbyState>> HostLobbyAsync(string name, uint maxPlayers)

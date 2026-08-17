@@ -1,10 +1,14 @@
 ﻿using Cysharp.Threading.Tasks;
+using System;
 using System.Collections.Generic;
 
 namespace Tanks.Core.Lobbies
 {
     public interface ILobbyService
     {
+        event Action<LobbyPlayerState> PlayerJoined;
+        event Action<LobbyPlayerState> PlayerLeft;
+
         LobbyState CurrentLobbyState { get; }
 
         UniTask<ResultType<IEnumerable<LobbySearchState>>> FindLobbiesAsync(string name = null);

@@ -26,6 +26,7 @@ namespace Tanks.UI.Menus.Lobbies
 
         public BindableProperty<string> QueryName { get; } = new("");
         public BindableProperty<string> Status { get; } = new("");
+        public BindableProperty<bool> IsLoading { get; } = new();
         public BindableProperty<LobbySearchState[]> FoundLobbies { get; } = new();
 
         private readonly ILobbyService _service;
@@ -39,9 +40,11 @@ namespace Tanks.UI.Menus.Lobbies
             _localization.TryGet("Menus", "menu.find-lobby.searching", out var searching);
 
             Status.Value = searching?.Get() ?? "";
+            IsLoading.Value = true;
             FoundLobbies.Value = null;
 
             var lobbies = await _service.FindLobbiesAsync(QueryName.Value);
+            IsLoading.Value = false;
 
             if (lobbies.IsSuccess == false)
             {
@@ -52,7 +55,10 @@ namespace Tanks.UI.Menus.Lobbies
             }
 
             FoundLobbies.Value = lobbies.Value.ToArray();
-            _localization.TryGet("Menus", "menu.find-lobby.found", out var found);
+
+            _localization.TryGet("Menus", FoundLobbies.Value.Length > 0
+                ? "menu.find-lobby.found"
+                : "menu.find-lobby.not-found", out var found);
 
             found?.AddVariable("count", FoundLobbies.Value.Length);
             Status.Value = found?.Get() ?? "";
