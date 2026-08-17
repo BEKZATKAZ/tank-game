@@ -127,6 +127,10 @@ MonoBehaviour:
     m_Key: menu.lobby.chat-send
     m_Metadata:
       m_Items: []
+  - m_Id: 6919344674529280
+    m_Key: menu.lobby.chat-welcome
+    m_Metadata:
+      m_Items: []
   - m_Id: 5429100515123200
     m_Key: menu.lobby.chat-player-joined
     m_Metadata:

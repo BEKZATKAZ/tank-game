@@ -128,13 +128,15 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 5429100515123200
-    m_Localized: '{0} has joined the lobby'
+    m_Localized: '{username} has joined the lobby'
     m_Metadata:
-      m_Items: []
+      m_Items:
+      - rid: 6704992630869852538
   - m_Id: 5429284712177664
-    m_Localized: '{0} has disconnected from the lobby'
+    m_Localized: '{username} has disconnected from the lobby'
     m_Metadata:
-      m_Items: []
+      m_Items:
+      - rid: 6704992630869852538
   - m_Id: 5433757098532864
     m_Localized: '{name}''s Lobby'
     m_Metadata:
@@ -169,6 +171,11 @@ MonoBehaviour:
     m_Localized: Joining lobby
     m_Metadata:
       m_Items: []
+  - m_Id: 6919344674529280
+    m_Localized: Welcome to {name}!
+    m_Metadata:
+      m_Items:
+      - rid: 6704992630869852538
   references:
     version: 2
     RefIds:
@@ -179,3 +186,6 @@ MonoBehaviour:
         m_SharedEntries:
         - id: 5433757098532864
         - id: 6608482260705280
+        - id: 5429100515123200
+        - id: 5429284712177664
+        - id: 6919344674529280
