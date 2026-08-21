@@ -16,9 +16,7 @@
     ],
     "includePlatforms": [
         "Editor",
-        "LinuxStandalone64Server",
-        "WindowsStandalone32Server",
-        "WindowsStandalone64Server"
+        "LinuxStandalone64Server"
     ],
     "excludePlatforms": [],
     "allowUnsafeCode": false,
