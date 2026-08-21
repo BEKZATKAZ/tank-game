@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using Unity.Multiplayer.PlayMode;
+using Unity.Multiplayer;
 using UnityEngine;
 using VContainer;
 using VContainer.Unity;
@@ -22,8 +21,8 @@ namespace Tanks.Shared.Bootstrap
     {
         protected override void Configure(IContainerBuilder builder)
         {
-            bool isServer = CurrentPlayer.Tags
-                .Any(x => x.Equals("server", StringComparison.OrdinalIgnoreCase));
+            MultiplayerRoleFlags role = MultiplayerRolesManager.ActiveMultiplayerRoleMask;
+            bool isServer = role is MultiplayerRoleFlags.Server;
 
             IEnumerable<Type> types = SplitComponentFinder.FindFor(
                 this, typeof(IGameplayScope<>), isServer);
