@@ -39,14 +39,14 @@ namespace Tanks.Client.Bootstrap
 
             await UniTask.Delay(TimeSpan.FromSeconds(message.StartDelaySeconds));
 
-            var player = NetworkManager.LocalClient.PlayerObject;
+            var player = Behaviour.NetworkManager.LocalClient.PlayerObject;
             _follow.SetFollowTarget(new UnityTransform(player.transform), 15);
 
             _driveInput.Enable();
             _turretInput.Enable();
         }
 
-        private void Start()
+        protected override void OnInitialize()
         {
             Behaviour.RegisterMessageHandler<TilemapGenerated>(this);
             Behaviour.RegisterMessageHandler<GameStarted>(this);

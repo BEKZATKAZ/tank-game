@@ -14,10 +14,10 @@ namespace Tanks.Client.Weapons
         private RingBuffer8<ClientShot> _fireBuffer;
         private bool _isHoldingDown;
 
-        public override void OnTick(int tick, float tickDelta)
+        protected override void OnTick(int tick, float tickDelta)
         {
             ShotId shotId = _isHoldingDown
-                ? _idGenerator.GenerateShotId(OwnerClientId, tick)
+                ? _idGenerator.GenerateShotId(Behaviour.OwnerClientId, tick)
                 : default;
 
             // Send nothing if the weapon was not used
@@ -30,14 +30,14 @@ namespace Tanks.Client.Weapons
             _isHoldingDown = false;
         }
 
-        private void Update()
+        protected override void OnUpdate(float deltaTime)
         {
             _isHoldingDown = _input.Read().Fire;
         }
 
-        private void Start()
+        protected override void OnInitialize()
         {
-            if (Behaviour.IsLocalPlayer == false) enabled = false;
+            if (Behaviour.IsLocalPlayer == false) IsEnabled = false;
         }
     }
 }

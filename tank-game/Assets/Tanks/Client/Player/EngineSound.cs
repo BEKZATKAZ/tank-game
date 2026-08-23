@@ -5,7 +5,6 @@ using Tanks.Core.Helpers;
 using Tanks.Shared;
 using Tanks.Shared.Driving;
 using Unity.Mathematics;
-using UnityEngine;
 using VContainer;
 
 namespace Tanks.Client.Player
@@ -20,7 +19,7 @@ namespace Tanks.Client.Player
         private float2 _lastPosition;
         private PositiveFloatOrZero _intensity;
 
-        private void Start()
+        protected override void OnInitialize()
         {
             _instance = _audioFactory.CreateInstance("event:/SFX/Engine/Engine_Default");
             _instance.SetVolume(0.5f);
@@ -32,16 +31,14 @@ namespace Tanks.Client.Player
             _instance.Play();
         }
 
-        public override void OnDestroy()
+        protected override void OnDestroy()
         {
-            base.OnDestroy();
             if (_instance is null) return;
-
             _instance.Stop(fadeOut: true);
             _instance.Dispose();
         }
 
-        private void Update()
+        protected override void OnUpdate(float deltaTime)
         {
             PositiveFloatOrZero target;
             float speed = 2;
@@ -56,11 +53,11 @@ namespace Tanks.Client.Player
                 float2 currentPosition = Behaviour.Transform.WorldPosition;
                 float distance = math.distance(currentPosition, _lastPosition);
 
-                target = distance > Time.deltaTime * 2 ? 1 : 0;
+                target = distance > deltaTime * 2 ? 1 : 0;
                 _lastPosition = currentPosition;
             }
 
-            _intensity = math.lerp(_intensity, target, Time.deltaTime * speed);
+            _intensity = math.lerp(_intensity, target, deltaTime * speed);
             _instance.SetParameter("EngineIntensity", _intensity);
         }
     }

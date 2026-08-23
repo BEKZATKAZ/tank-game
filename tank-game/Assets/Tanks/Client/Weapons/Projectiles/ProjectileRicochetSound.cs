@@ -18,9 +18,8 @@ namespace Tanks.Client.Weapons
             _audioPlayer.PlayOneShot("event:/SFX/Ricochet", hitPoint);
         }
 
-        protected override void Awake()
+        protected override void OnInitialize()
         {
-            base.Awake();
             Behaviour.RegisterMessageHandler(this);
         }
     }

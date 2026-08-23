@@ -21,7 +21,7 @@ namespace Tanks.Server.Bootstrap
 
         public async void Handle(PrepareGameRequested message)
         {
-            foreach (var client in NetworkManager.ConnectedClients.Values)
+            foreach (var client in Behaviour.NetworkManager.ConnectedClients.Values)
             {
                 if (client.PlayerObject == false) continue;
                 client.PlayerObject.Despawn(destroy: true);
@@ -60,15 +60,17 @@ namespace Tanks.Server.Bootstrap
 
             uint positionSeed = MemoryMarshal.Read<uint>(positionSeedBuffer);
             var positionRandom = Unity.Mathematics.Random.CreateFromIndex(positionSeed);
-            Required<GameObject> playerPrefab = NetworkManager.NetworkConfig.PlayerPrefab;
+            Required<GameObject> playerPrefab = Behaviour.NetworkManager.NetworkConfig.PlayerPrefab;
 
-            foreach (ulong clientId in NetworkManager.ConnectedClientsIds)
+            foreach (ulong clientId in Behaviour.NetworkManager.ConnectedClientsIds)
             {
                 float2 coords = positionRandom.NextInt2(0, new int2(resolution.x, resolution.y));
                 float2 position = coords * (wallWidth * 2) + wallWidth * 1.5f;
                 float3 position3D = new float3(position, 0);
 
-                GameObject player = Instantiate(playerPrefab.Value, position3D, quaternion.identity);
+                GameObject player = UnityEngine.Object.Instantiate(
+                    playerPrefab.Value, position3D, quaternion.identity);
+
                 _container.InjectGameObject(player);
 
                 NetworkObject networkObject = player.GetComponent<NetworkObject>();
@@ -76,9 +78,8 @@ namespace Tanks.Server.Bootstrap
             }
         }
 
-        protected override void Awake()
+        protected override void OnInitialize()
         {
-            base.Awake();
             Behaviour.RegisterMessageHandler(this);
         }
     }

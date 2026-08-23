@@ -3,7 +3,6 @@ using Tanks.Client.Items;
 using Tanks.Localization;
 using Tanks.Shared;
 using Tanks.Shared.Bootstrap;
-using Unity.Netcode;
 using UnityEngine;
 using VContainer;
 using VContainer.Unity;
@@ -32,7 +31,7 @@ namespace Tanks.Client.Bootstrap
                 _isInitialized = true;
             }
 
-            while (NetworkManager.LocalClient.PlayerObject == false)
+            while (Behaviour.NetworkManager.LocalClient.PlayerObject == false)
             {
                 await UniTask.Delay(500);
 
@@ -40,13 +39,13 @@ namespace Tanks.Client.Bootstrap
                 if (Application.isPlaying == false) return;
             }
 
-            GameObject player = NetworkManager.LocalClient.PlayerObject.gameObject;
+            GameObject player = Behaviour.NetworkManager.LocalClient.PlayerObject.gameObject;
             _container.InjectGameObject(player);
 
             Behaviour.SendReadyConfirmationServerRpc(message.SecretHandle);
         }
 
-        private void Start()
+        protected override void OnInitialize()
         {
             Behaviour.RegisterMessageHandler(this);
         }

@@ -46,14 +46,14 @@ namespace Tanks.Client.Items.Pickups
             _bus.Publish(new PickupAreaLeft { PickupId = Behaviour.PickupId }, this);
         }
 
-        private void OnDisable()
+        protected override void OnDisable()
         {
             TryLeave();
         }
 
-        public override void OnTick(int tick, float tickDelta)
+        protected override void OnTick(int tick, float tickDelta)
         {
-            var localPlayer = NetworkManager.LocalClient.PlayerObject;
+            var localPlayer = Behaviour.NetworkManager.LocalClient.PlayerObject;
 
             if (localPlayer == false)
             {

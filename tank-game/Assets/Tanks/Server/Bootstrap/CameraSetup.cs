@@ -20,14 +20,12 @@ namespace Tanks.Server.Bootstrap
             camera.Value.orthographicSize = math.cmin(size.xy) * 0.5f;
         }
 
-        protected override void Awake()
+        protected override void OnInitialize()
         {
-            base.Awake();
-
             // This is kept in the editor for testing
             if (Application.isEditor == false)
             {
-                enabled = false;
+                IsEnabled = false;
                 return;
             }
 

@@ -20,7 +20,7 @@ namespace Tanks.Server.Weapons
             _latestUnprocessedInput = message;
         }
 
-        public override void OnTick(int tick, float tickDelta)
+        protected override void OnTick(int tick, float tickDelta)
         {
             if (_latestUnprocessedInput.HasValue)
             {
@@ -32,16 +32,13 @@ namespace Tanks.Server.Weapons
             _scheduler.Tick(tick, tickDelta);
         }
 
-        public override void OnDestroy()
+        protected override void OnDestroy()
         {
-            base.OnDestroy();
             _scheduler.Dispose();
         }
 
-        protected override void Awake()
+        protected override void OnInitialize()
         {
-            base.Awake();
-
             _scheduler = new WeaponInputScheduler(
                 shoot: (shot, deltaTime) => Behaviour.WeaponTick(deltaTime, true, shot.Id),
                 fallback: deltaTime => Behaviour.WeaponTick(deltaTime, false, default));

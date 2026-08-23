@@ -56,14 +56,14 @@ namespace Tanks.Server.Items.Pickups
             _currentCooldown = _random.NextFloat(Behaviour.MinCooldown, Behaviour.MaxCooldown);
         }
 
-        private void Start()
+        protected override void OnInitialize()
         {
             _bus.RegisterHandler<TilemapGenerated>(this);
             _bus.RegisterHandler<GameStarted>(this);
             _bus.RegisterHandler<ItemPickedUp>(this);
         }
 
-        public override void OnTick(int tick, float tickDelta)
+        protected override void OnTick(int tick, float tickDelta)
         {
             if (_isGameStarted == false) return;
 
@@ -135,7 +135,7 @@ namespace Tanks.Server.Items.Pickups
             _occupiedCoords.Clear();
             _activePickups.Clear();
 
-            _players = NetworkManager.SpawnManager.PlayerObjects
+            _players = Behaviour.NetworkManager.SpawnManager.PlayerObjects
                 .Select(x => new UnityTransform(x.transform))
                 .ToArray();
 

@@ -12,9 +12,8 @@ namespace Tanks.Server.Weapons
             Behaviour.UseWeaponClientRpc(new WeaponUsedFromServer { Id = message.ShotId });
         }
 
-        protected override void Awake()
+        protected override void OnInitialize()
         {
-            base.Awake();
             Behaviour.RegisterMessageHandler(this);
         }
     }

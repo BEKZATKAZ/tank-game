@@ -157,19 +157,17 @@ namespace Tanks.Client.Bootstrap
             _vignetteMesh.SetSubMesh(0, new SubMeshDescriptor(0, _indices.Length));
         }
 
-        private void Start()
+        protected override void OnInitialize()
         {
             CreateVignette();
             Behaviour.RegisterMessageHandler(this);
         }
 
-        public override void OnDestroy()
+        protected override void OnDestroy()
         {
-            base.OnDestroy();
-
-            if (_vignetteMesh) Destroy(_vignetteMesh);
-            if (_gradient) Destroy(_gradient);
-            if (_gradientMaterial) Destroy(_gradientMaterial);
+            if (_vignetteMesh) Object.Destroy(_vignetteMesh);
+            if (_gradient) Object.Destroy(_gradient);
+            if (_gradientMaterial) Object.Destroy(_gradientMaterial);
 
             if (_vertices.IsCreated) _vertices.Dispose();
             if (_indices.IsCreated) _indices.Dispose();

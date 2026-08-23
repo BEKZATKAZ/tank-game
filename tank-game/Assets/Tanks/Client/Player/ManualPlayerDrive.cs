@@ -12,20 +12,15 @@ namespace Tanks.Client.Player
     {
         [Inject] private readonly IInputService<ManualDriveInput> _input;
 
-        private void Update()
+        protected override void OnUpdate(float deltaTime)
         {
             ManualDriveInput input = _input.Read();
             Behaviour.Tick(input.Throttle, input.Steering, Time.deltaTime);
         }
 
-        private void Start()
+        protected override void OnInitialize()
         {
-            if (Behaviour.IsLocalPlayer == false) enabled = false;
-        }
-
-        public override void OnDestroy()
-        {
-            base.OnDestroy();
+            if (Behaviour.IsLocalPlayer == false) IsEnabled = false;
         }
     }
 }

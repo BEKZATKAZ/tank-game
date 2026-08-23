@@ -22,9 +22,8 @@ namespace Tanks.Client.Items.Pickups
                 useDefault: Behaviour.IsLocalPlayer);
         }
 
-        protected override void Awake()
+        protected override void OnInitialize()
         {
-            base.Awake();
             Behaviour.RegisterMessageHandler(this);
         }
     }

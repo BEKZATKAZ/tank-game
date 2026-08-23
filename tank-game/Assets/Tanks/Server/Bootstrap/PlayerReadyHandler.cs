@@ -34,7 +34,7 @@ namespace Tanks.Server.Bootstrap
         {
             _pendingConfirmations.Clear();
 
-            foreach (ulong clientId in NetworkManager.ConnectedClientsIds)
+            foreach (ulong clientId in Behaviour.NetworkManager.ConnectedClientsIds)
             {
                 int secret = RandomNumberGenerator.GetInt32(int.MinValue, int.MaxValue);
 
@@ -49,9 +49,8 @@ namespace Tanks.Server.Bootstrap
             }
         }
 
-        protected override void Awake()
+        protected override void OnInitialize()
         {
-            base.Awake();
             Behaviour.RegisterMessageHandler<WaitingForPlayersRequested>(this);
             Behaviour.RegisterMessageHandler<PlayerReadyConfirmed>(this);
         }

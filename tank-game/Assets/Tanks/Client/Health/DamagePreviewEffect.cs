@@ -23,14 +23,20 @@ namespace Tanks.Client.Health
             preview.Initialize(message.Amount, Behaviour.Transform);
             await preview.Animate(duration: 0.5f);
 
-            if (this) _pool.Release(preview);
+            _pool?.Release(preview);
         }
 
-        private async void Start()
+        protected override void OnDestroy()
+        {
+            _pool?.Dispose();
+            _pool = null;
+        }
+
+        protected override async void OnInitialize()
         {
             if (Behaviour.IsLocalPlayer)
             {
-                enabled = false;
+                IsEnabled = false;
                 return;
             }
 
@@ -38,10 +44,10 @@ namespace Tanks.Client.Health
             DamagePreviewText prefab = resource.GetComponent<DamagePreviewText>();
 
             _pool = new ObjectPool<DamagePreviewText>(
-                createFunc: () => Instantiate(prefab),
+                createFunc: () => Object.Instantiate(prefab),
                 actionOnGet: x => x.gameObject.SetActive(true),
                 actionOnRelease: x => x.gameObject.SetActive(false),
-                actionOnDestroy: x => Destroy(x.gameObject),
+                actionOnDestroy: x => Object.Destroy(x.gameObject),
                 collectionCheck: false,
                 defaultCapacity: 5,
                 maxSize: 50);

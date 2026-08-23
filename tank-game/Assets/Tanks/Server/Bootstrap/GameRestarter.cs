@@ -31,7 +31,7 @@ namespace Tanks.Server.Bootstrap
             // Discard multiple restarts
             if (currentCount != _diedCount) return;
 
-            int alivePlayers = NetworkManager.ConnectedClients
+            int alivePlayers = Behaviour.NetworkManager.ConnectedClients
               .Count(x => x.Value.PlayerObject);
 
             if (alivePlayers > 1) return;
@@ -40,7 +40,7 @@ namespace Tanks.Server.Bootstrap
             Behaviour.PrepareGame();
         }
 
-        private void Start()
+        protected override void OnInitialize()
         {
             _bus.RegisterHandler<Died>(this);
         }

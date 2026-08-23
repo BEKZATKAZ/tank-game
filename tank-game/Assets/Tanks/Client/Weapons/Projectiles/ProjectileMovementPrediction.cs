@@ -5,7 +5,6 @@ using Tanks.Shared.Stats;
 using Tanks.Shared.Health;
 using Tanks.Shared.Weapons.Projectiles;
 using Unity.Mathematics;
-using UnityEngine;
 using VContainer;
 
 namespace Tanks.Client.Weapons
@@ -63,7 +62,7 @@ namespace Tanks.Client.Weapons
             _predicted.WorldPosition = Behaviour.Transform.WorldPosition;
             _predicted.WorldRotation = Behaviour.Transform.WorldRotation;
 
-            int tick = NetworkManager.NetworkTickSystem.LocalTime.Tick;
+            int tick = Behaviour.NetworkManager.NetworkTickSystem.LocalTime.Tick;
             _reconciliation.Reset(tick, _predicted);
             _positionError = float2.zero;
             _elapsed = 0;
@@ -72,7 +71,7 @@ namespace Tanks.Client.Weapons
 
         public void Handle(ProjectileSnapshotFromServer message)
         {
-            float tickDelta = 1f / NetworkManager.NetworkTickSystem.TickRate;
+            float tickDelta = 1f / Behaviour.NetworkManager.NetworkTickSystem.TickRate;
 
             if (_reconciliation.TryReconcile(
                 _predicted, message, tickDelta, out float2 newPositionError) == false) return;
@@ -80,22 +79,19 @@ namespace Tanks.Client.Weapons
             _positionError = newPositionError;
         }
 
-        public override void OnTick(int tick, float tickDelta)
+        protected override void OnTick(int tick, float tickDelta)
         {
             _reconciliation.Tick(tick, _predicted);
             _elapsed += tickDelta;
         }
 
-        public override void OnDestroy()
+        protected override void OnDestroy()
         {
-            base.OnDestroy();
             _reconciliation.Dispose();
         }
 
-        protected override void Awake()
+        protected override void OnInitialize()
         {
-            base.Awake();
-
             _predicted = new ProjectileTransform(Behaviour.Transform.WorldScale);
             _reconciliation = new ProjectileReconciliation(Behaviour);
 
@@ -103,15 +99,13 @@ namespace Tanks.Client.Weapons
             Behaviour.RegisterMessageHandler<ProjectileSnapshotFromServer>(this);
         }
 
-        private void Update()
+        protected override void OnUpdate(float deltaTime)
         {
             if (_elapsed >= Behaviour.Config.LifeTime)
             {
                 _pool.Return(Behaviour);
                 return;
             }
-
-            float deltaTime = Time.deltaTime;
 
             Behaviour.Simulate(new LaunchCallbacks
             {

@@ -11,12 +11,12 @@ namespace Tanks.Server.Items.Pickups
 
         private PickupAreaLogic _logic;
 
-        private void Start()
+        protected override void OnInitialize()
         {
             _logic = new PickupAreaLogic(_database, Behaviour.Transform, 1.5f, 1 << 3);
         }
 
-        public override void OnTick(int tick, float tickDelta)
+        protected override void OnTick(int tick, float tickDelta)
         {
             if (_logic is null) return;
             if (_logic.CheckArea(out IItemOwner owner) == false) return;

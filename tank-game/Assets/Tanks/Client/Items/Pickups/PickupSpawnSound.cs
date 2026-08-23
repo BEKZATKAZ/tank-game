@@ -31,13 +31,12 @@ namespace Tanks.Client.Items.Pickups
             _instance.Play();
         }
 
-        protected override void Awake()
+        protected override void OnInitialize()
         {
-            base.Awake();
             Behaviour.RegisterMessageHandler(this);
         }
 
-        private void OnDisable()
+        protected override void OnDisable()
         {
             if (_instance is null) return;
             _instance.Stop(fadeOut: true);

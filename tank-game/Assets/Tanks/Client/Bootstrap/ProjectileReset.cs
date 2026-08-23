@@ -17,9 +17,8 @@ namespace Tanks.Client.Bootstrap
             _pool.ReturnAll();
         }
 
-        protected override void Awake()
+        protected override void OnInitialize()
         {
-            base.Awake();
             Behaviour.RegisterMessageHandler(this);
         }
     }

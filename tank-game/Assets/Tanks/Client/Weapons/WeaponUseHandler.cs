@@ -30,8 +30,8 @@ namespace Tanks.Client.Weapons
 
         public void Handle(WeaponUsedFromServer message)
         {
-            int currentTick = NetworkManager.NetworkTickSystem.LocalTime.Tick;
-            float tickDelta = 1f / NetworkManager.NetworkTickSystem.TickRate;
+            int currentTick = Behaviour.NetworkManager.NetworkTickSystem.LocalTime.Tick;
+            float tickDelta = 1f / Behaviour.NetworkManager.NetworkTickSystem.TickRate;
 
             float cooldownDuration = Behaviour.CurrentWeapon.Cooldown.DurationSeconds;
             int cooldownTicks = (int)math.round(cooldownDuration / tickDelta);
@@ -41,7 +41,7 @@ namespace Tanks.Client.Weapons
             _scheduledShots.Enqueue(new ScheduledClientShot(_lastScheduledTick, message.Id));
         }
 
-        public override void OnTick(int tick, float tickDelta)
+        protected override void OnTick(int tick, float tickDelta)
         {
             if (_scheduledShots.Count == 0)
             {
@@ -61,17 +61,16 @@ namespace Tanks.Client.Weapons
             _scheduledShots.Dequeue();
         }
 
-        public override void OnDestroy()
+        protected override void OnDestroy()
         {
-            base.OnDestroy();
             if (_scheduledShots.IsCreated) _scheduledShots.Dispose();
         }
 
-        private void Start()
+        protected override void OnInitialize()
         {
             if (Behaviour.IsLocalPlayer)
             {
-                enabled = false;
+                IsEnabled = false;
                 return;
             }
 

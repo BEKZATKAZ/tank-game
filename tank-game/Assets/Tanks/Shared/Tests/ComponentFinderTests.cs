@@ -16,28 +16,18 @@ namespace Tanks.Shared.Tests
         public ITransform Transform { get; }
     }
 
-    public class EngineComponent : INetworkComponent<CarBehaviour>
+    public class EngineComponent : NetworkComponent<CarBehaviour>
     {
-        public bool IsEnabled => true;
-        public CarBehaviour Behaviour { get; private set; }
-
-        public void OnTick(int tick, float tickDelta) { }
+        
     }
 
-    public class TransmissionComponent : INetworkComponent<CarBehaviour>
+    public class TransmissionComponent : NetworkComponent<CarBehaviour>
     {
-        public bool IsEnabled => true;
-        public CarBehaviour Behaviour { get; private set; }
-
-        public void OnTick(int tick, float tickDelta) { }
     }
 
-    public class LifeStyleComponent : INetworkComponent<PersonBehaviour>
+    public class LifeStyleComponent : NetworkComponent<PersonBehaviour>
     {
-        public bool IsEnabled => true;
-        public PersonBehaviour Behaviour { get; private set; }
 
-        public void OnTick(int tick, float tickDelta) { }
     }
 
     public class ComponentFinderTests

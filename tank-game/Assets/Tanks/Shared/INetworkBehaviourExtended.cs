@@ -1,10 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using Tanks.Shared.Adapters;
+using Tanks.Utils;
 using Unity.Netcode;
 using UnityEngine;
 using VContainer;
-using VContainer.Unity;
 
 namespace Tanks.Shared
 {
@@ -22,6 +22,7 @@ namespace Tanks.Shared
     public abstract class NetworkBehaviourExtended : NetworkBehaviour, INetworkBehaviourExtended
     {
         public ITransform Transform { get; private set; }
+        public IEnumerable<INetworkComponent> Components => _components;
 
         private readonly Dictionary<Type, List<INetworkMessageHandler>> _handlers = new();
         private readonly List<INetworkComponent> _components = new();
@@ -76,11 +77,13 @@ namespace Tanks.Shared
 
             foreach (Type componentType in types)
             {
-                Component component = gameObject.AddComponent(componentType);
-                _components.Add(component as INetworkComponent);
+                INetworkComponent component = _container
+                    .CreateInjected(componentType) as INetworkComponent;
+
+                component.Initialize(this);
+                _components.Add(component);
             }
 
-            _container.InjectGameObject(gameObject);
             OnInitialize();
         }
 
@@ -107,10 +110,25 @@ namespace Tanks.Shared
         {
             base.OnDestroy();
 
+            foreach (INetworkComponent component in _components)
+            {
+                component.Destroy();
+            }
+
             if (_isInitialized == false || NetworkManager == false) return;
             if (NetworkManager.NetworkTickSystem is null) return;
 
             NetworkManager.NetworkTickSystem.Tick -= Tick;
+        }
+
+        private void Update()
+        {
+            float deltaTime = Time.deltaTime;
+
+            foreach (INetworkComponent component in _components)
+            {
+                component.Update(deltaTime);
+            }
         }
 
         private void Tick()
@@ -120,13 +138,12 @@ namespace Tanks.Shared
 
             int tick = NetworkManager.NetworkTickSystem.LocalTime.Tick;
             float tickDelta = 1f / NetworkManager.NetworkTickSystem.TickRate;
-
             OnTick(tick, tickDelta);
 
             foreach (INetworkComponent component in _components)
             {
                 if (component.IsEnabled == false) continue;
-                component.OnTick(tick, tickDelta);
+                component.Tick(tick, tickDelta);
             }
         }
 

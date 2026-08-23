@@ -26,8 +26,7 @@ namespace Tanks.Server.Health
 
             Behaviour.SendDiedEveryoneRpc();
             Behaviour.SendDiedLocalClientRpc(target);
-
-            GetComponent<NetworkObject>().Despawn();
+            Behaviour.GetComponent<NetworkObject>().Despawn();
         }
 
         public void Handle(HPHealed message)
@@ -38,9 +37,8 @@ namespace Tanks.Server.Health
             Behaviour.Health.Value = math.clamp(oldValue + message.Amount, 0, maxHealth);
         }
 
-        protected override void Awake()
+        protected override void OnInitialize()
         {
-            base.Awake();
             Behaviour.RegisterMessageHandler<DamageTaken>(this);
             Behaviour.RegisterMessageHandler<HPHealed>(this);
         }

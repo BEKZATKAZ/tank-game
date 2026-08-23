@@ -40,7 +40,7 @@ namespace Tanks.Client.Health
             if (currentTime != _lastTime) return;
 
             // Prevent effect from applying when the entity is destroyed
-            if (this == false) return;
+            if (Behaviour == false) return;
 
             foreach ((SpriteRenderer renderer, Color color) in _sprites)
             {
@@ -48,9 +48,9 @@ namespace Tanks.Client.Health
             }
         }
 
-        private void Start()
+        protected override void OnInitialize()
         {
-            _sprites = GetComponentsInChildren<SpriteRenderer>()
+            _sprites = Behaviour.GetComponentsInChildren<SpriteRenderer>()
                 .ToDictionary(x => x, x => x.color);
 
             Behaviour.RegisterMessageHandler(this);

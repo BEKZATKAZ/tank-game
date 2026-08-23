@@ -19,9 +19,8 @@ namespace Tanks.Client.Weapons
                 useDefault: Behaviour.IsLocalPlayer);
         }
 
-        protected override void Awake()
+        protected override void OnInitialize()
         {
-            base.Awake();
             Behaviour.RegisterMessageHandler(this);
         }
     }

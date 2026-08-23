@@ -23,7 +23,7 @@ namespace Tanks.Server.Weapons
             _elapsed = 0;
         }
 
-        public override void OnTick(int tick, float tickDelta)
+        protected override void OnTick(int tick, float tickDelta)
         {
             if (Behaviour.Transform.IsValid == false) return;
 
@@ -64,9 +64,8 @@ namespace Tanks.Server.Weapons
             _pool.Return(projectile);
         }
 
-        protected override void Awake()
+        protected override void OnInitialize()
         {
-            base.Awake();
             Behaviour.RegisterMessageHandler(this);
         }
     }

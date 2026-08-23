@@ -1,6 +1,5 @@
 ﻿using Tanks.Shared;
 using Tanks.Shared.Items.Pickups;
-using UnityEngine;
 using VContainer;
 
 namespace Tanks.Client.Items.Pickups
@@ -19,20 +18,18 @@ namespace Tanks.Client.Items.Pickups
             _logic.Reset(config);
         }
 
-        protected override void Awake()
+        protected override void OnInitialize()
         {
-            base.Awake();
-
             PickupVisualSetup setup = new PickupVisualSetup();
-            setup.Setup(transform, out var iconRenderer, out var glowRenderer);
+            setup.Setup(Behaviour.transform, out var iconRenderer, out var glowRenderer);
 
             _logic = new PickupVisualLogic(iconRenderer, glowRenderer);
             Behaviour.RegisterMessageHandler(this);
         }
 
-        private void Update()
+        protected override void OnUpdate(float deltaTime)
         {
-            _logic.Tick(Time.deltaTime);
+            _logic.Tick(deltaTime);
         }
     }
 }

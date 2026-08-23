@@ -1,11 +1,12 @@
-﻿using Unity.Netcode;
-
-namespace Tanks.Shared
+﻿namespace Tanks.Shared
 {
     public interface INetworkComponent
     {
-        bool IsEnabled { get; }
-        void OnTick(int tick, float tickDelta);
+        bool IsEnabled { get; set; }
+        void Initialize(INetworkBehaviourExtended behaviour);
+        void Update(float deltaTime);
+        void Tick(int tick, float tickDelta);
+        void Destroy();
     }
 
     public interface INetworkComponent<T> : INetworkComponent where T : INetworkBehaviourExtended
@@ -13,17 +14,48 @@ namespace Tanks.Shared
         T Behaviour { get; }
     }
 
-    public abstract class NetworkComponent<T> : NetworkBehaviour, INetworkComponent<T>
-        where T : NetworkBehaviourExtended
+    public class NetworkComponent<T> : INetworkComponent<T> where T : INetworkBehaviourExtended
     {
         public T Behaviour { get; private set; }
-        public bool IsEnabled => enabled;
 
-        public virtual void OnTick(int tick, float tickDelta) { }
-
-        protected virtual void Awake()
+        public bool IsEnabled
         {
-            Behaviour = GetComponent<T>();
+            get => _isEnabled;
+            set
+            {
+                if (_isEnabled == value) return;
+                _isEnabled = value;
+
+                if (value) OnEnable();
+                else OnDisable();
+            }
         }
+
+        private bool _isEnabled;
+
+        public void Initialize(INetworkBehaviourExtended behaviour)
+        {
+            Behaviour = (T)behaviour;
+            _isEnabled = true;
+
+            OnInitialize();
+            if (_isEnabled) OnEnable();
+        }
+
+        public void Destroy()
+        {
+            IsEnabled = false;
+            OnDestroy();
+        }
+
+        public void Update(float deltaTime) => OnUpdate(deltaTime);
+        public void Tick(int tick, float tickDelta) => OnTick(tick, tickDelta);
+
+        protected virtual void OnInitialize() { }
+        protected virtual void OnEnable() { }
+        protected virtual void OnUpdate(float deltaTime) { }
+        protected virtual void OnTick(int tick, float tickDelta) { }
+        protected virtual void OnDisable() { }
+        protected virtual void OnDestroy() { }
     }
 }

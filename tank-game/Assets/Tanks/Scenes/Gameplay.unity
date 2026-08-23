@@ -383,7 +383,7 @@ MonoBehaviour:
       NetworkPrefabsLists:
       - {fileID: 11400000, guid: 76ccad57eba4fe0409db4779cf7b8aa0, type: 2}
     TickRate: 20
-    ClientConnectionBufferTimeout: 10
+    ClientConnectionBufferTimeout: 30
     ConnectionApproval: 1
     ConnectionData: 
     EnableTimeResync: 0

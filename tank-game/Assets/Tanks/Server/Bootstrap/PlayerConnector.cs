@@ -8,10 +8,17 @@ namespace Tanks.Server.Bootstrap
     {
         private bool _allPlayersConnected;
 
-        private void Start()
+        protected override void OnInitialize()
         {
-            NetworkManager.ConnectionApprovalCallback += ApprovalCheck;
-            NetworkManager.OnClientConnectedCallback += OnClientConnected;
+            Behaviour.NetworkManager.ConnectionApprovalCallback += ApprovalCheck;
+            Behaviour.NetworkManager.OnClientConnectedCallback += OnClientConnected;
+        }
+
+        protected override void OnDestroy()
+        {
+            if (Behaviour.NetworkManager == false) return;
+            Behaviour.NetworkManager.ConnectionApprovalCallback += ApprovalCheck;
+            Behaviour.NetworkManager.OnClientConnectedCallback += OnClientConnected;
         }
 
         private void ApprovalCheck(
@@ -26,7 +33,7 @@ namespace Tanks.Server.Bootstrap
 
         private void OnClientConnected(ulong clientId)
         {
-            int currentCount = NetworkManager.ConnectedClients.Count;
+            int currentCount = Behaviour.NetworkManager.ConnectedClients.Count;
             if (currentCount < Behaviour.DesiredPlayerCount) return;
 
             _allPlayersConnected = true;

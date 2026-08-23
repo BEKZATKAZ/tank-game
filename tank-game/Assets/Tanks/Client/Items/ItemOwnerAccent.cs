@@ -35,11 +35,9 @@ namespace Tanks.Client.Items
                 });
         }
 
-        protected override void Awake()
+        protected override void OnInitialize()
         {
-            base.Awake();
             _block = new MaterialPropertyBlock();
-
             Behaviour.RegisterMessageHandler(this);
             Behaviour.Accent.gameObject.SetActive(false);
         }

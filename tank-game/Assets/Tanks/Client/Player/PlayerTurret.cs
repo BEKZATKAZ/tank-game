@@ -4,7 +4,6 @@ using Tanks.Client.Rendering;
 using Tanks.Shared;
 using Tanks.Shared.Driving;
 using Unity.Mathematics;
-using UnityEngine;
 using VContainer;
 
 namespace Tanks.Client.Player
@@ -36,7 +35,7 @@ namespace Tanks.Client.Player
             return _lastDirection;
         }
 
-        private void Update()
+        protected override void OnUpdate(float deltaTime)
         {
             TurretInput input = _input.Read();
 
@@ -47,17 +46,12 @@ namespace Tanks.Client.Player
                 _ => throw new NotImplementedException()
             };
 
-            Behaviour.Tick(direction, Time.deltaTime);
+            Behaviour.Tick(direction, deltaTime);
         }
 
-        private void Start()
+        protected override void OnInitialize()
         {
-            if (Behaviour.IsLocalPlayer == false) enabled = false;
-        }
-
-        public override void OnDestroy()
-        {
-            base.OnDestroy();
+            if (Behaviour.IsLocalPlayer == false) IsEnabled = false;
         }
     }
 }
