@@ -35,6 +35,6 @@ namespace Tanks.Shared.Generation
     public interface ITilemapGenerator
     {
         TemporaryArrayResult<GeneratedTile> Generate(
-            ReadOnlySpan<MazeCell> cells, TilemapGenerationSettings settings);
+            ReadOnlySpan<MazeCell> cells, TilemapGenerationSettings settings, int2 resolution);
     }
 }

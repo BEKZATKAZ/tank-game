@@ -34,7 +34,7 @@ namespace Tanks.Shared.Generation
         public Bounds Spawn(TilemapGenerationSettings settings, int2 resolution)
         {
             using var cells = _mazeGenerator.Generate(settings.Seed, resolution);
-            using var tiles = _tilemapGenerator.Generate(cells.Value, settings);
+            using var tiles = _tilemapGenerator.Generate(cells.Value, settings, resolution);
 
             int2 gridResolution = resolution * (settings.WallWidth * 2);
 

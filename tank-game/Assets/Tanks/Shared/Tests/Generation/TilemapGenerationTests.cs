@@ -49,7 +49,7 @@ namespace Tanks.Shared.Tests.Generation
                     Seed = 4019,
                     TileSpacing = 1,
                     WallWidth = wallWidth
-                });
+                }, new int2(1, 1));
 
                 // (Corner + Left Wall + Bottom Wall) * Width²
                 int tileCount = 1 + (leftWall ? 1 : 0) + (bottomWall ? 1 : 0);
@@ -97,7 +97,7 @@ namespace Tanks.Shared.Tests.Generation
                 Seed = 1999,
                 TileSpacing = 1,
                 WallWidth = wallWidth
-            });
+            }, new int2(3, 1));
 
             // 7 blocks * Width²
             int tileCount = 7 * math.square(wallWidth);

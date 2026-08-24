@@ -5,18 +5,19 @@ using Tanks.Utils;
 using Unity.Collections;
 using Unity.Jobs;
 using Unity.Mathematics;
+using UnityEngine;
 
 namespace Tanks.Shared.Generation
 {
     public sealed class TilemapGenerator : ITilemapGenerator
     {
         public unsafe TemporaryArrayResult<GeneratedTile> Generate(
-            ReadOnlySpan<MazeCell> cells, TilemapGenerationSettings settings)
+            ReadOnlySpan<MazeCell> cells, TilemapGenerationSettings settings, int2 resolution)
         {
             int tileCount = cells.Length * settings.WallWidth;
             using var tiles = new NativeList<int2>(tileCount, Allocator.TempJob);
 
-            foreach (MazeCell cell in cells) GenerateBlocks(cell, tiles, settings);
+            foreach (MazeCell cell in cells) GenerateBlocks(cell, tiles, settings, resolution);
             var result = new TemporaryArrayResult<GeneratedTile>(tiles.Length);
 
             try
@@ -47,10 +48,28 @@ namespace Tanks.Shared.Generation
         }
 
         private static void GenerateBlocks(
-            in MazeCell cell, NativeList<int2> tiles, TilemapGenerationSettings settings)
+            in MazeCell cell, NativeList<int2> tiles,
+            TilemapGenerationSettings settings,
+            int2 resolution)
         {
             int wallWidth = settings.WallWidth;
             int2 position = cell.Position * new int2(wallWidth * 2);
+
+            // Add variation by hiding some cells
+            if (cell.Position.x > 0 && cell.Position.y > 0 &&
+                cell.Position.x < resolution.x && cell.Position.y < resolution.y)
+            {
+                float seedX = settings.Seed * 0.001f;
+                float seedY = settings.Seed * 0.002f;
+
+                float threshold = math.lerp(0.4f, 0.8f, settings.Seed % 1f);
+                float noise = Mathf.PerlinNoise(
+                    seedX + cell.Position.x * 10f,
+                    seedY - cell.Position.y * 10f);
+
+                // Prevent weird looking walls without a corner
+                if (noise < threshold && (cell.WallLeft || cell.WallBottom)) return;
+            }
 
             /* │ **********************************
              * └── <-- Corner (represented as └) */

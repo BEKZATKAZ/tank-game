@@ -26,7 +26,7 @@ namespace Tanks.Shared.Generation.Mazes
 
         public bool IsVisited { get; private set; }
         public WallFlags Flags { get; private set; }
-        public readonly int2 Position { get; }
+        public int2 Position { get; set; }
 
         public void Visit() => IsVisited = true;
 
