@@ -3,8 +3,8 @@ using Tanks.Shared.Items;
 using Tanks.Shared.Items.Pickups;
 using Tanks.Shared.Messaging;
 using Unity.Mathematics;
+using Unity.Netcode;
 using UnityEngine;
-using VContainer;
 
 namespace Tanks.Client.Items.Pickups
 {
@@ -19,9 +19,14 @@ namespace Tanks.Client.Items.Pickups
         public PickupId PickupId;
     }
 
-    public sealed class PickupArea : NetworkComponent<PickupBehaviour>, IMessageSender
+    public sealed class PickupArea : NetworkComponent<IPickupBehaviour>, IMessageSender
     {
-        [Inject] private readonly IMessageBus _bus;
+        public PickupArea(IMessageBus bus)
+        {
+            _bus = bus;
+        }
+
+        private readonly IMessageBus _bus;
 
         private readonly Collider2D[] _colliderBuffer = new Collider2D[8];
         private bool _hasEntered;
@@ -53,7 +58,7 @@ namespace Tanks.Client.Items.Pickups
 
         protected override void OnTick(int tick, float tickDelta)
         {
-            var localPlayer = Behaviour.NetworkManager.LocalClient.PlayerObject;
+            var localPlayer = NetworkManager.Singleton.LocalClient.PlayerObject;
 
             if (localPlayer == false)
             {
@@ -62,7 +67,7 @@ namespace Tanks.Client.Items.Pickups
             }
 
             ContactFilter2D filter = new ContactFilter2D { layerMask = 1 << 3 };
-            float2 origin = Behaviour.Transform.WorldPosition;
+            float2 origin = Transform.WorldPosition;
             float radius = 6;
 
             int count = Physics2D.OverlapCircle(origin, radius, filter, _colliderBuffer);

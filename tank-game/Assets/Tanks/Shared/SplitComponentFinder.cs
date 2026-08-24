@@ -60,12 +60,16 @@ namespace Tanks.Shared
         }
 
         private static bool IsComponentFor(
-            Required<Type> candidate, Required<Type> targetType, Required<Type> abstractionType)
+            Required<Type> candidate,
+            Required<Type> targetType,
+            Required<Type> abstractionType)
         {
-            return candidate.Value.GetInterfaces().Any(i =>
-                i.IsGenericType &&
-                i.GetGenericTypeDefinition() == abstractionType.Value &&
-                i.GetGenericArguments()[0] == targetType.Value);
+            return candidate.Value
+                .GetInterfaces()
+                .Any(i =>
+                    i.IsGenericType &&
+                    i.GetGenericTypeDefinition() == abstractionType.Value &&
+                    i.GetGenericArguments()[0].IsAssignableFrom(targetType.Value));
         }
 
         private static bool FilterByAssembly(Required<Assembly> assembly, bool? isServer)

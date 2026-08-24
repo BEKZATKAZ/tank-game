@@ -27,10 +27,11 @@ namespace Tanks.Shared.Tests.Weapons
         public void InfiniteAmmo_CanAlwaysConsume(int amount)
         {
             IAmmo ammo = new InfiniteAmmo();
-            Assert.IsTrue(ammo.CanConsume(amount), "Someone redefined infinity");
+            Assert.True(ammo.CanConsume(amount), "Someone redefined infinity");
 
             ammo.Consume(amount);
-            Assert.IsTrue(ammo.CanConsume(amount), "Consumed once, now infinity has a cap");
+            ammo.Tick(0.1f);
+            Assert.True(ammo.CanConsume(amount), "Consumed once, now infinity has a cap");
         }
 
         [Test]
@@ -38,12 +39,12 @@ namespace Tanks.Shared.Tests.Weapons
         {
             IAmmo ammo = new FixedAmmo(10);
 
-            Assert.IsTrue(ammo.CanConsume(5));
-            Assert.IsTrue(ammo.CanConsume(10), "Should be able to consume all ammo");
-            Assert.IsFalse(ammo.CanConsume(11), "Where did an extra bullet come from?");
+            Assert.True(ammo.CanConsume(5));
+            Assert.True(ammo.CanConsume(10), "Should be able to consume all ammo");
+            Assert.False(ammo.CanConsume(11), "Where did an extra bullet come from?");
 
             ammo.Consume(10);
-            Assert.IsFalse(ammo.CanConsume(1), "Should not be able to consume any more ammo");
+            Assert.False(ammo.CanConsume(1), "Should not be able to consume any more ammo");
         }
 
         [TestCase(int.MinValue)]
@@ -69,23 +70,27 @@ namespace Tanks.Shared.Tests.Weapons
                 RegenerationDelay = 2
             });
 
-            Assert.IsFalse(ammo.CanConsume(1),
+            Assert.False(ammo.CanConsume(1),
                 "Should not be able to consume any more ammo");
             
             // Tick for 1 second (should not regenerate yet)
             ammo.Tick(1);
-            Assert.IsFalse(ammo.CanConsume(1),
+            Assert.False(ammo.CanConsume(1),
                 "Should not be able to consume any more ammo");
             
             // Tick for another 2 seconds (should start regenerating)
             ammo.Tick(2);
-            Assert.IsTrue(ammo.CanConsume(1),
+            Assert.True(ammo.CanConsume(1),
                 "Should be able to consume some ammo after delay");
             
             // Tick for another 5 seconds (should fully regenerate)
             ammo.Tick(5);
-            Assert.IsTrue(ammo.CanConsume(10),
+            Assert.True(ammo.CanConsume(10),
                 "Should be able to consume all ammo after full regeneration");
+
+            ammo.Consume(10);
+            Assert.False(ammo.CanConsume(1),
+                "Should not be able to consume any more ammo as already consumed");
         }
     }
 }

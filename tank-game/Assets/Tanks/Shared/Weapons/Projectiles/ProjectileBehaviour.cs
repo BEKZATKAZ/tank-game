@@ -1,5 +1,4 @@
-﻿using System;
-using System.Runtime.InteropServices;
+﻿using System.Runtime.InteropServices;
 using Tanks.Core.Helpers;
 using Tanks.Shared.Adapters;
 using Tanks.Shared.Health;
@@ -38,7 +37,17 @@ namespace Tanks.Shared.Weapons.Projectiles
         public ushort MaxRicochetCount;
     }
 
-    public class ProjectileBehaviour : NetworkBehaviourExtended, IProjectile, IMessageSender
+    public interface IProjectileBehaviour : INetworkBehaviourExtended, IProjectile
+    {
+        IDamage Damage { get; }
+        IWeaponOwner Owner { get; }
+
+        void OnRicochet(float2 hitPoint);
+        void Initialize(Required<IProjectileConfig> config, Required<IDamage> damage);
+    }
+
+    public class ProjectileBehaviour :
+        NetworkBehaviourExtended, IProjectileBehaviour, IMessageSender
     {
         public IProjectileConfig Config { get; private set; }
         public IDamage Damage { get; private set; }

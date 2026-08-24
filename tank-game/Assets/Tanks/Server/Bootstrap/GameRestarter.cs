@@ -1,48 +1,55 @@
-﻿using Cysharp.Threading.Tasks;
-using System.Linq;
-using Tanks.Shared;
+﻿using Tanks.Shared;
 using Tanks.Shared.Bootstrap;
 using Tanks.Shared.Health;
 using Tanks.Shared.Messaging;
 using Tanks.Shared.Weapons.Projectiles;
-using UnityEngine;
-using VContainer;
+using Unity.Mathematics;
 
 namespace Tanks.Server.Bootstrap
 {
     public sealed class GameRestarter :
-        NetworkComponent<GameStartBehaviour>,
+        NetworkComponent<IGameStartBehaviour>,
         IMessageHandler<Died>
     {
-        [Inject] private readonly IMessageBus _bus;
-        [Inject] private readonly IProjectilePoolService _pool;
-
-        private int _diedCount;
-
-        public async void Handle(Died message, IMessageSender sender)
+        public GameRestarter(IMessageBus bus, IProjectilePoolService pool)
         {
-            int currentCount = ++_diedCount;
+            _bus = bus;
+            _pool = pool;
+        }
 
-            await UniTask.Delay(2500);
+        private readonly IMessageBus _bus;
+        private readonly IProjectilePoolService _pool;
 
-            // Stop if playmode stopped
-            if (Application.isPlaying == false) return;
+        private int _currentTick;
+        private int _lastDiedTick = -1;
 
-            // Discard multiple restarts
-            if (currentCount != _diedCount) return;
-
-            int alivePlayers = Behaviour.NetworkManager.ConnectedClients
-              .Count(x => x.Value.PlayerObject);
-
-            if (alivePlayers > 1) return;
-
-            _pool.ReturnAll();
-            Behaviour.PrepareGame();
+        public void Handle(Died message, IMessageSender sender)
+        {
+            _lastDiedTick = _currentTick;
         }
 
         protected override void OnInitialize()
         {
             _bus.RegisterHandler<Died>(this);
+        }
+
+        protected override void OnTick(int tick, float tickDelta)
+        {
+            _currentTick = tick;
+
+            if (_lastDiedTick == -1) return;
+
+            float delaySeconds = 2.5f;
+            int delayTicks = (int)math.ceil(delaySeconds / tickDelta);
+
+            if (tick - _lastDiedTick < delayTicks) return;
+            _lastDiedTick = -1;
+
+            // Restart when only one left
+            if (Behaviour.GetAlivePlayerCount() > 1) return;
+
+            _pool.ReturnAll();
+            Behaviour.PrepareGame();
         }
     }
 }

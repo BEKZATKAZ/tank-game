@@ -1,8 +1,9 @@
-﻿using Tanks.Core.Helpers;
+﻿using System.Collections.Generic;
+using Tanks.Core.Helpers;
 using Tanks.Shared.Messaging;
+using Unity.Mathematics;
 using Unity.Netcode;
 using UnityEngine;
-using UnityEngine.SocialPlatforms;
 using VContainer;
 
 namespace Tanks.Shared.Health
@@ -27,9 +28,17 @@ namespace Tanks.Shared.Health
         
     }
 
-    [RequireComponent(typeof(NetworkObject))]
-    public class HealthBehaviour :
-        NetworkBehaviourExtended, IHealth, IDamageable, IHealable, IMessageSender
+    public interface IHealthBehaviour : INetworkBehaviourExtended, IHealth, IDamageable, IHealable
+    {
+        RpcTarget RpcTarget { get; }
+
+        IEnumerable<SpriteRenderer> GetAllSpriteRenderers();
+        void Despawn();
+        void SendDiedEveryoneRpc();
+        void SendDiedLocalClientRpc(RpcParams p = default);
+    }
+
+    public class HealthBehaviour : NetworkBehaviourExtended, IHealthBehaviour, IMessageSender
     {
         [Range(10, 200)]
         [SerializeField]
@@ -37,10 +46,16 @@ namespace Tanks.Shared.Health
 
         [Inject]
         private readonly IMessageBus _bus;
+        
+        public PositiveFloat MaxHealth => _maxHealth;
+        public PositiveFloatOrZero Value => _health.Value;
 
-        public NetworkVariable<float> Health { get; } = new(100);
-        public PositiveFloatOrZero MaxHealth => _maxHealth;
-        public float Value => Health.Value;
+        private readonly NetworkVariable<float> _health = new(100);
+
+        public void Despawn()
+        {
+            NetworkObject.Despawn();
+        }
 
         [Rpc(SendTo.Everyone, InvokePermission = RpcInvokePermission.Server)]
         public void SendDiedEveryoneRpc()
@@ -56,10 +71,15 @@ namespace Tanks.Shared.Health
             _bus.Publish(new DiedLocal(), this);
         }
 
+        public void SetCurrentHealth(PositiveFloatOrZero value)
+        {
+            _health.Value = math.clamp(value, 0, MaxHealth);
+        }
+
         public void SetMaxHealth(PositiveFloat value)
         {
             _maxHealth = value;
-            float remainder = Health.Value - _maxHealth;
+            float remainder = _health.Value - _maxHealth;
 
             // Damage to compensate max health
             if (remainder > 0) Damage(remainder);
@@ -73,6 +93,11 @@ namespace Tanks.Shared.Health
         public void Heal(PositiveFloat amount)
         {
             EmitMessage(new HPHealed { Amount = amount });
+        }
+
+        public IEnumerable<SpriteRenderer> GetAllSpriteRenderers()
+        {
+            return GetComponentsInChildren<SpriteRenderer>();
         }
     }
 }

@@ -1,16 +1,21 @@
 ﻿using Tanks.Audio;
 using Tanks.Shared;
 using Tanks.Shared.Items.Pickups;
-using VContainer;
 
 namespace Tanks.Client.Items.Pickups
 {
     public sealed class PickupSpawnSound :
-        NetworkComponent<PickupBehaviour>,
+        NetworkComponent<IPickupBehaviour>,
         INetworkMessageHandler<PickupSpawned>
     {
-        [Inject] private readonly IClientItemDatabase _database;
-        [Inject] private readonly IAudioFactory _audioFactory;
+        public PickupSpawnSound(IClientItemDatabase database, IAudioFactory audioFactory)
+        {
+            _database = database;
+            _audioFactory = audioFactory;
+        }
+
+        private readonly IClientItemDatabase _database;
+        private readonly IAudioFactory _audioFactory;
 
         private IAudioInstance _instance;
 
@@ -27,7 +32,7 @@ namespace Tanks.Client.Items.Pickups
             if (string.IsNullOrEmpty(config.OnSpawnSound)) return;
 
             _instance = _audioFactory.CreateInstance(config.OnSpawnSound);
-            _instance.AttachTo(Behaviour.Transform);
+            _instance.AttachTo(Transform);
             _instance.Play();
         }
 

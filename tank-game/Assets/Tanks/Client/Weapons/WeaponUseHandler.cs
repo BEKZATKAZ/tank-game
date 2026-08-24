@@ -21,28 +21,29 @@ namespace Tanks.Client.Weapons
         public readonly ShotId Id;
     }
 
-    public class WeaponUseHandler :
-        NetworkComponent<WeaponHolderBehaviour>,
+    public sealed class WeaponUseHandler :
+        NetworkComponent<IWeaponHolderBehaviour>,
         INetworkMessageHandler<WeaponUsedFromServer>
     {
         private NativeQueue<ScheduledClientShot> _scheduledShots;
         private int _lastScheduledTick;
+        private int _currentTick;
+        private float _tickDelta;
 
         public void Handle(WeaponUsedFromServer message)
         {
-            int currentTick = Behaviour.NetworkManager.NetworkTickSystem.LocalTime.Tick;
-            float tickDelta = 1f / Behaviour.NetworkManager.NetworkTickSystem.TickRate;
-
             float cooldownDuration = Behaviour.CurrentWeapon.Cooldown.DurationSeconds;
-            int cooldownTicks = (int)math.round(cooldownDuration / tickDelta);
+            int cooldownTicks = (int)math.round(cooldownDuration / _tickDelta);
             int cooldowned = _lastScheduledTick + cooldownTicks;
 
-            _lastScheduledTick = math.max(currentTick, cooldowned);
+            _lastScheduledTick = math.max(_currentTick, cooldowned);
             _scheduledShots.Enqueue(new ScheduledClientShot(_lastScheduledTick, message.Id));
         }
 
         protected override void OnTick(int tick, float tickDelta)
         {
+            (_currentTick, _tickDelta) = (tick, tickDelta);
+
             if (_scheduledShots.Count == 0)
             {
                 Behaviour.WeaponTick(tickDelta, isHoldingDown: false, default);

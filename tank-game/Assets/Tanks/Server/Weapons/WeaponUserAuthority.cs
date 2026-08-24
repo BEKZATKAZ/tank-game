@@ -3,16 +3,17 @@ using Tanks.Shared.Weapons;
 
 namespace Tanks.Server.Weapons
 {
-    public sealed class WeaponUserAuthority :
-        NetworkComponent<WeaponHolderBehaviour>,
+    public class WeaponUserAuthority :
+        NetworkComponent<IWeaponHolderBehaviour>,
         INetworkMessageHandler<WeaponInput>
     {
-        private WeaponInputScheduler _scheduler;
+        public WeaponInputScheduler Scheduler { get; private set; }
+
         private WeaponInput? _latestUnprocessedInput;
 
         public void Handle(WeaponInput message)
         {
-            if (_scheduler.LastProcessedClientTick >= message.ClientTick) return;
+            if (Scheduler.LastProcessedClientTick >= message.ClientTick) return;
 
             if (_latestUnprocessedInput.HasValue &&
                 _latestUnprocessedInput.Value.ClientTick > message.ClientTick) return;
@@ -25,21 +26,21 @@ namespace Tanks.Server.Weapons
             if (_latestUnprocessedInput.HasValue)
             {
                 WeaponInput input = _latestUnprocessedInput.Value;
-                _scheduler.Schedule(Behaviour.CurrentWeapon, input, tick, tickDelta);
+                Scheduler.Schedule(Behaviour.CurrentWeapon, input, tick, tickDelta);
                 _latestUnprocessedInput = null;
             }
 
-            _scheduler.Tick(tick, tickDelta);
+            Scheduler.Tick(tick, tickDelta);
         }
 
         protected override void OnDestroy()
         {
-            _scheduler.Dispose();
+            Scheduler.Dispose();
         }
 
         protected override void OnInitialize()
         {
-            _scheduler = new WeaponInputScheduler(
+            Scheduler = new WeaponInputScheduler(
                 shoot: (shot, deltaTime) => Behaviour.WeaponTick(deltaTime, true, shot.Id),
                 fallback: deltaTime => Behaviour.WeaponTick(deltaTime, false, default));
 

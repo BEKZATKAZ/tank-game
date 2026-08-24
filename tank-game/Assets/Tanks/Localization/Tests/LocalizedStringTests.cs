@@ -1,5 +1,8 @@
 using NUnit.Framework;
+using System;
+using System.Numerics;
 using System.Threading.Tasks;
+using UnityEngine;
 
 namespace Tanks.Localization.Tests
 {
@@ -46,20 +49,71 @@ namespace Tanks.Localization.Tests
         [TestCase("item.tier.uncommon", "Uncommon", "Необычный")]
         [TestCase("item.tier.rare", "Rare", "Редкий")]
         [TestCase("item.tier.epic", "Epic", "Эпический")]
-        public void Get_DifferentLocales_ReturnsTranslated(
+        public async Task Get_DifferentLocales_ReturnsTranslated(
             string entryName, string expectedEn, string expectedRu)
         {
             _database.TryGet("Items", entryName, out ILocalizedString result);
-            string stringFromCallback = null;
-            result.StringChanged += x => stringFromCallback = x;
 
+            string stringFromCallback = null;
+            void OnStringChanged(string newValue) => stringFromCallback = newValue;
+
+            result.StringChanged += OnStringChanged;
             _database.SetLocale("ru");
+
+            Assert.AreEqual(expectedRu, await result.GetAsync(), "Should switch from 'en' to 'ru'");
             Assert.AreEqual(expectedRu, result.Get(), "Should switch from 'en' to 'ru'");
             Assert.AreEqual(expectedRu, stringFromCallback, "Callback not called");
 
             _database.SetLocale("en");
+
             Assert.AreEqual(expectedEn, result.Get(), "Should switch from 'ru' to 'en'");
             Assert.AreEqual(expectedEn, stringFromCallback, "Callback not called");
+
+            result.StringChanged -= OnStringChanged;
+
+            _database.SetLocale("ru");
+            Assert.AreEqual(expectedEn, stringFromCallback, "Callback should not be called");
+        }
+
+        [Test]
+        public void AddVariable_UnsupportedTypes_Throws()
+        {
+            _database.TryGet("Items", "item.tier.uncommon", out ILocalizedString result);
+
+            Assert.Throws<NotImplementedException>(
+                () => result.AddVariable("name", (decimal)1));
+
+            Assert.Throws<NotImplementedException>(
+                () => result.AddVariable("name", new BigInteger(1)));
+        }
+
+        [TestCase("test")]
+        [TestCase("var")]
+        [TestCase("name")]
+        public void AddVariable_ValidTypes_Success(string name)
+        {
+            _database.TryGet("Items", "item.tier.uncommon", out ILocalizedString result);
+
+            result.AddVariable($"{name}_01", (byte)1);
+            result.AddVariable($"{name}_02", (sbyte)1);
+
+            result.AddVariable($"{name}_03", (short)1);
+            result.AddVariable($"{name}_04", (ushort)1);
+
+            result.AddVariable($"{name}_05", 1);
+            result.AddVariable($"{name}_06", 1u);
+
+            result.AddVariable($"{name}_07", 1L);
+            result.AddVariable($"{name}_08", 1UL);
+
+            result.AddVariable($"{name}_09", 1f);
+            result.AddVariable($"{name}_010", 1d);
+
+            result.AddVariable($"{name}_011", true);
+            result.AddVariable($"{name}_012", false);
+
+            result.AddVariable($"{name}_013", "str");
+            result.AddVariable($"{name}_014", new Mesh());
         }
     }
 }

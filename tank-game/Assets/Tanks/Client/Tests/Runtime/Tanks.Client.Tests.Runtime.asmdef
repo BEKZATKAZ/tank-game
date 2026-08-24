@@ -1,0 +1,27 @@
+{
+    "name": "Tanks.Client.Tests.Runtime",
+    "rootNamespace": "",
+    "references": [
+        "GUID:3b570a5146f9d4f0fa107ed4559471a3",
+        "GUID:709c0c0f80bdb3546acf88cce1ca1376",
+        "GUID:0d8f1684e64ea0f43b8a5b3bc55e15eb",
+        "GUID:2d8ca1202255a4243a9ebca3a433072c",
+        "GUID:062f5e808b278a541b6489e12da12d22",
+        "GUID:3f93f6c48cdbd804796618c781f92e56",
+        "GUID:f51ebe6a0ceec4240a699833d6309b23",
+        "GUID:0acc523941302664db1f4e527237feb3",
+        "GUID:27619889b8ba8c24980f49ee34dbb44a",
+        "GUID:e0cd26848372d4e5c891c569017e11f1",
+        "GUID:d8b63aba1907145bea998dd612889d6b",
+        "GUID:b0214a6008ed146ff8f122a6a9c2f6cc"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": false,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

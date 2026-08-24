@@ -4,31 +4,38 @@ using Tanks.Shared.Adapters;
 
 namespace Tanks.Shared.Tests
 {
-    public class CarBehaviour : INetworkBehaviourExtended
+    public interface ICarBehaviour : INetworkBehaviourExtended { }
+
+    public class CarBehaviour : ICarBehaviour
     {
         public bool IsEnabled => true;
         public ITransform Transform { get; }
+        public ulong OwnerClientId { get; }
+        public bool IsOwner { get; }
+        public bool IsLocalPlayer { get; }
+        public bool IsServer { get; }
+        public bool IsClient { get; }
+
+        public void RegisterMessageHandler<T>(INetworkMessageHandler<T> handler) { }
     }
 
     public class PersonBehaviour : INetworkBehaviourExtended
     {
         public bool IsEnabled => true;
         public ITransform Transform { get; }
+        public ulong OwnerClientId { get; }
+        public bool IsOwner { get; }
+        public bool IsLocalPlayer { get; }
+        public bool IsServer { get; }
+        public bool IsClient { get; }
+
+        public void RegisterMessageHandler<T>(INetworkMessageHandler<T> handler) { }
     }
 
-    public class EngineComponent : NetworkComponent<CarBehaviour>
-    {
-        
-    }
-
-    public class TransmissionComponent : NetworkComponent<CarBehaviour>
-    {
-    }
-
-    public class LifeStyleComponent : NetworkComponent<PersonBehaviour>
-    {
-
-    }
+    public class EngineComponent : NetworkComponent<ICarBehaviour> { }
+    public class TransmissionComponent : NetworkComponent<CarBehaviour> { }
+    public class LifeStyleComponent : NetworkComponent<PersonBehaviour> { }
+    public class AgeComponent : NetworkComponent<PersonBehaviour> { }
 
     public class ComponentFinderTests
     {
@@ -51,7 +58,7 @@ namespace Tanks.Shared.Tests
             Type[] carActual = SplitComponentFinder.FindFor(
                 _carBehaviour, abstractionType, isServer: false, out bool cache);
 
-            Type[] carExpected = { typeof(TransmissionComponent), typeof(EngineComponent), };
+            Type[] carExpected = { typeof(TransmissionComponent), typeof(EngineComponent) };
 
             ContainsTypes(carExpected, carActual);
             Assert.False(cache, "Unexisting data cannot be cached");
@@ -59,7 +66,7 @@ namespace Tanks.Shared.Tests
             Type[] personActual = SplitComponentFinder.FindFor(
                 _personBehaviour, abstractionType, out cache);
 
-            Type[] personExpected = { typeof(LifeStyleComponent) };
+            Type[] personExpected = { typeof(LifeStyleComponent), typeof(AgeComponent) };
 
             ContainsTypes(personExpected, personActual);
             Assert.False(cache, "Unexisting data cannot be cached");

@@ -59,12 +59,15 @@ namespace Tanks.Shared.Tests.Weapons
         public void NoCooldown_CanUseInfinitely()
         {
             ICooldown cooldown = new NoCooldown();
-            Assert.IsTrue(cooldown.CanUse(), "Should be able to use initially");
+
+            Assert.AreEqual(0, cooldown.DurationSeconds, "Should be no cooldown");
+            Assert.True(cooldown.CanUse(), "Should be able to use initially");
 
             for (int i = 0; i < 100; i++)
             {
                 cooldown.Use();
-                Assert.IsTrue(cooldown.CanUse(),
+                cooldown.Tick(0.1f);
+                Assert.True(cooldown.CanUse(),
                     "No cooldown is not an infinite cooldown");
             }
         }

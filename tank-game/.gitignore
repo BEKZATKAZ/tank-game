@@ -129,3 +129,6 @@ fmod_editor.log
 
 # Keep packages files for Unity
 !**/Packages/*
+
+# Code Coverage results
+**/CodeCoverage

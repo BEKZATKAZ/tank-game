@@ -3,15 +3,19 @@ using Tanks.Shared;
 using Tanks.Shared.Health;
 using UnityEngine;
 using UnityEngine.Pool;
-using VContainer;
 
 namespace Tanks.Client.Health
 {
     public sealed class DamagePreviewEffect :
-        NetworkComponent<HealthBehaviour>,
+        NetworkComponent<IHealthBehaviour>,
         INetworkMessageHandler<DamageTaken>
     {
-        [Inject] private readonly IResourceLoader _loader;
+        public DamagePreviewEffect(IResourceLoader loader)
+        {
+            _loader = loader;
+        }
+
+        private readonly IResourceLoader _loader;
 
         private static readonly string _address = "UI/DamagePreview";
         private ObjectPool<DamagePreviewText> _pool;
@@ -20,7 +24,7 @@ namespace Tanks.Client.Health
         {
             DamagePreviewText preview = _pool.Get();
 
-            preview.Initialize(message.Amount, Behaviour.Transform);
+            preview.Initialize(message.Amount, Transform);
             await preview.Animate(duration: 0.5f);
 
             _pool?.Release(preview);

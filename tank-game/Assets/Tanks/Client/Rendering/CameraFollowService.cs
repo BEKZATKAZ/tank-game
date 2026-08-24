@@ -15,14 +15,19 @@ namespace Tanks.Client.Rendering
         [SerializeField]
         private float _sizeSpeed = 1;
 
-        [Inject] private readonly ICameraMainService _cameraMain;
-
+        private ICameraMainService _cameraMain;
         private ITransform _target;
         private float _targetOrthographicSize;
         private Bounds _mapBounds;
 
         private float2 _defaultPosition;
         private float _defaultOrthographicSize = 5;
+
+        [Inject]
+        public void Inject(ICameraMainService cameraMain)
+        {
+            _cameraMain = cameraMain;
+        }
 
         public void SetDefault(Bounds mapBounds, bool forceOverride)
         {

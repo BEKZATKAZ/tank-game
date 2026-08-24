@@ -1,5 +1,6 @@
 ﻿using NUnit.Framework;
 using System;
+using System.Globalization;
 using Tanks.Core.Helpers;
 
 namespace Tanks.Core.Tests.Helpers
@@ -39,6 +40,26 @@ namespace Tanks.Core.Tests.Helpers
         {
             Assert.DoesNotThrow(() => new PositiveFloatOrZero(0),
                 "Should not throw because the value is allowed to be zero!");
+        }
+
+        [Test]
+        public void PositiveFloat_DefaultMethods()
+        {
+            PositiveFloat x = 150.45f;
+            float y = 150.45f;
+
+            Assert.AreEqual(y.ToString(), x.ToString(),
+                "Invalid ToString()");
+
+            Assert.AreEqual(y.ToString("#.#", CultureInfo.InvariantCulture), x.ToString("#.#"),
+                "Invalid ToString() with format");
+
+            Assert.AreEqual(y.GetHashCode(), x.GetHashCode(),
+                "Invalid GetHashCode()");
+
+            Assert.True(x.Equals(x), $"Invalid Equals() with PositiveFloat");
+            Assert.True(x.Equals(x.Value), $"Invalid Equals() with float");
+            Assert.False(x.Equals("test"), $"Invalid Equals() with unsupported type");
         }
 
         [Test]

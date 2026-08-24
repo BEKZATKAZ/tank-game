@@ -1,21 +1,25 @@
 ﻿using Tanks.Audio;
 using Tanks.Shared;
 using Tanks.Shared.Weapons;
-using VContainer;
 
 namespace Tanks.Client.Weapons
 {
     public sealed class WeaponFireSound :
-        NetworkComponent<WeaponHolderBehaviour>,
+        NetworkComponent<IWeaponHolderBehaviour>,
         INetworkMessageHandler<WeaponUsed>
     {
-        [Inject] private readonly IAudioPlayer _audioPlayer;
+        public WeaponFireSound(IAudioPlayer audioPlayer)
+        {
+            _audioPlayer = audioPlayer;
+        }
+
+        private readonly IAudioPlayer _audioPlayer;
 
         public void Handle(WeaponUsed message)
         {
             _audioPlayer.PlayOneShotAttached(
                 path: "event:/SFX/Shoot",
-                target: Behaviour.Transform,
+                target: Transform,
                 useDefault: Behaviour.IsLocalPlayer);
         }
 

@@ -2,15 +2,19 @@
 using Tanks.Shared.Bootstrap;
 using Tanks.Shared.Generation;
 using Tanks.Shared.Weapons.Projectiles;
-using VContainer;
 
 namespace Tanks.Client.Bootstrap
 {
     public sealed class ProjectileReset :
-        NetworkComponent<GameStartBehaviour>,
+        NetworkComponent<IGameStartBehaviour>,
         INetworkMessageHandler<TilemapGenerated>
     {
-        [Inject] private readonly IProjectilePoolService _pool;
+        public ProjectileReset(IProjectilePoolService pool)
+        {
+            _pool = pool;
+        }
+
+        private readonly IProjectilePoolService _pool;
 
         public void Handle(TilemapGenerated message)
         {

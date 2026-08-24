@@ -10,18 +10,25 @@ using Tanks.Shared.Items.Data;
 using Tanks.Shared.Items.Pickups;
 using Tanks.Shared.Messaging;
 using Unity.Mathematics;
-using VContainer;
+using Unity.Netcode;
 
 namespace Tanks.Server.Items.Pickups
 {
     public sealed class PickupSpawner :
-        NetworkComponent<PickupSpawnBehaviour>,
+        NetworkComponent<IPickupSpawnBehaviour>,
         IMessageHandler<TilemapGenerated>,
         IMessageHandler<GameStarted>,
         IMessageHandler<ItemPickedUp>
     {
-        [Inject] private readonly IItemDatabase _items;
-        [Inject] private readonly IMessageBus _bus;
+        public PickupSpawner(IItemDatabase items, IMessageBus bus)
+        {
+            _items = items;
+            _bus = bus;
+        }
+        public float CurrentCooldown { get; private set; }
+
+        private readonly IItemDatabase _items;
+        private readonly IMessageBus _bus;
 
         private readonly Dictionary<PickupId, int2> _activePickups = new();
         private readonly HashSet<int2> _occupiedCoords = new();
@@ -33,7 +40,6 @@ namespace Tanks.Server.Items.Pickups
         private TilemapGenerated? _lastTilemapGeneratedMessage;
 
         private float _elapsed;
-        private float _currentCooldown;
         private bool _isGameStarted;
 
         private void TryInitialize()
@@ -53,7 +59,7 @@ namespace Tanks.Server.Items.Pickups
             _chooser = new ItemChooser(_items.Items, chanceRatios, seed);
 
             _random = Random.CreateFromIndex(seed ^ 23);
-            _currentCooldown = _random.NextFloat(Behaviour.MinCooldown, Behaviour.MaxCooldown);
+            CurrentCooldown = _random.NextFloat(Behaviour.MinCooldown, Behaviour.MaxCooldown);
         }
 
         protected override void OnInitialize()
@@ -71,10 +77,10 @@ namespace Tanks.Server.Items.Pickups
             else return;
 
             _elapsed += tickDelta;
-            if (_elapsed < _currentCooldown) return;
+            if (_elapsed < CurrentCooldown) return;
 
             _elapsed = 0;
-            _currentCooldown = _random.NextFloat(Behaviour.MinCooldown, Behaviour.MaxCooldown);
+            CurrentCooldown = _random.NextFloat(Behaviour.MinCooldown, Behaviour.MaxCooldown);
             _lastPickupId = new PickupId(_lastPickupId.Value + 1);
 
             IItemConfig item = _chooser.ChooseRandomItem(_random.NextFloat(0, 1f));
@@ -127,6 +133,7 @@ namespace Tanks.Server.Items.Pickups
         public void Handle(TilemapGenerated message, IMessageSender sender)
         {
             _lastTilemapGeneratedMessage = message;
+            CurrentCooldown = 0;
         }
 
         public void Handle(GameStarted message, IMessageSender sender)
@@ -135,9 +142,13 @@ namespace Tanks.Server.Items.Pickups
             _occupiedCoords.Clear();
             _activePickups.Clear();
 
-            _players = Behaviour.NetworkManager.SpawnManager.PlayerObjects
-                .Select(x => new UnityTransform(x.transform))
-                .ToArray();
+            if (NetworkManager.Singleton)
+            {
+                _players = NetworkManager.Singleton.SpawnManager.PlayerObjects
+                    .Select(x => new UnityTransform(x.transform))
+                    .ToArray();
+            }
+            else _players = new ITransform[0];
 
             _elapsed = 0;
             _isGameStarted = true;

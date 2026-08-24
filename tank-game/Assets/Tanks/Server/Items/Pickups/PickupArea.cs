@@ -1,28 +1,54 @@
 using Tanks.Shared;
 using Tanks.Shared.Items;
+using Tanks.Shared.Items.Data;
 using Tanks.Shared.Items.Pickups;
-using VContainer;
+using Unity.Mathematics;
+using UnityEngine;
 
 namespace Tanks.Server.Items.Pickups
 {
-    public sealed class PickupArea : NetworkComponent<PickupBehaviour>
+    public sealed class PickupArea : NetworkComponent<IPickupBehaviour>
     {
-        [Inject] private readonly IItemDatabase _database;
-
-        private PickupAreaLogic _logic;
-
-        protected override void OnInitialize()
+        public PickupArea(IItemDatabase database)
         {
-            _logic = new PickupAreaLogic(_database, Behaviour.Transform, 1.5f, 1 << 3);
+            _database = database;
+            _radius = 1.5f;
+            _layerMask = 1 << 3;
+        }
+
+        private readonly IItemDatabase _database;
+        private readonly float _radius;
+        private readonly int _layerMask;
+
+        public bool CheckArea(out IItemOwner detected)
+        {
+            float2 origin = Transform.WorldPosition;
+            Collider2D target = Physics2D.OverlapCircle(origin, _radius, _layerMask);
+            detected = null;
+
+            if (target == false) return false;
+            if (target.TryGetComponent(out detected) == false) return false;
+
+            return true;
+        }
+
+        public void PickUp(IItemOwner owner, in ItemIdentifier itemId, in PickupId pickupId)
+        {
+            IItemConfig config = _database.Get(itemId);
+            owner.PickupItem(config, pickupId);
+
+            foreach (ItemStat stat in config.Stats)
+            {
+                if (stat.ApplyOnPickUp == false) continue;
+                owner.StatOwner.AddStat(stat.Type, stat.ValueType, stat.Value, stat.Duration);
+            }
         }
 
         protected override void OnTick(int tick, float tickDelta)
         {
-            if (_logic is null) return;
-            if (_logic.CheckArea(out IItemOwner owner) == false) return;
-
-            _logic.PickUp(owner, Behaviour.ItemId, Behaviour.PickupId);
-            Behaviour.Spawner.DespawnEveryoneRpc(Behaviour.PickupId);
+            if (CheckArea(out IItemOwner owner) == false) return;
+            PickUp(owner, Behaviour.ItemId, Behaviour.PickupId);
+            Behaviour.DespawnEveryoneRpc();
         }
     }
 }

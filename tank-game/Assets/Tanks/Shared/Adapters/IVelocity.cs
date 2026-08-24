@@ -53,7 +53,7 @@ namespace Tanks.Shared.Adapters
         public override string ToString() => Rigidbody.ToString();
         public override bool Equals(object obj)
         {
-            return obj is UnityRigidbody other && Rigidbody.Equals(other.Rigidbody);
+            return obj is UnityVelocity other && Rigidbody.Equals(other.Rigidbody);
         }
     }
 }

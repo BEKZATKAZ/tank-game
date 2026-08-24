@@ -4,32 +4,35 @@ using Tanks.Client.Rendering;
 using Tanks.Shared;
 using Tanks.Shared.Driving;
 using Unity.Mathematics;
-using VContainer;
 
 namespace Tanks.Client.Player
 {
-    public sealed class PlayerTurret : NetworkComponent<TankTurretBehaviour>
+    public sealed class PlayerTurret : NetworkComponent<ITankTurretBehaviour>
     {
-        [Inject] private readonly IInputService<TurretInput> _input;
-        [Inject] private readonly ICameraMainService _camera;
+        public PlayerTurret(IInputService<TurretInput> input, ICameraMainService camera)
+        {
+            _input = input;
+            _camera = camera;
+        }
+
+        private readonly IInputService<TurretInput> _input;
+        private readonly ICameraMainService _camera;
 
         private float2 _lastDirection;
 
         private float2 CalculateFromPointer(float2 pointerPosition)
         {
-            UnityCamera camera = (UnityCamera)_camera.Get();
+            ICamera camera = _camera.Get();
             if (camera is null) return _lastDirection;
 
-            float3 pointerPosition3d = new float3(pointerPosition.xy, 0);
-            float2 worldPosition = ((float3)camera.OriginalCamera.ScreenToWorldPoint(pointerPosition3d)).xy;
-
-            float2 playerPosition = Behaviour.Transform.WorldPosition;
+            float2 worldPosition = camera.ScreenToWorldPoint(pointerPosition);
+            float2 playerPosition = Transform.WorldPosition;
             float2 direction = math.normalizesafe(worldPosition - playerPosition);
 
-            return CalculateFromDirection(direction);
+            return NormalizeDirectionOrKeepLast(direction);
         }
 
-        private float2 CalculateFromDirection(float2 direction)
+        private float2 NormalizeDirectionOrKeepLast(float2 direction)
         {
             if (math.lengthsq(direction) > 0.01f) _lastDirection = math.normalizesafe(direction);
             return _lastDirection;
@@ -42,7 +45,7 @@ namespace Tanks.Client.Player
             float2 direction = _input.CurrentScheme switch
             {
                 InputScheme.KeyboardAndMouse => CalculateFromPointer(input.PointerPosition),
-                InputScheme.Gamepad => CalculateFromPointer(input.LookAtDirection),
+                InputScheme.Gamepad => NormalizeDirectionOrKeepLast(input.LookAtDirection),
                 _ => throw new NotImplementedException()
             };
 

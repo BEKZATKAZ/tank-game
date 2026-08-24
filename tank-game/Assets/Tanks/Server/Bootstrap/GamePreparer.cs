@@ -1,31 +1,21 @@
 using System;
 using System.Runtime.InteropServices;
 using System.Security.Cryptography;
-using Tanks.Core.Helpers;
 using Tanks.Shared;
 using Tanks.Shared.Bootstrap;
 using Tanks.Shared.Generation;
 using Unity.Mathematics;
-using Unity.Netcode;
 using UnityEngine;
-using VContainer;
-using VContainer.Unity;
 
 namespace Tanks.Server.Bootstrap
 {
     public sealed class GamePreparer :
-        NetworkComponent<GameStartBehaviour>,
+        NetworkComponent<IGameStartBehaviour>,
         INetworkMessageHandler<PrepareGameRequested>
     {
-        [Inject] private readonly IObjectResolver _container;
-
         public async void Handle(PrepareGameRequested message)
         {
-            foreach (var client in Behaviour.NetworkManager.ConnectedClients.Values)
-            {
-                if (client.PlayerObject == false) continue;
-                client.PlayerObject.Despawn(destroy: true);
-            }
+            Behaviour.DespawnAllPlayers();
 
             Vector2Int resolution = new Vector2Int(6, 4);
             int wallWidth = 5;
@@ -60,21 +50,12 @@ namespace Tanks.Server.Bootstrap
 
             uint positionSeed = MemoryMarshal.Read<uint>(positionSeedBuffer);
             var positionRandom = Unity.Mathematics.Random.CreateFromIndex(positionSeed);
-            Required<GameObject> playerPrefab = Behaviour.NetworkManager.NetworkConfig.PlayerPrefab;
 
-            foreach (ulong clientId in Behaviour.NetworkManager.ConnectedClientsIds)
+            foreach (ulong clientId in Behaviour.GetConnectedClientIds())
             {
                 float2 coords = positionRandom.NextInt2(0, new int2(resolution.x, resolution.y));
                 float2 position = coords * (wallWidth * 2) + wallWidth * 1.5f;
-                float3 position3D = new float3(position, 0);
-
-                GameObject player = UnityEngine.Object.Instantiate(
-                    playerPrefab.Value, position3D, quaternion.identity);
-
-                _container.InjectGameObject(player);
-
-                NetworkObject networkObject = player.GetComponent<NetworkObject>();
-                networkObject.SpawnAsPlayerObject(clientId, destroyWithScene: true);
+                Behaviour.SpawnPlayer(clientId, position);
             }
         }
 

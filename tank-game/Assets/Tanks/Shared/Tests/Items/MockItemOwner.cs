@@ -4,23 +4,23 @@ using Tanks.Shared.Adapters;
 using Tanks.Shared.Stats;
 using Tanks.Shared.Health;
 using Tanks.Shared.Items;
+using Tanks.Shared.Items.Data;
 using Tanks.Shared.Items.Pickups;
 using Tanks.Shared.Tests.Adapters;
 using Tanks.Shared.Weapons;
 using Unity.Mathematics;
-using Tanks.Shared.Items.Data;
 
 namespace Tanks.Shared.Tests.Items
 {
     public sealed class MockHealth : IHealth, IDamageable, IHealable
     {
-        public float Value { get; private set; } = 100;
-        private float _maxHealth = 100;
+        public PositiveFloatOrZero Value { get; private set; } = 100;
+        public PositiveFloat MaxHealth { get; private set; } = 100;
 
         public void SetMaxHealth(PositiveFloat value)
         {
-            _maxHealth = value;
-            float remainder = Value - _maxHealth;
+            MaxHealth = value;
+            float remainder = Value - MaxHealth;
 
             // Damage to compensate max health
             if (remainder > 0) Damage(remainder);
@@ -33,7 +33,12 @@ namespace Tanks.Shared.Tests.Items
 
         public void Heal(PositiveFloat amount)
         {
-            Value = math.min(Value + amount, _maxHealth);
+            Value = math.min(Value + amount, MaxHealth);
+        }
+
+        public void SetCurrentHealth(PositiveFloatOrZero value)
+        {
+            Value = math.clamp(value, 0, MaxHealth);
         }
     }
 

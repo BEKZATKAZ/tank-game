@@ -10,24 +10,21 @@ namespace Tanks.Shared.Tests.Adapters
         private IVelocity _adapter;
         private Rigidbody2D _component;
 
-        [OneTimeSetUp]
+        [SetUp]
         public void Setup()
         {
             _component = new GameObject("Velocity Tests", typeof(Rigidbody2D))
                 .GetComponent<Rigidbody2D>();
 
-            _adapter = new UnityVelocity(_component);
+            _adapter = new UnityVelocity(_component)
+            {
+                Linear = float2.zero,
+                Angular = Angle.FromDegrees(0)
+            };
         }
 
-        [SetUp]
-        public void SetupEach()
-        {
-            _adapter.Linear = float2.zero;
-            _adapter.Angular = Angle.FromDegrees(0);
-        }
-
-        [OneTimeTearDown]
-        public void Dispose()
+        [TearDown]
+        public void TearDown()
         {
             Object.DestroyImmediate(_component.gameObject);
         }
@@ -43,6 +40,20 @@ namespace Tanks.Shared.Tests.Adapters
 
             Assert.AreEqual(new float2(10, 1), (float2)_component.linearVelocity);
             Assert.AreEqual(180, _component.angularVelocity);
+        }
+
+        [Test]
+        public void StandardMethods()
+        {
+            Assert.AreEqual(
+               _component.GetHashCode(), _adapter.GetHashCode(),
+                "Invalid GetHashCode()");
+
+            Assert.AreEqual(
+                _component.ToString(), _adapter.ToString(),
+                "Invalid ToString()");
+
+            Assert.True(_adapter.Equals(_adapter), "Invalid Equals()");
         }
     }
 }

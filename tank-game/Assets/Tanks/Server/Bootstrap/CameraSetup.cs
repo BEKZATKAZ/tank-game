@@ -8,7 +8,7 @@ using UnityEngine;
 namespace Tanks.Server.Bootstrap
 {
     public sealed class CameraSetup :
-        NetworkComponent<GameStartBehaviour>,
+        NetworkComponent<IGameStartBehaviour>,
         INetworkMessageHandler<TilemapGenerated>
     {
         public void Handle(TilemapGenerated message)

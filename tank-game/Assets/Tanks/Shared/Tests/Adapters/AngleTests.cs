@@ -88,5 +88,21 @@ namespace Tanks.Shared.Tests.Adapters
                 Angle.FromDegrees(90),
                 Angle.FromDegrees(270) % Angle.FromDegrees(180));
         }
+
+        [Test]
+        public void StandardMethods()
+        {
+            Assert.AreEqual(
+                180f.GetHashCode(), Angle.FromDegrees(180).GetHashCode(),
+                "Invalid GetHashCode()");
+
+            Assert.AreEqual(
+                $"{{ Degrees: {180}, Radians: {math.PI} }}", Angle.FromDegrees(180).ToString(),
+                "Invalid ToString()");
+
+            Assert.AreEqual(
+                180f.CompareTo(180f), Angle.FromDegrees(180).CompareTo(Angle.FromDegrees(180)),
+                "Invalid CompareTo()");
+        }
     }
 }

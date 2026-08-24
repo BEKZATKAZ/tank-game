@@ -5,7 +5,6 @@ using Tanks.Shared.Stats;
 using Tanks.Shared.Health;
 using Tanks.Shared.Weapons.Projectiles;
 using Unity.Mathematics;
-using VContainer;
 
 namespace Tanks.Client.Weapons
 {
@@ -45,11 +44,16 @@ namespace Tanks.Client.Weapons
     }
 
     public sealed class ProjectileMovementPrediction :
-        NetworkComponent<ProjectileBehaviour>,
+        NetworkComponent<IProjectileBehaviour>,
         INetworkMessageHandler<ProjectileSnapshotFromServer>,
         INetworkMessageHandler<ProjectileLaunched>
     {
-        [Inject] private readonly IProjectilePoolService _pool;
+        public ProjectileMovementPrediction(IProjectilePoolService pool)
+        {
+            _pool = pool;
+        }
+
+        private readonly IProjectilePoolService _pool;
 
         private ProjectileReconciliation _reconciliation;
         private ITransform _predicted;
@@ -57,13 +61,15 @@ namespace Tanks.Client.Weapons
         private float _elapsed;
         private int _ricochetedCount;
 
+        private int _currentTick;
+        private float _currentTickDelta;
+
         public void Handle(ProjectileLaunched message)
         {
-            _predicted.WorldPosition = Behaviour.Transform.WorldPosition;
-            _predicted.WorldRotation = Behaviour.Transform.WorldRotation;
+            _predicted.WorldPosition = Transform.WorldPosition;
+            _predicted.WorldRotation = Transform.WorldRotation;
 
-            int tick = Behaviour.NetworkManager.NetworkTickSystem.LocalTime.Tick;
-            _reconciliation.Reset(tick, _predicted);
+            _reconciliation.Reset(_currentTick, _predicted);
             _positionError = float2.zero;
             _elapsed = 0;
             _ricochetedCount = 0;
@@ -71,18 +77,10 @@ namespace Tanks.Client.Weapons
 
         public void Handle(ProjectileSnapshotFromServer message)
         {
-            float tickDelta = 1f / Behaviour.NetworkManager.NetworkTickSystem.TickRate;
-
             if (_reconciliation.TryReconcile(
-                _predicted, message, tickDelta, out float2 newPositionError) == false) return;
+                _predicted, message, _currentTickDelta, out float2 newPositionError) == false) return;
 
             _positionError = newPositionError;
-        }
-
-        protected override void OnTick(int tick, float tickDelta)
-        {
-            _reconciliation.Tick(tick, _predicted);
-            _elapsed += tickDelta;
         }
 
         protected override void OnDestroy()
@@ -92,11 +90,18 @@ namespace Tanks.Client.Weapons
 
         protected override void OnInitialize()
         {
-            _predicted = new ProjectileTransform(Behaviour.Transform.WorldScale);
+            _predicted = new ProjectileTransform(Transform.WorldScale);
             _reconciliation = new ProjectileReconciliation(Behaviour);
 
             Behaviour.RegisterMessageHandler<ProjectileLaunched>(this);
             Behaviour.RegisterMessageHandler<ProjectileSnapshotFromServer>(this);
+        }
+
+        protected override void OnTick(int tick, float tickDelta)
+        {
+            (_currentTick, _currentTickDelta) = (tick, tickDelta);
+            _reconciliation.Tick(tick, _predicted);
+            _elapsed += tickDelta;
         }
 
         protected override void OnUpdate(float deltaTime)
@@ -116,8 +121,8 @@ namespace Tanks.Client.Weapons
             // Interpolate to the real position
             _positionError *= math.exp(-15 * deltaTime);
 
-            Behaviour.Transform.WorldPosition = _predicted.WorldPosition + _positionError;
-            Behaviour.Transform.WorldRotation = _predicted.WorldRotation;
+            Transform.WorldPosition = _predicted.WorldPosition + _positionError;
+            Transform.WorldRotation = _predicted.WorldRotation;
         }
 
         private void OnRicochet(float2 hitPoint)

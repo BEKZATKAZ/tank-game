@@ -1,24 +1,26 @@
-﻿using Tanks.Shared;
+﻿using System.Linq;
+using Tanks.Shared;
 using Tanks.Shared.Bootstrap;
 using Unity.Netcode;
 
 namespace Tanks.Server.Bootstrap
 {
-    public sealed class PlayerConnector : NetworkComponent<GameStartBehaviour>
+    public sealed class PlayerConnector : NetworkComponent<IGameStartBehaviour>
     {
         private bool _allPlayersConnected;
 
         protected override void OnInitialize()
         {
-            Behaviour.NetworkManager.ConnectionApprovalCallback += ApprovalCheck;
-            Behaviour.NetworkManager.OnClientConnectedCallback += OnClientConnected;
+            if (NetworkManager.Singleton == false) return;
+            NetworkManager.Singleton.ConnectionApprovalCallback += ApprovalCheck;
+            NetworkManager.Singleton.OnClientConnectedCallback += OnClientConnected;
         }
 
         protected override void OnDestroy()
         {
-            if (Behaviour.NetworkManager == false) return;
-            Behaviour.NetworkManager.ConnectionApprovalCallback += ApprovalCheck;
-            Behaviour.NetworkManager.OnClientConnectedCallback += OnClientConnected;
+            if (NetworkManager.Singleton == false) return;
+            NetworkManager.Singleton.ConnectionApprovalCallback += ApprovalCheck;
+            NetworkManager.Singleton.OnClientConnectedCallback += OnClientConnected;
         }
 
         private void ApprovalCheck(
@@ -31,9 +33,9 @@ namespace Tanks.Server.Bootstrap
             response.Approved = _allPlayersConnected == false;
         }
 
-        private void OnClientConnected(ulong clientId)
+        public void OnClientConnected(ulong clientId)
         {
-            int currentCount = Behaviour.NetworkManager.ConnectedClients.Count;
+            int currentCount = Behaviour.GetConnectedClientIds().Count();
             if (currentCount < Behaviour.DesiredPlayerCount) return;
 
             _allPlayersConnected = true;

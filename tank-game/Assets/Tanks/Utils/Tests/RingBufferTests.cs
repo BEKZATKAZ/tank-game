@@ -1,9 +1,8 @@
 using NUnit.Framework;
-using UnityEngine;
 
 namespace Tanks.Utils.Tests
 {
-    public class RingBufferTests : MonoBehaviour
+    public class RingBufferTests
     {
         private RingBuffer<int> _buffer;
 

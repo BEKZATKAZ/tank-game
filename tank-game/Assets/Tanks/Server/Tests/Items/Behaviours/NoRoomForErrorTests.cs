@@ -28,7 +28,7 @@ namespace Tanks.Server.Tests.Items.Behaviours
             Owner.Damageable.Damage(99);
             Behaviour.OnPickup(Owner);
 
-            Assert.AreEqual(1, Owner.Health.Value);
+            Assert.AreEqual(1, Owner.Health.Value.Value);
             Assert.Greater(Owner.StatOwner.GetStat(StatType.Damage, 1), 1,
                 "Damage did not multiply");
         }
@@ -42,7 +42,7 @@ namespace Tanks.Server.Tests.Items.Behaviours
             if (initial < 100) Owner.Damageable.Damage(100 - initial);
             Behaviour.OnPickup(Owner);
 
-            Assert.AreEqual(1, Owner.Health.Value);
+            Assert.AreEqual(1, Owner.Health.Value.Value);
             Assert.Greater(Owner.StatOwner.GetStat(StatType.Damage, 1), 1,
                 "Damage did not multiply");
         }

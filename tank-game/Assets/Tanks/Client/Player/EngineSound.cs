@@ -5,15 +5,24 @@ using Tanks.Core.Helpers;
 using Tanks.Shared;
 using Tanks.Shared.Driving;
 using Unity.Mathematics;
-using VContainer;
 
 namespace Tanks.Client.Player
 {
-    public sealed class EngineSound : NetworkComponent<TankDriveBehaviour>
+    public sealed class EngineSound : NetworkComponent<ITankDriveBehaviour>
     {
-        [Inject] private readonly IInputService<ManualDriveInput> _input;
-        [Inject] private readonly IAudioFactory _audioFactory;
-        [Inject] private readonly ICameraMainService _cameraService;
+        public EngineSound(
+            IInputService<ManualDriveInput> input,
+            IAudioFactory audioFactory,
+            ICameraMainService cameraService)
+        {
+            _input = input;
+            _audioFactory = audioFactory;
+            _cameraService = cameraService;
+        }
+
+        private readonly IInputService<ManualDriveInput> _input;
+        private readonly IAudioFactory _audioFactory;
+        private readonly ICameraMainService _cameraService;
 
         private IAudioInstance _instance;
         private float2 _lastPosition;
@@ -24,10 +33,7 @@ namespace Tanks.Client.Player
             _instance = _audioFactory.CreateInstance("event:/SFX/Engine/Engine_Default");
             _instance.SetVolume(0.5f);
 
-            _instance.AttachTo(Behaviour.IsLocalPlayer
-                ? _cameraService.Get().Transform
-                : Behaviour.Transform);
-
+            _instance.AttachTo(Behaviour.IsLocalPlayer ? _cameraService.Get().Transform : Transform);
             _instance.Play();
         }
 
@@ -50,14 +56,14 @@ namespace Tanks.Client.Player
             }
             else
             {
-                float2 currentPosition = Behaviour.Transform.WorldPosition;
+                float2 currentPosition = Transform.WorldPosition;
                 float distance = math.distance(currentPosition, _lastPosition);
 
                 target = distance > deltaTime * 2 ? 1 : 0;
                 _lastPosition = currentPosition;
             }
 
-            _intensity = math.lerp(_intensity, target, deltaTime * speed);
+            _intensity = math.lerp(_intensity, target, math.saturate(deltaTime * speed));
             _instance.SetParameter("EngineIntensity", _intensity);
         }
     }

@@ -8,7 +8,7 @@ using UnityEngine;
 namespace Tanks.Server.Bootstrap
 {
     public sealed class PlayerReadyHandler :
-        NetworkComponent<GameStartBehaviour>,
+        NetworkComponent<IGameStartBehaviour>,
         INetworkMessageHandler<WaitingForPlayersRequested>,
         INetworkMessageHandler<PlayerReadyConfirmed>
     {
@@ -34,7 +34,7 @@ namespace Tanks.Server.Bootstrap
         {
             _pendingConfirmations.Clear();
 
-            foreach (ulong clientId in Behaviour.NetworkManager.ConnectedClientsIds)
+            foreach (ulong clientId in Behaviour.GetConnectedClientIds())
             {
                 int secret = RandomNumberGenerator.GetInt32(int.MinValue, int.MaxValue);
 

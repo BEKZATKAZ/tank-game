@@ -13,9 +13,19 @@ namespace Tanks.Client.Bootstrap
         NetworkComponent<GameStartBehaviour>,
         INetworkMessageHandler<PlayerReadyRequested>
     {
-        [Inject] private readonly IClientItemDatabase _itemDatabase;
-        [Inject] private readonly ILocalizationDatabase _localization;
-        [Inject] private readonly IObjectResolver _container;
+        public PlayerReadyHandler(
+            IClientItemDatabase itemDatabase,
+            ILocalizationDatabase localization,
+            IObjectResolver container)
+        {
+            _itemDatabase = itemDatabase;
+            _localization = localization;
+            _container = container;
+        }
+
+        private readonly IClientItemDatabase _itemDatabase;
+        private readonly ILocalizationDatabase _localization;
+        private readonly IObjectResolver _container;
 
         private bool _isInitialized;
 

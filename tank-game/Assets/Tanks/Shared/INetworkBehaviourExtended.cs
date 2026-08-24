@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using Tanks.Shared.Adapters;
 using Tanks.Utils;
 using Unity.Netcode;
@@ -10,7 +11,15 @@ namespace Tanks.Shared
 {
     public interface INetworkBehaviourExtended
     {
+        bool IsOwner { get; }
+        bool IsLocalPlayer { get; }
+        bool IsServer { get; }
+        bool IsClient { get; }
+
+        ulong OwnerClientId { get; }
         ITransform Transform { get; }
+
+        void RegisterMessageHandler<T>(INetworkMessageHandler<T> handler);
     }
 
     public interface INetworkMessageHandler { }
@@ -77,11 +86,18 @@ namespace Tanks.Shared
 
             foreach (Type componentType in types)
             {
-                INetworkComponent component = _container
-                    .CreateInjected(componentType) as INetworkComponent;
+                try
+                {
+                    INetworkComponent component = _container
+                        .CreateInjected(componentType) as INetworkComponent;
 
-                component.Initialize(this);
-                _components.Add(component);
+                    component.Initialize(this);
+                    _components.Add(component);
+                }
+                catch (Exception ex)
+                {
+                    Debug.LogException(ex);
+                }
             }
 
             OnInitialize();
@@ -106,13 +122,32 @@ namespace Tanks.Shared
             TryInitializeBehaviour();
         }
 
+        private void OnEnable()
+        {
+            foreach (INetworkComponent component in _components)
+            {
+                try { component.IsEnabled = true; }
+                catch (Exception ex) { Debug.LogException(ex); }
+            }
+        }
+
+        private void OnDisable()
+        {
+            foreach (INetworkComponent component in _components)
+            {
+                try { component.IsEnabled = false; }
+                catch (Exception ex) { Debug.LogException(ex); }
+            }
+        }
+
         public override void OnDestroy()
         {
             base.OnDestroy();
 
             foreach (INetworkComponent component in _components)
             {
-                component.Destroy();
+                try { component.Destroy(); }
+                catch (Exception ex) { Debug.LogException(ex); }
             }
 
             if (_isInitialized == false || NetworkManager == false) return;
@@ -127,7 +162,8 @@ namespace Tanks.Shared
 
             foreach (INetworkComponent component in _components)
             {
-                component.Update(deltaTime);
+                try { component.Update(deltaTime); }
+                catch (Exception ex) { Debug.LogException(ex); }
             }
         }
 
@@ -143,7 +179,8 @@ namespace Tanks.Shared
             foreach (INetworkComponent component in _components)
             {
                 if (component.IsEnabled == false) continue;
-                component.Tick(tick, tickDelta);
+                try { component.Tick(tick, tickDelta); }
+                catch (Exception ex) { Debug.LogException(ex); }
             }
         }
 

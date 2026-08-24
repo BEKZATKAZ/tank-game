@@ -19,8 +19,18 @@ namespace Tanks.Shared.Items.Pickups
         public float2 WorldPosition;
     }
 
+    public interface IPickupSpawnBehaviour : INetworkBehaviourExtended
+    {
+        float MinCooldown { get; }
+        float MaxCooldown { get; }
+        float MinDistanceToPlayers { get; }
+
+        void SpawnEveryoneRpc(PickupSpawned payload);
+        void DespawnEveryoneRpc(PickupId id);
+    }
+
     public sealed class PickupSpawnBehaviour :
-        NetworkBehaviourExtended, IMessageHandler<TilemapGenerated>
+        NetworkBehaviourExtended, IPickupSpawnBehaviour, IMessageHandler<TilemapGenerated>
     {
         [MinMaxSlider(0, 120)]
         [SerializeField]

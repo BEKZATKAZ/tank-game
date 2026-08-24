@@ -10,24 +10,23 @@ namespace Tanks.Shared.Tests.Adapters
         private ITransform _adapter;
         private Transform _component;
 
-        [OneTimeSetUp]
+        [SetUp]
         public void Setup()
         {
             _component = new GameObject("Transform Tests").transform;
-            _adapter = new UnityTransform(_component);
+
+            _adapter = new UnityTransform(_component)
+            {
+                WorldPosition = float2.zero,
+                WorldRotation = Angle.FromDegrees(0),
+                LocalScale = new float2(1, 1)
+            };
         }
 
-        [SetUp]
-        public void SetupEach()
+        [TearDown]
+        public void TearDown()
         {
-            _adapter.WorldPosition = float2.zero;
-            _adapter.WorldRotation = Angle.FromDegrees(0);
-            _adapter.LocalScale = new float2(1, 1);
-        }
-
-        [OneTimeTearDown]
-        public void Dispose()
-        {
+            if (_component == false) return;
             Object.DestroyImmediate(_component.gameObject);
         }
 
@@ -85,6 +84,28 @@ namespace Tanks.Shared.Tests.Adapters
             AssertEquality(_adapter.LocalPosition, _component.localPosition);
             AssertEquality(_adapter.LocalRotation, _component.localRotation);
             AssertEquality(_adapter.LocalScale, _component.localScale);
+        }
+
+        [Test]
+        public void DestroyedObject_ReturnsIsValidFalse()
+        {
+            Assert.True(_adapter.IsValid, "Should be true before destroying");
+            Object.DestroyImmediate(_component.gameObject);
+            Assert.False(_adapter.IsValid, "Should be false after destroying");
+        }
+
+        [Test]
+        public void StandardMethods()
+        {
+            Assert.AreEqual(
+                _component.GetHashCode(), _adapter.GetHashCode(),
+                "Invalid GetHashCode()");
+
+            Assert.AreEqual(
+                _component.ToString(), _adapter.ToString(),
+                "Invalid ToString()");
+
+            Assert.True(_adapter.Equals(_adapter), "Invalid Equals()");
         }
 
         private static void AssertApprox(float2 expected, float2 actual)

@@ -1,16 +1,31 @@
 ﻿namespace Tanks.Shared.Items.Pickups
 {
-    public class PickupBehaviour : NetworkBehaviourExtended
+    public interface IPickupBehaviour : INetworkBehaviourExtended
     {
-        public PickupSpawnBehaviour Spawner { get; private set; }
+        PickupId PickupId { get; }
+        ItemIdentifier ItemId { get; }
+
+        void Initialize(PickupSpawned payload, PickupSpawnBehaviour spawner);
+        void DespawnEveryoneRpc();
+    }
+
+    public class PickupBehaviour : NetworkBehaviourExtended, IPickupBehaviour
+    {
         public PickupId PickupId { get; private set; }
         public ItemIdentifier ItemId { get; private set; }
+
+        private PickupSpawnBehaviour _spawner;
+
+        public void DespawnEveryoneRpc()
+        {
+            _spawner.DespawnEveryoneRpc(PickupId);
+        }
 
         public void Initialize(PickupSpawned payload, PickupSpawnBehaviour spawner)
         {
             PickupId = payload.PickupId;
             ItemId = payload.ItemId;
-            Spawner = spawner;
+            _spawner = spawner;
             EmitMessage(payload);
         }
 

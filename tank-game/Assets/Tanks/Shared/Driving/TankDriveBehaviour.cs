@@ -5,8 +5,13 @@ using UnityEngine;
 
 namespace Tanks.Shared.Driving
 {
+    public interface ITankDriveBehaviour : INetworkBehaviourExtended
+    {
+        void Tick(float throttle, float steering, float deltaTime);
+    }
+
     [RequireComponent(typeof(Rigidbody2D), typeof(StatOwnerBehaviour))]
-    public sealed class TankDriveBehaviour : NetworkBehaviourExtended
+    public sealed class TankDriveBehaviour : NetworkBehaviourExtended, ITankDriveBehaviour
     {
         private readonly RaycastHit2D[] _hitBuffer = new RaycastHit2D[1];
         private StatOwnerBehaviour _statOwner;

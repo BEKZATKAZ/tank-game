@@ -3,19 +3,23 @@ using Tanks.Shared;
 using Tanks.Shared.Driving;
 using Unity.Netcode.Components;
 using UnityEngine;
-using VContainer;
 
 namespace Tanks.Client.Player
 {
     [RequireComponent(typeof(NetworkTransform), typeof(NetworkRigidbody2D), typeof(Rigidbody2D))]
-    public sealed class ManualPlayerDrive : NetworkComponent<TankDriveBehaviour>
+    public sealed class ManualPlayerDrive : NetworkComponent<ITankDriveBehaviour>
     {
-        [Inject] private readonly IInputService<ManualDriveInput> _input;
+        public ManualPlayerDrive(IInputService<ManualDriveInput> input)
+        {
+            _input = input;
+        }
+
+        private readonly IInputService<ManualDriveInput> _input;
 
         protected override void OnUpdate(float deltaTime)
         {
             ManualDriveInput input = _input.Read();
-            Behaviour.Tick(input.Throttle, input.Steering, Time.deltaTime);
+            Behaviour.Tick(input.Throttle, input.Steering, deltaTime);
         }
 
         protected override void OnInitialize()

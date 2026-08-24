@@ -2,14 +2,19 @@ using Tanks.Client.Input;
 using Tanks.Shared;
 using Tanks.Shared.Weapons;
 using Tanks.Utils;
-using VContainer;
 
 namespace Tanks.Client.Weapons
 {
-    public sealed class WeaponFirePrediction : NetworkComponent<WeaponHolderBehaviour>
+    public sealed class WeaponFirePrediction : NetworkComponent<IWeaponHolderBehaviour>
     {
-        [Inject] private readonly IInputService<TurretInput> _input;
-        [Inject] private readonly IShotIdGenerator _idGenerator;
+        public WeaponFirePrediction(IInputService<TurretInput> input, IShotIdGenerator idGenerator)
+        {
+            _input = input;
+            _idGenerator = idGenerator;
+        }
+
+        private readonly IInputService<TurretInput> _input;
+        private readonly IShotIdGenerator _idGenerator;
 
         private RingBuffer8<ClientShot> _fireBuffer;
         private bool _isHoldingDown;

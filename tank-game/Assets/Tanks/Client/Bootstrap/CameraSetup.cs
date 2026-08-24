@@ -8,7 +8,6 @@ using Tanks.Shared.Adapters;
 using Tanks.Shared.Bootstrap;
 using Tanks.Shared.Generation;
 using UnityEngine;
-using VContainer;
 
 namespace Tanks.Client.Bootstrap
 {
@@ -17,11 +16,25 @@ namespace Tanks.Client.Bootstrap
         INetworkMessageHandler<TilemapGenerated>,
         INetworkMessageHandler<GameStarted>
     {
-        [Inject] private readonly IAudioPlayer _audioPlayer;
-        [Inject] private readonly ICameraMainService _camera;
-        [Inject] private readonly ICameraFollowService _follow;
-        [Inject] private readonly IInputService<ManualDriveInput> _driveInput;
-        [Inject] private readonly IInputService<TurretInput> _turretInput;
+        public CameraSetup(
+            IAudioPlayer audioPlayer,
+            ICameraMainService camera,
+            ICameraFollowService follow,
+            IInputService<ManualDriveInput> driveInput,
+            IInputService<TurretInput> turretInput)
+        {
+            _audioPlayer = audioPlayer;
+            _camera = camera;
+            _follow = follow;
+            _driveInput = driveInput;
+            _turretInput = turretInput;
+        }
+
+        private readonly IAudioPlayer _audioPlayer;
+        private readonly ICameraMainService _camera;
+        private readonly ICameraFollowService _follow;
+        private readonly IInputService<ManualDriveInput> _driveInput;
+        private readonly IInputService<TurretInput> _turretInput;
 
         private Bounds _mapBounds;
 

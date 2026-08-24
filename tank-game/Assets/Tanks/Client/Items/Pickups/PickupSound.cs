@@ -1,7 +1,6 @@
 ﻿using Tanks.Audio;
 using Tanks.Shared;
 using Tanks.Shared.Items;
-using VContainer;
 
 namespace Tanks.Client.Items.Pickups
 {
@@ -9,8 +8,14 @@ namespace Tanks.Client.Items.Pickups
         NetworkComponent<ItemOwnerBehaviour>,
         INetworkMessageHandler<ItemPickedUp>
     {
-        [Inject] private readonly IClientItemDatabase _database;
-        [Inject] private readonly IAudioPlayer _audioPlayer;
+        public PickupSound(IClientItemDatabase database, IAudioPlayer audioPlayer)
+        {
+            _database = database;
+            _audioPlayer = audioPlayer;
+        }
+
+        private readonly IClientItemDatabase _database;
+        private readonly IAudioPlayer _audioPlayer;
 
         public void Handle(ItemPickedUp message)
         {
@@ -18,7 +23,7 @@ namespace Tanks.Client.Items.Pickups
 
             _audioPlayer.PlayOneShotAttached(
                 path: config.OnPickUpSound,
-                target: Behaviour.Transform,
+                target: Transform,
                 useDefault: Behaviour.IsLocalPlayer);
         }
 

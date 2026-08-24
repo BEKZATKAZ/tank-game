@@ -1,4 +1,6 @@
-﻿namespace Tanks.Shared
+﻿using Tanks.Shared.Adapters;
+
+namespace Tanks.Shared
 {
     public interface INetworkComponent
     {
@@ -17,6 +19,7 @@
     public class NetworkComponent<T> : INetworkComponent<T> where T : INetworkBehaviourExtended
     {
         public T Behaviour { get; private set; }
+        public ITransform Transform => Behaviour.Transform;
 
         public bool IsEnabled
         {

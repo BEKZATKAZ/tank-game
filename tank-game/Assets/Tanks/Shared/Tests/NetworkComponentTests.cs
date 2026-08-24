@@ -3,7 +3,9 @@ using NUnit.Framework;
 
 namespace Tanks.Shared.Tests
 {
-    class TestNetworkComponent : NetworkComponent<INetworkBehaviourExtended>
+    public interface ITestNetworkBehaviour : INetworkBehaviourExtended { }
+
+    public class TestNetworkComponent : NetworkComponent<ITestNetworkBehaviour>
     {
         public int InitializeCalledCount { get; private set; }
         public int OnEnableCalled { get; private set; }
@@ -25,7 +27,7 @@ namespace Tanks.Shared.Tests
         [Test]
         public void Events_Initialize_InvokesCorrectly()
         {
-            INetworkBehaviourExtended behaviour = Substitute.For<INetworkBehaviourExtended>();
+            ITestNetworkBehaviour behaviour = Substitute.For<ITestNetworkBehaviour>();
             TestNetworkComponent component = new TestNetworkComponent();
 
             component.Initialize(behaviour);
@@ -53,11 +55,10 @@ namespace Tanks.Shared.Tests
         [Test]
         public void Events_Updates_InvokesCorrectly()
         {
-            INetworkBehaviourExtended behaviour = Substitute.For<INetworkBehaviourExtended>();
-
+            ITestNetworkBehaviour behaviour = Substitute.For<ITestNetworkBehaviour>();
             TestNetworkComponent component = new TestNetworkComponent();
-            component.Initialize(behaviour);
 
+            component.Initialize(behaviour);
             component.Update(0.01f);
             component.Update(0.01f);
             component.Update(0.01f);

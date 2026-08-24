@@ -13,7 +13,7 @@ namespace Tanks.Server.Tests.Items.Behaviours
         public void FullHP_HealsNothing()
         {
             Behaviour.OnPickup(Owner);
-            Assert.AreEqual(100, Owner.Health.Value);
+            Assert.AreEqual(100, Owner.Health.Value.Value);
         }
 
         [TestCase(90, 100)]

@@ -5,15 +5,19 @@ using Tanks.Audio;
 using Tanks.Shared;
 using Tanks.Shared.Health;
 using UnityEngine;
-using VContainer;
 
 namespace Tanks.Client.Health
 {
     public class DamagePredictionEffect :
-        NetworkComponent<HealthBehaviour>,
+        NetworkComponent<IHealthBehaviour>,
         INetworkMessageHandler<DamageTaken>
     {
-        [Inject] private readonly IAudioPlayer _audioPlayer;
+        public DamagePredictionEffect(IAudioPlayer audioPlayer)
+        {
+            _audioPlayer = audioPlayer;
+        }
+
+        private readonly IAudioPlayer _audioPlayer;
 
         private Dictionary<SpriteRenderer, Color> _sprites;
         private float _lastTime;
@@ -31,7 +35,7 @@ namespace Tanks.Client.Health
 
             _audioPlayer.PlayOneShotAttached(
                 path: "event:/SFX/DamageTaken",
-                target: Behaviour.Transform,
+                target: Transform,
                 useDefault: Behaviour.IsLocalPlayer);
 
             await UniTask.Delay(150);
@@ -40,7 +44,7 @@ namespace Tanks.Client.Health
             if (currentTime != _lastTime) return;
 
             // Prevent effect from applying when the entity is destroyed
-            if (Behaviour == false) return;
+            if (Transform.IsValid == false) return;
 
             foreach ((SpriteRenderer renderer, Color color) in _sprites)
             {
@@ -50,9 +54,7 @@ namespace Tanks.Client.Health
 
         protected override void OnInitialize()
         {
-            _sprites = Behaviour.GetComponentsInChildren<SpriteRenderer>()
-                .ToDictionary(x => x, x => x.color);
-
+            _sprites = Behaviour.GetAllSpriteRenderers().ToDictionary(x => x, x => x.color);
             Behaviour.RegisterMessageHandler(this);
         }
     }

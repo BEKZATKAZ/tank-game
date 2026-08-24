@@ -2,15 +2,19 @@
 using Tanks.Shared;
 using Tanks.Shared.Weapons.Projectiles;
 using Unity.Mathematics;
-using VContainer;
 
 namespace Tanks.Client.Weapons
 {
     public sealed class ProjectileRicochetSound :
-        NetworkComponent<ProjectileBehaviour>,
+        NetworkComponent<IProjectileBehaviour>,
         INetworkMessageHandler<ProjectileRicocheted>
     {
-        [Inject] private readonly IAudioPlayer _audioPlayer;
+        public ProjectileRicochetSound(IAudioPlayer audioPlayer)
+        {
+            _audioPlayer = audioPlayer;
+        }
+
+        private readonly IAudioPlayer _audioPlayer;
 
         public void Handle(ProjectileRicocheted message)
         {

@@ -16,7 +16,7 @@ namespace Tanks.Client.Bootstrap
     }
 
     public sealed class VignetteSetup :
-        NetworkComponent<GameStartBehaviour>,
+        NetworkComponent<IGameStartBehaviour>,
         INetworkMessageHandler<TilemapGenerated>
     {
         private NativeArray<Vtx> _vertices;

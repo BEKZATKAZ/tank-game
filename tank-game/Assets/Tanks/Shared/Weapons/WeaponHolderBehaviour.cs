@@ -42,8 +42,23 @@ namespace Tanks.Shared.Weapons
         public RingBuffer8<ClientShot> FireBuffer;
     }
 
+    public interface IWeaponHolderBehaviour : INetworkBehaviourExtended
+    {
+        IReadOnlyWeapon CurrentWeapon { get; }
+        IReadOnlyWeapon DefaultWeapon { get; }
+        ITransform MuzzlePoint { get; }
+        IStatOwner EffectOwner { get; }
+
+        void SendInputServerRpc(WeaponInput input);
+        void UseWeaponClientRpc(WeaponUsedFromServer message);
+        void SetDefault(Required<Weapon> weapon);
+        void SwitchToDefault();
+        bool WeaponTick(float deltaTime, bool isHoldingDown, ShotId id);
+    }
+
     [RequireComponent(typeof(StatOwnerBehaviour))]
-    public sealed class WeaponHolderBehaviour : NetworkBehaviourExtended, IWeaponOwner
+    public sealed class WeaponHolderBehaviour :
+        NetworkBehaviourExtended, IWeaponHolderBehaviour, IWeaponOwner
     {
         [SerializeField] private Transform _muzzlePoint;
 

@@ -4,8 +4,10 @@ namespace Tanks.Shared.Health
 {
     public interface IHealth
     {
-        float Value { get; }
+        PositiveFloatOrZero Value { get; }
+        PositiveFloat MaxHealth { get; }
 
+        void SetCurrentHealth(PositiveFloatOrZero value);
         void SetMaxHealth(PositiveFloat value);
     }
 

@@ -2,7 +2,7 @@
 
 namespace Tanks.Client.Items.Pickups
 {
-    public sealed class PickupVisualSetup
+    public static class PickupVisualSetup
     {
         static PickupVisualSetup()
         {
@@ -20,16 +20,12 @@ namespace Tanks.Client.Items.Pickups
 
         private static readonly Sprite _pixel;
 
-        public void Setup(
-            Transform parent, out SpriteRenderer iconRenderer, out SpriteRenderer glowRenderer)
+        public static void Setup(out SpriteRenderer iconRenderer, out SpriteRenderer glowRenderer)
         {
             GameObject view = new GameObject("view", typeof(SpriteRenderer));
             GameObject glow = new GameObject("glow", typeof(SpriteRenderer));
 
-            view.transform.SetParent(parent, worldPositionStays: false);
             view.transform.localScale = new Vector3(2, 2, 1);
-
-            glow.transform.SetParent(parent, worldPositionStays: false);
             glow.transform.localScale = new Vector3(5, 5, 1);
 
             iconRenderer = view.GetComponent<SpriteRenderer>();

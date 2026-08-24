@@ -3,7 +3,12 @@ using Unity.Mathematics;
 
 namespace Tanks.Shared.Driving
 {
-    public class TankTurretBehaviour : NetworkBehaviourExtended
+    public interface ITankTurretBehaviour : INetworkBehaviourExtended
+    {
+        void Tick(float2 lookAtDirection, float deltaTime);
+    }
+
+    public class TankTurretBehaviour : NetworkBehaviourExtended, ITankTurretBehaviour
     {
         private TankTurretRotation _rotation;
 
@@ -15,10 +20,8 @@ namespace Tanks.Shared.Driving
 
         public void Tick(float2 lookAtDirection, float deltaTime)
         {
-            if (math.length(lookAtDirection) >= 0.01f)
-            {
-                _rotation.TurnAt(lookAtDirection, deltaTime);
-            }
+            if (math.length(lookAtDirection) < 0.01f) return;
+            _rotation.TurnAt(lookAtDirection, deltaTime);
         }
     }
 }

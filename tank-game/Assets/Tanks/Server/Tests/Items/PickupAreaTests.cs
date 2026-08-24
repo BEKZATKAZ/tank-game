@@ -11,21 +11,18 @@ using Tanks.Shared.Stats;
 
 namespace Tanks.Server.Tests.Items
 {
-    public class PickupAreaLogicTests
+    public class PickupAreaTests
     {
         private IItemDatabase _database;
-        private ITransform _transform;
         private IItemOwner _owner;
         private IHealable _healable;
         private IStatOwner _statOwner;
-        private PickupAreaLogic _logic;
+        private PickupArea _component;
 
         [SetUp]
         public void SetUp()
         {
             _database = Substitute.For<IItemDatabase>();
-            _transform = Substitute.For<ITransform>();
-
             _owner = Substitute.For<IItemOwner>();
             _healable = Substitute.For<IHealable>();
             _statOwner = Substitute.For<IStatOwner>();
@@ -33,8 +30,8 @@ namespace Tanks.Server.Tests.Items
             _owner.Healable.Returns(_healable);
             _owner.StatOwner.Returns(_statOwner);
 
-            _logic = new PickupAreaLogic(
-                _database, _transform, radius: 5, layerMask: 1 << 3);
+            _component = new PickupArea(_database);
+            _component.Initialize(Substitute.For<IPickupBehaviour>());
         }
 
         [Test]
@@ -47,7 +44,7 @@ namespace Tanks.Server.Tests.Items
             config.Stats.Returns(Array.Empty<ItemStat>());
 
             _database.Get(itemId).Returns(config);
-            _logic.PickUp(_owner, itemId, pickupId);
+            _component.PickUp(_owner, itemId, pickupId);
 
             _owner.Received(1).PickupItem(config, pickupId);
         }
@@ -70,7 +67,7 @@ namespace Tanks.Server.Tests.Items
             config.Stats.Returns(new[] { stat });
 
             _database.Get(itemId).Returns(config);
-            _logic.PickUp(_owner, itemId, default);
+            _component.PickUp(_owner, itemId, default);
 
             _statOwner.Received(1)
                 .AddStat(stat.Type, stat.ValueType, stat.Value, stat.Duration);
@@ -95,7 +92,7 @@ namespace Tanks.Server.Tests.Items
             });
 
             _database.Get(itemId).Returns(config);
-            _logic.PickUp(_owner, itemId, default);
+            _component.PickUp(_owner, itemId, default);
 
             _statOwner.DidNotReceiveWithAnyArgs()
                 .AddStat(default, default, default, default);

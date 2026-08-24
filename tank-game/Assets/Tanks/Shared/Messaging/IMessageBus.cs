@@ -63,7 +63,6 @@ namespace Tanks.Shared.Messaging
             }
 
             list.Add(handler.Value);
-            Debug.Log($"New handler '{handlerType.Name}' of type '{type.Name}'");
         }
     }
 }

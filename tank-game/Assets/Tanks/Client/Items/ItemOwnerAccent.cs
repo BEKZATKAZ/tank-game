@@ -2,7 +2,6 @@
 using Tanks.Shared;
 using Tanks.Shared.Items;
 using UnityEngine;
-using VContainer;
 
 namespace Tanks.Client.Items
 {
@@ -10,7 +9,12 @@ namespace Tanks.Client.Items
         NetworkComponent<ItemOwnerBehaviour>,
         INetworkMessageHandler<ItemPickedUp>
     {
-        [Inject] private readonly IClientItemDatabase _database;
+        public ItemOwnerAccent(IClientItemDatabase database)
+        {
+            _database = database;
+        }
+
+        private readonly IClientItemDatabase _database;
 
         private MaterialPropertyBlock _block;
         private MotionHandle _motion;

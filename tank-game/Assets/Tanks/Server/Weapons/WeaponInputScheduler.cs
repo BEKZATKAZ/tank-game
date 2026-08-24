@@ -32,7 +32,7 @@ namespace Tanks.Server.Weapons
             _fallback = fallback;
         }
 
-        public int LastProcessedClientTick { get; private set; }
+        public int LastProcessedClientTick { get; set; }
         public int ScheduledCount => _scheduledShots.Count;
 
         private readonly WeaponInputProcessor _processor;

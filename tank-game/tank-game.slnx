@@ -7,6 +7,7 @@
   <Project Path="PlayFabEditorExtensions.csproj" />
   <Project Path="Tanks.Shared.Tests.csproj" />
   <Project Path="Tanks.Shared.csproj" />
+  <Project Path="Tanks.Client.Tests.csproj" />
   <Project Path="Tanks.Core.csproj" />
   <Project Path="Tanks.Infrastructure.csproj" />
   <Project Path="Tanks.Localization.csproj" />
@@ -17,14 +18,14 @@
   <Project Path="Tanks.Utils.csproj" />
   <Project Path="FMODUnityHaptics.csproj" />
   <Project Path="Tanks.Utils.Tests.csproj" />
-  <Project Path="Tanks.Client.Tests.csproj" />
   <Project Path="Tanks.Server.Tests.csproj" />
   <Project Path="Tanks.Infrastructure.Tests.csproj" />
   <Project Path="Tanks.Core.Bootstrap.csproj" />
   <Project Path="FMODUnityResonance.csproj" />
   <Project Path="Tanks.UI.Tests.csproj" />
   <Project Path="Tanks.Editor.csproj" />
-  <Project Path="Tanks.Audio.csproj" />
   <Project Path="Tanks.Core.Tests.csproj" />
+  <Project Path="Tanks.Audio.csproj" />
+  <Project Path="Tanks.Client.Tests.Runtime.csproj" />
   <Project Path="PlayFabSDKEditor.csproj" />
 </Solution>

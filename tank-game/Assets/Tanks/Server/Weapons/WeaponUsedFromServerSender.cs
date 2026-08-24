@@ -4,7 +4,7 @@ using Tanks.Shared.Weapons;
 namespace Tanks.Server.Weapons
 {
     public sealed class WeaponUsedFromServerSender :
-        NetworkComponent<WeaponHolderBehaviour>,
+        NetworkComponent<IWeaponHolderBehaviour>,
         INetworkMessageHandler<WeaponUsed>
     {
         public void Handle(WeaponUsed message)

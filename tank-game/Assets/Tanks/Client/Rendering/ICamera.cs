@@ -1,4 +1,6 @@
-﻿using Tanks.Shared.Adapters;
+﻿using System;
+using Tanks.Shared.Adapters;
+using Unity.Mathematics;
 using UnityEngine;
 
 namespace Tanks.Client.Rendering
@@ -8,6 +10,8 @@ namespace Tanks.Client.Rendering
         ITransform Transform { get; }
         float OrthographicSize { get; set; }
         float Aspect { get; }
+
+        float2 ScreenToWorldPoint(float2 pointerPosition);
     }
 
     public sealed class UnityCamera : ICamera
@@ -20,7 +24,12 @@ namespace Tanks.Client.Rendering
 
         public Camera OriginalCamera { get; }
         public ITransform Transform { get; }
-        public float Aspect => OriginalCamera.aspect;
+
+        public float Aspect
+        {
+            get => OriginalCamera.aspect;
+            set => OriginalCamera.aspect = value;
+        }
 
         public float OrthographicSize
         {
@@ -30,9 +39,16 @@ namespace Tanks.Client.Rendering
 
         public override int GetHashCode() => OriginalCamera.GetHashCode();
         public override string ToString() => OriginalCamera.ToString();
+
         public override bool Equals(object obj)
         {
             return obj is UnityCamera other && OriginalCamera.Equals(other.OriginalCamera);
+        }
+
+        public float2 ScreenToWorldPoint(float2 pointerPosition)
+        {
+            Vector3 result = OriginalCamera.ScreenToWorldPoint(new float3(pointerPosition.xy, 0));
+            return ((float3)result).xy;
         }
     }
 }
