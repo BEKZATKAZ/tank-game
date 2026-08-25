@@ -1,11 +1,17 @@
-* {
-    --text-color: rgb(245, 245, 245);
+:root {
+    --text-color: rgb(243, 243, 243);
     --text-secondary-color: rgb(205, 205, 205);
     --accent-color: rgb(122, 226, 207);
     --secondary-color: rgb(253, 235, 158);
     --bg: rgba(0, 0, 0, 0.75);
     --bg-dark: rgba(0, 0, 0, 0.85);
     --border-color: rgba(255, 255, 255, 0.1);
+    --font-regular: url("/Assets/Tanks/UI/Fonts/Tektur/Tektur-Regular.ttf");
+    --font-heavy: url("/Assets/Tanks/UI/Fonts/Tektur/Tektur-ExtraBold.ttf");
+    --font-black: url("/Assets/Tanks/UI/Fonts/Tektur/Tektur-Black.ttf");
+}
+
+* {
     margin: 0;
     padding: 0;
     color: var(--text-color);
@@ -64,6 +70,7 @@
     margin-bottom: 40px;
     font-size: 96px;
     -unity-text-align: middle-center;
+    -unity-font-definition: var(--font-heavy);
 }
 
 #Copyright {
@@ -86,6 +93,7 @@
     padding: 20px;
     background-color: rgba(0, 0, 0, 0.75);
     -unity-text-align: middle-center;
+    -unity-font-definition: var(--font-black);
 }
 
 .menu-content {

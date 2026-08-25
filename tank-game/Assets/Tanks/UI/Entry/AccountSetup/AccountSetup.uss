@@ -11,8 +11,9 @@
 
 #AccountSetupHeader {
 	font-size: 42px;
-	-unity-text-align: middle-center;
 	margin-bottom: 20px;
+	-unity-text-align: middle-center;
+	-unity-font-style: bold;
 }
 
 .unity-text-field {

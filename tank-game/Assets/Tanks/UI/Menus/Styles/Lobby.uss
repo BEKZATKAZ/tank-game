@@ -19,6 +19,7 @@
 
 #LobbyNameField .unity-text-element {
 	padding: 15px 20px 15px 30px;
+	-unity-font-definition: var(--font-black);
 }
 
 #LobbyNameEditButton {
@@ -35,6 +36,7 @@
 	padding: 15px 30px;
 	flex-shrink: 0;
 	margin-left: auto;
+	-unity-font-definition: var(--font-black);
 }
 
 #PlayerListContent {
@@ -66,12 +68,12 @@
 
 .lobby-player__username {
 	font-size: 32px;
-	-unity-font-style: bold;
 }
 
 #Chat .window-header .unity-label {
 	padding: 15px 30px;
 	-unity-text-align: middle-center;
+	-unity-font-definition: var(--font-black);
 	flex-grow: 1;
 }
 

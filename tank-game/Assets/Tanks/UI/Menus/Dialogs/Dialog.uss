@@ -18,6 +18,7 @@
 	font-size: 32px;
 	background-color: red;
 	padding: 10px 30px;
+	-unity-font-definition: var(--font-black);
 }
 
 .dialog-message {

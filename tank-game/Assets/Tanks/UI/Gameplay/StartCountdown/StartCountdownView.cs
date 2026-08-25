@@ -1,5 +1,4 @@
-﻿using FMODUnity;
-using Tanks.Audio;
+﻿using Tanks.Audio;
 using UnityEngine;
 using UnityEngine.UIElements;
 using VContainer;
@@ -8,7 +7,7 @@ namespace Tanks.UI.Gameplay.StartCountdown
 {
     public sealed class StartCountdownView : ViewBase<StartCountdownViewModel>
     {
-        [SerializeField] private EventReference _countdownSound;
+        [SerializeField] private string _countdownSoundPath = "event:/SFX/StartCounter";
 
         [Inject] private readonly IAudioFactory _audioFactory;
 
@@ -25,7 +24,7 @@ namespace Tanks.UI.Gameplay.StartCountdown
 
         protected override void Bind(StartCountdownViewModel viewModel)
         {
-            _instance ??= _audioFactory.CreateInstance(_countdownSound.Path);
+            _instance ??= _audioFactory.CreateInstance(_countdownSoundPath);
 
             viewModel.Title.Bind(x =>
             {

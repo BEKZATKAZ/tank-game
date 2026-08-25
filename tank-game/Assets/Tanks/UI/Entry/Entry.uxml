@@ -3,7 +3,7 @@
     <Style src="project://database/Assets/Tanks/UI/Entry/AccountSetup/AccountSetup.uss?fileID=7433441132597879392&amp;guid=d4de69de3ec3ae84c80b16cb102980a9&amp;type=3#AccountSetup"/>
     <ui:VisualElement name="EntryRoot">
         <ui:VisualElement name="AccountSetup">
-            <ui:Label name="AccountSetupHeader" style="-unity-font-definition: resource(&quot;FlatSkin/Font/Roboto-Black&quot;);">
+            <ui:Label name="AccountSetupHeader">
                 <Bindings>
                     <UnityEngine.Localization.LocalizedString property="text" table="GUID:c65a4f9d9da4a46468c02bed143a7960" entry="Id(979284484096)"/>
                 </Bindings>

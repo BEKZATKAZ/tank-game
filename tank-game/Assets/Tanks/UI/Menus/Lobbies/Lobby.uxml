@@ -1,19 +1,19 @@
 <ui:UXML xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
     <Style src="project://database/Assets/Tanks/UI/Menus/Styles/MainMenu.uss?fileID=7433441132597879392&amp;guid=e77348697c99f3b4795a79682c5e1415&amp;type=3#MainMenu"/>
-    <Style src="project://database/Assets/Tanks/UI/Menus/Styles/Lobby.uss?fileID=7433441132597879392&amp;guid=3e4178b502b4d3d43b0a5c081c7d2e76&amp;type=3#Lobby"/>
+    <Style src="project://database/Assets/Tanks/UI/Menus/Styles/Lobby.uss?fileID=7433441132597879392&amp;guid=b0ab1db9e25ec424ba52825e10f27a8f&amp;type=3#Lobby"/>
     <ui:VisualElement name="Root" style="background-color: rgba(0, 0, 0, 0.749);">
         <ui:VisualElement name="PlayerList" class="window">
             <ui:VisualElement name="PlayerListHeader" class="window-header">
-                <ui:TextField label="" placeholder-text="" name="LobbyNameField" max-length="30" is-delayed="true" value="Username&apos;s Lobby" style="-unity-font-definition: resource(&quot;FlatSkin/Font/Roboto-Black&quot;);"/>
+                <ui:TextField label="" placeholder-text="" name="LobbyNameField" max-length="30" is-delayed="true" value="Username&apos;s Lobby"/>
                 <ui:Button text="" name="LobbyNameEditButton" style="background-image: url(&quot;project://database/Assets/Plugins/Layer%20Lab/2D%20Icons-PictoIconPack01/PictoIcon_256/Icon_PictoIcon_Pencil.Png?fileID=21300000&amp;guid=2e626f9b7e8f74b19838796cb3e2bc3d&amp;type=3#Icon_PictoIcon_Pencil&quot;);"/>
-                <ui:Label text="1 / 8" name="PlayerCount" style="-unity-font-definition: resource(&quot;FlatSkin/Font/Roboto-Black&quot;);"/>
+                <ui:Label text="1 / 8" name="PlayerCount"/>
             </ui:VisualElement>
             <ui:ScrollView name="PlayerListContent"/>
         </ui:VisualElement>
         <ui:VisualElement name="RightSide" style="flex-grow: 1;">
             <ui:VisualElement name="Chat" class="window">
                 <ui:VisualElement name="ChatHeader" class="window-header">
-                    <ui:Label name="LobbyName" enable-rich-text="false" style="-unity-font-definition: resource(&quot;FlatSkin/Font/Roboto-Bold&quot;);">
+                    <ui:Label name="LobbyName" enable-rich-text="false">
                         <Bindings>
                             <UnityEngine.Localization.LocalizedString property="text" table="GUID:34510603f8b6d1a44b1b2ffa9aa551c9" entry="Id(5085350316171264)"/>
                         </Bindings>

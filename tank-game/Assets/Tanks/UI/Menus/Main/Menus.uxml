@@ -1,12 +1,12 @@
 <ui:UXML xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
     <Style src="project://database/Assets/Tanks/UI/Menus/Styles/MainMenu.uss?fileID=7433441132597879392&amp;guid=e77348697c99f3b4795a79682c5e1415&amp;type=3#MainMenu"/>
     <ui:VisualElement name="Header">
-        <ui:Label text="USERNAME" enable-rich-text="false" style="-unity-font-definition: resource(&quot;FlatSkin/Font/Roboto-Bold&quot;);"/>
+        <ui:Label text="USERNAME" enable-rich-text="false"/>
     </ui:VisualElement>
     <ui:VisualElement name="Content" style="flex-grow: 1;">
         <ui:VisualElement name="Buttons">
-            <ui:Label text="T.A.N.K.S." name="GameTitle" style="-unity-font-definition: url(&quot;project://database/Assets/Plugins/PlayFabEditorExtensions/Editor/UI/Fonts/Avalon%20Bold.ttf?fileID=12800000&amp;guid=96e17474f840a01459f0cc936c5d4d9b&amp;type=3#Avalon Bold&quot;);"/>
-            <Tanks.UI.Elements.CustomButton name="HostLobbyButton" style="background-image: url(&quot;project://database/Assets/Plugins/Layer%20Lab/2D%20Icons-PictoIconPack01/PictoIcon_256/Icon_PictoIcon_Control_Play.Png?fileID=21300000&amp;guid=89a5ae9f9ca3648d99ebe68370a1de31&amp;type=3#Icon_PictoIcon_Control_Play&quot;);">
+            <ui:Label text="T.A.N.K.S." name="GameTitle"/>
+            <Tanks.UI.Elements.CustomButton name="HostLobbyButton" style="background-image: url(&quot;project://database/Assets/Plugins/Layer%20Lab/2D%20Icons-PictoIconPack01/PictoIcon_256/Icon_PictoIcon_Control_Play.Png?fileID=21300000&amp;guid=89a5ae9f9ca3648d99ebe68370a1de31&amp;type=3#Icon_PictoIcon_Control_Play&quot;); -unity-font-definition: url(&quot;project://database/Assets/UI%20Toolkit/UnityThemes/UnityDefaultRuntimeTheme.tss?fileID=2230732570650464555&amp;guid=4ff49874f5498b042b7c5faf5a94fa03&amp;type=3#NotInter-Regular&quot;);">
                 <Bindings>
                     <UnityEngine.Localization.LocalizedString property="text" table="GUID:34510603f8b6d1a44b1b2ffa9aa551c9" entry="Id(3245362964291584)"/>
                 </Bindings>
@@ -31,11 +31,11 @@
                     <UnityEngine.Localization.LocalizedString property="text" table="GUID:34510603f8b6d1a44b1b2ffa9aa551c9" entry="Id(27659821056)"/>
                 </Bindings>
             </Tanks.UI.Elements.CustomButton>
-            <ui:Label text="© 2026 BEKZATKAZ" name="Copyright" style="-unity-font-definition: resource(&quot;FlatSkin/Font/Roboto-Light&quot;);"/>
+            <ui:Label text="© 2026 BEKZATKAZ" name="Copyright"/>
         </ui:VisualElement>
         <ui:VisualElement name="Menu" style="flex-grow: 1;">
             <ui:VisualElement name="LobbyBrowser" style="flex-grow: 1;">
-                <ui:Label name="" class="menu-header" style="-unity-font-definition: resource(&quot;FlatSkin/Font/Roboto-Black&quot;);">
+                <ui:Label name="" class="menu-header">
                     <Bindings>
                         <UnityEngine.Localization.LocalizedString property="text" table="GUID:34510603f8b6d1a44b1b2ffa9aa551c9" entry="Id(3244736305913856)"/>
                     </Bindings>
@@ -52,7 +52,7 @@
                 <ui:ScrollView name="LobbyList"/>
             </ui:VisualElement>
             <ui:VisualElement name="SettingsMenu" style="flex-grow: 1; display: none;">
-                <ui:Label name="" class="menu-header" style="-unity-font-definition: resource(&quot;FlatSkin/Font/Roboto-Black&quot;);">
+                <ui:Label name="" class="menu-header">
                     <Bindings>
                         <UnityEngine.Localization.LocalizedString property="text" table="GUID:34510603f8b6d1a44b1b2ffa9aa551c9" entry="Id(289292115968)"/>
                     </Bindings>

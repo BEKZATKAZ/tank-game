@@ -3,7 +3,7 @@
     <Style src="project://database/Assets/Tanks/UI/Menus/Dialogs/Dialog.uss?fileID=7433441132597879392&amp;guid=503c81716a673734aa76c5f5cb54921e&amp;type=3#Dialog"/>
     <ui:VisualElement name="Root">
         <ui:VisualElement name="Error" class="dialog">
-            <ui:Label name="ErrorHeader" class="dialog-header" style="-unity-font-definition: resource(&quot;FlatSkin/Font/Roboto-Black&quot;);">
+            <ui:Label name="ErrorHeader" class="dialog-header">
                 <Bindings>
                     <UnityEngine.Localization.LocalizedString property="text" table="GUID:034deb129b9dd5842973b131521ca8de" entry="Id(214359618314240)"/>
                 </Bindings>
@@ -16,7 +16,7 @@
             </Tanks.UI.Elements.CustomButton>
         </ui:VisualElement>
         <ui:VisualElement name="Confirmation" class="dialog">
-            <ui:Label name="ConfirmationHeader" text="QUIT GAME" class="dialog-header" style="-unity-font-definition: resource(&quot;FlatSkin/Font/Roboto-Black&quot;);"/>
+            <ui:Label name="ConfirmationHeader" text="QUIT GAME" class="dialog-header"/>
             <ui:Label name="ConfirmationMessage" class="dialog-message">
                 <Bindings>
                     <UnityEngine.Localization.LocalizedString property="text" table="GUID:55ca1aef952d294408a5931b93c5118f" entry="Id(27588517888)"/>
