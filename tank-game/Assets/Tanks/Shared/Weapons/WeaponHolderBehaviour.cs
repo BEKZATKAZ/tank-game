@@ -4,6 +4,7 @@ using Tanks.Core.Helpers;
 using Tanks.Shared.Adapters;
 using Tanks.Shared.Stats;
 using Tanks.Utils;
+using Unity.Mathematics;
 using Unity.Netcode;
 using UnityEngine;
 
@@ -42,30 +43,28 @@ namespace Tanks.Shared.Weapons
         public RingBuffer8<ClientShot> FireBuffer;
     }
 
-    public interface IWeaponHolderBehaviour : INetworkBehaviourExtended
+    public interface IWeaponHolderBehaviour : INetworkBehaviourExtended, IWeaponOwner
     {
         IReadOnlyWeapon CurrentWeapon { get; }
         IReadOnlyWeapon DefaultWeapon { get; }
-        ITransform MuzzlePoint { get; }
-        IStatOwner EffectOwner { get; }
 
         void SendInputServerRpc(WeaponInput input);
         void UseWeaponClientRpc(WeaponUsedFromServer message);
         void SetDefault(Required<Weapon> weapon);
-        void SwitchToDefault();
         bool WeaponTick(float deltaTime, bool isHoldingDown, ShotId id);
     }
 
-    [RequireComponent(typeof(StatOwnerBehaviour))]
-    public sealed class WeaponHolderBehaviour :
-        NetworkBehaviourExtended, IWeaponHolderBehaviour, IWeaponOwner
+    [RequireComponent(typeof(StatOwnerBehaviour), typeof(Rigidbody2D))]
+    public sealed class WeaponHolderBehaviour : NetworkBehaviourExtended, IWeaponHolderBehaviour
     {
         [SerializeField] private Transform _muzzlePoint;
 
         public IReadOnlyWeapon CurrentWeapon => _currentWeapon;
         public IReadOnlyWeapon DefaultWeapon => _defaultWeapon;
+
         public ITransform MuzzlePoint { get; private set; }
         public IStatOwner EffectOwner { get; private set; }
+        public IVelocity Velocity { get; private set; }
 
         private Weapon _currentWeapon;
         private Weapon _defaultWeapon;
@@ -113,6 +112,7 @@ namespace Tanks.Shared.Weapons
         protected override void Awake()
         {
             base.Awake();
+            Velocity = new UnityVelocity(GetComponent<Rigidbody2D>());
             MuzzlePoint = new UnityTransform(_muzzlePoint);
             EffectOwner = GetComponent<StatOwnerBehaviour>();
         }

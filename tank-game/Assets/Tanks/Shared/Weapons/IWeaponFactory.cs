@@ -28,7 +28,7 @@ namespace Tanks.Shared.Weapons
             var useMode = CreateUseMode(config.UseMode).AsRequired();
             var useAction = config.UseAction.Create(muzzlePoint).AsRequired();
 
-            weapon.Initialize(ammo, cooldown, useMode, useAction);
+            weapon.Initialize(ammo, cooldown, useMode, useAction, config.Recoil.AsRequired());
             return weapon;
         }
     }

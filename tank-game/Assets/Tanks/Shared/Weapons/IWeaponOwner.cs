@@ -8,6 +8,7 @@ namespace Tanks.Shared.Weapons
     {
         ITransform Transform { get; }
         ITransform MuzzlePoint { get; }
+        IVelocity Velocity { get; }
         IStatOwner EffectOwner { get; }
 
         void SwitchTo(Required<Weapon> weapon);

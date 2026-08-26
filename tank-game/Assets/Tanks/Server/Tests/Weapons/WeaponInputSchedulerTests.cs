@@ -1,6 +1,7 @@
 ﻿using NUnit.Framework;
 using Tanks.Server.Weapons;
 using Tanks.Shared.Weapons;
+using Tanks.Shared.Weapons.Data;
 using Tanks.Utils;
 
 namespace Tanks.Server.Tests.Weapons
@@ -32,7 +33,8 @@ namespace Tanks.Server.Tests.Weapons
                 new FixedAmmo(10),
                 new Cooldown(0.15f),
                 new FullAutomaticUseMode(),
-                new NoUseAction());
+                new NoUseAction(),
+                new RecoilConfig());
 
             _scheduler = new WeaponInputScheduler(OnShoot, null);
         }

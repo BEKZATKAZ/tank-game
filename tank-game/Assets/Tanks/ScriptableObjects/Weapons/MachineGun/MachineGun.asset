@@ -16,3 +16,6 @@ MonoBehaviour:
   _ammo: {fileID: 11400000, guid: 899f2f2afa705ae41bcf3ab20ae3a35f, type: 2}
   _cooldown: {fileID: 11400000, guid: cbc43096844c14e4d9c9fd5d7d245314, type: 2}
   _useAction: {fileID: 11400000, guid: c446650e569952f449beeeb380547ab8, type: 2}
+  _recoil:
+    _amount: 12.2
+    _durationSeconds: 0.64

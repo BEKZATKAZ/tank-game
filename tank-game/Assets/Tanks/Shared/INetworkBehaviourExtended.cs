@@ -167,6 +167,17 @@ namespace Tanks.Shared
             }
         }
 
+        private void LateUpdate()
+        {
+            float deltaTime = Time.deltaTime;
+
+            foreach (INetworkComponent component in _components)
+            {
+                try { component.LateUpdate(deltaTime); }
+                catch (Exception ex) { Debug.LogException(ex); }
+            }
+        }
+
         private void Tick()
         {
             if (gameObject.activeInHierarchy == false) return;
@@ -180,6 +191,13 @@ namespace Tanks.Shared
             {
                 if (component.IsEnabled == false) continue;
                 try { component.Tick(tick, tickDelta); }
+                catch (Exception ex) { Debug.LogException(ex); }
+            }
+
+            foreach (INetworkComponent component in _components)
+            {
+                if (component.IsEnabled == false) continue;
+                try { component.LateTick(tick, tickDelta); }
                 catch (Exception ex) { Debug.LogException(ex); }
             }
         }

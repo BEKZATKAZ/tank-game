@@ -1,5 +1,6 @@
 ﻿using System;
 using Tanks.Core.Helpers;
+using Tanks.Shared.Weapons.Data;
 
 namespace Tanks.Shared.Weapons
 {
@@ -10,6 +11,7 @@ namespace Tanks.Shared.Weapons
         IReadOnlyAmmo Ammo { get; }
         IReadOnlyCooldown Cooldown { get; }
         IReadOnlyUseMode UseMode { get; }
+        IRecoilConfig Recoil { get; }
     }
 
     public class Weapon : IReadOnlyWeapon
@@ -19,6 +21,7 @@ namespace Tanks.Shared.Weapons
         public IReadOnlyAmmo Ammo => _ammo;
         public IReadOnlyCooldown Cooldown => _cooldown;
         public IReadOnlyUseMode UseMode => _useMode;
+        public IRecoilConfig Recoil { get; private set; }
 
         private IAmmo _ammo;
         private ICooldown _cooldown;
@@ -29,12 +32,14 @@ namespace Tanks.Shared.Weapons
             Required<IAmmo> ammo,
             Required<ICooldown> cooldown,
             Required<IUseMode> useMode,
-            Required<IUseAction> useAction)
+            Required<IUseAction> useAction,
+            Required<IRecoilConfig> recoil)
         {
             _ammo = ammo.Value;
             _cooldown = cooldown.Value;
             _useMode = useMode.Value;
             _useAction = useAction.Value;
+            Recoil = recoil.Value;
         }
 
         public bool Tick(IWeaponOwner owner, bool isHoldingDown, float deltaTime, ShotId id)

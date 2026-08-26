@@ -14,6 +14,7 @@ namespace Tanks.Shared.Tests.Weapons
         public IAmmoConfig Ammo { get; } = ScriptableObject.CreateInstance<AmmoConfig>();
         public ICooldownConfig Cooldown { get; } = ScriptableObject.CreateInstance<CooldownConfig>();
         public IUseActionConfig UseAction { get; } = new MockUseActionConfig();
+        public IRecoilConfig Recoil { get; } = new RecoilConfig();
 
         public void Dispose()
         {

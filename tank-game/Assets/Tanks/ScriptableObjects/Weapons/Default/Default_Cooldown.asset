@@ -12,4 +12,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a0b973ef7f250614b8412af9ab0ba2dc, type: 3}
   m_Name: Default_Cooldown
   m_EditorClassIdentifier: Tanks.Shared::Tanks.Shared.Weapons.Data.CooldownConfig
-  _duration: 0.2
+  _duration: 0.34
