@@ -16,7 +16,7 @@ MonoBehaviour:
   _frameCount: 1
   _iconMaterial: {fileID: -876546973899608171, guid: 9680fbb573735774aaa7e0c722f9aad3, type: 3}
   _glowMaterial: {fileID: -876546973899608171, guid: 854e9148940c8d64ea6929e8ef0edb9a, type: 3}
-  _icon: {fileID: 263260402, guid: 1c10ab560e7afed43991be2cabaf3733, type: 3}
+  _icon: {fileID: 21300000, guid: 2b35aef68fadf5243a92005fb41c4ed0, type: 3}
   _onPickUpSound: event:/SFX/Items/PickUp/Uncommon
   _onSpawnSound: 
   _accentColor: {r: 0.25490198, g: 1, b: 0.34901962, a: 1}

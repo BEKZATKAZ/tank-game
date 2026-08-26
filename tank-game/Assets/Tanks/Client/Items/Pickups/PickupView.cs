@@ -41,9 +41,7 @@ namespace Tanks.Client.Items.Pickups
                 GlowRenderer.sharedMaterial = config.GlowMaterial;
             }
 
-            IconBlock.SetFloat("_FrameCount", config.FrameCount);
             GlowBlock.SetColor("_Color", config.AccentColor);
-
             IconRenderer.SetPropertyBlock(IconBlock);
             GlowRenderer.SetPropertyBlock(GlowBlock);
 

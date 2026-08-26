@@ -64,7 +64,6 @@ namespace Tanks.Client.Tests.Items.Pickups
 
             config.Icon.Returns(icon);
             config.AccentColor.Returns(Color.red);
-            config.FrameCount.Returns(1);
 
             _database.Get(id).Returns(config);
             _component.Handle(new PickupSpawned { ItemId = id });

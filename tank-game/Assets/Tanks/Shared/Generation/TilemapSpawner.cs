@@ -23,11 +23,14 @@ namespace Tanks.Shared.Generation
         [SerializeField]
         private TilemapThemeConfig _config;
 
+        [Required]
+        [SerializeField]
+        private SpriteRenderer _backgroundRenderer;
+
         [Inject] private readonly IMazeGenerator _mazeGenerator;
         [Inject] private readonly ITilemapGenerator _tilemapGenerator;
 
         private readonly Dictionary<DirectionFlags, Tile> _cachedTileAssets = new();
-        private Tile _backgroundTileAsset;
 
         public Tilemap Tilemap { get; private set; }
 
@@ -36,23 +39,24 @@ namespace Tanks.Shared.Generation
             using var cells = _mazeGenerator.Generate(settings.Seed, resolution);
             using var tiles = _tilemapGenerator.Generate(cells.Value, settings, resolution);
 
-            int2 gridResolution = resolution * (settings.WallWidth * 2);
-
-            FillBackground(gridResolution);
-            FillForeground(tiles.Value.AsSpan());
-
             // Should end at the very top right corner
             // Not at the very last tile origin
+            int2 gridResolution = resolution * (settings.WallWidth * 2);
             gridResolution += settings.WallWidth;
 
             float3 size = new float3(gridResolution.x, gridResolution.y, 0);
             float3 center = size * 0.5f;
+
+            FillBackground(center);
+            FillForeground(tiles.Value.AsSpan());
 
             return new Bounds(center, size + math.forward());
         }
 
         public void Clear(TilemapGenerationSettings settings, int2 resolution)
         {
+            _backgroundRenderer.sprite = null;
+
             int2 gridResolution = resolution * (settings.WallWidth * 2);
 
             for (int y = 0; y < gridResolution.y; y++)
@@ -68,28 +72,14 @@ namespace Tanks.Shared.Generation
             }
         }
 
-        private void FillBackground(int2 gridResolution)
+        private void FillBackground(float3 center)
         {
             TileSprite sprite = _config.GetBackground();
-
             if (sprite is null || sprite.Sprite == false) return;
 
-            if (_backgroundTileAsset == false)
-            {
-                _backgroundTileAsset = ScriptableObject.CreateInstance<Tile>();
-                _backgroundTileAsset.sprite = sprite.Sprite;
-                _backgroundTileAsset.color = sprite.Tint;
-                _backgroundTileAsset.colliderType = Tile.ColliderType.None;
-            }
-
-            for (int y = 1; y < gridResolution.y; y++)
-            {
-                for (int x = 1; x < gridResolution.x; x++)
-                {
-                    Vector3Int position = new Vector3Int(x, y, -1);
-                    Tilemap.SetTile(position, _backgroundTileAsset);
-                }
-            }
+            _backgroundRenderer.transform.position = center;
+            _backgroundRenderer.sprite = sprite.Sprite;
+            _backgroundRenderer.color = sprite.Tint;
         }
 
         private void FillForeground(Span<GeneratedTile> tiles)
@@ -117,7 +107,6 @@ namespace Tanks.Shared.Generation
         private void OnDestroy()
         {
             foreach (Tile tile in _cachedTileAssets.Values) Destroy(tile);
-            Destroy(_backgroundTileAsset);
             _cachedTileAssets.Clear();
         }
     }

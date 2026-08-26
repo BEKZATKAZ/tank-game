@@ -18,7 +18,7 @@ namespace Tanks.Server.Bootstrap
             Behaviour.DespawnAllPlayers();
 
             Vector2Int resolution = new Vector2Int(6, 4);
-            int wallWidth = 5;
+            int wallWidth = 7;
 
             await Behaviour.TryLoadSceneAsync();
 

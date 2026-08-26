@@ -14,7 +14,6 @@ namespace Tanks.Editor.Items
         [SerializeField] private ItemActionConfigBase[] _onPickUpActions;
 
         [Header("Visuals")]
-        [SerializeField] private int _frameCount = 1;
         [SerializeField] private Material _iconMaterial;
         [SerializeField] private Material _glowMaterial;
         [SerializeField] private Sprite _icon;
@@ -29,7 +28,6 @@ namespace Tanks.Editor.Items
         public ItemStat[] Stats => _stats;
         public ItemActionConfigBase[] OnPickUpActions => _onPickUpActions;
 
-        public int FrameCount => _frameCount;
         public Material IconMaterial => _iconMaterial;
         public Material GlowMaterial => _glowMaterial;
         public Sprite Icon => _icon;

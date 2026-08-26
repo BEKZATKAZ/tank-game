@@ -13,9 +13,9 @@ MonoBehaviour:
   m_Name: TilemapTheme
   m_EditorClassIdentifier: Tanks.Shared::Tanks.Shared.Generation.TilemapThemeConfig
   _background:
-    _sprite: {fileID: 300040418721006742, guid: 5800b9f40a2b01a40b17b0d9ceb14a20, type: 3}
+    _sprite: {fileID: 21300000, guid: 81fca18f9eda0da42a016896e07e1d4a, type: 3}
     _directions: 0
-    _tint: {r: 0.2830189, g: 0.2830189, b: 0.2830189, a: 1}
+    _tint: {r: 0.5294118, g: 0.5294118, b: 0.5294118, a: 1}
   _parts:
   - _sprite: {fileID: 842455669, guid: 5800b9f40a2b01a40b17b0d9ceb14a20, type: 3}
     _directions: -1

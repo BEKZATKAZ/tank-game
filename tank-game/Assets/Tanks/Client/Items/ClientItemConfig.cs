@@ -8,7 +8,6 @@ namespace Tanks.Client.Items
     {
         ItemIdentifier Identifier { get; }
 
-        int FrameCount { get; }
         Material IconMaterial { get; }
         Material GlowMaterial { get; }
         Sprite Icon { get; }
@@ -29,10 +28,6 @@ namespace Tanks.Client.Items
         [ReadOnly]
         [SerializeField]
         private string _identifier;
-
-        [ReadOnly]
-        [SerializeField]
-        private int _frameCount;
 
         [ReadOnly]
         [SerializeField]
@@ -60,7 +55,6 @@ namespace Tanks.Client.Items
 
         public ItemIdentifier Identifier => new ItemIdentifier(_identifier);
 
-        public int FrameCount => _frameCount;
         public Material IconMaterial => _iconMaterial;
         public Material GlowMaterial => _glowMaterial;
         public Sprite Icon => _icon;
@@ -76,10 +70,9 @@ namespace Tanks.Client.Items
         }
 
         public void InitializeVisualsFromEditor(
-            int frameCount, Material iconMaterial, Material glowMaterial,
+            Material iconMaterial, Material glowMaterial,
             Sprite icon, Color accentColor)
         {
-            _frameCount = frameCount;
             _iconMaterial = iconMaterial;
             _glowMaterial = glowMaterial;
             _icon = icon;

@@ -50,7 +50,6 @@ namespace Tanks.Editor.Items
                     editorConfig.Identifier);
 
                 clientConfig.InitializeVisualsFromEditor(
-                    editorConfig.FrameCount,
                     editorConfig.IconMaterial,
                     editorConfig.GlowMaterial,
                     editorConfig.Icon,

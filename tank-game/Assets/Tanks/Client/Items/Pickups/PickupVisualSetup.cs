@@ -25,7 +25,6 @@ namespace Tanks.Client.Items.Pickups
             GameObject view = new GameObject("view", typeof(SpriteRenderer));
             GameObject glow = new GameObject("glow", typeof(SpriteRenderer));
 
-            view.transform.localScale = new Vector3(2, 2, 1);
             glow.transform.localScale = new Vector3(5, 5, 1);
 
             iconRenderer = view.GetComponent<SpriteRenderer>();
