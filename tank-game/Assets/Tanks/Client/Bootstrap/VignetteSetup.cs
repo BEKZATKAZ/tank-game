@@ -28,8 +28,13 @@ namespace Tanks.Client.Bootstrap
 
         public void Handle(TilemapGenerated message)
         {
+            if (_gradientMaterial == false)
+            {
+                CreateVignette(message.Settings.WallWidth, pixelsPerUnit: 16);
+            }
+
             PositiveFloat width = message.Settings.WallWidth + 2;
-            RecalculateVignette(default, message.Bounds.max, width);
+            RecalculateVignette(message.Bounds.min, message.Bounds.max, width);
         }
 
         private void RecalculateVignette(float3 min, float3 max, PositiveFloat width)
@@ -60,20 +65,22 @@ namespace Tanks.Client.Bootstrap
             _vignetteMesh.RecalculateBounds();
         }
 
-        private void CreateGradient()
+        private void CreateGradient(int wallWidth, int pixelsPerUnit)
         {
-            _gradient = new Texture2D(1, 128, TextureFormat.RGBA32, mipChain: false)
+            int height = pixelsPerUnit * wallWidth;
+
+            _gradient = new Texture2D(1, height, TextureFormat.RGBA32, mipChain: false)
             {
                 wrapMode = TextureWrapMode.Clamp,
-                filterMode = FilterMode.Bilinear,
+                filterMode = FilterMode.Point,
                 anisoLevel = 0
             };
 
-            Color32[] pixels = new Color32[128];
+            Color32[] pixels = new Color32[height];
 
-            for (int i = 0; i < 128; i++)
+            for (int i = 0; i < height; i++)
             {
-                float t = i / 127f;
+                float t = i / (height - 1f);
                 float alpha = math.cos(t * math.PIHALF);
                 pixels[i] = new Color32(0, 0, 0, (byte)math.round(alpha * 255));
             }
@@ -82,15 +89,15 @@ namespace Tanks.Client.Bootstrap
             _gradient.Apply(false, false);
         }
 
-        private void CreateVignette()
+        private void CreateVignette(int wallWidth, int pixelsPerUnit)
         {
-            CreateGradient();
+            CreateGradient(wallWidth, pixelsPerUnit);
 
             GameObject vignette = new GameObject("Vignette",
                 typeof(MeshFilter), typeof(MeshRenderer));
 
             // Should be on top of others
-            vignette.transform.position = Vector3.back * 5;
+            vignette.transform.position = Vector3.back * wallWidth;
 
             var filter = vignette.GetComponent<MeshFilter>();
             var renderer = vignette.GetComponent<MeshRenderer>();
@@ -159,7 +166,6 @@ namespace Tanks.Client.Bootstrap
 
         protected override void OnInitialize()
         {
-            CreateVignette();
             Behaviour.RegisterMessageHandler(this);
         }
 
