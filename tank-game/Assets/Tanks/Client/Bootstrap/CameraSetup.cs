@@ -47,13 +47,13 @@ namespace Tanks.Client.Bootstrap
 
         public async void Handle(GameStarted message)
         {
-            _follow.SetDefault(_mapBounds, forceOverride: true);
+            var player = Behaviour.NetworkManager.LocalClient.PlayerObject;
+
             _audioPlayer.SetDefault(_camera.Get().Transform);
+            _follow.SetBounds(_mapBounds);
+            _follow.SetFollowTarget(new UnityTransform(player.transform));
 
             await UniTask.Delay(TimeSpan.FromSeconds(message.StartDelaySeconds));
-
-            var player = Behaviour.NetworkManager.LocalClient.PlayerObject;
-            _follow.SetFollowTarget(new UnityTransform(player.transform), 15);
 
             _driveInput.Enable();
             _turretInput.Enable();

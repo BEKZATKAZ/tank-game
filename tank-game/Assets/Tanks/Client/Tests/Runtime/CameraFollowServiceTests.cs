@@ -38,43 +38,15 @@ namespace Tanks.Client.Tests.Runtime
             Object.DestroyImmediate(_gameObject);
         }
 
-        [Test]
-        public void SetDefault_ForceOverride_SetsCameraPosition()
-        {
-            _cameraMain.Get().Returns(_camera);
-
-            Bounds bounds = new Bounds(
-                new Vector3(10, 20, 0),
-                new Vector3(20, 10, 0));
-
-            _service.SetDefault(bounds, forceOverride: true);
-
-            _camera.Received(1).OrthographicSize = 10;
-            _camera.Transform.Received(1).WorldPosition =
-                new float2(bounds.center.x, bounds.center.y);
-        }
-
-        [Test]
-        public void SetDefault_WithoutForceOverride_DoesNotMoveCamera()
-        {
-            Bounds bounds = new Bounds(Vector3.zero, new Vector3(20, 10, 0));
-            _service.SetDefault(bounds, false);
-
-            _camera.Transform.DidNotReceive().WorldPosition = Arg.Any<float2>();
-            _camera.DidNotReceive().OrthographicSize = Arg.Any<float>();
-        }
-
         [UnityTest]
         public IEnumerator LateUpdate_WithoutTarget_FollowsDefault()
         {
             _camera.Transform.WorldPosition.Returns(float2.zero);
             _camera.OrthographicSize.Returns(5);
 
-            _service.SetDefault(
-                new Bounds(new Vector3(10, 20, 0), new Vector3(20, 10, 0)),
-                false);
-
+            _service.SetBounds(new Bounds(new Vector3(10, 20, 0), new Vector3(20, 10, 0)));
             yield return null;
+
             _camera.Transform.Received().WorldPosition = Arg.Any<float2>();
         }
 
@@ -83,11 +55,8 @@ namespace Tanks.Client.Tests.Runtime
         {
             _target.IsValid.Returns(false);
 
-            _service.SetDefault(
-                new Bounds(Vector3.zero, new Vector3(20, 20, 0)),
-                false);
-
-            _service.SetFollowTarget(_target, 3f);
+            _service.SetBounds(new Bounds(Vector3.zero, new Vector3(20, 20, 0)));
+            _service.SetFollowTarget(_target);
 
             yield return null;
             _camera.Transform.Received().WorldPosition = Arg.Any<float2>();
@@ -102,17 +71,13 @@ namespace Tanks.Client.Tests.Runtime
             _camera.Transform.WorldPosition.Returns(float2.zero);
             _camera.OrthographicSize.Returns(5);
 
-            _service.SetDefault(
-                new Bounds(Vector3.zero, new Vector3(20, 20, 0)),
-                false);
+            _service.SetBounds(new Bounds(Vector3.zero, new Vector3(20, 20, 0)));
+            _service.SetFollowTarget(_target);
 
-            _service.SetFollowTarget(_target, 3);
             yield return null;
 
             _camera.Transform.Received().WorldPosition =
                 Arg.Is<float2>(x => x.x > 0 && x.x <= 4 && x.y > 0 && x.y <= 3);
-
-            _camera.Received().OrthographicSize = Arg.Is<float>(x => x < 5 && x >= 3);
         }
     }
 }
