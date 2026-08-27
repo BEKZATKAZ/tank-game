@@ -44,7 +44,7 @@ namespace Tanks.Shared.Weapons.Projectiles
             result += transform.Right * remaining;
 
             transform.WorldPosition = result;
-            callbacks.OnRicochet?.Invoke(hit.point);
+            callbacks.OnRicochet?.Invoke(hit.point, normal);
         }
     }
 }

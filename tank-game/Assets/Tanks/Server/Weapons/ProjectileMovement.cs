@@ -39,7 +39,7 @@ namespace Tanks.Server.Weapons
 
             Behaviour.Simulate(new LaunchCallbacks
             {
-                OnRicochet = _ => _ricochetedCount++,
+                OnRicochet = (_, _) => _ricochetedCount++,
                 OnDamageableHit = x => DealDamage(Behaviour, x)
             }, Transform, tickDelta);
 

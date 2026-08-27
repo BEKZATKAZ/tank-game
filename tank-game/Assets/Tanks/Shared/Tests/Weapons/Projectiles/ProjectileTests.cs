@@ -66,9 +66,9 @@ namespace Tanks.Shared.Tests.Weapons.Projectiles
                 box.offset = new float2(0.5f, 0);
                 box.size = new float2(1, 5);
 
-                static void FailIfRicocheted(float2 hitPoint)
+                static void FailIfRicocheted(float2 hitPoint, float2 normal)
                 {
-                    Assert.Fail($"Ricocheted too early at {hitPoint}");
+                    Assert.Fail($"Ricocheted too early at {hitPoint}, normal {normal}");
                 }
 
                 for (int i = 0; i < 9; i++)
@@ -85,7 +85,7 @@ namespace Tanks.Shared.Tests.Weapons.Projectiles
 
                 _mover.Simulate(new LaunchCallbacks
                 {
-                    OnRicochet = _ => ricocheted = true
+                    OnRicochet = (_, _) => ricocheted = true
                 }, _projectileTransform, 0.5f);
 
                 float difference = math.distance(expectedForward, _projectileTransform.Right);

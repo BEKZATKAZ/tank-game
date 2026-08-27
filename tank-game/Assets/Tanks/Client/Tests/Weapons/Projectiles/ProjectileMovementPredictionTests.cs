@@ -89,8 +89,8 @@ namespace Tanks.Client.Tests.Weapons.Projectiles
                 });
 
             _component.Update(0.1f);
-            _component.Transform.Received().WorldPosition =new float2(4, 3);
-            _component.Transform.Received().WorldRotation =Angle.FromRadians(1);
+            _component.Transform.Received().WorldPosition = new float2(4, 3);
+            _component.Transform.Received().WorldRotation = Angle.FromRadians(1);
         }
 
         [Test]
@@ -110,7 +110,7 @@ namespace Tanks.Client.Tests.Weapons.Projectiles
         [Test]
         public void Update_WhenRicochetLimitExceeded_ReturnsProjectile()
         {
-            _config.LifeTime.Returns(10f);
+            _config.LifeTime.Returns(10);
             _config.MaxRicochetCount.Returns((ushort)1);
 
             SimulateWithRicochets(2);
@@ -128,26 +128,24 @@ namespace Tanks.Client.Tests.Weapons.Projectiles
             SimulateWithRicochets(1);
             _component.Update(0.1f);
 
-            _behaviour.Received(1)
-                .OnRicochet(Arg.Any<float2>());
-
+            _behaviour.Received(1).OnRicochet(Arg.Any<float2>(), Arg.Any<float2>());
             _pool.DidNotReceive().Return(_behaviour);
         }
 
         [Test]
         public void Update_WhenDamageableHit_DealsModifiedDamage()
         {
-            _config.LifeTime.Returns(10f);
+            _config.LifeTime.Returns(10);
 
-            _damage.Evaluate(0f).Returns(25);
+            _damage.Evaluate(0).Returns(25);
             _effectOwner
-                .GetStat(StatType.Damage, 25f)
-                .Returns(40f);
+                .GetStat(StatType.Damage, 25)
+                .Returns(40);
 
             SimulateWithDamageableHit();
             _component.Update(0.1f);
 
-            _damageable.Received(1).Damage(40f);
+            _damageable.Received(1).Damage(40);
             _pool.Received(1).Return(_behaviour);
         }
 
@@ -164,7 +162,7 @@ namespace Tanks.Client.Tests.Weapons.Projectiles
 
                     for (int i = 0; i < count; i++)
                     {
-                        callbacks.OnRicochet(float2.zero);
+                        callbacks.OnRicochet(float2.zero, Arg.Any<float2>());
                     }
                 });
         }

@@ -12,6 +12,7 @@ namespace Tanks.Shared.Weapons.Projectiles
     public struct ProjectileRicocheted
     {
         public float2 HitPoint;
+        public float2 SurfaceNormal;
     }
 
     public struct ProjectileLaunched
@@ -42,7 +43,7 @@ namespace Tanks.Shared.Weapons.Projectiles
         IDamage Damage { get; }
         IWeaponOwner Owner { get; }
 
-        void OnRicochet(float2 hitPoint);
+        void OnRicochet(float2 hitPoint, float2 surfaceNormal);
         void Initialize(Required<IProjectileConfig> config, Required<IDamage> damage);
     }
 
@@ -60,9 +61,13 @@ namespace Tanks.Shared.Weapons.Projectiles
             EmitMessage(snapshot);
         }
 
-        public void OnRicochet(float2 hitPoint)
+        public void OnRicochet(float2 hitPoint, float2 surfaceNormal)
         {
-            EmitMessage(new ProjectileRicocheted { HitPoint = hitPoint });
+            EmitMessage(new ProjectileRicocheted
+            {
+                HitPoint = hitPoint,
+                SurfaceNormal = surfaceNormal
+            });
         }
 
         public void Initialize(Required<IProjectileConfig> config, Required<IDamage> damage)

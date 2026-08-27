@@ -125,7 +125,7 @@ namespace Tanks.Client.Weapons
             Transform.WorldRotation = _predicted.WorldRotation;
         }
 
-        private void OnRicochet(float2 hitPoint)
+        private void OnRicochet(float2 hitPoint, float2 surfaceNormal)
         {
             if (++_ricochetedCount > Behaviour.Config.MaxRicochetCount)
             {
@@ -133,7 +133,7 @@ namespace Tanks.Client.Weapons
                 return;
             }
 
-            Behaviour.OnRicochet(hitPoint);
+            Behaviour.OnRicochet(hitPoint, surfaceNormal);
         }
 
         private void DamagePrediction(IDamageable damageable)

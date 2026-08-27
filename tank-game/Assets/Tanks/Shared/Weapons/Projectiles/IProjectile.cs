@@ -8,7 +8,7 @@ namespace Tanks.Shared.Weapons.Projectiles
 {
     public struct LaunchCallbacks
     {
-        public Action<float2> OnRicochet;
+        public Action<float2, float2> OnRicochet;
         public Action<IDamageable> OnDamageableHit;
     }
 

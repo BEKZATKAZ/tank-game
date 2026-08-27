@@ -180,7 +180,7 @@ namespace Tanks.Server.Tests.Weapons
 
                     for (int i = 0; i < count; i++)
                     {
-                        callbacks.OnRicochet(float2.zero);
+                        callbacks.OnRicochet(float2.zero, Arg.Any<float2>());
                     }
                 });
         }
