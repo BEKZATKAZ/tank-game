@@ -1,5 +1,6 @@
 ﻿using Tanks.Shared;
 using Tanks.Shared.Weapons;
+using UnityEngine;
 
 namespace Tanks.Server.Weapons
 {
@@ -9,6 +10,7 @@ namespace Tanks.Server.Weapons
     {
         public void Handle(WeaponUsed message)
         {
+            Debug.Log("Weapon used");
             Behaviour.UseWeaponClientRpc(new WeaponUsedFromServer { Id = message.ShotId });
         }
 

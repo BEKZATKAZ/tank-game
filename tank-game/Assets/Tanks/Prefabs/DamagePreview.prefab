@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 4194137831009526530}
   - component: {fileID: 3431376565486009852}
   - component: {fileID: 2758975324602548416}
+  - component: {fileID: 5344925733033184110}
   m_Layer: 0
   m_Name: DamagePreview
   m_TagString: Untagged
@@ -27,8 +28,8 @@ RectTransform:
   m_GameObject: {fileID: 3969762482825067449}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.024999999, y: 0.024999999, z: 0.024999999}
-  m_ConstrainProportionsScale: 1
+  m_LocalScale: {x: 0.02, y: 0.02, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 3339909549754347565}
   m_Father: {fileID: 0}
@@ -74,7 +75,25 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a0fc50772b01e2e48badf785905a6709, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Tanks.Client::Tanks.Client.Health.DamagePreview
+  _animation: {fileID: 5344925733033184110}
   _text: {fileID: 1166581407319557672}
+--- !u!111 &5344925733033184110
+Animation:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3969762482825067449}
+  m_Enabled: 1
+  serializedVersion: 4
+  m_Animation: {fileID: 7400000, guid: b920a327a87090241a199ef25e6f1cb5, type: 2}
+  m_Animations:
+  - {fileID: 7400000, guid: b920a327a87090241a199ef25e6f1cb5, type: 2}
+  m_WrapMode: 0
+  m_PlayAutomatically: 0
+  m_AnimatePhysics: 0
+  m_UpdateMode: 0
+  m_CullingType: 0
 --- !u!1 &5625202052100446264
 GameObject:
   m_ObjectHideFlags: 0
@@ -88,7 +107,7 @@ GameObject:
   - component: {fileID: 1166581407319557672}
   - component: {fileID: 6060431346225632925}
   m_Layer: 0
-  m_Name: Text (Legacy)
+  m_Name: Text
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -107,11 +126,11 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 4194137831009526530}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 1, y: 1}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 29.809902}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 0}
+  m_SizeDelta: {x: 48, y: 24}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &8974045345419550208
 CanvasRenderer:
@@ -142,19 +161,19 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   m_FontData:
-    m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
-    m_FontSize: 48
-    m_FontStyle: 3
+    m_Font: {fileID: 12800000, guid: f027ce80bdea4164a98c0cbc98e33c59, type: 3}
+    m_FontSize: 96
+    m_FontStyle: 2
     m_BestFit: 0
     m_MinSize: 2
-    m_MaxSize: 48
+    m_MaxSize: 96
     m_Alignment: 4
     m_AlignByGeometry: 1
     m_RichText: 0
     m_HorizontalOverflow: 1
     m_VerticalOverflow: 1
     m_LineSpacing: 1
-  m_Text: 26
+  m_Text: -26
 --- !u!114 &6060431346225632925
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -168,5 +187,5 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Outline
   m_EffectColor: {r: 0, g: 0, b: 0, a: 1}
-  m_EffectDistance: {x: 1, y: -1}
+  m_EffectDistance: {x: 2, y: -2}
   m_UseGraphicAlpha: 1

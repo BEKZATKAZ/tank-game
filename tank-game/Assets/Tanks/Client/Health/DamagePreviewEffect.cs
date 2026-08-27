@@ -23,10 +23,9 @@ namespace Tanks.Client.Health
         public async void Handle(DamageTaken message)
         {
             DamagePreviewText preview = _pool.Get();
-
             preview.Initialize(message.Amount, Transform);
-            await preview.Animate(duration: 0.5f);
 
+            await preview.AnimateAsync();
             _pool?.Release(preview);
         }
 
