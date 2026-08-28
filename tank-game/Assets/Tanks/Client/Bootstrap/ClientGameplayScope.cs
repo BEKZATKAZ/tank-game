@@ -3,6 +3,7 @@ using Tanks.Client.Entities;
 using Tanks.Client.Input;
 using Tanks.Client.Items;
 using Tanks.Client.Rendering;
+using Tanks.Client.Visuals;
 using Tanks.Client.Weapons;
 using Tanks.Localization;
 using Tanks.Shared.Bootstrap;
@@ -30,6 +31,7 @@ namespace Tanks.Client.Bootstrap
             builder.Register<IShotIdGenerator, ShotIdGenerator>(Lifetime.Singleton);
             builder.Register<IClientItemDatabase, ClientItemDatabase>(Lifetime.Singleton);
             builder.Register<IClientEntityService, ClientEntityService>(Lifetime.Singleton);
+            builder.Register<IVisualService, VisualService>(Lifetime.Singleton);
 
             builder.RegisterComponentOnNewGameObject<CameraFollowService>(Lifetime.Singleton)
                 .As<ICameraFollowService>();

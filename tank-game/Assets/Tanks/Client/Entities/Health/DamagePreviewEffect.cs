@@ -1,8 +1,6 @@
-﻿using Tanks.Core.Repositories;
+﻿using Tanks.Client.Visuals;
 using Tanks.Shared;
 using Tanks.Shared.Entities.Health;
-using UnityEngine;
-using UnityEngine.Pool;
 
 namespace Tanks.Client.Entities.Health
 {
@@ -10,50 +8,27 @@ namespace Tanks.Client.Entities.Health
         NetworkComponent<IHealthBehaviour>,
         INetworkMessageHandler<DamageTaken>
     {
-        public DamagePreviewEffect(IResourceLoader loader)
+        public DamagePreviewEffect(IVisualService service)
         {
-            _loader = loader;
+            _service = service;
         }
 
-        private readonly IResourceLoader _loader;
+        private readonly IVisualService _service;
 
-        private static readonly string _address = "UI/DamagePreview";
-        private ObjectPool<DamagePreviewText> _pool;
-
-        public async void Handle(DamageTaken message)
+        public void Handle(DamageTaken message)
         {
-            DamagePreviewText preview = _pool.Get();
-            preview.Initialize(message.Amount, Transform);
-
-            await preview.AnimateAsync();
-            _pool?.Release(preview);
+            DamagePreviewText text = _service.Play<DamagePreviewText>(VisualType.DamageText, default);
+            text.Initialize(message.Amount, Transform);
+            text.Animate();
         }
 
-        protected override void OnDestroy()
-        {
-            _pool?.Dispose();
-            _pool = null;
-        }
-
-        protected override async void OnInitialize()
+        protected override void OnInitialize()
         {
             if (Behaviour.IsLocalPlayer)
             {
                 IsEnabled = false;
                 return;
             }
-
-            GameObject resource = await _loader.LoadAsync<GameObject>(_address);
-            DamagePreviewText prefab = resource.GetComponent<DamagePreviewText>();
-
-            _pool = new ObjectPool<DamagePreviewText>(
-                createFunc: () => Object.Instantiate(prefab),
-                actionOnGet: x => x.gameObject.SetActive(true),
-                actionOnRelease: x => x.gameObject.SetActive(false),
-                actionOnDestroy: x => Object.Destroy(x.gameObject),
-                collectionCheck: false,
-                defaultCapacity: 5,
-                maxSize: 50);
 
             Behaviour.RegisterMessageHandler(this);
         }

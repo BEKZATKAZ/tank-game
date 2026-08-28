@@ -1,6 +1,4 @@
-﻿using Cysharp.Threading.Tasks;
-using System;
-using Tanks.Core.Helpers;
+﻿using Tanks.Core.Helpers;
 using Tanks.Shared.Adapters;
 using Unity.Mathematics;
 using UnityEngine;
@@ -27,14 +25,11 @@ namespace Tanks.Client.Entities.Health
             Transform.WorldPosition = at.WorldPosition + new float2(x, y);
         }
 
-        public UniTask AnimateAsync()
+        public void Animate()
         {
             AnimationState state = _animation["DamagePreview_Popup"];
-
             state.speed = UnityEngine.Random.Range(0.75f, 1.25f);
             _animation.Play(state.name);
-
-            return UniTask.Delay(TimeSpan.FromSeconds(state.length / state.speed));
         }
 
         private void Awake()
