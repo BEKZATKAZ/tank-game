@@ -7,6 +7,7 @@ using VContainer;
 using VContainer.Unity;
 using Tanks.Shared.Weapons;
 using Tanks.Shared.Items;
+using Tanks.Shared.Entities;
 
 namespace Tanks.Shared.Bootstrap
 {
@@ -25,6 +26,7 @@ namespace Tanks.Shared.Bootstrap
             builder.Register<IMessageBus, MessageBus>(Lifetime.Singleton);
             builder.Register<IWeaponFactory, WeaponFactory>(Lifetime.Singleton);
             builder.Register<IItemDatabase, ItemDatabase>(Lifetime.Singleton);
+            builder.Register<IEntityService, EntityService>(Lifetime.Singleton);
         }
     }
 }

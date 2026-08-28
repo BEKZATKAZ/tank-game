@@ -1,6 +1,6 @@
 ﻿using Tanks.Shared;
 using Tanks.Shared.Stats;
-using Tanks.Shared.Health;
+using Tanks.Shared.Entities.Health;
 using Tanks.Shared.Weapons.Projectiles;
 
 namespace Tanks.Server.Weapons
@@ -64,7 +64,7 @@ namespace Tanks.Server.Weapons
             float amount = _damage.Evaluate(_elapsed);
             amount = Behaviour.Owner.EffectOwner.GetStat(StatType.Damage, amount);
 
-            damageable.Damage(amount);
+            damageable.Damage(amount, Behaviour.Owner.Entity);
             _pool.Return(projectile);
         }
 

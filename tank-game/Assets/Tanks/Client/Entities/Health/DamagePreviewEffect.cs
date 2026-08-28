@@ -1,10 +1,10 @@
 ﻿using Tanks.Core.Repositories;
 using Tanks.Shared;
-using Tanks.Shared.Health;
+using Tanks.Shared.Entities.Health;
 using UnityEngine;
 using UnityEngine.Pool;
 
-namespace Tanks.Client.Health
+namespace Tanks.Client.Entities.Health
 {
     public sealed class DamagePreviewEffect :
         NetworkComponent<IHealthBehaviour>,

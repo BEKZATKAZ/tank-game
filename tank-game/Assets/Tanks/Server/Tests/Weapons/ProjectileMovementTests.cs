@@ -2,7 +2,7 @@
 using NUnit.Framework;
 using Tanks.Server.Weapons;
 using Tanks.Shared.Adapters;
-using Tanks.Shared.Health;
+using Tanks.Shared.Entities.Health;
 using Tanks.Shared.Stats;
 using Tanks.Shared.Weapons.Data;
 using Tanks.Shared.Weapons.Projectiles;
@@ -153,7 +153,7 @@ namespace Tanks.Server.Tests.Weapons
             Launch();
             Tick();
 
-            _damageable.Received(1).Damage(40);
+            _damageable.Received(1).Damage(40, _behaviour.Owner.Entity);
             _pool.Received(1).Return(_behaviour);
         }
 
@@ -180,7 +180,7 @@ namespace Tanks.Server.Tests.Weapons
 
                     for (int i = 0; i < count; i++)
                     {
-                        callbacks.OnRicochet(float2.zero, Arg.Any<float2>());
+                        callbacks.OnRicochet(float2.zero, new float2(1, 0));
                     }
                 });
         }

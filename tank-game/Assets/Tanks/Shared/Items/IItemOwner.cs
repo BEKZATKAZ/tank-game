@@ -1,6 +1,6 @@
 ﻿using Tanks.Shared.Adapters;
 using Tanks.Shared.Stats;
-using Tanks.Shared.Health;
+using Tanks.Shared.Entities.Health;
 using Tanks.Shared.Items.Pickups;
 using Tanks.Shared.Weapons;
 using Tanks.Shared.Items.Data;

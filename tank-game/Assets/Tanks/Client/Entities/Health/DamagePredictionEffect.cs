@@ -3,10 +3,10 @@ using System.Collections.Generic;
 using System.Linq;
 using Tanks.Audio;
 using Tanks.Shared;
-using Tanks.Shared.Health;
+using Tanks.Shared.Entities.Health;
 using UnityEngine;
 
-namespace Tanks.Client.Health
+namespace Tanks.Client.Entities.Health
 {
     public class DamagePredictionEffect :
         NetworkComponent<IHealthBehaviour>,

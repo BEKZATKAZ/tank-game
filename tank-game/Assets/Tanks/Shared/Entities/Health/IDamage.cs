@@ -1,7 +1,7 @@
 ﻿using Tanks.Core.Helpers;
 using Unity.Mathematics;
 
-namespace Tanks.Shared.Health
+namespace Tanks.Shared.Entities.Health
 {
     public interface IDamage
     {

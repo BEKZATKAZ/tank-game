@@ -2,7 +2,7 @@
 using NUnit.Framework;
 using Tanks.Server.Bootstrap;
 using Tanks.Shared.Bootstrap;
-using Tanks.Shared.Health;
+using Tanks.Shared.Entities.Health;
 using Tanks.Shared.Messaging;
 using Tanks.Shared.Weapons.Projectiles;
 

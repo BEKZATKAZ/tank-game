@@ -6,7 +6,7 @@ using Unity.Mathematics;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace Tanks.Client.Health
+namespace Tanks.Client.Entities.Health
 {
     public sealed class DamagePreviewText : MonoBehaviour
     {

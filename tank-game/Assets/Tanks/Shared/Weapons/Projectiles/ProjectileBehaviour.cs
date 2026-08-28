@@ -1,7 +1,7 @@
 ﻿using System.Runtime.InteropServices;
 using Tanks.Core.Helpers;
 using Tanks.Shared.Adapters;
-using Tanks.Shared.Health;
+using Tanks.Shared.Entities.Health;
 using Tanks.Shared.Messaging;
 using Tanks.Shared.Weapons.Data;
 using Unity.Mathematics;

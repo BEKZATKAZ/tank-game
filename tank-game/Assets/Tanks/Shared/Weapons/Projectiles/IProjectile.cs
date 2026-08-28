@@ -1,6 +1,6 @@
 ﻿using System;
 using Tanks.Shared.Adapters;
-using Tanks.Shared.Health;
+using Tanks.Shared.Entities.Health;
 using Tanks.Shared.Weapons.Data;
 using Unity.Mathematics;
 

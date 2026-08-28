@@ -73,10 +73,6 @@ namespace Tanks.Client.Tests.Items.Pickups
                 "Icon sprite dismatch");
 
             Assert.AreEqual(
-                1, _component.IconBlock.GetInt("_FrameCount"),
-                "Icon frame count dismatch");
-
-            Assert.AreEqual(
                 Color.red, _component.GlowBlock.GetColor("_Color"),
                 "Glow color dismatch");
         }

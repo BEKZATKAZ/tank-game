@@ -3,7 +3,7 @@ using NUnit.Framework;
 using System;
 using Tanks.Server.Items.Pickups;
 using Tanks.Shared.Adapters;
-using Tanks.Shared.Health;
+using Tanks.Shared.Entities.Health;
 using Tanks.Shared.Items;
 using Tanks.Shared.Items.Data;
 using Tanks.Shared.Items.Pickups;

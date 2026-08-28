@@ -2,7 +2,8 @@
 using NUnit.Framework;
 using Tanks.Client.Weapons;
 using Tanks.Shared.Adapters;
-using Tanks.Shared.Health;
+using Tanks.Shared.Entities;
+using Tanks.Shared.Entities.Health;
 using Tanks.Shared.Stats;
 using Tanks.Shared.Weapons.Data;
 using Tanks.Shared.Weapons.Projectiles;
@@ -135,17 +136,18 @@ namespace Tanks.Client.Tests.Weapons.Projectiles
         [Test]
         public void Update_WhenDamageableHit_DealsModifiedDamage()
         {
+            IEntity from = Substitute.For<IEntity>();
+
+            _behaviour.Owner.Entity.Returns(from);
             _config.LifeTime.Returns(10);
 
             _damage.Evaluate(0).Returns(25);
-            _effectOwner
-                .GetStat(StatType.Damage, 25)
-                .Returns(40);
+            _effectOwner.GetStat(StatType.Damage, 25).Returns(40);
 
             SimulateWithDamageableHit();
             _component.Update(0.1f);
 
-            _damageable.Received(1).Damage(40);
+            _damageable.Received(1).Damage(40, from);
             _pool.Received(1).Return(_behaviour);
         }
 
@@ -162,7 +164,7 @@ namespace Tanks.Client.Tests.Weapons.Projectiles
 
                     for (int i = 0; i < count; i++)
                     {
-                        callbacks.OnRicochet(float2.zero, Arg.Any<float2>());
+                        callbacks.OnRicochet(float2.zero, new float2(1, 0));
                     }
                 });
         }

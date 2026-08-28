@@ -1,5 +1,5 @@
 ﻿using NUnit.Framework;
-using Tanks.Shared.Health;
+using Tanks.Shared.Entities.Health;
 
 namespace Tanks.Shared.Tests
 {

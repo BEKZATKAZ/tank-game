@@ -6,11 +6,12 @@ using Unity.Netcode;
 using UnityEngine;
 using VContainer;
 
-namespace Tanks.Shared.Health
+namespace Tanks.Shared.Entities.Health
 {
     public struct DamageTaken
     {
         public PositiveFloat Amount;
+        public IEntity From;
     }
 
     public struct HPHealed
@@ -21,6 +22,8 @@ namespace Tanks.Shared.Health
     public struct Died
     {
         public IDamageable Damageable;
+        public IEntity From;
+        public float2 WorldPosition;
     }
 
     public struct DiedLocal
@@ -30,23 +33,26 @@ namespace Tanks.Shared.Health
 
     public interface IHealthBehaviour : INetworkBehaviourExtended, IHealth, IDamageable, IHealable
     {
+        IEntity Entity { get; }
         RpcTarget RpcTarget { get; }
 
         IEnumerable<SpriteRenderer> GetAllSpriteRenderers();
         void Despawn();
-        void SendDiedEveryoneRpc();
+        void SendDiedEveryoneRpc(EntityId from);
         void SendDiedLocalClientRpc(RpcParams p = default);
     }
 
+    [RequireComponent(typeof(EntityBehaviour))]
     public class HealthBehaviour : NetworkBehaviourExtended, IHealthBehaviour, IMessageSender
     {
         [Range(10, 200)]
         [SerializeField]
         private float _maxHealth = 100;
 
-        [Inject]
-        private readonly IMessageBus _bus;
+        [Inject] private readonly IMessageBus _bus;
+        [Inject] private readonly IEntityService _entityService;
         
+        public IEntity Entity { get; private set; }
         public PositiveFloat MaxHealth => _maxHealth;
         public PositiveFloatOrZero Value => _health.Value;
 
@@ -58,10 +64,17 @@ namespace Tanks.Shared.Health
         }
 
         [Rpc(SendTo.Everyone, InvokePermission = RpcInvokePermission.Server)]
-        public void SendDiedEveryoneRpc()
+        public void SendDiedEveryoneRpc(EntityId from)
         {
-            EmitMessage(new Died { Damageable = this });
-            _bus.Publish(new Died { Damageable = this }, this);
+            Died died = new Died
+            {
+                Damageable = this,
+                From = _entityService.GetById(from),
+                WorldPosition = Transform.WorldPosition
+            };
+
+            EmitMessage(died);
+            _bus.Publish(died, this);
         }
 
         [Rpc(SendTo.SpecifiedInParams, InvokePermission = RpcInvokePermission.Server)]
@@ -85,9 +98,9 @@ namespace Tanks.Shared.Health
             if (remainder > 0) Damage(remainder);
         }
 
-        public void Damage(PositiveFloat amount)
+        public void Damage(PositiveFloat amount, IEntity from = null)
         {
-            EmitMessage(new DamageTaken { Amount = amount });
+            EmitMessage(new DamageTaken { Amount = amount, From = from });
         }
 
         public void Heal(PositiveFloat amount)
@@ -98,6 +111,12 @@ namespace Tanks.Shared.Health
         public IEnumerable<SpriteRenderer> GetAllSpriteRenderers()
         {
             return GetComponentsInChildren<SpriteRenderer>();
+        }
+
+        protected override void Awake()
+        {
+            base.Awake();
+            Entity = GetComponent<EntityBehaviour>();
         }
     }
 }

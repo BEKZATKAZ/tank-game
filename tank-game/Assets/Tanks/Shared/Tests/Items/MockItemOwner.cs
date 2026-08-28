@@ -1,11 +1,12 @@
 ﻿using System;
 using Tanks.Core.Helpers;
 using Tanks.Shared.Adapters;
-using Tanks.Shared.Stats;
-using Tanks.Shared.Health;
+using Tanks.Shared.Entities;
+using Tanks.Shared.Entities.Health;
 using Tanks.Shared.Items;
 using Tanks.Shared.Items.Data;
 using Tanks.Shared.Items.Pickups;
+using Tanks.Shared.Stats;
 using Tanks.Shared.Tests.Adapters;
 using Tanks.Shared.Weapons;
 using Unity.Mathematics;
@@ -20,13 +21,10 @@ namespace Tanks.Shared.Tests.Items
         public void SetMaxHealth(PositiveFloat value)
         {
             MaxHealth = value;
-            float remainder = Value - MaxHealth;
-
-            // Damage to compensate max health
-            if (remainder > 0) Damage(remainder);
+            if (Value > MaxHealth) Value = MaxHealth.Value;
         }
 
-        public void Damage(PositiveFloat amount)
+        public void Damage(PositiveFloat amount, IEntity from = null)
         {
             Value = math.max(Value - amount, 0);
         }

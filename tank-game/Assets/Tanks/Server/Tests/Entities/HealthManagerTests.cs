@@ -1,10 +1,10 @@
 ﻿using NSubstitute;
 using NUnit.Framework;
-using Tanks.Server.Health;
-using Tanks.Shared.Health;
+using Tanks.Server.Entities;
+using Tanks.Shared.Entities.Health;
 using Unity.Mathematics;
 
-namespace Tanks.Server.Tests
+namespace Tanks.Server.Tests.Entities
 {
     public class HealthManagerTests
     {

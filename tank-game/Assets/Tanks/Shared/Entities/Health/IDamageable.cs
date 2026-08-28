@@ -1,6 +1,6 @@
 using Tanks.Core.Helpers;
 
-namespace Tanks.Shared.Health
+namespace Tanks.Shared.Entities.Health
 {
     public interface IHealth
     {
@@ -13,7 +13,7 @@ namespace Tanks.Shared.Health
 
     public interface IDamageable
     {
-        void Damage(PositiveFloat amount);
+        void Damage(PositiveFloat amount, IEntity from = null);
     }
 
     public interface IHealable

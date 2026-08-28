@@ -2,7 +2,7 @@
 using System;
 using UnityEngine;
 
-namespace Tanks.Shared.Health.Data
+namespace Tanks.Shared.Entities.Health.Data
 {
     public enum DamageType
     {

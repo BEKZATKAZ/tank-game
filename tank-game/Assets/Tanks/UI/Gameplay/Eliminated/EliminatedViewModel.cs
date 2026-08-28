@@ -1,5 +1,5 @@
 ﻿using Tanks.Localization;
-using Tanks.Shared.Health;
+using Tanks.Shared.Entities.Health;
 using Tanks.Shared.Messaging;
 using Tanks.Utils;
 

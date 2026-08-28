@@ -2,9 +2,9 @@
 using System.Runtime.InteropServices;
 using Tanks.Core.Helpers;
 using Tanks.Shared.Adapters;
+using Tanks.Shared.Entities;
 using Tanks.Shared.Stats;
 using Tanks.Utils;
-using Unity.Mathematics;
 using Unity.Netcode;
 using UnityEngine;
 
@@ -54,7 +54,7 @@ namespace Tanks.Shared.Weapons
         bool WeaponTick(float deltaTime, bool isHoldingDown, ShotId id);
     }
 
-    [RequireComponent(typeof(StatOwnerBehaviour), typeof(Rigidbody2D))]
+    [RequireComponent(typeof(StatOwnerBehaviour), typeof(EntityBehaviour), typeof(Rigidbody2D))]
     public sealed class WeaponHolderBehaviour : NetworkBehaviourExtended, IWeaponHolderBehaviour
     {
         [SerializeField] private Transform _muzzlePoint;
@@ -65,6 +65,7 @@ namespace Tanks.Shared.Weapons
         public ITransform MuzzlePoint { get; private set; }
         public IStatOwner EffectOwner { get; private set; }
         public IVelocity Velocity { get; private set; }
+        public IEntity Entity { get; private set; }
 
         private Weapon _currentWeapon;
         private Weapon _defaultWeapon;
@@ -115,6 +116,7 @@ namespace Tanks.Shared.Weapons
             Velocity = new UnityVelocity(GetComponent<Rigidbody2D>());
             MuzzlePoint = new UnityTransform(_muzzlePoint);
             EffectOwner = GetComponent<StatOwnerBehaviour>();
+            Entity = GetComponent<EntityBehaviour>();
         }
     }
 }

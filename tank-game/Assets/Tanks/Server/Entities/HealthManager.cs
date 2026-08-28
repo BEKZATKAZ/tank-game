@@ -1,11 +1,11 @@
 using Tanks.Core.Helpers;
 using Tanks.Shared;
-using Tanks.Shared.Health;
+using Tanks.Shared.Entities.Health;
 using Unity.Mathematics;
 using Unity.Netcode;
 using UnityEngine;
 
-namespace Tanks.Server.Health
+namespace Tanks.Server.Entities
 {
     [RequireComponent(typeof(NetworkObject))]
     public sealed class HealthManager :
@@ -24,7 +24,7 @@ namespace Tanks.Server.Health
             BaseRpcTarget target = Behaviour.RpcTarget
                 .Single(Behaviour.OwnerClientId, RpcTargetUse.Temp);
 
-            Behaviour.SendDiedEveryoneRpc();
+            Behaviour.SendDiedEveryoneRpc(message.From.Id);
             Behaviour.SendDiedLocalClientRpc(target);
             Behaviour.Despawn();
         }

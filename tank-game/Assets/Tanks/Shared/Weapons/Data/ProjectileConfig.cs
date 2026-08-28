@@ -1,6 +1,6 @@
 ﻿using NaughtyAttributes;
 using Tanks.Core.Helpers;
-using Tanks.Shared.Health.Data;
+using Tanks.Shared.Entities.Health.Data;
 using Tanks.Shared.Weapons.Projectiles;
 using UnityEngine;
 

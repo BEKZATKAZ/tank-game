@@ -1,5 +1,5 @@
 ﻿using Tanks.Shared.Adapters;
-using Tanks.Shared.Health;
+using Tanks.Shared.Entities.Health;
 using Unity.Mathematics;
 using UnityEngine;
 

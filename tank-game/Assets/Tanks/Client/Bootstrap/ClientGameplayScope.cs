@@ -1,4 +1,5 @@
 ﻿using Tanks.Audio;
+using Tanks.Client.Entities;
 using Tanks.Client.Input;
 using Tanks.Client.Items;
 using Tanks.Client.Rendering;
@@ -28,6 +29,7 @@ namespace Tanks.Client.Bootstrap
             builder.Register<ICameraMainService, CameraMainService>(Lifetime.Singleton);
             builder.Register<IShotIdGenerator, ShotIdGenerator>(Lifetime.Singleton);
             builder.Register<IClientItemDatabase, ClientItemDatabase>(Lifetime.Singleton);
+            builder.Register<IClientEntityService, ClientEntityService>(Lifetime.Singleton);
 
             builder.RegisterComponentOnNewGameObject<CameraFollowService>(Lifetime.Singleton)
                 .As<ICameraFollowService>();

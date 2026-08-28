@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 using Tanks.Shared.Stats;
-using Tanks.Shared.Health;
+using Tanks.Shared.Entities.Health;
 using Tanks.Shared.Items.Behaviours;
 using Tanks.Shared.Items.Data;
 using Tanks.Shared.Items.Pickups;
