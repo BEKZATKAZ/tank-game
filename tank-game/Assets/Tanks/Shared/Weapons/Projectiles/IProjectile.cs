@@ -9,7 +9,7 @@ namespace Tanks.Shared.Weapons.Projectiles
     public struct LaunchCallbacks
     {
         public Action<float2, float2> OnRicochet;
-        public Action<IDamageable> OnDamageableHit;
+        public Action<IHealthBehaviour> OnDamageableHit;
     }
 
     public interface IProjectile
@@ -17,7 +17,7 @@ namespace Tanks.Shared.Weapons.Projectiles
         ITransform Transform { get; }
         IProjectileConfig Config { get; }
 
-        void Launch(IWeaponOwner owner);
+        void Launch(IWeaponHolderBehaviour owner);
         void Reconcile(ProjectileSnapshotFromServer snapshot);
         void Simulate(LaunchCallbacks callbacks, ITransform transform, float deltaTime);
     }

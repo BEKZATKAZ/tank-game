@@ -6,9 +6,7 @@ using Tanks.Shared.Entities.Health;
 namespace Tanks.Client.Entities.Health
 {
     public sealed class ExplosionSound :
-        NetworkComponent<IHealthBehaviour>,
-        INetworkMessageHandler<Died>,
-        INetworkMessageHandler<DiedLocal>
+        NetworkComponent<IHealthBehaviour>, INetworkMessageHandler<Died>
     {
         public ExplosionSound(IClientEntityService entityService, IAudioPlayer audioPlayer)
         {
@@ -25,26 +23,26 @@ namespace Tanks.Client.Entities.Health
 
         public void Handle(Died message)
         {
-            string path = _other;
+            IEntityBehaviour localPlayer = _entityService.GetPossessedPlayer();
 
-            if (message.From != null)
+            if (message.Target == localPlayer)
             {
-                IEntity localPlayer = _entityService.GetLocalPlayer();
-                path = message.From == localPlayer ? _killed : _other;
+                _audioPlayer.PlayOneShot(_self, message.WorldPosition);
+                return;
             }
 
-            _audioPlayer.PlayOneShot(path, message.WorldPosition);
-        }
+            if (message.From == localPlayer)
+            {
+                _audioPlayer.PlayOneShot(_killed, message.WorldPosition);
+                return;
+            }
 
-        public void Handle(DiedLocal message)
-        {
-            _audioPlayer.PlayOneShot(_self);
+            _audioPlayer.PlayOneShot(_other, message.WorldPosition);
         }
 
         protected override void OnInitialize()
         {
-            if (Behaviour.IsLocalPlayer) Behaviour.RegisterMessageHandler<DiedLocal>(this);
-            else Behaviour.RegisterMessageHandler<Died>(this);
+            Behaviour.RegisterMessageHandler(this);
         }
     }
 }

@@ -2,6 +2,7 @@
 using Tanks.Shared.Stats;
 using Tanks.Shared.Entities.Health;
 using Tanks.Shared.Weapons.Projectiles;
+using Tanks.Server.Entities;
 
 namespace Tanks.Server.Weapons
 {
@@ -59,12 +60,13 @@ namespace Tanks.Server.Weapons
             _elapsed += tickDelta;
         }
 
-        private void DealDamage(IProjectile projectile, IDamageable damageable)
+        private void DealDamage(IProjectile projectile, IHealthBehaviour health)
         {
-            float amount = _damage.Evaluate(_elapsed);
-            amount = Behaviour.Owner.EffectOwner.GetStat(StatType.Damage, amount);
+            var statOwner = Behaviour.Owner.GetBehaviour<IStatOwnerBehaviour>();
+            var authoritativeHealth = health.Require<IAuthoritativeHealth>();
 
-            damageable.Damage(amount, Behaviour.Owner.Entity);
+            float amount = statOwner.GetStat(StatType.Damage, _damage.Evaluate(_elapsed));
+            authoritativeHealth.Damage(amount, Behaviour.Owner.Entity);
             _pool.Return(projectile);
         }
 

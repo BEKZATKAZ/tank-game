@@ -5,10 +5,9 @@ using UnityEngine;
 
 namespace Tanks.Client.Entities.Health
 {
-    public class ExplosionVisuals :
+    public sealed class ExplosionVisuals :
         NetworkComponent<IHealthBehaviour>,
-        INetworkMessageHandler<Died>,
-        INetworkMessageHandler<DiedLocal>
+        INetworkMessageHandler<Died>
     {
         public ExplosionVisuals(IVisualService particlePlayer)
         {
@@ -19,22 +18,13 @@ namespace Tanks.Client.Entities.Health
 
         public void Handle(Died message)
         {
-            _particlePlayer
-                .Play<ParticleSystem>(VisualType.Explosion, message.WorldPosition)
-                .Play();
-        }
-
-        public void Handle(DiedLocal message)
-        {
-            _particlePlayer
-                .Play<ParticleSystem>(VisualType.Explosion, Transform.WorldPosition)
-                .Play();
+            _particlePlayer.Play<ParticleSystem>(
+                VisualType.Explosion, message.WorldPosition).Play();
         }
 
         protected override void OnInitialize()
         {
-            Behaviour.RegisterMessageHandler<Died>(this);
-            Behaviour.RegisterMessageHandler<DiedLocal>(this);
+            Behaviour.RegisterMessageHandler(this);
         }
     }
 }

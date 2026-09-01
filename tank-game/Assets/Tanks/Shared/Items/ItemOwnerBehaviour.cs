@@ -1,11 +1,8 @@
 ﻿using System.Collections.Generic;
-using Tanks.Shared.Stats;
-using Tanks.Shared.Entities.Health;
 using Tanks.Shared.Items.Behaviours;
 using Tanks.Shared.Items.Data;
 using Tanks.Shared.Items.Pickups;
 using Tanks.Shared.Messaging;
-using Tanks.Shared.Weapons;
 using Unity.Netcode;
 using UnityEngine;
 using VContainer;
@@ -18,22 +15,19 @@ namespace Tanks.Shared.Items
         public PickupId PickupId;
     }
 
-    [RequireComponent(typeof(IDamageable), typeof(IHealable), typeof(IHealth))]
-    [RequireComponent(typeof(IWeaponOwner), typeof(IStatOwner))]
+    public interface IItemOwnerBehaviour : INetworkBehaviourExtended
+    {
+        void PickupItem(IItemConfig item, in PickupId pickupId);
+    }
+
     public sealed class ItemOwnerBehaviour :
-        NetworkBehaviourExtended, IItemOwner, IMessageSender
+        NetworkBehaviourExtended, IItemOwnerBehaviour, IMessageSender
     {
         [SerializeField] private SpriteRenderer _accent;
 
         [Inject] private readonly IItemDatabase _database;
         [Inject] private readonly IObjectResolver _resolver;
         [Inject] private readonly IMessageBus _bus;
-
-        public IDamageable Damageable { get; private set; }
-        public IStatOwner StatOwner { get; private set; }
-        public IHealable Healable { get; private set; }
-        public IHealth Health { get; private set; }
-        public IWeaponOwner WeaponOwner { get; private set; }
 
         public SpriteRenderer Accent => _accent;
 
@@ -69,17 +63,6 @@ namespace Tanks.Shared.Items
             _bus.Publish(message, this);
 
             if (IsServer) PickupItemClientRpc(item.Identifier, pickupId);
-        }
-
-        protected override void Awake()
-        {
-            base.Awake();
-            Health = GetComponent<IHealth>();
-            Damageable = GetComponent<IDamageable>();
-            Healable = GetComponent<IHealable>();
-
-            StatOwner = GetComponent<IStatOwner>();
-            WeaponOwner = GetComponent<IWeaponOwner>();
         }
     }
 }

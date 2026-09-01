@@ -8,8 +8,7 @@ namespace Tanks.Client.Items.Behaviours.OnPickup
 {
     [ItemBehaviour("random_teleport")]
     public sealed class RandomTeleportBehaviour :
-        ItemBehaviourBase,
-        IMessageHandler<TilemapGenerated>
+        ItemBehaviourBase, IMessageHandler<TilemapGenerated>
     {
         public RandomTeleportBehaviour(IMessageBus bus)
         {
@@ -25,7 +24,7 @@ namespace Tanks.Client.Items.Behaviours.OnPickup
             _generated = message;
         }
 
-        public override void OnPickup(IItemOwner owner)
+        public override void OnPickup(IItemOwnerBehaviour owner)
         {
             int wallWidth = _generated.Settings.WallWidth;
             int minDistance = 20;

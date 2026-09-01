@@ -6,7 +6,7 @@ namespace Tanks.Shared.Items
 {
     public interface IItemAction
     {
-        void Invoke(IItemOwner owner);
+        void Invoke(IItemOwnerBehaviour owner);
     }
 
     public sealed class GiveWeaponAction : IItemAction
@@ -20,10 +20,11 @@ namespace Tanks.Shared.Items
         private readonly IWeaponFactory _factory;
         private readonly IWeaponConfig _config;
 
-        public void Invoke(IItemOwner owner)
+        public void Invoke(IItemOwnerBehaviour owner)
         {
-            Weapon created = _factory.Create(_config, owner.WeaponOwner.MuzzlePoint);
-            owner.WeaponOwner.SwitchTo(created);
+            IWeaponHolderBehaviour weaponHolder = owner.GetBehaviour<IWeaponHolderBehaviour>();
+            Weapon created = _factory.Create(_config, weaponHolder.MuzzlePoint);
+            weaponHolder.SwitchTo(created);
         }
     }
 }

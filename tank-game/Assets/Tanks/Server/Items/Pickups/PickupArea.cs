@@ -2,6 +2,7 @@ using Tanks.Shared;
 using Tanks.Shared.Items;
 using Tanks.Shared.Items.Data;
 using Tanks.Shared.Items.Pickups;
+using Tanks.Shared.Stats;
 using Unity.Mathematics;
 using UnityEngine;
 
@@ -20,7 +21,7 @@ namespace Tanks.Server.Items.Pickups
         private readonly float _radius;
         private readonly int _layerMask;
 
-        public bool CheckArea(out IItemOwner detected)
+        public bool CheckArea(out IItemOwnerBehaviour detected)
         {
             float2 origin = Transform.WorldPosition;
             Collider2D target = Physics2D.OverlapCircle(origin, _radius, _layerMask);
@@ -32,21 +33,23 @@ namespace Tanks.Server.Items.Pickups
             return true;
         }
 
-        public void PickUp(IItemOwner owner, in ItemIdentifier itemId, in PickupId pickupId)
+        public void PickUp(
+            IItemOwnerBehaviour owner, in ItemIdentifier itemId, in PickupId pickupId)
         {
+            IStatOwnerBehaviour statOwner = owner.GetBehaviour<IStatOwnerBehaviour>();
             IItemConfig config = _database.Get(itemId);
             owner.PickupItem(config, pickupId);
 
             foreach (ItemStat stat in config.Stats)
             {
                 if (stat.ApplyOnPickUp == false) continue;
-                owner.StatOwner.AddStat(stat.Type, stat.ValueType, stat.Value, stat.Duration);
+                statOwner.AddStat(stat.Type, stat.ValueType, stat.Value, stat.Duration);
             }
         }
 
         protected override void OnTick(int tick, float tickDelta)
         {
-            if (CheckArea(out IItemOwner owner) == false) return;
+            if (CheckArea(out IItemOwnerBehaviour owner) == false) return;
             PickUp(owner, Behaviour.ItemId, Behaviour.PickupId);
             Behaviour.DespawnEveryoneRpc();
         }

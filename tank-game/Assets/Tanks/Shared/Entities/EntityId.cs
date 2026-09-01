@@ -9,6 +9,9 @@ namespace Tanks.Shared.Entities
 
         public readonly int Value;
 
+        public static bool operator ==(in EntityId lhs, in EntityId rhs) => lhs.Value == rhs.Value;
+        public static bool operator !=(in EntityId lhs, in EntityId rhs) => lhs.Value != rhs.Value;
+
         public override bool Equals(object obj) => obj is EntityId other && Equals(other);
         public override int GetHashCode() => Value;
         public override string ToString() => Value.ToString();

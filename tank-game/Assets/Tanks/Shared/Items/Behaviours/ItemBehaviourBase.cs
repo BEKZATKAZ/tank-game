@@ -6,11 +6,7 @@ namespace Tanks.Shared.Items.Behaviours
     {
         protected IItemConfig Config { get; private set; }
 
-        public virtual void Initialize(IItemConfig config)
-        {
-            Config = config;
-        }
-
-        public abstract void OnPickup(IItemOwner owner);
+        public virtual void Initialize(IItemConfig config) => Config = config;
+        public abstract void OnPickup(IItemOwnerBehaviour owner);
     }
 }

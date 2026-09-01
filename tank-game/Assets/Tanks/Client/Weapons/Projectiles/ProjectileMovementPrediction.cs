@@ -5,6 +5,7 @@ using Tanks.Shared.Stats;
 using Tanks.Shared.Entities.Health;
 using Tanks.Shared.Weapons.Projectiles;
 using Unity.Mathematics;
+using Tanks.Client.Entities.Health;
 
 namespace Tanks.Client.Weapons
 {
@@ -136,12 +137,13 @@ namespace Tanks.Client.Weapons
             Behaviour.OnRicochet(hitPoint, surfaceNormal);
         }
 
-        private void DamagePrediction(IDamageable damageable)
+        private void DamagePrediction(IHealthBehaviour health)
         {
-            float amount = Behaviour.Damage.Evaluate(_elapsed);
-            amount = Behaviour.Owner.EffectOwner.GetStat(StatType.Damage, amount);
+            var statOwner = Behaviour.Owner.GetBehaviour<IStatOwnerBehaviour>();
+            var predictedHealth = health.Require<IPredictedHealth>();
 
-            damageable.Damage(amount, Behaviour.Owner.Entity);
+            float amount = statOwner.GetStat(StatType.Damage, Behaviour.Damage.Evaluate(_elapsed));
+            predictedHealth.Damage(amount, Behaviour.Owner.Entity);
             _pool.Return(Behaviour);
         }
     }

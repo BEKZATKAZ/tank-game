@@ -1,5 +1,6 @@
 ﻿using NSubstitute;
 using NUnit.Framework;
+using Tanks.Client.Entities.Health;
 using Tanks.Client.Weapons;
 using Tanks.Shared.Adapters;
 using Tanks.Shared.Entities;
@@ -17,9 +18,10 @@ namespace Tanks.Client.Tests.Weapons.Projectiles
         private IProjectilePoolService _pool;
         private IProjectileBehaviour _behaviour;
         private IProjectileConfig _config;
-        private IStatOwner _effectOwner;
+        private IStatOwnerBehaviour _statOwner;
         private IDamage _damage;
-        private IDamageable _damageable;
+        private IHealthBehaviour _healthBehaviour;
+        private IPredictedHealth _predictedHealth;
 
         [SetUp]
         public void Setup()
@@ -27,13 +29,16 @@ namespace Tanks.Client.Tests.Weapons.Projectiles
             _pool = Substitute.For<IProjectilePoolService>();
             _behaviour = Substitute.For<IProjectileBehaviour>();
             _config = Substitute.For<IProjectileConfig>();
-            _effectOwner = Substitute.For<IStatOwner>();
+            _statOwner = Substitute.For<IStatOwnerBehaviour>();
             _damage = Substitute.For<IDamage>();
-            _damageable = Substitute.For<IDamageable>();
+            _healthBehaviour = Substitute.For<IHealthBehaviour>();
+            _predictedHealth = Substitute.For<IPredictedHealth>();
 
             _behaviour.Config.Returns(_config);
-            _behaviour.Owner.EffectOwner.Returns(_effectOwner);
             _behaviour.Damage.Returns(_damage);
+
+            _behaviour.Owner.GetBehaviour<IStatOwnerBehaviour>().Returns(_statOwner);
+            _healthBehaviour.Require<IPredictedHealth>().Returns(_predictedHealth);
 
             _component = new ProjectileMovementPrediction(_pool);
             _component.Initialize(_behaviour);
@@ -136,18 +141,18 @@ namespace Tanks.Client.Tests.Weapons.Projectiles
         [Test]
         public void Update_WhenDamageableHit_DealsModifiedDamage()
         {
-            IEntity from = Substitute.For<IEntity>();
+            IEntityBehaviour from = Substitute.For<IEntityBehaviour>();
 
             _behaviour.Owner.Entity.Returns(from);
             _config.LifeTime.Returns(10);
 
             _damage.Evaluate(0).Returns(25);
-            _effectOwner.GetStat(StatType.Damage, 25).Returns(40);
+            _statOwner.GetStat(StatType.Damage, 25).Returns(40);
 
             SimulateWithDamageableHit();
             _component.Update(0.1f);
 
-            _damageable.Received(1).Damage(40, from);
+            _predictedHealth.Received(1).Damage(40, from);
             _pool.Received(1).Return(_behaviour);
         }
 
@@ -179,7 +184,7 @@ namespace Tanks.Client.Tests.Weapons.Projectiles
                 .Do(x =>
                 {
                     LaunchCallbacks callbacks = x.Arg<LaunchCallbacks>();
-                    callbacks.OnDamageableHit(_damageable);
+                    callbacks.OnDamageableHit(_healthBehaviour);
                 });
         }
     }

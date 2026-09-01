@@ -10,7 +10,7 @@ namespace Tanks.Client.Visuals
 {
     public interface IVisualService
     {
-        T Play<T>(VisualType type, float2 position, Angle rotation = default)
+        T Play<T>(VisualType type, float2 position = default, Angle rotation = default)
             where T : Component;
     }
 
@@ -23,7 +23,7 @@ namespace Tanks.Client.Visuals
 
         private Dictionary<VisualType, VisualBuffer> _buffers;
 
-        public T Play<T>(VisualType type, float2 position, Angle rotation = default)
+        public T Play<T>(VisualType type, float2 position = default, Angle rotation = default)
             where T : Component
         {
             VisualEntry entry = _buffers[type].Get();

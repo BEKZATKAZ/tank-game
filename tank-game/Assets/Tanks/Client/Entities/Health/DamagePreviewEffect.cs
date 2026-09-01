@@ -6,7 +6,7 @@ namespace Tanks.Client.Entities.Health
 {
     public sealed class DamagePreviewEffect :
         NetworkComponent<IHealthBehaviour>,
-        INetworkMessageHandler<DamageTaken>
+        INetworkMessageHandler<HealthChangedFromPrediction>
     {
         public DamagePreviewEffect(IVisualService service)
         {
@@ -15,10 +15,15 @@ namespace Tanks.Client.Entities.Health
 
         private readonly IVisualService _service;
 
-        public void Handle(DamageTaken message)
+        public void Handle(HealthChangedFromPrediction message)
         {
-            DamagePreviewText text = _service.Play<DamagePreviewText>(VisualType.DamageText, default);
-            text.Initialize(message.Amount, Transform);
+            if (message.OldState.Current < message.NewState.Current) return;
+
+            float current = message.NewState.Current;
+            float old = message.OldState.Current;
+
+            DamagePreviewText text = _service.Play<DamagePreviewText>(VisualType.DamageText);
+            text.Initialize(old - current, Transform);
             text.Animate();
         }
 

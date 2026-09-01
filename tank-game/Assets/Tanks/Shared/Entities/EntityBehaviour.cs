@@ -4,8 +4,11 @@ using VContainer;
 
 namespace Tanks.Shared.Entities
 {
-    public interface IEntityBehaviour : INetworkBehaviourExtended, IEntity
+    public interface IEntityBehaviour : INetworkBehaviourExtended
     {
+        EntityId Id { get; }
+        string DisplayName { get; }
+
         void SetId(EntityId value);
         void SetDisplayName(string value);
     }

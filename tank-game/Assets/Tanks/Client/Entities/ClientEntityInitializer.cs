@@ -1,4 +1,5 @@
-﻿using Tanks.Shared;
+﻿using Tanks.Core.Helpers;
+using Tanks.Shared;
 using Tanks.Shared.Entities;
 
 namespace Tanks.Client.Entities
@@ -14,7 +15,8 @@ namespace Tanks.Client.Entities
 
         protected override void OnInitialize()
         {
-            if (Behaviour.IsLocalPlayer) _service.SetLocalPlayer(Behaviour);
+            if (Behaviour.IsLocalPlayer == false) return;
+            _service.PossessPlayer(Behaviour.AsRequired());
         }
     }
 }

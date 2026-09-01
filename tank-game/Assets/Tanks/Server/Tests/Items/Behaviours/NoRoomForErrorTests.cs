@@ -4,6 +4,9 @@ using Tanks.Server.Items.Behaviours.OnPickup;
 using Tanks.Shared.Stats;
 using Tanks.Shared.Items.Data;
 using Tanks.Shared.Tests.Items;
+using Tanks.Shared.Entities.Health;
+using Tanks.Server.Entities;
+using NSubstitute;
 
 namespace Tanks.Server.Tests.Items.Behaviours
 {
@@ -23,28 +26,15 @@ namespace Tanks.Server.Tests.Items.Behaviours
         };
 
         [Test]
-        public void OneHP_DoesNotDealDamage()
+        public void PickUp_DropsToOneHP()
         {
-            Owner.Damageable.Damage(99);
-            Behaviour.OnPickup(Owner);
+            Behaviour.OnPickup(MockOwner);
 
-            Assert.AreEqual(1, Owner.Health.Value.Value);
-            Assert.Greater(Owner.StatOwner.GetStat(StatType.Damage, 1), 1,
-                "Damage did not multiply");
-        }
+            var health = MockOwner.GetBehaviour<IHealthBehaviour>().Require<IAuthoritativeHealth>();
+            var statOwner = MockOwner.GetBehaviour<IStatOwnerBehaviour>();
 
-        [TestCase(1.1f)]
-        [TestCase(2)]
-        [TestCase(10)]
-        [TestCase(100)]
-        public void AboveOneHP_DropsToOneHP(float initial)
-        {
-            if (initial < 100) Owner.Damageable.Damage(100 - initial);
-            Behaviour.OnPickup(Owner);
-
-            Assert.AreEqual(1, Owner.Health.Value.Value);
-            Assert.Greater(Owner.StatOwner.GetStat(StatType.Damage, 1), 1,
-                "Damage did not multiply");
+            health.Received(1).SetState(new HealthState(1, 1));
+            statOwner.Received(1).AddStat(StatType.Damage, StatValueType.Percent, 99999);
         }
     }
 }

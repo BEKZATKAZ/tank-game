@@ -18,7 +18,7 @@ namespace Tanks.Shared.Weapons.Projectiles
     public struct ProjectileLaunched
     {
         public IDamage Damage;
-        public IWeaponOwner Owner;
+        public IWeaponHolderBehaviour Owner;
     }
 
     [StructLayout(LayoutKind.Sequential)]
@@ -41,7 +41,7 @@ namespace Tanks.Shared.Weapons.Projectiles
     public interface IProjectileBehaviour : INetworkBehaviourExtended, IProjectile
     {
         IDamage Damage { get; }
-        IWeaponOwner Owner { get; }
+        IWeaponHolderBehaviour Owner { get; }
 
         void OnRicochet(float2 hitPoint, float2 surfaceNormal);
         void Initialize(Required<IProjectileConfig> config, Required<IDamage> damage);
@@ -52,7 +52,7 @@ namespace Tanks.Shared.Weapons.Projectiles
     {
         public IProjectileConfig Config { get; private set; }
         public IDamage Damage { get; private set; }
-        public IWeaponOwner Owner { get; private set; }
+        public IWeaponHolderBehaviour Owner { get; private set; }
 
         private readonly ProjectileMover _mover = new ProjectileMover();
 
@@ -76,7 +76,7 @@ namespace Tanks.Shared.Weapons.Projectiles
             Damage = damage.Value;
         }
 
-        public void Launch(IWeaponOwner owner)
+        public void Launch(IWeaponHolderBehaviour owner)
         {
             Owner = owner;
             EmitMessage(new ProjectileLaunched { Damage = Damage, Owner = owner });

@@ -42,7 +42,7 @@ namespace Tanks.Shared.Weapons
             Recoil = recoil.Value;
         }
 
-        public bool Tick(IWeaponOwner owner, bool isHoldingDown, float deltaTime, ShotId id)
+        public bool Tick(IWeaponHolderBehaviour owner, bool isHoldingDown, float deltaTime, ShotId id)
         {
             _useMode.Tick(isHoldingDown);
             _cooldown.Tick(deltaTime);
@@ -55,8 +55,8 @@ namespace Tanks.Shared.Weapons
             _ammo.Consume();
             _cooldown.Use();
             _useAction.Use(owner, id);
-            Used?.Invoke(id);
 
+            Used?.Invoke(id);
             return true;
         }
     }

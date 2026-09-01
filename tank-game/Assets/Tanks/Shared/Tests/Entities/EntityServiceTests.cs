@@ -10,7 +10,7 @@ namespace Tanks.Shared.Tests.Entities
         public void Add_AddsToEntityList()
         {
             IEntityService service = new EntityService();
-            IEntity entity = Substitute.For<IEntity>();
+            IEntityBehaviour entity = Substitute.For<IEntityBehaviour>();
 
             EntityId id = new EntityId(10);
             EntityId otherId = new EntityId(11);

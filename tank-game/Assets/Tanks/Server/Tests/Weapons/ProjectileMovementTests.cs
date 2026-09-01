@@ -1,5 +1,7 @@
 ﻿using NSubstitute;
 using NUnit.Framework;
+using Tanks.Core.Helpers;
+using Tanks.Server.Entities;
 using Tanks.Server.Weapons;
 using Tanks.Shared.Adapters;
 using Tanks.Shared.Entities.Health;
@@ -15,9 +17,10 @@ namespace Tanks.Server.Tests.Weapons
         private ProjectileMovement _component;
         private IProjectilePoolService _pool;
         private IProjectileBehaviour _behaviour;
+        private IHealthBehaviour _healthBehaviour;
+        private IAuthoritativeHealth _health;
         private IProjectileConfig _config;
         private IDamage _damage;
-        private IDamageable _damageable;
         private ITransform _transform;
 
         [SetUp]
@@ -25,9 +28,10 @@ namespace Tanks.Server.Tests.Weapons
         {
             _pool = Substitute.For<IProjectilePoolService>();
             _behaviour = Substitute.For<IProjectileBehaviour>();
+            _healthBehaviour = Substitute.For<IHealthBehaviour>();
+            _health = Substitute.For<IAuthoritativeHealth>();
             _config = Substitute.For<IProjectileConfig>();
             _damage = Substitute.For<IDamage>();
-            _damageable = Substitute.For<IDamageable>();
             _transform = Substitute.For<ITransform>();
 
             _component = new ProjectileMovement(_pool);
@@ -35,7 +39,7 @@ namespace Tanks.Server.Tests.Weapons
             _component.Transform.Returns(_transform);
 
             _behaviour.Config.Returns(_config);
-            _behaviour.Owner.EffectOwner.Returns(Substitute.For<IStatOwner>());
+            _healthBehaviour.Require<IAuthoritativeHealth>().Returns(_health);
         }
 
         [Test]
@@ -143,17 +147,17 @@ namespace Tanks.Server.Tests.Weapons
         {
             _transform.IsValid.Returns(true);
             _config.LifeTime.Returns(10);
+            _damage.Evaluate(Arg.Any<PositiveFloatOrZero>()).Returns(25);
 
-            _damage.Evaluate(0).Returns(25);
-            _behaviour.Owner.EffectOwner
-                .GetStat(StatType.Damage, 25)
-                .Returns(40);
+            _behaviour.Owner
+                .GetBehaviour<IStatOwnerBehaviour>()
+                .GetStat(StatType.Damage, 25).Returns(40);
 
             SimulateWithDamageableHit();
             Launch();
             Tick();
 
-            _damageable.Received(1).Damage(40, _behaviour.Owner.Entity);
+            _health.Received(1).Damage(40, _behaviour.Owner.Entity);
             _pool.Received(1).Return(_behaviour);
         }
 
@@ -195,7 +199,7 @@ namespace Tanks.Server.Tests.Weapons
                 .Do(x =>
                 {
                     LaunchCallbacks callbacks = x.Arg<LaunchCallbacks>();
-                    callbacks.OnDamageableHit(_damageable);
+                    callbacks.OnDamageableHit(_healthBehaviour);
                 });
         }
     }

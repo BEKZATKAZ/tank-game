@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
-using Tanks.Core.Helpers;
 using Tanks.Shared.Messaging;
+using Tanks.Utils;
 using Unity.Mathematics;
 using Unity.Netcode;
 using UnityEngine;
@@ -8,104 +8,77 @@ using VContainer;
 
 namespace Tanks.Shared.Entities.Health
 {
-    public struct DamageTaken
-    {
-        public PositiveFloat Amount;
-        public IEntity From;
-    }
-
-    public struct HPHealed
-    {
-        public PositiveFloat Amount;
-    }
-
     public struct Died
     {
-        public IDamageable Damageable;
-        public IEntity From;
+        public IEntityBehaviour Target;
+        public IEntityBehaviour From;
         public float2 WorldPosition;
     }
 
-    public struct DiedLocal
+    public struct HealthChangedFromServer
     {
-        
+        public IEntityBehaviour Target;
+        public HealthState OldState;
+        public HealthState AuthoritativeState;
     }
 
-    public interface IHealthBehaviour : INetworkBehaviourExtended, IHealth, IDamageable, IHealable
+    public interface IHealthBehaviour : INetworkBehaviourExtended
     {
-        IEntity Entity { get; }
-        RpcTarget RpcTarget { get; }
+        IEntityBehaviour Entity { get; }
+        IReadOnlyBindableProperty<HealthState> ServerState { get; }
 
         IEnumerable<SpriteRenderer> GetAllSpriteRenderers();
-        void Despawn();
-        void SendDiedEveryoneRpc(EntityId from);
-        void SendDiedLocalClientRpc(RpcParams p = default);
+        void UpdateStateEveryoneRpc(int tick, HealthState state, EntityId from = default);
     }
 
     [RequireComponent(typeof(EntityBehaviour))]
     public class HealthBehaviour : NetworkBehaviourExtended, IHealthBehaviour, IMessageSender
     {
-        [Range(10, 200)]
-        [SerializeField]
-        private float _maxHealth = 100;
-
         [Inject] private readonly IMessageBus _bus;
         [Inject] private readonly IEntityService _entityService;
-        
-        public IEntity Entity { get; private set; }
-        public PositiveFloat MaxHealth => _maxHealth;
-        public PositiveFloatOrZero Value => _health.Value;
 
-        private readonly NetworkVariable<float> _health = new(100);
+        public IEntityBehaviour Entity { get; private set; }
+        public IReadOnlyBindableProperty<HealthState> ServerState => _serverState;
 
-        public void Despawn()
+        private readonly BindableProperty<HealthState> _serverState = new();
+        private int _lastProcessedTick;
+
+        [Rpc(SendTo.Everyone,
+            Delivery = RpcDelivery.Unreliable,
+            InvokePermission = RpcInvokePermission.Server)]
+        public void UpdateStateEveryoneRpc(int tick, HealthState newState, EntityId from = default)
         {
-            NetworkObject.Despawn();
-        }
+            HealthState oldState = _serverState.Value;
 
-        [Rpc(SendTo.Everyone, InvokePermission = RpcInvokePermission.Server)]
-        public void SendDiedEveryoneRpc(EntityId from)
-        {
+            // Avoid constant reduntant updates
+            if (oldState.Equals(newState)) return;
+
+            // Discard older packets
+            if (_lastProcessedTick >= tick) return;
+
+            _serverState.Value = newState;
+            _lastProcessedTick = tick;
+
+            EmitMessage(new HealthChangedFromServer
+            {
+                Target = Entity,
+                OldState = oldState,
+                AuthoritativeState = newState
+            });
+
+            if (newState.Current > 0) return;
+
             Died died = new Died
             {
-                Damageable = this,
+                Target = Entity,
                 From = _entityService.GetById(from),
                 WorldPosition = Transform.WorldPosition
             };
 
             EmitMessage(died);
             _bus.Publish(died, this);
-        }
 
-        [Rpc(SendTo.SpecifiedInParams, InvokePermission = RpcInvokePermission.Server)]
-        public void SendDiedLocalClientRpc(RpcParams p = default)
-        {
-            EmitMessage(new DiedLocal());
-            _bus.Publish(new DiedLocal(), this);
-        }
-
-        public void SetCurrentHealth(PositiveFloatOrZero value)
-        {
-            _health.Value = math.clamp(value, 0, MaxHealth);
-        }
-
-        public void SetMaxHealth(PositiveFloat value)
-        {
-            _maxHealth = value;
-            float remainder = _health.Value - _maxHealth;
-
-            // Damage to compensate max health
-            if (remainder > 0) Damage(remainder);
-        }
-
-        public void Damage(PositiveFloat amount, IEntity from = null)
-        {
-            EmitMessage(new DamageTaken { Amount = amount, From = from });
-        }
-
-        public void Heal(PositiveFloat amount)
-        {
-            EmitMessage(new HPHealed { Amount = amount });
+            if (IsServer) NetworkObject.Despawn();
         }
 
         public IEnumerable<SpriteRenderer> GetAllSpriteRenderers()
@@ -117,6 +90,7 @@ namespace Tanks.Shared.Entities.Health
         {
             base.Awake();
             Entity = GetComponent<EntityBehaviour>();
+            _serverState.Value = new HealthState(100, 100);
         }
     }
 }

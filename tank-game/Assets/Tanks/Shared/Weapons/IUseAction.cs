@@ -2,11 +2,11 @@
 {
     public interface IUseAction
     {
-        void Use(IWeaponOwner owner, ShotId id);
+        void Use(IWeaponHolderBehaviour owner, ShotId id);
     }
 
     public class NoUseAction : IUseAction
     {
-        public void Use(IWeaponOwner owner, ShotId id) { }
+        public void Use(IWeaponHolderBehaviour owner, ShotId id) { }
     }
 }

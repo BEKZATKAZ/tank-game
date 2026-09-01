@@ -10,7 +10,7 @@ namespace Tanks.Client.Entities.Health
 {
     public class DamagePredictionEffect :
         NetworkComponent<IHealthBehaviour>,
-        INetworkMessageHandler<DamageTaken>
+        INetworkMessageHandler<HealthChangedFromPrediction>
     {
         public DamagePredictionEffect(IAudioPlayer audioPlayer)
         {
@@ -22,8 +22,10 @@ namespace Tanks.Client.Entities.Health
         private Dictionary<SpriteRenderer, Color> _sprites;
         private float _lastTime;
 
-        public async void Handle(DamageTaken message)
+        public async void Handle(HealthChangedFromPrediction message)
         {
+            if (message.OldState.Current < message.NewState.Current) return;
+
             _lastTime = Time.time;
 
             float currentTime = _lastTime;

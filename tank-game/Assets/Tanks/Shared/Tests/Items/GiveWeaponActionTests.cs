@@ -12,12 +12,12 @@ namespace Tanks.Shared.Tests.Items
     {
         private IWeaponFactory _factory;
         private IWeaponConfig _config;
-        private IItemOwner _owner;
+        private IItemOwnerBehaviour _owner;
 
         [SetUp]
         public void Setup()
         {
-            _owner = Substitute.For<IItemOwner>();
+            _owner = Substitute.For<IItemOwnerBehaviour>();
             _config = Substitute.For<IWeaponConfig>();
             _factory = Substitute.For<IWeaponFactory>();
             _factory.Create(_config, Arg.Any<ITransform>()).Returns(new Weapon());

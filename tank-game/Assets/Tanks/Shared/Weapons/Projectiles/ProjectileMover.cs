@@ -23,7 +23,7 @@ namespace Tanks.Shared.Weapons.Projectiles
                 return;
             }
 
-            if (hit.collider.TryGetComponent(out IDamageable damageable))
+            if (hit.collider.TryGetComponent(out IHealthBehaviour damageable))
             {
                 callbacks.OnDamageableHit?.Invoke(damageable);
                 return;

@@ -10,7 +10,15 @@ namespace Tanks.Shared.Stats
         public float Duration;
     }
 
-    public sealed class StatOwnerBehaviour : NetworkBehaviourExtended, IStatOwner
+    public interface IStatOwnerBehaviour : INetworkBehaviourExtended
+    {
+        float GetStat(StatType type, float baseValue);
+
+        void AddStat(
+            StatType type, StatValueType valueType, float multiplier, float duration = -1);
+    }
+
+    public sealed class StatOwnerBehaviour : NetworkBehaviourExtended, IStatOwnerBehaviour
     {
         private readonly StatLogic _logic = new StatLogic();
 

@@ -2,22 +2,18 @@
 using NUnit.Framework;
 using Tanks.Server.Entities;
 using Tanks.Shared.Entities.Health;
-using Unity.Mathematics;
 
 namespace Tanks.Server.Tests.Entities
 {
     public class HealthManagerTests
     {
-        private HealthManager _component;
+        private AuthoritativeHealth _component;
 
         [SetUp]
         public void Setup()
         {
-            _component = new HealthManager();
+            _component = new AuthoritativeHealth();
             _component.Initialize(Substitute.For<IHealthBehaviour>());
-
-            _component.Behaviour.Value.Returns(100);
-            _component.Behaviour.MaxHealth.Returns(100);
         }
 
         [TestCase(1)]
@@ -25,8 +21,15 @@ namespace Tanks.Server.Tests.Entities
         [TestCase(90)]
         public void Damage_ReducesHP(float amount)
         {
-            _component.Handle(new DamageTaken { Amount = amount });
-            _component.Behaviour.Received(1).SetCurrentHealth(100 - amount);
+            float max = _component.GetState().Max;
+            _component.Damage(amount);
+
+            HealthState expected = new HealthState(100 - amount, max);
+            HealthState actual = _component.GetState();
+
+            Assert.AreEqual(expected, actual, "Wrong state");
+            _component.Tick(1, 0.1f);
+            _component.Behaviour.Received(1).UpdateStateEveryoneRpc(1, actual);
         }
 
         [TestCase(1)]
@@ -35,11 +38,15 @@ namespace Tanks.Server.Tests.Entities
         [TestCase(1000)]
         public void Heal_RestoresHPUpToMax(float amount)
         {
-            _component.Behaviour.Value.Returns(50);
-            _component.Behaviour.MaxHealth.Returns(150);
+            _component.SetState(new HealthState(50, 150));
+            _component.Heal(amount);
 
-            _component.Handle(new HPHealed { Amount = amount });
-            _component.Behaviour.Received(1).SetCurrentHealth(math.min(50 + amount, 150));
+            HealthState expected = new HealthState(50 + amount, 150);
+            HealthState actual = _component.GetState();
+
+            Assert.AreEqual(expected, actual, "Wrong state");
+            _component.Tick(5, 0.1f);
+            _component.Behaviour.Received(1).UpdateStateEveryoneRpc(5, actual);
         }
     }
 }

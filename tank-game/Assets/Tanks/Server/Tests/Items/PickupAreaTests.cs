@@ -2,7 +2,6 @@
 using NUnit.Framework;
 using System;
 using Tanks.Server.Items.Pickups;
-using Tanks.Shared.Adapters;
 using Tanks.Shared.Entities.Health;
 using Tanks.Shared.Items;
 using Tanks.Shared.Items.Data;
@@ -14,22 +13,18 @@ namespace Tanks.Server.Tests.Items
     public class PickupAreaTests
     {
         private IItemDatabase _database;
-        private IItemOwner _owner;
-        private IHealable _healable;
-        private IStatOwner _statOwner;
+        private IItemOwnerBehaviour _owner;
+        private IStatOwnerBehaviour _statOwner;
         private PickupArea _component;
 
         [SetUp]
         public void SetUp()
         {
             _database = Substitute.For<IItemDatabase>();
-            _owner = Substitute.For<IItemOwner>();
-            _healable = Substitute.For<IHealable>();
-            _statOwner = Substitute.For<IStatOwner>();
+            _owner = Substitute.For<IItemOwnerBehaviour>();
+            _statOwner = Substitute.For<IStatOwnerBehaviour>();
 
-            _owner.Healable.Returns(_healable);
-            _owner.StatOwner.Returns(_statOwner);
-
+            _owner.GetBehaviour<IStatOwnerBehaviour>().Returns(_statOwner);
             _component = new PickupArea(_database);
             _component.Initialize(Substitute.For<IPickupBehaviour>());
         }
@@ -68,11 +63,7 @@ namespace Tanks.Server.Tests.Items
 
             _database.Get(itemId).Returns(config);
             _component.PickUp(_owner, itemId, default);
-
-            _statOwner.Received(1)
-                .AddStat(stat.Type, stat.ValueType, stat.Value, stat.Duration);
-
-            _healable.DidNotReceiveWithAnyArgs().Heal(default);
+            _statOwner.Received(1).AddStat(stat.Type, stat.ValueType, stat.Value, stat.Duration);
         }
 
         [Test]

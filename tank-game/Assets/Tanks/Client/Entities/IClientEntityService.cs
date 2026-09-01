@@ -1,18 +1,33 @@
-﻿using Tanks.Shared.Entities;
+﻿using Tanks.Core.Helpers;
+using Tanks.Shared.Entities;
 
 namespace Tanks.Client.Entities
 {
+    public delegate void PossessedPlayerChanged(IEntityBehaviour previous, IEntityBehaviour current);
+
     public interface IClientEntityService
     {
-        IEntity GetLocalPlayer();
-        void SetLocalPlayer(IEntity entity);
+        event PossessedPlayerChanged Changed;
+        IEntityBehaviour GetPossessedPlayer();
+        void PossessPlayer(Required<IEntityBehaviour> player);
     }
 
     public sealed class ClientEntityService : IClientEntityService
     {
-        private IEntity _localPlayer;
+        public event PossessedPlayerChanged Changed;
 
-        public IEntity GetLocalPlayer() => _localPlayer;
-        public void SetLocalPlayer(IEntity entity) => _localPlayer = entity;
+        private IEntityBehaviour _possessed;
+
+        public IEntityBehaviour GetPossessedPlayer()
+        {
+            return _possessed;
+        }
+
+        public void PossessPlayer(Required<IEntityBehaviour> player)
+        {
+            IEntityBehaviour previous = _possessed;
+            _possessed = player.Value;
+            Changed?.Invoke(previous, _possessed);
+        }
     }
 }

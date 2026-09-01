@@ -4,26 +4,26 @@ namespace Tanks.Shared.Entities
 {
     public interface IEntityService
     {
-        IEntity GetById(EntityId id);
-        void AddEntity(IEntity entity);
-        void RemoveEntity(IEntity entity);
+        IEntityBehaviour GetById(EntityId id);
+        void AddEntity(IEntityBehaviour entity);
+        void RemoveEntity(IEntityBehaviour entity);
     }
 
     public sealed class EntityService : IEntityService
     {
-        private readonly Dictionary<EntityId, IEntity> _entities = new();
+        private readonly Dictionary<EntityId, IEntityBehaviour> _entities = new();
 
-        public IEntity GetById(EntityId id)
+        public IEntityBehaviour GetById(EntityId id)
         {
-            return _entities.TryGetValue(id, out IEntity result) ? result : null;
+            return _entities.TryGetValue(id, out IEntityBehaviour result) ? result : null;
         }
 
-        public void AddEntity(IEntity entity)
+        public void AddEntity(IEntityBehaviour entity)
         {
             _entities.Add(entity.Id, entity);
         }
 
-        public void RemoveEntity(IEntity entity)
+        public void RemoveEntity(IEntityBehaviour entity)
         {
             _entities.Remove(entity.Id);
         }

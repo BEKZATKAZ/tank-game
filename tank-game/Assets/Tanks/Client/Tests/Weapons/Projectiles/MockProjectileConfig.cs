@@ -28,7 +28,7 @@ namespace Tanks.Client.Tests.Weapons.Projectiles
 
         private readonly ProjectileMover _mover;
 
-        public void Launch(IWeaponOwner owner)
+        public void Launch(IWeaponHolderBehaviour owner)
         {
             throw new System.NotImplementedException();
         }

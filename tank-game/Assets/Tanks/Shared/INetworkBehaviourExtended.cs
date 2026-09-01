@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using Tanks.Shared.Adapters;
 using Tanks.Utils;
 using Unity.Netcode;
@@ -19,7 +18,11 @@ namespace Tanks.Shared
         ulong OwnerClientId { get; }
         ITransform Transform { get; }
 
+        void EmitMessage<T>(T message);
         void RegisterMessageHandler<T>(INetworkMessageHandler<T> handler);
+
+        T GetBehaviour<T>() where T : INetworkBehaviourExtended;
+        T Require<T>() where T : INetworkComponent;
     }
 
     public interface INetworkMessageHandler { }
@@ -49,58 +52,19 @@ namespace Tanks.Shared
             TryInitializeBehaviour();
         }
 
-        protected void EmitMessage<T>(T message)
+        public void EmitMessage<T>(T message)
         {
             Type type = message.GetType();
-
-            if (_handlers.TryGetValue(type, out List<INetworkMessageHandler> handlers) == false)
-            {
-                //Debug.LogWarningFormat("No message handler found for '{0}'", type.Name);
-                return;
-            }
+            if (_handlers.TryGetValue(type, out var handlers) == false) return;
 
             foreach (INetworkMessageHandler handler in handlers)
             {
-                try
-                {
-                    // Safe cast
-                    ((INetworkMessageHandler<T>)handler).Handle(message);
-                }
-                catch (Exception ex)
-                {
-                    Debug.LogException(ex);
-                }
+                // Safe cast
+                var casted = (INetworkMessageHandler<T>)handler;
+                
+                try { casted.Handle(message); }
+                catch (Exception ex) { Debug.LogException(ex); }
             }
-        }
-
-        private void TryInitializeBehaviour()
-        {
-            if (_isInitialized) return;
-            if (_isSpawned == false || _isInjected == false) return;
-
-            _isInitialized = true;
-            NetworkManager.NetworkTickSystem.Tick += Tick;
-
-            IEnumerable<Type> types = SplitComponentFinder
-                .FindFor(this, typeof(INetworkComponent<>), NetworkManager.IsServer);
-
-            foreach (Type componentType in types)
-            {
-                try
-                {
-                    INetworkComponent component = _container
-                        .CreateInjected(componentType) as INetworkComponent;
-
-                    component.Initialize(this);
-                    _components.Add(component);
-                }
-                catch (Exception ex)
-                {
-                    Debug.LogException(ex);
-                }
-            }
-
-            OnInitialize();
         }
 
         public void RegisterMessageHandler<T>(INetworkMessageHandler<T> handler)
@@ -116,10 +80,41 @@ namespace Tanks.Shared
             handlers.Add(handler);
         }
 
+        public T GetBehaviour<T>() where T : INetworkBehaviourExtended
+        {
+            return GetComponent<T>();
+        }
+
+        public T Require<T>() where T : INetworkComponent
+        {
+            foreach (INetworkComponent component in _components)
+            {
+                if (component is T result) return result;
+            }
+
+            return default;
+        }
+
         public override void OnNetworkSpawn()
         {
             _isSpawned = true;
             TryInitializeBehaviour();
+        }
+
+        public override void OnDestroy()
+        {
+            base.OnDestroy();
+
+            foreach (INetworkComponent component in _components)
+            {
+                try { component.Destroy(); }
+                catch (Exception ex) { Debug.LogException(ex); }
+            }
+
+            if (_isInitialized == false || NetworkManager == false) return;
+            if (NetworkManager.NetworkTickSystem is null) return;
+
+            NetworkManager.NetworkTickSystem.Tick -= Tick;
         }
 
         private void OnEnable()
@@ -138,22 +133,6 @@ namespace Tanks.Shared
                 try { component.IsEnabled = false; }
                 catch (Exception ex) { Debug.LogException(ex); }
             }
-        }
-
-        public override void OnDestroy()
-        {
-            base.OnDestroy();
-
-            foreach (INetworkComponent component in _components)
-            {
-                try { component.Destroy(); }
-                catch (Exception ex) { Debug.LogException(ex); }
-            }
-
-            if (_isInitialized == false || NetworkManager == false) return;
-            if (NetworkManager.NetworkTickSystem is null) return;
-
-            NetworkManager.NetworkTickSystem.Tick -= Tick;
         }
 
         private void Update()
@@ -200,6 +179,36 @@ namespace Tanks.Shared
                 try { component.LateTick(tick, tickDelta); }
                 catch (Exception ex) { Debug.LogException(ex); }
             }
+        }
+
+        private void TryInitializeBehaviour()
+        {
+            if (_isInitialized) return;
+            if (_isSpawned == false || _isInjected == false) return;
+
+            _isInitialized = true;
+            NetworkManager.NetworkTickSystem.Tick += Tick;
+
+            IEnumerable<Type> types = SplitComponentFinder
+                .FindFor(this, typeof(INetworkComponent<>), NetworkManager.IsServer);
+
+            foreach (Type componentType in types)
+            {
+                try
+                {
+                    INetworkComponent component = _container
+                        .CreateInjected(componentType) as INetworkComponent;
+
+                    component.Initialize(this);
+                    _components.Add(component);
+                }
+                catch (Exception ex)
+                {
+                    Debug.LogException(ex);
+                }
+            }
+
+            OnInitialize();
         }
 
         protected void ForceInitialize() => OnNetworkSpawn();

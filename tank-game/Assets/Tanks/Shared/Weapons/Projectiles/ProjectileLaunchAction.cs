@@ -23,7 +23,7 @@ namespace Tanks.Server.Weapons.Projectiles
         private readonly ITransform _muzzlePoint;
         private readonly IProjectilePoolService _pool;
 
-        public void Use(IWeaponOwner owner, ShotId id)
+        public void Use(IWeaponHolderBehaviour owner, ShotId id)
         {
             ProjectileId projectileId = new ProjectileId(id, 1);
 

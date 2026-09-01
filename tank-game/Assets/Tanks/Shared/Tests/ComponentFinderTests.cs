@@ -16,7 +16,11 @@ namespace Tanks.Shared.Tests
         public bool IsServer { get; }
         public bool IsClient { get; }
 
+        public T Require<T>() where T : INetworkComponent => default;
+        public T GetBehaviour<T>() where T : INetworkBehaviourExtended => default;
+
         public void RegisterMessageHandler<T>(INetworkMessageHandler<T> handler) { }
+        public void EmitMessage<T>(T message) { }
     }
 
     public class PersonBehaviour : INetworkBehaviourExtended
@@ -29,7 +33,11 @@ namespace Tanks.Shared.Tests
         public bool IsServer { get; }
         public bool IsClient { get; }
 
+        public T Require<T>() where T : INetworkComponent => default;
+        public T GetBehaviour<T>() where T : INetworkBehaviourExtended => default;
+
         public void RegisterMessageHandler<T>(INetworkMessageHandler<T> handler) { }
+        public void EmitMessage<T>(T message) { }
     }
 
     public class EngineComponent : NetworkComponent<ICarBehaviour> { }

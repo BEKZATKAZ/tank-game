@@ -387,7 +387,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &651582272
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -402,7 +402,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Unity.Multiplayer.Tools.NetworkSimulator.Runtime::Unity.Multiplayer.Tools.NetworkSimulator.Runtime.NetworkSimulator
   m_PresetAsset: {fileID: 0}
   m_PresetReference:
-    rid: 6704992813013270749
+    rid: 6704993043074515122
   m_Scenario:
     rid: -2
   m_IsScenarioSettingsFolded: 0
@@ -412,14 +412,15 @@ MonoBehaviour:
     RefIds:
     - rid: -2
       type: {class: , ns: , asm: }
-    - rid: 6704992813013270749
+    - rid: 6704993043074515122
       type: {class: NetworkSimulatorPreset, ns: Unity.Multiplayer.Tools.NetworkSimulator.Runtime, asm: Unity.Multiplayer.Tools.NetworkSimulator.Runtime}
       data:
-        <Name>k__BackingField: 'Home Fiber [Best real-world scenario]'
-        <Description>k__BackingField: Best case scenario for desktop and console
-          platforms. Excellent ping, excellent jitter and no packet loss.
-        <PacketDelayMs>k__BackingField: 10
-        <PacketJitterMs>k__BackingField: 1
+        <Name>k__BackingField: 'Home Satellite [low Earth orbit]'
+        <Description>k__BackingField: Low Earth orbit satellite network scenario
+          for desktop and console platforms. Bad ping, good jitter and no packet
+          loss.
+        <PacketDelayMs>k__BackingField: 100
+        <PacketJitterMs>k__BackingField: 10
         <PacketLossInterval>k__BackingField: 0
         <PacketLossPercent>k__BackingField: 0
 --- !u!4 &651582273
@@ -499,6 +500,7 @@ GameObject:
   - component: {fileID: 1288937383}
   - component: {fileID: 1288937382}
   - component: {fileID: 1288937381}
+  - component: {fileID: 1288937384}
   m_Layer: 0
   m_Name: UI
   m_TagString: Untagged
@@ -584,6 +586,20 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Tanks.UI::Tanks.UI.Gameplay.ItemDescription.ItemDescriptionView
   _showOnPlay: 1
+--- !u!114 &1288937384
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1288937377}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: afde2a5100aba924c8dcc5feb31daf26, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Tanks.UI::Tanks.UI.Gameplay.PlayerStats.PlayerStatsView
+  _showOnPlay: 1
+  _tankMaterial: {fileID: -876546973899608171, guid: 30d36fd8c31436746931c48cd0dac5af, type: 3}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0

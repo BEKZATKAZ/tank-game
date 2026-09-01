@@ -88,3 +88,21 @@
     font-size: 22px;
     -unity-font-style: bold;
 }
+
+.player-stats {
+    align-self: flex-start;
+    padding: 40px 0;
+    position: absolute;
+}
+
+.player-stats__tank {
+    align-self: flex-start;
+    width: 300px;
+    height: 300px;
+    background-color: white;
+}
+
+.player-stats__hp-overlay {
+    width: 100%;
+    background-color: red;
+}
