@@ -12,7 +12,7 @@ namespace Tanks.Shared.Weapons.Data
         float LifeTime { get; }
         ushort MaxRicochetCount { get; }
 
-        IProjectile Create();
+        IProjectileBehaviour Create();
     }
 
     [CreateAssetMenu(fileName = "Projectile", menuName = "Scriptable Objects/Weapons/Projectile")]
@@ -42,7 +42,7 @@ namespace Tanks.Shared.Weapons.Data
         public float LifeTime => _lifeTime;
         public ushort MaxRicochetCount => _maxRicochetCount;
 
-        public IProjectile Create()
+        public IProjectileBehaviour Create()
         {
             ProjectileBehaviour instance = Instantiate(_prefab);
             instance.Initialize(this, _damage.Create().AsRequired());

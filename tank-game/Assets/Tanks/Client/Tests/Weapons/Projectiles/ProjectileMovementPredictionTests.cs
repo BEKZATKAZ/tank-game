@@ -148,12 +148,13 @@ namespace Tanks.Client.Tests.Weapons.Projectiles
 
             _damage.Evaluate(0).Returns(25);
             _statOwner.GetStat(StatType.Damage, 25).Returns(40);
+            _component.Handle(new ProjectileLaunched { Damage = _damage });
 
             SimulateWithDamageableHit();
             _component.Update(0.1f);
 
-            _predictedHealth.Received(1).Damage(40, from);
-            _pool.Received(1).Return(_behaviour);
+            _predictedHealth.Received(1).Damage(40, from, Arg.Any<HealthEventId>());
+            _pool.Received(1).RequestReturnAsClient(_behaviour);
         }
 
         private void SimulateWithRicochets(int count)

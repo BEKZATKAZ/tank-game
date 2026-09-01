@@ -10,7 +10,7 @@ namespace Tanks.Shared.Tests.Weapons.Projectiles
         public float LifeTime { get; set; }
         public ushort MaxRicochetCount { get; set; }
 
-        public IProjectile Create()
+        public IProjectileBehaviour Create()
         {
             ProjectileBehaviour projectile =  new GameObject("projectile")
                 .AddComponent<ProjectileBehaviour>();

@@ -50,23 +50,27 @@ namespace Tanks.Server.Weapons
                 return;
             }
 
+            _elapsed += tickDelta;
+
             _pool.RequestReconciliation(Behaviour, new ProjectileSnapshotFromServer
             {
                 ServerPosition = Transform.WorldPosition,
                 ServerRotation = Transform.WorldRotation,
-                ServerTick = tick
+                ServerTick = tick,
+                ServerElapsed = _elapsed,
+                ServerRicochetedCount = _ricochetedCount
             });
-
-            _elapsed += tickDelta;
         }
 
-        private void DealDamage(IProjectile projectile, IHealthBehaviour health)
+        private void DealDamage(IProjectileBehaviour projectile, IHealthBehaviour health)
         {
             var statOwner = Behaviour.Owner.GetBehaviour<IStatOwnerBehaviour>();
             var authoritativeHealth = health.Require<IAuthoritativeHealth>();
 
             float amount = statOwner.GetStat(StatType.Damage, _damage.Evaluate(_elapsed));
-            authoritativeHealth.Damage(amount, Behaviour.Owner.Entity);
+            HealthEventId eventId = HealthEventId.Create(Behaviour, Behaviour.Id);
+
+            authoritativeHealth.Damage(amount, Behaviour.Owner.Entity, eventId);
             _pool.Return(projectile);
         }
 

@@ -64,6 +64,7 @@ namespace Tanks.Client.Weapons
 
         private int _currentTick;
         private float _currentTickDelta;
+        private bool _canDamage;
 
         public void Handle(ProjectileLaunched message)
         {
@@ -74,12 +75,22 @@ namespace Tanks.Client.Weapons
             _positionError = float2.zero;
             _elapsed = 0;
             _ricochetedCount = 0;
+            _canDamage = true;
         }
 
         public void Handle(ProjectileSnapshotFromServer message)
         {
+            LaunchCallbacks callbacks = new LaunchCallbacks
+            {
+                OnRicochet = OnRicochetPartial
+            };
+
+            _elapsed = message.ServerElapsed;
+            _ricochetedCount = message.ServerRicochetedCount;
+
             if (_reconciliation.TryReconcile(
-                _predicted, message, _currentTickDelta, out float2 newPositionError) == false) return;
+                _predicted, message, callbacks, _currentTickDelta,
+                out float2 newPositionError) == false) return;
 
             _positionError = newPositionError;
         }
@@ -115,7 +126,7 @@ namespace Tanks.Client.Weapons
 
             Behaviour.Simulate(new LaunchCallbacks
             {
-                OnRicochet = OnRicochet,
+                OnRicochet = OnRicochetFull,
                 OnDamageableHit = DamagePrediction
             }, _predicted, deltaTime);
 
@@ -126,7 +137,7 @@ namespace Tanks.Client.Weapons
             Transform.WorldRotation = _predicted.WorldRotation;
         }
 
-        private void OnRicochet(float2 hitPoint, float2 surfaceNormal)
+        private void OnRicochetFull(float2 hitPoint, float2 surfaceNormal)
         {
             if (++_ricochetedCount > Behaviour.Config.MaxRicochetCount)
             {
@@ -137,14 +148,25 @@ namespace Tanks.Client.Weapons
             Behaviour.OnRicochet(hitPoint, surfaceNormal);
         }
 
+        private void OnRicochetPartial(float2 hitPoint, float2 surfaceNormal)
+        {
+            if (++_ricochetedCount <= Behaviour.Config.MaxRicochetCount) return;
+            _pool.Return(Behaviour);
+        }
+
         private void DamagePrediction(IHealthBehaviour health)
         {
+            if (_canDamage == false) return;
+            _canDamage = false;
+
             var statOwner = Behaviour.Owner.GetBehaviour<IStatOwnerBehaviour>();
             var predictedHealth = health.Require<IPredictedHealth>();
 
             float amount = statOwner.GetStat(StatType.Damage, Behaviour.Damage.Evaluate(_elapsed));
-            predictedHealth.Damage(amount, Behaviour.Owner.Entity);
-            _pool.Return(Behaviour);
+            HealthEventId eventId = HealthEventId.Create(Behaviour, Behaviour.Id);
+
+            predictedHealth.Damage(amount, Behaviour.Owner.Entity, eventId);
+            _pool.RequestReturnAsClient(Behaviour);
         }
     }
 }

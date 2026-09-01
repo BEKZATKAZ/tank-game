@@ -24,10 +24,11 @@ namespace Tanks.Shared.Weapons.Projectiles
     [StructLayout(LayoutKind.Sequential)]
     public struct ProjectileSnapshotFromServer : INetworkSerializeByMemcpy
     {
-        public ShotId Id;
         public float2 ServerPosition;
         public Angle ServerRotation;
         public int ServerTick;
+        public int ServerRicochetedCount;
+        public float ServerElapsed;
     }
 
     [StructLayout(LayoutKind.Sequential)]
@@ -38,13 +39,19 @@ namespace Tanks.Shared.Weapons.Projectiles
         public ushort MaxRicochetCount;
     }
 
-    public interface IProjectileBehaviour : INetworkBehaviourExtended, IProjectile
+    public interface IProjectileBehaviour : INetworkBehaviourExtended
     {
         IDamage Damage { get; }
         IWeaponHolderBehaviour Owner { get; }
+        IProjectileConfig Config { get; }
+        ProjectileId Id { get; }
 
-        void OnRicochet(float2 hitPoint, float2 surfaceNormal);
+        void Launch(IWeaponHolderBehaviour owner, in ProjectileId id);
         void Initialize(Required<IProjectileConfig> config, Required<IDamage> damage);
+
+        void Reconcile(ProjectileSnapshotFromServer snapshot);
+        void Simulate(LaunchCallbacks callbacks, ITransform transform, float deltaTime);
+        void OnRicochet(float2 hitPoint, float2 surfaceNormal);
     }
 
     public class ProjectileBehaviour :
@@ -53,6 +60,7 @@ namespace Tanks.Shared.Weapons.Projectiles
         public IProjectileConfig Config { get; private set; }
         public IDamage Damage { get; private set; }
         public IWeaponHolderBehaviour Owner { get; private set; }
+        public ProjectileId Id { get; private set; }
 
         private readonly ProjectileMover _mover = new ProjectileMover();
 
@@ -76,8 +84,9 @@ namespace Tanks.Shared.Weapons.Projectiles
             Damage = damage.Value;
         }
 
-        public void Launch(IWeaponHolderBehaviour owner)
+        public void Launch(IWeaponHolderBehaviour owner, in ProjectileId id)
         {
+            Id = id;
             Owner = owner;
             EmitMessage(new ProjectileLaunched { Damage = Damage, Owner = owner });
         }

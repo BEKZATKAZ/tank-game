@@ -20,6 +20,7 @@ namespace Tanks.Shared.Entities.Health
         public IEntityBehaviour Target;
         public HealthState OldState;
         public HealthState AuthoritativeState;
+        public HealthEventId EventId;
     }
 
     public interface IHealthBehaviour : INetworkBehaviourExtended
@@ -28,7 +29,11 @@ namespace Tanks.Shared.Entities.Health
         IReadOnlyBindableProperty<HealthState> ServerState { get; }
 
         IEnumerable<SpriteRenderer> GetAllSpriteRenderers();
-        void UpdateStateEveryoneRpc(int tick, HealthState state, EntityId from = default);
+
+        void UpdateStateEveryoneRpc(
+            HealthState state,
+            EntityId from = default,
+            HealthEventId eventId = default);
     }
 
     [RequireComponent(typeof(EntityBehaviour))]
@@ -41,26 +46,23 @@ namespace Tanks.Shared.Entities.Health
         public IReadOnlyBindableProperty<HealthState> ServerState => _serverState;
 
         private readonly BindableProperty<HealthState> _serverState = new();
-        private int _lastProcessedTick;
 
-        [Rpc(SendTo.Everyone,
-            Delivery = RpcDelivery.Unreliable,
-            InvokePermission = RpcInvokePermission.Server)]
-        public void UpdateStateEveryoneRpc(int tick, HealthState newState, EntityId from = default)
+        [Rpc(SendTo.Everyone, InvokePermission = RpcInvokePermission.Server)]
+        public void UpdateStateEveryoneRpc(
+            HealthState newState,
+            EntityId from = default,
+            HealthEventId eventId = default)
         {
             HealthState oldState = _serverState.Value;
 
             // Avoid constant reduntant updates
             if (oldState.Equals(newState)) return;
 
-            // Discard older packets
-            if (_lastProcessedTick >= tick) return;
-
             _serverState.Value = newState;
-            _lastProcessedTick = tick;
 
             EmitMessage(new HealthChangedFromServer
             {
+                EventId = eventId,
                 Target = Entity,
                 OldState = oldState,
                 AuthoritativeState = newState

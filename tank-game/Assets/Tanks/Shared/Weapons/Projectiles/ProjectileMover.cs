@@ -26,6 +26,7 @@ namespace Tanks.Shared.Weapons.Projectiles
             if (hit.collider.TryGetComponent(out IHealthBehaviour damageable))
             {
                 callbacks.OnDamageableHit?.Invoke(damageable);
+                transform.WorldPosition += transform.Right * distance;
                 return;
             }
 

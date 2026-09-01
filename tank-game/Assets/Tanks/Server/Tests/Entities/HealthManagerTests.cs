@@ -29,7 +29,7 @@ namespace Tanks.Server.Tests.Entities
 
             Assert.AreEqual(expected, actual, "Wrong state");
             _component.Tick(1, 0.1f);
-            _component.Behaviour.Received(1).UpdateStateEveryoneRpc(1, actual);
+            _component.Behaviour.Received(1).UpdateStateEveryoneRpc(actual);
         }
 
         [TestCase(1)]
@@ -46,7 +46,7 @@ namespace Tanks.Server.Tests.Entities
 
             Assert.AreEqual(expected, actual, "Wrong state");
             _component.Tick(5, 0.1f);
-            _component.Behaviour.Received(1).UpdateStateEveryoneRpc(5, actual);
+            _component.Behaviour.Received(1).UpdateStateEveryoneRpc(actual);
         }
     }
 }

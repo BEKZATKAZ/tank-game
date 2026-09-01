@@ -46,7 +46,6 @@ namespace Tanks.Server.Tests.Weapons
         public void Tick_WithInvalidTransform_DoesNothing()
         {
             _transform.IsValid.Returns(false);
-
             Tick();
 
             _behaviour.DidNotReceive().Simulate(
@@ -56,7 +55,7 @@ namespace Tanks.Server.Tests.Weapons
 
             _pool.DidNotReceive().Return(_behaviour);
             _pool.DidNotReceive().RequestReconciliation(
-                Arg.Any<IProjectile>(),
+                Arg.Any<IProjectileBehaviour>(),
                 Arg.Any<ProjectileSnapshotFromServer>());
         }
 
@@ -121,9 +120,9 @@ namespace Tanks.Server.Tests.Weapons
             Tick();
 
             _pool.Received(1).Return(_behaviour);
-
             _pool.DidNotReceive().RequestReconciliation(
-                Arg.Any<IProjectile>(), Arg.Any<ProjectileSnapshotFromServer>());
+                Arg.Any<IProjectileBehaviour>(),
+                Arg.Any<ProjectileSnapshotFromServer>());
         }
 
         [Test]
@@ -157,7 +156,7 @@ namespace Tanks.Server.Tests.Weapons
             Launch();
             Tick();
 
-            _health.Received(1).Damage(40, _behaviour.Owner.Entity);
+            _health.Received(1).Damage(40, _behaviour.Owner.Entity, Arg.Any<HealthEventId>());
             _pool.Received(1).Return(_behaviour);
         }
 

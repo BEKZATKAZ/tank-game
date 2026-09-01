@@ -1,35 +1,23 @@
-﻿using System.Buffers;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using Tanks.Shared.Weapons.Data;
 using Unity.Netcode;
 using UnityEngine;
 using UnityEngine.Pool;
 using VContainer;
-using VContainer.Unity;
 
 namespace Tanks.Shared.Weapons.Projectiles
 {
     public sealed class SharedProjectilePoolService :
         NetworkBehaviourExtended, IProjectilePoolService
     {
-        [Inject] private readonly IObjectResolver _container;
+        private IObjectResolver _container;
+        private ProjectilePoolLogic _logic;
 
-        public IEnumerable<KeyValuePair<ProjectileId, IProjectile>> ActiveProjectiles => _idToProjectiles;
-
-        private readonly Dictionary<IProjectileConfig, ObjectPool<ProjectileBehaviour>> _pools = new();
-        private readonly Dictionary<ProjectileId, IProjectile> _idToProjectiles = new();
-        private readonly Dictionary<IProjectile, ProjectileId> _projectilesToId = new();
-
-        private void DestroyProjectile(ProjectileBehaviour instance)
+        [Inject]
+        public void Construct(IObjectResolver container)
         {
-            if (instance) Destroy(instance.gameObject);
-        }
-
-        private ProjectileBehaviour CreateProjectile(IProjectileConfig config)
-        {
-            ProjectileBehaviour instance = config.Create() as ProjectileBehaviour;
-            _container?.InjectGameObject(instance.gameObject);
-            return instance;
+            _container = container;
+            _logic = new ProjectilePoolLogic(_container);
         }
 
         [Rpc(SendTo.NotServer,
@@ -38,7 +26,7 @@ namespace Tanks.Shared.Weapons.Projectiles
         private void ReconcileProjectileClientRpc(
             ProjectileId id, ProjectileSnapshotFromServer snapshot)
         {
-            if (_idToProjectiles.TryGetValue(id, out IProjectile projectile) == false)
+            if (_logic.TryGetById(id, out IProjectileBehaviour projectile) == false)
             {
                 // Projectiles may already be released by the time RPC arrives
                 return;
@@ -47,86 +35,102 @@ namespace Tanks.Shared.Weapons.Projectiles
             projectile.Reconcile(snapshot);
         }
 
-        public void RequestReconciliation(
-            IProjectile projectile, ProjectileSnapshotFromServer snapshot)
+        [Rpc(SendTo.Server)]
+        private void RequestReturnServerRpc(ProjectileId id)
         {
-            if (_projectilesToId.TryGetValue(projectile, out ProjectileId id) == false) return;
+            EmitMessage(new ProjectileReturnRequested { Id = id });
+        }
+
+        public bool TryGetProjectile(ProjectileId id, out IProjectileBehaviour instance)
+        {
+            return _logic.TryGetById(id, out instance);
+        }
+
+        public void RequestReconciliation(
+            IProjectileBehaviour projectile, ProjectileSnapshotFromServer snapshot)
+        {
+            if (_logic.TryGetByInstance(projectile, out ProjectileId id) == false) return;
             ReconcileProjectileClientRpc(id, snapshot);
         }
 
         public bool TryInitializePool(IProjectileConfig config)
         {
-            if (_pools.ContainsKey(config)) return false;
-
-            int initialSize = 25;
-            int maxSize = 1000;
-
-            ObjectPool<ProjectileBehaviour> pool = new ObjectPool<ProjectileBehaviour>(
-                createFunc: () => CreateProjectile(config),
-                actionOnGet: x => x.gameObject.SetActive(true),
-                actionOnRelease: x => x.gameObject.SetActive(false),
-                actionOnDestroy: DestroyProjectile,
-                collectionCheck: true,
-                initialSize,
-                maxSize);
-
-            // Prevent stutters during gameplay
-            ProjectileBehaviour[] warmup = ArrayPool<ProjectileBehaviour>.Shared.Rent(initialSize);
-
-            try
-            {
-                for (int i = 0; i < initialSize; i++) warmup[i] = pool.Get();
-                for (int i = 0; i < initialSize; i++) pool.Release(warmup[i]);
-            }
-            finally
-            {
-                ArrayPool<ProjectileBehaviour>.Shared.Return(warmup);
-                _pools[config] = pool;
-            }
-
-            return true;
+            return _logic.TryInitializePool(config);
         }
 
-        public bool TryRent(IProjectileConfig config, ProjectileId id, out IProjectile instance)
+        public bool TryRent(
+            IProjectileConfig config, ProjectileId id, out IProjectileBehaviour instance)
         {
-            if (_idToProjectiles.ContainsKey(id))
+            instance = null;
+
+            if (_logic.TryGetById(id, out _))
             {
-                Debug.LogWarning("Duplicate projectile detected");
-                instance = null;
+                Debug.LogWarning("Duplicate projectile detected: " + id);
                 return false;
             }
 
-            instance = _pools[config].Get();
-            _projectilesToId[instance] = id;
-            _idToProjectiles[id] = instance;
+            if (_logic.TryGetPool(config, out ObjectPool<ProjectileBehaviour> pool) == false)
+            {
+                Debug.LogWarning("No pool found for config: " + config);
+                return false;
+            }
 
+            instance = pool.Get();
+            _logic.Set(id, instance);
             return true;
         }
 
-        public void Return(IProjectile instance, bool removeHandle = true)
+        [Rpc(SendTo.NotServer, InvokePermission = RpcInvokePermission.Server)]
+        public void ReturnProjectileClientRpc(ProjectileId id)
         {
-            _pools[instance.Config].Release(instance as ProjectileBehaviour);
+            if (_logic.TryGetById(id, out IProjectileBehaviour projectile) == false) return;
+            Return(projectile);
+        }
+
+        public void RequestReturnAsClient(IProjectileBehaviour instance)
+        {
+            if (_logic.TryGetByInstance(instance, out ProjectileId id) == false) return;
+            RequestReturnServerRpc(id);
+            EmitMessage(new ProjectileReturnRequested { Id = id, Instance = instance });
+        }
+
+        [Rpc(SendTo.NotServer, InvokePermission = RpcInvokePermission.Server)]
+        public void RejectReturnClientRpc(ProjectileReturnRequestRejected message)
+        {
+            EmitMessage(message);
+        }
+
+        public void Return(IProjectileBehaviour instance, bool removeHandle = true)
+        {
+            if (_logic.TryGetPool(instance.Config, out var pool) == false)
+            {
+                Debug.LogWarning("Projectile pool not found for config: " + instance.Config);
+                return;
+            }
+
+            pool.Release(instance as ProjectileBehaviour);
             if (removeHandle == false) return;
 
-            _projectilesToId.Remove(instance, out ProjectileId id);
-            _idToProjectiles.Remove(id);
+            ProjectileId id = _logic.RemoveByInstance(instance);
+            EmitMessage(new ProjectileReturned { Id = id });
         }
 
         public void ReturnAll()
         {
-            foreach (IProjectile projectile in _projectilesToId.Keys)
+            IEnumerable<IProjectileBehaviour> projectiles = _logic.GetActiveProjectiles();
+
+            foreach (IProjectileBehaviour projectile in projectiles)
             {
-                Return(projectile, removeHandle: false);
+                Return(projectile, false);
             }
 
-            _projectilesToId.Clear();
-            _idToProjectiles.Clear();
+            _logic.Clear();
         }
 
         public override void OnDestroy()
         {
             base.OnDestroy();
-            foreach (var pool in _pools.Values) pool.Dispose();
+            _logic.Dispose();
         }
     }
 }

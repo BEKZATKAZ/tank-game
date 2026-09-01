@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Runtime.InteropServices;
 using Tanks.Shared.Weapons.Data;
 using Unity.Netcode;
@@ -21,7 +20,13 @@ namespace Tanks.Shared.Weapons.Projectiles
         public static bool operator ==(in ProjectileId lhs, in ProjectileId rhs) => lhs.Equals(rhs);
         public static bool operator !=(in ProjectileId lhs, in ProjectileId rhs) => !lhs.Equals(rhs);
 
-        public override int GetHashCode() => HashCode.Combine(ShotId, Value);
+        public override int GetHashCode()
+        {
+            int shotId = ShotId.GetHashCode();
+            int value = Value.GetHashCode();
+            return shotId ^ ((value << 16) | (value >> 24));
+        }
+
         public override string ToString() => (ShotId, Value).ToString();
         public override bool Equals(object obj) => obj is ProjectileId other && Equals(other);
 
@@ -31,15 +36,18 @@ namespace Tanks.Shared.Weapons.Projectiles
         }
     }
 
-    public interface IProjectilePoolService
+    public interface IProjectilePoolService : INetworkBehaviourExtended
     {
-        IEnumerable<KeyValuePair<ProjectileId, IProjectile>> ActiveProjectiles { get; }
-
-        void RequestReconciliation(IProjectile projectile, ProjectileSnapshotFromServer snapshot);
         bool TryInitializePool(IProjectileConfig config);
+        bool TryGetProjectile(ProjectileId id, out IProjectileBehaviour instance);
+        bool TryRent(IProjectileConfig config, ProjectileId id, out IProjectileBehaviour instance);
 
-        bool TryRent(IProjectileConfig config, ProjectileId id, out IProjectile instance);
-        void Return(IProjectile instance, bool removeHandle = true);
+        void RequestReconciliation(IProjectileBehaviour projectile, ProjectileSnapshotFromServer snapshot);
+        void ReturnProjectileClientRpc(ProjectileId id);
+        void RejectReturnClientRpc(ProjectileReturnRequestRejected message);
+        void RequestReturnAsClient(IProjectileBehaviour instance);
+
+        void Return(IProjectileBehaviour instance, bool removeHandle = true);
         void ReturnAll();
     }
 }

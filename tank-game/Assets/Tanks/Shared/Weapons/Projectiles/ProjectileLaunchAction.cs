@@ -27,14 +27,14 @@ namespace Tanks.Server.Weapons.Projectiles
         {
             ProjectileId projectileId = new ProjectileId(id, 1);
 
-            if (_pool.TryRent(_config, projectileId, out IProjectile projectile) == false)
+            if (_pool.TryRent(_config, projectileId, out IProjectileBehaviour projectile) == false)
             {
                 return;
             }
 
             projectile.Transform.WorldPosition = _muzzlePoint.WorldPosition;
             projectile.Transform.WorldRotation = _muzzlePoint.WorldRotation;
-            projectile.Launch(owner);
+            projectile.Launch(owner, projectileId);
         }
     }
 }

@@ -9,7 +9,12 @@ namespace Tanks.Server.Entities
     {
         HealthState GetState();
         void SetState(in HealthState newState);
-        void Damage(PositiveFloat amount, IEntityBehaviour from = null);
+
+        void Damage(
+            PositiveFloat amount, 
+            IEntityBehaviour from = null, 
+            HealthEventId eventId = default);
+
         void Heal(PositiveFloat amount, IEntityBehaviour from = null);
     }
 
@@ -17,26 +22,23 @@ namespace Tanks.Server.Entities
         NetworkComponent<IHealthBehaviour>, IAuthoritativeHealth
     {
         private HealthState _state = new HealthState(100, 100);
-        private IEntityBehaviour _lastFrom;
 
         public HealthState GetState() => _state;
         public void SetState(in HealthState newState) => _state = newState;
 
-        public void Damage(PositiveFloat amount, IEntityBehaviour from = null)
+        public void Damage(
+            PositiveFloat amount,
+            IEntityBehaviour from = null,
+            HealthEventId eventId = default)
         {
             _state = new HealthState(_state.Current - amount, _state.Max);
-            _lastFrom = from;
+            Behaviour.UpdateStateEveryoneRpc(_state, from?.Id ?? default, eventId);
         }
 
         public void Heal(PositiveFloat amount, IEntityBehaviour from = null)
         {
             _state = new HealthState(_state.Current + amount, _state.Max);
-            _lastFrom = from;
-        }
-
-        protected override void OnTick(int tick, float tickDelta)
-        {
-            Behaviour.UpdateStateEveryoneRpc(tick, _state, _lastFrom?.Id ?? default);
+            Behaviour.UpdateStateEveryoneRpc(_state, from?.Id ?? default);
         }
     }
 }

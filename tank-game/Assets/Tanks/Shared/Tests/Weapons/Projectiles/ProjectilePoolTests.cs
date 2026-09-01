@@ -1,8 +1,10 @@
-﻿using NUnit.Framework;
+﻿using NSubstitute;
+using NUnit.Framework;
 using Tanks.Shared.Weapons;
 using Tanks.Shared.Weapons.Data;
 using Tanks.Shared.Weapons.Projectiles;
 using UnityEngine;
+using VContainer;
 
 namespace Tanks.Shared.Tests.Weapons.Projectiles
 {
@@ -15,6 +17,8 @@ namespace Tanks.Shared.Tests.Weapons.Projectiles
         {
             _pool = new GameObject("projectile-pool")
                 .AddComponent<SharedProjectilePoolService>();
+
+            _pool.Construct(Substitute.For<IObjectResolver>());
         }
 
         [TearDown]

@@ -9,7 +9,7 @@ namespace Tanks.Client.Weapons
     public sealed class ProjectileReconciliation : IDisposable
     {
         public ProjectileReconciliation(
-            IProjectile projectile,
+            IProjectileBehaviour projectile,
             float positionThreshold = 0.001f,
             float degreeThreshold = 10)
         {
@@ -20,7 +20,7 @@ namespace Tanks.Client.Weapons
         }
 
         private readonly RingBuffer<ProjectileSnapshot> _tickSnapshots;
-        private readonly IProjectile _projectile;
+        private readonly IProjectileBehaviour _projectile;
         private readonly float _positionThreshold;
         private readonly float _degreeThreshold;
 
@@ -44,6 +44,7 @@ namespace Tanks.Client.Weapons
         public bool TryReconcile(
             ITransform predictedTransform,
             ProjectileSnapshotFromServer snapshot,
+            LaunchCallbacks launchCallbacks,
             float tickDelta,
             out float2 positionError)
         {
@@ -65,7 +66,7 @@ namespace Tanks.Client.Weapons
             // Replay simulation
             for (int i = snapshot.ServerTick; i < _currentTick; i++)
             {
-                _projectile.Simulate(default, predictedTransform, tickDelta);
+                _projectile.Simulate(launchCallbacks, predictedTransform, tickDelta);
             }
 
             float2 predictedPosition = predictedTransform.WorldPosition;

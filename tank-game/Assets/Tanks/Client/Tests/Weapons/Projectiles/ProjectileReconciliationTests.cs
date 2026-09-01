@@ -1,31 +1,23 @@
+using NSubstitute;
 using NUnit.Framework;
 using Tanks.Client.Weapons;
 using Tanks.Shared.Adapters;
-using Tanks.Shared.Weapons.Data;
 using Tanks.Shared.Weapons.Projectiles;
 using Unity.Mathematics;
 
 namespace Tanks.Client.Tests.Weapons.Projectiles
 {
-    public sealed class ProjectileReconciliationTests
+    public class ProjectileReconciliationTests
     {
         private ProjectileReconciliation _reconciliation;
-        private IProjectile _projectile;
+        private IProjectileBehaviour _projectile;
         private ITransform _predictedTransform;
 
         [SetUp]
         public void Setup()
         {
             _predictedTransform = new ProjectileTransform(0.5f);
-
-            IProjectileConfig config = new MockProjectileConfig
-            {
-                LifeTime = 5,
-                MaxRicochetCount = 5,
-                Speed = 5
-            };
-
-            _projectile = config.Create();
+            _projectile = Substitute.For<IProjectileBehaviour>();
             _reconciliation = new ProjectileReconciliation(_projectile);
         }
 
@@ -53,7 +45,7 @@ namespace Tanks.Client.Tests.Weapons.Projectiles
             };
 
             Assert.False(_reconciliation.TryReconcile(
-                _predictedTransform, snapshot, 0.05f, out _), "Too sensititve");
+                _predictedTransform, snapshot, default, 0.05f, out _), "Too sensititve");
 
             Assert.AreEqual(initialPosition, _predictedTransform.WorldPosition,
                 "Positions differ, but no reconciliation occured");
@@ -74,7 +66,7 @@ namespace Tanks.Client.Tests.Weapons.Projectiles
             };
 
             Assert.True(_reconciliation.TryReconcile(
-                _predictedTransform, snapshot, 0.05f, out float2 error), "Too strict");
+                _predictedTransform, snapshot, default, 0.05f, out float2 error), "Too strict");
 
             float expectedErrorX = math.abs(difference) + _projectile.Config.Speed * 0.05f;
 
@@ -98,7 +90,7 @@ namespace Tanks.Client.Tests.Weapons.Projectiles
             };
 
             Assert.True(_reconciliation.TryReconcile(
-                _predictedTransform, snapshot, 0.05f, out float2 error), "Too strict");
+                _predictedTransform, snapshot, default, 0.05f, out float2 error), "Too strict");
 
             Assert.AreEqual(float2.zero, error, "Should snap when the distance is too much");
         }
