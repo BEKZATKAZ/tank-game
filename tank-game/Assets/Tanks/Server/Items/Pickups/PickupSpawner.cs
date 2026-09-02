@@ -24,7 +24,12 @@ namespace Tanks.Server.Items.Pickups
         {
             _items = items;
             _bus = bus;
+
+            _bus.RegisterHandler<TilemapGenerated>(this);
+            _bus.RegisterHandler<GameStarted>(this);
+            _bus.RegisterHandler<ItemPickedUp>(this);
         }
+
         public float CurrentCooldown { get; private set; }
 
         private readonly IItemDatabase _items;
@@ -62,11 +67,11 @@ namespace Tanks.Server.Items.Pickups
             CurrentCooldown = _random.NextFloat(Behaviour.MinCooldown, Behaviour.MaxCooldown);
         }
 
-        protected override void OnInitialize()
+        protected override void OnDestroy()
         {
-            _bus.RegisterHandler<TilemapGenerated>(this);
-            _bus.RegisterHandler<GameStarted>(this);
-            _bus.RegisterHandler<ItemPickedUp>(this);
+            _bus.UnregisterHandler<TilemapGenerated>(this);
+            _bus.UnregisterHandler<GameStarted>(this);
+            _bus.UnregisterHandler<ItemPickedUp>(this);
         }
 
         protected override void OnTick(int tick, float tickDelta)

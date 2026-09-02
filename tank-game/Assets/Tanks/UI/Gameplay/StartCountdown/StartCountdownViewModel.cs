@@ -6,7 +6,8 @@ using Tanks.Utils;
 
 namespace Tanks.UI.Gameplay.StartCountdown
 {
-    public sealed class StartCountdownViewModel : IViewModel, IMessageHandler<GameStarted>
+    public sealed class StartCountdownViewModel :
+        IViewModel, IMessageHandler<GameStarted>, IDisposable
     {
         public StartCountdownViewModel(IMessageBus bus)
         {
@@ -18,6 +19,11 @@ namespace Tanks.UI.Gameplay.StartCountdown
         public BindableProperty<string> Title { get; } = new();
 
         private readonly IMessageBus _bus;
+
+        public void Dispose()
+        {
+            _bus.UnregisterHandler<GameStarted>(this);
+        }
 
         public async void Handle(GameStarted message, IMessageSender sender)
         {

@@ -15,6 +15,7 @@ namespace Tanks.Server.Bootstrap
         {
             _bus = bus;
             _pool = pool;
+            _bus.RegisterHandler<Died>(this);
         }
 
         private readonly IMessageBus _bus;
@@ -28,9 +29,9 @@ namespace Tanks.Server.Bootstrap
             _lastDiedTick = _currentTick;
         }
 
-        protected override void OnInitialize()
+        protected override void OnDestroy()
         {
-            _bus.RegisterHandler<Died>(this);
+            _bus.UnregisterHandler<Died>(this);
         }
 
         protected override void OnTick(int tick, float tickDelta)

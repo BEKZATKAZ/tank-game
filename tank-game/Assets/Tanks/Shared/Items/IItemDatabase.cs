@@ -8,6 +8,7 @@ using Tanks.Core.Repositories;
 using Tanks.Shared.Items.Behaviours;
 using Tanks.Shared.Items.Data;
 using Tanks.Utils;
+using UnityEngine;
 using UnityEngine.Rendering.VirtualTexturing;
 using VContainer;
 
@@ -94,7 +95,26 @@ namespace Tanks.Shared.Items
             return _behaviours;
         }
 
-        public IItemConfig Get(in ItemIdentifier id) => _items[id];
-        public void Dispose() => _loader.ReleaseFromKey("Gameplay/ItemDatabase");
+        public IItemConfig Get(in ItemIdentifier id)
+        {
+            return _items[id];
+        }
+
+        public void Dispose()
+        {
+            _loader.ReleaseFromKey("Gameplay/ItemDatabase");
+
+            foreach (ItemBehaviourBase behaviour in _behaviours.SelectMany(x => x.Value))
+            {
+                try
+                {
+                    if (behaviour is IDisposable disposable) disposable.Dispose();
+                }
+                catch (Exception e)
+                {
+                    Debug.LogException(e);
+                }
+            }
+        }
     }
 }

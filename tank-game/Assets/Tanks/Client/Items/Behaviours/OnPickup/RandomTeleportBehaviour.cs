@@ -1,3 +1,4 @@
+using System;
 using Tanks.Shared.Generation;
 using Tanks.Shared.Items;
 using Tanks.Shared.Items.Behaviours;
@@ -8,7 +9,7 @@ namespace Tanks.Client.Items.Behaviours.OnPickup
 {
     [ItemBehaviour("random_teleport")]
     public sealed class RandomTeleportBehaviour :
-        ItemBehaviourBase, IMessageHandler<TilemapGenerated>
+        ItemBehaviourBase, IMessageHandler<TilemapGenerated>, IDisposable
     {
         public RandomTeleportBehaviour(IMessageBus bus)
         {
@@ -16,8 +17,13 @@ namespace Tanks.Client.Items.Behaviours.OnPickup
             _bus.RegisterHandler<TilemapGenerated>(this);
         }
 
-        private IMessageBus _bus;
+        private readonly IMessageBus _bus;
         private TilemapGenerated _generated;
+
+        public void Dispose()
+        {
+            _bus.UnregisterHandler<TilemapGenerated>(this);
+        }
 
         public void Handle(TilemapGenerated message, IMessageSender sender)
         {

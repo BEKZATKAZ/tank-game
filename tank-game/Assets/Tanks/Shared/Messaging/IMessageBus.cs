@@ -9,7 +9,7 @@ namespace Tanks.Shared.Messaging
     public interface IMessageBus
     {
         void RegisterHandler<T>(Required<IMessageHandler<T>> handler);
-
+        void UnregisterHandler<T>(Required<IMessageHandler<T>> handler);
         void Publish<T>(T message, IMessageSender sender);
     }
 
@@ -62,6 +62,20 @@ namespace Tanks.Shared.Messaging
             }
 
             list.Add(handler.Value);
+        }
+
+        public void UnregisterHandler<T>(Required<IMessageHandler<T>> handler)
+        {
+            Type type = typeof(T);
+
+            if (_handlers.TryGetValue(type, out List<IMessageHandler> list) == false)
+            {
+                throw new ArgumentException($"No message handlers found for {type.Name}");
+            }
+
+            if (list.Remove(handler.Value)) return;
+
+            throw new ArgumentException($"Handler '{type.Name}' not registered");
         }
     }
 }

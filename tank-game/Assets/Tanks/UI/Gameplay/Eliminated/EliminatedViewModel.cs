@@ -1,4 +1,5 @@
-﻿using Tanks.Client.Entities;
+﻿using System;
+using Tanks.Client.Entities;
 using Tanks.Localization;
 using Tanks.Shared.Entities.Health;
 using Tanks.Shared.Messaging;
@@ -6,7 +7,7 @@ using Tanks.Utils;
 
 namespace Tanks.UI.Gameplay.Eliminated
 {
-    public sealed class EliminatedViewModel : IViewModel, IMessageHandler<Died>
+    public sealed class EliminatedViewModel : IViewModel, IMessageHandler<Died>, IDisposable
     {
         public EliminatedViewModel(
             IMessageBus bus,
@@ -26,6 +27,11 @@ namespace Tanks.UI.Gameplay.Eliminated
         private readonly IMessageBus _bus;
         private readonly IClientEntityService _clientEntityService;
         private readonly ILocalizationDatabase _localization;
+
+        public void Dispose()
+        {
+            _bus.UnregisterHandler<Died>(this);
+        }
 
         public void Handle(Died message, IMessageSender sender)
         {

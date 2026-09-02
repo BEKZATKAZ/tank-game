@@ -51,6 +51,13 @@ namespace Tanks.UI.Gameplay.ItemDescription
         private readonly IMessageBus _bus;
         private ItemIdentifier _currentEnteredItemId;
 
+        public void Dispose()
+        {
+            _localization.LocaleChanged -= OnLocaleChanged;
+            _bus.UnregisterHandler<PickupAreaEntered>(this);
+            _bus.UnregisterHandler<PickupAreaLeft>(this);
+        }
+
         private void OnLocaleChanged(string locale)
         {
             if (_currentEnteredItemId == default) return;
@@ -102,11 +109,6 @@ namespace Tanks.UI.Gameplay.ItemDescription
             _currentEnteredItemId = message.ItemId;
             _enteredPickups.Add(message.PickupId, message.ItemId);
             Reset(message.ItemId);
-        }
-
-        public void Dispose()
-        {
-            _localization.LocaleChanged -= OnLocaleChanged;
         }
     }
 }

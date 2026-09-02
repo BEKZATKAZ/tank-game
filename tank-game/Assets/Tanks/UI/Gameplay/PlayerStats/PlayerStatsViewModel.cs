@@ -42,6 +42,8 @@ namespace Tanks.UI.Gameplay.PlayerStats
         public void Dispose()
         {
             _clientEntityService.Changed -= OnPlayerChanged;
+            _bus.UnregisterHandler<HealthChangedFromPrediction>(this);
+            _bus.UnregisterHandler<HealthChangedFromServer>(this);
         }
 
         public void Handle(HealthChangedFromServer message, IMessageSender sender)
