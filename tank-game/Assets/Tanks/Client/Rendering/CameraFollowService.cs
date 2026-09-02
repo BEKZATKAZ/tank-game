@@ -52,16 +52,16 @@ namespace Tanks.Client.Rendering
                 math.clamp(target.y, minY, maxY));
         }
 
-        private void UpdateTargetPosition()
+        private void UpdateTargetPosition(float deltaTime)
         {
             float lookAheadSpeed = 3;
             float lookAheadMultiplier = 0.65f;
 
             float2 playerPosition = _target.WorldPosition;
-            float2 movement = (playerPosition - _previousTargetPosition) / Time.deltaTime;
+            float2 movement = (playerPosition - _previousTargetPosition) / deltaTime;
             float2 desiredLookAhead = movement * lookAheadMultiplier;
 
-            float dt = math.min(Time.deltaTime, 0.05f);
+            float dt = math.min(deltaTime, 0.1f);
             float t = 1 - math.exp(-lookAheadSpeed * dt);
 
             _lookAhead = math.lerp(_lookAhead, desiredLookAhead, t);
@@ -74,7 +74,7 @@ namespace Tanks.Client.Rendering
             ICamera camera = _cameraMain.Get();
 
             if (camera is null) return;
-            if (_target != null && _target.IsValid) UpdateTargetPosition();
+            if (_target != null && _target.IsValid) UpdateTargetPosition(Time.unscaledDeltaTime);
 
             float2 currentPosition = camera.Transform.WorldPosition;
             float2 clamped = ClampToBounds(_cameraNextPosition, camera);

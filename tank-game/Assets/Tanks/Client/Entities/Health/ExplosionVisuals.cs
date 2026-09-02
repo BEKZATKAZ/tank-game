@@ -16,35 +16,47 @@ namespace Tanks.Client.Entities.Health
         NetworkComponent<IHealthBehaviour>,
         INetworkMessageHandler<Died>
     {
-        public ExplosionVisuals(IVisualService particlePlayer, ISpectatorService spectatorService)
+        public ExplosionVisuals(
+            IHitstopService hitstop,
+            IVisualService particlePlayer,
+            ISpectatorService spectatorService)
         {
+            _hitstop = hitstop;
             _particlePlayer = particlePlayer;
             _spectatorService = spectatorService;
         }
 
+        private readonly IHitstopService _hitstop;
         private readonly IVisualService _particlePlayer;
         private readonly ISpectatorService _spectatorService;
 
-        public async void Handle(Died message)
+        private void Spectate(IEntityBehaviour eliminatedFrom, float2 worldPosition)
         {
-            _particlePlayer.Play<ParticleSystem>(
-                VisualType.Explosion, message.WorldPosition).Play();
-            
-            await UniTask.Delay(1500);
-
-            IEntityBehaviour newTarget = message.From;
+            IEntityBehaviour newTarget = eliminatedFrom;
 
             if (newTarget is null || newTarget.IsValid == false)
             {
                 newTarget = NetworkManager.Singleton.SpawnManager.PlayerObjects
                     .Select(x => x.GetComponent<IEntityBehaviour>())
-                    .OrderBy(x => math.distance(x.Transform.WorldPosition, message.WorldPosition))
+                    .OrderBy(x => math.distance(x.Transform.WorldPosition, worldPosition))
                     .FirstOrDefault();
             }
 
             if (newTarget is null || newTarget.IsValid == false) return;
 
             _spectatorService.Spectate(newTarget.AsRequired());
+        }
+
+        public async void Handle(Died message)
+        {
+            _particlePlayer.Play<ParticleSystem>(
+                VisualType.Explosion, message.WorldPosition).Play();
+
+            await UniTask.Delay(150);
+            await _hitstop.RunAsync(0.3f);
+            await UniTask.Delay(1000);
+
+            Spectate(message.From, message.WorldPosition);
         }
 
         protected override void OnInitialize()

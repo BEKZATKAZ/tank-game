@@ -37,6 +37,7 @@ namespace Tanks.Client.Bootstrap
             builder.Register<IClientEntityService, ClientEntityService>(Lifetime.Singleton);
 
             builder.Register<IVisualService, VisualService>(Lifetime.Singleton);
+            builder.Register<IHitstopService, HitstopService>(Lifetime.Singleton);
             builder.Register<IShotIdGenerator, ShotIdGenerator>(Lifetime.Singleton);
         }
     }

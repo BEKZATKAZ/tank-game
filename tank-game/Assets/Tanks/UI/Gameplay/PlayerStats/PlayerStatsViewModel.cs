@@ -25,7 +25,6 @@ namespace Tanks.UI.Gameplay.PlayerStats
             _bus.RegisterHandler<HealthChangedFromServer>(this);
 
             _clientEntityService.Changed += OnPlayerChanged;
-            _currentPlayer ??= _clientEntityService.GetPossessedEntity();
         }
 
         public BindableProperty<float> InstantHealthOverlay { get; } = new(1);
@@ -34,7 +33,6 @@ namespace Tanks.UI.Gameplay.PlayerStats
 
         private readonly IMessageBus _bus;
         private readonly IClientEntityService _clientEntityService;
-        private IEntityBehaviour _currentPlayer;
         private float _lastFrozenTime;
         private float _currentTime;
         private float _latestAuthoritativeOverlay = 1;
@@ -48,7 +46,7 @@ namespace Tanks.UI.Gameplay.PlayerStats
 
         public void Handle(HealthChangedFromServer message, IMessageSender sender)
         {
-            if (_currentPlayer != message.Target) return;
+            if (message.Target.IsPossessed == false) return;
 
             OnHealthChanged(message.OldState, message.AuthoritativeState);
             _latestAuthoritativeOverlay = InstantHealthOverlay.Value;
@@ -59,7 +57,7 @@ namespace Tanks.UI.Gameplay.PlayerStats
 
         public void Handle(HealthChangedFromPrediction message, IMessageSender sender)
         {
-            if (_currentPlayer != message.Target) return;
+            if (message.Target.IsPossessed == false) return;
             OnHealthChanged(message.OldState, message.NewState);
 
             // Freeze overlay and wait for authoritative health
@@ -89,9 +87,7 @@ namespace Tanks.UI.Gameplay.PlayerStats
 
         private void OnPlayerChanged(IEntityBehaviour previous, IEntityBehaviour current)
         {
-            _currentPlayer = current;
             HealthState state = current.GetBehaviour<IHealthBehaviour>().ServerState.Value;
-
             OnHealthChanged(state, state);
             TankColor.Value = Color.white;
         }

@@ -2,6 +2,7 @@ using Cysharp.Threading.Tasks;
 using System.Collections.Generic;
 using System.Linq;
 using Tanks.Audio;
+using Tanks.Client.Visuals;
 using Tanks.Shared;
 using Tanks.Shared.Entities.Health;
 using UnityEngine;
@@ -12,11 +13,13 @@ namespace Tanks.Client.Entities.Health
         NetworkComponent<IHealthBehaviour>,
         INetworkMessageHandler<HealthChangedFromPrediction>
     {
-        public DamagePredictionEffect(IAudioPlayer audioPlayer)
+        public DamagePredictionEffect(IHitstopService hitstop, IAudioPlayer audioPlayer)
         {
+            _hitstop = hitstop;
             _audioPlayer = audioPlayer;
         }
 
+        private readonly IHitstopService _hitstop;
         private readonly IAudioPlayer _audioPlayer;
 
         private Dictionary<SpriteRenderer, Color> _sprites;
@@ -39,6 +42,12 @@ namespace Tanks.Client.Entities.Health
                 path: "event:/SFX/DamageTaken",
                 target: Transform,
                 useDefault: Behaviour.Entity.IsPossessed);
+
+            if (message.NewState.Current > 0 && (message.From?.IsPossessed ?? false))
+            {
+                await UniTask.DelayFrame(1);
+                await _hitstop.RunAsync(0.05f);
+            }
 
             await UniTask.Delay(150);
 

@@ -17,7 +17,7 @@ namespace Tanks.Client.Entities.Health
 
         public void Handle(HealthChangedFromPrediction message)
         {
-            if (message.OldState.Current < message.NewState.Current) return;
+            if (message.OldState.Current <= message.NewState.Current) return;
             if (Behaviour.Entity.IsPossessed) return;
 
             float current = message.NewState.Current;
