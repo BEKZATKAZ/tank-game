@@ -25,7 +25,7 @@ namespace Tanks.UI.Gameplay.PlayerStats
             _bus.RegisterHandler<HealthChangedFromServer>(this);
 
             _clientEntityService.Changed += OnPlayerChanged;
-            _currentPlayer ??= _clientEntityService.GetPossessedPlayer();
+            _currentPlayer ??= _clientEntityService.GetPossessedEntity();
         }
 
         public BindableProperty<float> InstantHealthOverlay { get; } = new(1);

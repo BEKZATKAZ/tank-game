@@ -23,7 +23,7 @@ namespace Tanks.Client.Entities.Health
 
         public void Handle(Died message)
         {
-            IEntityBehaviour localPlayer = _entityService.GetPossessedPlayer();
+            IEntityBehaviour localPlayer = _entityService.GetPossessedEntity();
 
             if (message.Target == localPlayer)
             {

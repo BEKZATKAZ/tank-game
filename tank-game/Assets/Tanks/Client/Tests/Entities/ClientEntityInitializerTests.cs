@@ -24,7 +24,7 @@ namespace Tanks.Client.Tests.Entities
             behaviour.IsLocalPlayer.Returns(true);
 
             _component.Initialize(behaviour);
-            Assert.AreEqual(behaviour, _service.GetPossessedPlayer());
+            Assert.AreEqual(behaviour, _service.GetPossessedEntity());
         }
 
         [Test]
@@ -34,7 +34,7 @@ namespace Tanks.Client.Tests.Entities
             behaviour.IsLocalPlayer.Returns(false);
 
             _component.Initialize(behaviour);
-            Assert.Null(_service.GetPossessedPlayer());
+            Assert.Null(_service.GetPossessedEntity());
         }
     }
 }

@@ -16,7 +16,7 @@ namespace Tanks.Client.Entities
         protected override void OnInitialize()
         {
             if (Behaviour.IsLocalPlayer == false) return;
-            _service.PossessPlayer(Behaviour.AsRequired());
+            _service.PossessEntity(Behaviour.AsRequired());
         }
     }
 }

@@ -20,7 +20,7 @@ namespace Tanks.Client.Weapons
             _audioPlayer.PlayOneShotAttached(
                 path: "event:/SFX/Shoot",
                 target: Transform,
-                useDefault: Behaviour.IsLocalPlayer);
+                useDefault: Behaviour.Entity.IsPossessed);
         }
 
         protected override void OnInitialize()

@@ -3,30 +3,34 @@ using Tanks.Shared.Entities;
 
 namespace Tanks.Client.Entities
 {
-    public delegate void PossessedPlayerChanged(IEntityBehaviour previous, IEntityBehaviour current);
+    public delegate void PossessedEntityChanged(IEntityBehaviour previous, IEntityBehaviour current);
 
     public interface IClientEntityService
     {
-        event PossessedPlayerChanged Changed;
-        IEntityBehaviour GetPossessedPlayer();
-        void PossessPlayer(Required<IEntityBehaviour> player);
+        event PossessedEntityChanged Changed;
+        IEntityBehaviour GetPossessedEntity();
+        void PossessEntity(Required<IEntityBehaviour> entity);
     }
 
     public sealed class ClientEntityService : IClientEntityService
     {
-        public event PossessedPlayerChanged Changed;
+        public event PossessedEntityChanged Changed;
 
         private IEntityBehaviour _possessed;
 
-        public IEntityBehaviour GetPossessedPlayer()
+        public IEntityBehaviour GetPossessedEntity()
         {
             return _possessed;
         }
 
-        public void PossessPlayer(Required<IEntityBehaviour> player)
+        public void PossessEntity(Required<IEntityBehaviour> entity)
         {
             IEntityBehaviour previous = _possessed;
-            _possessed = player.Value;
+            previous?.MarkAsUnpossessed();
+
+            _possessed = entity.Value;
+            _possessed.MarkAsPossessed();
+
             Changed?.Invoke(previous, _possessed);
         }
     }

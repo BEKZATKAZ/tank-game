@@ -38,7 +38,7 @@ namespace Tanks.Client.Entities.Health
             _audioPlayer.PlayOneShotAttached(
                 path: "event:/SFX/DamageTaken",
                 target: Transform,
-                useDefault: Behaviour.IsLocalPlayer);
+                useDefault: Behaviour.Entity.IsPossessed);
 
             await UniTask.Delay(150);
 

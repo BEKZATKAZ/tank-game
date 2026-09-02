@@ -1,5 +1,6 @@
 ﻿using Tanks.Audio;
 using Tanks.Shared;
+using Tanks.Shared.Entities;
 using Tanks.Shared.Items;
 
 namespace Tanks.Client.Items.Pickups
@@ -19,12 +20,13 @@ namespace Tanks.Client.Items.Pickups
 
         public void Handle(ItemPickedUp message)
         {
+            IEntityBehaviour entity = Behaviour.GetBehaviour<IEntityBehaviour>();
             IClientItemConfig config = _database.Get(message.ItemId);
 
             _audioPlayer.PlayOneShotAttached(
                 path: config.OnPickUpSound,
                 target: Transform,
-                useDefault: Behaviour.IsLocalPlayer);
+                useDefault: entity.IsPossessed);
         }
 
         protected override void OnInitialize()

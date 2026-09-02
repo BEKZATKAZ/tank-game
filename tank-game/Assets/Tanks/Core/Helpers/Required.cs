@@ -25,7 +25,13 @@ namespace Tanks.Core.Helpers
 
         public override string ToString() => Value.ToString();
         public override int GetHashCode() => Value.GetHashCode();
-        public override bool Equals(object obj) => Value.Equals(obj);
+
+        public override bool Equals(object obj) => obj switch
+        {
+            T value => Equals(value),
+            Required<T> required => Equals(required),
+            _ => false
+        };
 
         public bool Equals(T other) => Value.Equals(other);
         public bool Equals(Required<T> other) => Value.Equals(other.Value);

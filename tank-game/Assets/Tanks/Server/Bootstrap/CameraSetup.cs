@@ -1,4 +1,7 @@
-﻿using Tanks.Core.Helpers;
+﻿// ! This is kept in the editor for testing
+#if UNITY_EDITOR
+using Cysharp.Threading.Tasks;
+using Tanks.Core.Helpers;
 using Tanks.Shared;
 using Tanks.Shared.Bootstrap;
 using Tanks.Shared.Generation;
@@ -11,8 +14,11 @@ namespace Tanks.Server.Bootstrap
         NetworkComponent<IGameStartBehaviour>,
         INetworkMessageHandler<TilemapGenerated>
     {
-        public void Handle(TilemapGenerated message)
+        public async void Handle(TilemapGenerated message)
         {
+            // Sometimes camera setup is called before the scene is fully loaded
+            await UniTask.DelayFrame(1);
+
             float3 size = message.Bounds.size;
             Required<Camera> camera = Camera.main;
 
@@ -22,14 +28,8 @@ namespace Tanks.Server.Bootstrap
 
         protected override void OnInitialize()
         {
-            // This is kept in the editor for testing
-            if (Application.isEditor == false)
-            {
-                IsEnabled = false;
-                return;
-            }
-
             Behaviour.RegisterMessageHandler(this);
         }
     }
 }
+#endif

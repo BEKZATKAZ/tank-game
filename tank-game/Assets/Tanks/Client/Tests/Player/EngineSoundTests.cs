@@ -1,11 +1,13 @@
 using NSubstitute;
 using NUnit.Framework;
 using Tanks.Audio;
+using Tanks.Client.Entities;
 using Tanks.Client.Input;
 using Tanks.Client.Player;
 using Tanks.Client.Rendering;
 using Tanks.Shared.Adapters;
 using Tanks.Shared.Driving;
+using Tanks.Shared.Entities;
 using Unity.Mathematics;
 
 namespace Tanks.Client.Tests.Player
@@ -16,6 +18,7 @@ namespace Tanks.Client.Tests.Player
         private IAudioFactory _audioFactory;
         private ICameraMainService _cameraService;
         private IAudioInstance _mockAudioInstance;
+        private IClientEntityService _clientEntityService;
         private EngineSound _component;
 
         [SetUp]
@@ -24,15 +27,24 @@ namespace Tanks.Client.Tests.Player
             _input = Substitute.For<IInputService<ManualDriveInput>>();
             _audioFactory = Substitute.For<IAudioFactory>();
             _cameraService = Substitute.For<ICameraMainService>();
-            _component = new EngineSound(_input, _audioFactory, _cameraService);
-
+            _clientEntityService = Substitute.For<IClientEntityService>();
             _mockAudioInstance = Substitute.For<IAudioInstance>();
+
+            _component = new EngineSound(
+                _input, _audioFactory, _cameraService, _clientEntityService);
+
             _audioFactory
                 .CreateInstance(Arg.Any<string>())
                 .Returns(_mockAudioInstance);
 
             _component.Initialize(Substitute.For<ITankDriveBehaviour>());
             _component.Behaviour.Transform.Returns(Substitute.For<ITransform>());
+        }
+
+        [TearDown]
+        public void TearDown()
+        {
+            _component.Destroy();
         }
 
         [TestCase(0)]

@@ -29,7 +29,7 @@ namespace Tanks.UI.Gameplay.Eliminated
 
         public void Handle(Died message, IMessageSender sender)
         {
-            if (_clientEntityService.GetPossessedPlayer() != message.Target) return;
+            if (_clientEntityService.GetPossessedEntity() != message.Target) return;
             Title.Value = "ELIMINATED";
             Subtitle.Value = "";
         }

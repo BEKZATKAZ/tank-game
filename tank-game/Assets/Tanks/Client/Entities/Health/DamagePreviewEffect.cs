@@ -18,6 +18,7 @@ namespace Tanks.Client.Entities.Health
         public void Handle(HealthChangedFromPrediction message)
         {
             if (message.OldState.Current < message.NewState.Current) return;
+            if (Behaviour.Entity.IsPossessed) return;
 
             float current = message.NewState.Current;
             float old = message.OldState.Current;
@@ -29,12 +30,6 @@ namespace Tanks.Client.Entities.Health
 
         protected override void OnInitialize()
         {
-            if (Behaviour.IsLocalPlayer)
-            {
-                IsEnabled = false;
-                return;
-            }
-
             Behaviour.RegisterMessageHandler(this);
         }
     }

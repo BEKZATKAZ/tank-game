@@ -79,17 +79,8 @@ namespace Tanks.Client.Rendering
             float2 currentPosition = camera.Transform.WorldPosition;
             float2 clamped = ClampToBounds(_cameraNextPosition, camera);
 
-            // Snap if too far
-            if (math.distance(currentPosition, clamped) > 10)
-            {
-                camera.Transform.WorldPosition = clamped;
-                _cameraNextPosition = clamped;
-                _lookAhead = float2.zero;
-                return;
-            }
-
             // Limit delta time to prevent overshooting during stutters
-            float deltaTime = math.min(Time.deltaTime, 0.05f);
+            float deltaTime = math.min(Time.deltaTime, 0.1f);
             
             float2 position = math.lerp(currentPosition, clamped, deltaTime * _positionSpeed);
             camera.Transform.WorldPosition = position;

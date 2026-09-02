@@ -25,7 +25,7 @@ namespace Tanks.Client.Tests.Weapons
         public void Fire_ShouldPlaySound(bool isLocalPlayer)
         {
             ITransform transform = _component.Transform;
-            _component.Behaviour.IsLocalPlayer.Returns(isLocalPlayer);
+            _component.Behaviour.Entity.IsPossessed.Returns(isLocalPlayer);
 
             _component.Handle(new WeaponUsed());
             _audioPlayer.Received(1).PlayOneShotAttached(Arg.Any<string>(), transform, isLocalPlayer);

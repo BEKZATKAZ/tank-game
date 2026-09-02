@@ -20,7 +20,7 @@ namespace Tanks.UI.Tests.Gameplay
             _localPlayer = Substitute.For<IEntityBehaviour>();
 
             _clientEntityService = Substitute.For<IClientEntityService>();
-            _clientEntityService.GetPossessedPlayer().Returns(_localPlayer);
+            _clientEntityService.GetPossessedEntity().Returns(_localPlayer);
 
             return new PlayerStatsViewModel(Substitute.For<IMessageBus>(), _clientEntityService);
         }
