@@ -15,7 +15,6 @@ namespace Tanks.Editor.Items
 
         [Header("Visuals")]
         [SerializeField] private Material _iconMaterial;
-        [SerializeField] private Material _glowMaterial;
         [SerializeField] private Sprite _icon;
         [SerializeField] private Color _accentColor = Color.white;
 
@@ -29,7 +28,6 @@ namespace Tanks.Editor.Items
         public ItemActionConfigBase[] OnPickUpActions => _onPickUpActions;
 
         public Material IconMaterial => _iconMaterial;
-        public Material GlowMaterial => _glowMaterial;
         public Sprite Icon => _icon;
         public Color AccentColor => _accentColor;
 

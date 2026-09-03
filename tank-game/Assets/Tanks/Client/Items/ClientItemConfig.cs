@@ -9,7 +9,6 @@ namespace Tanks.Client.Items
         ItemIdentifier Identifier { get; }
 
         Material IconMaterial { get; }
-        Material GlowMaterial { get; }
         Sprite Icon { get; }
 
         string OnSpawnSound { get; }
@@ -35,10 +34,6 @@ namespace Tanks.Client.Items
 
         [ReadOnly]
         [SerializeField]
-        private Material _glowMaterial;
-
-        [ReadOnly]
-        [SerializeField]
         private Sprite _icon;
 
         [ReadOnly]
@@ -56,7 +51,6 @@ namespace Tanks.Client.Items
         public ItemIdentifier Identifier => new ItemIdentifier(_identifier);
 
         public Material IconMaterial => _iconMaterial;
-        public Material GlowMaterial => _glowMaterial;
         public Sprite Icon => _icon;
         public string OnSpawnSound => _onSpawnSound;
         public string OnPickUpSound => _onPickUpSound;
@@ -70,11 +64,9 @@ namespace Tanks.Client.Items
         }
 
         public void InitializeVisualsFromEditor(
-            Material iconMaterial, Material glowMaterial,
-            Sprite icon, Color accentColor)
+            Material iconMaterial, Sprite icon, Color accentColor)
         {
             _iconMaterial = iconMaterial;
-            _glowMaterial = glowMaterial;
             _icon = icon;
             _accentColor = accentColor;
         }

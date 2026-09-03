@@ -51,7 +51,6 @@ namespace Tanks.Editor.Items
 
                 clientConfig.InitializeVisualsFromEditor(
                     editorConfig.IconMaterial,
-                    editorConfig.GlowMaterial,
                     editorConfig.Icon,
                     editorConfig.AccentColor);
 

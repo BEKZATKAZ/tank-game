@@ -1,38 +1,36 @@
-﻿using UnityEngine;
+﻿using System.Reflection;
+using UnityEngine;
+using UnityEngine.Rendering.Universal;
 
 namespace Tanks.Client.Items.Pickups
 {
     public static class PickupVisualSetup
     {
-        static PickupVisualSetup()
-        {
-            Texture2D texture = new Texture2D(1, 1, TextureFormat.RGBA32, false)
-            {
-                anisoLevel = 0,
-                filterMode = FilterMode.Point
-            };
-
-            texture.SetPixel(0, 0, Color.white);
-            texture.Apply();
-
-            _pixel = Sprite.Create(texture, new Rect(0, 0, 1, 1), new Vector2(0.5f, 0.5f), 1);
-        }
-
-        private static readonly Sprite _pixel;
-
-        public static void Setup(out SpriteRenderer iconRenderer, out SpriteRenderer glowRenderer)
+        public static void Setup(out SpriteRenderer icon, out Light2D glow)
         {
             GameObject view = new GameObject("view", typeof(SpriteRenderer));
-            GameObject glow = new GameObject("glow", typeof(SpriteRenderer));
+            GameObject glowObject = new GameObject("glow", typeof(Light2D));
 
-            glow.transform.localScale = new Vector3(5, 5, 1);
+            glowObject.transform.localScale = new Vector3(5, 5, 1);
 
-            iconRenderer = view.GetComponent<SpriteRenderer>();
-            iconRenderer.sortingOrder = 5;
+            icon = view.GetComponent<SpriteRenderer>();
+            icon.sortingOrder = 5;
 
-            glowRenderer = glow.GetComponent<SpriteRenderer>();
-            glowRenderer.sortingOrder = 1;
-            glowRenderer.sprite = _pixel;
+            glow = glowObject.GetComponent<Light2D>();
+            glow.intensity = 1;
+            glow.pointLightOuterRadius = 8;
+            glow.pointLightInnerRadius = 1;
+
+            glow.shadowsEnabled = false;
+            glow.volumetricEnabled = false;
+
+            var lightType = typeof(Light2D);
+            var quality = Light2D.NormalMapQuality.Fast;
+            var flags = BindingFlags.Instance | BindingFlags.NonPublic;
+
+            // ! Using reflection as these fields are not exposed
+            lightType.GetField("m_NormalMapQuality", flags).SetValue(glow, quality);
+            lightType.GetField("m_NormalMapDistance", flags).SetValue(glow, 8);
         }
     }
 }

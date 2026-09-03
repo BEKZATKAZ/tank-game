@@ -29,14 +29,6 @@ namespace Tanks.Client.Tests.Items.Pickups
         }
 
         [Test]
-        public void Setup_ReturnsRenderers()
-        {
-            Assert.Greater(
-                _component.IconRenderer.sortingOrder, _component.GlowRenderer.sortingOrder,
-                "Icon sorting order should be greater than glow sorting order");
-        }
-
-        [Test]
         public void Update_SticksToRootTransform()
         {
             _component.Update(0.1f);
@@ -57,10 +49,7 @@ namespace Tanks.Client.Tests.Items.Pickups
             Shader shader = Shader.Find("Universal Render Pipeline/Unlit");
 
             Material iconMaterial = new Material(shader);
-            Material glowMaterial = new Material(shader);
-            
             config.IconMaterial.Returns(iconMaterial);
-            config.GlowMaterial.Returns(glowMaterial);
 
             config.Icon.Returns(icon);
             config.AccentColor.Returns(Color.red);
@@ -73,7 +62,7 @@ namespace Tanks.Client.Tests.Items.Pickups
                 "Icon sprite dismatch");
 
             Assert.AreEqual(
-                Color.red, _component.GlowBlock.GetColor("_Color"),
+                Color.red, _component.GlowRenderer.color,
                 "Glow color dismatch");
         }
     }

@@ -3,6 +3,7 @@ using Tanks.Shared.Adapters;
 using Tanks.Shared.Items.Pickups;
 using Unity.Mathematics;
 using UnityEngine;
+using UnityEngine.Rendering.Universal;
 
 namespace Tanks.Client.Items.Pickups
 {
@@ -16,13 +17,11 @@ namespace Tanks.Client.Items.Pickups
         }
 
         public SpriteRenderer IconRenderer { get; private set; }
-        public SpriteRenderer GlowRenderer { get; private set; }
+        public Light2D GlowRenderer { get; private set; }
 
         public ITransform IconTransform { get; private set; }
         public ITransform GlowTransform { get; private set; }
-
         public MaterialPropertyBlock IconBlock { get; private set; }
-        public MaterialPropertyBlock GlowBlock { get; private set; }
 
         private readonly IClientItemDatabase _database;
         private float _elapsedSinceReset;
@@ -36,14 +35,8 @@ namespace Tanks.Client.Items.Pickups
                 IconRenderer.sharedMaterial = config.IconMaterial;
             }
 
-            if (GlowRenderer.sharedMaterial != config.GlowMaterial)
-            {
-                GlowRenderer.sharedMaterial = config.GlowMaterial;
-            }
-
-            GlowBlock.SetColor("_Color", config.AccentColor);
+            GlowRenderer.color = config.AccentColor;
             IconRenderer.SetPropertyBlock(IconBlock);
-            GlowRenderer.SetPropertyBlock(GlowBlock);
 
             IconRenderer.sprite = config.Icon;
             _elapsedSinceReset = 0;
@@ -60,10 +53,7 @@ namespace Tanks.Client.Items.Pickups
             GlowTransform = new UnityTransform(GlowRenderer.transform);
 
             IconBlock = new MaterialPropertyBlock();
-            GlowBlock = new MaterialPropertyBlock();
-
             IconRenderer.GetPropertyBlock(IconBlock);
-            GlowRenderer.GetPropertyBlock(GlowBlock);
 
             Behaviour.RegisterMessageHandler(this);
             OnDisable();
@@ -88,9 +78,7 @@ namespace Tanks.Client.Items.Pickups
 
             IconBlock.SetFloat("_Brightness", math.lerp(10, 1, alpha));
             IconRenderer.SetPropertyBlock(IconBlock);
-
-            GlowBlock.SetFloat("_Intensity", math.lerp(0.75f, 0.5f, alpha));
-            GlowRenderer.SetPropertyBlock(GlowBlock);
+            GlowRenderer.intensity = math.lerp(8, 4, alpha);
 
             IconTransform.WorldPosition = Transform.WorldPosition;
             GlowTransform.WorldPosition = Transform.WorldPosition;
