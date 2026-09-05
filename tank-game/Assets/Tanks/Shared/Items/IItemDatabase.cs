@@ -9,7 +9,6 @@ using Tanks.Shared.Items.Behaviours;
 using Tanks.Shared.Items.Data;
 using Tanks.Utils;
 using UnityEngine;
-using UnityEngine.Rendering.VirtualTexturing;
 using VContainer;
 
 namespace Tanks.Shared.Items
@@ -102,6 +101,8 @@ namespace Tanks.Shared.Items
 
         public void Dispose()
         {
+            if (_behaviours is null) return;
+
             _loader.ReleaseFromKey("Gameplay/ItemDatabase");
 
             foreach (ItemBehaviourBase behaviour in _behaviours.SelectMany(x => x.Value))

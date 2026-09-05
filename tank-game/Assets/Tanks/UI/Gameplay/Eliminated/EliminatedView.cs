@@ -6,7 +6,6 @@ namespace Tanks.UI.Gameplay.Eliminated
     public sealed class EliminatedView : ViewBase<EliminatedViewModel>
     {
         private VisualElement _container;
-        private Label _title;
         private Label _subtitle;
 
         protected override VisualElement GetRootElement() => _container;
@@ -14,16 +13,17 @@ namespace Tanks.UI.Gameplay.Eliminated
         protected override void Initialize(VisualElement root)
         {
             _container = root.Q("EliminatedContainer");
-            _title = _container.Q<Label>("EliminatedText");
             _subtitle = _container.Q<Label>("EliminatedSubtitle");
+            _container.style.opacity = 0;
         }
 
         protected override void Bind(EliminatedViewModel viewModel)
         {
-            viewModel.Title.Bind(x =>
+            viewModel.EliminatedBy.Bind(x =>
             {
-                _title.text = x;
+                _subtitle.text = x;
 
+                // Prevent animation at the start of the game
                 if (string.IsNullOrEmpty(x)) return;
 
                 LMotion.Create(from: 1f, to: 0f, duration: 1.25f)
@@ -31,8 +31,6 @@ namespace Tanks.UI.Gameplay.Eliminated
                     .WithEase(Ease.OutSine)
                     .Bind(x => _container.style.opacity = x);
             });
-
-            viewModel.Subtitle.Bind(x => _subtitle.text = x);
         }
     }
 }

@@ -9,23 +9,16 @@ namespace Tanks.UI.Gameplay.Eliminated
 {
     public sealed class EliminatedViewModel : IViewModel, IMessageHandler<Died>, IDisposable
     {
-        public EliminatedViewModel(
-            IMessageBus bus,
-            IClientEntityService clientEntityService,
-            ILocalizationDatabase localization)
+        public EliminatedViewModel(IMessageBus bus, ILocalizationDatabase localization)
         {
-            _clientEntityService = clientEntityService;
             _localization = localization;
-
             _bus = bus;
             _bus.RegisterHandler<Died>(this);
         }
 
-        public BindableProperty<string> Title { get; } = new();
-        public BindableProperty<string> Subtitle { get; } = new();
+        public BindableProperty<string> EliminatedBy { get; } = new();
 
         private readonly IMessageBus _bus;
-        private readonly IClientEntityService _clientEntityService;
         private readonly ILocalizationDatabase _localization;
 
         public void Dispose()
@@ -35,9 +28,24 @@ namespace Tanks.UI.Gameplay.Eliminated
 
         public void Handle(Died message, IMessageSender sender)
         {
-            if (_clientEntityService.GetPossessedEntity() != message.Target) return;
-            Title.Value = "ELIMINATED";
-            Subtitle.Value = "";
+            if (message.Target.IsPossessed == false) return;
+
+            if (message.From == message.Target)
+            {
+                _localization.TryGet("Gameplay", "gameplay.eliminated-by-self", out var self);
+                EliminatedBy.Value = self?.Get();
+                return;
+            }
+
+            if (message.From is null || string.IsNullOrWhiteSpace(message.From.DisplayName))
+            {
+                EliminatedBy.Value = "";
+                return;
+            }
+
+            _localization.TryGet("Gameplay", "gameplay.eliminated-by", out var by);
+            by?.AddVariable("name", message.From.DisplayName);
+            EliminatedBy.Value = by?.Get();
         }
     }
 }

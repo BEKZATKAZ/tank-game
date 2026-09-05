@@ -1,12 +1,18 @@
+using NaughtyAttributes;
 using System;
 using Unity.Multiplayer;
 using Unity.Netcode;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 namespace Tanks.Shared.Bootstrap
 {
     public sealed class NetworkConnector : MonoBehaviour
     {
+        [Scene]
+        [SerializeField]
+        private string _clientScene = "Gameplay_Client";
+
         private void Start()
         {
             NetworkManager manager = NetworkManager.Singleton;
@@ -23,7 +29,7 @@ namespace Tanks.Shared.Bootstrap
 
             if (role is MultiplayerRoleFlags.Client)
             {
-                manager.StartClient();
+                SceneManager.LoadSceneAsync(_clientScene, LoadSceneMode.Additive);
                 return;
             }
 

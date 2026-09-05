@@ -13,14 +13,19 @@ namespace Tanks.Server.Bootstrap
         NetworkComponent<IGameStartBehaviour>,
         INetworkMessageHandler<PrepareGameRequested>
     {
-        public async void Handle(PrepareGameRequested message)
+        public GamePreparer(IConnectedClientService clientService)
+        {
+            _clientService = clientService;
+        }
+
+        private readonly IConnectedClientService _clientService;
+
+        public void Handle(PrepareGameRequested message)
         {
             Behaviour.DespawnAllPlayers();
 
             Vector2Int resolution = new Vector2Int(6, 4);
             int wallWidth = 7;
-
-            await Behaviour.TryLoadSceneAsync();
 
             GenerateMap(wallWidth, resolution);
             SpawnPlayers(wallWidth, resolution);
@@ -51,11 +56,13 @@ namespace Tanks.Server.Bootstrap
             uint positionSeed = MemoryMarshal.Read<uint>(positionSeedBuffer);
             var positionRandom = Unity.Mathematics.Random.CreateFromIndex(positionSeed);
 
-            foreach (ulong clientId in Behaviour.GetConnectedClientIds())
+            foreach (ulong clientId in _clientService.GetConnectedClientIds())
             {
                 float2 coords = positionRandom.NextInt2(0, new int2(resolution.x, resolution.y));
                 float2 position = coords * (wallWidth * 2) + wallWidth * 1.5f;
-                Behaviour.SpawnPlayer(clientId, position);
+
+                ClientData data = _clientService.GetClientData(clientId);
+                Behaviour.SpawnPlayer(clientId, position, data.DisplayName);
             }
         }
 

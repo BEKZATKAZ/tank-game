@@ -1,14 +1,11 @@
-﻿using Cysharp.Threading.Tasks;
-using System.Collections.Generic;
-using System.Linq;
-using Tanks.Core.Helpers;
+﻿using Tanks.Core.Helpers;
+using Tanks.Shared.Entities;
 using Tanks.Shared.Generation;
 using Tanks.Shared.Items;
 using Tanks.Shared.Messaging;
 using Unity.Mathematics;
 using Unity.Netcode;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 using VContainer;
 using VContainer.Unity;
 
@@ -30,17 +27,13 @@ namespace Tanks.Shared.Bootstrap
     public interface IGameStartBehaviour : INetworkBehaviourExtended
     {
         int DesiredPlayerCount { get; }
-        RpcTarget RpcTarget { get; }
 
         void GenerateTilemapEveryoneRpc(TilemapGenerationSettings settings, Vector2Int resolution);
         void SendReadyConfirmationServerRpc(int secretHandle);
-        void RequestReadyConfirmationClientRpc(int secretHandle, RpcParams p = default);
+        void RequestReadyConfirmation(ulong clientId, int secretHandle);
         void StartGameEveryoneRpc(GameStarted message);
 
-        int GetAlivePlayerCount();
-        IEnumerable<ulong> GetConnectedClientIds();
-        UniTask TryLoadSceneAsync();
-        void SpawnPlayer(ulong clientId, float2 position);
+        void SpawnPlayer(ulong clientId, float2 position, string displayName);
         void DespawnAllPlayers();
 
         void PrepareGame();
@@ -53,44 +46,16 @@ namespace Tanks.Shared.Bootstrap
 		[SerializeField] private TilemapSpawner _tilemap;
 		[SerializeField] private int _desiredPlayerCount = 1;
 
-		[SerializeField] private string _serverSceneName = "Gameplay_Server";
-		[SerializeField] private string _clientSceneName = "Gameplay_Client";
-
         [Inject] private readonly IObjectResolver _container;
         [Inject] private readonly IMessageBus _bus;
 		[Inject] private readonly IItemDatabase _itemDatabase;
-        [Inject] private readonly LifetimeScope _scope;
-
-		private bool _isSceneLoaded;
 
         public int DesiredPlayerCount => _desiredPlayerCount;
 
-        protected override void OnInitialize()
+        [Rpc(SendTo.SpecifiedInParams)]
+        private void RequestReadyConfirmationClientRpc(int secretHandle, RpcParams p = default)
         {
-            _itemDatabase.TryInitializeAsync(IsServer);
-        }
-
-        public IEnumerable<ulong> GetConnectedClientIds()
-        {
-            return NetworkManager.ConnectedClientsIds;
-        }
-
-        public int GetAlivePlayerCount()
-        {
-            return NetworkManager.ConnectedClients.Count(x => x.Value.PlayerObject == true);
-        }
-
-        public async UniTask TryLoadSceneAsync()
-		{
-			if (_isSceneLoaded) return;
-
-			string sceneName = IsServer ? _serverSceneName : _clientSceneName;
-            _isSceneLoaded = true;
-
-            using (LifetimeScope.EnqueueParent(_scope))
-            {
-                await SceneManager.LoadSceneAsync(sceneName, LoadSceneMode.Additive);
-            }
+            EmitMessage(new PlayerReadyRequested { SecretHandle = secretHandle });
         }
 
         [Rpc(SendTo.Everyone, InvokePermission = RpcInvokePermission.Server)]
@@ -119,17 +84,17 @@ namespace Tanks.Shared.Bootstrap
             EmitMessage(new PlayerReadyConfirmed { SecretHandle = secretHandle });
         }
 
-        [Rpc(SendTo.SpecifiedInParams)]
-        public void RequestReadyConfirmationClientRpc(int secretHandle, RpcParams p = default)
-        {
-            EmitMessage(new PlayerReadyRequested { SecretHandle = secretHandle });
-        }
-
         [Rpc(SendTo.Everyone, InvokePermission = RpcInvokePermission.Server)]
 		public void StartGameEveryoneRpc(GameStarted message)
 		{
             EmitMessage(message);
             _bus.Publish(message, this);
+        }
+
+        public void RequestReadyConfirmation(ulong clientId, int secretHandle)
+        {
+            RpcParams p = RpcTarget.Single(clientId, RpcTargetUse.Temp);
+            RequestReadyConfirmationClientRpc(secretHandle, p);
         }
 
         public void DespawnAllPlayers()
@@ -141,7 +106,7 @@ namespace Tanks.Shared.Bootstrap
             }
         }
 
-        public void SpawnPlayer(ulong clientId, float2 position)
+        public void SpawnPlayer(ulong clientId, float2 position, string displayName)
         {
             Required<GameObject> playerPrefab = NetworkManager.NetworkConfig.PlayerPrefab;
 
@@ -150,11 +115,18 @@ namespace Tanks.Shared.Bootstrap
 
             _container.InjectGameObject(player);
 
+            player.GetComponent<IEntityBehaviour>().SetDisplayName(displayName);
+
             NetworkObject networkObject = player.GetComponent<NetworkObject>();
             networkObject.SpawnAsPlayerObject(clientId, destroyWithScene: true);
         }
 
         public void PrepareGame() => EmitMessage(new PrepareGameRequested());
 		public void WaitForPlayers() => EmitMessage(new WaitingForPlayersRequested());
+
+        protected override void OnInitialize()
+        {
+            _itemDatabase.TryInitializeAsync(IsServer);
+        }
     }
 }

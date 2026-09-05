@@ -72,7 +72,7 @@ namespace Tanks.UI
 
         protected virtual void OnDisable()
         {
-            Hide();
+            if (_hasInitialized) Hide();
         }
 
         protected virtual void OnEnable()
@@ -84,9 +84,11 @@ namespace Tanks.UI
             else Hide();
         }
 
-        protected virtual void Start()
+        protected virtual void Update()
         {
             if (_hasInitialized) return;
+            if (_resolver is null) return;
+
             if (ShowOnPlay) Show();
             else Hide();
         }

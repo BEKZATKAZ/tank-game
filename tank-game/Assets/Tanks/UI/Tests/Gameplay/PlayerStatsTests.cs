@@ -18,6 +18,7 @@ namespace Tanks.UI.Tests.Gameplay
         protected override PlayerStatsViewModel CreateViewModel()
         {
             _localPlayer = Substitute.For<IEntityBehaviour>();
+            _localPlayer.IsPossessed.Returns(true);
 
             _clientEntityService = Substitute.For<IClientEntityService>();
             _clientEntityService.GetPossessedEntity().Returns(_localPlayer);

@@ -28,7 +28,6 @@ namespace Tanks.Client.Bootstrap
             if (_isInitialized == false)
             {
                 await UniTask.WhenAll(
-                    Behaviour.TryLoadSceneAsync(),
                     _itemDatabase.TryInitializeAsync(),
                     _localization.WaitForInitializationAsync());
 

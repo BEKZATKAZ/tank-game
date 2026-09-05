@@ -11,9 +11,13 @@
         </ui:VisualElement>
     </ui:VisualElement>
     <ui:Label text="GO!" name="StartText" class="start-counter" style="display: none;"/>
-    <ui:VisualElement name="EliminatedContainer" class="eliminated" style="display: none;">
-        <ui:Label text="ELIMINATED" name="EliminatedText" class="eliminated-title"/>
-        <ui:Label text="By BEKZATKAZ" name="EliminatedSubtitle" class="eliminated-subtitle"/>
+    <ui:VisualElement name="EliminatedContainer" class="eliminated" style="display: flex;">
+        <ui:Label name="EliminatedText" focusable="true" class="eliminated-title">
+            <Bindings>
+                <UnityEngine.Localization.LocalizedString property="text" table="GUID:be3c65f295ea4a545a8406a0bc7b68e6" entry="Id(34970492928)"/>
+            </Bindings>
+        </ui:Label>
+        <ui:Label name="EliminatedSubtitle" text="" enable-rich-text="false" class="eliminated-subtitle"/>
     </ui:VisualElement>
     <ui:VisualElement name="PlayerStats" class="player-stats">
         <ui:VisualElement name="PlayerTank" class="player-stats__tank" style="-unity-material: url(&quot;project://database/Assets/Tanks/Shaders/TankHP.shadergraph?fileID=-876546973899608171&amp;guid=30d36fd8c31436746931c48cd0dac5af&amp;type=3#TankHP&quot;);"/>

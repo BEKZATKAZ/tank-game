@@ -12,6 +12,14 @@ namespace Tanks.Server.Bootstrap
         INetworkMessageHandler<WaitingForPlayersRequested>,
         INetworkMessageHandler<PlayerReadyConfirmed>
     {
+        public PlayerReadyHandler(IConnectedClientService clientService)
+        {
+            _clientService = clientService;
+        }
+
+        public ISet<int> Pending => _pendingConfirmations;
+
+        private readonly IConnectedClientService _clientService;
         private readonly HashSet<int> _pendingConfirmations = new();
 
         public void Handle(PlayerReadyConfirmed message)
@@ -34,18 +42,14 @@ namespace Tanks.Server.Bootstrap
         {
             _pendingConfirmations.Clear();
 
-            foreach (ulong clientId in Behaviour.GetConnectedClientIds())
+            foreach (ulong clientId in _clientService.GetConnectedClientIds())
             {
                 int secret = RandomNumberGenerator.GetInt32(int.MinValue, int.MaxValue);
 
                 // Increment if duplicated
-                while (_pendingConfirmations.Add(secret) == false)
-                {
-                    secret++;
-                }
+                while (_pendingConfirmations.Add(secret) == false) secret++;
 
-                BaseRpcTarget target = Behaviour.RpcTarget.Single(clientId, RpcTargetUse.Temp);
-                Behaviour.RequestReadyConfirmationClientRpc(secret, target);
+                Behaviour.RequestReadyConfirmation(clientId, secret);
             }
         }
 

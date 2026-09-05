@@ -1,0 +1,40 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5b11a58205ec3474ca216360e9fa74a8, type: 3}
+  m_Name: Gameplay Shared Data
+  m_EditorClassIdentifier: Unity.Localization::UnityEngine.Localization.Tables.SharedTableData
+  m_TableCollectionName: Gameplay
+  m_TableCollectionNameGuidString: be3c65f295ea4a545a8406a0bc7b68e6
+  m_Entries:
+  - m_Id: 34970492928
+    m_Key: gameplay.eliminated
+    m_Metadata:
+      m_Items: []
+  - m_Id: 155103748096
+    m_Key: gameplay.eliminated-by
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4674600525824
+    m_Key: gameplay.eliminated-by-self
+    m_Metadata:
+      m_Items: []
+  m_Metadata:
+    m_Items: []
+  m_KeyGenerator:
+    rid: 937747157883289799
+  references:
+    version: 2
+    RefIds:
+    - rid: 937747157883289799
+      type: {class: DistributedUIDGenerator, ns: UnityEngine.Localization.Tables, asm: Unity.Localization}
+      data:
+        m_CustomEpoch: 1788441004079

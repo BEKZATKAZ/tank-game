@@ -77,8 +77,11 @@ namespace Tanks.Shared.Items.Pickups
         public override void OnDestroy()
         {
             base.OnDestroy();
+            if (_pool is null) return;
+
             _bus.UnregisterHandler<TilemapGenerated>(this);
-            _pool?.Dispose();
+            _pool.Dispose();
+            _pool = null;
         }
 
         protected override void OnInitialize()
