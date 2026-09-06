@@ -17,16 +17,13 @@ namespace Tanks.Client.Entities.Health
         INetworkMessageHandler<Died>
     {
         public ExplosionVisuals(
-            IHitstopService hitstop,
             IVisualService particlePlayer,
             ISpectatorService spectatorService)
         {
-            _hitstop = hitstop;
             _particlePlayer = particlePlayer;
             _spectatorService = spectatorService;
         }
 
-        private readonly IHitstopService _hitstop;
         private readonly IVisualService _particlePlayer;
         private readonly ISpectatorService _spectatorService;
 
@@ -52,9 +49,9 @@ namespace Tanks.Client.Entities.Health
             _particlePlayer.Play<ParticleSystem>(
                 VisualType.Explosion, message.WorldPosition).Play();
 
-            await UniTask.Delay(150);
-            await _hitstop.RunAsync(0.3f);
-            await UniTask.Delay(1000);
+            if (message.Target.IsPossessed == false) return;
+
+            await UniTask.Delay(1500);
 
             Spectate(message.From, message.WorldPosition);
         }

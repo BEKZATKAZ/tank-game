@@ -34,6 +34,8 @@ namespace Tanks.Client.Player
             bool isMoving = distance > 0.001f;
             bool isTurning = math.abs(angularVelocity) > 5;
 
+            if (isTurning == false) angularVelocity = 0;
+
             // Turning in place
             if (isMoving == false && isTurning)
             {

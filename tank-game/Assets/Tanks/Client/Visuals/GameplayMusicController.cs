@@ -64,7 +64,7 @@ namespace Tanks.Client.Visuals
                 return;
             }
 
-            float stress = math.saturate((float)eliminatedCount / allCount);
+            float stress = math.saturate((float)eliminatedCount / (allCount - 1));
             _music.SetParameter("Stress", stress);
         }
 

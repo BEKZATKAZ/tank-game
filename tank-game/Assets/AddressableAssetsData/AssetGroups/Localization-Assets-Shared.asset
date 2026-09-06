@@ -36,6 +36,11 @@ MonoBehaviour:
     m_ReadOnly: 1
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: be3c65f295ea4a545a8406a0bc7b68e6
+    m_Address: Assets/Tanks/Localization/Tables/Gameplay/New Table Shared Data.asset
+    m_ReadOnly: 1
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: c65a4f9d9da4a46468c02bed143a7960
     m_Address: Assets/Tanks/Localization/Tables/Entry/Entry Shared Data.asset
     m_ReadOnly: 1

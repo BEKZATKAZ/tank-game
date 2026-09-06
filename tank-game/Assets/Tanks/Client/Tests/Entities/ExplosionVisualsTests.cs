@@ -14,7 +14,6 @@ namespace Tanks.Client.Tests.Entities
 {
     public class ExplosionVisualsTests
     {
-        private IHitstopService _hitstop;
         private IVisualService _visuals;
         private ISpectatorService _spectatorService;
         private ExplosionVisuals _component;
@@ -22,11 +21,10 @@ namespace Tanks.Client.Tests.Entities
         [SetUp]
         public void Setup()
         {
-            _hitstop = Substitute.For<IHitstopService>();
             _visuals = Substitute.For<IVisualService>();
             _spectatorService = Substitute.For<ISpectatorService>();
 
-            _component = new ExplosionVisuals(_hitstop, _visuals, _spectatorService);
+            _component = new ExplosionVisuals(_visuals, _spectatorService);
             _component.Initialize(Substitute.For<IHealthBehaviour>());
         }
 
