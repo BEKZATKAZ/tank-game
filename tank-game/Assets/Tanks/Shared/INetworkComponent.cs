@@ -9,6 +9,7 @@ namespace Tanks.Shared
         void Initialize(INetworkBehaviourExtended behaviour);
         void Destroy();
 
+        void EarlyUpdate(float deltaTime);
         void Update(float deltaTime);
         void LateUpdate(float deltaTime);
 
@@ -56,6 +57,7 @@ namespace Tanks.Shared
             OnDestroy();
         }
 
+        public void EarlyUpdate(float deltaTime) => OnEarlyUpdate(deltaTime);
         public void Update(float deltaTime) => OnUpdate(deltaTime);
         public void LateUpdate(float deltaTime) => OnLateUpdate(deltaTime);
 
@@ -64,6 +66,7 @@ namespace Tanks.Shared
 
         protected virtual void OnInitialize() { }
         protected virtual void OnEnable() { }
+        protected virtual void OnEarlyUpdate(float deltaTime) { }
         protected virtual void OnUpdate(float deltaTime) { }
         protected virtual void OnLateUpdate(float deltaTime) { }
         protected virtual void OnTick(int tick, float tickDelta) { }

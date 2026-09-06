@@ -141,6 +141,12 @@ namespace Tanks.Shared
 
             foreach (INetworkComponent component in _components)
             {
+                try { component.EarlyUpdate(deltaTime); }
+                catch (Exception ex) { Debug.LogException(ex); }
+            }
+
+            foreach (INetworkComponent component in _components)
+            {
                 try { component.Update(deltaTime); }
                 catch (Exception ex) { Debug.LogException(ex); }
             }
