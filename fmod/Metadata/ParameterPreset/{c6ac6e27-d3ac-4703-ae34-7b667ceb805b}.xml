@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<objects serializationModel="Studio.02.03.00">
+	<object class="ParameterPreset" id="{c6ac6e27-d3ac-4703-ae34-7b667ceb805b}">
+		<property name="name">
+			<value>Stress</value>
+		</property>
+		<relationship name="folder">
+			<destination>{171434a0-f1e9-451e-bc60-9de3ffc45b95}</destination>
+		</relationship>
+		<relationship name="parameter">
+			<destination>{8118d315-beed-42a0-9ce6-ec217445fb9a}</destination>
+		</relationship>
+	</object>
+	<object class="GameParameter" id="{8118d315-beed-42a0-9ce6-ec217445fb9a}">
+		<property name="initialValue">
+			<value>0</value>
+		</property>
+	</object>
+</objects>
