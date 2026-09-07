@@ -1,3 +1,4 @@
+using NSubstitute;
 using NUnit.Framework;
 using Tanks.Shared.Adapters;
 using Unity.Mathematics;
@@ -84,6 +85,37 @@ namespace Tanks.Shared.Tests.Adapters
             AssertEquality(_adapter.LocalPosition, _component.localPosition);
             AssertEquality(_adapter.LocalRotation, _component.localRotation);
             AssertEquality(_adapter.LocalScale, _component.localScale);
+        }
+
+        [Test]
+        public void SetParent_UnityTransform_AssignsParent()
+        {
+            Transform other = new GameObject().transform;
+            ITransform otherAdapter = new UnityTransform(other);
+
+            try
+            {
+                _adapter.SetParent(otherAdapter, true);
+                Assert.AreEqual(other, _component.parent);
+
+                _adapter.SetParent(otherAdapter, false);
+                Assert.AreEqual(other, _component.parent);
+
+                _adapter.SetParent(null, false);
+                Assert.Null(_component.parent);
+            }
+            finally
+            {
+                Object.DestroyImmediate(other.gameObject);
+            }
+        }
+
+        [Test]
+        public void SetParent_UnknownType_Ignores()
+        {
+            ITransform unknown = Substitute.For<ITransform>();
+            _adapter.SetParent(unknown, true);
+            _adapter.SetParent(unknown, false);
         }
 
         [Test]

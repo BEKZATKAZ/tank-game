@@ -14,6 +14,8 @@ namespace Tanks.Shared.Tests.Adapters
         public float2 LocalPosition { get; set; }
         public Angle LocalRotation { get; set; }
         public float2 LocalScale { get; set; }
+
+        public void SetParent(ITransform parent, bool keepWorldPosition = true) { }
     }
 
     public sealed class MockRigidbody : IRigidbody

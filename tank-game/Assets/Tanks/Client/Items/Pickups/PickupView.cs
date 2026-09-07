@@ -52,6 +52,9 @@ namespace Tanks.Client.Items.Pickups
             IconTransform = new UnityTransform(IconRenderer.transform);
             GlowTransform = new UnityTransform(GlowRenderer.transform);
 
+            IconTransform.SetParent(Transform, keepWorldPosition: false);
+            GlowTransform.SetParent(Transform, keepWorldPosition: false);
+
             IconBlock = new MaterialPropertyBlock();
             IconRenderer.GetPropertyBlock(IconBlock);
 
@@ -79,9 +82,6 @@ namespace Tanks.Client.Items.Pickups
             IconBlock.SetFloat("_Brightness", math.lerp(10, 1, alpha));
             IconRenderer.SetPropertyBlock(IconBlock);
             GlowRenderer.intensity = math.lerp(8, 4, alpha);
-
-            IconTransform.WorldPosition = Transform.WorldPosition;
-            GlowTransform.WorldPosition = Transform.WorldPosition;
         }
     }
 }

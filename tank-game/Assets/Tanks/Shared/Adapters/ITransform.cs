@@ -99,6 +99,8 @@ namespace Tanks.Shared.Adapters
         }
 
         float2 Up => Right.yx * new float2(-1, 1);
+
+        void SetParent(ITransform parent, bool keepWorldPosition = true);
     }
 
     public sealed class UnityTransform : ITransform
@@ -148,9 +150,22 @@ namespace Tanks.Shared.Adapters
 
         public override int GetHashCode() => Transform.GetHashCode();
         public override string ToString() => Transform.ToString();
+
         public override bool Equals(object obj)
         {
             return obj is UnityTransform other && Transform.Equals(other.Transform);
+        }
+
+        public void SetParent(ITransform parent, bool keepWorldPosition = true)
+        {
+            if (parent is null)
+            {
+                Transform.SetParent(null, keepWorldPosition);
+                return;
+            }
+
+            if (parent is not UnityTransform unityTransform) return;
+            Transform.SetParent(unityTransform.Transform, keepWorldPosition);
         }
     }
 }

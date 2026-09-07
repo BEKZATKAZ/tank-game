@@ -42,6 +42,8 @@ namespace Tanks.Client.Weapons
             get => throw new NotImplementedException();
             set => throw new NotImplementedException();
         }
+
+        public void SetParent(ITransform parent, bool keepWorldPosition = true) { }
     }
 
     public sealed class ProjectileMovementPrediction :
