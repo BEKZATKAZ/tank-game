@@ -41,6 +41,7 @@ namespace Tanks.Client.Visuals
         public async void Handle(GameStarted message, IMessageSender sender)
         {
             _music = _audioFactory.CreateInstance(_musicPaths[_currentMusicIndex]);
+            _music.SetVolume(0.8f);
             _currentMusicIndex = ++_currentMusicIndex % _musicPaths.Length;
 
             await UniTask.Delay(TimeSpan.FromSeconds(message.StartDelaySeconds));

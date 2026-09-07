@@ -47,7 +47,7 @@ namespace Tanks.Client.Entities.Health
         public async void Handle(Died message)
         {
             _particlePlayer.Play<ParticleSystem>(
-                VisualType.Explosion, message.WorldPosition).Play();
+                VisualType.Explosion_1, message.WorldPosition).Play();
 
             if (message.Target.IsPossessed == false) return;
 

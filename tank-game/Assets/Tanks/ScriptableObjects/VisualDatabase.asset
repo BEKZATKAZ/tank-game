@@ -13,9 +13,12 @@ MonoBehaviour:
   m_Name: VisualDatabase
   m_EditorClassIdentifier: Tanks.Client::Tanks.Client.Visuals.VisualPrefabDatabase
   _visuals:
-  - _type: 0
+  - _type: 1001
     _prefab: {fileID: 2433282508537954060, guid: 3ef3ae421f71c5c4e97fe12dc2fc6312, type: 3}
     _maxInstanceCount: 5
   - _type: 1
     _prefab: {fileID: 3969762482825067449, guid: bbf662643893d54419fa64c83cac72ff, type: 3}
     _maxInstanceCount: 25
+  - _type: 2001
+    _prefab: {fileID: 4661775002933408396, guid: e740ae47deb0651459d6992702506b38, type: 3}
+    _maxInstanceCount: 30

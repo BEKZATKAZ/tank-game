@@ -17,5 +17,5 @@ MonoBehaviour:
   _cooldown: {fileID: 11400000, guid: 4dfcc38c9d899a941ab0875b059e749e, type: 2}
   _useAction: {fileID: 11400000, guid: 38197b41cf9985244845cb9a8499e608, type: 2}
   _recoil:
-    _amount: 6.6
+    _amount: 9.8
     _durationSeconds: 0.89

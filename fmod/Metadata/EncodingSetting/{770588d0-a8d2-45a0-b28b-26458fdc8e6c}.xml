@@ -7,6 +7,9 @@
 		<property name="quality">
 			<value>85</value>
 		</property>
+		<property name="sampleRateMode">
+			<value>2</value>
+		</property>
 		<relationship name="platform">
 			<destination>{15059197-07f6-4f30-8995-666045382faf}</destination>
 		</relationship>

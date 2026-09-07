@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <objects serializationModel="Studio.02.03.00">
 	<object class="AudioFile" id="{e4d1d672-c75b-471a-8e1f-c2dd7f397d5b}">
+		<property name="note" />
 		<property name="assetPath">
 			<value>SFX/StartCount.ogg</value>
 		</property>

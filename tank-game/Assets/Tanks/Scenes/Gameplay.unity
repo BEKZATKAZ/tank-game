@@ -567,7 +567,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Tanks.Shared::Tanks.Shared.Bootstrap.GameStartBehaviour
   ShowTopMostFoldoutHeaderGroup: 1
   _tilemap: {fileID: 1563795404}
-  _desiredPlayerCount: 3
+  _desiredPlayerCount: 1
 --- !u!4 &1183163574
 Transform:
   m_ObjectHideFlags: 0

@@ -40,13 +40,13 @@ namespace Tanks.Client.Tests.Entities
                 float2 position = new float2(10, 20);
 
                 _visuals
-                    .Play<ParticleSystem>(VisualType.Explosion, position)
+                    .Play<ParticleSystem>(VisualType.Explosion_1, position)
                     .Returns(particleSystem);
 
                 _component.Handle(new Died { From = from, WorldPosition = position });
                 await Task.Delay(2000);
 
-                _visuals.Received(1).Play<ParticleSystem>(VisualType.Explosion, position);
+                _visuals.Received(1).Play<ParticleSystem>(VisualType.Explosion_1, position);
                 _spectatorService.Received(1).Spectate(from.AsRequired());
             }
             finally

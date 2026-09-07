@@ -84,7 +84,7 @@
 	</object>
 	<object class="MultiSound" id="{bdf2923c-1729-4d5d-9c14-9e7d39efe9be}">
 		<relationship name="sounds">
-			<destination>{b3956008-2bb1-43ec-a746-083e8de58b53}</destination>
+			<destination>{7e2dcfa5-0a2f-4799-9389-6fe0b57c6ca8}</destination>
 		</relationship>
 	</object>
 	<object class="MixerBusEffectChain" id="{6c47068d-9474-4a68-9945-4fd7a9c307c9}">
@@ -100,22 +100,31 @@
 		</relationship>
 	</object>
 	<object class="MixerBusPanner" id="{0f7cbbc2-9974-49ef-8a47-6d2ceb1322dc}" />
-	<object class="SingleSound" id="{b3956008-2bb1-43ec-a746-083e8de58b53}">
+	<object class="SingleSound" id="{7e2dcfa5-0a2f-4799-9389-6fe0b57c6ca8}">
 		<relationship name="audioFile">
-			<destination>{92470f6e-96e7-497b-897e-b937bef61232}</destination>
+			<destination>{36d871d3-1502-4075-89ae-a4b098fef098}</destination>
 		</relationship>
 	</object>
 	<object class="MixerBusFader" id="{3bf5022f-8c68-415f-8de0-e5b83b289fc8}" />
 	<object class="MixerBusFader" id="{15a39a04-f857-4040-89b6-1027cb116ebe}" />
 	<object class="ObjectSpatialiserEffect" id="{a57ce872-f723-402c-bc3c-bc6841670899}">
 		<property name="minimumDistance">
-			<value>8.19999981</value>
+			<value>10</value>
 		</property>
 		<property name="maximumDistance">
-			<value>45</value>
+			<value>150</value>
 		</property>
 		<property name="overrideRange">
 			<value>true</value>
+		</property>
+		<property name="extentMode">
+			<value>1</value>
+		</property>
+		<property name="soundSize">
+			<value>68</value>
+		</property>
+		<property name="minimumExtent">
+			<value>184</value>
 		</property>
 	</object>
 </objects>
