@@ -14,7 +14,7 @@ namespace Tanks.Client.Bootstrap
     public sealed class CameraSetup :
         NetworkComponent<GameStartBehaviour>,
         INetworkMessageHandler<TilemapGenerated>,
-        INetworkMessageHandler<GameStarted>
+        INetworkMessageHandler<GameStartedFromClient>
     {
         public CameraSetup(
             IAudioPlayer audioPlayer,
@@ -45,7 +45,7 @@ namespace Tanks.Client.Bootstrap
             _turretInput.Disable();
         }
 
-        public async void Handle(GameStarted message)
+        public async void Handle(GameStartedFromClient message)
         {
             var player = Behaviour.NetworkManager.LocalClient.PlayerObject;
 
@@ -53,7 +53,7 @@ namespace Tanks.Client.Bootstrap
             _follow.SetBounds(_mapBounds);
             _follow.SetFollowTarget(new UnityTransform(player.transform));
 
-            await UniTask.Delay(TimeSpan.FromSeconds(message.StartDelaySeconds));
+            await UniTask.Delay(TimeSpan.FromSeconds(message.AdaptedStartDelaySeconds));
 
             _driveInput.Enable();
             _turretInput.Enable();
@@ -62,7 +62,7 @@ namespace Tanks.Client.Bootstrap
         protected override void OnInitialize()
         {
             Behaviour.RegisterMessageHandler<TilemapGenerated>(this);
-            Behaviour.RegisterMessageHandler<GameStarted>(this);
+            Behaviour.RegisterMessageHandler<GameStartedFromClient>(this);
         }
     }
 }

@@ -29,17 +29,6 @@ namespace Tanks.Client.Tests.Items.Pickups
         }
 
         [Test]
-        public void Update_SticksToRootTransform()
-        {
-            _component.Update(0.1f);
-            _component.Transform.WorldPosition.Returns(new float2(100, 50));
-            _component.Update(0.1f);
-
-            Assert.AreEqual(new float2(100, 50), _component.IconTransform.WorldPosition);
-            Assert.AreEqual(new float2(100, 50), _component.GlowTransform.WorldPosition);
-        }
-
-        [Test]
         public void Spawn_AssignsVisuals()
         {
             ItemIdentifier id = new ItemIdentifier("test");

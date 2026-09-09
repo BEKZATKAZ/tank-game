@@ -2,6 +2,7 @@
 using Tanks.UI.Gameplay.ItemDescription;
 using Tanks.UI.Gameplay.PlayerStats;
 using Tanks.UI.Gameplay.StartCountdown;
+using Tanks.UI.Gameplay.Timer;
 using VContainer;
 using VContainer.Unity;
 
@@ -15,6 +16,7 @@ namespace Tanks.UI.Gameplay
             builder.Register<EliminatedViewModel>(Lifetime.Transient);
             builder.Register<ItemDescriptionViewModel>(Lifetime.Transient);
             builder.Register<PlayerStatsViewModel>(Lifetime.Transient);
+            builder.Register<TimerViewModel>(Lifetime.Transient);
         }
     }
 }

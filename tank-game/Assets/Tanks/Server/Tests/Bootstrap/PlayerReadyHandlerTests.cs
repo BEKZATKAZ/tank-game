@@ -49,7 +49,7 @@ namespace Tanks.Server.Tests.Bootstrap
 
             _component.Behaviour
                 .DidNotReceiveWithAnyArgs()
-                .StartGameEveryoneRpc(Arg.Any<GameStarted>());
+                .StartGameEveryoneRpc(Arg.Any<GameStartedFromServer>());
 
             int lastSecret = _component.Pending.First();
             _component.Handle(new PlayerReadyConfirmed { SecretHandle = lastSecret });
@@ -59,7 +59,7 @@ namespace Tanks.Server.Tests.Bootstrap
 
             _component.Behaviour
                 .Received(1)
-                .StartGameEveryoneRpc(Arg.Any<GameStarted>());
+                .StartGameEveryoneRpc(Arg.Any<GameStartedFromServer>());
         }
     }
 }

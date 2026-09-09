@@ -22,4 +22,7 @@
     <ui:VisualElement name="PlayerStats" class="player-stats">
         <ui:VisualElement name="PlayerTank" class="player-stats__tank" style="-unity-material: url(&quot;project://database/Assets/Tanks/Shaders/TankHP.shadergraph?fileID=-876546973899608171&amp;guid=30d36fd8c31436746931c48cd0dac5af&amp;type=3#TankHP&quot;);"/>
     </ui:VisualElement>
+    <ui:VisualElement name="Timer" class="timer" style="flex-grow: 1;">
+        <ui:Label text="45" name="TimerCounter" class="timer-counter"/>
+    </ui:VisualElement>
 </ui:UXML>

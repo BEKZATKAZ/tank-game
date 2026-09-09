@@ -2,10 +2,9 @@
 using System;
 using System.Linq;
 using Tanks.Audio;
-using Tanks.Shared;
+using Tanks.Client.Bootstrap;
 using Tanks.Shared.Entities.Health;
 using Tanks.Shared.Messaging;
-using Unity.Mathematics;
 using Unity.Netcode;
 using UnityEngine;
 using VContainer;
@@ -13,17 +12,18 @@ using VContainer;
 namespace Tanks.Client.Visuals
 {
     public sealed class GameplayMusicController :
-        MonoBehaviour, IMessageHandler<Died>, IMessageHandler<GameStarted>
+        MonoBehaviour, IMessageHandler<Died>, IMessageHandler<GameStartedFromClient>
     {
         [SerializeField] private string[] _musicPaths;
 
         private IAudioFactory _audioFactory;
         private IMessageBus _bus;
         private IAudioInstance _music;
+        private IStressService _stress;
         private int _currentMusicIndex;
 
         [Inject]
-        public void Inject(IAudioFactory audioFactory, IMessageBus bus)
+        public void Inject(IAudioFactory audioFactory, IMessageBus bus, IStressService stress)
         {
             for (int i = _musicPaths.Length - 1; i > 0; i--)
             {
@@ -33,18 +33,21 @@ namespace Tanks.Client.Visuals
 
             _audioFactory = audioFactory;
             _bus = bus;
+            _stress = stress;
 
             _bus.RegisterHandler<Died>(this);
-            _bus.RegisterHandler<GameStarted>(this);
+            _bus.RegisterHandler<GameStartedFromClient>(this);
         }
 
-        public async void Handle(GameStarted message, IMessageSender sender)
+        public async void Handle(GameStartedFromClient message, IMessageSender sender)
         {
             _music = _audioFactory.CreateInstance(_musicPaths[_currentMusicIndex]);
             _music.SetVolume(0.8f);
-            _currentMusicIndex = ++_currentMusicIndex % _musicPaths.Length;
 
-            await UniTask.Delay(TimeSpan.FromSeconds(message.StartDelaySeconds));
+            _currentMusicIndex = ++_currentMusicIndex % _musicPaths.Length;
+            _stress.ResetStress();
+
+            await UniTask.Delay(TimeSpan.FromSeconds(message.AdaptedStartDelaySeconds));
             _music.Play();
         }
 
@@ -54,19 +57,17 @@ namespace Tanks.Client.Visuals
             await UniTask.DelayFrame(2);
 
             var allClients = NetworkManager.Singleton.ConnectedClients;
-            int allCount = allClients.Count;
-
             int eliminatedCount = allClients.Count(x => x.Value.PlayerObject == false);
-            int remaining = allCount - eliminatedCount;
+            int remaining = allClients.Count - eliminatedCount;
 
-            if (remaining <= 1)
+            if (remaining > 2)
             {
-                DisposeMusic();
+                _stress.AddStress(1f / allClients.Count);
                 return;
             }
 
-            float stress = math.saturate((float)eliminatedCount / (allCount - 1));
-            _music.SetParameter("Stress", stress);
+            DisposeMusic();
+            return;
         }
 
         private void DisposeMusic()
@@ -77,12 +78,18 @@ namespace Tanks.Client.Visuals
             _music = null;
         }
 
+        private void Update()
+        {
+            if (_music is null) return;
+            _music.SetParameter("Stress", _stress.Stress);
+        }
+
         private void OnDestroy()
         {
             if (_bus is null) return;
 
             _bus.UnregisterHandler<Died>(this);
-            _bus.UnregisterHandler<GameStarted>(this);
+            _bus.UnregisterHandler<GameStartedFromClient>(this);
 
             DisposeMusic();
         }

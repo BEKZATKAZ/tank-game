@@ -17,7 +17,7 @@ namespace Tanks.Server.Items.Pickups
     public sealed class PickupSpawner :
         NetworkComponent<IPickupSpawnBehaviour>,
         IMessageHandler<TilemapGenerated>,
-        IMessageHandler<GameStarted>,
+        IMessageHandler<GameStartedFromServer>,
         IMessageHandler<ItemPickedUp>
     {
         public PickupSpawner(IItemDatabase items, IMessageBus bus)
@@ -26,7 +26,7 @@ namespace Tanks.Server.Items.Pickups
             _bus = bus;
 
             _bus.RegisterHandler<TilemapGenerated>(this);
-            _bus.RegisterHandler<GameStarted>(this);
+            _bus.RegisterHandler<GameStartedFromServer>(this);
             _bus.RegisterHandler<ItemPickedUp>(this);
         }
 
@@ -70,7 +70,7 @@ namespace Tanks.Server.Items.Pickups
         protected override void OnDestroy()
         {
             _bus.UnregisterHandler<TilemapGenerated>(this);
-            _bus.UnregisterHandler<GameStarted>(this);
+            _bus.UnregisterHandler<GameStartedFromServer>(this);
             _bus.UnregisterHandler<ItemPickedUp>(this);
         }
 
@@ -141,7 +141,7 @@ namespace Tanks.Server.Items.Pickups
             CurrentCooldown = 0;
         }
 
-        public void Handle(GameStarted message, IMessageSender sender)
+        public void Handle(GameStartedFromServer message, IMessageSender sender)
         {
             // Reset after the previous round
             _occupiedCoords.Clear();

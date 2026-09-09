@@ -7,7 +7,7 @@ using VContainer.Unity;
 namespace Tanks.Client.Bootstrap
 {
     public sealed class PlayerInjector :
-        NetworkComponent<IGameStartBehaviour>, INetworkMessageHandler<GameStarted>
+        NetworkComponent<IGameStartBehaviour>, INetworkMessageHandler<GameStartedFromClient>
     {
         public PlayerInjector(IObjectResolver container)
         {
@@ -16,7 +16,7 @@ namespace Tanks.Client.Bootstrap
 
         private readonly IObjectResolver _container;
 
-        public void Handle(GameStarted message)
+        public void Handle(GameStartedFromClient message)
         {
             var playerObjects = NetworkManager.Singleton.SpawnManager.PlayerObjects;
 

@@ -1,5 +1,4 @@
-﻿using Unity.Collections;
-using Unity.Netcode;
+﻿using Unity.Netcode;
 using VContainer;
 
 namespace Tanks.Shared.Entities
@@ -11,8 +10,8 @@ namespace Tanks.Shared.Entities
         bool IsPossessed { get; }
         bool IsValid { get; }
 
-        void SetId(EntityId value);
-        void SetDisplayName(string value);
+        void SetIdEveryoneRpc(EntityId value);
+        void SetDisplayNameEveryoneRpc(string value);
 
         void MarkAsPossessed();
         void MarkAsUnpossessed();
@@ -22,16 +21,16 @@ namespace Tanks.Shared.Entities
     {
         [Inject] private readonly IEntityService _service;
 
-        public EntityId Id => _id.Value;
-        public string DisplayName => _displayName.Value.ToString();
-        public bool IsValid => this;
+        public EntityId Id { get; private set; }
+        public string DisplayName { get; private set; }
         public bool IsPossessed { get; private set; }
+        public bool IsValid => this;
 
-        private readonly NetworkVariable<EntityId> _id = new();
-        private readonly NetworkVariable<FixedString32Bytes> _displayName = new();
+        [Rpc(SendTo.Everyone, InvokePermission = RpcInvokePermission.Server)]
+        public void SetIdEveryoneRpc(EntityId value) => Id = value;
 
-        public void SetId(EntityId value) => _id.Value = value;
-        public void SetDisplayName(string value) => _displayName.Value = value;
+        [Rpc(SendTo.Everyone, InvokePermission = RpcInvokePermission.Server)]
+        public void SetDisplayNameEveryoneRpc(string value) => DisplayName = value;
 
         public override void OnDestroy()
         {

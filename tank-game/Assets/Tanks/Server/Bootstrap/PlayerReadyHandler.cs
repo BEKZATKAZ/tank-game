@@ -2,7 +2,6 @@
 using System.Security.Cryptography;
 using Tanks.Shared;
 using Tanks.Shared.Bootstrap;
-using Unity.Netcode;
 using UnityEngine;
 
 namespace Tanks.Server.Bootstrap
@@ -22,6 +21,9 @@ namespace Tanks.Server.Bootstrap
         private readonly IConnectedClientService _clientService;
         private readonly HashSet<int> _pendingConfirmations = new();
 
+        private int _lastTick;
+        private float _lastTickDelta;
+
         public void Handle(PlayerReadyConfirmed message)
         {
             if (_pendingConfirmations.Remove(message.SecretHandle) == false)
@@ -32,8 +34,10 @@ namespace Tanks.Server.Bootstrap
 
             if (_pendingConfirmations.Count > 0) return;
 
-            Behaviour.StartGameEveryoneRpc(new GameStarted
+            Behaviour.StartGameEveryoneRpc(new GameStartedFromServer
             {
+                ServerTick = _lastTick,
+                ServerTickDelta = _lastTickDelta,
                 StartDelaySeconds = 2
             });
         }
@@ -51,6 +55,12 @@ namespace Tanks.Server.Bootstrap
 
                 Behaviour.RequestReadyConfirmation(clientId, secret);
             }
+        }
+
+        protected override void OnTick(int tick, float tickDelta)
+        {
+            _lastTick = tick;
+            _lastTickDelta = tickDelta;
         }
 
         protected override void OnInitialize()

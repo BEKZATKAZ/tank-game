@@ -12,7 +12,7 @@ namespace Tanks.Server.Tests.Entities
         {
             EntityInitializer component = new EntityInitializer();
             component.Initialize(Substitute.For<IEntityBehaviour>());
-            component.Behaviour.Received(1).SetId(Arg.Any<EntityId>());
+            component.Behaviour.Received(1).SetIdEveryoneRpc(Arg.Any<EntityId>());
         }
     }
 }

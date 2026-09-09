@@ -546,6 +546,7 @@ GameObject:
   - component: {fileID: 1288937382}
   - component: {fileID: 1288937381}
   - component: {fileID: 1288937384}
+  - component: {fileID: 1288937385}
   m_Layer: 0
   m_Name: UI
   m_TagString: Untagged
@@ -645,6 +646,19 @@ MonoBehaviour:
   m_EditorClassIdentifier: Tanks.UI::Tanks.UI.Gameplay.PlayerStats.PlayerStatsView
   _showOnPlay: 1
   _tankMaterial: {fileID: -876546973899608171, guid: 30d36fd8c31436746931c48cd0dac5af, type: 3}
+--- !u!114 &1288937385
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1288937377}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b31832393944b3340ac5ab784c8786da, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Tanks.UI::Tanks.UI.Gameplay.Timer.TimerView
+  _showOnPlay: 1
 --- !u!1 &1820337965
 GameObject:
   m_ObjectHideFlags: 0

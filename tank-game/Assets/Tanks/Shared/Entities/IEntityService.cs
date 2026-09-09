@@ -4,7 +4,9 @@ namespace Tanks.Shared.Entities
 {
     public interface IEntityService
     {
+        IEnumerable<IEntityBehaviour> GetAllEntities();
         IEntityBehaviour GetById(EntityId id);
+
         void AddEntity(IEntityBehaviour entity);
         void RemoveEntity(IEntityBehaviour entity);
     }
@@ -12,6 +14,11 @@ namespace Tanks.Shared.Entities
     public sealed class EntityService : IEntityService
     {
         private readonly Dictionary<EntityId, IEntityBehaviour> _entities = new();
+
+        public IEnumerable<IEntityBehaviour> GetAllEntities()
+        {
+            return _entities.Values;
+        }
 
         public IEntityBehaviour GetById(EntityId id)
         {

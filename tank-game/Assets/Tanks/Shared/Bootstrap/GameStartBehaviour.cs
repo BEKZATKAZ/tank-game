@@ -31,7 +31,7 @@ namespace Tanks.Shared.Bootstrap
         void GenerateTilemapEveryoneRpc(TilemapGenerationSettings settings, Vector2Int resolution);
         void SendReadyConfirmationServerRpc(int secretHandle);
         void RequestReadyConfirmation(ulong clientId, int secretHandle);
-        void StartGameEveryoneRpc(GameStarted message);
+        void StartGameEveryoneRpc(GameStartedFromServer message);
 
         void SpawnPlayer(ulong clientId, float2 position, string displayName);
         void DespawnAllPlayers();
@@ -85,7 +85,7 @@ namespace Tanks.Shared.Bootstrap
         }
 
         [Rpc(SendTo.Everyone, InvokePermission = RpcInvokePermission.Server)]
-		public void StartGameEveryoneRpc(GameStarted message)
+		public void StartGameEveryoneRpc(GameStartedFromServer message)
 		{
             EmitMessage(message);
             _bus.Publish(message, this);
@@ -115,10 +115,11 @@ namespace Tanks.Shared.Bootstrap
 
             _container.InjectGameObject(player);
 
-            player.GetComponent<IEntityBehaviour>().SetDisplayName(displayName);
-
             NetworkObject networkObject = player.GetComponent<NetworkObject>();
             networkObject.SpawnAsPlayerObject(clientId, destroyWithScene: true);
+
+            IEntityBehaviour entity = player.GetComponent<IEntityBehaviour>();
+            entity.SetDisplayNameEveryoneRpc(displayName);
         }
 
         public void PrepareGame() => EmitMessage(new PrepareGameRequested());

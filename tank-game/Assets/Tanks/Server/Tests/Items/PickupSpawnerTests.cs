@@ -51,7 +51,7 @@ namespace Tanks.Server.Tests.Items
             _component.Behaviour.SpawnEveryoneRpc(
                 Arg.Do<PickupSpawned>(x => ValidateSpawn(x, min, max, previousPositions)));
 
-            _component.Handle(new GameStarted { StartDelaySeconds = 0 }, null);
+            _component.Handle(new GameStartedFromServer { StartDelaySeconds = 0 }, null);
 
             for (int i = 0; i < 15; i++)
             {

@@ -49,7 +49,7 @@ namespace Tanks.Client.Entities.Health
             _particlePlayer.Play<ParticleSystem>(
                 VisualType.Explosion_1, message.WorldPosition).Play();
 
-            if (message.Target.IsPossessed == false) return;
+            if (message.Target is not { IsPossessed: true }) return;
 
             await UniTask.Delay(1500);
 

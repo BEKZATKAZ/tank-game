@@ -11,7 +11,7 @@ namespace Tanks.Server.Bootstrap
     public sealed class GameRestarter :
         NetworkComponent<IGameStartBehaviour>,
         IMessageHandler<Died>,
-        INetworkMessageHandler<GameStarted>
+        INetworkMessageHandler<GameStartedFromServer>
     {
         public GameRestarter(
             IMessageBus bus,
@@ -39,7 +39,7 @@ namespace Tanks.Server.Bootstrap
             _lastDiedTick = _currentTick;
         }
 
-        public void Handle(GameStarted message)
+        public void Handle(GameStartedFromServer message)
         {
             _eliminatedPlayerIds.Clear();
             _lastDiedTick = -1;

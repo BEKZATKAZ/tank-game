@@ -106,3 +106,14 @@
     width: 100%;
     background-color: red;
 }
+
+.timer {
+    position: absolute;
+    align-self: center;
+}
+
+.timer-counter {
+    font-size: 64px;
+    letter-spacing: 5px;
+    -unity-font-definition: var(--font-black);
+}

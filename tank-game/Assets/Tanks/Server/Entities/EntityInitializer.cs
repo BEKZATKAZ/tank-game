@@ -7,7 +7,7 @@ namespace Tanks.Server.Entities
     {
         protected override void OnInitialize()
         {
-            Behaviour.SetId(EntityIdGenerator.GenerateNext());
+            Behaviour.SetIdEveryoneRpc(EntityIdGenerator.GenerateNext());
         }
     }
 }
