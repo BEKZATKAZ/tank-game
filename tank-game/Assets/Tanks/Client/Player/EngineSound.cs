@@ -81,7 +81,7 @@ namespace Tanks.Client.Player
             IEntityBehaviour entity = Behaviour.GetBehaviour<IEntityBehaviour>();
 
             _instance?.AttachTo(entity.IsPossessed
-                ? _cameraService.Get().Transform
+                ? _cameraService.Get().BodyTransform
                 : Transform);
         }
     }

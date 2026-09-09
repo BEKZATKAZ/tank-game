@@ -1,5 +1,4 @@
-﻿using System;
-using Tanks.Shared.Adapters;
+﻿using Tanks.Shared.Adapters;
 using Unity.Mathematics;
 using UnityEngine;
 
@@ -7,7 +6,9 @@ namespace Tanks.Client.Rendering
 {
     public interface ICamera
     {
-        ITransform Transform { get; }
+        ITransform BodyTransform { get; }
+        ITransform ShakeTransform { get; }
+
         float OrthographicSize { get; set; }
         float Aspect { get; }
 
@@ -19,11 +20,17 @@ namespace Tanks.Client.Rendering
         public UnityCamera(Camera camera)
         {
             OriginalCamera = camera;
-            Transform = new UnityTransform(camera.transform);
+
+            Transform cameraTransform = camera.transform;
+            Transform body = cameraTransform.parent;
+
+            BodyTransform = new UnityTransform(body ? body : cameraTransform);
+            ShakeTransform = new UnityTransform(cameraTransform);
         }
 
         public Camera OriginalCamera { get; }
-        public ITransform Transform { get; }
+        public ITransform BodyTransform { get; }
+        public ITransform ShakeTransform { get; }
 
         public float Aspect
         {

@@ -76,14 +76,14 @@ namespace Tanks.Client.Rendering
             if (camera is null) return;
             if (_target != null && _target.IsValid) UpdateTargetPosition(Time.unscaledDeltaTime);
 
-            float2 currentPosition = camera.Transform.WorldPosition;
+            float2 currentPosition = camera.BodyTransform.WorldPosition;
             float2 clamped = ClampToBounds(_cameraNextPosition, camera);
 
             // Limit delta time to prevent overshooting during stutters
             float deltaTime = math.min(Time.deltaTime, 0.1f);
             
             float2 position = math.lerp(currentPosition, clamped, deltaTime * _positionSpeed);
-            camera.Transform.WorldPosition = position;
+            camera.BodyTransform.WorldPosition = position;
         }
     }
 }

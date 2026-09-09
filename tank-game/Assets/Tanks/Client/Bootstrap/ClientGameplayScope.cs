@@ -30,7 +30,13 @@ namespace Tanks.Client.Bootstrap
 
             builder.Register<ICameraMainService, CameraMainService>(Lifetime.Singleton);
             builder.Register<ISpectatorService, SpectatorService>(Lifetime.Singleton);
-            builder.RegisterComponentOnNewGameObject<CameraFollowService>(Lifetime.Singleton)
+
+            builder
+                .RegisterComponentOnNewGameObject<UnityCameraShakeService>(Lifetime.Singleton)
+                .As<ICameraShakeService>();
+
+            builder
+                .RegisterComponentOnNewGameObject<CameraFollowService>(Lifetime.Singleton)
                 .As<ICameraFollowService>();
 
             builder.Register<IClientItemDatabase, ClientItemDatabase>(Lifetime.Singleton);

@@ -49,7 +49,7 @@ namespace Tanks.Client.Tests.Rendering
         [Test]
         public void Transform_ReturnsAsOriginal()
         {
-            UnityTransform transform = (UnityTransform)_camera.Transform;
+            UnityTransform transform = (UnityTransform)_camera.BodyTransform;
             Assert.AreEqual(_camera.OriginalCamera.transform, transform.Transform);
         }
 

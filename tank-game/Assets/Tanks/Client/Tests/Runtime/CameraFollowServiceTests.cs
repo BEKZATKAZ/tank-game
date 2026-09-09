@@ -41,13 +41,13 @@ namespace Tanks.Client.Tests.Runtime
         [UnityTest]
         public IEnumerator LateUpdate_WithoutTarget_FollowsDefault()
         {
-            _camera.Transform.WorldPosition.Returns(float2.zero);
+            _camera.BodyTransform.WorldPosition.Returns(float2.zero);
             _camera.OrthographicSize.Returns(5);
 
             _service.SetBounds(new Bounds(new Vector3(10, 20, 0), new Vector3(20, 10, 0)));
             yield return null;
 
-            _camera.Transform.Received().WorldPosition = Arg.Any<float2>();
+            _camera.BodyTransform.Received().WorldPosition = Arg.Any<float2>();
         }
 
         [UnityTest]
@@ -59,7 +59,7 @@ namespace Tanks.Client.Tests.Runtime
             _service.SetFollowTarget(_target);
 
             yield return null;
-            _camera.Transform.Received().WorldPosition = Arg.Any<float2>();
+            _camera.BodyTransform.Received().WorldPosition = Arg.Any<float2>();
         }
 
         [UnityTest]
@@ -68,7 +68,7 @@ namespace Tanks.Client.Tests.Runtime
             _target.IsValid.Returns(true);
             _target.WorldPosition.Returns(new float2(4, 3));
 
-            _camera.Transform.WorldPosition.Returns(float2.zero);
+            _camera.BodyTransform.WorldPosition.Returns(float2.zero);
             _camera.OrthographicSize.Returns(5);
 
             _service.SetBounds(new Bounds(Vector3.zero, new Vector3(20, 20, 0)));
@@ -76,7 +76,7 @@ namespace Tanks.Client.Tests.Runtime
 
             yield return null;
 
-            _camera.Transform.Received().WorldPosition =
+            _camera.BodyTransform.Received().WorldPosition =
                 Arg.Is<float2>(x => x.x > 0 && x.x <= 4 && x.y > 0 && x.y <= 3);
         }
     }

@@ -3,6 +3,7 @@ using NUnit.Framework;
 using System.Threading.Tasks;
 using Tanks.Client.Entities.Health;
 using Tanks.Client.Player;
+using Tanks.Client.Rendering;
 using Tanks.Client.Visuals;
 using Tanks.Core.Helpers;
 using Tanks.Shared.Entities;
@@ -24,7 +25,9 @@ namespace Tanks.Client.Tests.Entities
             _visuals = Substitute.For<IVisualService>();
             _spectatorService = Substitute.For<ISpectatorService>();
 
-            _component = new ExplosionVisuals(_visuals, _spectatorService);
+            _component = new ExplosionVisuals(
+                _visuals, _spectatorService, Substitute.For<ICameraShakeService>());
+
             _component.Initialize(Substitute.For<IHealthBehaviour>());
         }
 

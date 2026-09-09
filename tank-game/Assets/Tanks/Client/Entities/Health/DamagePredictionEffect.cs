@@ -2,22 +2,27 @@ using Cysharp.Threading.Tasks;
 using System.Collections.Generic;
 using System.Linq;
 using Tanks.Audio;
+using Tanks.Client.Rendering;
 using Tanks.Shared;
 using Tanks.Shared.Entities.Health;
 using UnityEngine;
 
 namespace Tanks.Client.Entities.Health
 {
-    public class DamagePredictionEffect :
+    public sealed class DamagePredictionEffect :
         NetworkComponent<IHealthBehaviour>,
         INetworkMessageHandler<HealthChangedFromPrediction>
     {
-        public DamagePredictionEffect(IAudioPlayer audioPlayer)
+        public DamagePredictionEffect(
+            IAudioPlayer audioPlayer,
+            ICameraShakeService cameraShake)
         {
             _audioPlayer = audioPlayer;
+            _cameraShake = cameraShake;
         }
 
         private readonly IAudioPlayer _audioPlayer;
+        private readonly ICameraShakeService _cameraShake;
 
         private Dictionary<SpriteRenderer, Color> _sprites;
         private float _lastTime;
@@ -38,6 +43,19 @@ namespace Tanks.Client.Entities.Health
                 path: "event:/SFX/DamageTaken",
                 target: Transform,
                 useDefault: Behaviour.Entity.IsPossessed);
+
+            bool isLocalPlayer = message.Target.IsPossessed;
+            bool isFromLocalPlayer = message.From?.IsPossessed ?? false;
+
+            if (isLocalPlayer || isFromLocalPlayer)
+            {
+                _cameraShake.AddShake(new CameraImpulse(
+                    position: Transform.WorldPosition,
+                    amplitude: 0.8f,
+                    frequency: 4,
+                    radius: isLocalPlayer ? 1000 : isFromLocalPlayer ? 20 : 5,
+                    duration: 0.9f));
+            }
 
             await UniTask.Delay(150);
 

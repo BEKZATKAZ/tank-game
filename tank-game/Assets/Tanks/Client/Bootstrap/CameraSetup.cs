@@ -49,7 +49,7 @@ namespace Tanks.Client.Bootstrap
         {
             var player = Behaviour.NetworkManager.LocalClient.PlayerObject;
 
-            _audioPlayer.SetDefault(_camera.Get().Transform);
+            _audioPlayer.SetDefault(_camera.Get().BodyTransform);
             _follow.SetBounds(_mapBounds);
             _follow.SetFollowTarget(new UnityTransform(player.transform));
 
