@@ -1,6 +1,8 @@
 ﻿using Tanks.Core;
+using Tanks.Core.Lobbies.Sessions;
 using Tanks.Shared;
 using Tanks.Shared.Bootstrap;
+using Unity.Mathematics;
 using Unity.Netcode;
 using UnityEngine;
 
@@ -11,16 +13,19 @@ namespace Tanks.Server.Bootstrap
         public PlayerConnector(
             IClientConnectionValidator validator,
             IConnectedClientService clientService,
-            IVirtualMachineService vmService)
+            IVirtualMachineService vmService,
+            ISessionSettingsService sessionSettings)
         {
             _validator = validator;
             _clientService = clientService;
             _vmService = vmService;
+            _sessionSettings = sessionSettings;
         }
 
         private readonly IClientConnectionValidator _validator;
         private readonly IConnectedClientService _clientService;
         private readonly IVirtualMachineService _vmService;
+        private readonly ISessionSettingsService _sessionSettings;
         private bool _allPlayersConnected;
 
         protected override void OnInitialize()
@@ -76,7 +81,7 @@ namespace Tanks.Server.Bootstrap
         public void OnClientConnected(ulong clientId)
         {
             int currentCount = _clientService.ConnectedClientCount;
-            if (currentCount < Behaviour.DesiredPlayerCount) return;
+            if (currentCount < _sessionSettings.GetSettings().DesiredPlayerCount) return;
 
             _allPlayersConnected = true;
             Behaviour.PrepareGame();

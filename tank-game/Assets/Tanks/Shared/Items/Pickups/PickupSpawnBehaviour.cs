@@ -1,5 +1,4 @@
-﻿using NaughtyAttributes;
-using System.Buffers;
+﻿using System.Buffers;
 using System.Collections.Generic;
 using Tanks.Shared.Generation;
 using Tanks.Shared.Messaging;
@@ -21,10 +20,6 @@ namespace Tanks.Shared.Items.Pickups
 
     public interface IPickupSpawnBehaviour : INetworkBehaviourExtended
     {
-        float MinCooldown { get; }
-        float MaxCooldown { get; }
-        float MinDistanceToPlayers { get; }
-
         void SpawnEveryoneRpc(PickupSpawned payload);
         void DespawnEveryoneRpc(PickupId id);
     }
@@ -32,23 +27,11 @@ namespace Tanks.Shared.Items.Pickups
     public sealed class PickupSpawnBehaviour :
         NetworkBehaviourExtended, IPickupSpawnBehaviour, IMessageHandler<TilemapGenerated>
     {
-        [MinMaxSlider(0, 120)]
-        [SerializeField]
-        private Vector2 _cooldownMinMax;
-
-        [Range(1, 5)]
-        [SerializeField]
-        private float _minDistanceToPlayers = 2;
-
         [Inject] private readonly IMessageBus _bus;
         [Inject] private readonly IObjectResolver _container;
 
         private readonly Dictionary<PickupId, PickupBehaviour> _pickups = new();
         private ObjectPool<PickupBehaviour> _pool;
-
-        public float MinCooldown => _cooldownMinMax.x;
-        public float MaxCooldown => _cooldownMinMax.y;
-        public float MinDistanceToPlayers => _minDistanceToPlayers;
 
         [Rpc(SendTo.Everyone, InvokePermission = RpcInvokePermission.Server)]
         public void SpawnEveryoneRpc(PickupSpawned payload)

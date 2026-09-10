@@ -385,7 +385,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Tanks.UI::Tanks.UI.Menus.MenuScope
   parentReference:
-    TypeName: Tanks.Core.Bootstrap.CoreScope
+    TypeName: Tanks.Infrastructure.InfrastructureScope
   autoRun: 1
   autoInjectGameObjects:
   - {fileID: 592596780}

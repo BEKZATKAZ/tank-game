@@ -2,6 +2,7 @@
 using System.Linq;
 using System.Security.Cryptography;
 using Tanks.Core.Helpers;
+using Tanks.Core.Lobbies.Sessions;
 using Tanks.Shared;
 using Tanks.Shared.Adapters;
 using Tanks.Shared.Generation;
@@ -20,10 +21,14 @@ namespace Tanks.Server.Items.Pickups
         IMessageHandler<GameStartedFromServer>,
         IMessageHandler<ItemPickedUp>
     {
-        public PickupSpawner(IItemDatabase items, IMessageBus bus)
+        public PickupSpawner(
+            IItemDatabase items,
+            IMessageBus bus,
+            ISessionSettingsService settings)
         {
             _items = items;
             _bus = bus;
+            _settings = settings;
 
             _bus.RegisterHandler<TilemapGenerated>(this);
             _bus.RegisterHandler<GameStartedFromServer>(this);
@@ -34,6 +39,7 @@ namespace Tanks.Server.Items.Pickups
 
         private readonly IItemDatabase _items;
         private readonly IMessageBus _bus;
+        private readonly ISessionSettingsService _settings;
 
         private readonly Dictionary<PickupId, int2> _activePickups = new();
         private readonly HashSet<int2> _occupiedCoords = new();
@@ -58,11 +64,14 @@ namespace Tanks.Server.Items.Pickups
                 [ItemTier.Legendary] = 2
             };
 
+            ItemSpawnSettings settings = _settings.GetSettings().ItemSpawn;
             uint seed = (uint)RandomNumberGenerator.GetInt32(0, int.MaxValue);
-            _chooser = new ItemChooser(_items.Items, chanceRatios, seed);
 
+            _chooser = new ItemChooser(_items.Items, chanceRatios, seed);
             _random = Random.CreateFromIndex(seed ^ 23);
-            CurrentCooldown = _random.NextFloat(Behaviour.MinCooldown, Behaviour.MaxCooldown);
+
+            CurrentCooldown = _random.NextFloat(
+                settings.MinCooldownSeconds, settings.MaxCooldownSeconds);
         }
 
         protected override void OnDestroy()
@@ -79,9 +88,13 @@ namespace Tanks.Server.Items.Pickups
             _elapsed += tickDelta;
             if (_elapsed < CurrentCooldown) return;
 
-            _elapsed = 0;
-            CurrentCooldown = _random.NextFloat(Behaviour.MinCooldown, Behaviour.MaxCooldown);
+            ItemSpawnSettings settings = _settings.GetSettings().ItemSpawn;
+
+            CurrentCooldown = _random.NextFloat(
+                settings.MinCooldownSeconds, settings.MaxCooldownSeconds);
+
             _lastPickupId = new PickupId(_lastPickupId.Value + 1);
+            _elapsed = 0;
 
             IItemConfig item = _chooser.ChooseRandomItem(_random.NextFloat(0, 1f));
             TilemapGenerated message = _lastTilemapGeneratedMessage.Value;
@@ -116,7 +129,7 @@ namespace Tanks.Server.Items.Pickups
                 }
 
                 // Prevent spawning right on players
-                if (minDistance >= Behaviour.MinDistanceToPlayers) break;
+                if (minDistance >= settings.MinDistanceToPlayers) break;
             }
 
             float2 position = (float2)coords * (wallWidth * 2) + wallWidth * 1.5f;

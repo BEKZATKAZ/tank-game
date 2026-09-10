@@ -1,6 +1,7 @@
 using NSubstitute;
 using NUnit.Framework;
 using Tanks.Core;
+using Tanks.Core.Lobbies.Sessions;
 using Tanks.Server.Bootstrap;
 using Tanks.Shared.Bootstrap;
 using Unity.Netcode;
@@ -12,6 +13,7 @@ namespace Tanks.Server.Tests.Bootstrap
         private IClientConnectionValidator _validator;
         private IConnectedClientService _clientService;
         private IVirtualMachineService _vmService;
+        private ISessionSettingsService _settings;
         private PlayerConnector _component;
 
         [SetUp]
@@ -20,8 +22,9 @@ namespace Tanks.Server.Tests.Bootstrap
             _validator = Substitute.For<IClientConnectionValidator>();
             _clientService = Substitute.For<IConnectedClientService>();
             _vmService = Substitute.For<IVirtualMachineService>();
+            _settings = Substitute.For<ISessionSettingsService>();
 
-            _component = new PlayerConnector(_validator, _clientService, _vmService);
+            _component = new PlayerConnector(_validator, _clientService, _vmService, _settings);
             _component.Initialize(Substitute.For<IGameStartBehaviour>());
         }
 
@@ -41,7 +44,6 @@ namespace Tanks.Server.Tests.Bootstrap
         public void Approval_FullSession_Rejects()
         {
             _clientService.ConnectedClientCount.Returns(1);
-            _component.Behaviour.DesiredPlayerCount.Returns(1);
             _component.OnClientConnected(1);
 
             var response = new NetworkManager.ConnectionApprovalResponse();
@@ -85,7 +87,7 @@ namespace Tanks.Server.Tests.Bootstrap
         [TestCase(10ul)]
         public void WaitsUntilEveryoneConnects(ulong desiredCount)
         {
-            _component.Behaviour.DesiredPlayerCount.Returns((int)desiredCount);
+            _settings.GetSettings().DesiredPlayerCount.Returns((int)desiredCount);
 
             for (ulong id = 1; id <= desiredCount; id++)
             {

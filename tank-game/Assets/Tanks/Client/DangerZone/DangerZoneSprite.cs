@@ -1,5 +1,6 @@
 ﻿using Tanks.Client.Bootstrap;
 using Tanks.Client.Visuals;
+using Tanks.Core.Lobbies.Sessions;
 using Tanks.Shared;
 using Tanks.Shared.Adapters;
 using Tanks.Shared.Messaging;
@@ -13,10 +14,14 @@ namespace Tanks.Client.DangerZone
         INetworkMessageHandler<DangerZoneStarted>,
         IMessageHandler<GameStartedFromClient>
     {
-        public DangerZoneSprite(IMessageBus bus, IStressService stress)
+        public DangerZoneSprite(
+            IMessageBus bus,
+            IStressService stress,
+            ISessionSettingsService settings)
         {
             _bus = bus;
             _stress = stress;
+            _settings = settings;
         }
 
         public SpriteRenderer Renderer { get; private set; }
@@ -24,8 +29,8 @@ namespace Tanks.Client.DangerZone
 
         private readonly IMessageBus _bus;
         private readonly IStressService _stress;
+        private readonly ISessionSettingsService _settings;
 
-        private float _duration;
         private float2 _maxSize;
         private float2 _currentSize;
 
@@ -34,8 +39,11 @@ namespace Tanks.Client.DangerZone
 
         private float ShrinkStep(float deltaTime)
         {
-            _currentSize -= deltaTime * _maxSize / _duration;
+            float duration = _settings.GetSettings().DangerZone.DurationSeconds;
+
+            _currentSize -= deltaTime * _maxSize / duration;
             _currentSize = math.max(_currentSize, 0);
+
             return math.cmax(_currentSize);
         }
 
@@ -49,7 +57,6 @@ namespace Tanks.Client.DangerZone
         {
             _stress.SetMinStress(0.5f);
 
-            _duration = message.ServerDuration;
             _maxSize = message.StartSize;
             _currentSize = _maxSize;
 

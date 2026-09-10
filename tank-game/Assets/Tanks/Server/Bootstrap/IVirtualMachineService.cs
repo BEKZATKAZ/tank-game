@@ -33,6 +33,8 @@ namespace Tanks.Server.Bootstrap
                 .GamePortsConfiguration
                 .Single(x => x.Name == "game_port")
                 .ServerListeningPort;
+#else
+            return 7777;
 #endif
         }
 

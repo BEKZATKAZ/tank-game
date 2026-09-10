@@ -2,13 +2,13 @@ using Cysharp.Threading.Tasks;
 using NUnit.Framework;
 using System.Threading.Tasks;
 using Tanks.Infrastructure.Repositories;
-using UnityEngine;
+using UnityEngine.Localization;
 
-namespace Tanks.Infrastructure.Tests.Repositories
+namespace Tanks.Infrastructure.Tests.Runtime
 {
     public class ResourceLoaderTests
     {
-        private static readonly string _assetPath = "UI/DamagePreview";
+        private static readonly string _assetPath = "English (en)";
         private AddressablesLoader _loader;
 
         [SetUp]
@@ -27,16 +27,16 @@ namespace Tanks.Infrastructure.Tests.Repositories
         [Test]
         public async Task LoadFromKey_ValidKey_CachesResult()
         {
-            GameObject expected = await _loader.LoadAsync<GameObject>(_assetPath);
+            Locale expected = await _loader.LoadAsync<Locale>(_assetPath);
             Assert.NotNull(expected, "Should be a valid asset");
 
-            GameObject cached = await _loader.LoadAsync<GameObject>(_assetPath);
+            Locale cached = await _loader.LoadAsync<Locale>(_assetPath);
             Assert.AreEqual(expected, cached, "Cached asset should be the same");
 
             Assert.True(_loader.ReleaseFromResource(cached), "Should successfuly release");
             Assert.False(_loader.ReleaseFromResource(cached), "Should already be released");
 
-            GameObject newAsset = await _loader.LoadAsync<GameObject>(_assetPath);
+            Locale newAsset = await _loader.LoadAsync<Locale>(_assetPath);
             Assert.NotNull(newAsset, "New asset should be a valid asset");
 
             Assert.True(_loader.ReleaseFromKey(_assetPath), "Should successfuly release");
@@ -46,21 +46,21 @@ namespace Tanks.Infrastructure.Tests.Repositories
         [Test]
         public async Task LoadFromKey_Concurrent_DoesPending()
         {
-            UniTask<GameObject>[] tasks = new UniTask<GameObject>[10];
+            UniTask<Locale>[] tasks = new UniTask<Locale>[10];
 
             for (int i = 0; i < 10; i++)
             {
-                tasks[i] = _loader.LoadAsync<GameObject>(_assetPath);
+                tasks[i] = _loader.LoadAsync<Locale>(_assetPath);
             }
 
             await UniTask.WhenAll(tasks);
 
-            GameObject expected = tasks[0].GetAwaiter().GetResult();
+            Locale expected = tasks[0].GetAwaiter().GetResult();
             Assert.NotNull(expected, "Should be a valid asset");
 
             for (int i = 1; i < 10; i++)
             {
-                GameObject actual = tasks[i].GetAwaiter().GetResult();
+                Locale actual = tasks[i].GetAwaiter().GetResult();
                 Assert.AreEqual(expected, actual, "One key, different outcomes");
             }
         }
@@ -68,7 +68,7 @@ namespace Tanks.Infrastructure.Tests.Repositories
         [Test]
         public async Task Dispose_ReleasesAll()
         {
-            await _loader.LoadAsync<GameObject>(_assetPath);
+            await _loader.LoadAsync<Locale>(_assetPath);
             _loader.Dispose();
         }
 

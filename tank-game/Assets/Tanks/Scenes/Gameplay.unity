@@ -588,8 +588,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Tanks.Shared::Tanks.Shared.Items.Pickups.PickupSpawnBehaviour
   ShowTopMostFoldoutHeaderGroup: 1
-  _cooldownMinMax: {x: 1, y: 2}
-  _minDistanceToPlayers: 2
 --- !u!4 &415803225
 Transform:
   m_ObjectHideFlags: 0
@@ -991,9 +989,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Tanks.Shared::Tanks.Shared.DangerZoneBehaviour
   ShowTopMostFoldoutHeaderGroup: 1
-  _startDelay: 15
-  _shrinkDuration: 40
-  _damage: 10
 --- !u!4 &995560639
 Transform:
   m_ObjectHideFlags: 0
@@ -1130,7 +1125,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Tanks.Shared::Tanks.Shared.Bootstrap.GameStartBehaviour
   ShowTopMostFoldoutHeaderGroup: 1
   _tilemap: {fileID: 1563795404}
-  _desiredPlayerCount: 1
+  _defaultDesiredPlayerCount: 1
 --- !u!4 &1183163574
 Transform:
   m_ObjectHideFlags: 0
@@ -1200,7 +1195,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Tanks.Server::Tanks.Server.Bootstrap.ServerGameplayScope
   parentReference:
-    TypeName: Tanks.Core.Bootstrap.CoreScope
+    TypeName: Tanks.Infrastructure.InfrastructureScope
   autoRun: 1
   autoInjectGameObjects:
   - {fileID: 71442778}
@@ -1886,7 +1881,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Tanks.Client::Tanks.Client.Bootstrap.ClientGameplayScope
   parentReference:
-    TypeName: Tanks.Core.Bootstrap.CoreScope
+    TypeName: Tanks.Infrastructure.InfrastructureScope
   autoRun: 1
   autoInjectGameObjects:
   - {fileID: 1622637408}

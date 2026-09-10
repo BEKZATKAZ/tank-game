@@ -22,7 +22,6 @@
   <Project Path="FMODUnityHaptics.csproj" />
   <Project Path="Tanks.Utils.Tests.csproj" />
   <Project Path="Tanks.Infrastructure.Tests.csproj" />
-  <Project Path="Tanks.Core.Bootstrap.csproj" />
   <Project Path="FMODUnityResonance.csproj" />
   <Project Path="Tanks.UI.Tests.csproj" />
   <Project Path="Tanks.Editor.csproj" />
@@ -30,4 +29,5 @@
   <Project Path="Tanks.Audio.csproj" />
   <Project Path="Tanks.Client.Tests.Runtime.csproj" />
   <Project Path="PlayFabSDKEditor.csproj" />
+  <Project Path="Tanks.Infrastructure.Tests.Runtime.csproj" />
 </Solution>

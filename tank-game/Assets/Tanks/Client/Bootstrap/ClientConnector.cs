@@ -2,7 +2,7 @@
 using System.Linq;
 using System.Text;
 using Tanks.Core;
-using Tanks.Core.Lobbies;
+using Tanks.Core.Lobbies.Sessions;
 using Tanks.Shared.Bootstrap;
 using Unity.Multiplayer.PlayMode;
 using Unity.Netcode;

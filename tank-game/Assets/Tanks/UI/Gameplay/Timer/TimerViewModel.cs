@@ -1,5 +1,6 @@
 using System;
 using Tanks.Client.Bootstrap;
+using Tanks.Core.Lobbies.Sessions;
 using Tanks.Shared;
 using Tanks.Shared.Messaging;
 using Tanks.Utils;
@@ -14,9 +15,11 @@ namespace Tanks.UI.Gameplay.Timer
         IMessageHandler<DangerZoneStarted>,
         IDisposable
     {
-        public TimerViewModel(IMessageBus bus)
+        public TimerViewModel(IMessageBus bus, ISessionSettingsService settings)
         {
             _bus = bus;
+            _settings = settings;
+
             _bus.RegisterHandler<GameStartedFromClient>(this);
             _bus.RegisterHandler<DangerZoneStarted>(this);
         }
@@ -25,10 +28,10 @@ namespace Tanks.UI.Gameplay.Timer
         public BindableProperty<Color> CounterColor { get; } = new();
 
         private readonly IMessageBus _bus;
+        private readonly ISessionSettingsService _settings;
+
         private float _seconds;
         private float _duration;
-        private float _dangerZoneDelay;
-        private float _dangerZoneDuration;
         private bool _isDangerZoneStarted;
 
         public void Dispose()
@@ -37,19 +40,12 @@ namespace Tanks.UI.Gameplay.Timer
             _bus.UnregisterHandler<DangerZoneStarted>(this);
         }
 
-        public void SetDangerZoneInfo(float delay, float duration)
-        {
-            _dangerZoneDelay = delay;
-            _dangerZoneDuration = duration;
-        }
-
         public void Handle(DangerZoneStarted message, IMessageSender sender)
         {
             if (_isDangerZoneStarted) return;
 
             _isDangerZoneStarted = true;
-            _dangerZoneDuration = message.ServerDuration;
-            _duration = _dangerZoneDuration;
+            _duration = _settings.GetSettings().DangerZone.DurationSeconds;
             _seconds = _duration;
 
             Seconds.Value = (int)math.ceil(_seconds);
@@ -58,7 +54,7 @@ namespace Tanks.UI.Gameplay.Timer
 
         public void Handle(GameStartedFromClient message, IMessageSender sender)
         {
-            _duration = _dangerZoneDelay;
+            _duration = _settings.GetSettings().DangerZone.StartDelaySeconds;
             _seconds = _duration + message.AdaptedStartDelaySeconds;
             _isDangerZoneStarted = false;
 
@@ -79,7 +75,7 @@ namespace Tanks.UI.Gameplay.Timer
 
             // Predict danger zone start
             if (_isDangerZoneStarted || _seconds > 0) return;
-            Handle(new DangerZoneStarted { ServerDuration = _dangerZoneDuration }, null);
+            Handle(new DangerZoneStarted(), null);
         }
     }
 }

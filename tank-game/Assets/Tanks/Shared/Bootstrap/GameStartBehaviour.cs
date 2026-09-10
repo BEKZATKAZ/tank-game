@@ -1,7 +1,6 @@
 ﻿using Tanks.Core.Helpers;
 using Tanks.Shared.Entities;
 using Tanks.Shared.Generation;
-using Tanks.Shared.Items;
 using Tanks.Shared.Messaging;
 using Unity.Mathematics;
 using Unity.Netcode;
@@ -26,8 +25,6 @@ namespace Tanks.Shared.Bootstrap
 
     public interface IGameStartBehaviour : INetworkBehaviourExtended
     {
-        int DesiredPlayerCount { get; }
-
         void GenerateTilemapEveryoneRpc(TilemapGenerationSettings settings, Vector2Int resolution);
         void SendReadyConfirmationServerRpc(int secretHandle);
         void RequestReadyConfirmation(ulong clientId, int secretHandle);
@@ -44,13 +41,9 @@ namespace Tanks.Shared.Bootstrap
         NetworkBehaviourExtended, IGameStartBehaviour, IMessageSender
 	{
 		[SerializeField] private TilemapSpawner _tilemap;
-		[SerializeField] private int _desiredPlayerCount = 1;
 
         [Inject] private readonly IObjectResolver _container;
         [Inject] private readonly IMessageBus _bus;
-		[Inject] private readonly IItemDatabase _itemDatabase;
-
-        public int DesiredPlayerCount => _desiredPlayerCount;
 
         [Rpc(SendTo.SpecifiedInParams)]
         private void RequestReadyConfirmationClientRpc(int secretHandle, RpcParams p = default)

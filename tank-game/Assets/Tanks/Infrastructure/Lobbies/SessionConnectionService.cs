@@ -1,4 +1,4 @@
-﻿using Tanks.Core.Lobbies;
+﻿using Tanks.Core.Lobbies.Sessions;
 
 namespace Tanks.Infrastructure.Lobbies
 {

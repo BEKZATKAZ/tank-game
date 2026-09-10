@@ -19,9 +19,6 @@ namespace Tanks.UI.Gameplay.Timer
 
         protected override void Bind(TimerViewModel viewModel)
         {
-            DangerZoneBehaviour dangerZone = FindAnyObjectByType<DangerZoneBehaviour>();
-            viewModel.SetDangerZoneInfo(dangerZone.StartDelay, dangerZone.ShrinkDuration);
-
             viewModel.Seconds.Bind(UpdateCounterText);
             viewModel.CounterColor.Bind(x => _counter.style.color = x);
         }

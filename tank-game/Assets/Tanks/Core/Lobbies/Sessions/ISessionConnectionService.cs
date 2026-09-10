@@ -1,4 +1,4 @@
-﻿namespace Tanks.Core.Lobbies
+﻿namespace Tanks.Core.Lobbies.Sessions
 {
     public interface ISessionConnectionService
     {

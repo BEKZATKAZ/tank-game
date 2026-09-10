@@ -1,4 +1,5 @@
-﻿using Tanks.Server.Entities;
+﻿using Tanks.Core.Lobbies.Sessions;
+using Tanks.Server.Entities;
 using Tanks.Shared;
 using Tanks.Shared.Entities;
 using Tanks.Shared.Entities.Health;
@@ -14,14 +15,19 @@ namespace Tanks.Server
         IMessageHandler<TilemapGenerated>,
         IMessageHandler<GameStartedFromServer>
     {
-        public DangerZone(IEntityService entityService, IMessageBus bus)
+        public DangerZone(
+            IEntityService entityService,
+            IMessageBus bus,
+            ISessionSettingsService sessionSettings)
         {
             _entityService = entityService;
             _bus = bus;
+            _sessionSettings = sessionSettings;
         }
 
         private readonly IEntityService _entityService;
         private readonly IMessageBus _bus;
+        private readonly ISessionSettingsService _sessionSettings;
 
         private float2 _currentSize;
         private float2 _maxSize;
@@ -37,8 +43,10 @@ namespace Tanks.Server
 
         public void Handle(GameStartedFromServer message, IMessageSender sender)
         {
+            DangerZoneSettings settings = _sessionSettings.GetSettings().DangerZone;
             _canSimulate = true;
-            _timeUntilStart = Behaviour.StartDelay + message.StartDelaySeconds;
+
+            _timeUntilStart = settings.StartDelaySeconds + message.StartDelaySeconds;
             Behaviour.SetCurrentState(Rect.MinMaxRect(-10000, -10000, 10000, 10000));
         }
 
@@ -67,12 +75,13 @@ namespace Tanks.Server
                 Behaviour.StartShrinkingClientRpc(new DangerZoneStarted
                 {
                     ServerTick = tick,
-                    ServerDuration = Behaviour.ShrinkDuration,
                     StartSize = _currentSize
                 });
             }
 
-            _currentSize -= tickDelta * _maxSize / Behaviour.ShrinkDuration;
+            DangerZoneSettings settings = _sessionSettings.GetSettings().DangerZone;
+
+            _currentSize -= tickDelta * _maxSize / settings.DurationSeconds;
             _currentSize = math.max(_currentSize, float2.zero);
 
             int tickRate = (int)math.ceil(1 / tickDelta);
@@ -95,7 +104,8 @@ namespace Tanks.Server
                     .GetBehaviour<IHealthBehaviour>()
                     .Require<IAuthoritativeHealth>();
 
-                health.Damage(Behaviour.Damage, eventId: HealthEventId.Create(Behaviour, tick));
+                HealthEventId eventId = HealthEventId.Create(Behaviour, tick);
+                health.Damage(settings.DamagePerSecond, null, eventId);
             }
         }
     }

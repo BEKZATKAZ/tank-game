@@ -1,6 +1,7 @@
 using System;
 using System.Runtime.InteropServices;
 using System.Security.Cryptography;
+using Tanks.Core.Lobbies.Sessions;
 using Tanks.Shared;
 using Tanks.Shared.Bootstrap;
 using Tanks.Shared.Generation;
@@ -13,19 +14,23 @@ namespace Tanks.Server.Bootstrap
         NetworkComponent<IGameStartBehaviour>,
         INetworkMessageHandler<PrepareGameRequested>
     {
-        public GamePreparer(IConnectedClientService clientService)
+        public GamePreparer(
+            IConnectedClientService clientService, 
+            ISessionSettingsService settings)
         {
             _clientService = clientService;
+            _settings = settings;
         }
 
         private readonly IConnectedClientService _clientService;
+        private readonly ISessionSettingsService _settings;
 
         public void Handle(PrepareGameRequested message)
         {
             Behaviour.DespawnAllPlayers();
 
-            Vector2Int resolution = new Vector2Int(6, 4);
-            int wallWidth = 7;
+            Vector2Int resolution = _settings.GetSettings().MapGeneration.Resolution;
+            int wallWidth = _settings.GetSettings().MapGeneration.WallWidth;
 
             GenerateMap(wallWidth, resolution);
             SpawnPlayers(wallWidth, resolution);

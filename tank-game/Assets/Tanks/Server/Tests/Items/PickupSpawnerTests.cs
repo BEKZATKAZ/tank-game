@@ -3,6 +3,7 @@ using NUnit.Framework;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Tanks.Core.Lobbies.Sessions;
 using Tanks.Server.Items.Pickups;
 using Tanks.Shared;
 using Tanks.Shared.Generation;
@@ -17,6 +18,7 @@ namespace Tanks.Server.Tests.Items
     public class PickupSpawnerTests
     {
         private PickupSpawner _component;
+        private ISessionSettingsService _settings;
         private IItemConfig[] _itemCollection;
 
         [SetUp]
@@ -28,11 +30,16 @@ namespace Tanks.Server.Tests.Items
             _itemCollection = GetItems().ToArray();
             items.Items.Returns(_itemCollection);
 
-            _component = new PickupSpawner(items, bus);
-            _component.Initialize(Substitute.For<IPickupSpawnBehaviour>());
+            _settings = Substitute.For<ISessionSettingsService>();
+            _settings.GetSettings().ItemSpawn.Returns(new ItemSpawnSettings
+            {
+                MinCooldownSeconds = 10,
+                MaxCooldownSeconds = 20,
+                MinDistanceToPlayers = 2
+            });
 
-            _component.Behaviour.MinCooldown.Returns(10);
-            _component.Behaviour.MaxCooldown.Returns(20);
+            _component = new PickupSpawner(items, bus, _settings);
+            _component.Initialize(Substitute.For<IPickupSpawnBehaviour>());
         }
 
         [TestCase(1)]
@@ -69,10 +76,11 @@ namespace Tanks.Server.Tests.Items
                     "Cooldown should be set after Tick()");
 
                 _component.Tick(++tick, 0.1f);
+                ItemSpawnSettings settings = _settings.GetSettings().ItemSpawn;
 
                 float cooldown = _component.CurrentCooldown;
-                float minCooldown = _component.Behaviour.MinCooldown;
-                float maxCooldown = _component.Behaviour.MaxCooldown;
+                float minCooldown = settings.MinCooldownSeconds;
+                float maxCooldown = settings.MaxCooldownSeconds;
 
                 Assert.GreaterOrEqual(cooldown, minCooldown, "Cooldown is below min");
                 Assert.LessOrEqual(cooldown, maxCooldown, "Cooldown is above max");

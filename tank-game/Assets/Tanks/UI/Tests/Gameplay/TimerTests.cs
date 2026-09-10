@@ -1,6 +1,7 @@
 ﻿using NSubstitute;
 using NUnit.Framework;
 using Tanks.Client.Bootstrap;
+using Tanks.Core.Lobbies.Sessions;
 using Tanks.Shared;
 using Tanks.Shared.Messaging;
 using Tanks.UI.Gameplay.Timer;
@@ -11,26 +12,33 @@ namespace Tanks.UI.Tests.Gameplay
     public sealed class TimerTests : ViewModelTestBase<TimerViewModel>
     {
         private IMessageBus _bus;
+        private ISessionSettingsService _settings;
 
         protected override TimerViewModel CreateViewModel()
         {
             _bus = Substitute.For<IMessageBus>();
-            return new TimerViewModel(_bus);
+            _settings = Substitute.For<ISessionSettingsService>();
+            return new TimerViewModel(_bus, _settings);
         }
 
         [Test]
         public void Tick_WithDangerZone_SwitchesToDangerZone()
         {
-            ViewModel.SetDangerZoneInfo(10, 20);
+            _settings.GetSettings().DangerZone.Returns(new DangerZoneSettings
+            {
+                StartDelaySeconds = 10,
+                DurationSeconds = 20
+            });
+
             ViewModel.Handle(new GameStartedFromClient { AdaptedStartDelaySeconds = 1 }, null);
 
             Color color = ViewModel.CounterColor.Value;
             ViewModel.Tick(deltaTime: 5);
 
-            ViewModel.Handle(new DangerZoneStarted { ServerDuration = 30 }, null);
+            ViewModel.Handle(new DangerZoneStarted(), null);
             ViewModel.Tick(deltaTime: 0.1f);
 
-            Assert.AreEqual(30, ViewModel.Seconds.Value,
+            Assert.AreEqual(20, ViewModel.Seconds.Value,
                 "Counter should reset as the danger zone starts");
 
             Assert.AreNotEqual(color, ViewModel.CounterColor.Value,
@@ -43,7 +51,12 @@ namespace Tanks.UI.Tests.Gameplay
         [TestCase(30)]
         public void Tick_CountsDown_PredictsDangerZone(int dangerZoneDelay)
         {
-            ViewModel.SetDangerZoneInfo(dangerZoneDelay, 20);
+            _settings.GetSettings().DangerZone.Returns(new DangerZoneSettings
+            {
+                StartDelaySeconds = dangerZoneDelay,
+                DurationSeconds = 20
+            });
+
             ViewModel.Handle(new GameStartedFromClient { AdaptedStartDelaySeconds = 1 }, null);
             Color color = ViewModel.CounterColor.Value;
 

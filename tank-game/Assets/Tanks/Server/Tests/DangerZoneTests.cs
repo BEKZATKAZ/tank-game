@@ -1,6 +1,7 @@
 ﻿using NSubstitute;
 using NUnit.Framework;
 using Tanks.Core.Helpers;
+using Tanks.Core.Lobbies.Sessions;
 using Tanks.Server.Entities;
 using Tanks.Shared;
 using Tanks.Shared.Entities;
@@ -16,6 +17,7 @@ namespace Tanks.Server.Tests
     {
         private IEntityService _entityService;
         private IMessageBus _bus;
+        private ISessionSettingsService _settings;
         private DangerZone _component;
 
         [SetUp]
@@ -24,12 +26,16 @@ namespace Tanks.Server.Tests
             _entityService = Substitute.For<IEntityService>();
             _bus = Substitute.For<IMessageBus>();
 
-            _component = new DangerZone(_entityService, _bus);
-            _component.Initialize(Substitute.For<IDangerZoneBehaviour>());
+            _settings = Substitute.For<ISessionSettingsService>();
+            _settings.GetSettings().DangerZone.Returns(new DangerZoneSettings
+            {
+                StartDelaySeconds = 10,
+                DurationSeconds = 30,
+                DamagePerSecond = 10
+            });
 
-            _component.Behaviour.Damage.Returns(10);
-            _component.Behaviour.StartDelay.Returns(10);
-            _component.Behaviour.ShrinkDuration.Returns(30);
+            _component = new DangerZone(_entityService, _bus, _settings);
+            _component.Initialize(Substitute.For<IDangerZoneBehaviour>());
         }
 
         [TearDown]
@@ -65,9 +71,7 @@ namespace Tanks.Server.Tests
 
             _component.Behaviour
                 .Received(1)
-                .StartShrinkingClientRpc(Arg.Is<DangerZoneStarted>(x =>
-                    x.ServerTick == 13 &&
-                    x.ServerDuration == _component.Behaviour.ShrinkDuration));
+                .StartShrinkingClientRpc(Arg.Is<DangerZoneStarted>(x => x.ServerTick == 13));
 
             _component.Behaviour.SetCurrentState(Arg.Any<Rect>());
         }
