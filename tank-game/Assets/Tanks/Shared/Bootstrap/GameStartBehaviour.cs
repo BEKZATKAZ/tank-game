@@ -124,10 +124,5 @@ namespace Tanks.Shared.Bootstrap
 
         public void PrepareGame() => EmitMessage(new PrepareGameRequested());
 		public void WaitForPlayers() => EmitMessage(new WaitingForPlayersRequested());
-
-        protected override void OnInitialize()
-        {
-            _itemDatabase.TryInitializeAsync(IsServer);
-        }
     }
 }

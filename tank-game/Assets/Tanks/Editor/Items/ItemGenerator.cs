@@ -73,18 +73,6 @@ namespace Tanks.Editor.Items
 
             AssetDatabase.CreateAsset(sharedDatabase, sharedDatabasePath);
             AssetDatabase.CreateAsset(clientDatabase, clientDatabasePath);
-
-            AddressablesUtility.MarkAddressable(
-                assetPath: sharedDatabasePath,
-                groupName: "Local_Gameplay",
-                address: $"Gameplay/ItemDatabase",
-                saveAssets: false);
-
-            AddressablesUtility.MarkAddressable(
-                assetPath: clientDatabasePath,
-                groupName: "Local_Gameplay_Client",
-                address: $"Gameplay/Client/ItemDatabase",
-                saveAssets: true);
         }
     }
 }

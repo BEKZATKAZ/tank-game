@@ -8,24 +8,30 @@ using VContainer.Unity;
 using Tanks.Shared.Weapons;
 using Tanks.Shared.Items;
 using Tanks.Shared.Entities;
+using NaughtyAttributes;
 
 namespace Tanks.Shared.Bootstrap
 {
-    public sealed class GameplayScope : GameplayScopeBase
+    public abstract class GameplayScope : LifetimeScope
     {
-        [SerializeField] private SharedProjectilePoolService _projectilePool;
+        [Required]
+        [SerializeField]
+        private SharedProjectilePoolService _projectilePool;
+
+        [Required]
+        [SerializeField]
+        private UnityItemDatabase _itemDatabase;
 
         protected override void Configure(IContainerBuilder builder)
         {
-            base.Configure(builder);
-
             builder.RegisterComponent(_projectilePool).As<IProjectilePoolService>();
+            builder.RegisterComponent(_itemDatabase).As<IItemDatabase>();
+
             builder.Register<IMazeGenerator, DFSGenerator>(Lifetime.Singleton);
             builder.Register<ITilemapGenerator, TilemapGenerator>(Lifetime.Singleton);
 
             builder.Register<IMessageBus, MessageBus>(Lifetime.Singleton);
             builder.Register<IWeaponFactory, WeaponFactory>(Lifetime.Singleton);
-            builder.Register<IItemDatabase, ItemDatabase>(Lifetime.Singleton);
             builder.Register<IEntityService, EntityService>(Lifetime.Singleton);
         }
     }

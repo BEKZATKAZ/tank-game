@@ -2,6 +2,7 @@
 using Tanks.Shared;
 using Tanks.Shared.Bootstrap;
 using Unity.Netcode;
+using UnityEngine;
 
 namespace Tanks.Server.Bootstrap
 {
@@ -9,23 +10,29 @@ namespace Tanks.Server.Bootstrap
     {
         public PlayerConnector(
             IClientConnectionValidator validator,
-            IConnectedClientService clientService)
+            IConnectedClientService clientService,
+            IVirtualMachineService vmService)
         {
             _validator = validator;
             _clientService = clientService;
+            _vmService = vmService;
         }
 
         private readonly IClientConnectionValidator _validator;
         private readonly IConnectedClientService _clientService;
+        private readonly IVirtualMachineService _vmService;
         private bool _allPlayersConnected;
 
         protected override void OnInitialize()
         {
-            if (NetworkManager.Singleton == false) return;
+            if (NetworkManager.Singleton)
+            {
+                NetworkManager.Singleton.ConnectionApprovalCallback += ApprovalCheck;
+                NetworkManager.Singleton.OnClientConnectedCallback += OnClientConnected;
+                NetworkManager.Singleton.OnClientDisconnectCallback += OnClientDisconnected;
+            }
 
-            NetworkManager.Singleton.ConnectionApprovalCallback += ApprovalCheck;
-            NetworkManager.Singleton.OnClientConnectedCallback += OnClientConnected;
-            NetworkManager.Singleton.OnClientDisconnectCallback += OnClientDisconnected;
+            _vmService.StandBy();
         }
 
         protected override void OnDestroy()
@@ -61,6 +68,7 @@ namespace Tanks.Server.Bootstrap
                 return;
             }
 
+            Debug.LogWarningFormat("Client rejected, reason: '{0}'", result.ErrorCode);
             response.Reason = result.ErrorCode;
             response.Approved = false;
         }

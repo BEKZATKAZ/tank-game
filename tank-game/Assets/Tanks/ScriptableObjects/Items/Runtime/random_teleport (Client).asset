@@ -13,9 +13,7 @@ MonoBehaviour:
   m_Name: random_teleport (Client)
   m_EditorClassIdentifier: Tanks.Client::Tanks.Client.Items.ClientItemConfig
   _identifier: random_teleport
-  _frameCount: 4
   _iconMaterial: {fileID: -876546973899608171, guid: 9680fbb573735774aaa7e0c722f9aad3, type: 3}
-  _glowMaterial: {fileID: -876546973899608171, guid: 854e9148940c8d64ea6929e8ef0edb9a, type: 3}
   _icon: {fileID: 21300000, guid: 49ec673f03073f646b1e7b6bb887f057, type: 3}
   _onPickUpSound: event:/SFX/Items/PickUp/Teleport
   _onSpawnSound: event:/SFX/Items/Spawn/Rare

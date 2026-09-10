@@ -25,15 +25,14 @@ namespace Tanks.Server.Tests.Items
             IItemDatabase items = Substitute.For<IItemDatabase>();
             IMessageBus bus = Substitute.For<IMessageBus>();
 
+            _itemCollection = GetItems().ToArray();
+            items.Items.Returns(_itemCollection);
+
             _component = new PickupSpawner(items, bus);
             _component.Initialize(Substitute.For<IPickupSpawnBehaviour>());
 
             _component.Behaviour.MinCooldown.Returns(10);
             _component.Behaviour.MaxCooldown.Returns(20);
-            _itemCollection = GetItems().ToArray();
-
-            items.IsReady.Returns(true);
-            items.Items.Returns(_itemCollection);
         }
 
         [TestCase(1)]

@@ -11,6 +11,7 @@ namespace Tanks.Server.Tests.Bootstrap
     {
         private IClientConnectionValidator _validator;
         private IConnectedClientService _clientService;
+        private IVirtualMachineService _vmService;
         private PlayerConnector _component;
 
         [SetUp]
@@ -18,8 +19,9 @@ namespace Tanks.Server.Tests.Bootstrap
         {
             _validator = Substitute.For<IClientConnectionValidator>();
             _clientService = Substitute.For<IConnectedClientService>();
+            _vmService = Substitute.For<IVirtualMachineService>();
 
-            _component = new PlayerConnector(_validator, _clientService);
+            _component = new PlayerConnector(_validator, _clientService, _vmService);
             _component.Initialize(Substitute.For<IGameStartBehaviour>());
         }
 
@@ -27,6 +29,12 @@ namespace Tanks.Server.Tests.Bootstrap
         public void TearDown()
         {
             _component.Destroy();
+        }
+
+        [Test]
+        public void Initialize_StandsBy()
+        {
+            _vmService.Received(1).StandBy();
         }
 
         [Test]

@@ -26,8 +26,12 @@ namespace Tanks.Infrastructure.Lobbies
         {
             string localPlayerId = PlayFabSettings.staticPlayer.EntityId;
 
-            lobby.GetSearchProperties()
-                .TryGetValue(LobbyConstants.LOBBY_NAME_REGULAR_KEY, out string name);
+            var searchData = lobby.GetSearchProperties();
+            var data = lobby.GetLobbyProperties();
+
+            searchData.TryGetValue(LobbyConstants.LOBBY_NAME_REGULAR_KEY, out string name);
+            data.TryGetValue(LobbyConstants.SESSION_IP_ADDRESS_KEY, out string ipAddress);
+            data.TryGetValue(LobbyConstants.SESSION_PORT_KEY, out string port);
 
             destination.Id.Value = new LobbyId(lobby.Id);
             destination.Address.Value = new LobbyAddress(lobby.ConnectionString);
@@ -35,6 +39,9 @@ namespace Tanks.Infrastructure.Lobbies
             destination.OwnerId.Value = lobby.TryGetOwner(out PFEntityKey owner) ? owner.Id : "";
             destination.IsLocalPlayerOwner.Value = owner?.Id == localPlayerId;
             destination.Name.Value = name ?? "";
+
+            destination.SessionIpAddress.Value = ipAddress ?? "127.0.0.1";
+            destination.SessionPort.Value = ushort.TryParse(port, out ushort p) ? p : (ushort)7777;
 
             destination.MaxPlayerCount.Value = (int)lobby.MaxMemberCount;
             destination.Players.Value = MapPlayers(lobby);

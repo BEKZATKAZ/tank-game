@@ -29,9 +29,6 @@ MonoBehaviour:
   - m_enabled: 1
     m_path: Assets/Tanks/Scenes/Gameplay.unity
     m_guid: 8c9cfa26abfee488c85f1582747f6a02
-  - m_enabled: 1
-    m_path: Assets/Tanks/Scenes/Gameplay_Client.unity
-    m_guid: f75900165d08826449b13a445cd9d201
   m_HasScriptingDefines: 0
   m_ScriptingDefines: []
   m_PlayerSettingsYaml:

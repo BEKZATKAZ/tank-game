@@ -47,10 +47,8 @@ namespace Tanks.Server.Items.Pickups
         private float _elapsed;
         private bool _isGameStarted;
 
-        private void TryInitialize()
+        protected override void OnInitialize()
         {
-            if (_chooser != null) return;
-
             Dictionary<ItemTier, PositiveFloat> chanceRatios = new()
             {
                 [ItemTier.Uncommon] = 50,
@@ -77,9 +75,6 @@ namespace Tanks.Server.Items.Pickups
         protected override void OnTick(int tick, float tickDelta)
         {
             if (_isGameStarted == false) return;
-
-            if (_items.IsReady) TryInitialize();
-            else return;
 
             _elapsed += tickDelta;
             if (_elapsed < CurrentCooldown) return;
@@ -109,6 +104,8 @@ namespace Tanks.Server.Items.Pickups
 
                 foreach (ITransform player in _players)
                 {
+                    if (player is not { IsValid: true }) continue;
+
                     float2 playerPosition = player.WorldPosition;
 
                     int2 playerCoords = (int2)math.round(

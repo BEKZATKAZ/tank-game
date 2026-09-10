@@ -29,7 +29,7 @@ namespace Tanks.UI.Gameplay.Timer
         protected override void Update()
         {
             base.Update();
-            ViewModel.Tick(Time.deltaTime);
+            ViewModel?.Tick(Time.deltaTime);
         }
 
         private void UpdateCounterText(int number)

@@ -152,6 +152,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5744209467174844544}
   - component: {fileID: 998581430350831358}
+  - component: {fileID: 7308833652396915332}
   m_Layer: 3
   m_Name: Sprite
   m_TagString: Untagged
@@ -233,6 +234,15 @@ SpriteRenderer:
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
   m_SpriteSortPoint: 0
+--- !u!1652712579 &7308833652396915332
+MultiplayerRolesData:
+  m_ObjectHideFlags: 2
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 464355341517542018}
+  m_GameObjectRolesMask: 1
+  m_ComponentsRolesMasks: []
 --- !u!1 &980042091046413426
 GameObject:
   m_ObjectHideFlags: 0
@@ -243,6 +253,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4239630183538036084}
   - component: {fileID: 4606510086361603135}
+  - component: {fileID: 4768620979771392112}
   m_Layer: 3
   m_Name: Spot Light 2D
   m_TagString: Untagged
@@ -317,6 +328,15 @@ MonoBehaviour:
   - {x: 0.5, y: -0.5, z: 0}
   - {x: 0.5, y: 0.5, z: 0}
   - {x: -0.5, y: 0.5, z: 0}
+--- !u!1652712579 &4768620979771392112
+MultiplayerRolesData:
+  m_ObjectHideFlags: 2
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 980042091046413426}
+  m_GameObjectRolesMask: 1
+  m_ComponentsRolesMasks: []
 --- !u!1 &1962749342786751724
 GameObject:
   m_ObjectHideFlags: 0
@@ -469,6 +489,7 @@ GameObject:
   m_Component:
   - component: {fileID: 507176293128443793}
   - component: {fileID: 2143697946900647390}
+  - component: {fileID: 4189610902569025966}
   m_Layer: 3
   m_Name: Accent
   m_TagString: Untagged
@@ -550,6 +571,15 @@ SpriteRenderer:
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
   m_SpriteSortPoint: 0
+--- !u!1652712579 &4189610902569025966
+MultiplayerRolesData:
+  m_ObjectHideFlags: 2
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5819066064326913249}
+  m_GameObjectRolesMask: 1
+  m_ComponentsRolesMasks: []
 --- !u!1 &6278805005820137996
 GameObject:
   m_ObjectHideFlags: 0
@@ -684,6 +714,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7537670924711008899}
+  - component: {fileID: 5831614563473667289}
   m_Layer: 0
   m_Name: Tracks
   m_TagString: Untagged
@@ -708,6 +739,15 @@ Transform:
   - {fileID: 9132024421703622149}
   m_Father: {fileID: 2254764853037302780}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1652712579 &5831614563473667289
+MultiplayerRolesData:
+  m_ObjectHideFlags: 2
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7957595091881639732}
+  m_GameObjectRolesMask: 1
+  m_ComponentsRolesMasks: []
 --- !u!1 &7983979346145053049
 GameObject:
   m_ObjectHideFlags: 0
@@ -1024,6 +1064,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5769774272370822025}
   - component: {fileID: 6982754619946961884}
+  - component: {fileID: 6595187382794789170}
   m_Layer: 3
   m_Name: Sprite
   m_TagString: Untagged
@@ -1105,3 +1146,12 @@ SpriteRenderer:
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
   m_SpriteSortPoint: 0
+--- !u!1652712579 &6595187382794789170
+MultiplayerRolesData:
+  m_ObjectHideFlags: 2
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8750889528304404789}
+  m_GameObjectRolesMask: 1
+  m_ComponentsRolesMasks: []

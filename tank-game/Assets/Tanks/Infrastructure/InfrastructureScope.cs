@@ -18,7 +18,9 @@ namespace Tanks.Infrastructure
 
             builder.Register<IPlayFabCaller, PlayFabCaller>(Lifetime.Singleton);
             builder.Register<ILobbyService, PlayFabLobbyService>(Lifetime.Singleton);
+
             builder.Register<IAuthService, PlayFabAuthService>(Lifetime.Singleton);
+            builder.Register<ISessionConnectionService, SessionConnectionService>(Lifetime.Singleton);
 
             builder.Register<ISettingsLoader, JsonSettingsLoader>(Lifetime.Singleton);
             builder.Register<ISettingsService, JsonSettingsService>(Lifetime.Singleton);

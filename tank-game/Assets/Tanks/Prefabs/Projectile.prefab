@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: -4253159675830141488}
   - component: {fileID: 5180612007738186379}
   - component: {fileID: 6219840235481289347}
+  - component: {fileID: 1479614433520886047}
   m_Layer: 0
   m_Name: Projectile
   m_TagString: Untagged
@@ -133,6 +134,17 @@ SpriteRenderer:
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
   m_SpriteSortPoint: 0
+--- !u!1652712579 &1479614433520886047
+MultiplayerRolesData:
+  m_ObjectHideFlags: 2
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2547299740596462716}
+  m_GameObjectRolesMask: 3
+  m_ComponentsRolesMasks:
+  - m_Object: {fileID: 6219840235481289347}
+    m_RolesMask: 1
 --- !u!1 &4807053157390917983
 GameObject:
   m_ObjectHideFlags: 0
@@ -144,6 +156,7 @@ GameObject:
   - component: {fileID: 3795321939528051464}
   - component: {fileID: 9205325509508074038}
   - component: {fileID: 421373155707926463}
+  - component: {fileID: 5251025228440473194}
   m_Layer: 0
   m_Name: RicochetParticle
   m_TagString: Untagged
@@ -5036,3 +5049,12 @@ ParticleSystemRenderer:
   m_MeshWeighting1: 1
   m_MeshWeighting2: 1
   m_MeshWeighting3: 1
+--- !u!1652712579 &5251025228440473194
+MultiplayerRolesData:
+  m_ObjectHideFlags: 2
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4807053157390917983}
+  m_GameObjectRolesMask: 1
+  m_ComponentsRolesMasks: []

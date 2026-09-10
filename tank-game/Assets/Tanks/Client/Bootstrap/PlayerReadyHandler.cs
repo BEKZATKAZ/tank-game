@@ -1,5 +1,4 @@
 ﻿using Cysharp.Threading.Tasks;
-using Tanks.Client.Items;
 using Tanks.Localization;
 using Tanks.Shared;
 using Tanks.Shared.Bootstrap;
@@ -19,17 +18,12 @@ namespace Tanks.Client.Bootstrap
         INetworkMessageHandler<GameStartedFromServer>,
         IMessageSender
     {
-        public PlayerReadyHandler(
-            IClientItemDatabase itemDatabase,
-            ILocalizationDatabase localization,
-            IMessageBus bus)
+        public PlayerReadyHandler(ILocalizationDatabase localization, IMessageBus bus)
         {
-            _itemDatabase = itemDatabase;
             _localization = localization;
             _bus = bus;
         }
 
-        private readonly IClientItemDatabase _itemDatabase;
         private readonly ILocalizationDatabase _localization;
         private readonly IMessageBus _bus;
 
@@ -54,10 +48,7 @@ namespace Tanks.Client.Bootstrap
         {
             if (_isInitialized == false)
             {
-                await UniTask.WhenAll(
-                    _itemDatabase.TryInitializeAsync(),
-                    _localization.WaitForInitializationAsync());
-
+                await _localization.WaitForInitializationAsync();
                 _isInitialized = true;
             }
 
