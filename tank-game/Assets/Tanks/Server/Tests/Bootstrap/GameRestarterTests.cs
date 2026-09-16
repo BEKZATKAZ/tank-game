@@ -1,28 +1,36 @@
 ﻿using NSubstitute;
 using NUnit.Framework;
+using Tanks.Core.Lobbies.Sessions;
 using Tanks.Server.Bootstrap;
 using Tanks.Shared.Bootstrap;
 using Tanks.Shared.Entities;
 using Tanks.Shared.Entities.Health;
 using Tanks.Shared.Messaging;
+using Tanks.Shared.Teams;
 using Tanks.Shared.Weapons.Projectiles;
 
 namespace Tanks.Server.Tests.Bootstrap
 {
     public class GameRestarterTests
     {
-        private IConnectedClientService _clientService;
+        private ITeamBehaviourService _teamService;
+        private ISessionSettingsService _settings;
+        private IServerLifetimeService _lifetime;
         private GameRestarter _component;
 
         [SetUp]
         public void Setup()
         {
-            _clientService = Substitute.For<IConnectedClientService>();
+            _teamService = Substitute.For<ITeamBehaviourService>();
+            _lifetime = Substitute.For<IServerLifetimeService>();
+
+            _settings = Substitute.For<ISessionSettingsService>();
+            _settings.GetSettings().MaxScore.Returns(30);
 
             _component = new GameRestarter(
                 Substitute.For<IMessageBus>(),
                 Substitute.For<IProjectilePoolService>(),
-                _clientService);
+                _teamService, _settings, _lifetime);
 
             _component.Initialize(Substitute.For<IGameStartBehaviour>());
         }
@@ -40,7 +48,7 @@ namespace Tanks.Server.Tests.Bootstrap
             Handle(clientId: 0); // Id 0 = Not a player
 
             _component.Tick(100, tickDelta: 500);
-            _clientService.DidNotReceiveWithAnyArgs().GetConnectedClientIds();
+            _teamService.DidNotReceiveWithAnyArgs().GetAllTeams();
         }
 
         [Test]
@@ -63,40 +71,89 @@ namespace Tanks.Server.Tests.Bootstrap
         {
             AddPlayers(playerCount);
             Handle(1);
+
             _component.Tick(tick: 10, tickDelta: 500);
+            _component.Behaviour.DidNotReceiveWithAnyArgs().PrepareGame();
+
+            _teamService
+                .DidNotReceiveWithAnyArgs()
+                .AddTeamScoreEveryoneRpc(Arg.Any<TeamId>(), Arg.Any<int>());
+        }
+
+        [Test]
+        public void OneRemains_Restarts()
+        {
+            AddPlayers(2);
+            Handle(clientId: 1);
+
+            Team team = _teamService.GetTeamByPlayerId(2);
+            _component.Tick(tick: 10, tickDelta: 500);
+
+            _teamService.Received(1).AddTeamScoreEveryoneRpc(team.Id, 1);
+            _component.Behaviour.Received(1).PrepareGame();
+        }
+
+        [Test]
+        public void TeamWins_EndsGame()
+        {
+            AddPlayers(2);
+
+            Team winningTeam = _teamService.GetTeamByPlayerId(1);
+            winningTeam.AddScore(_settings.GetSettings().MaxScore);
+
+            Handle(clientId: 2);
+
+            _component.Tick(tick: 10, tickDelta: 500);
+            _component.Tick(tick: 11, tickDelta: 600);
+
+            _lifetime.Received(1).TrySetStep(GameStep.End);
+            _component.Behaviour.Received(1).EndGameEveryoneRpc(winningTeam.Id);
             _component.Behaviour.DidNotReceiveWithAnyArgs().PrepareGame();
         }
 
-        [TestCase(1)]
-        [TestCase(0)]
-        public void OneOrZeroRemain_Restarts(int playerCount)
+        [Test]
+        public void NoOneRemains_Restarts()
         {
-            AddPlayers(playerCount);
+            AddPlayers(1);
             Handle(1);
+
             _component.Tick(tick: 10, tickDelta: 500);
             _component.Behaviour.Received(1).PrepareGame();
+
+            _teamService
+                .DidNotReceiveWithAnyArgs()
+                .AddTeamScoreEveryoneRpc(Arg.Any<TeamId>(), Arg.Any<int>());
         }
 
         private void Handle(ulong clientId)
         {
             IEntityBehaviour entity = Substitute.For<IEntityBehaviour>();
             entity.OwnerClientId.Returns(clientId);
+
+            if (clientId > 0)
+            {
+                _teamService.GetTeamByPlayerId(clientId).GetPlayer(clientId).SetEliminated(true);
+            }
+
             _component.Handle(new Died { Target = entity }, null);
         }
 
         private void AddPlayers(int count)
         {
-            ulong[] connected = new ulong[count];
+            Team[] teams = new Team[count];
 
             for (int i = 0; i < count; i++)
             {
-                connected[i] = (ulong)(i + 1);
-                ClientData data = new ClientData("test");
-                _clientService.GetClientData(connected[i]).Returns(data);
+                ulong ownerClientId = (ulong)(i + 1);
+                TeamId teamId = new TeamId((ushort)(i + 101));
+
+                teams[i] = new Team(teamId);
+                teams[i].AddPlayer(ownerClientId, "test");
+
+                _teamService.GetTeamByPlayerId(ownerClientId).Returns(teams[i]);
             }
 
-            _clientService.GetConnectedClientIds().Returns(connected);
-            _clientService.ConnectedClientCount.Returns(count);
+            _teamService.GetAllTeams().Returns(teams);
         }
     }
 }

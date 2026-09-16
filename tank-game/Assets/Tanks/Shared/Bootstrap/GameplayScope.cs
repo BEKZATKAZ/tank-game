@@ -9,6 +9,7 @@ using Tanks.Shared.Weapons;
 using Tanks.Shared.Items;
 using Tanks.Shared.Entities;
 using NaughtyAttributes;
+using Tanks.Shared.Teams;
 
 namespace Tanks.Shared.Bootstrap
 {
@@ -22,10 +23,15 @@ namespace Tanks.Shared.Bootstrap
         [SerializeField]
         private UnityItemDatabase _itemDatabase;
 
+        [Required]
+        [SerializeField]
+        private TeamBehaviourService _teamService;
+
         protected override void Configure(IContainerBuilder builder)
         {
             builder.RegisterComponent(_projectilePool).As<IProjectilePoolService>();
             builder.RegisterComponent(_itemDatabase).As<IItemDatabase>();
+            builder.RegisterComponent(_teamService).As<ITeamBehaviourService>();
 
             builder.Register<IMazeGenerator, DFSGenerator>(Lifetime.Singleton);
             builder.Register<ITilemapGenerator, TilemapGenerator>(Lifetime.Singleton);

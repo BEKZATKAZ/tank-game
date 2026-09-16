@@ -6,6 +6,8 @@ namespace Tanks.Core.Lobbies.Sessions
     public interface ISessionSettings
     {
         int DesiredPlayerCount { get; }
+        int MaxScore { get; }
+
         MapGenerationSettings MapGeneration { get; }
         ItemSpawnSettings ItemSpawn { get; }
         DangerZoneSettings DangerZone { get; }

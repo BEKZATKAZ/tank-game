@@ -56,11 +56,7 @@ namespace Tanks.Server.Tests.Bootstrap
 
             for (ulong id = 1; id <= (ulong)playerCount; id++)
             {
-                string expectedName = $"Test_{id}";
-
-                _component.Behaviour
-                    .Received(1)
-                    .SpawnPlayer(id, Arg.Any<float2>(), expectedName);
+                _component.Behaviour.Received(1).SpawnPlayer(id, Arg.Any<float2>());
             }
 
             _component.Behaviour.Received(1).WaitForPlayers();

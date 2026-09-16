@@ -1,4 +1,7 @@
-﻿using Tanks.UI.Gameplay.Eliminated;
+﻿using Tanks.Client.Input;
+using Tanks.UI.Gameplay.Eliminated;
+using Tanks.UI.Gameplay.GameStats;
+using Tanks.UI.Gameplay.Input;
 using Tanks.UI.Gameplay.ItemDescription;
 using Tanks.UI.Gameplay.PlayerStats;
 using Tanks.UI.Gameplay.StartCountdown;
@@ -16,7 +19,12 @@ namespace Tanks.UI.Gameplay
             builder.Register<EliminatedViewModel>(Lifetime.Transient);
             builder.Register<ItemDescriptionViewModel>(Lifetime.Transient);
             builder.Register<PlayerStatsViewModel>(Lifetime.Transient);
+            builder.Register<GameStatsViewModel>(Lifetime.Transient);
             builder.Register<TimerViewModel>(Lifetime.Transient);
+
+            builder.Register<
+                IInputService<UIGameplayInput>,
+                UIGameplayInputService>(Lifetime.Singleton);
         }
     }
 }

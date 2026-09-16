@@ -12,7 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a7421fc09a3e86748a4f64577d624936, type: 3}
   m_Name: DefaultSessionSettings
   m_EditorClassIdentifier: Tanks.Core::Tanks.Core.Lobbies.Sessions.SessionSettingsConfig
-  _desiredPlayerCount: 1
+  _desiredPlayerCount: 2
+  _maxScoreToReach: 15
   _mapGeneration:
     Resolution: {x: 9, y: 6}
     WallWidth: 7

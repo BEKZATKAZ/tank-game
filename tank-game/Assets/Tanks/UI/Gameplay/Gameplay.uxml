@@ -25,4 +25,18 @@
     <ui:VisualElement name="Timer" class="timer" style="flex-grow: 1;">
         <ui:Label text="45" name="TimerCounter" class="timer-counter"/>
     </ui:VisualElement>
+    <ui:VisualElement name="GameStats" class="game-stats">
+        <ui:VisualElement name="GameStatsContainer" class="game-stats__container">
+            <ui:Label name="GameStatsHeader" text="Statistics - Round 1" class="game-stats__header"/>
+            <ui:VisualElement name="GameStatsListHeader" class="game-stats__list-header" style="flex-grow: 1;">
+                <ui:VisualElement name="Eliminations" class="game-stats__eliminations" style="background-image: url(&quot;project://database/Assets/Plugins/Layer%20Lab/2D%20Icons-PictoIconPack01/PictoIcon_256/Icon_PictoIcon_Sword.Png?fileID=21300000&amp;guid=e0337559183924e36a4018e31474a794&amp;type=3#Icon_PictoIcon_Sword&quot;);"/>
+                <ui:VisualElement name="Assistance" style="background-image: url(&quot;project://database/Assets/Plugins/Layer%20Lab/2D%20Icons-PictoIconPack01/PictoIcon_256/Icon_PictoIcon_Defense.Png?fileID=21300000&amp;guid=c17ba09485ff64d8ab445978f4d4af8c&amp;type=3#Icon_PictoIcon_Defense&quot;);"/>
+                <ui:VisualElement name="Deaths" style="background-image: url(&quot;project://database/Assets/Plugins/Layer%20Lab/2D%20Icons-PictoIconPack01/PictoIcon_256/Icon_PictoIcon_Skull.Png?fileID=21300000&amp;guid=13ab7e8c2a8f546c19a75f878cc8934b&amp;type=3#Icon_PictoIcon_Skull&quot;);"/>
+                <ui:VisualElement name="Victories" style="background-image: url(&quot;project://database/Assets/Plugins/Layer%20Lab/2D%20Icons-PictoIconPack01/PictoIcon_256/Icon_PictoIcon_Trophy.Png?fileID=21300000&amp;guid=30403112b4f0b459ea596b830d783004&amp;type=3#Icon_PictoIcon_Trophy&quot;);"/>
+            </ui:VisualElement>
+            <ui:ScrollView name="PlayerList">
+                <Tanks.UI.Gameplay.GameStats.PlayerElement/>
+            </ui:ScrollView>
+        </ui:VisualElement>
+    </ui:VisualElement>
 </ui:UXML>

@@ -65,9 +65,7 @@ namespace Tanks.Server.Bootstrap
             {
                 float2 coords = positionRandom.NextInt2(0, new int2(resolution.x, resolution.y));
                 float2 position = coords * (wallWidth * 2) + wallWidth * 1.5f;
-
-                ClientData data = _clientService.GetClientData(clientId);
-                Behaviour.SpawnPlayer(clientId, position, data.DisplayName);
+                Behaviour.SpawnPlayer(clientId, position);
             }
         }
 

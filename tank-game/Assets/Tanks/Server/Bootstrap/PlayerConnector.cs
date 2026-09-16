@@ -2,7 +2,7 @@
 using Tanks.Core.Lobbies.Sessions;
 using Tanks.Shared;
 using Tanks.Shared.Bootstrap;
-using Unity.Mathematics;
+using Tanks.Shared.Teams;
 using Unity.Netcode;
 using UnityEngine;
 
@@ -14,18 +14,24 @@ namespace Tanks.Server.Bootstrap
             IClientConnectionValidator validator,
             IConnectedClientService clientService,
             IVirtualMachineService vmService,
-            ISessionSettingsService sessionSettings)
+            ISessionSettingsService sessionSettings,
+            IServerLifetimeService lifetime,
+            ITeamBehaviourService teamService)
         {
             _validator = validator;
             _clientService = clientService;
             _vmService = vmService;
             _sessionSettings = sessionSettings;
+            _lifetime = lifetime;
+            _teamService = teamService;
         }
 
         private readonly IClientConnectionValidator _validator;
         private readonly IConnectedClientService _clientService;
         private readonly IVirtualMachineService _vmService;
         private readonly ISessionSettingsService _sessionSettings;
+        private readonly IServerLifetimeService _lifetime;
+        private readonly ITeamBehaviourService _teamService;
         private bool _allPlayersConnected;
 
         protected override void OnInitialize()
@@ -84,12 +90,23 @@ namespace Tanks.Server.Bootstrap
             if (currentCount < _sessionSettings.GetSettings().DesiredPlayerCount) return;
 
             _allPlayersConnected = true;
+            _lifetime.TrySetStep(GameStep.Session);
+
             Behaviour.PrepareGame();
         }
 
         public void OnClientDisconnected(ulong clientId)
         {
             _clientService.RemoveClient(clientId);
+
+            if (_teamService.TryGetTeamByPlayerId(clientId, out Team team))
+            {
+                team.RemovePlayer(clientId);
+            }
+
+            if (_clientService.ConnectedClientCount > 0) return;
+
+            Application.Quit();
         }
     }
 }

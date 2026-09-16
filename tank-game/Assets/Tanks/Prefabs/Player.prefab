@@ -769,6 +769,7 @@ GameObject:
   - component: {fileID: 1217353675794160710}
   - component: {fileID: 5075868166914636794}
   - component: {fileID: 3197157395556612071}
+  - component: {fileID: 3623627063252432586}
   m_Layer: 3
   m_Name: Player
   m_TagString: Untagged
@@ -1053,6 +1054,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 98879b9ab6dcaa144b3a62632c846223, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Tanks.Shared::Tanks.Shared.Entities.EntityBehaviour
+  ShowTopMostFoldoutHeaderGroup: 1
+--- !u!114 &3623627063252432586
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7983979346145053049}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: df63060a5370509439bc77b2c9854f73, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Tanks.Shared::Tanks.Shared.Teams.TeamParticipantBehaviour
   ShowTopMostFoldoutHeaderGroup: 1
 --- !u!1 &8750889528304404789
 GameObject:

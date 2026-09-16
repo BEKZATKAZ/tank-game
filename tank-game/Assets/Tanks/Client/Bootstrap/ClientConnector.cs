@@ -8,6 +8,7 @@ using Unity.Multiplayer.PlayMode;
 using Unity.Netcode;
 using Unity.Netcode.Transports.UTP;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using VContainer;
 
 namespace Tanks.Client.Bootstrap
@@ -20,8 +21,9 @@ namespace Tanks.Client.Bootstrap
         private void Start()
         {
             NetworkManager manager = NetworkManager.Singleton;
-            UnityTransport transport = manager.GetComponent<UnityTransport>();
+            manager.OnConnectionEvent += OnConnectionEvent;
 
+            UnityTransport transport = manager.GetComponent<UnityTransport>();
             transport.SetConnectionData(_connection.IPAddress, _connection.Port);
             string displayName = _auth.CurrentProfile?.DisplayName?.Value;
 
@@ -35,6 +37,18 @@ namespace Tanks.Client.Bootstrap
             
             manager.NetworkConfig.ConnectionData = Encoding.UTF8.GetBytes(json);
             manager.StartClient();
+        }
+
+        private void OnDestroy()
+        {
+            if (NetworkManager.Singleton == false) return;
+            NetworkManager.Singleton.OnConnectionEvent -= OnConnectionEvent;
+        }
+
+        private void OnConnectionEvent(NetworkManager manager, ConnectionEventData e)
+        {
+            if (e.EventType != ConnectionEvent.ClientDisconnected) return;
+            SceneManager.LoadScene(0);
         }
     }
 }

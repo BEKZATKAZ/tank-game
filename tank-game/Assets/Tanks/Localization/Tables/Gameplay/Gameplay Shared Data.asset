@@ -27,6 +27,18 @@ MonoBehaviour:
     m_Key: gameplay.eliminated-by-self
     m_Metadata:
       m_Items: []
+  - m_Id: 3952752743374848
+    m_Key: gameplay.game-stats
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4262694868180992
+    m_Key: gameplay.victory
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4262755660423168
+    m_Key: gameplay.defeat
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:

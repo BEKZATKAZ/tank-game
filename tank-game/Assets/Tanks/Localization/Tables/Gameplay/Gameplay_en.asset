@@ -32,6 +32,19 @@ MonoBehaviour:
     m_Localized: By your own hands
     m_Metadata:
       m_Items: []
+  - m_Id: 3952752743374848
+    m_Localized: Statistics - Round {round}
+    m_Metadata:
+      m_Items:
+      - rid: 937747157883289969
+  - m_Id: 4262694868180992
+    m_Localized: VICTORY
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4262755660423168
+    m_Localized: DEFEAT
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:
@@ -41,3 +54,4 @@ MonoBehaviour:
         m_Entries: 
         m_SharedEntries:
         - id: 155103748096
+        - id: 3952752743374848

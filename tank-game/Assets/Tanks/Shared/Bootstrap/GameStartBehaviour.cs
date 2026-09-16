@@ -1,7 +1,7 @@
 ﻿using Tanks.Core.Helpers;
-using Tanks.Shared.Entities;
 using Tanks.Shared.Generation;
 using Tanks.Shared.Messaging;
+using Tanks.Shared.Teams;
 using Unity.Mathematics;
 using Unity.Netcode;
 using UnityEngine;
@@ -10,33 +10,6 @@ using VContainer.Unity;
 
 namespace Tanks.Shared.Bootstrap
 {
-	public struct WaitingForPlayersRequested { }
-	public struct PrepareGameRequested { }
-
-	public struct PlayerReadyConfirmed
-	{
-		public int SecretHandle;
-    }
-
-    public struct PlayerReadyRequested
-    {
-        public int SecretHandle;
-    }
-
-    public interface IGameStartBehaviour : INetworkBehaviourExtended
-    {
-        void GenerateTilemapEveryoneRpc(TilemapGenerationSettings settings, Vector2Int resolution);
-        void SendReadyConfirmationServerRpc(int secretHandle);
-        void RequestReadyConfirmation(ulong clientId, int secretHandle);
-        void StartGameEveryoneRpc(GameStartedFromServer message);
-
-        void SpawnPlayer(ulong clientId, float2 position, string displayName);
-        void DespawnAllPlayers();
-
-        void PrepareGame();
-        void WaitForPlayers();
-    }
-
 	public sealed class GameStartBehaviour :
         NetworkBehaviourExtended, IGameStartBehaviour, IMessageSender
 	{
@@ -79,7 +52,15 @@ namespace Tanks.Shared.Bootstrap
 
         [Rpc(SendTo.Everyone, InvokePermission = RpcInvokePermission.Server)]
 		public void StartGameEveryoneRpc(GameStartedFromServer message)
-		{
+        {
+            EmitMessage(message);
+            _bus.Publish(message, this);
+        }
+
+        [Rpc(SendTo.Everyone, InvokePermission = RpcInvokePermission.Server)]
+        public void EndGameEveryoneRpc(TeamId winningTeamId)
+        {
+            EndGameFromServer message = new EndGameFromServer { WinningTeamId = winningTeamId };
             EmitMessage(message);
             _bus.Publish(message, this);
         }
@@ -99,7 +80,7 @@ namespace Tanks.Shared.Bootstrap
             }
         }
 
-        public void SpawnPlayer(ulong clientId, float2 position, string displayName)
+        public void SpawnPlayer(ulong clientId, float2 position)
         {
             Required<GameObject> playerPrefab = NetworkManager.NetworkConfig.PlayerPrefab;
 
@@ -110,9 +91,6 @@ namespace Tanks.Shared.Bootstrap
 
             NetworkObject networkObject = player.GetComponent<NetworkObject>();
             networkObject.SpawnAsPlayerObject(clientId, destroyWithScene: true);
-
-            IEntityBehaviour entity = player.GetComponent<IEntityBehaviour>();
-            entity.SetDisplayNameEveryoneRpc(displayName);
         }
 
         public void PrepareGame() => EmitMessage(new PrepareGameRequested());

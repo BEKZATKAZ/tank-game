@@ -1,8 +1,8 @@
 ﻿using System;
-using Tanks.Client.Entities;
 using Tanks.Localization;
 using Tanks.Shared.Entities.Health;
 using Tanks.Shared.Messaging;
+using Tanks.Shared.Teams;
 using Tanks.Utils;
 
 namespace Tanks.UI.Gameplay.Eliminated
@@ -37,14 +37,17 @@ namespace Tanks.UI.Gameplay.Eliminated
                 return;
             }
 
-            if (message.From is null || string.IsNullOrWhiteSpace(message.From.DisplayName))
+            ITeamParticipantBehaviour participant = message.From?
+                .GetBehaviour<ITeamParticipantBehaviour>();
+
+            if (participant is null)
             {
                 EliminatedBy.Value = "";
                 return;
             }
 
             _localization.TryGet("Gameplay", "gameplay.eliminated-by", out var by);
-            by?.AddVariable("name", message.From.DisplayName);
+            by?.AddVariable("name", participant.State.DisplayName);
             EliminatedBy.Value = by?.Get();
         }
     }

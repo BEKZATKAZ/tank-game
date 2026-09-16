@@ -44,6 +44,10 @@ namespace Tanks.Core.Lobbies.Sessions
         [SerializeField]
         private int _desiredPlayerCount = 1;
 
+        [Range(1, 30)]
+        [SerializeField]
+        private int _maxScoreToReach = 15;
+
         [Header("Other")]
         [SerializeField]
         private MapGenerationConfig _mapGeneration;
@@ -55,6 +59,7 @@ namespace Tanks.Core.Lobbies.Sessions
         private DangerZoneConfig _dangerZone;
 
         public int DesiredPlayerCount => _desiredPlayerCount;
+        public int MaxScore => _maxScoreToReach;
 
         public MapGenerationSettings MapGeneration => new MapGenerationSettings
         {

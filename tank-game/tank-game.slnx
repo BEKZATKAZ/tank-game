@@ -30,4 +30,5 @@
   <Project Path="Tanks.Client.Tests.Runtime.csproj" />
   <Project Path="PlayFabSDKEditor.csproj" />
   <Project Path="Tanks.Infrastructure.Tests.Runtime.csproj" />
+  <Project Path="Tanks.Server.Tests.Runtime.csproj" />
 </Solution>
