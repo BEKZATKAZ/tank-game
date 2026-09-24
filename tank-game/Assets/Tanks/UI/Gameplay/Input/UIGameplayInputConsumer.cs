@@ -54,8 +54,8 @@ namespace Tanks.UI.Gameplay.Input
 
         private void OnDestroy()
         {
-            _bus.UnregisterHandler<GameStartedFromServer>(this);
-            _bus.UnregisterHandler<EndGameFromServer>(this);
+            _bus?.UnregisterHandler<GameStartedFromServer>(this);
+            _bus?.UnregisterHandler<EndGameFromServer>(this);
         }
 
         public void Handle(GameStartedFromServer message, IMessageSender sender)

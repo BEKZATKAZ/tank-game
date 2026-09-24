@@ -25,23 +25,20 @@ namespace Tanks.Server.Tests.Runtime.Bootstrap
         [UnityTest]
         public IEnumerator AllTimeouts()
         {
-            // Switching to Session to reset the current step
-            _component.TrySetStep(GameStep.Session);
-            _component.SetLifetime(startup: 2, session: 4, end: 6);
+            // Switching to End to reset the current step
+            _component.TrySetStep(GameStep.End);
+            _component.SetLifetime(session: 2, end: 4);
 
-            _component.TrySetStep(GameStep.Startup);
+            _component.TrySetStep(GameStep.Session);
             yield return TestTimeout(2);
-
-            _component.TrySetStep(GameStep.Session);
-            yield return TestTimeout(4);
 
             _component.TrySetStep(GameStep.End);
-            yield return TestTimeout(6);
+            yield return TestTimeout(4);
 
-            _component.TrySetStep(GameStep.Startup);
+            _component.TrySetStep(GameStep.Session);
             yield return TestTimeout(2);
 
-            _component.TrySetStep(GameStep.Startup);
+            _component.TrySetStep(GameStep.Session);
             Assert.True(_component.IsTimedOut, "Should not reset if given the same step");
         }
 

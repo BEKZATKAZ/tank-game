@@ -84,15 +84,15 @@ namespace Tanks.UI.Tests.Menus.Lobbies
             _dialog.Received(1).ShowErrorFromCode(Arg.Any<string>(), errorCode);
         }
 
-        [TestCase("address")]
+        [TestCase("some-id")]
         [TestCase("123456")]
-        public void Join_Success_NavigatesToLobby(string addressString)
+        public void Join_Success_NavigatesToLobby(string id)
         {
             MockLocalizationReturn("Menus", "menu.lobby.joining", "Joining lobby");
 
             var tcs = new UniTaskCompletionSource<ResultType<LobbyState>>();
-            _service.JoinLobbyAsync(Arg.Any<LobbyAddress>()).Returns(tcs.Task);
-            ViewModel.JoinLobbyAsync(new LobbyAddress(addressString)).Forget();
+            _service.JoinLobbyAsync(Arg.Any<LobbyId>()).Returns(tcs.Task);
+            ViewModel.JoinLobbyAsync(new LobbyId(id)).Forget();
 
             _loading.Received(1).Begin(Arg.Any<ILocalizedString>());
             _loading.DidNotReceiveWithAnyArgs().End();
@@ -107,11 +107,11 @@ namespace Tanks.UI.Tests.Menus.Lobbies
         [TestCase("bad-request")]
         public async Task Join_Failure_ShowsErrorScreen(string errorCode)
         {
-            _service.
-                JoinLobbyAsync(Arg.Any<LobbyAddress>())
+            _service
+                .JoinLobbyAsync(Arg.Any<LobbyId>())
                 .Returns(UniTask.FromResult(Result.Failure<LobbyState>(errorCode)));
 
-            await ViewModel.JoinLobbyAsync(new LobbyAddress("some_address"));
+            await ViewModel.JoinLobbyAsync(new LobbyId("some_address"));
             _loading.Received(1).End();
 
             _dialog.Received(1).ShowErrorFromCode(Arg.Any<string>(), errorCode);

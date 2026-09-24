@@ -2,9 +2,8 @@
 {
     public interface ISessionConnectionService
     {
-        string IPAddress { get; }
-        ushort Port { get; }
+        string JoinCode { get; }
 
-        void SetConnectionData(string ipAdress, ushort port);
+        void SetConnectionData(string joinCode);
     }
 }

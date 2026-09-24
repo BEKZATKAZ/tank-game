@@ -115,12 +115,20 @@ MonoBehaviour:
     m_Key: menu.lobby.default-name
     m_Metadata:
       m_Items: []
+  - m_Id: 20387375585124352
+    m_Key: menu.lobby.starting-server
+    m_Metadata:
+      m_Items: []
   - m_Id: 6152229935865856
     m_Key: menu.lobby.creating
     m_Metadata:
       m_Items: []
   - m_Id: 6894076769558528
     m_Key: menu.lobby.joining
+    m_Metadata:
+      m_Items: []
+  - m_Id: 19202858845429760
+    m_Key: menu.lobby.leaving
     m_Metadata:
       m_Items: []
   - m_Id: 5086135213056000
@@ -165,6 +173,22 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 6608482260705280
     m_Key: menu.find-lobby.found
+    m_Metadata:
+      m_Items: []
+  - m_Id: 19179996239585280
+    m_Key: menu.lobby.lobby
+    m_Metadata:
+      m_Items: []
+  - m_Id: 19180675230294016
+    m_Key: menu.lobby.settings
+    m_Metadata:
+      m_Items: []
+  - m_Id: 19189575547576320
+    m_Key: menu.lobby.preparing-server
+    m_Metadata:
+      m_Items: []
+  - m_Id: 19189660226379776
+    m_Key: menu.lobby.connecting
     m_Metadata:
       m_Items: []
   m_Metadata:

@@ -539,11 +539,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: Unity.Netcode.Runtime::Unity.Netcode.NetworkObject
   GlobalObjectIdHash: 567973236
   InScenePlacedSourceGlobalObjectIdHash: 0
+  m_InScenePlacedDisabledByDefault: 0
   DeferredDespawnTick: 0
   Ownership: 1
   AlwaysReplicateAsRoot: 0
   SynchronizeTransform: 0
-  <InScenePlaced>k__BackingField: 0
+  m_InScenePlaced: 1
   ActiveSceneSynchronization: 0
   SceneMigrationSynchronization: 0
   SpawnWithObservers: 1
@@ -596,11 +597,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: Unity.Netcode.Runtime::Unity.Netcode.NetworkObject
   GlobalObjectIdHash: 3150453638
   InScenePlacedSourceGlobalObjectIdHash: 0
+  m_InScenePlacedDisabledByDefault: 0
   DeferredDespawnTick: 0
   Ownership: 1
   AlwaysReplicateAsRoot: 0
   SynchronizeTransform: 0
-  <InScenePlaced>k__BackingField: 0
+  m_InScenePlaced: 1
   ActiveSceneSynchronization: 0
   SceneMigrationSynchronization: 0
   SpawnWithObservers: 1
@@ -962,7 +964,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6960e84d07fb87f47956e7a81d71c4e6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Unity.Netcode.Runtime::Unity.Netcode.Transports.UTP.UnityTransport
-  m_ProtocolType: 0
+  m_ProtocolType: 1
   m_UseWebSockets: 0
   m_UseEncryption: 0
   m_MaxPacketQueueSize: 256
@@ -970,7 +972,7 @@ MonoBehaviour:
   m_HeartbeatTimeoutMS: 1000
   m_ConnectTimeoutMS: 1000
   m_MaxConnectAttempts: 30
-  m_DisconnectTimeoutMS: 15000
+  m_DisconnectTimeoutMS: 10000
   ConnectionData:
     Address: 127.0.0.1
     Port: 7777
@@ -997,7 +999,7 @@ MonoBehaviour:
   NetworkConfig:
     ProtocolVersion: 0
     NetworkTransport: {fileID: 893424077}
-    PlayerPrefab: {fileID: 7983979346145053049, guid: af2fde4ec1ac50942be4b011ea556c65, type: 3}
+    PlayerPrefab: {fileID: 0}
     Prefabs:
       NetworkPrefabsLists:
       - {fileID: 11400000, guid: 76ccad57eba4fe0409db4779cf7b8aa0, type: 2}
@@ -1084,11 +1086,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: Unity.Netcode.Runtime::Unity.Netcode.NetworkObject
   GlobalObjectIdHash: 3414331686
   InScenePlacedSourceGlobalObjectIdHash: 0
+  m_InScenePlacedDisabledByDefault: 0
   DeferredDespawnTick: 0
   Ownership: 1
   AlwaysReplicateAsRoot: 0
   SynchronizeTransform: 0
-  <InScenePlaced>k__BackingField: 0
+  m_InScenePlaced: 1
   ActiveSceneSynchronization: 0
   SceneMigrationSynchronization: 0
   SpawnWithObservers: 1
@@ -1165,11 +1168,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: Unity.Netcode.Runtime::Unity.Netcode.NetworkObject
   GlobalObjectIdHash: 2270925739
   InScenePlacedSourceGlobalObjectIdHash: 0
+  m_InScenePlacedDisabledByDefault: 0
   DeferredDespawnTick: 0
   Ownership: 1
   AlwaysReplicateAsRoot: 0
   SynchronizeTransform: 1
-  <InScenePlaced>k__BackingField: 0
+  m_InScenePlaced: 1
   ActiveSceneSynchronization: 0
   SceneMigrationSynchronization: 0
   SpawnWithObservers: 1
@@ -1190,6 +1194,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Tanks.Shared::Tanks.Shared.Bootstrap.GameStartBehaviour
   ShowTopMostFoldoutHeaderGroup: 1
+  _playerPrefab: {fileID: 224988897999633473, guid: af2fde4ec1ac50942be4b011ea556c65, type: 3}
   _tilemap: {fileID: 1563795404}
 --- !u!4 &1183163574
 Transform:
@@ -1265,10 +1270,10 @@ MonoBehaviour:
   autoInjectGameObjects:
   - {fileID: 71442778}
   - {fileID: 2095325335}
-  - {fileID: 1183163571}
   - {fileID: 1563795402}
   - {fileID: 995560637}
   - {fileID: 415803222}
+  - {fileID: 1183163571}
   _projectilePool: {fileID: 315083342}
   _itemDatabase: {fileID: 1405575642}
   _teamService: {fileID: 1421461476}
@@ -1613,11 +1618,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: Unity.Netcode.Runtime::Unity.Netcode.NetworkObject
   GlobalObjectIdHash: 1564801451
   InScenePlacedSourceGlobalObjectIdHash: 0
+  m_InScenePlacedDisabledByDefault: 0
   DeferredDespawnTick: 0
   Ownership: 1
   AlwaysReplicateAsRoot: 0
   SynchronizeTransform: 0
-  <InScenePlaced>k__BackingField: 0
+  m_InScenePlaced: 1
   ActiveSceneSynchronization: 0
   SceneMigrationSynchronization: 0
   SpawnWithObservers: 1
@@ -1745,11 +1751,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: Unity.Netcode.Runtime::Unity.Netcode.NetworkObject
   GlobalObjectIdHash: 4260625764
   InScenePlacedSourceGlobalObjectIdHash: 0
+  m_InScenePlacedDisabledByDefault: 0
   DeferredDespawnTick: 0
   Ownership: 1
   AlwaysReplicateAsRoot: 0
   SynchronizeTransform: 1
-  <InScenePlaced>k__BackingField: 0
+  m_InScenePlaced: 1
   ActiveSceneSynchronization: 0
   SceneMigrationSynchronization: 0
   SpawnWithObservers: 1
@@ -2283,8 +2290,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 283ff7d918cbc184e9700a2b1e33a648, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Tanks.Server::Tanks.Server.Bootstrap.UnityServerLifetimeService
-  _startupLifetimeSeconds: 120
-  _sessionLifetimeSeconds: 3600
+  _sessionLifetimeSeconds: 7200
   _endLifetimeSeconds: 5
 --- !u!1 &2109703089
 GameObject:

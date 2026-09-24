@@ -23,9 +23,8 @@ MonoBehaviour:
   - m_enabled: 1
     m_path: Assets/Tanks/Scenes/Gameplay.unity
     m_guid: 8c9cfa26abfee488c85f1582747f6a02
-  m_HasScriptingDefines: 1
-  m_ScriptingDefines:
-  - ENABLE_PLAYFABSERVER_API
+  m_HasScriptingDefines: 0
+  m_ScriptingDefines: []
   m_PlayerSettingsYaml:
     m_Settings: []
   references:

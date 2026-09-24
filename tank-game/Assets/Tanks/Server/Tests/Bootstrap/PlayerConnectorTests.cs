@@ -13,7 +13,6 @@ namespace Tanks.Server.Tests.Bootstrap
     {
         private IClientConnectionValidator _validator;
         private IConnectedClientService _clientService;
-        private IVirtualMachineService _vmService;
         private ISessionSettingsService _settings;
         private IServerLifetimeService _lifetime;
         private ITeamBehaviourService _teamService;
@@ -24,13 +23,12 @@ namespace Tanks.Server.Tests.Bootstrap
         {
             _validator = Substitute.For<IClientConnectionValidator>();
             _clientService = Substitute.For<IConnectedClientService>();
-            _vmService = Substitute.For<IVirtualMachineService>();
             _settings = Substitute.For<ISessionSettingsService>();
             _lifetime = Substitute.For<IServerLifetimeService>();
             _teamService = Substitute.For<ITeamBehaviourService>();
 
             _component = new PlayerConnector(
-                _validator, _clientService, _vmService, _settings, _lifetime, _teamService);
+                _validator, _clientService, _settings, _lifetime, _teamService);
 
             _component.Initialize(Substitute.For<IGameStartBehaviour>());
         }
@@ -39,12 +37,6 @@ namespace Tanks.Server.Tests.Bootstrap
         public void TearDown()
         {
             _component.Destroy();
-        }
-
-        [Test]
-        public void Initialize_StandsBy()
-        {
-            _vmService.Received(1).StandBy();
         }
 
         [Test]

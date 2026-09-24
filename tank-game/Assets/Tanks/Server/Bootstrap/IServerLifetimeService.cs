@@ -2,7 +2,6 @@ namespace Tanks.Server.Bootstrap
 {
     public enum GameStep
     {
-        Startup,
         Session,
         End
     }

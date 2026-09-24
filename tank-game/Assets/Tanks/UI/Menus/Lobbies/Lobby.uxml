@@ -1,46 +1,48 @@
 <ui:UXML xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
     <Style src="project://database/Assets/Tanks/UI/Menus/Styles/MainMenu.uss?fileID=7433441132597879392&amp;guid=e77348697c99f3b4795a79682c5e1415&amp;type=3#MainMenu"/>
     <Style src="project://database/Assets/Tanks/UI/Menus/Styles/Lobby.uss?fileID=7433441132597879392&amp;guid=b0ab1db9e25ec424ba52825e10f27a8f&amp;type=3#Lobby"/>
-    <ui:VisualElement name="Root" style="background-color: rgba(0, 0, 0, 0.749);">
-        <ui:VisualElement name="PlayerList" class="window">
-            <ui:VisualElement name="PlayerListHeader" class="window-header">
-                <ui:TextField label="" placeholder-text="" name="LobbyNameField" max-length="30" is-delayed="true" value="Username&apos;s Lobby"/>
-                <ui:Button text="" name="LobbyNameEditButton" style="background-image: url(&quot;project://database/Assets/Plugins/Layer%20Lab/2D%20Icons-PictoIconPack01/PictoIcon_256/Icon_PictoIcon_Pencil.Png?fileID=21300000&amp;guid=2e626f9b7e8f74b19838796cb3e2bc3d&amp;type=3#Icon_PictoIcon_Pencil&quot;);"/>
-                <ui:Label text="1 / 8" name="PlayerCount"/>
+    <ui:VisualElement name="Root">
+        <ui:Label text="Player&apos;s Lobby" name="LobbyName" enable-rich-text="false" class="lobby__name"/>
+        <ui:VisualElement name="Container" class="lobby-container">
+            <ui:VisualElement name="LobbyHeader" class="lobby__header">
+                <Tanks.UI.Elements.CustomButton name="MainButton" style="background-image: url(&quot;project://database/Assets/Plugins/Layer%20Lab/2D%20Icons-PictoIconPack01/PictoIcon_256/Icon_PictoIcon_User.Png?fileID=21300000&amp;guid=ea94334b2c3a74171b94b1b830878009&amp;type=3#Icon_PictoIcon_User&quot;);"/>
+                <Tanks.UI.Elements.CustomButton name="ChatButton" style="background-image: url(&quot;project://database/Assets/Plugins/Layer%20Lab/2D%20Icons-PictoIconPack01/PictoIcon_256/Icon_PictoIcon_Chat.Png?fileID=21300000&amp;guid=ae3aad40c6d7048089d003ff1f6f4b26&amp;type=3#Icon_PictoIcon_Chat&quot;);"/>
+                <Tanks.UI.Elements.CustomButton name="SettingsButton" style="background-image: url(&quot;project://database/Assets/Plugins/Layer%20Lab/2D%20Icons-PictoIconPack01/PictoIcon_256/Icon_PictoIcon_Setting_1.Png?fileID=2800000&amp;guid=a8e1509e3881943cbafc9ee0bf954e81&amp;type=3#Icon_PictoIcon_Setting_1&quot;);"/>
             </ui:VisualElement>
-            <ui:ScrollView name="PlayerListContent"/>
-        </ui:VisualElement>
-        <ui:VisualElement name="RightSide" style="flex-grow: 1;">
-            <ui:VisualElement name="Chat" class="window">
-                <ui:VisualElement name="ChatHeader" class="window-header">
-                    <ui:Label name="LobbyName" enable-rich-text="false">
+            <ui:VisualElement name="Main" class="lobby__section lobby-main" style="flex-grow: 1; display: none;">
+                <ui:ScrollView class="lobby__main-list">
+                    <Tanks.UI.Menus.Lobbies.Elements.LobbyPlayer/>
+                    <Tanks.UI.Menus.Lobbies.Elements.LobbyPlayer/>
+                </ui:ScrollView>
+                <ui:VisualElement name="Bottom" class="lobby__bottom lobby__main-bottom" style="flex-grow: 1;">
+                    <Tanks.UI.Elements.CustomButton name="LeaveButton" style="background-image: url(&quot;project://database/Assets/Plugins/Layer%20Lab/2D%20Icons-PictoIconPack01/PictoIcon_256/Icon_PictoIcon_Back.Png?fileID=21300000&amp;guid=ab31ece68847a4ee795dde79c8617c80&amp;type=3#Icon_PictoIcon_Back&quot;);">
                         <Bindings>
-                            <UnityEngine.Localization.LocalizedString property="text" table="GUID:34510603f8b6d1a44b1b2ffa9aa551c9" entry="Id(5085350316171264)"/>
+                            <UnityEngine.Localization.LocalizedString property="text" table="GUID:34510603f8b6d1a44b1b2ffa9aa551c9" entry="Id(5099162528342016)"/>
                         </Bindings>
-                    </ui:Label>
+                    </Tanks.UI.Elements.CustomButton>
+                    <Tanks.UI.Elements.CustomButton name="StartButton" style="background-image: url(&quot;project://database/Assets/Plugins/Layer%20Lab/2D%20Icons-PictoIconPack01/PictoIcon_256/Icon_PictoIcon_Control_Play.Png?fileID=2800000&amp;guid=89a5ae9f9ca3648d99ebe68370a1de31&amp;type=3#Icon_PictoIcon_Control_Play&quot;);">
+                        <Bindings>
+                            <UnityEngine.Localization.LocalizedString property="text" table="GUID:34510603f8b6d1a44b1b2ffa9aa551c9" entry="Id(5068842412236800)"/>
+                        </Bindings>
+                    </Tanks.UI.Elements.CustomButton>
                 </ui:VisualElement>
-                <ui:ScrollView name="ChatMessages"/>
-                <ui:VisualElement name="ChatFieldContainer">
-                    <ui:TextField label="" name="ChatField" max-length="250">
+            </ui:VisualElement>
+            <ui:VisualElement name="Chat" class="lobby__section lobby-chat" style="flex-grow: 1; display: flex;">
+                <ui:ScrollView horizontal-scroller-visibility="Hidden">
+                    <Tanks.UI.Menus.Lobbies.Elements.ChatServerMessage content="Username joined the lobby"/>
+                    <Tanks.UI.Menus.Lobbies.Elements.ChatUserMessage content="Example message"/>
+                    <Tanks.UI.Menus.Lobbies.Elements.ChatUserMessage content="Example message"/>
+                </ui:ScrollView>
+                <ui:VisualElement name="ChatFieldContainer" class="chat__field-container lobby__bottom" style="flex-grow: 1;">
+                    <ui:TextField name="ChatField" class="chat__field">
                         <Bindings>
                             <UnityEngine.Localization.LocalizedString property="placeholderText" table="GUID:34510603f8b6d1a44b1b2ffa9aa551c9" entry="Id(5219211482193920)"/>
                         </Bindings>
                     </ui:TextField>
-                    <Tanks.UI.Elements.CustomButton name="ChatSendButton" style="background-image: url(&quot;project://database/Assets/Plugins/Layer%20Lab/2D%20Icons-PictoIconPack01/PictoIcon_256/Icon_PictoIcon_Send_1.Png?fileID=21300000&amp;guid=5488ea9efc75a409f9dfa625d0574c04&amp;type=3#Icon_PictoIcon_Send_1&quot;);"/>
+                    <Tanks.UI.Elements.CustomButton name="SendButton" class="chat__send-button" style="background-image: url(&quot;project://database/Assets/Plugins/Layer%20Lab/2D%20Icons-PictoIconPack01/PictoIcon_256/Icon_PictoIcon_Send_1.Png?fileID=21300000&amp;guid=5488ea9efc75a409f9dfa625d0574c04&amp;type=3#Icon_PictoIcon_Send_1&quot;);"/>
                 </ui:VisualElement>
             </ui:VisualElement>
-            <ui:VisualElement name="LobbyButtons">
-                <Tanks.UI.Elements.CustomButton name="LeaveButton" style="background-image: url(&quot;project://database/Assets/Plugins/Layer%20Lab/2D%20Icons-PictoIconPack01/PictoIcon_256/Icon_PictoIcon_Back.Png?fileID=21300000&amp;guid=ab31ece68847a4ee795dde79c8617c80&amp;type=3#Icon_PictoIcon_Back&quot;);">
-                    <Bindings>
-                        <UnityEngine.Localization.LocalizedString property="text" table="GUID:34510603f8b6d1a44b1b2ffa9aa551c9" entry="Id(5099162528342016)"/>
-                    </Bindings>
-                </Tanks.UI.Elements.CustomButton>
-                <Tanks.UI.Elements.CustomButton name="StartButton" style="background-image: url(&quot;project://database/Assets/Plugins/Layer%20Lab/2D%20Icons-PictoIconPack01/PictoIcon_256/Icon_PictoIcon_Control_Play.Png?fileID=21300000&amp;guid=89a5ae9f9ca3648d99ebe68370a1de31&amp;type=3#Icon_PictoIcon_Control_Play&quot;);">
-                    <Bindings>
-                        <UnityEngine.Localization.LocalizedString property="text" table="GUID:34510603f8b6d1a44b1b2ffa9aa551c9" entry="Id(5068842412236800)"/>
-                    </Bindings>
-                </Tanks.UI.Elements.CustomButton>
-            </ui:VisualElement>
         </ui:VisualElement>
+        <ui:Label text="Starting server..." name="LobbyStatus" class="lobby__status"/>
     </ui:VisualElement>
 </ui:UXML>

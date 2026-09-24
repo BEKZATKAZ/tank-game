@@ -10,12 +10,13 @@ namespace Tanks.UI.Menus.Lobbies.Elements
     [UxmlElement]
     public sealed partial class JoinableLobby : VisualElement
     {
-        public JoinableLobby() : this(null) { }
+        public JoinableLobby() : this(default, null) { }
 
-        public JoinableLobby(Action<LobbyAddress> onJoin)
+        public JoinableLobby(LobbyId id, Action<LobbyId> onJoin)
         {
             _name = new Label(_nameValue);
             _name.AddToClassList("lobby-name");
+            _id = id;
 
             _memberCount = new Label($"{_memberCountValue} / {_maxMemberCountValue}");
             _memberCount.AddToClassList("lobby-member-count");
@@ -31,12 +32,8 @@ namespace Tanks.UI.Menus.Lobbies.Elements
             Add(joinButton);
             AddToClassList("lobby");
 
-            joinButton.clicked += () => onJoin?.Invoke(new LobbyAddress(Address));
+            joinButton.clicked += () => onJoin?.Invoke(_id);
         }
-
-        [UxmlAttribute]
-        [CreateProperty]
-        public string Address { get; set; }
 
         [UxmlAttribute]
         [CreateProperty]
@@ -83,5 +80,6 @@ namespace Tanks.UI.Menus.Lobbies.Elements
         private string _nameValue = "Lobby Name";
         private int _memberCountValue = 1;
         private int _maxMemberCountValue = 8;
+        private LobbyId _id;
     }
 }

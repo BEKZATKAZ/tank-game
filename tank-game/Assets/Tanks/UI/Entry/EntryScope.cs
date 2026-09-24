@@ -1,4 +1,5 @@
-﻿using Tanks.Localization;
+﻿using NaughtyAttributes;
+using Tanks.Localization;
 using Tanks.UI.Entry.AccountSetup;
 using Tanks.UI.Menus.Dialogs;
 using UnityEngine;
@@ -9,7 +10,9 @@ namespace Tanks.UI.Entry
 {
     public sealed class EntryScope : LifetimeScope
     {
-        [SerializeField] private DialogScreenService _dialogScreenService;
+        [Required]
+        [SerializeField]
+        private DialogScreenService _dialogScreenService;
 
         protected override void Configure(IContainerBuilder builder)
         {

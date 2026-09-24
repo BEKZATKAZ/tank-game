@@ -65,17 +65,12 @@ namespace Tanks.Server.Bootstrap
             if (tick - _lastDiedTick < delayTicks || _isEndingGame) return;
             _lastDiedTick = -1;
 
-            Debug.Log("Total teams: " + _teamService.GetAllTeams().Count());
-            Debug.Log("Total players: " + _teamService.GetAllTeams().SelectMany(x => x.Players).Count());
-
             int aliveTeamCount = _teamService
                 .GetAllTeams()
                 .Count(x => x.Players.Any(x => x.IsEliminated == false));
 
             // Restart when only one or zero teams left
             if (aliveTeamCount > 1) return;
-
-            Debug.Log(aliveTeamCount);
 
             if (aliveTeamCount == 1)
             {

@@ -31,8 +31,10 @@ namespace Tanks.UI.Menus
             builder.Register<DialogScreenViewModel>(Lifetime.Transient);
             builder.Register<MainMenuSectionsViewModel>(Lifetime.Transient);
             builder.Register<SettingsViewModel>(Lifetime.Transient);
+
             builder.Register<LobbyBrowserViewModel>(Lifetime.Transient);
-            builder.Register<LobbyViewModel>(Lifetime.Transient);
+            builder.Register<LobbySectionsViewModel>(Lifetime.Transient);
+            builder.Register<LobbyMainViewModel>(Lifetime.Transient);
             builder.Register<LobbyChatViewModel>(Lifetime.Transient);
 
             builder.Register<GeneralSettingsApplier>(Lifetime.Singleton);

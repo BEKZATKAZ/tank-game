@@ -33,6 +33,7 @@ MonoBehaviour:
     m_ReadOnly: 1
     m_SerializedLabels:
     - Locale-ru
+    - Preload
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: cbf1073c755feb74fac84fb973005e58
     m_Address: Items_ru

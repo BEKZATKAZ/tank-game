@@ -48,9 +48,8 @@ namespace Tanks.UI.Menus.Lobbies
 
             foreach (LobbySearchState lobby in lobbies)
             {
-                _list.Add(new JoinableLobby(OnJoined)
+                _list.Add(new JoinableLobby(lobby.Id, OnJoined)
                 {
-                    Address = lobby.Address.Value,
                     Name = lobby.Name,
                     MemberCount = lobby.PlayerCount,
                     MaxMemberCount = lobby.MaxPlayerCount
@@ -58,9 +57,9 @@ namespace Tanks.UI.Menus.Lobbies
             }
         }
 
-        private void OnJoined(LobbyAddress address)
+        private void OnJoined(LobbyId id)
         {
-            ViewModel.JoinLobbyAsync(address).Forget();
+            ViewModel.JoinLobbyAsync(id).Forget();
         }
 
         private void OnRefreshed()

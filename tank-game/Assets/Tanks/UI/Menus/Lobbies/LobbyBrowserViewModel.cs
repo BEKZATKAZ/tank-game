@@ -64,12 +64,12 @@ namespace Tanks.UI.Menus.Lobbies
             Status.Value = found?.Get() ?? "";
         }
 
-        public async UniTask JoinLobbyAsync(LobbyAddress address)
+        public async UniTask JoinLobbyAsync(LobbyId id)
         {
             _localization.TryGet("Menus", "menu.lobby.joining", out ILocalizedString joining);
             _loading.Begin(joining);
 
-            var result = await _service.JoinLobbyAsync(address);
+            var result = await _service.JoinLobbyAsync(id);
             _loading.End();
 
             if (result.IsSuccess) _navigation.Navigate(MenuType.Lobby);

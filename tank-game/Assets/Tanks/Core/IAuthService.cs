@@ -7,8 +7,13 @@ namespace Tanks.Core
     {
         PlayerProfileState CurrentProfile { get; }
 
+        UniTask InitializeAsync();
         UniTask<ResultType> SetupProfileAsync(string displayName);
-        UniTask<ResultType<PlayerProfileResult>> GetProfileAsync(string userId);
-        UniTask<ResultType<PlayerProfileResult>> LoginWithDeviceIdAsync();
+
+        UniTask<ResultType<string>> GenerateSignInCodeAsync(string identifier);
+        UniTask<ResultType> ConfirmCodeAsync(string code);
+
+        UniTask<ResultType<PlayerProfileResult>> SignInWithCodeAsync();
+        UniTask<ResultType<PlayerProfileResult>> SignInWithDeviceIdAsync();
     }
 }

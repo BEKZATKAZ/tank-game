@@ -86,7 +86,7 @@ namespace Tanks.Localization
             StringTable table = LocalizationSettings.StringDatabase.GetTable(tableName);
             if (table == false) return false;
 
-            StringTableEntry entry = table.GetEntry(entryName);
+            StringTableEntry entry = table.GetEntry(entryName ?? "");
             if (entry is null) return false;
 
             result = new UnityLocalizedString(new LocalizedString(tableName, entryName));

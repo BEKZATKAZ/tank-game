@@ -22,7 +22,9 @@ namespace Tanks.UI.Entry.AccountSetup
 
         public async UniTask<bool> LoginAsync()
         {
-            var result = await _service.LoginWithDeviceIdAsync();
+            await _service.InitializeAsync();
+
+            var result = await _service.SignInWithDeviceIdAsync();
 
             if (result.IsSuccess == false)
             {

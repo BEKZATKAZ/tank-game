@@ -16,10 +16,12 @@ namespace Tanks.UI.Menus.Lobbies
             _service.PlayerLeft += OnPlayerLeft;
         }
 
-        public BindableProperty<string> CurrentServerMessage { get; } = new();
+        public IReadOnlyBindableProperty<string> CurrentServerMessage => _currentServerMessage;
+        public IReadOnlyBindableProperty<LobbyId> LobbyId => _service.CurrentLobbyState.Id;
 
         private readonly ILobbyService _service;
         private readonly ILocalizationDatabase _localization;
+        private readonly BindableProperty<string> _currentServerMessage = new();
 
         public void Dispose()
         {
@@ -31,21 +33,21 @@ namespace Tanks.UI.Menus.Lobbies
         {
             _localization.TryGet("Menus", "menu.lobby.chat-welcome", out var text);
             text?.AddVariable("name", _service.CurrentLobbyState.Name.Value);
-            CurrentServerMessage.Value = text?.Get() ?? "";
+            _currentServerMessage.Value = text?.Get() ?? "";
         }
 
         private void OnPlayerJoined(LobbyPlayerState player)
         {
             _localization.TryGet("Menus", "menu.lobby.chat-player-joined", out var text);
             text?.AddVariable("username", player.DisplayName);
-            CurrentServerMessage.Value = text?.Get() ?? "";
+            _currentServerMessage.Value = text?.Get() ?? "";
         }
 
         private void OnPlayerLeft(LobbyPlayerState player)
         {
             _localization.TryGet("Menus", "menu.lobby.chat-player-disconnected", out var text);
             text?.AddVariable("username", player.DisplayName);
-            CurrentServerMessage.Value = text?.Get() ?? "";
+            _currentServerMessage.Value = text?.Get() ?? "";
         }
     }
 }

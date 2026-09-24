@@ -13,14 +13,12 @@ namespace Tanks.Server.Bootstrap
         public PlayerConnector(
             IClientConnectionValidator validator,
             IConnectedClientService clientService,
-            IVirtualMachineService vmService,
             ISessionSettingsService sessionSettings,
             IServerLifetimeService lifetime,
             ITeamBehaviourService teamService)
         {
             _validator = validator;
             _clientService = clientService;
-            _vmService = vmService;
             _sessionSettings = sessionSettings;
             _lifetime = lifetime;
             _teamService = teamService;
@@ -28,7 +26,6 @@ namespace Tanks.Server.Bootstrap
 
         private readonly IClientConnectionValidator _validator;
         private readonly IConnectedClientService _clientService;
-        private readonly IVirtualMachineService _vmService;
         private readonly ISessionSettingsService _sessionSettings;
         private readonly IServerLifetimeService _lifetime;
         private readonly ITeamBehaviourService _teamService;
@@ -36,14 +33,11 @@ namespace Tanks.Server.Bootstrap
 
         protected override void OnInitialize()
         {
-            if (NetworkManager.Singleton)
-            {
-                NetworkManager.Singleton.ConnectionApprovalCallback += ApprovalCheck;
-                NetworkManager.Singleton.OnClientConnectedCallback += OnClientConnected;
-                NetworkManager.Singleton.OnClientDisconnectCallback += OnClientDisconnected;
-            }
+            if (NetworkManager.Singleton == false) return;
 
-            _vmService.StandBy();
+            NetworkManager.Singleton.ConnectionApprovalCallback += ApprovalCheck;
+            NetworkManager.Singleton.OnClientConnectedCallback += OnClientConnected;
+            NetworkManager.Singleton.OnClientDisconnectCallback += OnClientDisconnected;
         }
 
         protected override void OnDestroy()
@@ -86,6 +80,9 @@ namespace Tanks.Server.Bootstrap
 
         public void OnClientConnected(ulong clientId)
         {
+            // Discard host (server)
+            if (clientId == 0) return;
+
             int currentCount = _clientService.ConnectedClientCount;
             if (currentCount < _sessionSettings.GetSettings().DesiredPlayerCount) return;
 

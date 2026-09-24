@@ -1,6 +1,7 @@
 using Cysharp.Threading.Tasks;
 using Tanks.Core;
 using Tanks.Core.Lobbies;
+using Tanks.Core.Lobbies.UseCases;
 using Tanks.Localization;
 using Tanks.UI.Menus.Dialogs;
 using Tanks.UI.Menus.Loading;
@@ -17,7 +18,8 @@ namespace Tanks.UI.Menus.Main
             ILocalizationDatabase localization,
             ILoadingScreenService loading,
             IDialogScreenService dialog,
-            IMenuNavigation navigation)
+            IMenuNavigation navigation,
+            IRunServerUseCase runServer)
         {
             _auth = auth;
             _lobbyService = lobbyService;
@@ -25,6 +27,7 @@ namespace Tanks.UI.Menus.Main
             _loading = loading;
             _dialog = dialog;
             _navigation = navigation;
+            _runServer = runServer;
         }
 
         public BindableProperty<MainMenuSection> Section { get; } = new();
@@ -35,6 +38,7 @@ namespace Tanks.UI.Menus.Main
         private readonly ILoadingScreenService _loading;
         private readonly IDialogScreenService _dialog;
         private readonly IMenuNavigation _navigation;
+        private readonly IRunServerUseCase _runServer;
 
         public void OpenSection(MainMenuSection section)
         {
@@ -51,13 +55,25 @@ namespace Tanks.UI.Menus.Main
             string lobbyName = "My lobby";
 
             if (_localization.TryGet(
-                "Menus", "menu.lobby.default-name", out ILocalizedString defaultName))
+                "Menus", "menu.lobby.default-name", out var defaultName))
             {
                 defaultName.AddVariable("name", _auth.CurrentProfile.DisplayName.Value);
                 lobbyName = defaultName.Get();
             }
 
-            _localization.TryGet("Menus", "menu.lobby.creating", out ILocalizedString creating);
+            _localization.TryGet("Menus", "menu.lobby.starting-server", out var starting);
+            _loading.Begin(starting);
+
+            ResultType started = await _runServer.RunAsync();
+
+            if (started.IsSuccess == false)
+            {
+                _dialog.ShowErrorFromCode("error.lobby", started.ErrorCode);
+                _loading.End();
+                return;
+            }
+
+            _localization.TryGet("Menus", "menu.lobby.creating", out var creating);
             _loading.Begin(creating);
 
             ResultType result = await _lobbyService.HostLobbyAsync(lobbyName, 4);

@@ -9,6 +9,7 @@ using Tanks.Client.Visuals;
 using Tanks.Client.Weapons;
 using Tanks.Localization;
 using Tanks.Shared.Bootstrap;
+using Unity.Multiplayer;
 using UnityEngine;
 using VContainer;
 using VContainer.Unity;
@@ -35,6 +36,11 @@ namespace Tanks.Client.Bootstrap
 
         protected override void Configure(IContainerBuilder builder)
         {
+#if UNITY_EDITOR
+            MultiplayerRoleFlags role = MultiplayerRolesManager.ActiveMultiplayerRoleMask;
+            if (role is not MultiplayerRoleFlags.Client) return;
+#endif
+
             base.Configure(builder);
 
             builder.RegisterAudio(Lifetime.Singleton);

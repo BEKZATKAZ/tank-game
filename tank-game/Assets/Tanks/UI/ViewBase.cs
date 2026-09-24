@@ -33,7 +33,8 @@ namespace Tanks.UI
         [Inject] private readonly IObjectResolver _resolver;
 
         public T ViewModel { get; private set; }
-        public bool IsVisible => GetRootElement().style.display != DisplayStyle.None;
+        public VisualElement Root => GetRootElement();
+        public bool IsVisible => Root.style.display != DisplayStyle.None;
 
         private bool _hasInitialized;
 

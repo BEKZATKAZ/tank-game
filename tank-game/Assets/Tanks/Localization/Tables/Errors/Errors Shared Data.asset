@@ -15,16 +15,8 @@ MonoBehaviour:
   m_TableCollectionName: Errors
   m_TableCollectionNameGuidString: 034deb129b9dd5842973b131521ca8de
   m_Entries:
-  - m_Id: 1051715732725760
-    m_Key: error.entry.name-not-available
-    m_Metadata:
-      m_Items: []
-  - m_Id: 1049871174295552
-    m_Key: error.entry.too-short-username
-    m_Metadata:
-      m_Items: []
-  - m_Id: 675254177849344
-    m_Key: error.lobby.too-many-requests
+  - m_Id: 8684789760
+    m_Key: error.default
     m_Metadata:
       m_Items: []
   - m_Id: 214359618314240
@@ -35,20 +27,60 @@ MonoBehaviour:
     m_Key: error.ok
     m_Metadata:
       m_Items: []
-  - m_Id: 1378158600192
-    m_Key: error.lobby.not-member
+  - m_Id: 1051715732725760
+    m_Key: error.entry.name-not-available
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1049871174295552
+    m_Key: error.entry.too-short-username
+    m_Metadata:
+      m_Items: []
+  - m_Id: 675254177849344
+    m_Key: error.lobby.rate-limited
     m_Metadata:
       m_Items: []
   - m_Id: 1071924076544
-    m_Key: error.lobby.lobby-not-joinable
+    m_Key: error.lobby.gone
     m_Metadata:
       m_Items: []
   - m_Id: 632541372416
     m_Key: error.lobby.lobby-not-found
     m_Metadata:
       m_Items: []
-  - m_Id: 8684789760
-    m_Key: error.default
+  - m_Id: 14073502426947584
+    m_Key: error.lobby.failed-to-create
+    m_Metadata:
+      m_Items: []
+  - m_Id: 14708398786830336
+    m_Key: error.lobby.failed-to-join
+    m_Metadata:
+      m_Items: []
+  - m_Id: 13262707732471808
+    m_Key: error.lobby.failed-to-leave
+    m_Metadata:
+      m_Items: []
+  - m_Id: 13688554381598720
+    m_Key: error.lobby.failed-to-start-server
+    m_Metadata:
+      m_Items: []
+  - m_Id: 13688838436642816
+    m_Key: error.lobby.server-timed-out
+    m_Metadata:
+      m_Items: []
+  - m_Id: 14704694973128704
+    m_Key: error.lobby.lobby-full
+    m_Metadata:
+      m_Items: []
+  - m_Id: 14705904262275072
+    m_Key: error.lobby.request-time-out
+    m_Metadata:
+      m_Items: []
+  - m_Id: 14708559386730496
+    m_Key: error.lobby.lobby-version-does-not-match
+    m_Metadata:
+      m_Items: []
+  - m_Id: 14710554747166720
+    m_Key: error.lobby.lobby-disbanded
     m_Metadata:
       m_Items: []
   m_Metadata:

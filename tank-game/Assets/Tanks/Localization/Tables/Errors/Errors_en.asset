@@ -30,11 +30,6 @@ MonoBehaviour:
     m_Localized: Lobby is no longer available.
     m_Metadata:
       m_Items: []
-  - m_Id: 1378158600192
-    m_Localized: You cannot perform this action because you are no longer in the
-      lobby.
-    m_Metadata:
-      m_Items: []
   - m_Id: 5444695711744
     m_Localized: OK
     m_Metadata:
@@ -53,6 +48,42 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 1051715732725760
     m_Localized: Username already taken.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 13262707732471808
+    m_Localized: Oops! We couldn't remove you from the lobby. Please try again.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 13688554381598720
+    m_Localized: Failed to start server. Please try again.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 13688838436642816
+    m_Localized: Server timed out.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 14073502426947584
+    m_Localized: Failed to create lobby. Please try again.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 14704694973128704
+    m_Localized: Lobby is full.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 14705904262275072
+    m_Localized: Request timed out.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 14708398786830336
+    m_Localized: Failed to join lobby. Please try again.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 14708559386730496
+    m_Localized: Lobby version mismatch.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 14710554747166720
+    m_Localized: Lobby has been disbanded.
     m_Metadata:
       m_Items: []
   references:

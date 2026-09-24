@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using UnityEngine;
 
 namespace Tanks.Utils
 {
@@ -27,14 +28,25 @@ namespace Tanks.Utils
             get => _value;
             set
             {
+                if (_value != null && _value.Equals(value)) return;
                 _value = value;
-                foreach (Action<T> binding in _toTargetBindings) binding(value);
+                ForceRefresh();
+            }
+        }
+
+        public void ForceRefresh()
+        {
+            foreach (Action<T> binding in _toTargetBindings)
+            {
+                try { binding(_value); }
+                catch (Exception ex) { Debug.LogException(ex); }
             }
         }
 
         public void Bind(Action<T> callback)
         {
-            callback(_value);
+            try { callback(_value); }
+            catch (Exception ex) { Debug.LogException(ex); }
             _toTargetBindings.Add(callback);
         }
 

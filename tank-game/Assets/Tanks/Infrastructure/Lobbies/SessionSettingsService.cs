@@ -9,18 +9,13 @@ namespace Tanks.Infrastructure.Lobbies
         [Expandable]
         [Required]
         [SerializeField]
-        private SessionSettingsConfig _defaultSettings;
+        private SessionDefaultSettingsConfig _defaultSettings;
 
         private ISessionSettings _settings;
 
-        public ISessionSettings GetSettings()
-        {
-            return _settings ?? _defaultSettings;
-        }
+        public ISessionDefaultSettingsConfig DefaultSettings => _defaultSettings;
 
-        public void SetSettings(ISessionSettings settings)
-        {
-            _settings = settings;
-        }
+        public ISessionSettings GetSettings() => _settings;
+        public void SetSettings(ISessionSettings settings) => _settings = settings;
     }
 }

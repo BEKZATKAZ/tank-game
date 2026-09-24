@@ -9,14 +9,14 @@
         "GUID:b0214a6008ed146ff8f122a6a9c2f6cc"
     ],
     "includePlatforms": [],
-    "excludePlatforms": [
-        "LinuxStandalone64Server"
-    ],
+    "excludePlatforms": [],
     "allowUnsafeCode": false,
     "overrideReferences": false,
     "precompiledReferences": [],
     "autoReferenced": false,
-    "defineConstraints": [],
+    "defineConstraints": [
+        "!UNITY_SERVER || UNITY_EDITOR"
+    ],
     "versionDefines": [],
     "noEngineReferences": false
 }

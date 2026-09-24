@@ -9,18 +9,37 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a7421fc09a3e86748a4f64577d624936, type: 3}
+  m_Script: {fileID: 11500000, guid: c742d9f4a68265847ac09ae9fce56d7a, type: 3}
   m_Name: DefaultSessionSettings
-  m_EditorClassIdentifier: Tanks.Core::Tanks.Core.Lobbies.Sessions.SessionSettingsConfig
-  _desiredPlayerCount: 2
-  _maxScoreToReach: 15
+  m_EditorClassIdentifier: Tanks.Core::Tanks.Core.Lobbies.Sessions.SessionDefaultSettingsConfig
+  _desiredPlayerCount:
+    Values: 0100000002000000030000000400000005000000060000000700000008000000
+    Default: 1
+  _maxScoreToReach:
+    Values: 050000000f0000001e0000002d0000003c0000004b0000005a000000
+    Default: 15
   _mapGeneration:
-    Resolution: {x: 9, y: 6}
-    WallWidth: 7
+    Resolution:
+      Values:
+      - {x: 5, y: 4}
+      - {x: 8, y: 5}
+      - {x: 10, y: 6}
+      Default: {x: 8, y: 5}
+    WallWidth:
+      Values: 06000000080000000a000000
+      Default: 8
   _itemSpawn:
-    Cooldown: {x: 2, y: 3}
+    CooldownSeconds:
+      Values: 1e0000000c0000000600000002000000
+      Default: 6
     MinDistanceToPlayers: 2
   _dangerZone:
-    StartDelaySeconds: 15
-    DurationSeconds: 40
-    DamagePerSecond: 10
+    StartDelaySeconds:
+      Values: 050000000f0000001e0000002d0000003c000000
+      Default: 15
+    DurationSeconds:
+      Values: 0a000000140000001e00000028000000320000003c000000
+      Default: 40
+    DamagePerSecond:
+      Values: 050000000a000000140000003200000064000000
+      Default: 10

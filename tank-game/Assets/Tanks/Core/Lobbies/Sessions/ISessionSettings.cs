@@ -35,4 +35,15 @@ namespace Tanks.Core.Lobbies.Sessions
         public int DurationSeconds;
         public int DamagePerSecond;
     }
+
+    [Serializable]
+    public struct SessionSettings : ISessionSettings
+    {
+        public int DesiredPlayerCount { get; set; }
+        public int MaxScore { get; set; }
+
+        public MapGenerationSettings MapGeneration { get; set; }
+        public ItemSpawnSettings ItemSpawn { get; set; }
+        public DangerZoneSettings DangerZone { get; set; }
+    }
 }

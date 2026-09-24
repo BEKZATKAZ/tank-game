@@ -54,7 +54,7 @@ namespace Tanks.UI.Gameplay.GameStats
 
         private void OnTeamScoreChanged(int score)
         {
-            Players.Value = Players.Value;
+            Players.ForceRefresh();
 
             if (score < _settings.GetSettings().MaxScore) return;
 
@@ -69,13 +69,13 @@ namespace Tanks.UI.Gameplay.GameStats
         private void OnPlayerJoined(PlayerState player)
         {
             Players.Value.Add(player);
-            Players.Value = Players.Value;
+            Players.ForceRefresh();
         }
 
         private void OnPlayerLeft(PlayerState player)
         {
             if (Players.Value.Remove(player) == false) return;
-            Players.Value = Players.Value;
+            Players.ForceRefresh();
         }
 
         private void OnRoundChanged(int round)

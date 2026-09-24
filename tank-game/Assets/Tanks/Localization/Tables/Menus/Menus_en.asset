@@ -176,6 +176,30 @@ MonoBehaviour:
     m_Metadata:
       m_Items:
       - rid: 6704992630869852538
+  - m_Id: 19179996239585280
+    m_Localized: Lobby
+    m_Metadata:
+      m_Items: []
+  - m_Id: 19180675230294016
+    m_Localized: Settings
+    m_Metadata:
+      m_Items: []
+  - m_Id: 19189575547576320
+    m_Localized: Preparing server...
+    m_Metadata:
+      m_Items: []
+  - m_Id: 19189660226379776
+    m_Localized: Connecting to server...
+    m_Metadata:
+      m_Items: []
+  - m_Id: 19202858845429760
+    m_Localized: Leaving lobby
+    m_Metadata:
+      m_Items: []
+  - m_Id: 20387375585124352
+    m_Localized: Starting server
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:

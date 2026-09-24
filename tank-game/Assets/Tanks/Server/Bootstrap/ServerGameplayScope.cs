@@ -1,5 +1,6 @@
 ﻿using NaughtyAttributes;
 using Tanks.Shared.Bootstrap;
+using Unity.Multiplayer;
 using UnityEngine;
 using VContainer;
 using VContainer.Unity;
@@ -14,6 +15,11 @@ namespace Tanks.Server.Bootstrap
 
         protected override void Configure(IContainerBuilder builder)
         {
+#if UNITY_EDITOR
+            MultiplayerRoleFlags role = MultiplayerRolesManager.ActiveMultiplayerRoleMask;
+            if (role is MultiplayerRoleFlags.Client) return;
+#endif
+
             base.Configure(builder);
 
             builder.Register<
@@ -24,16 +30,7 @@ namespace Tanks.Server.Bootstrap
                 IConnectedClientService,
                 ConnectedClientService>(Lifetime.Singleton);
 
-            builder.Register<
-                IVirtualMachineService,
-                PlayFabVirtualMachineService>(Lifetime.Singleton);
-
             builder.RegisterComponent(_lifetime).As<IServerLifetimeService>();
-
-            builder.RegisterBuildCallback(container =>
-            {
-                container.Resolve<IVirtualMachineService>().Start();
-            });
         }
     }
 }

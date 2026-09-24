@@ -30,7 +30,8 @@ namespace Tanks.Infrastructure.Settings
 
             foreach (BindableProperty<int> setting in _settings.Values)
             {
-                setting.Value = setting.Value;
+                // Mimics reset
+                setting.ForceRefresh();
             }
         }
 

@@ -1,4 +1,4 @@
-﻿using Tanks.Core.Helpers;
+﻿using NaughtyAttributes;
 using Tanks.Shared.Generation;
 using Tanks.Shared.Messaging;
 using Tanks.Shared.Teams;
@@ -13,7 +13,13 @@ namespace Tanks.Shared.Bootstrap
 	public sealed class GameStartBehaviour :
         NetworkBehaviourExtended, IGameStartBehaviour, IMessageSender
 	{
-		[SerializeField] private TilemapSpawner _tilemap;
+        [Required]
+        [SerializeField]
+        private NetworkObject _playerPrefab;
+
+        [Required]
+		[SerializeField]
+        private TilemapSpawner _tilemap;
 
         [Inject] private readonly IObjectResolver _container;
         [Inject] private readonly IMessageBus _bus;
@@ -82,15 +88,11 @@ namespace Tanks.Shared.Bootstrap
 
         public void SpawnPlayer(ulong clientId, float2 position)
         {
-            Required<GameObject> playerPrefab = NetworkManager.NetworkConfig.PlayerPrefab;
+            NetworkObject player = Instantiate(
+                _playerPrefab, new float3(position, 0), quaternion.identity);
 
-            GameObject player = Instantiate(
-                playerPrefab.Value, new float3(position, 0), quaternion.identity);
-
-            _container.InjectGameObject(player);
-
-            NetworkObject networkObject = player.GetComponent<NetworkObject>();
-            networkObject.SpawnAsPlayerObject(clientId, destroyWithScene: true);
+            _container.InjectGameObject(player.gameObject);
+            player.SpawnAsPlayerObject(clientId, destroyWithScene: true);
         }
 
         public void PrepareGame() => EmitMessage(new PrepareGameRequested());

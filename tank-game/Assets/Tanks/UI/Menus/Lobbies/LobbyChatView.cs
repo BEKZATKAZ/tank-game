@@ -1,4 +1,5 @@
-﻿using Tanks.UI.Menus.Lobbies.Elements;
+﻿using Tanks.Core.Lobbies;
+using Tanks.UI.Menus.Lobbies.Elements;
 using UnityEngine.UIElements;
 
 namespace Tanks.UI.Menus.Lobbies
@@ -7,6 +8,7 @@ namespace Tanks.UI.Menus.Lobbies
     {
         private VisualElement _root;
         private ScrollView _messages;
+        private LobbyId _lastLobbyId;
 
         protected override VisualElement GetRootElement() => _root;
 
@@ -14,12 +16,26 @@ namespace Tanks.UI.Menus.Lobbies
         {
             _root = root.Q("Chat");
             _messages = _root.Q<ScrollView>();
+            _messages.Clear();
         }
 
         protected override void Bind(LobbyChatViewModel viewModel)
         {
             viewModel.CurrentServerMessage.Bind(OnServerMessageAdded);
-            viewModel.DisplayWelcomeMessage();
+            viewModel.LobbyId.Bind(OnLobbyIdChanged);
+        }
+
+        protected override void Unbind(LobbyChatViewModel viewModel)
+        {
+            viewModel.CurrentServerMessage.Unbind(OnServerMessageAdded);
+            viewModel.LobbyId.Unbind(OnLobbyIdChanged);
+        }
+
+        private void OnLobbyIdChanged(LobbyId id)
+        {
+            if (_lastLobbyId.Value == id.Value) return;
+            _lastLobbyId = id;
+            ViewModel.DisplayWelcomeMessage();
         }
 
         private void OnServerMessageAdded(string message)
