@@ -3,6 +3,7 @@ using System;
 using System.Linq;
 using Tanks.Audio;
 using Tanks.Client.Bootstrap;
+using Tanks.Client.Input;
 using Tanks.Shared.Entities.Health;
 using Tanks.Shared.Messaging;
 using Unity.Netcode;
@@ -20,10 +21,17 @@ namespace Tanks.Client.Visuals
         private IMessageBus _bus;
         private IAudioInstance _music;
         private IStressService _stress;
+        private IInputService<ManualDriveInput> _driveInput;
+        private IInputService<TurretInput> _turretInput;
         private int _currentMusicIndex;
 
         [Inject]
-        public void Inject(IAudioFactory audioFactory, IMessageBus bus, IStressService stress)
+        public void Inject(
+            IAudioFactory audioFactory,
+            IMessageBus bus,
+            IStressService stress,
+            IInputService<ManualDriveInput> driveInput,
+            IInputService<TurretInput> turretInput)
         {
             for (int i = _musicPaths.Length - 1; i > 0; i--)
             {
@@ -34,6 +42,8 @@ namespace Tanks.Client.Visuals
             _audioFactory = audioFactory;
             _bus = bus;
             _stress = stress;
+            _driveInput = driveInput;
+            _turretInput = turretInput;
 
             _bus.RegisterHandler<Died>(this);
             _bus.RegisterHandler<GameStartedFromClient>(this);
@@ -41,14 +51,13 @@ namespace Tanks.Client.Visuals
 
         public async void Handle(GameStartedFromClient message, IMessageSender sender)
         {
-            _music = _audioFactory.CreateInstance(_musicPaths[_currentMusicIndex]);
-            _music.SetVolume(0.8f);
-
-            _currentMusicIndex = ++_currentMusicIndex % _musicPaths.Length;
             _stress.ResetStress();
 
+            // Play only at the beginning of the first round
+            if (_music != null) return;
+
             await UniTask.Delay(TimeSpan.FromSeconds(message.AdaptedStartDelaySeconds));
-            _music.Play();
+            PlayNext();
         }
 
         public async void Handle(Died message, IMessageSender sender)
@@ -66,8 +75,23 @@ namespace Tanks.Client.Visuals
                 return;
             }
 
+            _driveInput.Disable();
+            _turretInput.Disable();
+
             DisposeMusic();
+            PlayNext();
             return;
+        }
+
+        private void PlayNext()
+        {
+            _music = _audioFactory.CreateInstance(_musicPaths[_currentMusicIndex]);
+            _music.SetVolume(0.8f);
+
+            _currentMusicIndex = ++_currentMusicIndex % _musicPaths.Length;
+            _stress.ResetStress();
+
+            _music.Play();
         }
 
         private void DisposeMusic()

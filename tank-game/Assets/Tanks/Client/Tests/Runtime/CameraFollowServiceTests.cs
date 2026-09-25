@@ -56,7 +56,7 @@ namespace Tanks.Client.Tests.Runtime
             _target.IsValid.Returns(false);
 
             _service.SetBounds(new Bounds(Vector3.zero, new Vector3(20, 20, 0)));
-            _service.SetFollowTarget(_target);
+            _service.SetFollowTarget(_target, true);
 
             yield return null;
             _camera.BodyTransform.Received().WorldPosition = Arg.Any<float2>();
@@ -72,7 +72,7 @@ namespace Tanks.Client.Tests.Runtime
             _camera.OrthographicSize.Returns(5);
 
             _service.SetBounds(new Bounds(Vector3.zero, new Vector3(20, 20, 0)));
-            _service.SetFollowTarget(_target);
+            _service.SetFollowTarget(_target, false);
 
             yield return null;
 

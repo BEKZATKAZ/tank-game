@@ -39,4 +39,5 @@
             </ui:ScrollView>
         </ui:VisualElement>
     </ui:VisualElement>
+    <ui:VisualElement name="TransitionOverlay" class="transition-overlay"/>
 </ui:UXML>

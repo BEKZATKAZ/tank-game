@@ -7,7 +7,6 @@ using Tanks.Shared.Messaging;
 using Tanks.Shared.Teams;
 using Tanks.Shared.Weapons.Projectiles;
 using Unity.Mathematics;
-using UnityEngine;
 
 namespace Tanks.Server.Bootstrap
 {
@@ -59,7 +58,7 @@ namespace Tanks.Server.Bootstrap
             _currentTick = tick;
             if (_lastDiedTick == -1 || _isEndingGame) return;
 
-            float delaySeconds = 2.5f;
+            float delaySeconds = 1.5f;
             int delayTicks = (int)math.ceil(delaySeconds / tickDelta);
 
             if (tick - _lastDiedTick < delayTicks || _isEndingGame) return;

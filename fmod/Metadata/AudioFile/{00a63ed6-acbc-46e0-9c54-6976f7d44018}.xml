@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<objects serializationModel="Studio.02.03.00">
+	<object class="AudioFile" id="{00a63ed6-acbc-46e0-9c54-6976f7d44018}">
+		<property name="assetPath">
+			<value>UI/RoundTransition.wav</value>
+		</property>
+		<property name="frequencyInKHz">
+			<value>44.0999985</value>
+		</property>
+		<property name="channelCount">
+			<value>2</value>
+		</property>
+		<property name="length">
+			<value>0.8571428571428571</value>
+		</property>
+		<relationship name="masterAssetFolder">
+			<destination>{7d808c64-ed2c-4260-95b8-2316dffdcfce}</destination>
+		</relationship>
+	</object>
+</objects>

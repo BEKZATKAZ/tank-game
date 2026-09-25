@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using Cysharp.Threading.Tasks;
+using System.Collections.Generic;
 using System.Security.Cryptography;
 using Tanks.Shared;
 using Tanks.Shared.Bootstrap;
@@ -23,8 +24,9 @@ namespace Tanks.Server.Bootstrap
 
         private int _lastTick;
         private float _lastTickDelta;
+        private bool _isFirstTime = true;
 
-        public void Handle(PlayerReadyConfirmed message)
+        public async void Handle(PlayerReadyConfirmed message)
         {
             if (_pendingConfirmations.Remove(message.SecretHandle) == false)
             {
@@ -34,11 +36,16 @@ namespace Tanks.Server.Bootstrap
 
             if (_pendingConfirmations.Count > 0) return;
 
+            // Wait a bit to warm up the clients
+            if (_isFirstTime && Application.isPlaying) await UniTask.Delay(1000);
+
+            _isFirstTime = false;
+
             Behaviour.StartGameEveryoneRpc(new GameStartedFromServer
             {
                 ServerTick = _lastTick,
                 ServerTickDelta = _lastTickDelta,
-                StartDelaySeconds = 2
+                StartDelaySeconds = 1.5f
             });
         }
 

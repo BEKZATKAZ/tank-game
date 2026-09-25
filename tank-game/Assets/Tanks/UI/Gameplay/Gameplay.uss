@@ -180,3 +180,11 @@
 .game-stats__player-name {
     width: 500px;
 }
+
+.transition-overlay {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background-color: var(--text-color);
+    opacity: 0;
+}

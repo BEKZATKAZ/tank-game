@@ -25,7 +25,7 @@ namespace Tanks.Client.Player
 
         public void Spectate(Required<IEntityBehaviour> entity)
         {
-            _followService.SetFollowTarget(entity.Value.Transform);
+            _followService.SetFollowTarget(entity.Value.Transform, instant: false);
             _clientEntityService.PossessEntity(entity);
         }
     }

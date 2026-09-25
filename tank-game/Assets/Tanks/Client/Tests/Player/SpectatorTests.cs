@@ -28,7 +28,7 @@ namespace Tanks.Client.Tests.Player
             IEntityBehaviour entity = Substitute.For<IEntityBehaviour>();
             _service.Spectate(entity.AsRequired());
 
-            _followService.Received(1).SetFollowTarget(entity.Transform);
+            _followService.Received(1).SetFollowTarget(entity.Transform, instant: false);
             _clientEntityService.Received(1).PossessEntity(entity.AsRequired());
         }
     }

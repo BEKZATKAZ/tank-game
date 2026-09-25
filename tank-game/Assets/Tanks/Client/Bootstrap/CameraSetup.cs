@@ -51,7 +51,7 @@ namespace Tanks.Client.Bootstrap
 
             _audioPlayer.SetDefault(_camera.Get().BodyTransform);
             _follow.SetBounds(_mapBounds);
-            _follow.SetFollowTarget(new UnityTransform(player.transform));
+            _follow.SetFollowTarget(new UnityTransform(player.transform), instant: true);
 
             await UniTask.Delay(TimeSpan.FromSeconds(message.AdaptedStartDelaySeconds));
 

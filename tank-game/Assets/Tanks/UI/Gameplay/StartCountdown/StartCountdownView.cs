@@ -13,6 +13,7 @@ namespace Tanks.UI.Gameplay.StartCountdown
 
         private IAudioInstance _instance;
         private Label _label;
+        private VisualElement _transitionOverlay;
 
         protected override VisualElement GetRootElement() => _label;
 
@@ -20,6 +21,7 @@ namespace Tanks.UI.Gameplay.StartCountdown
         {
             _label = root.Q<Label>("StartText");
             _label.style.display = DisplayStyle.Flex;
+            _transitionOverlay = root.Q("TransitionOverlay");
         }
 
         protected override void Bind(StartCountdownViewModel viewModel)
@@ -31,6 +33,8 @@ namespace Tanks.UI.Gameplay.StartCountdown
                 _label.text = x;
                 if (string.IsNullOrEmpty(x) == false) _instance.Play();
             });
+
+            viewModel.TransitionOpacity.Bind(x => _transitionOverlay.style.opacity = x);
         }
 
         private void OnDestroy()

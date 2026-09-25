@@ -29,12 +29,23 @@ namespace Tanks.Client.Rendering
             _mapBounds = mapBounds;
         }
 
-        public void SetFollowTarget(ITransform target)
+        public void SetFollowTarget(ITransform target, bool instant)
         {
             _target = target;
+            _lookAhead = float2.zero;
+
             _previousTargetPosition = target.WorldPosition;
             _cameraNextPosition = _previousTargetPosition;
-            _lookAhead = float2.zero;
+
+            if (instant == false) return;
+
+            ICamera camera = _cameraMain.Get();
+            if (camera is null) return;
+
+            _previousTargetPosition = ClampToBounds(_cameraNextPosition, camera);
+            _cameraNextPosition = _previousTargetPosition;
+
+            camera.BodyTransform.WorldPosition = _previousTargetPosition;
         }
 
         private float2 ClampToBounds(float2 target, ICamera camera)

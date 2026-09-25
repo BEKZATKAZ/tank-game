@@ -57,7 +57,7 @@ namespace Tanks.Server.Tests.Bootstrap
             AddPlayers(2);
             Handle(1);
 
-            for (int tick = 1; tick <= 24; tick++) _component.Tick(tick, tickDelta: 0.1f);
+            for (int tick = 1; tick <= 14; tick++) _component.Tick(tick, tickDelta: 0.1f);
             _component.Behaviour.DidNotReceiveWithAnyArgs().PrepareGame();
 
             _component.Tick(100, 0.2f);
