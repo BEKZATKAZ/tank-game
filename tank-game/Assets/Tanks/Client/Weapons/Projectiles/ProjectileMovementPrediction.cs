@@ -1,68 +1,34 @@
-﻿using System;
+﻿using Tanks.Client.Entities.Health;
 using Tanks.Shared;
 using Tanks.Shared.Adapters;
-using Tanks.Shared.Stats;
 using Tanks.Shared.Entities.Health;
+using Tanks.Shared.Lag;
+using Tanks.Shared.Stats;
 using Tanks.Shared.Weapons.Projectiles;
 using Unity.Mathematics;
-using Tanks.Client.Entities.Health;
 
-namespace Tanks.Client.Weapons
+namespace Tanks.Client.Weapons.Projectiles
 {
-    public struct ProjectileSnapshot
-    {
-        public float2 Position;
-        public Angle Rotation;
-    }
-
-    public class ProjectileTransform : ITransform
-    {
-        public ProjectileTransform(float2 worldScale) => WorldScale = worldScale;
-
-        public bool IsValid => true;
-        public float2 WorldPosition { get; set; }
-        public Angle WorldRotation { get; set; }
-        public float2 WorldScale { get; }
-
-        // These are not used in projectile movement
-        public float2 LocalPosition
-        {
-            get => throw new NotImplementedException();
-            set => throw new NotImplementedException();
-        }
-
-        public Angle LocalRotation
-        {
-            get => throw new NotImplementedException();
-            set => throw new NotImplementedException();
-        }
-
-        public float2 LocalScale
-        {
-            get => throw new NotImplementedException();
-            set => throw new NotImplementedException();
-        }
-
-        public void SetParent(ITransform parent, bool keepWorldPosition = true) { }
-    }
-
     public sealed class ProjectileMovementPrediction :
         NetworkComponent<IProjectileBehaviour>,
         INetworkMessageHandler<ProjectileSnapshotFromServer>,
         INetworkMessageHandler<ProjectileLaunched>
     {
-        public ProjectileMovementPrediction(IProjectilePoolService pool)
+        public ProjectileMovementPrediction(
+            IProjectilePoolService pool,
+            ILagCompensationGateway lagCompensation)
         {
             _pool = pool;
+            _lagCompensation = lagCompensation;
         }
+        public ITransform SimulatedTransform { get; private set; }
 
         private readonly IProjectilePoolService _pool;
+        private readonly ILagCompensationGateway _lagCompensation;
 
         private ProjectileReconciliation _reconciliation;
-        private ITransform _predicted;
-        private float2 _positionError;
-        private float _elapsed;
         private int _ricochetedCount;
+        private bool _justRicocheted;
 
         private int _currentTick;
         private float _currentTickDelta;
@@ -70,31 +36,30 @@ namespace Tanks.Client.Weapons
 
         public void Handle(ProjectileLaunched message)
         {
-            _predicted.WorldPosition = Transform.WorldPosition;
-            _predicted.WorldRotation = Transform.WorldRotation;
+            SimulatedTransform.WorldPosition = Transform.WorldPosition;
+            SimulatedTransform.WorldRotation = Transform.WorldRotation;
+            Behaviour.ElapsedSeconds = 0;
 
-            _reconciliation.Reset(_currentTick, _predicted);
-            _positionError = float2.zero;
-            _elapsed = 0;
+            _reconciliation.Reset(_currentTick, SimulatedTransform);
             _ricochetedCount = 0;
             _canDamage = true;
         }
 
         public void Handle(ProjectileSnapshotFromServer message)
         {
-            LaunchCallbacks callbacks = new LaunchCallbacks
-            {
-                OnRicochet = OnRicochetPartial
-            };
+            LaunchCallbacks callbacks = new LaunchCallbacks { OnRicochet = OnRicochetPartial };
 
-            _elapsed = message.ServerElapsed;
+            Behaviour.ElapsedSeconds = message.ServerElapsed;
             _ricochetedCount = message.ServerRicochetedCount;
 
-            if (_reconciliation.TryReconcile(
-                _predicted, message, callbacks, _currentTickDelta,
-                out float2 newPositionError) == false) return;
+            _reconciliation.TryReconcile(
+                SimulatedTransform, message, callbacks, _currentTickDelta,
+                out float2 positionError);
 
-            _positionError = newPositionError;
+            if (math.length(positionError) < 3) return;
+
+            // Snap if too distant
+            Transform.WorldPosition = SimulatedTransform.WorldPosition;
         }
 
         protected override void OnDestroy()
@@ -104,7 +69,7 @@ namespace Tanks.Client.Weapons
 
         protected override void OnInitialize()
         {
-            _predicted = new ProjectileTransform(Transform.WorldScale);
+            SimulatedTransform = new ProjectileTransform(Transform.WorldScale);
             _reconciliation = new ProjectileReconciliation(Behaviour);
 
             Behaviour.RegisterMessageHandler<ProjectileLaunched>(this);
@@ -114,15 +79,13 @@ namespace Tanks.Client.Weapons
         protected override void OnTick(int tick, float tickDelta)
         {
             (_currentTick, _currentTickDelta) = (tick, tickDelta);
-            _reconciliation.Tick(tick, _predicted);
-            _elapsed += tickDelta;
-        }
+            _reconciliation.Tick(tick, SimulatedTransform);
 
-        protected override void OnUpdate(float deltaTime)
-        {
-            if (_elapsed >= Behaviour.Config.LifeTime)
+            Behaviour.ElapsedSeconds += tickDelta;
+
+            if (Behaviour.ElapsedSeconds >= Behaviour.Config.LifeTime)
             {
-                _pool.Return(Behaviour);
+                _pool.Return(Behaviour.Id);
                 return;
             }
 
@@ -130,30 +93,38 @@ namespace Tanks.Client.Weapons
             {
                 OnRicochet = OnRicochetFull,
                 OnDamageableHit = DamagePrediction
-            }, _predicted, deltaTime);
+            }, SimulatedTransform, tickDelta);
+        }
 
-            // Interpolate to the real position
-            _positionError *= math.exp(-15 * deltaTime);
+        protected override void OnUpdate(float deltaTime)
+        {
+            float lerpSpeed = _justRicocheted ? 80 : 20;
+            float t = 1 - math.exp(-lerpSpeed * deltaTime);
 
-            Transform.WorldPosition = _predicted.WorldPosition + _positionError;
-            Transform.WorldRotation = _predicted.WorldRotation;
+            Transform.WorldPosition = math.lerp(
+                Transform.WorldPosition, SimulatedTransform.WorldPosition, t);
+
+            Transform.WorldRotation = SimulatedTransform.WorldRotation;
+
+            _justRicocheted = false;
         }
 
         private void OnRicochetFull(float2 hitPoint, float2 surfaceNormal)
         {
             if (++_ricochetedCount > Behaviour.Config.MaxRicochetCount)
             {
-                _pool.Return(Behaviour);
+                _pool.Return(Behaviour.Id);
                 return;
             }
 
             Behaviour.OnRicochet(hitPoint, surfaceNormal);
+            _justRicocheted = true;
         }
 
         private void OnRicochetPartial(float2 hitPoint, float2 surfaceNormal)
         {
             if (++_ricochetedCount <= Behaviour.Config.MaxRicochetCount) return;
-            _pool.Return(Behaviour);
+            _pool.Return(Behaviour.Id);
         }
 
         private void DamagePrediction(IHealthBehaviour health)
@@ -161,14 +132,28 @@ namespace Tanks.Client.Weapons
             if (_canDamage == false) return;
             _canDamage = false;
 
-            var statOwner = Behaviour.Owner.GetBehaviour<IStatOwnerBehaviour>();
-            var predictedHealth = health.Require<IPredictedHealth>();
+            IStatOwnerBehaviour statOwner = Behaviour.Owner.GetBehaviour<IStatOwnerBehaviour>();
+            IPredictedHealth predictedHealth = health.Require<IPredictedHealth>();
 
-            float amount = statOwner.GetStat(StatType.Damage, Behaviour.Damage.Evaluate(_elapsed));
-            HealthEventId eventId = HealthEventId.Create(Behaviour, Behaviour.Id);
+            float amount = Behaviour.Damage.Evaluate(Behaviour.ElapsedSeconds);
+            amount = statOwner.GetStat(StatType.Damage, amount);
+
+            HealthEventId eventId = HealthEventId
+                .Create(typeof(IProjectileBehaviour), Behaviour.Id);
 
             predictedHealth.Damage(amount, Behaviour.Owner.Entity, eventId);
-            _pool.RequestReturnAsClient(Behaviour);
+
+            if (Behaviour.Owner.IsLocalPlayer)
+            {
+                _lagCompensation.RequestHitServerRpc(new HitRequest
+                {
+                    TargetId = health.Entity.Id,
+                    ProjectileId = Behaviour.Id,
+                    ClientTick = _currentTick
+                });
+            };
+
+            _pool.Return(Behaviour.Id, removeHandle: true);
         }
     }
 }

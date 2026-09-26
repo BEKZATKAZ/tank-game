@@ -48,13 +48,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d5a57f767e5e46a458fc5d3c628d0cbb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Unity.Netcode.Runtime::Unity.Netcode.NetworkObject
-  GlobalObjectIdHash: 415252721
+  GlobalObjectIdHash: 1896723026
   InScenePlacedSourceGlobalObjectIdHash: 0
+  m_InScenePlacedDisabledByDefault: 0
   DeferredDespawnTick: 0
   Ownership: 1
   AlwaysReplicateAsRoot: 0
   SynchronizeTransform: 0
-  <InScenePlaced>k__BackingField: 0
+  m_InScenePlaced: 0
   ActiveSceneSynchronization: 0
   SceneMigrationSynchronization: 1
   SpawnWithObservers: 1
@@ -75,6 +76,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Tanks.Shared::Tanks.Shared.Weapons.Projectiles.ProjectileComponent
   ShowTopMostFoldoutHeaderGroup: 1
+  _radius: 0.4
 --- !u!212 &6219840235481289347
 SpriteRenderer:
   serializedVersion: 2

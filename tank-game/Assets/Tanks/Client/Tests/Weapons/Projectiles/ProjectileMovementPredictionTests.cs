@@ -1,10 +1,11 @@
 ﻿using NSubstitute;
 using NUnit.Framework;
 using Tanks.Client.Entities.Health;
-using Tanks.Client.Weapons;
+using Tanks.Client.Weapons.Projectiles;
 using Tanks.Shared.Adapters;
 using Tanks.Shared.Entities;
 using Tanks.Shared.Entities.Health;
+using Tanks.Shared.Lag;
 using Tanks.Shared.Stats;
 using Tanks.Shared.Weapons.Data;
 using Tanks.Shared.Weapons.Projectiles;
@@ -40,7 +41,9 @@ namespace Tanks.Client.Tests.Weapons.Projectiles
             _behaviour.Owner.GetBehaviour<IStatOwnerBehaviour>().Returns(_statOwner);
             _healthBehaviour.Require<IPredictedHealth>().Returns(_predictedHealth);
 
-            _component = new ProjectileMovementPrediction(_pool);
+            _component = new ProjectileMovementPrediction(
+                _pool, Substitute.For<ILagCompensationGateway>());
+
             _component.Initialize(_behaviour);
             _component.Transform.WorldScale.Returns(new float2(1, 1));
         }
@@ -52,32 +55,32 @@ namespace Tanks.Client.Tests.Weapons.Projectiles
         }
 
         [Test]
-        public void Update_SimulatesProjectile()
+        public void Tick_SimulatesProjectile()
         {
             _config.LifeTime.Returns(10);
-            _component.Update(0.1f);
+            _component.Tick(1, 0.1f);
 
             _behaviour.Received().Simulate(
                 Arg.Any<LaunchCallbacks>(),
-                Arg.Any<ITransform>(),
-                Arg.Any<float>());
+                _component.SimulatedTransform,
+                0.1f);
         }
 
         [Test]
-        public void Update_WhenLifetimeExpired_ReturnsProjectile()
+        public void Tick_WhenLifetimeExpired_ReturnsProjectile()
         {
             _config.LifeTime.Returns(0);
-            _component.Update(0.1f);
-            _pool.Received(1).Return(_behaviour);
+            _component.Tick(10, 0.1f);
+            _pool.Received(1).Return(_behaviour.Id);
 
-            _behaviour.DidNotReceive().Simulate(
+            _behaviour.DidNotReceiveWithAnyArgs().Simulate(
                 Arg.Any<LaunchCallbacks>(),
                 Arg.Any<ITransform>(),
                 Arg.Any<float>());
         }
 
         [Test]
-        public void Update_CopiesPredictedTransformToRealTransform()
+        public void Update_CopiesSimulatedTransformToRealTransform()
         {
             _config.LifeTime.Returns(10);
 
@@ -88,15 +91,19 @@ namespace Tanks.Client.Tests.Weapons.Projectiles
                     Arg.Any<float>()))
                 .Do(x =>
                 {
-                    ITransform predicted = x.Arg<ITransform>();
-
-                    predicted.WorldPosition = new float2(4, 3);
-                    predicted.WorldRotation = Angle.FromRadians(1);
+                    ITransform simulated = x.Arg<ITransform>();
+                    simulated.WorldPosition = new float2(4, 3);
+                    simulated.WorldRotation = Angle.FromRadians(1);
                 });
 
+            _component.Tick(1, 0.1f);
             _component.Update(0.1f);
-            _component.Transform.Received().WorldPosition = new float2(4, 3);
-            _component.Transform.Received().WorldRotation = Angle.FromRadians(1);
+
+            Assert.AreEqual(new float2(4, 3), _component.SimulatedTransform.WorldPosition);
+            Assert.AreEqual(Angle.FromRadians(1), _component.SimulatedTransform.WorldRotation);
+
+            _component.Transform.Received().WorldPosition = Arg.Any<float2>();
+            _component.Transform.Received().WorldRotation = Arg.Any<Angle>();
         }
 
         [Test]
@@ -107,54 +114,58 @@ namespace Tanks.Client.Tests.Weapons.Projectiles
 
             _component.Handle(new ProjectileLaunched());
 
-            _behaviour.DidNotReceive().Simulate(
+            _behaviour.DidNotReceiveWithAnyArgs().Simulate(
                 Arg.Any<LaunchCallbacks>(),
                 Arg.Any<ITransform>(),
                 Arg.Any<float>());
         }
 
         [Test]
-        public void Update_WhenRicochetLimitExceeded_ReturnsProjectile()
+        public void Tick_WhenRicochetLimitExceeded_ReturnsProjectile()
         {
             _config.LifeTime.Returns(10);
             _config.MaxRicochetCount.Returns((ushort)1);
 
             SimulateWithRicochets(2);
-            _component.Update(0.1f);
+            _component.Tick(10, 0.1f);
 
-            _pool.Received(1).Return(_behaviour);
+            _pool.Received(1).Return(_behaviour.Id);
         }
 
         [Test]
-        public void Update_WhenRicochetWithinLimit_ForwardsRicochet()
+        public void Tick_WhenRicochetWithinLimit_ForwardsRicochet()
         {
             _config.LifeTime.Returns(10);
             _config.MaxRicochetCount.Returns((ushort)2);
 
             SimulateWithRicochets(1);
-            _component.Update(0.1f);
+            _component.Tick(10, 0.1f);
 
             _behaviour.Received(1).OnRicochet(Arg.Any<float2>(), Arg.Any<float2>());
-            _pool.DidNotReceive().Return(_behaviour);
+            _pool.DidNotReceive().Return(_behaviour.Id);
         }
 
-        [Test]
-        public void Update_WhenDamageableHit_DealsModifiedDamage()
+        [TestCase(0.1f)]
+        [TestCase(0.5f)]
+        [TestCase(2)]
+        public void Tick_WhenDamageableHit_DealsModifiedDamage(float tickDelta)
         {
             IEntityBehaviour from = Substitute.For<IEntityBehaviour>();
 
             _behaviour.Owner.Entity.Returns(from);
             _config.LifeTime.Returns(10);
 
-            _damage.Evaluate(0).Returns(25);
+            // 'Evaluate' takes 'elapsed', 'tickDelta' is elapsed
+            _damage.Evaluate(tickDelta).Returns(25);
             _statOwner.GetStat(StatType.Damage, 25).Returns(40);
+
             _component.Handle(new ProjectileLaunched { Damage = _damage });
 
-            SimulateWithDamageableHit();
-            _component.Update(0.1f);
+            SimulateWithDamageableHit(tickDelta);
+            _component.Tick(1, tickDelta);
 
             _predictedHealth.Received(1).Damage(40, from, Arg.Any<HealthEventId>());
-            _pool.Received(1).RequestReturnAsClient(_behaviour);
+            _pool.Received(1).Return(_behaviour.Id);
         }
 
         private void SimulateWithRicochets(int count)
@@ -175,13 +186,13 @@ namespace Tanks.Client.Tests.Weapons.Projectiles
                 });
         }
 
-        private void SimulateWithDamageableHit()
+        private void SimulateWithDamageableHit(float expectedDeltaTime)
         {
             _behaviour
                 .When(x => x.Simulate(
                     Arg.Any<LaunchCallbacks>(),
-                    Arg.Any<ITransform>(),
-                    Arg.Any<float>()))
+                    _component.SimulatedTransform,
+                    expectedDeltaTime))
                 .Do(x =>
                 {
                     LaunchCallbacks callbacks = x.Arg<LaunchCallbacks>();

@@ -7,13 +7,20 @@ namespace Tanks.Shared.Weapons.Projectiles
 {
     public class ProjectileMover 
     {
+        public ProjectileMover(float radius)
+        {
+            _radius = radius;
+        }
+
+        private readonly float _radius;
+
         public void Simulate(
             LaunchCallbacks callbacks, ITransform transform, float distance)
         {
             int mask = (1 << 0) | (1 << 3); // Only walls & entities
 
             float2 position = transform.WorldPosition;
-            float radius = math.cmax(transform.WorldScale) * 0.5f;
+            float radius = math.cmax(transform.WorldScale) * _radius;
 
             RaycastHit2D hit = Physics2D.Raycast(position, transform.Right, radius + distance, mask);
 

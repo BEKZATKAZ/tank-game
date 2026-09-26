@@ -1,4 +1,5 @@
 ﻿using NaughtyAttributes;
+using Tanks.Server.Lag;
 using Tanks.Shared.Bootstrap;
 using Unity.Multiplayer;
 using UnityEngine;
@@ -21,6 +22,7 @@ namespace Tanks.Server.Bootstrap
 #endif
 
             base.Configure(builder);
+            builder.RegisterComponent(_lifetime).As<IServerLifetimeService>();
 
             builder.Register<
                 IClientConnectionValidator, 
@@ -30,7 +32,8 @@ namespace Tanks.Server.Bootstrap
                 IConnectedClientService,
                 ConnectedClientService>(Lifetime.Singleton);
 
-            builder.RegisterComponent(_lifetime).As<IServerLifetimeService>();
+            builder.Register<IHitSimulator, HitSimulator>(Lifetime.Singleton);
+            builder.Register<ILagCompensationService, LagCompensationService>(Lifetime.Singleton);
         }
     }
 }

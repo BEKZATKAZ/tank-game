@@ -1,7 +1,7 @@
 ﻿using NSubstitute;
 using NUnit.Framework;
 using Tanks.Audio;
-using Tanks.Client.Weapons;
+using Tanks.Client.Weapons.Projectiles;
 using Tanks.Shared.Weapons.Projectiles;
 using Unity.Mathematics;
 

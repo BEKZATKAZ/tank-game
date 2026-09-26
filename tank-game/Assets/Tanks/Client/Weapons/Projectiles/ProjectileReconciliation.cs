@@ -4,8 +4,14 @@ using Tanks.Shared.Weapons.Projectiles;
 using Tanks.Utils;
 using Unity.Mathematics;
 
-namespace Tanks.Client.Weapons
+namespace Tanks.Client.Weapons.Projectiles
 {
+    public struct ProjectileSnapshot
+    {
+        public float2 Position;
+        public Angle Rotation;
+    }
+
     public sealed class ProjectileReconciliation : IDisposable
     {
         public ProjectileReconciliation(
@@ -71,9 +77,6 @@ namespace Tanks.Client.Weapons
 
             float2 predictedPosition = predictedTransform.WorldPosition;
             positionError = _projectile.Transform.WorldPosition - predictedPosition;
-
-            // Snap instantly if too far
-            if (math.length(positionError) > 3) positionError = float2.zero;
 
             return true;
         }

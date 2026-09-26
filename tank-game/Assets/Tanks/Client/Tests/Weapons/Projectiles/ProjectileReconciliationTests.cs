@@ -1,6 +1,6 @@
 using NSubstitute;
 using NUnit.Framework;
-using Tanks.Client.Weapons;
+using Tanks.Client.Weapons.Projectiles;
 using Tanks.Shared.Adapters;
 using Tanks.Shared.Weapons.Projectiles;
 using Unity.Mathematics;
@@ -72,27 +72,6 @@ namespace Tanks.Client.Tests.Weapons.Projectiles
 
             Assert.AreEqual(expectedErrorX, math.abs(error.x), delta: 0.05f,
                 "Reconciliation occured, but no error is out");
-        }
-
-        [TestCase(5)]
-        [TestCase(1000)]
-        [TestCase(-5)]
-        [TestCase(-1000)]
-        public void Reconcile_TooDistant_ReturnsTrueAndSnaps(float difference)
-        {
-            _reconciliation.Tick(100, _predictedTransform);
-
-            ProjectileSnapshotFromServer snapshot = new ProjectileSnapshotFromServer
-            {
-                ServerPosition = new float2(difference, 0),
-                ServerRotation = default,
-                ServerTick = 95
-            };
-
-            Assert.True(_reconciliation.TryReconcile(
-                _predictedTransform, snapshot, default, 0.05f, out float2 error), "Too strict");
-
-            Assert.AreEqual(float2.zero, error, "Should snap when the distance is too much");
         }
     }
 }

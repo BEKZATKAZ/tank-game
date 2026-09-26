@@ -47,7 +47,7 @@ namespace Tanks.Shared.Weapons.Projectiles
         void RejectReturnClientRpc(ProjectileReturnRequestRejected message);
         void RequestReturnAsClient(IProjectileBehaviour instance);
 
-        void Return(IProjectileBehaviour instance, bool removeHandle = true);
+        void Return(ProjectileId id, bool removeHandle = true);
         void ReturnAll();
     }
 }

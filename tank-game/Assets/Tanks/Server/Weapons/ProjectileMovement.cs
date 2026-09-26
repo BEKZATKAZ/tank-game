@@ -19,59 +19,61 @@ namespace Tanks.Server.Weapons
 
         private IDamage _damage;
         private int _ricochetedCount;
-        private float _elapsed;
 
         public void Handle(ProjectileLaunched message)
         {
             _damage = message.Damage;
             _ricochetedCount = 0;
-            _elapsed = 0;
+            Behaviour.ElapsedSeconds = 0;
         }
 
         protected override void OnTick(int tick, float tickDelta)
         {
             if (Transform.IsValid == false) return;
 
-            if (_elapsed >= Behaviour.Config.LifeTime)
+            if (Behaviour.ElapsedSeconds >= Behaviour.Config.LifeTime)
             {
-                _pool.Return(Behaviour);
+                _pool.Return(Behaviour.Id);
                 return;
             }
 
             Behaviour.Simulate(new LaunchCallbacks
             {
                 OnRicochet = (_, _) => _ricochetedCount++,
-                OnDamageableHit = x => DealDamage(Behaviour, x)
+                OnDamageableHit = DealDamage
             }, Transform, tickDelta);
 
             if (_ricochetedCount > Behaviour.Config.MaxRicochetCount)
             {
-                _pool.Return(Behaviour);
+                _pool.Return(Behaviour.Id);
                 return;
             }
 
-            _elapsed += tickDelta;
+            Behaviour.ElapsedSeconds += tickDelta;
 
             _pool.RequestReconciliation(Behaviour, new ProjectileSnapshotFromServer
             {
                 ServerPosition = Transform.WorldPosition,
                 ServerRotation = Transform.WorldRotation,
                 ServerTick = tick,
-                ServerElapsed = _elapsed,
+                ServerElapsed = Behaviour.ElapsedSeconds,
                 ServerRicochetedCount = _ricochetedCount
             });
         }
 
-        private void DealDamage(IProjectileBehaviour projectile, IHealthBehaviour health)
+        private void DealDamage(IHealthBehaviour health)
         {
             var statOwner = Behaviour.Owner.GetBehaviour<IStatOwnerBehaviour>();
             var authoritativeHealth = health.Require<IAuthoritativeHealth>();
 
-            float amount = statOwner.GetStat(StatType.Damage, _damage.Evaluate(_elapsed));
-            HealthEventId eventId = HealthEventId.Create(Behaviour, Behaviour.Id);
+            float amount = _damage.Evaluate(Behaviour.ElapsedSeconds);
+            amount = statOwner.GetStat(StatType.Damage, amount);
 
+            var eventId = HealthEventId.Create(typeof(IProjectileBehaviour), Behaviour.Id);
             authoritativeHealth.Damage(amount, Behaviour.Owner.Entity, eventId);
-            _pool.Return(projectile);
+
+            _pool.ReturnProjectileClientRpc(Behaviour.Id);
+            _pool.Return(Behaviour.Id);
         }
 
         protected override void OnInitialize()

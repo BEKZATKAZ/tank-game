@@ -3,7 +3,7 @@ using Unity.Collections;
 
 namespace Tanks.Utils
 {
-    public readonly struct RingBuffer<T> : IDisposable where T : unmanaged
+    public sealed class RingBuffer<T> : IDisposable where T : unmanaged
     {
         public RingBuffer(int size)
         {
@@ -12,12 +12,12 @@ namespace Tanks.Utils
 
         private readonly NativeArray<T> _buffer;
 
-        public readonly ref T this[int index]
+        public ref T this[int index]
         {
             get => ref _buffer.AsSpan()[index % _buffer.Length];
         }
 
-        public readonly void Dispose()
+        public void Dispose()
         {
             if (_buffer.IsCreated == false) return;
             _buffer.Dispose();

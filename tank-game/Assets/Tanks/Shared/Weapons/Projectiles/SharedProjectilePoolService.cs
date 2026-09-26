@@ -83,8 +83,7 @@ namespace Tanks.Shared.Weapons.Projectiles
         [Rpc(SendTo.NotServer, InvokePermission = RpcInvokePermission.Server)]
         public void ReturnProjectileClientRpc(ProjectileId id)
         {
-            if (_logic.TryGetById(id, out IProjectileBehaviour projectile) == false) return;
-            Return(projectile);
+            Return(id);
         }
 
         public void RequestReturnAsClient(IProjectileBehaviour instance)
@@ -100,8 +99,10 @@ namespace Tanks.Shared.Weapons.Projectiles
             EmitMessage(message);
         }
 
-        public void Return(IProjectileBehaviour instance, bool removeHandle = true)
+        public void Return(ProjectileId id, bool removeHandle = true)
         {
+            if (_logic.TryGetById(id, out IProjectileBehaviour instance) == false) return;
+
             if (_logic.TryGetPool(instance.Config, out var pool) == false)
             {
                 Debug.LogWarning("Projectile pool not found for config: " + instance.Config);
@@ -111,7 +112,7 @@ namespace Tanks.Shared.Weapons.Projectiles
             pool.Release(instance as ProjectileBehaviour);
             if (removeHandle == false) return;
 
-            ProjectileId id = _logic.RemoveByInstance(instance);
+            _logic.RemoveByInstance(instance);
             EmitMessage(new ProjectileReturned { Id = id });
         }
 
@@ -121,7 +122,7 @@ namespace Tanks.Shared.Weapons.Projectiles
 
             foreach (IProjectileBehaviour projectile in projectiles)
             {
-                Return(projectile, false);
+                Return(projectile.Id, false);
             }
 
             _logic.Clear();

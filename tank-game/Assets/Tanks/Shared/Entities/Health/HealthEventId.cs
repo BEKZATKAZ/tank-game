@@ -11,9 +11,9 @@ namespace Tanks.Shared.Entities.Health
 
         public bool Equals(HealthEventId other) => other.Value == Value;
 
-        public static HealthEventId Create<TCaller, TValue>(TCaller caller, TValue value)
+        public static HealthEventId Create<TValue>(Type callerType, TValue value)
         {
-            string name = caller.GetType().Name;
+            string name = callerType.Name;
 
             unchecked
             {

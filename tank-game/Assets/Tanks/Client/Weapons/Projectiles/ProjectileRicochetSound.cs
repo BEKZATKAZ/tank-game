@@ -3,7 +3,7 @@ using Tanks.Shared;
 using Tanks.Shared.Weapons.Projectiles;
 using Unity.Mathematics;
 
-namespace Tanks.Client.Weapons
+namespace Tanks.Client.Weapons.Projectiles
 {
     public sealed class ProjectileRicochetSound :
         NetworkComponent<IProjectileBehaviour>,

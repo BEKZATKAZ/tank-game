@@ -53,7 +53,7 @@ namespace Tanks.Server.Tests.Weapons
                 Arg.Any<ITransform>(),
                 Arg.Any<float>());
 
-            _pool.DidNotReceive().Return(_behaviour);
+            _pool.DidNotReceive().Return(_behaviour.Id);
             _pool.DidNotReceive().RequestReconciliation(
                 Arg.Any<IProjectileBehaviour>(),
                 Arg.Any<ProjectileSnapshotFromServer>());
@@ -69,14 +69,14 @@ namespace Tanks.Server.Tests.Weapons
             Tick(deltaTime: 1);
 
             _behaviour.Received(1).Simulate(Arg.Any<LaunchCallbacks>(), _transform, 1);
-            _pool.DidNotReceive().Return(_behaviour);
+            _pool.DidNotReceive().Return(_behaviour.Id);
 
             Tick();
 
             _behaviour.Received(1).Simulate(
                 Arg.Any<LaunchCallbacks>(), Arg.Any<ITransform>(), Arg.Any<float>());
 
-            _pool.Received(1).Return(_behaviour);
+            _pool.Received(1).Return(_behaviour.Id);
         }
 
         [Test]
@@ -119,7 +119,7 @@ namespace Tanks.Server.Tests.Weapons
             Launch();
             Tick();
 
-            _pool.Received(1).Return(_behaviour);
+            _pool.Received(1).Return(_behaviour.Id);
             _pool.DidNotReceive().RequestReconciliation(
                 Arg.Any<IProjectileBehaviour>(),
                 Arg.Any<ProjectileSnapshotFromServer>());
@@ -136,7 +136,7 @@ namespace Tanks.Server.Tests.Weapons
             Launch();
             Tick();
 
-            _pool.DidNotReceive().Return(_behaviour);
+            _pool.DidNotReceive().Return(_behaviour.Id);
             _pool.Received(1).RequestReconciliation(
                 _behaviour, Arg.Any<ProjectileSnapshotFromServer>());
         }
@@ -157,7 +157,7 @@ namespace Tanks.Server.Tests.Weapons
             Tick();
 
             _health.Received(1).Damage(40, _behaviour.Owner.Entity, Arg.Any<HealthEventId>());
-            _pool.Received(1).Return(_behaviour);
+            _pool.Received(1).Return(_behaviour.Id);
         }
 
         private void Launch()

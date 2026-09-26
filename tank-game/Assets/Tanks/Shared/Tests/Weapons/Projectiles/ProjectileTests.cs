@@ -9,7 +9,7 @@ namespace Tanks.Shared.Tests.Weapons.Projectiles
 {
     public class ProjectileTests
     {
-        private readonly ProjectileMover _mover = new ProjectileMover();
+        private readonly ProjectileMover _mover = new ProjectileMover(0.5f);
         private readonly float2 _initialProjectilePosition = new float2(-10, 51.5f);
 
         private ITransform _projectileTransform;

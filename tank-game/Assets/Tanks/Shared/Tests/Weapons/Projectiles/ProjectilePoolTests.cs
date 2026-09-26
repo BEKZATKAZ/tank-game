@@ -49,8 +49,12 @@ namespace Tanks.Shared.Tests.Weapons.Projectiles
 
             Assert.AreNotEqual(i1, i2, "Projectile instances should not be duplicated");
 
-            _pool.Return(i1);
-            _pool.Return(i2);
+
+            i1.Launch(null, new ProjectileId(new(1), 1));
+            i2.Launch(null, new ProjectileId(new(2), 1));
+
+            _pool.Return(i1.Id);
+            _pool.Return(i2.Id);
 
             Assert.True(_pool.TryRent(config, new ProjectileId(new(1), 1), out _),
                 "Failed to rent after returning");
@@ -69,10 +73,11 @@ namespace Tanks.Shared.Tests.Weapons.Projectiles
             Assert.True(_pool.TryRent(config, id1, out var i1), "Failed to rent (1,1)");
             Assert.True(_pool.TryRent(config, id2, out _), "Failed to rent (1,2)");
             Assert.True(_pool.TryRent(config, id3, out _), "Failed to rent (1,3)");
+
+            i1.Launch(null, id1);
             Assert.False(_pool.TryRent(config, id1, out _), "Should return false on duplicates");
 
-            _pool.Return(i1);
-
+            _pool.Return(i1.Id);
             Assert.True(_pool.TryRent(config, id1, out _), "Should no longer be a duplicate");
         }
     }

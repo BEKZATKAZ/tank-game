@@ -6,6 +6,7 @@ using Tanks.Shared.Messaging;
 using Tanks.Shared.Weapons.Data;
 using Unity.Mathematics;
 using Unity.Netcode;
+using UnityEngine;
 
 namespace Tanks.Shared.Weapons.Projectiles
 {
@@ -44,7 +45,10 @@ namespace Tanks.Shared.Weapons.Projectiles
         IDamage Damage { get; }
         IWeaponHolderBehaviour Owner { get; }
         IProjectileConfig Config { get; }
+
         ProjectileId Id { get; }
+        float Radius { get; }
+        float ElapsedSeconds { get; set; }
 
         void Launch(IWeaponHolderBehaviour owner, in ProjectileId id);
         void Initialize(Required<IProjectileConfig> config, Required<IDamage> damage);
@@ -57,12 +61,17 @@ namespace Tanks.Shared.Weapons.Projectiles
     public class ProjectileBehaviour :
         NetworkBehaviourExtended, IProjectileBehaviour, IMessageSender
     {
+        [SerializeField] private float _radius = 0.5f;
+
         public IProjectileConfig Config { get; private set; }
         public IDamage Damage { get; private set; }
         public IWeaponHolderBehaviour Owner { get; private set; }
-        public ProjectileId Id { get; private set; }
 
-        private readonly ProjectileMover _mover = new ProjectileMover();
+        public ProjectileId Id { get; private set; }
+        public float ElapsedSeconds { get; set; }
+        public float Radius => _radius;
+
+        private ProjectileMover _mover;
 
         public void Reconcile(ProjectileSnapshotFromServer snapshot)
         {
@@ -99,7 +108,13 @@ namespace Tanks.Shared.Weapons.Projectiles
         protected override void Awake()
         {
             base.Awake();
+            _mover = new ProjectileMover(_radius);
             ForceInitialize();
+        }
+
+        private void OnDrawGizmosSelected()
+        {
+            Gizmos.DrawWireSphere(transform.position, Radius);
         }
     }
 }

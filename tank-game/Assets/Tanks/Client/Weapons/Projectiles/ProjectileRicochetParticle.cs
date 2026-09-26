@@ -4,7 +4,7 @@ using Tanks.Shared.Weapons.Projectiles;
 using Unity.Mathematics;
 using UnityEngine;
 
-namespace Tanks.Client.Weapons
+namespace Tanks.Client.Weapons.Projectiles
 {
     public sealed class ProjectileRicochetParticle :
         NetworkComponent<ProjectileBehaviour>,

@@ -104,7 +104,9 @@ namespace Tanks.Server
                     .GetBehaviour<IHealthBehaviour>()
                     .Require<IAuthoritativeHealth>();
 
-                HealthEventId eventId = HealthEventId.Create(Behaviour, tick);
+                HealthEventId eventId = HealthEventId
+                    .Create(typeof(IDangerZoneBehaviour), tick);
+
                 health.Damage(settings.DamagePerSecond, null, eventId);
             }
         }

@@ -10,6 +10,7 @@ using Tanks.Shared.Items;
 using Tanks.Shared.Entities;
 using NaughtyAttributes;
 using Tanks.Shared.Teams;
+using Tanks.Shared.Lag;
 
 namespace Tanks.Shared.Bootstrap
 {
@@ -27,11 +28,16 @@ namespace Tanks.Shared.Bootstrap
         [SerializeField]
         private TeamBehaviourService _teamService;
 
+        [Required]
+        [SerializeField]
+        private LagCompensationGateway _lagCompensation;
+
         protected override void Configure(IContainerBuilder builder)
         {
             builder.RegisterComponent(_projectilePool).As<IProjectilePoolService>();
             builder.RegisterComponent(_itemDatabase).As<IItemDatabase>();
             builder.RegisterComponent(_teamService).As<ITeamBehaviourService>();
+            builder.RegisterComponent(_lagCompensation).As<ILagCompensationGateway>();
 
             builder.Register<IMazeGenerator, DFSGenerator>(Lifetime.Singleton);
             builder.Register<ITilemapGenerator, TilemapGenerator>(Lifetime.Singleton);
