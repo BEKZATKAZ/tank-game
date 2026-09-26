@@ -457,6 +457,7 @@ Transform:
   - {fileID: 644923461}
   - {fileID: 1261939163}
   - {fileID: 1542355674}
+  - {fileID: 1183973060}
   - {fileID: 22108526}
   - {fileID: 1821635252}
   m_Father: {fileID: 0}
@@ -1294,6 +1295,74 @@ MultiplayerRolesData:
   m_GameObject: {fileID: 1183163571}
   m_GameObjectRolesMask: 3
   m_ComponentsRolesMasks: []
+--- !u!1 &1183973059
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1183973060}
+  - component: {fileID: 1183973061}
+  - component: {fileID: 1183973062}
+  m_Layer: 0
+  m_Name: Post Process
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1183973060
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1183973059}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 208528453}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1183973061
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1183973059}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2ead24f818a4e5a43bb8f71d4b92a2eb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Tanks.Client::Tanks.Client.Rendering.WhiteBalanceChanger
+  _volume: {fileID: 1183973062}
+  _globalLight: {fileID: 1542355675}
+  _temperatureShiftChance: 0.65
+  _temperatureShift: 30
+  _lightsOutChance: 0.4
+  _lightsOutIntensity: 0.01
+--- !u!114 &1183973062
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1183973059}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 172515602e62fb746b5d573b38a5fe58, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Unity.RenderPipelines.Core.Runtime::UnityEngine.Rendering.Volume
+  m_IsGlobal: 1
+  priority: 0
+  blendDistance: 0
+  weight: 1
+  sharedProfile: {fileID: 11400000, guid: c054d63d8c9b0694891cf5f84e136ea8, type: 2}
 --- !u!1 &1201526857
 GameObject:
   m_ObjectHideFlags: 0
@@ -1400,7 +1469,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Unity.Multiplayer.Tools.NetworkSimulator.Runtime::Unity.Multiplayer.Tools.NetworkSimulator.Runtime.NetworkSimulator
   m_PresetAsset: {fileID: 0}
   m_PresetReference:
-    rid: 937747671695753410
+    rid: 937747681675575473
   m_Scenario:
     rid: -2
   m_IsScenarioSettingsFolded: 0
@@ -1410,7 +1479,7 @@ MonoBehaviour:
     RefIds:
     - rid: -2
       type: {class: , ns: , asm: }
-    - rid: 937747671695753410
+    - rid: 937747681675575473
       type: {class: NetworkSimulatorPreset, ns: Unity.Multiplayer.Tools.NetworkSimulator.Runtime, asm: Unity.Multiplayer.Tools.NetworkSimulator.Runtime}
       data:
         <Name>k__BackingField: 'Home Satellite [low Earth orbit]'
@@ -2120,6 +2189,7 @@ MonoBehaviour:
   autoRun: 1
   autoInjectGameObjects:
   - {fileID: 1622637408}
+  - {fileID: 1183973059}
   - {fileID: 22108525}
   - {fileID: 1563795402}
   - {fileID: 995560637}
