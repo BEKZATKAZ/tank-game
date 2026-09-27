@@ -10,6 +10,8 @@ namespace Tanks.Localization
     {
         event Action<string> StringChanged;
 
+        string EntryName { get; }
+
         string Get();
         UniTask<string> GetAsync();
         void AddVariable<T>(string key, T value);
@@ -17,9 +19,10 @@ namespace Tanks.Localization
 
     public sealed class UnityLocalizedString : ILocalizedString
     {
-        public UnityLocalizedString(LocalizedString original)
+        public UnityLocalizedString(LocalizedString original, string entryName)
         {
             Original = original;
+            EntryName = entryName;
         }
 
         public event Action<string> StringChanged
@@ -39,6 +42,7 @@ namespace Tanks.Localization
         }
 
         public LocalizedString Original { get; }
+        public string EntryName { get; }
 
         private readonly Dictionary<Action<string>, LocalizedString.ChangeHandler> _handlers = new();
 

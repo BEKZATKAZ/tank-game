@@ -2,9 +2,9 @@
 using Newtonsoft.Json;
 using System.Linq;
 using System.Text;
-using System.Threading;
 using Tanks.Core;
 using Tanks.Core.Common.Processes;
+using Tanks.Core.Common.Scenes;
 using Tanks.Core.Lobbies.Payloads;
 using Tanks.Core.Lobbies.Responses;
 using Tanks.Core.Lobbies.Sessions;
@@ -15,7 +15,6 @@ using Unity.Netcode.Transports.UTP;
 using Unity.Services.Relay;
 using Unity.Services.Relay.Models;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 using VContainer;
 
 namespace Tanks.Client.Bootstrap
@@ -23,16 +22,18 @@ namespace Tanks.Client.Bootstrap
     public sealed class ClientConnector : MonoBehaviour
     {
         [Inject] private readonly IAuthService _auth;
-        [Inject] private readonly ISessionConnectionService _connection;
         [Inject] private readonly ISessionSettingsService _settings;
         [Inject] private readonly IClientCommunicationService _client;
+        [Inject] private readonly ISceneLoader _sceneLoader;
 
-        public async UniTask SetupRelayAsync()
+        public async UniTask SetupRelayAsync(LoadGameplay data)
         {
-            string joinCode = _connection.JoinCode;
-            NetworkManager manager = NetworkManager.Singleton;
+            _settings.SetSettings(data.Settings);
 
-            JoinAllocation allocation = await RelayService.Instance.JoinAllocationAsync(joinCode);
+            NetworkManager manager = NetworkManager.Singleton;
+            JoinAllocation allocation = await RelayService.Instance
+                .JoinAllocationAsync(data.JoinCode);
+
             if (Application.isPlaying == false) return;
 
             UnityTransport transport = manager.GetComponent<UnityTransport>();
@@ -81,13 +82,24 @@ namespace Tanks.Client.Bootstrap
         private void OnConnectionEvent(NetworkManager manager, ConnectionEventData e)
         {
             if (e.EventType != ConnectionEvent.ClientDisconnected) return;
-            SceneManager.LoadScene(0);
+            _sceneLoader.StartLoadingAsync(new LoadMenus(), withTips: false);
         }
 
         private async void Start()
         {
-            if (string.IsNullOrWhiteSpace(_connection.JoinCode)) SetupLocalhost();
-            else await SetupRelayAsync();
+#if UNITY_EDITOR
+            if (_sceneLoader.IsLoading == false)
+            {
+                _sceneLoader.StartLoadingAsync(new LoadGameplay(), loadActualScene: false).Forget();
+            }
+#endif
+
+            LoadGameplay data = _sceneLoader.GetLoadingParameters<LoadGameplay>();
+
+            if (string.IsNullOrWhiteSpace(data.JoinCode)) SetupLocalhost();
+            else await SetupRelayAsync(data);
+
+            _sceneLoader.Progress = 0.6f;
 
             string json = JsonConvert.SerializeObject(new ClientConnectionPayload
             {

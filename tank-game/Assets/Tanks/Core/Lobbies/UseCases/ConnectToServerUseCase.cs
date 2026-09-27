@@ -1,27 +1,30 @@
 ﻿using Cysharp.Threading.Tasks;
+using Tanks.Core.Common.Scenes;
 using Tanks.Core.Lobbies.Sessions;
-using UnityEngine.SceneManagement;
 
 namespace Tanks.Core.Lobbies.UseCases
 {
     public interface IConnectToServerUseCase
     {
-        UniTask ConnectAsync(string joinCode);
+        void Load(string joinCode, SessionSettings settings);
     }
 
     public sealed class ConnectToServerUseCase : IConnectToServerUseCase
     {
-        public ConnectToServerUseCase(ISessionConnectionService connectionService)
+        public ConnectToServerUseCase(ISceneLoader loader)
         {
-            _connectionService = connectionService;
+            _loader = loader;
         }
 
-        private readonly ISessionConnectionService _connectionService;
+        private readonly ISceneLoader _loader;
 
-        public async UniTask ConnectAsync(string joinCode)
+        public void Load(string joinCode, SessionSettings settings)
         {
-            _connectionService.SetConnectionData(joinCode);
-            await SceneManager.LoadSceneAsync("Gameplay").ToUniTask();
+            _loader.StartLoadingAsync(new LoadGameplay
+            {
+                JoinCode = joinCode,
+                Settings = settings
+            }).Forget();
         }
     }
 }

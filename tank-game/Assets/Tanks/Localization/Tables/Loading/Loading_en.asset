@@ -1,0 +1,77 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e9620f8c34305754d8cc9a7e49e852d9, type: 3}
+  m_Name: Loading_en
+  m_EditorClassIdentifier: Unity.Localization::UnityEngine.Localization.Tables.StringTable
+  m_LocaleId:
+    m_Code: en
+  m_SharedData: {fileID: 11400000, guid: 8a7fe4fa637c3cb4d9a09d65255608c7, type: 2}
+  m_Metadata:
+    m_Items: []
+  m_TableData:
+  - m_Id: 9594953728
+    m_Localized: 'Projectiles ricochet off the walls, don''t fire for no reason
+
+      unless
+      you see an enemy.'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1127561519104
+    m_Localized: Various items spawn all over the map, but read their descriptions
+      before picking them up.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2198761594880
+    m_Localized: The map is generated randomly, keep that in mind.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2424410955776
+    m_Localized: Keep an eye on the timer - it shows when the danger zone starts
+      and its duration.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3757503373312
+    m_Localized: If you self-destruct, you will get -1 points.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4690362720256
+    m_Localized: Unstable items are among the rarest, yet the most complex. Use them
+      at your own risk.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6446383587328
+    m_Localized: The standard weapon has an infinite supply of ammo, but it needs
+      to be reloaded.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7583602008064
+    m_Localized: You can also find weapons among the items. Just watch out for the
+      recoil.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 8203172012032
+    m_Localized: Each item belongs to a tier. They can be distinguished by their
+      characteristic sound and color.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9527674494976
+    m_Localized: Wanna gamble? With this item you can end up anywhere, even inside
+      the danger zone.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 10569631883264
+    m_Localized: Don't waste fuel. There's no fuel in this game.
+    m_Metadata:
+      m_Items: []
+  references:
+    version: 2
+    RefIds: []

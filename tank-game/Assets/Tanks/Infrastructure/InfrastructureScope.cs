@@ -1,6 +1,7 @@
 ﻿using NaughtyAttributes;
 using Tanks.Core;
 using Tanks.Core.Common.Processes;
+using Tanks.Core.Common.Scenes;
 using Tanks.Core.Lobbies;
 using Tanks.Core.Lobbies.Sessions;
 using Tanks.Core.Lobbies.UseCases;
@@ -37,13 +38,10 @@ namespace Tanks.Infrastructure
 
             builder.Register<IFileSystem, DriveFileSystem>(Lifetime.Singleton);
             builder.Register<IResourceLoader, AddressablesLoader>(Lifetime.Singleton);
+            builder.Register<ISceneLoader, UnitySceneLoader>(Lifetime.Singleton);
 
             builder.Register<ILobbyService, UGSLobbyService>(Lifetime.Singleton);
             builder.Register<IAuthService, UGSAuthService>(Lifetime.Singleton);
-
-            builder.Register<
-                ISessionConnectionService,
-                SessionConnectionService>(Lifetime.Singleton);
 
             if (role is MultiplayerRoleFlags.Client)
             {

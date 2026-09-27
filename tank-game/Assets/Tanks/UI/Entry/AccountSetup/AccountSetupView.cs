@@ -1,6 +1,4 @@
-﻿using Cysharp.Threading.Tasks;
-using UnityEngine.SceneManagement;
-using UnityEngine.UIElements;
+﻿using UnityEngine.UIElements;
 
 namespace Tanks.UI.Entry.AccountSetup
 {
@@ -36,7 +34,7 @@ namespace Tanks.UI.Entry.AccountSetup
                 .Bind(x => _container.style.display = x ? DisplayStyle.Flex : DisplayStyle.None);
 
             bool success = await viewModel.LoginAsync();
-            if (success) await SceneManager.LoadSceneAsync("Menus").ToUniTask();
+            if (success) ViewModel.EnterMainMenu();
         }
 
         private void OnDisplayNameChanged(ChangeEvent<string> e)
@@ -47,7 +45,7 @@ namespace Tanks.UI.Entry.AccountSetup
         private async void ConfirmDisplayName()
         {
             bool success = await ViewModel.ConfirmAsync();
-            if (success) await SceneManager.LoadSceneAsync("Menus").ToUniTask();
+            if (success) ViewModel.EnterMainMenu();
         }
     }
 }

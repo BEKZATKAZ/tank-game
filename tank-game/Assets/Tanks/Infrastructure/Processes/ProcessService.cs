@@ -3,7 +3,7 @@ using System.Diagnostics;
 using System.IO;
 using Tanks.Core.Common.Processes;
 
-namespace Tanks.Infrastructure
+namespace Tanks.Infrastructure.Processes
 {
     public sealed class ProcessService : IProcessService
     {

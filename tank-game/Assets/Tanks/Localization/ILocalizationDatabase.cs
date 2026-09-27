@@ -1,5 +1,7 @@
 using Cysharp.Threading.Tasks;
 using System;
+using System.Collections.Generic;
+using System.Linq;
 using UnityEngine.Localization;
 using UnityEngine.Localization.Settings;
 using UnityEngine.Localization.Tables;
@@ -24,6 +26,8 @@ namespace Tanks.Localization
 
         void SetLocale(string locale);
         UniTask WaitForInitializationAsync();
+
+        IEnumerable<ILocalizedString> GetAllFromTable(string tableName);
 
         bool TryGet(
             string tableName, string entryName, out ILocalizedString result);
@@ -64,6 +68,16 @@ namespace Tanks.Localization
             return LocalizationSettings.InitializationOperation.ToUniTask();
         }
 
+        public IEnumerable<ILocalizedString> GetAllFromTable(string tableName)
+        {
+            StringTable table = LocalizationSettings.StringDatabase.GetTable(tableName);
+            if (table == false) return Enumerable.Empty<ILocalizedString>();
+
+            return table.Select(x =>
+                new UnityLocalizedString(
+                    new LocalizedString(tableName, x.Value.Key), x.Value.Key));
+        }
+
         public bool TryGet(string tableName, string entryName, out ILocalizedString result)
         {
             return TryGet(tableName, entryName, out result, out _);
@@ -89,10 +103,12 @@ namespace Tanks.Localization
             StringTableEntry entry = table.GetEntry(entryName ?? "");
             if (entry is null) return false;
 
-            result = new UnityLocalizedString(new LocalizedString(tableName, entryName));
-            _cached.Add(tuple, result);
+            result = new UnityLocalizedString(
+                new LocalizedString(tableName, entryName), entryName);
 
+            _cached.Add(tuple, result);
             fromCache = false;
+
             return true;
         }
     }

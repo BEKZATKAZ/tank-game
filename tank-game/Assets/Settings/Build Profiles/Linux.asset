@@ -27,6 +27,9 @@ MonoBehaviour:
     m_path: Assets/Tanks/Scenes/Menus.unity
     m_guid: 440a5ef3c489e7544bb22ba51f5ab99e
   - m_enabled: 1
+    m_path: Assets/Tanks/Scenes/Loading.unity
+    m_guid: e6d3d7e70c6b33a43bcd16391c4a6cf4
+  - m_enabled: 1
     m_path: Assets/Tanks/Scenes/Gameplay.unity
     m_guid: 8c9cfa26abfee488c85f1582747f6a02
   m_HasScriptingDefines: 0

@@ -39,14 +39,14 @@ namespace Tanks.Server.Bootstrap
             // Wait a bit to warm up the clients
             if (_isFirstTime && Application.isPlaying) await UniTask.Delay(1000);
 
-            _isFirstTime = false;
-
             Behaviour.StartGameEveryoneRpc(new GameStartedFromServer
             {
                 ServerTick = _lastTick,
                 ServerTickDelta = _lastTickDelta,
-                StartDelaySeconds = 1.5f
+                StartDelaySeconds = _isFirstTime ? 3 : 1.5f
             });
+
+            _isFirstTime = false;
         }
 
         public void Handle(WaitingForPlayersRequested message)

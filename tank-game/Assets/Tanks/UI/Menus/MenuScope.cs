@@ -6,6 +6,7 @@ using Tanks.UI.Menus.Lobbies;
 using Tanks.UI.Menus.Main;
 using Tanks.UI.Menus.Settings;
 using Tanks.UI.Menus.Settings.Appliers;
+using Tanks.UI.Menus.Transitions;
 using UnityEngine;
 using VContainer;
 using VContainer.Unity;
@@ -27,6 +28,7 @@ namespace Tanks.UI.Menus
             builder.RegisterComponent(_loadingService).As<ILoadingScreenService>();
             builder.RegisterComponent(_dialogService).As<IDialogScreenService>();
 
+            builder.Register<FadeTransitionViewModel>(Lifetime.Transient);
             builder.Register<LoadingViewModel>(Lifetime.Transient);
             builder.Register<DialogScreenViewModel>(Lifetime.Transient);
             builder.Register<MainMenuSectionsViewModel>(Lifetime.Transient);

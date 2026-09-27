@@ -1,0 +1,72 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5b11a58205ec3474ca216360e9fa74a8, type: 3}
+  m_Name: Loading Shared Data
+  m_EditorClassIdentifier: Unity.Localization::UnityEngine.Localization.Tables.SharedTableData
+  m_TableCollectionName: Loading
+  m_TableCollectionNameGuidString: 8a7fe4fa637c3cb4d9a09d65255608c7
+  m_Entries:
+  - m_Id: 9594953728
+    m_Key: loading.tip.ricochet
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2198761594880
+    m_Key: loading.tip.map-generation
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2424410955776
+    m_Key: loading.tip.danger-zone
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3757503373312
+    m_Key: loading.tip-self-destruct
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1127561519104
+    m_Key: loading.tip.items
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4690362720256
+    m_Key: loading.tip.unstable-items
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6446383587328
+    m_Key: loading.tip.infinite-ammo
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7583602008064
+    m_Key: loading.tip.weapon-items
+    m_Metadata:
+      m_Items: []
+  - m_Id: 8203172012032
+    m_Key: loading.tip.item-tiers
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9527674494976
+    m_Key: loading.tip.random-teleport-item
+    m_Metadata:
+      m_Items: []
+  - m_Id: 10569631883264
+    m_Key: loading.tip.dont-waste-fuel
+    m_Metadata:
+      m_Items: []
+  m_Metadata:
+    m_Items: []
+  m_KeyGenerator:
+    rid: 937747695437087398
+  references:
+    version: 2
+    RefIds:
+    - rid: 937747695437087398
+      type: {class: DistributedUIDGenerator, ns: UnityEngine.Localization.Tables, asm: Unity.Localization}
+      data:
+        m_CustomEpoch: 1790492363555

@@ -5,6 +5,7 @@ using Tanks.Client.Bootstrap;
 using Tanks.Shared.Generation;
 using Tanks.Shared.Messaging;
 using Tanks.Utils;
+using Unity.Mathematics;
 
 namespace Tanks.UI.Gameplay.StartCountdown
 {
@@ -44,7 +45,15 @@ namespace Tanks.UI.Gameplay.StartCountdown
         public async void Handle(GameStartedFromClient message, IMessageSender sender)
         {
             TransitionOpacity.Value = 0;
-            TimeSpan delayThird = TimeSpan.FromSeconds(message.AdaptedStartDelaySeconds / 3);
+
+            if (message.AdaptedStartDelaySeconds > 1.5f)
+            {
+                float remainder = message.AdaptedStartDelaySeconds - 1.5f;
+                await UniTask.Delay(TimeSpan.FromSeconds(remainder));
+            }
+
+            float total = math.min(1.5f, message.AdaptedStartDelaySeconds);
+            TimeSpan delayThird = TimeSpan.FromSeconds(total / 3);
 
             for (int i = 0; i < 4; i++)
             {

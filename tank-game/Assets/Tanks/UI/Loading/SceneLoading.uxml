@@ -1,0 +1,11 @@
+<ui:UXML xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
+    <Style src="project://database/Assets/Tanks/UI/Loading/SceneLoading.uss?fileID=7433441132597879392&amp;guid=de64dce41fe33a44bb37b4f1b595fc43&amp;type=3#SceneLoading"/>
+    <Style src="project://database/Assets/Tanks/UI/Menus/Styles/MainMenu.uss?fileID=7433441132597879392&amp;guid=e77348697c99f3b4795a79682c5e1415&amp;type=3#MainMenu"/>
+    <ui:VisualElement name="TitleContainer" class="title-container" style="flex-grow: 1;">
+        <ui:Label name="Title" text="T.A.N.K.S." class="game-title" style="-unity-font-definition: url(&quot;project://database/Assets/Tanks/UI/Fonts/Tektur/Tektur-Black.ttf?fileID=12800000&amp;guid=45f7b32b4f832744ebbabf86a666ecac&amp;type=3#Tektur-Black&quot;);"/>
+        <ui:ProgressBar value="0.8" high-value="1" class="loading-progress"/>
+    </ui:VisualElement>
+    <ui:VisualElement name="Bottom" class="loading-bottom">
+        <ui:Label text="Projectiles ricochet off the walls, don&apos;t fire for no reason unless you see an enemy." name="Tip" class="tip-text"/>
+    </ui:VisualElement>
+</ui:UXML>

@@ -5,7 +5,6 @@ using Tanks.Core.Lobbies.UseCases;
 using Tanks.Localization;
 using Tanks.UI.Menus.Dialogs;
 using Tanks.Utils;
-using UnityEngine;
 
 namespace Tanks.UI.Menus.Lobbies
 {
@@ -14,14 +13,12 @@ namespace Tanks.UI.Menus.Lobbies
         public LobbySectionsViewModel(
             ILobbyService service,
             ILocalizationDatabase localization,
-            ISessionSettingsService settings,
             IDialogScreenService dialog,
             IMenuNavigation navigation,
             IConnectToServerUseCase connectToServer)
         {
             _service = service;
             _localization = localization;
-            _settings = settings;
             _dialog = dialog;
             _navigation = navigation;
             _connectToServer = connectToServer;
@@ -29,7 +26,6 @@ namespace Tanks.UI.Menus.Lobbies
             LobbyName = service.CurrentLobbyState.Name;
 
             _service.CurrentLobbyState.Status.Bind(OnStatusChanged);
-            _service.CurrentLobbyState.JoinCode.Bind(OnJoinCodeUpdated);
             _service.CurrentLobbyState.ServerConfirmedSettings.Bind(OnSettingsChanged);
             _service.LobbyDeleted += OnLobbyDeleted;
         }
@@ -39,7 +35,6 @@ namespace Tanks.UI.Menus.Lobbies
 
         private readonly ILobbyService _service;
         private readonly ILocalizationDatabase _localization;
-        private readonly ISessionSettingsService _settings;
         private readonly IDialogScreenService _dialog;
         private readonly IMenuNavigation _navigation;
         private readonly IConnectToServerUseCase _connectToServer;
@@ -48,7 +43,6 @@ namespace Tanks.UI.Menus.Lobbies
         {
             _service.LobbyDeleted -= OnLobbyDeleted;
             _service.CurrentLobbyState.Status.Unbind(OnStatusChanged);
-            _service.CurrentLobbyState.JoinCode.Unbind(OnJoinCodeUpdated);
             _service.CurrentLobbyState.ServerConfirmedSettings.Unbind(OnSettingsChanged);
         }
 
@@ -60,16 +54,11 @@ namespace Tanks.UI.Menus.Lobbies
 
         private void OnSettingsChanged(SessionSettings settings)
         {
-            _settings.SetSettings(settings);
-        }
+            // Discard default settings
+            if (settings.DesiredPlayerCount == 0) return;
 
-        private async void OnJoinCodeUpdated(string joinCode)
-        {
-            if (string.IsNullOrWhiteSpace(joinCode)) return;
-
-            Debug.LogFormat("Connecting to server: '{0}'", joinCode);
-
-            await _connectToServer.ConnectAsync(joinCode);
+            string joinCode = _service.CurrentLobbyState.JoinCode.Value;
+            _connectToServer.Load(joinCode, settings);
         }
 
         private void OnStatusChanged(LobbyStatus status)

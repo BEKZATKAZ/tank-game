@@ -1,4 +1,5 @@
 ﻿using Cysharp.Threading.Tasks;
+using Tanks.Core.Common.Scenes;
 using Tanks.Localization;
 using Tanks.Shared;
 using Tanks.Shared.Bootstrap;
@@ -18,13 +19,18 @@ namespace Tanks.Client.Bootstrap
         INetworkMessageHandler<GameStartedFromServer>,
         IMessageSender
     {
-        public PlayerReadyHandler(ILocalizationDatabase localization, IMessageBus bus)
+        public PlayerReadyHandler(
+            ILocalizationDatabase localization,
+            ISceneLoader sceneLoader,
+            IMessageBus bus)
         {
             _localization = localization;
+            _sceneLoader = sceneLoader;
             _bus = bus;
         }
 
         private readonly ILocalizationDatabase _localization;
+        private readonly ISceneLoader _sceneLoader;
         private readonly IMessageBus _bus;
 
         private bool _isInitialized;
@@ -32,6 +38,8 @@ namespace Tanks.Client.Bootstrap
 
         public void Handle(GameStartedFromServer message)
         {
+            if (_sceneLoader.IsLoading) _sceneLoader.EndLoading<LoadGameplay>();
+
             int tickDifference = math.max(_lastTick - message.ServerTick, 0);
             float timeDifference = tickDifference * message.ServerTickDelta;
 
@@ -46,11 +54,15 @@ namespace Tanks.Client.Bootstrap
 
         public async void Handle(PlayerReadyRequested message)
         {
+            _sceneLoader.Progress = 0.75f;
+
             if (_isInitialized == false)
             {
                 await _localization.WaitForInitializationAsync();
                 _isInitialized = true;
             }
+
+            _sceneLoader.Progress = 0.9f;
 
             while (Behaviour.NetworkManager.LocalClient.PlayerObject == false)
             {
@@ -58,6 +70,7 @@ namespace Tanks.Client.Bootstrap
             }
 
             Behaviour.SendReadyConfirmationServerRpc(message.SecretHandle);
+            _sceneLoader.Progress = 1;
         }
 
         protected override void OnInitialize()
