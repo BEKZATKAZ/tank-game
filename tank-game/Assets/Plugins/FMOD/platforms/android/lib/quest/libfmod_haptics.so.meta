@@ -1,40 +1,35 @@
 fileFormatVersion: 2
 guid: 1408fea401f68214daa96a07fd44428b
+AssetOrigin:
+  serializedVersion: 1
+  productId: 311497
+  packageName: FMOD for Unity (2.03)
+  packageVersion: 2.03.15
+  assetPath: Assets/Plugins/FMOD/platforms/android/lib/quest/libfmod_haptics.so
+  uploadId: 1007396
 PluginImporter:
   externalObjects: {}
-  serializedVersion: 2
+  serializedVersion: 3
   iconMap: {}
   executionOrder: {}
   defineConstraints: []
   isPreloaded: 0
   isOverridable: 0
   isExplicitlyReferenced: 0
+  validateReferences: 1
   platformData:
-  - first:
-      Android: Android
-    second:
+    Android:
       enabled: 0
       settings:
         CPU: ARM64
         Is16KbAligned: true
-  - first:
-      Any: 
-    second:
+    Any:
       enabled: 0
       settings: {}
-  - first:
-      Editor: Editor
-    second:
+    Editor:
       enabled: 0
       settings:
         DefaultValueInitialized: true
   userData: 
   assetBundleName: 
   assetBundleVariant: 
-AssetOrigin:
-  serializedVersion: 1
-  productId: 311497
-  packageName: FMOD for Unity (2.03)
-  packageVersion: 2.03.13
-  assetPath: Assets/Plugins/FMOD/platforms/android/lib/quest/libfmod_haptics.so
-  uploadId: 931626
