@@ -4,17 +4,19 @@ using System.Collections.Generic;
 using System.Linq;
 using Tanks.Core.Repositories;
 using Tanks.Core.Settings;
+using Unity.Scripting.LifecycleManagement;
 using UnityEngine;
 
 namespace Tanks.Infrastructure.Settings
 {
-    public sealed class JsonSettingsLoader : ISettingsLoader
+    public sealed partial class JsonSettingsLoader : ISettingsLoader
     {
         public JsonSettingsLoader(IFileSystem fileSystem)
         {
             _fileSystem = fileSystem;
         }
 
+        [AutoStaticsCleanup]
         public static readonly IReadOnlyDictionary<PlayerSetting, int> Defaults =
             new Dictionary<PlayerSetting, int>()
             {

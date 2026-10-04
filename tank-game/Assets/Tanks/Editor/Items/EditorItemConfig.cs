@@ -1,5 +1,7 @@
 using FMODUnity;
+using System.Collections.Generic;
 using Tanks.Shared.Items.Data;
+using Tanks.Shared.Stats;
 using UnityEngine;
 
 namespace Tanks.Editor.Items
@@ -10,7 +12,8 @@ namespace Tanks.Editor.Items
         [Header("Main Info")]
         [SerializeField] private string _identifier;
         [SerializeField] private ItemTier _tier;
-        [SerializeField] private ItemStat[] _stats;
+        [SerializeField] private Dictionary<StatType, PlayerStat> _playerStats;
+        [SerializeField] private Dictionary<string, ItemStat> _itemStats;
         [SerializeField] private ItemActionConfigBase[] _onPickUpActions;
 
         [Header("Visuals")]
@@ -24,7 +27,8 @@ namespace Tanks.Editor.Items
 
         public string Identifier => _identifier;
         public ItemTier Tier => _tier;
-        public ItemStat[] Stats => _stats;
+        public Dictionary<StatType, PlayerStat> PlayerStats => _playerStats;
+        public Dictionary<string, ItemStat> ItemStats => _itemStats;
         public ItemActionConfigBase[] OnPickUpActions => _onPickUpActions;
 
         public Material IconMaterial => _iconMaterial;

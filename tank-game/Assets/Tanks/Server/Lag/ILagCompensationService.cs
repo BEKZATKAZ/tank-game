@@ -2,7 +2,6 @@ using System;
 using System.Collections.Generic;
 using Tanks.Shared;
 using Tanks.Shared.Entities;
-using Tanks.Shared.Entities.Health;
 using Tanks.Shared.Messaging;
 using Tanks.Shared.Weapons;
 using Tanks.Shared.Weapons.Projectiles;
@@ -12,7 +11,7 @@ namespace Tanks.Server.Lag
 {
     public struct ProjectileData
     {
-        public IDamage Damage;
+        public IProjectileBehaviour Behaviour;
         public IWeaponHolderBehaviour Owner;
     }
 

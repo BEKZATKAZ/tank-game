@@ -1,9 +1,7 @@
-﻿using Tanks.Client.Entities.Health;
-using Tanks.Shared;
+﻿using Tanks.Shared;
 using Tanks.Shared.Adapters;
 using Tanks.Shared.Entities.Health;
 using Tanks.Shared.Lag;
-using Tanks.Shared.Stats;
 using Tanks.Shared.Weapons.Projectiles;
 using Unity.Mathematics;
 
@@ -21,6 +19,7 @@ namespace Tanks.Client.Weapons.Projectiles
             _pool = pool;
             _lagCompensation = lagCompensation;
         }
+
         public ITransform SimulatedTransform { get; private set; }
 
         private readonly IProjectilePoolService _pool;
@@ -32,7 +31,6 @@ namespace Tanks.Client.Weapons.Projectiles
 
         private int _currentTick;
         private float _currentTickDelta;
-        private bool _canDamage;
 
         public void Handle(ProjectileLaunched message)
         {
@@ -42,7 +40,6 @@ namespace Tanks.Client.Weapons.Projectiles
 
             _reconciliation.Reset(_currentTick, SimulatedTransform);
             _ricochetedCount = 0;
-            _canDamage = true;
         }
 
         public void Handle(ProjectileSnapshotFromServer message)
@@ -83,16 +80,16 @@ namespace Tanks.Client.Weapons.Projectiles
 
             Behaviour.ElapsedSeconds += tickDelta;
 
-            if (Behaviour.ElapsedSeconds >= Behaviour.Config.LifeTime)
+            if (Behaviour.ElapsedSeconds >= Behaviour.LifeTime)
             {
-                _pool.Return(Behaviour.Id);
+                Done();
                 return;
             }
 
             Behaviour.Simulate(new LaunchCallbacks
             {
                 OnRicochet = OnRicochetFull,
-                OnDamageableHit = DamagePrediction
+                OnDamageableHit = OnDamageableHit
             }, SimulatedTransform, tickDelta);
         }
 
@@ -111,9 +108,9 @@ namespace Tanks.Client.Weapons.Projectiles
 
         private void OnRicochetFull(float2 hitPoint, float2 surfaceNormal)
         {
-            if (++_ricochetedCount > Behaviour.Config.MaxRicochetCount)
+            if (++_ricochetedCount > Behaviour.MaxRicochetCount)
             {
-                _pool.Return(Behaviour.Id);
+                Done();
                 return;
             }
 
@@ -123,37 +120,27 @@ namespace Tanks.Client.Weapons.Projectiles
 
         private void OnRicochetPartial(float2 hitPoint, float2 surfaceNormal)
         {
-            if (++_ricochetedCount <= Behaviour.Config.MaxRicochetCount) return;
-            _pool.Return(Behaviour.Id);
+            if (++_ricochetedCount <= Behaviour.MaxRicochetCount) return;
+            Done();
         }
 
-        private void DamagePrediction(IHealthBehaviour health)
+        private void OnDamageableHit(IHealthBehaviour target)
         {
-            if (_canDamage == false) return;
-            _canDamage = false;
+            Behaviour.OnDamageableHit(target);
 
-            IStatOwnerBehaviour statOwner = Behaviour.Owner.GetBehaviour<IStatOwnerBehaviour>();
-            IPredictedHealth predictedHealth = health.Require<IPredictedHealth>();
-
-            float amount = Behaviour.Damage.Evaluate(Behaviour.ElapsedSeconds);
-            amount = statOwner.GetStat(StatType.Damage, amount);
-
-            HealthEventId eventId = HealthEventId
-                .Create(typeof(IProjectileBehaviour), Behaviour.Id);
-
-            predictedHealth.Damage(amount, Behaviour.Owner.Entity, eventId);
-
-            if (Behaviour.Owner.IsLocalPlayer)
+            _lagCompensation.RequestHitServerRpc(new HitRequest
             {
-                _lagCompensation.RequestHitServerRpc(new HitRequest
-                {
-                    TargetId = health.Entity.Id,
-                    ProjectileId = Behaviour.Id,
-                    ClientTick = _currentTick
-                });
-            };
+                ClientTick = _currentTick,
+                ProjectileId = Behaviour.Id,
+                TargetId = target.Entity.Id
+            });
 
-            _pool.Return(Behaviour.Id, removeHandle: true);
+            Done();
+        }
+
+        private void Done()
+        {
+            _pool.Return(Behaviour.Id);
         }
     }
 }

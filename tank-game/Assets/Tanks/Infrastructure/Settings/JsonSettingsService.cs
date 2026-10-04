@@ -4,17 +4,19 @@ using System.IO;
 using System.Linq;
 using Tanks.Core.Settings;
 using Tanks.Utils;
+using Unity.Scripting.LifecycleManagement;
 using UnityEngine;
 
 namespace Tanks.Infrastructure.Settings
 {
-    public sealed class JsonSettingsService : ISettingsService
+    public sealed partial class JsonSettingsService : ISettingsService
     {
         public JsonSettingsService(ISettingsLoader loader)
         {
             _loader = loader;
         }
 
+        [AutoStaticsCleanup]
         public static readonly string FilePath = Path
             .Combine(Application.persistentDataPath, "settings.json");
 

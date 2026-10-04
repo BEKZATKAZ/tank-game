@@ -7,7 +7,7 @@ using Unity.Mathematics;
 
 namespace Tanks.Client.Items.Behaviours.OnPickup
 {
-    [ItemBehaviour("random_teleport")]
+    [ItemBehaviour("random-teleport")]
     public sealed class RandomTeleportBehaviour :
         ItemBehaviourBase, IMessageHandler<TilemapGenerated>, IDisposable
     {
@@ -33,7 +33,7 @@ namespace Tanks.Client.Items.Behaviours.OnPickup
         public override void OnPickup(IItemOwnerBehaviour owner)
         {
             int wallWidth = _generated.Settings.WallWidth;
-            int minDistance = 20;
+            int minDistance = wallWidth * 4;
 
             float2 initialPosition = owner.Transform.WorldPosition;
             float2 position;

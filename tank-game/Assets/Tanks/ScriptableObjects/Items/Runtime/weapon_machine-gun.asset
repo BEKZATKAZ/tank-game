@@ -13,7 +13,8 @@ MonoBehaviour:
   m_Name: weapon_machine-gun
   m_EditorClassIdentifier: Tanks.Shared::Tanks.Shared.Items.Data.ItemConfig
   _identifier: weapon_machine-gun
-  _tier: 2
+  _tier: 1
   _onPickUpActions:
   - {fileID: 11400000, guid: 9c6d8bae6749bca42b5f9e18b842165f, type: 2}
-  _stats: []
+  _playerStats: []
+  _itemStats: []

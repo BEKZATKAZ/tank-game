@@ -18,6 +18,7 @@ namespace Tanks.Client.Tests.Weapons
             _weapon.Cooldown.Returns(Substitute.For<IReadOnlyCooldown>());
 
             _behaviour = Substitute.For<IWeaponHolderBehaviour>();
+            _behaviour.GetDeltaMultiplier().Returns(1);
             _behaviour.CurrentWeapon.Returns(_weapon);
             _behaviour.IsLocalPlayer.Returns(false);
 
@@ -48,22 +49,6 @@ namespace Tanks.Client.Tests.Weapons
             _component.Tick(15, 0.1f);
 
             _behaviour.Received(1).WeaponTick(0.1f, true, new ShotId(123));
-        }
-
-        [Test]
-        public void Tick_BeforeScheduledTick_DoesNotUseWeapon()
-        {
-            _weapon.Cooldown.DurationSeconds.Returns(0.5f);
-
-            _component.Tick(10, 0.1f);
-            _component.Handle(new WeaponUsedFromServer { Id = new ShotId(123) });
-
-            _component.Tick(10, 0.1f);
-            _component.Handle(new WeaponUsedFromServer { Id = new ShotId(456) });
-
-            _component.Tick(14, 0.1f);
-            _behaviour.Received(2).WeaponTick(0.1f, false, default);
-            _behaviour.DidNotReceive().WeaponTick(0.1f, true, new ShotId(456));
         }
 
         [Test]

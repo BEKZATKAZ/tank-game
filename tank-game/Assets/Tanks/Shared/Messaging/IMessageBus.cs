@@ -53,11 +53,9 @@ namespace Tanks.Shared.Messaging
                 _handlers[type] = list;
             }
 
-            Type handlerType = handler.Value.GetType();
-
-            if (list.Any(x => x.GetType() == handlerType))
+            if (list.Any(x => x == handler.Value))
             {
-                string name = handlerType.Name;
+                string name = handler.Value.GetType().Name;
                 throw new ArgumentException($"Handler '{name}' already registered");
             }
 

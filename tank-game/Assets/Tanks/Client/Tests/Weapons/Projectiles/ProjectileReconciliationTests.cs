@@ -68,7 +68,7 @@ namespace Tanks.Client.Tests.Weapons.Projectiles
             Assert.True(_reconciliation.TryReconcile(
                 _predictedTransform, snapshot, default, 0.05f, out float2 error), "Too strict");
 
-            float expectedErrorX = math.abs(difference) + _projectile.Config.Speed * 0.05f;
+            float expectedErrorX = math.abs(difference) + _projectile.Speed * 0.05f;
 
             Assert.AreEqual(expectedErrorX, math.abs(error.x), delta: 0.05f,
                 "Reconciliation occured, but no error is out");

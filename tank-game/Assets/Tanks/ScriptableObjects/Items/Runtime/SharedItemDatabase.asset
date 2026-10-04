@@ -13,7 +13,19 @@ MonoBehaviour:
   m_Name: SharedItemDatabase
   m_EditorClassIdentifier: Tanks.Shared::Tanks.Shared.Items.Data.SharedItemDatabaseConfig
   _items:
-  - {fileID: 11400000, guid: d950709357e404f47b36e1f31be6ae33, type: 2}
-  - {fileID: 11400000, guid: 791ea2cf4ddfb0445a2f231992f95ad3, type: 2}
-  - {fileID: 11400000, guid: debabad848803b64eba09bcd42fcd327, type: 2}
+  - {fileID: 11400000, guid: 8ac943f82c3455347a20b2cad480a511, type: 2}
+  - {fileID: 11400000, guid: 795a61a731f45e1439e2a278f85b2dd9, type: 2}
+  - {fileID: 11400000, guid: 904cfe9a26932994d89e75055410382d, type: 2}
+  - {fileID: 11400000, guid: e29866518060c1f49adc6015603ec47a, type: 2}
+  - {fileID: 11400000, guid: 975958698c2b4e749826a069f1f569e9, type: 2}
+  - {fileID: 11400000, guid: ef3a244f78ba1fd45b053ca0a0f2ae33, type: 2}
+  - {fileID: 11400000, guid: 43bcbd4f285f9a9498ab5f49faa27e38, type: 2}
+  - {fileID: 11400000, guid: 08ac37487e1027e45b42ed69e3c71acf, type: 2}
+  - {fileID: 11400000, guid: f48ef1c73ac150641901dcac2c4bad5a, type: 2}
   - {fileID: 11400000, guid: 79211a8057a22ce459ef41cfa6446b1b, type: 2}
+  - {fileID: 11400000, guid: 59ca0261fbdffe04a900663bba47a550, type: 2}
+  - {fileID: 11400000, guid: 79f61734a4eec60498a8658b173ab6bd, type: 2}
+  - {fileID: 11400000, guid: 102aadcf505fe904da4658877909aeb4, type: 2}
+  - {fileID: 11400000, guid: 98f146097858e5947a6b19150e57fcee, type: 2}
+  - {fileID: 11400000, guid: 77bed75eb5ea0fd4d8498af02e5e5420, type: 2}
+  - {fileID: 11400000, guid: 8046bafe58b451f4ba9e36e96cfe2a28, type: 2}

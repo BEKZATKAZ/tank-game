@@ -25,6 +25,7 @@ namespace Tanks.Server.Tests.Weapons
             _weapon.Cooldown.Returns(_cooldown);
 
             _component.Behaviour.CurrentWeapon.Returns(_weapon);
+            _component.Behaviour.GetDeltaMultiplier().Returns(1);
         }
 
         [TearDown]

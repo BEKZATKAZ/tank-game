@@ -4,6 +4,7 @@ using System.Runtime.InteropServices;
 using Tanks.Shared.Weapons;
 using Unity.Collections;
 using Unity.Mathematics;
+using UnityEngine;
 
 namespace Tanks.Server.Weapons
 {
@@ -69,10 +70,11 @@ namespace Tanks.Server.Weapons
         }
 
         public void Schedule(
-            IReadOnlyWeapon weapon, WeaponInput input, int tick, float tickDelta)
+            IWeaponHolderBehaviour owner, WeaponInput input, int tick, float tickDelta)
         {
-            float cooldownDuration = weapon.Cooldown.DurationSeconds;
-            int cooldownTicks = (int)math.round(cooldownDuration / tickDelta);
+            float cooldownDuration = owner.CurrentWeapon.Cooldown.DurationSeconds;
+            float multiplier = owner.GetDeltaMultiplier();
+            int cooldownTicks = (int)math.ceil(cooldownDuration / tickDelta / multiplier);
 
             _processor.Process(
                 input: input,
@@ -84,17 +86,25 @@ namespace Tanks.Server.Weapons
                     if (_lastScheduledClientTick == -1) scheduledTick = tick;
                     else
                     {
-                        // Discard too quick shots
+                        // Delay too quick shots
                         int cooldowned = _lastScheduledServerTick + cooldownTicks;
                         scheduledTick = math.max(tick, cooldowned);
                     }
 
                     _lastScheduledClientTick = shot.ClientTick;
                     _lastScheduledServerTick = scheduledTick;
-                    _scheduledShots.Enqueue(new ScheduledShot(scheduledTick, shot.Id));
-                });
 
-            LastProcessedClientTick = input.ClientTick;
+                    _scheduledShots.Enqueue(new ScheduledShot(scheduledTick, shot.Id));
+                    LastProcessedClientTick = shot.ClientTick;
+
+                    Debug.Log(
+                        $"SHOT SCHEDULED tick={tick} " +
+                        $"clientTick={shot.ClientTick} " +
+                        $"scheduled={scheduledTick} " +
+                        $"cooldown={cooldownTicks} " +
+                        $"lastProcessed={LastProcessedClientTick}"
+                    );
+                });
         }
     }
 }

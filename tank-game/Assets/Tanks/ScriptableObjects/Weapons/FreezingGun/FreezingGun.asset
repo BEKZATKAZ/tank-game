@@ -1,0 +1,21 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e65df12e201a90d46a5e80278588ce45, type: 3}
+  m_Name: FreezingGun
+  m_EditorClassIdentifier: Tanks.Shared::Tanks.Shared.Weapons.Data.WeaponConfig
+  _useMode: 1
+  _ammo: {fileID: 11400000, guid: 862f3ad09141ef34f93d66e5ed5f3ae7, type: 2}
+  _cooldown: {fileID: 0}
+  _useAction: {fileID: 11400000, guid: 1ad1d4f8b3e61784a931b5baaa34582b, type: 2}
+  _recoil:
+    _amount: 12
+    _durationSeconds: 0.68

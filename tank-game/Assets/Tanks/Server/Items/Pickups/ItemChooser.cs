@@ -11,9 +11,9 @@ namespace Tanks.Server.Items.Pickups
         public ItemChooser(
             IEnumerable<IItemConfig> items,
             Dictionary<ItemTier, PositiveFloat> chanceWeights,
-            uint seed)
+            int seed)
         {
-            _random = Random.CreateFromIndex(seed);
+            _random = new System.Random(seed);
             _chanceWeights = new Dictionary<ItemTier, PositiveFloat>(chanceWeights);
 
             _byTier = items
@@ -36,7 +36,7 @@ namespace Tanks.Server.Items.Pickups
 
         private readonly Dictionary<ItemTier, PositiveFloat> _chanceWeights;
         private readonly Dictionary<ItemTier, IItemConfig[]> _byTier;
-        private readonly Random _random;
+        private readonly System.Random _random;
         private readonly float _totalChance;
 
         public IItemConfig ChooseRandomItem(PositiveFloatOrZero alpha)
@@ -60,7 +60,7 @@ namespace Tanks.Server.Items.Pickups
                     $"No items registered for tier '{selectedTier}'");
             }
 
-            return items[_random.NextInt(items.Length)];
+            return items[_random.Next(items.Length)];
         }
     }
 }

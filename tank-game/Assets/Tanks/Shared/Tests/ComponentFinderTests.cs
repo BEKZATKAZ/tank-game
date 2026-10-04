@@ -14,7 +14,6 @@ namespace Tanks.Shared.Tests
         public bool IsOwner { get; }
         public bool IsLocalPlayer { get; }
         public bool IsServer { get; }
-        public bool IsClient { get; }
 
         public T Require<T>() where T : INetworkComponent => default;
         public T GetBehaviour<T>() where T : INetworkBehaviourExtended => default;
@@ -31,7 +30,6 @@ namespace Tanks.Shared.Tests
         public bool IsOwner { get; }
         public bool IsLocalPlayer { get; }
         public bool IsServer { get; }
-        public bool IsClient { get; }
 
         public T Require<T>() where T : INetworkComponent => default;
         public T GetBehaviour<T>() where T : INetworkBehaviourExtended => default;

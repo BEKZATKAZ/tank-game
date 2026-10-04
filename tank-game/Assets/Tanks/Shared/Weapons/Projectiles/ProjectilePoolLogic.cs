@@ -1,6 +1,5 @@
 ﻿using System.Buffers;
 using System.Collections.Generic;
-using Tanks.Shared.Weapons.Data;
 using UnityEngine;
 using UnityEngine.Pool;
 using VContainer;
@@ -15,7 +14,7 @@ namespace Tanks.Shared.Weapons.Projectiles
             _container = container;
         }
 
-        private readonly Dictionary<IProjectileConfig, ObjectPool<ProjectileBehaviour>> _pools = new();
+        private readonly Dictionary<string, ObjectPool<ProjectileBehaviour>> _pools = new();
         private readonly Dictionary<ProjectileId, IProjectileBehaviour> _idToProjectiles = new();
         private readonly Dictionary<IProjectileBehaviour, ProjectileId> _projectilesToId = new();
         private readonly IObjectResolver _container;
@@ -36,9 +35,9 @@ namespace Tanks.Shared.Weapons.Projectiles
             _projectilesToId.Clear();
         }
 
-        public bool TryGetPool(IProjectileConfig config, out ObjectPool<ProjectileBehaviour> pool)
+        public bool TryGetPool(string name, out ObjectPool<ProjectileBehaviour> pool)
         {
-            return _pools.TryGetValue(config, out pool);
+            return _pools.TryGetValue(name, out pool);
         }
 
         public bool TryGetById(ProjectileId id, out IProjectileBehaviour instance)
@@ -64,15 +63,15 @@ namespace Tanks.Shared.Weapons.Projectiles
             return id;
         }
 
-        public bool TryInitializePool(IProjectileConfig config)
+        public bool TryInitializePool(ProjectileBehaviour prefab)
         {
-            if (_pools.ContainsKey(config)) return false;
+            if (_pools.ContainsKey(prefab.Name)) return false;
 
             int initialSize = 25;
             int maxSize = 1000;
 
             ObjectPool<ProjectileBehaviour> pool = new ObjectPool<ProjectileBehaviour>(
-                createFunc: () => CreateProjectile(config),
+                createFunc: () => CreateProjectile(prefab),
                 actionOnGet: x => x.gameObject.SetActive(true),
                 actionOnRelease: x => x.gameObject.SetActive(false),
                 actionOnDestroy: DestroyProjectile,
@@ -91,7 +90,7 @@ namespace Tanks.Shared.Weapons.Projectiles
             finally
             {
                 ArrayPool<ProjectileBehaviour>.Shared.Return(warmup);
-                _pools[config] = pool;
+                _pools[prefab.Name] = pool;
             }
 
             return true;
@@ -102,10 +101,14 @@ namespace Tanks.Shared.Weapons.Projectiles
             if (instance) Object.Destroy(instance.gameObject);
         }
 
-        private ProjectileBehaviour CreateProjectile(IProjectileConfig config)
+        private ProjectileBehaviour CreateProjectile(ProjectileBehaviour prefab)
         {
-            ProjectileBehaviour instance = config.Create() as ProjectileBehaviour;
-            _container.InjectGameObject(instance.gameObject);
+            ProjectileBehaviour instance = Object.Instantiate(prefab);
+            instance.name = prefab.name;
+
+            try { _container.InjectGameObject(instance.gameObject); }
+            catch (System.Exception ex) { Debug.LogException(ex); }
+
             return instance;
         }
     }

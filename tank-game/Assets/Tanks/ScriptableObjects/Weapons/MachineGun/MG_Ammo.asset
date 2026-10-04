@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: MG_Ammo
   m_EditorClassIdentifier: Tanks.Shared::Tanks.Shared.Weapons.Data.AmmoConfig
   _type: 0
-  _defaultAmount: 20
+  _defaultAmount: 30
   _maxAmount: 10
   _regenerationDelay: 2
   _regenerationDuration: 5

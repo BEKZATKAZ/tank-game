@@ -26,11 +26,11 @@ namespace Tanks.Server.Weapons
             if (_latestUnprocessedInput.HasValue)
             {
                 WeaponInput input = _latestUnprocessedInput.Value;
-                Scheduler.Schedule(Behaviour.CurrentWeapon, input, tick, tickDelta);
+                Scheduler.Schedule(Behaviour, input, tick, tickDelta);
                 _latestUnprocessedInput = null;
             }
 
-            Scheduler.Tick(tick, tickDelta);
+            Scheduler.Tick(tick, tickDelta * Behaviour.GetDeltaMultiplier());
         }
 
         protected override void OnDestroy()

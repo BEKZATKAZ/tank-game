@@ -7,14 +7,25 @@ namespace Tanks.Server.Weapons
         NetworkComponent<IWeaponHolderBehaviour>,
         INetworkMessageHandler<WeaponUsed>
     {
+        private int _lastTick;
+
         public void Handle(WeaponUsed message)
         {
-            Behaviour.UseWeaponClientRpc(new WeaponUsedFromServer { Id = message.ShotId });
+            Behaviour.UseWeaponClientRpc(new WeaponUsedFromServer
+            {
+                ServerTick = _lastTick,
+                Id = message.ShotId
+            });
         }
 
         protected override void OnInitialize()
         {
             Behaviour.RegisterMessageHandler(this);
+        }
+
+        protected override void OnTick(int tick, float tickDelta)
+        {
+            _lastTick = tick;
         }
     }
 }

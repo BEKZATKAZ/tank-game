@@ -5,7 +5,7 @@ using Tanks.Shared.Items.Behaviours;
 
 namespace Tanks.Server.Items.Behaviours.OnPickup
 {
-    [ItemBehaviour("health_up")]
+    [ItemBehaviour("health-up")]
     public sealed class HealthUpBehaviour : ItemBehaviourBase
     {
         public override void OnPickup(IItemOwnerBehaviour owner)
@@ -14,7 +14,20 @@ namespace Tanks.Server.Items.Behaviours.OnPickup
                 .GetBehaviour<IHealthBehaviour>()
                 .Require<IAuthoritativeHealth>();
 
-            health.Heal(40);
+            health.Heal(Config.GetStat("health").Value);
+        }
+    }
+
+    [ItemBehaviour("health-up-mini")]
+    public sealed class HealthUpMiniBehaviour : ItemBehaviourBase
+    {
+        public override void OnPickup(IItemOwnerBehaviour owner)
+        {
+            IAuthoritativeHealth health = owner
+                .GetBehaviour<IHealthBehaviour>()
+                .Require<IAuthoritativeHealth>();
+
+            health.Heal(Config.GetStat("health").Value);
         }
     }
 }

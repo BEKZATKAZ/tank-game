@@ -1,14 +1,17 @@
 ﻿using NaughtyAttributes;
 using Tanks.Audio;
 using Tanks.Client.Entities;
+using Tanks.Client.Entities.Health;
 using Tanks.Client.Input;
 using Tanks.Client.Items;
 using Tanks.Client.Player;
 using Tanks.Client.Rendering;
 using Tanks.Client.Visuals;
+using Tanks.Client.Visuals.Hitstop;
 using Tanks.Client.Weapons;
 using Tanks.Localization;
 using Tanks.Shared.Bootstrap;
+using Tanks.Shared.Entities.Health;
 using Unity.Multiplayer;
 using UnityEngine;
 using VContainer;
@@ -61,6 +64,7 @@ namespace Tanks.Client.Bootstrap
             builder.Register<IHitstopService, HitstopService>(Lifetime.Singleton);
             builder.Register<IStressService, StressService>(Lifetime.Singleton);
             builder.Register<IShotIdGenerator, ShotIdGenerator>(Lifetime.Singleton);
+            builder.Register<IDamageService, DamagePredictionService>(Lifetime.Singleton);
 
             builder.RegisterComponent(_clientItemDatabase).As<IClientItemDatabase>();
             builder.RegisterComponent(_shakeService).As<ICameraShakeService>();

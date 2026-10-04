@@ -18,6 +18,7 @@ namespace Tanks.Shared.Entities.Health
     public struct HealthChangedFromServer
     {
         public IEntityBehaviour Target;
+        public IEntityBehaviour From;
         public HealthState OldState;
         public HealthState AuthoritativeState;
         public HealthEventId EventId;
@@ -59,21 +60,26 @@ namespace Tanks.Shared.Entities.Health
             if (oldState.Equals(newState)) return;
 
             _serverState.Value = newState;
+            IEntityBehaviour fromEntity = _entityService.GetById(from);
 
-            EmitMessage(new HealthChangedFromServer
+            HealthChangedFromServer message = new HealthChangedFromServer
             {
                 EventId = eventId,
                 Target = Entity,
+                From = fromEntity,
                 OldState = oldState,
                 AuthoritativeState = newState
-            });
+            };
+
+            EmitMessage(message);
+            _bus.Publish(message, this);
 
             if (newState.Current > 0) return;
 
             Died died = new Died
             {
                 Target = Entity,
-                From = _entityService.GetById(from),
+                From = fromEntity,
                 WorldPosition = Transform.WorldPosition
             };
 

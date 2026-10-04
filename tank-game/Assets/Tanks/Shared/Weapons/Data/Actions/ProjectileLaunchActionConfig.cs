@@ -16,10 +16,21 @@ namespace Tanks.Shared.Weapons.Data.Actions
         menuName = "Scriptable Objects/Weapons/Actions/Projectile Launch")]
     public class ProjectileLaunchActionConfig : UseActionConfig
     {
-        [Expandable]
         [Required]
         [SerializeField]
-        private ProjectileConfig _projectile;
+        private ProjectileBehaviour _prefab;
+
+        [Range(1, 50)]
+        [SerializeField]
+        private ushort _projectileCount = 1;
+
+        [Range(0, 180)]
+        [SerializeField]
+        private float _spreadDegrees;
+
+        public ProjectileBehaviour Prefab => _prefab;
+        public ushort ProjectileCount => _projectileCount;
+        public float SpreadDegrees => _spreadDegrees;
 
         public override IUseAction Create(ITransform muzzlePoint)
         {
@@ -27,7 +38,7 @@ namespace Tanks.Shared.Weapons.Data.Actions
                 .Find<GameplayScope>().Container
                 .Resolve<IProjectilePoolService>();
 
-            return new ProjectileLaunchAction(pool.AsRequired(), _projectile, muzzlePoint);
+            return new ProjectileLaunchAction(pool.AsRequired(), this, muzzlePoint);
         }
     }
 }

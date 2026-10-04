@@ -25,8 +25,11 @@ namespace Tanks.Client.Weapons
                 ? _idGenerator.GenerateShotId(Behaviour.OwnerClientId, tick)
                 : default;
 
+            // Predict rate of fire
+            float affectedTickDelta = tickDelta * Behaviour.GetDeltaMultiplier();
+
             // Send nothing if the weapon was not used
-            if (Behaviour.WeaponTick(tickDelta, _isHoldingDown, shotId) == false) return;
+            if (Behaviour.WeaponTick(affectedTickDelta, _isHoldingDown, shotId) == false) return;
 
             // Send many inputs at once to avoid packet loss
             _fireBuffer = _fireBuffer.Add(new ClientShot(tick, shotId));

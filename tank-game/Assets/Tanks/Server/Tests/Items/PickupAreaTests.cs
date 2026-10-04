@@ -1,6 +1,8 @@
 ﻿using NSubstitute;
 using NUnit.Framework;
 using System;
+using System.Collections.Generic;
+using System.Linq;
 using Tanks.Server.Items.Pickups;
 using Tanks.Shared.Entities.Health;
 using Tanks.Shared.Items;
@@ -36,7 +38,8 @@ namespace Tanks.Server.Tests.Items
             PickupId pickupId = new PickupId(2);
 
             IItemConfig config = Substitute.For<IItemConfig>();
-            config.Stats.Returns(Array.Empty<ItemStat>());
+            config.PlayerStats.Returns(new Dictionary<StatType, PlayerStat>());
+            config.ItemStats.Returns(new Dictionary<string, ItemStat>());
 
             _database.Get(itemId).Returns(config);
             _component.PickUp(_owner, itemId, pickupId);
@@ -45,42 +48,35 @@ namespace Tanks.Server.Tests.Items
         }
 
         [Test]
-        public void PickUp_WithStats_AddsStats()
+        public void PickUp_WithPlayerStats_AddsStats()
         {
             ItemIdentifier itemId = new ItemIdentifier("test-id");
 
-            ItemStat stat = new ItemStat
+            PlayerStat stat = new PlayerStat
             {
-                ApplyOnPickUp = true,
-                Type = StatType.Speed,
                 ValueType = StatValueType.Flat,
                 Value = 5,
                 Duration = 10
             };
 
             IItemConfig config = Substitute.For<IItemConfig>();
-            config.Stats.Returns(new[] { stat });
+            config.PlayerStats.Returns(new Dictionary<StatType, PlayerStat>
+            {
+                [StatType.Speed] = stat
+            });
 
             _database.Get(itemId).Returns(config);
             _component.PickUp(_owner, itemId, default);
-            _statOwner.Received(1).AddStat(stat.Type, stat.ValueType, stat.Value, stat.Duration);
+            _statOwner.Received(1).AddStat(StatType.Speed, stat.ValueType, stat.Value, stat.Duration);
         }
 
         [Test]
-        public void PickUp_NoApplyOnPickUp_DoesNothing()
+        public void PickUp_NoPlayerStats_DoesNothing()
         {
             ItemIdentifier itemId = new ItemIdentifier("test-id");
-            IItemConfig config = Substitute.For<IItemConfig>();
 
-            config.Stats.Returns(new[]
-            {
-                new ItemStat
-                {
-                    ApplyOnPickUp = false,
-                    Type = StatType.Speed,
-                    Value = 100
-                }
-            });
+            IItemConfig config = Substitute.For<IItemConfig>();
+            config.PlayerStats.Returns(new Dictionary<StatType, PlayerStat>());
 
             _database.Get(itemId).Returns(config);
             _component.PickUp(_owner, itemId, default);

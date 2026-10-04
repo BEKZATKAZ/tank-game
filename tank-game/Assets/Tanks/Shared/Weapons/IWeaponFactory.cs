@@ -24,11 +24,12 @@ namespace Tanks.Shared.Weapons
             Weapon weapon = new Weapon();
 
             var ammo = config.Ammo.Create().AsRequired();
-            var cooldown = config.Cooldown.Create().AsRequired();
+            var cooldown = config.Cooldown?.Create().AsRequired() ?? new NoCooldown();
             var useMode = CreateUseMode(config.UseMode).AsRequired();
-            var useAction = config.UseAction.Create(muzzlePoint).AsRequired();
+            var useAction = config.UseAction?.Create(muzzlePoint).AsRequired() ?? new NoUseAction();
+            var recoil = config.Recoil.AsRequired();
 
-            weapon.Initialize(ammo, cooldown, useMode, useAction, config.Recoil.AsRequired());
+            weapon.Initialize(config.Name, ammo, cooldown, useMode, useAction, recoil);
             return weapon;
         }
     }

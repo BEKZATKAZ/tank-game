@@ -63,6 +63,7 @@
 .item-description__name {
     padding: 0 10px;
     font-size: 38px;
+    letter-spacing: 2px;
     -unity-font-definition: var(--font-black);
     -unity-text-align: middle-left;
 }
@@ -79,13 +80,14 @@
 
 .item-description__description {
     color: var(--text-secondary-color);
-    font-size: 20px;
+    font-size: 24px;
+    letter-spacing: 2px;
     white-space: normal;
 }
 
 .item-description__tier {
     padding-top: 25px;
-    font-size: 22px;
+    font-size: 24px;
     -unity-font-style: bold;
 }
 

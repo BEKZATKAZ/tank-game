@@ -13,7 +13,6 @@ namespace Tanks.Shared
         bool IsOwner { get; }
         bool IsLocalPlayer { get; }
         bool IsServer { get; }
-        bool IsClient { get; }
 
         ulong OwnerClientId { get; }
         ITransform Transform { get; }
@@ -117,7 +116,7 @@ namespace Tanks.Shared
             NetworkManager.NetworkTickSystem.Tick -= Tick;
         }
 
-        private void OnEnable()
+        protected virtual void OnEnable()
         {
             foreach (INetworkComponent component in _components)
             {
@@ -126,7 +125,7 @@ namespace Tanks.Shared
             }
         }
 
-        private void OnDisable()
+        protected virtual void OnDisable()
         {
             foreach (INetworkComponent component in _components)
             {
@@ -135,7 +134,7 @@ namespace Tanks.Shared
             }
         }
 
-        private void Update()
+        protected virtual void Update()
         {
             float deltaTime = Time.deltaTime;
 
@@ -152,7 +151,7 @@ namespace Tanks.Shared
             }
         }
 
-        private void LateUpdate()
+        protected virtual void LateUpdate()
         {
             float deltaTime = Time.deltaTime;
 
@@ -165,11 +164,21 @@ namespace Tanks.Shared
 
         private void Tick()
         {
-            if (gameObject.activeInHierarchy == false) return;
+            if (this == false)
+            {
+                if (NetworkManager == false) return;
+                if (NetworkManager.NetworkTickSystem is null) return;
+
+                NetworkManager.NetworkTickSystem.Tick -= Tick;
+                return;
+            }
+
+            if (this == false || gameObject.activeInHierarchy == false) return;
             if (enabled == false) return;
 
             int tick = NetworkManager.NetworkTickSystem.LocalTime.Tick;
             float tickDelta = 1f / NetworkManager.NetworkTickSystem.TickRate;
+
             OnTick(tick, tickDelta);
 
             foreach (INetworkComponent component in _components)
@@ -178,6 +187,8 @@ namespace Tanks.Shared
                 try { component.Tick(tick, tickDelta); }
                 catch (Exception ex) { Debug.LogException(ex); }
             }
+
+            OnLateTick(tick, tickDelta);
 
             foreach (INetworkComponent component in _components)
             {
@@ -219,7 +230,9 @@ namespace Tanks.Shared
 
         protected void ForceInitialize() => OnNetworkSpawn();
         protected virtual void Awake() => Transform = new UnityTransform(transform);
-        protected virtual void OnTick(int tick, float tickDelta) { }
         protected virtual void OnInitialize() { }
+
+        public virtual void OnTick(int tick, float tickDelta) { }
+        public virtual void OnLateTick(int tick, float tickDelta) { }
     }
 }

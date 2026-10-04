@@ -10,6 +10,7 @@ namespace Tanks.Shared.Tests.Weapons
 {
     class MockWeaponConfig : IWeaponConfig, System.IDisposable
     {
+        public string Name => "MockWeaponConfig";
         public WeaponUseMode UseMode { get; set; }
         public IAmmoConfig Ammo { get; } = ScriptableObject.CreateInstance<AmmoConfig>();
         public ICooldownConfig Cooldown { get; } = ScriptableObject.CreateInstance<CooldownConfig>();

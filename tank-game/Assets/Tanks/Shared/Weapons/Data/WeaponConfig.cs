@@ -12,6 +12,7 @@ namespace Tanks.Shared.Weapons.Data
 
     public interface IWeaponConfig
     {
+        string Name { get; }
         WeaponUseMode UseMode { get; }
         IAmmoConfig Ammo { get; }
         ICooldownConfig Cooldown { get; }
@@ -31,18 +32,17 @@ namespace Tanks.Shared.Weapons.Data
         private AmmoConfig _ammo;
 
         [Expandable]
-        [Required]
         [SerializeField]
         private CooldownConfig _cooldown;
 
         [Expandable]
-        [Required]
         [SerializeField]
         private UseActionConfig _useAction;
 
         [SerializeField]
         private RecoilConfig _recoil;
 
+        public string Name => name;
         public WeaponUseMode UseMode => _useMode;
         public IAmmoConfig Ammo => _ammo;
         public ICooldownConfig Cooldown => _cooldown;

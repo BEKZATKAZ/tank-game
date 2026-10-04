@@ -1,0 +1,21 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e65df12e201a90d46a5e80278588ce45, type: 3}
+  m_Name: TwinBarrel
+  m_EditorClassIdentifier: Tanks.Shared::Tanks.Shared.Weapons.Data.WeaponConfig
+  _useMode: 1
+  _ammo: {fileID: 11400000, guid: 37d2c62cb3915a34a9336f160bf60cb4, type: 2}
+  _cooldown: {fileID: 11400000, guid: eae3701a9086ac745b817d5d4c760d22, type: 2}
+  _useAction: {fileID: 11400000, guid: 0fdc66803c7cc6d448c94798fce0b1a2, type: 2}
+  _recoil:
+    _amount: 17.5
+    _durationSeconds: 0.82

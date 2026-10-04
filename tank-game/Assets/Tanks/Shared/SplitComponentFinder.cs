@@ -4,26 +4,26 @@ using System.Linq;
 using System.Reflection;
 using System.Text.RegularExpressions;
 using Tanks.Core.Helpers;
+using Unity.Scripting.LifecycleManagement;
 
 namespace Tanks.Shared
 {
-	public static class SplitComponentFinder
+    [AutoStaticsCleanup]
+    public static partial class SplitComponentFinder
 	{
-        static SplitComponentFinder()
-        {
-            _baseTypes = AppDomain.CurrentDomain
-                .GetAssemblies()
-                .SelectMany(x =>
-                {
-                    try { return x.GetTypes(); }
-                    catch (ReflectionTypeLoadException e) { return e.Types.Where(t => t != null); }
-                })
-                .Where(x => x.IsAbstract == false && x.IsInterface == false)
-                .ToArray();
-        }
-
         // Cache to minimize reflection on each call
-        private static readonly Type[] _baseTypes;
+        [AutoStaticsCleanup]
+        private static readonly Type[] _baseTypes = UnityEngine.Assemblies.CurrentAssemblies
+            .GetLoadedAssemblies()
+            .SelectMany(x =>
+            {
+                try { return x.GetTypes(); }
+                catch (ReflectionTypeLoadException e) { return e.Types.Where(t => t != null); }
+            })
+            .Where(x => x.IsAbstract == false && x.IsInterface == false)
+            .ToArray();
+
+        [AutoStaticsCleanup]
         private static readonly Dictionary<Type, Type[]> _componentTypes = new();
 
         public static void ClearCache() => _componentTypes.Clear();

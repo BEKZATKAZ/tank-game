@@ -1,0 +1,40 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 25a9e02b83171d44f9a4f5f7aa4052bb, type: 3}
+  m_Name: StatTypeParameters
+  m_EditorClassIdentifier: Tanks.Shared::Tanks.Shared.Stats.StatTypeParametersConfig
+  _parameters:
+  - key: 0
+    value:
+      MinValue: -99999
+      MaxValue: 99999
+      DiminishingBase: 0
+  - key: 1
+    value:
+      MinValue: 2
+      MaxValue: 15
+      DiminishingBase: 0
+  - key: 2
+    value:
+      MinValue: -99999
+      MaxValue: 99999
+      DiminishingBase: 50
+  - key: 3
+    value:
+      MinValue: -20
+      MaxValue: 20
+      DiminishingBase: 0
+  - key: 4
+    value:
+      MinValue: 0
+      MaxValue: 20
+      DiminishingBase: 0

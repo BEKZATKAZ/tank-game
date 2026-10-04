@@ -1,0 +1,21 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e65df12e201a90d46a5e80278588ce45, type: 3}
+  m_Name: BombLauncher
+  m_EditorClassIdentifier: Tanks.Shared::Tanks.Shared.Weapons.Data.WeaponConfig
+  _useMode: 1
+  _ammo: {fileID: 11400000, guid: 2b16c7c609b465f41a8a145edd055357, type: 2}
+  _cooldown: {fileID: 0}
+  _useAction: {fileID: 11400000, guid: b6b8c55e56ac9d346b17537e61332d5d, type: 2}
+  _recoil:
+    _amount: 17.5
+    _durationSeconds: 0.82

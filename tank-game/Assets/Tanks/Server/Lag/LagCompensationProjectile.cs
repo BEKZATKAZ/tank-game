@@ -21,7 +21,7 @@ namespace Tanks.Server.Lag
 
             ProjectileData data = new ProjectileData
             {
-                Damage = Behaviour.Damage,
+                Behaviour = Behaviour,
                 Owner = Behaviour.Owner
             };
 

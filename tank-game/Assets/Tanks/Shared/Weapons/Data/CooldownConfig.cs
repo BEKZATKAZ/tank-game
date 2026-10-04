@@ -13,14 +13,11 @@ namespace Tanks.Shared.Weapons.Data
     public sealed class CooldownConfig : ScriptableObject, ICooldownConfig
     {
         [SerializeField]
-        [Range(0, 5)]
+        [Range(0.01f, 5)]
         private float _duration = 0.15f;
 
         public float DurationSeconds => _duration;
 
-        public ICooldown Create()
-        {
-            return _duration <= 0 ? new NoCooldown() : new Cooldown(_duration);
-        }
+        public ICooldown Create() => new Cooldown(_duration);
     }
 }

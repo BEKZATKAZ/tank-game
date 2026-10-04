@@ -29,7 +29,11 @@ namespace Tanks.Client.Items
             Behaviour.Accent.gameObject.SetActive(true);
 
             _motion = LMotion.Create(1f, 0, duration: 0.4f)
-                .WithOnComplete(() => Behaviour.Accent.gameObject.SetActive(false))
+                .WithOnComplete(() =>
+                {
+                    if (Behaviour.Accent == false) return;
+                    Behaviour.Accent.gameObject.SetActive(false);
+                })
                 .WithEase(Ease.InSine)
                 .Bind(x =>
                 {

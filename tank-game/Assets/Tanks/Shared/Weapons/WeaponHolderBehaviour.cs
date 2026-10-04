@@ -3,20 +3,24 @@ using System.Runtime.InteropServices;
 using Tanks.Core.Helpers;
 using Tanks.Shared.Adapters;
 using Tanks.Shared.Entities;
+using Tanks.Shared.Messaging;
 using Tanks.Shared.Stats;
 using Tanks.Utils;
 using Unity.Netcode;
 using UnityEngine;
+using VContainer;
 
 namespace Tanks.Shared.Weapons
 {
     public struct WeaponUsedFromServer : INetworkSerializeByMemcpy
     {
+        public int ServerTick;
         public ShotId Id;
     }
 
     public struct WeaponUsed
     {
+        public IWeaponHolderBehaviour Owner;
         public Required<IReadOnlyWeapon> Weapon;
         public ShotId ShotId;
     }
@@ -53,6 +57,8 @@ namespace Tanks.Shared.Weapons
 
         void SendInputServerRpc(WeaponInput input);
         void UseWeaponClientRpc(WeaponUsedFromServer message);
+
+        float GetDeltaMultiplier();
         bool WeaponTick(float deltaTime, bool isHoldingDown, ShotId id);
 
         void SwitchTo(Required<Weapon> weapon);
@@ -61,7 +67,8 @@ namespace Tanks.Shared.Weapons
     }
 
     [RequireComponent(typeof(StatOwnerBehaviour), typeof(EntityBehaviour), typeof(Rigidbody2D))]
-    public sealed class WeaponHolderBehaviour : NetworkBehaviourExtended, IWeaponHolderBehaviour
+    public sealed class WeaponHolderBehaviour :
+        NetworkBehaviourExtended, IWeaponHolderBehaviour, IMessageSender
     {
         [SerializeField] private Transform _muzzlePoint;
 
@@ -69,12 +76,15 @@ namespace Tanks.Shared.Weapons
         public IReadOnlyWeapon DefaultWeapon => _defaultWeapon;
 
         public ITransform MuzzlePoint { get; private set; }
-        public IStatOwnerBehaviour EffectOwner { get; private set; }
         public IVelocity Velocity { get; private set; }
         public IEntityBehaviour Entity { get; private set; }
 
+        [Inject] private readonly IMessageBus _bus;
+
         private Weapon _currentWeapon;
         private Weapon _defaultWeapon;
+        private IStatOwnerBehaviour _statOwner;
+
 
         [Rpc(SendTo.Server, InvokePermission = RpcInvokePermission.Owner)]
         public void SendInputServerRpc(WeaponInput input) => EmitMessage(input);
@@ -94,8 +104,17 @@ namespace Tanks.Shared.Weapons
             _currentWeapon.Used += OnWeaponUsed;
         }
 
+        public float GetDeltaMultiplier()
+        {
+            float baseRateOfFire = 1f / _currentWeapon.Cooldown.DurationSeconds;
+            float rateOfFire = _statOwner.GetStat(StatType.RateOfFire, baseRateOfFire);
+            return rateOfFire / baseRateOfFire;
+        }
+
         public bool WeaponTick(float deltaTime, bool isHoldingDown, ShotId id)
         {
+            if (deltaTime <= 0) return false;
+
             bool used = _currentWeapon.Tick(this, isHoldingDown, deltaTime, id);
 
             // Unless we want 2 ticks on our current weapon
@@ -105,6 +124,7 @@ namespace Tanks.Shared.Weapons
             if (_currentWeapon.Ammo.CanConsume() == false)
             {
                 SwitchToDefault();
+                return used;
             }
             
             _defaultWeapon.Tick(this, isHoldingDown: false, deltaTime, id);
@@ -113,15 +133,25 @@ namespace Tanks.Shared.Weapons
 
         private void OnWeaponUsed(ShotId id)
         {
-            EmitMessage(new WeaponUsed { Weapon = _currentWeapon, ShotId = id });
+            WeaponUsed message = new WeaponUsed
+            {
+                Owner = this,
+                Weapon = _currentWeapon,
+                ShotId = id
+            };
+
+            EmitMessage(message);
+            _bus.Publish(message, this);
         }
 
         protected override void Awake()
         {
             base.Awake();
+
             Velocity = new UnityVelocity(GetComponent<Rigidbody2D>());
             MuzzlePoint = new UnityTransform(_muzzlePoint);
-            EffectOwner = GetComponent<StatOwnerBehaviour>();
+
+            _statOwner = GetComponent<StatOwnerBehaviour>();
             Entity = GetComponent<EntityBehaviour>();
         }
     }

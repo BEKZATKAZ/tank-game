@@ -1,5 +1,4 @@
 ﻿using Tanks.Core.Lobbies.Sessions;
-using Tanks.Server.Entities;
 using Tanks.Shared;
 using Tanks.Shared.Entities;
 using Tanks.Shared.Entities.Health;
@@ -18,16 +17,19 @@ namespace Tanks.Server
         public DangerZone(
             IEntityService entityService,
             IMessageBus bus,
-            ISessionSettingsService sessionSettings)
+            ISessionSettingsService sessionSettings,
+            IDamageService damageService)
         {
             _entityService = entityService;
             _bus = bus;
             _sessionSettings = sessionSettings;
+            _damageService = damageService;
         }
 
         private readonly IEntityService _entityService;
         private readonly IMessageBus _bus;
         private readonly ISessionSettingsService _sessionSettings;
+        private readonly IDamageService _damageService;
 
         private float2 _currentSize;
         private float2 _maxSize;
@@ -100,14 +102,12 @@ namespace Tanks.Server
 
                 if (rect.Overlaps(new Rect(center.x, center.y, 0.01f, 0.01f))) continue;
 
-                var health = entity
-                    .GetBehaviour<IHealthBehaviour>()
-                    .Require<IAuthoritativeHealth>();
-
                 HealthEventId eventId = HealthEventId
                     .Create(typeof(IDangerZoneBehaviour), tick);
 
-                health.Damage(settings.DamagePerSecond, null, eventId);
+                // Don't count stats for pure damage
+                _damageService.Damage(
+                    settings.DamagePerSecond, entity, null, eventId, includeStats: false);
             }
         }
     }

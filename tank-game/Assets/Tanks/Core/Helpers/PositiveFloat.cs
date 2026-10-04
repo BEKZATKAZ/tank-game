@@ -8,7 +8,8 @@ namespace Tanks.Core.Helpers
         public PositiveFloat(float value)
         {
             Value = value <= 0
-                ? throw new ArgumentOutOfRangeException(nameof(value))
+                ? throw new ArgumentOutOfRangeException(
+                    nameof(value), $"Value not positive '{value}'")
                 : value;
         }
 
@@ -46,7 +47,8 @@ namespace Tanks.Core.Helpers
         public PositiveFloatOrZero(float value)
         {
             Value = value < 0
-                ? throw new ArgumentOutOfRangeException(nameof(value))
+                ? throw new ArgumentOutOfRangeException(
+                    nameof(value), $"Negative value '{value}'")
                 : value;
         }
 

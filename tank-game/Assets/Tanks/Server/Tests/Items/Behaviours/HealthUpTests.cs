@@ -10,14 +10,17 @@ namespace Tanks.Server.Tests.Items.Behaviours
 {
     public class HealthUpTests : ItemBehaviourTestBase<HealthUpBehaviour>
     {
-        protected override IItemConfig InitializeConfig() => new MockItemConfig();
+        protected override void InitializeConfig()
+        {
+            AddItemStat("health", new ItemStat { Value = 20 });
+        }
 
         [Test]
         public void PickUp_Heals()
         {
             Behaviour.OnPickup(MockOwner);
             var health = MockOwner.GetBehaviour<IHealthBehaviour>().Require<IAuthoritativeHealth>();
-            health.Received(1).Heal(40);
+            health.Received(1).Heal(Config.GetStat("health").Value);
         }
     }
 }

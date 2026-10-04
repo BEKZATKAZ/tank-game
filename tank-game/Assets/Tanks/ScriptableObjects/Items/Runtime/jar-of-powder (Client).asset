@@ -1,0 +1,20 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: affa312280d72464db64682277b702b4, type: 3}
+  m_Name: jar-of-powder (Client)
+  m_EditorClassIdentifier: Tanks.Client::Tanks.Client.Items.ClientItemConfig
+  _identifier: jar-of-powder
+  _iconMaterial: {fileID: -876546973899608171, guid: 9680fbb573735774aaa7e0c722f9aad3, type: 3}
+  _icon: {fileID: 21300000, guid: 15013b1c9c1fa1b4aace7fe70fb5929e, type: 3}
+  _onPickUpSound: event:/SFX/Items/PickUp/Weapon_Equip
+  _onSpawnSound: event:/SFX/Items/Spawn/Epic
+  _accentColor: {r: 1, g: 0.2, b: 0.3019608, a: 1}

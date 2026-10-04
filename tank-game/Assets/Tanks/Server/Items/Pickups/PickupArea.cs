@@ -40,10 +40,9 @@ namespace Tanks.Server.Items.Pickups
             IItemConfig config = _database.Get(itemId);
             owner.PickupItem(config, pickupId);
 
-            foreach (ItemStat stat in config.Stats)
+            foreach ((StatType type, PlayerStat stat) in config.PlayerStats)
             {
-                if (stat.ApplyOnPickUp == false) continue;
-                statOwner.AddStat(stat.Type, stat.ValueType, stat.Value, stat.Duration);
+                statOwner.AddStat(type, stat.ValueType, stat.Value, stat.Duration);
             }
         }
 

@@ -1,5 +1,4 @@
 ﻿using Unity.Mathematics;
-using UnityEngine;
 
 namespace Tanks.Server.Lag
 {
@@ -26,8 +25,6 @@ namespace Tanks.Server.Lag
 
             float2 closestPoint = math.clamp(localPosition, -halfSize, halfSize);
             float2 delta = localPosition - closestPoint;
-
-            Debug.Log(entity.Position + " - " + projectile.Position);
 
             return math.lengthsq(delta) <= projectile.Radius * projectile.Radius;
         }

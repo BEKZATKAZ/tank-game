@@ -1,11 +1,12 @@
 ﻿using Tanks.Shared.Entities;
+using Unity.Scripting.LifecycleManagement;
 
 namespace Tanks.Server.Entities
 {
-    public static class EntityIdGenerator
+    public static partial class EntityIdGenerator
     {
-        private static readonly object _lock = new object();
-        private static int _lastId;
+        [AutoStaticsCleanup] private static readonly object _lock = new object();
+        [AutoStaticsCleanup] private static int _lastId;
 
         public static EntityId GenerateNext()
         {

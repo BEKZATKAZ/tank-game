@@ -7,16 +7,18 @@ using UnityEngine;
 namespace Tanks.Shared.Items.Data
 {
     [Serializable]
-    public sealed class ItemStat
+    public sealed class PlayerStat
     {
-        public string Name;
-        public StatType Type;
-
+        public float Duration = -1;
         public float Value;
         public StatValueType ValueType;
+    }
 
-        public float Duration = -1;
-        public bool ApplyOnPickUp = true;
+    [Serializable]
+    public struct ItemStat
+    {
+        public float Value;
+        public StatValueType ValueType;
     }
 
     public interface IItemConfig
@@ -24,7 +26,8 @@ namespace Tanks.Shared.Items.Data
         ItemIdentifier Identifier { get; }
         ItemTier Tier { get; }
 
-        IEnumerable<ItemStat> Stats { get; }
+        IReadOnlyDictionary<StatType, PlayerStat> PlayerStats { get; }
+        IReadOnlyDictionary<string, ItemStat> ItemStats { get; }
         IEnumerable<ItemActionConfigBase> OnPickUpActions { get; }
 
         ItemStat GetStat(string name);
@@ -46,30 +49,34 @@ namespace Tanks.Shared.Items.Data
 
         [ReadOnly]
         [SerializeField]
-        private ItemStat[] _stats;
+        private Dictionary<StatType, PlayerStat> _playerStats;
+
+        [ReadOnly]
+        [SerializeField]
+        private Dictionary<string, ItemStat> _itemStats;
 
         public ItemIdentifier Identifier => new ItemIdentifier(_identifier);
         public ItemTier Tier => _tier;
 
-        public IEnumerable<ItemStat> Stats => _stats;
+        public IReadOnlyDictionary<StatType, PlayerStat> PlayerStats => _playerStats;
+        public IReadOnlyDictionary<string, ItemStat> ItemStats => _itemStats;
         public IEnumerable<ItemActionConfigBase> OnPickUpActions => _onPickUpActions;
         
         public ItemStat GetStat(string name)
         {
-            for (int i = 0; i < _stats.Length; i++)
-            {
-                if (_stats[i].Name == name) return _stats[i];
-            }
-
+            if (_itemStats.TryGetValue(name, out ItemStat stat)) return stat;
             throw new KeyNotFoundException($"Stat '{name}' was not found");
         }
 
 #if UNITY_EDITOR
-        public void InitializeFromEditor(string id, ItemTier tier, ItemStat[] stats)
+        public void InitializeFromEditor(
+            string id, ItemTier tier,
+            Dictionary<StatType, PlayerStat> playerStats, Dictionary<string, ItemStat> stats)
         {
             _identifier = id;
             _tier = tier;
-            _stats = stats;
+            _playerStats = playerStats;
+            _itemStats = stats;
         }
 
         public void InitializeActionsFromEditor(ItemActionConfigBase[] onPickUp)

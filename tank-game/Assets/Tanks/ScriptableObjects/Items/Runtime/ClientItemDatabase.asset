@@ -13,7 +13,19 @@ MonoBehaviour:
   m_Name: ClientItemDatabase
   m_EditorClassIdentifier: Tanks.Client::Tanks.Client.Items.ClientItemDatabaseConfig
   _items:
-  - {fileID: 11400000, guid: 6a73c8078c4be434e9026b171c4d6449, type: 2}
-  - {fileID: 11400000, guid: 6ea3e848ec175094abd473c58be39f85, type: 2}
-  - {fileID: 11400000, guid: 7f8d658f623d85041a923e2361939036, type: 2}
+  - {fileID: 11400000, guid: 5bd6d0d374256a549875094f867d8578, type: 2}
+  - {fileID: 11400000, guid: dd241af7cee127b408d5d03351c11b84, type: 2}
+  - {fileID: 11400000, guid: 2e23865e0752fc24ca74a1f4325c199b, type: 2}
+  - {fileID: 11400000, guid: 0c6b4f3dcd4bf8f418bd89c8fc2b85c0, type: 2}
+  - {fileID: 11400000, guid: ec4310dc42a4fa04492d13b428f4d54a, type: 2}
+  - {fileID: 11400000, guid: 462f2ed73d8245944b09aaa28cd8f752, type: 2}
+  - {fileID: 11400000, guid: 506f3fe913c75d7499ea04b3cb51c82a, type: 2}
+  - {fileID: 11400000, guid: 58851a47d1177e745aefd2e4174df228, type: 2}
+  - {fileID: 11400000, guid: 76d018fc8a9278245aab522f399299c3, type: 2}
   - {fileID: 11400000, guid: b2f7012391b35cd4e84bd950d9903b1e, type: 2}
+  - {fileID: 11400000, guid: 151f51319bc2c2449b837e824bb97046, type: 2}
+  - {fileID: 11400000, guid: 2f779285ab38f604abbb6cd4c7345fae, type: 2}
+  - {fileID: 11400000, guid: 590c02b6d37594745a6cb17b9f7b336d, type: 2}
+  - {fileID: 11400000, guid: 4dcadbfd62e4e6b47a463f56f218f67a, type: 2}
+  - {fileID: 11400000, guid: 0d65e227d57621146a8013567fe727fd, type: 2}
+  - {fileID: 11400000, guid: 0b97ace2dc12a344bb6acb03255e7c8d, type: 2}

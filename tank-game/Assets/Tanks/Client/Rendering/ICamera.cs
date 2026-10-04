@@ -13,6 +13,7 @@ namespace Tanks.Client.Rendering
         float Aspect { get; }
 
         float2 ScreenToWorldPoint(float2 pointerPosition);
+        float2 WorldToViewportPoint(float2 worldPosition);
     }
 
     public sealed class UnityCamera : ICamera
@@ -55,6 +56,12 @@ namespace Tanks.Client.Rendering
         public float2 ScreenToWorldPoint(float2 pointerPosition)
         {
             Vector3 result = OriginalCamera.ScreenToWorldPoint(new float3(pointerPosition.xy, 0));
+            return ((float3)result).xy;
+        }
+
+        public float2 WorldToViewportPoint(float2 worldPosition)
+        {
+            Vector3 result = OriginalCamera.WorldToViewportPoint(new float3(worldPosition.xy, 0));
             return ((float3)result).xy;
         }
     }

@@ -1,8 +1,9 @@
 ﻿using Tanks.Core.Helpers;
 using Tanks.Shared.Adapters;
 using Tanks.Shared.Weapons;
-using Tanks.Shared.Weapons.Data;
+using Tanks.Shared.Weapons.Data.Actions;
 using Tanks.Shared.Weapons.Projectiles;
+using Unity.Mathematics;
 
 namespace Tanks.Server.Weapons.Projectiles
 {
@@ -10,31 +11,43 @@ namespace Tanks.Server.Weapons.Projectiles
     {
         public ProjectileLaunchAction(
             Required<IProjectilePoolService> pool,
-            Required<IProjectileConfig> config,
+            Required<ProjectileLaunchActionConfig> actionConfig,
             ITransform muzzlePoint)
         {
             _pool = pool.Value;
-            _config = config.Value;
+            _pool.TryInitializePool(actionConfig.Value.Prefab);
+
             _muzzlePoint = muzzlePoint;
-            _pool.TryInitializePool(_config);
+            _actionConfig = actionConfig;
         }
 
-        private readonly IProjectileConfig _config;
         private readonly ITransform _muzzlePoint;
         private readonly IProjectilePoolService _pool;
+        private readonly ProjectileLaunchActionConfig _actionConfig;
 
         public void Use(IWeaponHolderBehaviour owner, ShotId id)
         {
-            ProjectileId projectileId = new ProjectileId(id, 1);
+            string prefabName = _actionConfig.Prefab.Name;
 
-            if (_pool.TryRent(_config, projectileId, out IProjectileBehaviour projectile) == false)
+            for (ushort value = 1; value <= _actionConfig.ProjectileCount; value++)
             {
-                return;
-            }
+                ProjectileId projectileId = new ProjectileId(id, value);
 
-            projectile.Transform.WorldPosition = _muzzlePoint.WorldPosition;
-            projectile.Transform.WorldRotation = _muzzlePoint.WorldRotation;
-            projectile.Launch(owner, projectileId);
+                if (_pool.TryRent(prefabName, projectileId, out var projectile) == false)
+                {
+                    continue;
+                }
+
+                float t = (value - 0.5f) / _actionConfig.ProjectileCount;
+                float spread = _actionConfig.SpreadDegrees;
+
+                float offset = math.lerp(-spread, spread, t);
+                Angle rotation = _muzzlePoint.WorldRotation + Angle.FromDegrees(offset);
+
+                projectile.Transform.WorldPosition = _muzzlePoint.WorldPosition;
+                projectile.Transform.WorldRotation = rotation;
+                projectile.Launch(owner, projectileId);
+            }
         }
     }
 }

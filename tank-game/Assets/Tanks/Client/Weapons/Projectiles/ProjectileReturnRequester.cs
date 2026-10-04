@@ -1,7 +1,6 @@
 ﻿using System.Collections.Generic;
 using Tanks.Shared;
 using Tanks.Shared.Weapons;
-using Tanks.Shared.Weapons.Data;
 using Tanks.Shared.Weapons.Projectiles;
 using UnityEngine;
 
@@ -10,7 +9,6 @@ namespace Tanks.Client.Weapons.Projectiles
     public struct PendingProjectileReturn
     {
         public ProjectileId Id;
-        public IProjectileConfig Config;
         public IWeaponHolderBehaviour Owner;
     }
 
@@ -33,7 +31,6 @@ namespace Tanks.Client.Weapons.Projectiles
             _pending[message.Id] = new PendingProjectileReturn
             {
                 Id = message.Id,
-                Config = instance.Config,
                 Owner = instance.Owner
             };
         }

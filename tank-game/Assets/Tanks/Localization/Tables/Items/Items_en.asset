@@ -16,31 +16,32 @@ MonoBehaviour:
     m_Code: en
   m_SharedData: {fileID: 11400000, guid: 72df8041cb1f65b40958c98981ef1561, type: 2}
   m_Metadata:
-    m_Items: []
+    m_Items:
+    - rid: 937747718553469026
   m_TableData:
   - m_Id: 1898613006336
     m_Localized: No Room For Error
     m_Metadata:
       m_Items: []
   - m_Id: 2067794452480
-    m_Localized: You deal an absurd amount of damage, but a single hit could be your
-      undoing.
+    m_Localized: You deal an absurd amount of damage, but a single hit could be your undoing.
     m_Metadata:
       m_Items: []
   - m_Id: 70567816814592
-    m_Localized: Health Up
+    m_Localized: Large Health Up
     m_Metadata:
       m_Items: []
   - m_Id: 70680580677632
-    m_Localized: You restore a bit of HP.
+    m_Localized: You restore {health} HP.
     m_Metadata:
-      m_Items: []
+      m_Items:
+      - rid: 937747718553469026
   - m_Id: 71017257459712
     m_Localized: Random Teleport
     m_Metadata:
       m_Items: []
   - m_Id: 71319167655936
-    m_Localized: You teleport to a random spot on the map.
+    m_Localized: Wanna gamble? Teleport to a random spot, even inside the danger zone.
     m_Metadata:
       m_Items: []
   - m_Id: 71503196938240
@@ -48,15 +49,11 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 71606984990720
-    m_Localized: You get a weapon with a higher rate of fire but lower damage.
+    m_Localized: Weapon with a much higher rate of fire but much lower damage.
     m_Metadata:
       m_Items: []
   - m_Id: 73022222852096
     m_Localized: There's no point of return
-    m_Metadata:
-      m_Items: []
-  - m_Id: 74361057271808
-    m_Localized: Little Health Up
     m_Metadata:
       m_Items: []
   - m_Id: 74540846112768
@@ -87,6 +84,144 @@ MonoBehaviour:
     m_Localized: Legendary
     m_Metadata:
       m_Items: []
+  - m_Id: 24637296295239680
+    m_Localized: Missing Texture
+    m_Metadata:
+      m_Items: []
+  - m_Id: 24637799422976000
+    m_Localized: They can't see you, you can't see them. If you already have this item, you go missing yourself... At least you'll gain speed.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 24638048178757632
+    m_Localized: Hide the tracks!
+    m_Metadata:
+      m_Items: []
+  - m_Id: 24638443533852672
+    m_Localized: (Un)lucky Shot
+    m_Metadata:
+      m_Items: []
+  - m_Id: 24639211494137856
+    m_Localized: One random player among all players including you gets unlucky and takes {damage} damage out of the blue.
+    m_Metadata:
+      m_Items:
+      - rid: 937747718553469026
+  - m_Id: 24639686226436096
+    m_Localized: One got unlucky
+    m_Metadata:
+      m_Items: []
+  - m_Id: 24646271011086336
+    m_Localized: Twin Barrel
+    m_Metadata:
+      m_Items: []
+  - m_Id: 24646440532271104
+    m_Localized: Weapon that fires 2 exploding projectiles. Ideal for small distances.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 24647016879972352
+    m_Localized: Close Encounters - Face to Face
+    m_Metadata:
+      m_Items: []
+  - m_Id: 25105894847504384
+    m_Localized: Small Health Up
+    m_Metadata:
+      m_Items: []
+  - m_Id: 25106182220242944
+    m_Localized: You restore {health} HP.
+    m_Metadata:
+      m_Items:
+      - rid: 937747718553469026
+  - m_Id: 25157885992853504
+    m_Localized: Jar O' Gunpowder
+    m_Metadata:
+      m_Items: []
+  - m_Id: 25158317096001536
+    m_Localized: More gunpowder!
+    m_Metadata:
+      m_Items: []
+  - m_Id: 25158649037414400
+    m_Localized: Heavy Treads
+    m_Metadata:
+      m_Items: []
+  - m_Id: 25158904093040640
+    m_Localized: Heavier doesn't mean fatter
+    m_Metadata:
+      m_Items: []
+  - m_Id: 25362945230200832
+    m_Localized: Rapid Loader
+    m_Metadata:
+      m_Items: []
+  - m_Id: 25372714284310528
+    m_Localized: Beeswax Armor
+    m_Metadata:
+      m_Items: []
+  - m_Id: 25372870668935168
+    m_Localized: Temporary gain enough defense and speed to demolish everyone on the map.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 25373363868753920
+    m_Localized: It all begins now
+    m_Metadata:
+      m_Items: []
+  - m_Id: 25751314284109824
+    m_Localized: Bloodlust
+    m_Metadata:
+      m_Items: []
+  - m_Id: 25751396253392896
+    m_Localized: For each {interval} missing HP, you gain {damage} damage. But this item may be picked up only once, otherwise you'll die.
+    m_Metadata:
+      m_Items:
+      - rid: 937747718553469026
+  - m_Id: 25753328636354560
+    m_Localized: Berserker's bloodlust
+    m_Metadata:
+      m_Items: []
+  - m_Id: 26193936811253760
+    m_Localized: Bomb Launcher
+    m_Metadata:
+      m_Items: []
+  - m_Id: 26194437552431104
+    m_Localized: Weapon that fires a bomb. When collision occurs, the bomb detonates launching a ton of shards around. Each shard deal small damage. This weapon may be fired only once.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 26196113726332928
+    m_Localized: Big gun - Big decision
+    m_Metadata:
+      m_Items: []
+  - m_Id: 26441192122572800
+    m_Localized: Freezing Gun
+    m_Metadata:
+      m_Items: []
+  - m_Id: 26441382044852224
+    m_Localized: This weapon doesn't deal damage, but when it hits a player, it significantly drops the speed and the rate of fire of the player for a couple of seconds. This weapon may be fired only once.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 26442908607930368
+    m_Localized: Freeze!
+    m_Metadata:
+      m_Items: []
+  - m_Id: 26924141402087424
+    m_Localized: True Balance?
+    m_Metadata:
+      m_Items: []
+  - m_Id: 26924559217680384
+    m_Localized: Every time you fire a weapon, every player but you gains {heal} HP. Players that have this item are not affected. Your rate of fire is doubled, make sure you deal more damage than you miss.
+    m_Metadata:
+      m_Items:
+      - rid: 937747718553469026
+  - m_Id: 26926915934183424
+    m_Localized: Untrue balance
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
-    RefIds: []
+    RefIds:
+    - rid: 937747718553469026
+      type: {class: SmartFormatTag, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_Entries: 
+        m_SharedEntries:
+        - id: 24639211494137856
+        - id: 70680580677632
+        - id: 25106182220242944
+        - id: 25751396253392896
+        - id: 26924559217680384

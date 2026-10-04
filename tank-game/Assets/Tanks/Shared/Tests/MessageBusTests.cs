@@ -58,11 +58,9 @@ namespace Tanks.Shared.Tests
         [Test]
         public void Register_DuplicateHandlers_Throws()
         {
-            // Same type
             Assert.Throws<ArgumentException>(() =>
-                _bus.RegisterHandler(Substitute.For<IMessageHandler<ItemAdded>>().AsRequired()));
+                _bus.RegisterHandler(_addedHandler.AsRequired()));
 
-            // Same reference
             Assert.Throws<ArgumentException>(() =>
                 _bus.RegisterHandler(_removedHandler.AsRequired()));
         }

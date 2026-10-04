@@ -6,7 +6,7 @@
             <ui:Label text="Health Up" enable-rich-text="false" emoji-fallback-support="false" name="ItemName" class="item-description__name"/>
         </ui:VisualElement>
         <ui:VisualElement name="Body" class="item-description__body">
-            <ui:Label text="You restore &lt;#0f0&gt;40&lt;/color&gt; HP" name="ItemDescription" class="item-description__description"/>
+            <ui:Label text="You restore &lt;color=#0f0&gt;40&lt;/color&gt; HP" name="ItemDescription" class="item-description__description"/>
             <ui:Label text="Uncommon" enable-rich-text="false" emoji-fallback-support="false" name="ItemTier" class="item-description__tier" style="color: rgb(0, 255, 51); -unity-text-align: middle-left;"/>
         </ui:VisualElement>
     </ui:VisualElement>

@@ -2,6 +2,7 @@
 
 namespace Tanks.Shared.Items.Behaviours
 {
+    [AttributeUsage(AttributeTargets.Class)]
     public sealed class ItemBehaviourAttribute : Attribute
     {
         public ItemBehaviourAttribute(string targetIdentifier)

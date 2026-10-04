@@ -3,7 +3,6 @@ using System.Runtime.InteropServices;
 using Tanks.Shared;
 using Tanks.Shared.Weapons;
 using Unity.Collections;
-using Unity.Mathematics;
 
 namespace Tanks.Client.Weapons
 {
@@ -26,40 +25,52 @@ namespace Tanks.Client.Weapons
         INetworkMessageHandler<WeaponUsedFromServer>
     {
         private NativeQueue<ScheduledClientShot> _scheduledShots;
-        private int _lastScheduledTick;
-        private int _currentTick;
-        private float _tickDelta;
 
         public void Handle(WeaponUsedFromServer message)
         {
-            float cooldownDuration = Behaviour.CurrentWeapon.Cooldown.DurationSeconds;
-            int cooldownTicks = (int)math.round(cooldownDuration / _tickDelta);
-            int cooldowned = _lastScheduledTick + cooldownTicks;
-
-            _lastScheduledTick = math.max(_currentTick, cooldowned);
-            _scheduledShots.Enqueue(new ScheduledClientShot(_lastScheduledTick, message.Id));
+            _scheduledShots.Enqueue(new ScheduledClientShot(message.ServerTick, message.Id));
         }
 
         protected override void OnTick(int tick, float tickDelta)
         {
-            (_currentTick, _tickDelta) = (tick, tickDelta);
+            float affectedTickDelta =
+                tickDelta * Behaviour.GetDeltaMultiplier();
 
             if (_scheduledShots.Count == 0)
             {
-                Behaviour.WeaponTick(tickDelta, isHoldingDown: false, default);
+                Behaviour.WeaponTick(
+                    affectedTickDelta,
+                    isHoldingDown: false,
+                    default
+                );
+
                 return;
             }
 
-            ScheduledClientShot shot = _scheduledShots.Peek();
-
-            if (tick < shot.Tick)
+            while (_scheduledShots.Count > 0)
             {
-                Behaviour.WeaponTick(tickDelta, isHoldingDown: false, default);
-                return;
+                ScheduledClientShot shot = _scheduledShots.Peek();
+
+                if (tick < shot.Tick)
+                    break;
+
+                Behaviour.WeaponTick(
+                    affectedTickDelta,
+                    isHoldingDown: true,
+                    shot.Id
+                );
+
+                _scheduledShots.Dequeue();
             }
 
-            Behaviour.WeaponTick(tickDelta, isHoldingDown: true, shot.Id);
-            _scheduledShots.Dequeue();
+            if (_scheduledShots.Count == 0)
+            {
+                Behaviour.WeaponTick(
+                    affectedTickDelta,
+                    isHoldingDown: false,
+                    default
+                );
+            }
         }
 
         protected override void OnDestroy()

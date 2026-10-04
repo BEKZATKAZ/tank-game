@@ -4,6 +4,7 @@ using Tanks.Core.Helpers;
 using Tanks.Server.Items.Pickups;
 using Tanks.Shared.Items;
 using Tanks.Shared.Items.Data;
+using Tanks.Shared.Stats;
 
 namespace Tanks.Server.Tests.Items
 {
@@ -12,14 +13,16 @@ namespace Tanks.Server.Tests.Items
         public ItemIdentifier Identifier { get; set; }
         public ItemTier Tier { get; set; }
 
-        public IEnumerable<ItemStat> Stats => StatsDictionary.Values;
+        public IReadOnlyDictionary<StatType, PlayerStat> PlayerStats => PlayerStatsDictionary;
+        public IReadOnlyDictionary<string, ItemStat> ItemStats => ItemStatsDictionary;
         public IEnumerable<ItemActionConfigBase> OnPickUpActions { get; set; }
 
-        public Dictionary<string, ItemStat> StatsDictionary { get; set; } = new();
+        public Dictionary<StatType, PlayerStat> PlayerStatsDictionary { get; set; } = new();
+        public Dictionary<string, ItemStat> ItemStatsDictionary { get; set; } = new();
 
         public ItemStat GetStat(string name)
         {
-            return StatsDictionary[name];
+            return ItemStatsDictionary[name];
         }
     }
 

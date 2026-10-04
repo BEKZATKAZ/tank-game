@@ -1,13 +1,12 @@
 ﻿using NSubstitute;
 using NUnit.Framework;
-using Tanks.Server.Entities;
+using System;
 using Tanks.Server.Lag;
 using Tanks.Shared.Entities;
-using Tanks.Shared.Entities.Health;
 using Tanks.Shared.Lag;
-using Tanks.Shared.Stats;
 using Tanks.Shared.Weapons;
 using Tanks.Shared.Weapons.Projectiles;
+using Tanks.Shared.Weapons.Projectiles.Modules;
 
 namespace Tanks.Server.Tests.Lag
 {
@@ -71,18 +70,12 @@ namespace Tanks.Server.Tests.Lag
         public void Handle_DamagesTarget_ReturnsProjectile()
         {
             HitRequest message = CreateMessage();
-
             IEntityBehaviour target = Substitute.For<IEntityBehaviour>();
-            IHealthBehaviour health = Substitute.For<IHealthBehaviour>();
-            IAuthoritativeHealth authoritativeHealth = Substitute.For<IAuthoritativeHealth>();
-            IWeaponHolderBehaviour owner = Substitute.For<IWeaponHolderBehaviour>();
-            IStatOwnerBehaviour statOwner = Substitute.For<IStatOwnerBehaviour>();
-            IDamage damage = Substitute.For<IDamage>();
 
             ProjectileData data = new ProjectileData
             {
-                Damage = damage,
-                Owner = owner
+                Behaviour = Substitute.For<IProjectileBehaviour>(),
+                Owner = Substitute.For<IWeaponHolderBehaviour>()
             };
 
             ProjectileSnapshot snapshot = new ProjectileSnapshot(default, 0.5f, 2);
@@ -100,22 +93,13 @@ namespace Tanks.Server.Tests.Lag
             _service.GetProjectileData(message.ProjectileId).Returns(data);
             _service.GetProjectileSnapshot(message.ProjectileId, 10).Returns(snapshot);
 
-            target.GetBehaviour<IHealthBehaviour>().Returns(health);
-            health.Require<IAuthoritativeHealth>().Returns(authoritativeHealth);
-
-            owner.GetBehaviour<IStatOwnerBehaviour>().Returns(statOwner);
-            damage.Evaluate(2).Returns(50);
-            statOwner.GetStat(StatType.Damage, 50).Returns(75);
-
             _entityService.GetById(message.TargetId).Returns(target);
             target.IsValid.Returns(true);
 
             _component.Handle(message);
 
-            HealthEventId eventId = HealthEventId
-                .Create(typeof(IProjectileBehaviour), message.ProjectileId);
-
-            authoritativeHealth.Received(1).Damage(75, owner.Entity, eventId);
+            var modules = data.Behaviour.GetBehaviour<IProjectileModuleList>();
+            modules.Received(1).Call(Arg.Any<Action<ProjectileModuleBehaviourBase>>());
 
             _projectilePool.Received(1).ReturnProjectileClientRpc(message.ProjectileId);
             _projectilePool.Received(1).Return(message.ProjectileId);

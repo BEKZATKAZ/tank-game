@@ -1,6 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
+using System.Text;
+using System.Text.RegularExpressions;
 using Tanks.Client.Items;
 using Tanks.Client.Items.Pickups;
 using Tanks.Localization;
@@ -8,6 +11,7 @@ using Tanks.Shared.Items;
 using Tanks.Shared.Items.Data;
 using Tanks.Shared.Items.Pickups;
 using Tanks.Shared.Messaging;
+using Tanks.Shared.Stats;
 using Tanks.Utils;
 using UnityEngine;
 
@@ -64,6 +68,70 @@ namespace Tanks.UI.Gameplay.ItemDescription
             Reset(_currentEnteredItemId);
         }
 
+        private void FormatStat(string name, ItemStat stat, ILocalizedString description)
+        {
+            string color = stat.Value switch
+            {
+                < 0 => "#f00",
+                _ => "#0f0"
+            };
+
+            string value = stat.Value.ToString("0.##;-0.##;0", CultureInfo.InvariantCulture);
+            if (stat.ValueType is StatValueType.Percent) value += '%';
+
+            string formatted = $"<color={color}><b>{value}</b></color>";
+            description.AddVariable(name, formatted);
+        }
+
+        private string FormatPlayerStats(IReadOnlyDictionary<StatType, PlayerStat> stats)
+        {
+            if (stats.Any() == false) return "";
+
+            StringBuilder builder = new StringBuilder();
+
+            foreach ((StatType type, PlayerStat stat) in stats)
+            {
+                if (builder.Length > 0) builder.Append('\n');
+
+                string color = stat.Value switch
+                {
+                    < 0 => "#f00",
+                    _ => "#0f0"
+                };
+
+                string statType = type.ToString();
+                string statEntry = $"stat.{ToKebabCase(statType)}";
+
+                _localization.TryGet("Stats", statEntry, out var name);
+
+                string statName = name?.Get() ?? statType;
+                string value = stat.Value.ToString("+0.##;-0.##;0", CultureInfo.InvariantCulture);
+
+                // For example +150%, -150%
+                if (stat.ValueType is StatValueType.Percent)
+                {
+                    value += '%';
+                }
+
+                builder.Append($"{statName}: <color={color}><b>{value}</b></color>");
+
+                if (stat.Duration < 0 || _localization.TryGet(
+                    "Stats", "stat.duration-seconds", out var duration) == false) continue;
+
+                duration.AddVariable("seconds", stat.Duration);
+                builder.Append($" ({duration.Get()})");
+            }
+
+            return builder.ToString();
+        }
+
+        private static string ToKebabCase(string value)
+        {
+            value = Regex.Replace(value, @"([A-Z]+)([A-Z][a-z])", "$1-$2");
+            value = Regex.Replace(value, @"([a-z\d])([A-Z])", "$1-$2");
+            return value.ToLowerInvariant();
+        }
+
         private void Reset(ItemIdentifier itemId)
         {
             IClientItemConfig clientConfig = _clientDatabase.Get(itemId);
@@ -71,19 +139,29 @@ namespace Tanks.UI.Gameplay.ItemDescription
 
             string idString = itemId.ToString();
             string tierString = sharedConfig.Tier.ToString().ToLower();
+            string playerStats = FormatPlayerStats(sharedConfig.PlayerStats);
 
-            bool nameExists = _localization.TryGet(
-                "Items", $"item.{idString}.name", out ILocalizedString name);
+            _localization.TryGet("Items", $"item.{idString}.name", out ILocalizedString name);
+            _localization.TryGet("Items", $"item.tier.{tierString}", out ILocalizedString tier);
 
-            bool descriptionExists = _localization.TryGet(
-                "Items", $"item.{idString}.description", out ILocalizedString description);
+            if (_localization.TryGet(
+                "Items", $"item.{idString}.description", out ILocalizedString description))
+            {
+                foreach ((string statName, ItemStat stat) in sharedConfig.ItemStats)
+                {
+                    FormatStat(statName, stat, description);
+                }
 
-            bool tierExists = _localization.TryGet(
-                "Items", $"item.tier.{tierString}", out ILocalizedString tier);
+                if (string.IsNullOrWhiteSpace(playerStats) == false)
+                {
+                    // Add empty lines for more visiblity
+                    playerStats = $"\n\n{playerStats}";
+                }
+            }
 
-            Name.Value = nameExists ? name.Get() : "";
-            Description.Value = descriptionExists ? description.Get() : "";
-            TierName.Value = tierExists ? tier.Get() : "";
+            Name.Value = name?.Get() ?? "";
+            Description.Value = (description?.Get() ?? "") + playerStats;
+            TierName.Value = tier?.Get() ?? "";
 
             Icon.Value = clientConfig.Icon;
             AccentColor.Value = clientConfig.AccentColor;

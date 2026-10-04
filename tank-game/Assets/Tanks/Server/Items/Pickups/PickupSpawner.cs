@@ -65,10 +65,10 @@ namespace Tanks.Server.Items.Pickups
             };
 
             ItemSpawnSettings settings = _settings.GetSettings().ItemSpawn;
-            uint seed = (uint)RandomNumberGenerator.GetInt32(0, int.MaxValue);
+            int seed = RandomNumberGenerator.GetInt32(int.MaxValue);
 
             _chooser = new ItemChooser(_items.Items, chanceRatios, seed);
-            _random = Random.CreateFromIndex(seed ^ 23);
+            _random = Random.CreateFromIndex((uint)(seed ^ 23));
 
             CurrentCooldown = _random.NextFloat(
                 settings.MinCooldownSeconds, settings.MaxCooldownSeconds);

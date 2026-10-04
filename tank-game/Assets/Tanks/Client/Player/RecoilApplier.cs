@@ -1,4 +1,5 @@
 using Tanks.Shared;
+using Tanks.Shared.Stats;
 using Tanks.Shared.Weapons;
 using Tanks.Shared.Weapons.Data;
 using Unity.Mathematics;
@@ -8,6 +9,7 @@ namespace Tanks.Client.Player
     public sealed class RecoilApplier : 
         NetworkComponent<IWeaponHolderBehaviour>, INetworkMessageHandler<WeaponUsed>
     {
+        private IStatOwnerBehaviour _statOwner;
         private float _longitudinalElapsed;
         private float _lateralElapsed;
         private float2 _longitudinalForce;
@@ -22,8 +24,11 @@ namespace Tanks.Client.Player
             float sideways = math.dot(Transform.Up, Behaviour.MuzzlePoint.Right);
             float lateralCoeff = 0.5f;
 
-            _longitudinalForce = -config.Amount * forward * Transform.Right;
-            _lateralForce = -config.Amount * sideways * Transform.Up;
+            float amount = config.Amount - _statOwner.GetStat(StatType.Resistance, 0);
+            if (amount <= 0) return;
+
+            _longitudinalForce = -amount * forward * Transform.Right;
+            _lateralForce = -amount * sideways * Transform.Up;
             _duration = config.DurationSeconds;
 
             _longitudinalElapsed = _duration;
@@ -38,6 +43,7 @@ namespace Tanks.Client.Player
                 return;
             }
 
+            _statOwner = Behaviour.GetBehaviour<IStatOwnerBehaviour>();
             Behaviour.RegisterMessageHandler(this);
         }
 

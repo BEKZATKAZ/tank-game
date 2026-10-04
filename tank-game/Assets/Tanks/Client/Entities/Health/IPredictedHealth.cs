@@ -53,8 +53,6 @@ namespace Tanks.Client.Entities.Health
             {
                 EmitChangedMessages(message.OldState, default, eventId);
             }
-
-            _bus.Publish(message, this);
         }
 
         public void Damage(

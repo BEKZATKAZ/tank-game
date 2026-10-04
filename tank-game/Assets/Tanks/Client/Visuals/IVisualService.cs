@@ -1,6 +1,3 @@
-using NaughtyAttributes;
-using System.Collections.Generic;
-using System.Linq;
 using Tanks.Shared.Adapters;
 using Unity.Mathematics;
 using UnityEngine;

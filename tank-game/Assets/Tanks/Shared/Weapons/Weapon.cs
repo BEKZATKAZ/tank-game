@@ -8,6 +8,7 @@ namespace Tanks.Shared.Weapons
     {
         event Action<ShotId> Used;
 
+        string Name { get; }
         IReadOnlyAmmo Ammo { get; }
         IReadOnlyCooldown Cooldown { get; }
         IReadOnlyUseMode UseMode { get; }
@@ -22,6 +23,7 @@ namespace Tanks.Shared.Weapons
         public IReadOnlyCooldown Cooldown => _cooldown;
         public IReadOnlyUseMode UseMode => _useMode;
         public IRecoilConfig Recoil { get; private set; }
+        public string Name { get; private set; }
 
         private IAmmo _ammo;
         private ICooldown _cooldown;
@@ -29,6 +31,7 @@ namespace Tanks.Shared.Weapons
         private IUseAction _useAction;
 
         public void Initialize(
+            string name,
             Required<IAmmo> ammo,
             Required<ICooldown> cooldown,
             Required<IUseMode> useMode,
@@ -40,6 +43,7 @@ namespace Tanks.Shared.Weapons
             _useMode = useMode.Value;
             _useAction = useAction.Value;
             Recoil = recoil.Value;
+            Name = name;
         }
 
         public bool Tick(IWeaponHolderBehaviour owner, bool isHoldingDown, float deltaTime, ShotId id)

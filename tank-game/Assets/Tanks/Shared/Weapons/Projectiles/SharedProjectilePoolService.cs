@@ -53,13 +53,12 @@ namespace Tanks.Shared.Weapons.Projectiles
             ReconcileProjectileClientRpc(id, snapshot);
         }
 
-        public bool TryInitializePool(IProjectileConfig config)
+        public bool TryInitializePool(ProjectileBehaviour prefab)
         {
-            return _logic.TryInitializePool(config);
+            return _logic.TryInitializePool(prefab);
         }
 
-        public bool TryRent(
-            IProjectileConfig config, ProjectileId id, out IProjectileBehaviour instance)
+        public bool TryRent(string name, ProjectileId id, out IProjectileBehaviour instance)
         {
             instance = null;
 
@@ -69,9 +68,9 @@ namespace Tanks.Shared.Weapons.Projectiles
                 return false;
             }
 
-            if (_logic.TryGetPool(config, out ObjectPool<ProjectileBehaviour> pool) == false)
+            if (_logic.TryGetPool(name, out ObjectPool<ProjectileBehaviour> pool) == false)
             {
-                Debug.LogWarning("No pool found for config: " + config);
+                Debug.LogWarningFormat("No pool found '{0}'", name);
                 return false;
             }
 
@@ -103,9 +102,9 @@ namespace Tanks.Shared.Weapons.Projectiles
         {
             if (_logic.TryGetById(id, out IProjectileBehaviour instance) == false) return;
 
-            if (_logic.TryGetPool(instance.Config, out var pool) == false)
+            if (_logic.TryGetPool(instance.Name, out var pool) == false)
             {
-                Debug.LogWarning("Projectile pool not found for config: " + instance.Config);
+                Debug.LogWarningFormat("Projectile pool not found '{0}'", instance.Name);
                 return;
             }
 

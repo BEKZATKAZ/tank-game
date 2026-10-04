@@ -41,11 +41,19 @@ MonoBehaviour:
     - Locale-ru
     - Preload
     FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: b31aa618fac00334eadfd25fda90260e
+    m_Address: Stats_ru
+    m_ReadOnly: 1
+    m_SerializedLabels:
+    - Locale-ru
+    - Preload
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: cbf1073c755feb74fac84fb973005e58
     m_Address: Items_ru
     m_ReadOnly: 1
     m_SerializedLabels:
     - Locale-ru
+    - Preload
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: d36d0d2a4ade2334087afa94380f4839
     m_Address: Errors_ru

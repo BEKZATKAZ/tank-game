@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using Unity.Scripting.LifecycleManagement;
 using UnityEngine.Localization.Settings;
 using UnityEngine.Localization.Tables;
 using UnityEngine.UIElements;
@@ -20,6 +21,7 @@ namespace Tanks.UI.Menus.Settings.Elements
             
         }
 
+        [AutoStaticsCleanup]
         private static readonly StringTable _table =
             LocalizationSettings.StringDatabase.GetTable("Menus");
 

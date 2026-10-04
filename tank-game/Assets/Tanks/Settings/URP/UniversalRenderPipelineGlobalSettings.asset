@@ -68,9 +68,9 @@ MonoBehaviour:
       - rid: 3048657130729504780
       - rid: 3048657130729504781
       - rid: 3048657130729504782
-      - rid: 5824281351882539008
-      - rid: 5824281351882539009
-      - rid: 5824281351882539010
+      - rid: 5824281351400194048
+      - rid: 5824281351400194049
+      - rid: 5824281351400194050
     m_RuntimeSettings:
       m_List: []
   m_AssetVersion: 11
@@ -275,19 +275,19 @@ MonoBehaviour:
           - {r: 0.5, g: 0, b: 0.5, a: 1}
           - {r: 0.5, g: 0.5, b: 0.5, a: 1}
           - {r: 0, g: 0, b: 1, a: 1}
-    - rid: 5824281351882539008
+    - rid: 5824281351400194048
       type: {class: ScreenSpaceReflectionPersistentResources, ns: UnityEngine.Rendering.Universal, asm: Unity.RenderPipelines.Universal.Runtime}
       data:
         m_Shader: {fileID: 4800000, guid: 7b3e6785f5f6b634794df3a85a2a35da, type: 3}
         m_BlitShader: {fileID: 4800000, guid: 815c625bb9d4fe240a4ccf42ca3899cb, type: 3}
         m_Version: 0
-    - rid: 5824281351882539009
+    - rid: 5824281351400194049
       type: {class: MipGenRenderPipelineRuntimeResources, ns: UnityEngine.Rendering, asm: Unity.RenderPipelines.Universal.Runtime}
       data:
         m_ColorPyramidPS: {fileID: 4800000, guid: 63b92baba208e314c8fdebe52ca0cc34, type: 3}
         m_ColorPyramidCS: {fileID: 7200000, guid: 28969cfddd9ef3f4e94b971690146a4f, type: 3}
         m_DepthPyramidCS: {fileID: 7200000, guid: 90a204702cd44e54cac7ed4fc6e5d86b, type: 3}
-    - rid: 5824281351882539010
+    - rid: 5824281351400194050
       type: {class: UniversalRenderPipelineFilmGrainResources, ns: UnityEngine.Rendering.Universal, asm: Unity.RenderPipelines.Universal.Runtime}
       data:
         m_Textures:

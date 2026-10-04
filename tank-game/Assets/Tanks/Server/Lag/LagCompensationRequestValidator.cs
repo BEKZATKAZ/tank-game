@@ -1,10 +1,8 @@
-﻿using Tanks.Server.Entities;
-using Tanks.Shared;
+﻿using Tanks.Shared;
 using Tanks.Shared.Entities;
-using Tanks.Shared.Entities.Health;
 using Tanks.Shared.Lag;
-using Tanks.Shared.Stats;
 using Tanks.Shared.Weapons.Projectiles;
+using Tanks.Shared.Weapons.Projectiles.Modules;
 
 namespace Tanks.Server.Lag
 {
@@ -39,22 +37,10 @@ namespace Tanks.Server.Lag
             IEntityBehaviour target = _entityService.GetById(message.TargetId);
             if (target is not { IsValid: true }) return;
 
-            var data = _service.GetProjectileData(message.ProjectileId);
-            var projectile = _service.GetProjectileSnapshot(projectileId, usedTick);
+            ProjectileData data = _service.GetProjectileData(message.ProjectileId);
 
-            IStatOwnerBehaviour statOwner = data.Owner.GetBehaviour<IStatOwnerBehaviour>();
-
-            IAuthoritativeHealth authoritativeHealth = target
-                .GetBehaviour<IHealthBehaviour>()
-                .Require<IAuthoritativeHealth>();
-
-            float damageAmount = data.Damage.Evaluate(projectile.Elapsed);
-            damageAmount = statOwner.GetStat(StatType.Damage, damageAmount);
-
-            HealthEventId eventId = HealthEventId
-                .Create(typeof(IProjectileBehaviour), projectileId);
-
-            authoritativeHealth.Damage(damageAmount, data.Owner.Entity, eventId);
+            var modules = data.Behaviour.GetBehaviour<IProjectileModuleList>();
+            modules.Call(module => module.HitEntity(target, data.Owner.Entity));
 
             _projectilePool.ReturnProjectileClientRpc(projectileId);
             _projectilePool.Return(projectileId);

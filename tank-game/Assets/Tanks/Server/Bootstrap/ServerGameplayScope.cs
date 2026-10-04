@@ -1,6 +1,8 @@
 ﻿using NaughtyAttributes;
+using Tanks.Server.Entities;
 using Tanks.Server.Lag;
 using Tanks.Shared.Bootstrap;
+using Tanks.Shared.Entities.Health;
 using Unity.Multiplayer;
 using UnityEngine;
 using VContainer;
@@ -34,6 +36,7 @@ namespace Tanks.Server.Bootstrap
 
             builder.Register<IHitSimulator, HitSimulator>(Lifetime.Singleton);
             builder.Register<ILagCompensationService, LagCompensationService>(Lifetime.Singleton);
+            builder.Register<IDamageService, AuthoritativeDamageService>(Lifetime.Singleton);
         }
     }
 }

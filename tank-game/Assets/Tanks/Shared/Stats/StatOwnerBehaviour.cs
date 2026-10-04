@@ -1,50 +1,138 @@
-﻿using Unity.Netcode;
+﻿using System;
+using System.Collections.Generic;
+using Unity.Mathematics;
+using Unity.Netcode;
 
 namespace Tanks.Shared.Stats
 {
-    public struct StatAddedFromServer : INetworkSerializeByMemcpy
-    {
-        public StatType Type;
-        public StatValueType ValueType;
-        public float Value;
-        public float Duration;
-    }
-
-    public interface IStatOwnerBehaviour : INetworkBehaviourExtended
-    {
-        float GetStat(StatType type, float baseValue);
-
-        void AddStat(
-            StatType type, StatValueType valueType, float multiplier, float duration = -1);
-    }
-
     public sealed class StatOwnerBehaviour : NetworkBehaviourExtended, IStatOwnerBehaviour
     {
-        private readonly StatLogic _logic = new StatLogic();
+        public StatTypeParametersConfig Config;
+
+        private readonly Dictionary<StatType, Dictionary<StatId, AppliedStat>> _applied = new();
+        private int _lastTick;
 
         [Rpc(SendTo.Everyone, InvokePermission = RpcInvokePermission.Server)]
-        private void AddStatEveryoneRpc(StatAddedFromServer message)
+        private void OverrideStatEveryoneRpc(StatOverriddenFromServer message)
         {
-            _logic.AddStat(message.Type, message.ValueType, message.Value, message.Duration);
+            if (_applied.TryGetValue(message.Type, out var stats) == false ||
+                stats.ContainsKey(message.Id) == false)
+            {
+                OverrideStat(
+                    message.Id, message.Type, message.ValueType,
+                    message.Value, message.Duration);
+
+                return;
+            }
+
+            stats[message.Id] = new AppliedStat(
+                _lastTick, message.Value, message.Duration, message.ValueType);
         }
 
-        public void AddStat(
-            StatType type, StatValueType valueType, float multiplier, float duration = -1)
+        public bool HasStat(StatId id)
         {
-            AddStatEveryoneRpc(new StatAddedFromServer
+            foreach (var stats in _applied.Values)
             {
+                if (stats.ContainsKey(id)) return true;
+            }
+
+            return false;
+        }
+
+        public void OverrideStat(
+            StatId id, StatType type, StatValueType valueType,
+            float value, float duration = -1)
+        {
+            if (_applied.TryGetValue(type, out var stats) == false)
+            {
+                stats = new Dictionary<StatId, AppliedStat>();
+                _applied.Add(type, stats);
+            }
+
+            stats[id] = new AppliedStat(_lastTick, value, duration, valueType);
+
+            if (IsServer == false) return;
+            
+            OverrideStatEveryoneRpc(new StatOverriddenFromServer
+            {
+                Id = id,
                 Type = type,
                 ValueType = valueType,
-                Value = multiplier,
+                Value = value,
                 Duration = duration
             });
         }
 
-        public float GetStat(StatType type, float baseValue) => _logic.GetStat(type, baseValue);
-
-        protected override void OnTick(int tick, float tickDelta)
+        public StatId AddStat(
+            StatType type, StatValueType valueType, float value, float duration = -1)
         {
-            _logic.Tick(tick, tickDelta);
+            StatId id = StatIdGenerator.GenerateNext();
+            OverrideStat(id, type, valueType, value, duration);
+            return id;
+        }
+
+        public float GetStat(StatType type, float baseValue)
+        {
+            if (_applied.TryGetValue(type, out var stats) == false) return baseValue;
+
+            StatTypeParameters parameters = Config.GetParameters(type);
+            float sum = baseValue;
+
+            foreach (AppliedStat stat in stats.Values)
+            {
+                sum = math.clamp(sum, parameters.MinValue, parameters.MaxValue);
+
+                _ = stat.ValueType switch
+                {
+                    StatValueType.Flat => sum += stat.Value,
+                    StatValueType.Percent => sum += baseValue * (stat.Value * 0.01f),
+                    _ => throw new NotImplementedException()
+                };
+            }
+
+            return math.clamp(sum, parameters.MinValue, parameters.MaxValue);
+        }
+
+        public float GetDiminishingReturns(StatType type, float value)
+        {
+            StatTypeParameters parameters = Config.GetParameters(type);
+            int diminishingBase = parameters.DiminishingBase;
+
+            return diminishingBase switch
+            {
+                > 0 => diminishingBase / (diminishingBase + value),
+                < 0 => -diminishingBase / (diminishingBase - value),
+                0 => value,
+            };
+        }
+
+        public override void OnTick(int tick, float tickDelta)
+        {
+            _lastTick = tick;
+
+            foreach (var stats in _applied.Values)
+            {
+                Span<StatId> toRemove = stackalloc StatId[stats.Count];
+                int count = 0;
+
+                foreach ((StatId id, AppliedStat stat) in stats)
+                {
+                    // Infinite
+                    if (stat.Duration < 0) continue;
+
+                    int elapsedTicks = tick - stat.AppliedTick;
+                    float elapsedSeconds = tickDelta * elapsedTicks;
+
+                    if (elapsedSeconds < stat.Duration) continue;
+
+                    toRemove[count++] = id;
+                }
+
+                for (int i = 0; i < count; i++)
+                {
+                    stats.Remove(toRemove[i]);
+                }
+            }
         }
     }
 }

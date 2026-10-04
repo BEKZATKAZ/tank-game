@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Runtime.InteropServices;
-using Tanks.Shared.Weapons.Data;
 using Unity.Netcode;
 
 namespace Tanks.Shared.Weapons.Projectiles
@@ -38,9 +37,9 @@ namespace Tanks.Shared.Weapons.Projectiles
 
     public interface IProjectilePoolService : INetworkBehaviourExtended
     {
-        bool TryInitializePool(IProjectileConfig config);
+        bool TryInitializePool(ProjectileBehaviour prefab);
         bool TryGetProjectile(ProjectileId id, out IProjectileBehaviour instance);
-        bool TryRent(IProjectileConfig config, ProjectileId id, out IProjectileBehaviour instance);
+        bool TryRent(string name, ProjectileId id, out IProjectileBehaviour instance);
 
         void RequestReconciliation(IProjectileBehaviour projectile, ProjectileSnapshotFromServer snapshot);
         void ReturnProjectileClientRpc(ProjectileId id);

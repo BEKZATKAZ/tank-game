@@ -12,4 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c202943728ebc684a959e750dce01ebe, type: 3}
   m_Name: Default_Action
   m_EditorClassIdentifier: Tanks.Shared::Tanks.Shared.Weapons.Data.Actions.ProjectileLaunchActionConfig
-  _projectile: {fileID: 11400000, guid: d258eb38bbe0add42bbcf2c54b3bdec9, type: 2}
+  _prefab: {fileID: 5180612007738186379, guid: 49875ef025b799a468527ffd34132dc2, type: 3}
+  _projectileCount: 1
+  _spreadDegrees: 0

@@ -46,7 +46,8 @@ namespace Tanks.Shared.Items
             _items = _database.Items
                 .ToDictionary(k => k.Identifier, v => v as IItemConfig);
 
-            _behaviours = AppDomain.CurrentDomain.GetAssemblies()
+            _behaviours = UnityEngine.Assemblies.CurrentAssemblies
+                .GetLoadedAssemblies()
                 .SelectMany(x => x.GetTypes())
                 .Where(x => IsValidBehaviourType(x, isServer))
                 .GroupBy(x => x.GetCustomAttribute<ItemBehaviourAttribute>().TargetIdentifier)
@@ -61,7 +62,6 @@ namespace Tanks.Shared.Items
                         return behaviour;
                     })
                     .ToArray());
-
         }
 
         public IEnumerable<ItemBehaviourBase> GetBehaviours(in ItemIdentifier id)

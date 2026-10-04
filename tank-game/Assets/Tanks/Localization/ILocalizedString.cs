@@ -1,8 +1,10 @@
 using Cysharp.Threading.Tasks;
 using System;
 using System.Collections.Generic;
+using UnityEngine;
 using UnityEngine.Localization;
 using UnityEngine.Localization.SmartFormat.PersistentVariables;
+using UnityEngine.ResourceManagement.Exceptions;
 
 namespace Tanks.Localization
 {
@@ -76,7 +78,8 @@ namespace Tanks.Localization
                 _ => throw new NotImplementedException($"Type '{typeof(T).Name}' is not supported")
             };
 
-            Original.Add(key, variable);
+            try { Original.Add(key, variable); }
+            catch (OperationException ex) { Debug.LogException(ex); }
         }
     }
 }

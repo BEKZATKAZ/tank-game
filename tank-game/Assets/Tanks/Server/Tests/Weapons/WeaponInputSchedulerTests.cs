@@ -1,8 +1,10 @@
-﻿using NUnit.Framework;
+﻿using NSubstitute;
+using NUnit.Framework;
 using Tanks.Server.Weapons;
 using Tanks.Shared.Weapons;
 using Tanks.Shared.Weapons.Data;
 using Tanks.Utils;
+using static UnityEngine.UI.GridLayoutGroup;
 
 namespace Tanks.Server.Tests.Weapons
 {
@@ -10,6 +12,7 @@ namespace Tanks.Server.Tests.Weapons
     {
         private WeaponInputScheduler _scheduler;
         private Weapon _weapon;
+        private IWeaponHolderBehaviour _owner;
 
         private ScheduledShot[] _expected;
         private int _expectedIndex;
@@ -30,6 +33,7 @@ namespace Tanks.Server.Tests.Weapons
             _weapon = new Weapon();
 
             _weapon.Initialize(
+                "test",
                 new FixedAmmo(10),
                 new Cooldown(0.15f),
                 new FullAutomaticUseMode(),
@@ -37,6 +41,10 @@ namespace Tanks.Server.Tests.Weapons
                 new RecoilConfig());
 
             _scheduler = new WeaponInputScheduler(OnShoot, null);
+
+            _owner = Substitute.For<IWeaponHolderBehaviour>();
+            _owner.GetDeltaMultiplier().Returns(1);
+            _owner.CurrentWeapon.Returns(_weapon);
         }
 
         [TearDown]
@@ -67,7 +75,7 @@ namespace Tanks.Server.Tests.Weapons
                 new ScheduledShot(15, new ShotId(3)),
             };
 
-            _scheduler.Schedule(_weapon, input, 9, 0.05f);
+            _scheduler.Schedule(_owner, input, 9, 0.05f);
 
             Assert.AreEqual(3, _scheduler.ScheduledCount);
 
@@ -89,7 +97,7 @@ namespace Tanks.Server.Tests.Weapons
                 FireBuffer = bufferA
             };
 
-            _scheduler.Schedule(_weapon, inputA, 9, 0.05f);
+            _scheduler.Schedule(_owner, inputA, 9, 0.05f);
 
             Assert.AreEqual(2, _scheduler.ScheduledCount);
 
@@ -104,7 +112,7 @@ namespace Tanks.Server.Tests.Weapons
                 FireBuffer = bufferB
             };
 
-            _scheduler.Schedule(_weapon, inputB, 10, 0.05f);
+            _scheduler.Schedule(_owner, inputB, 10, 0.05f);
 
             Assert.AreEqual(3, _scheduler.ScheduledCount);
         }
@@ -114,7 +122,7 @@ namespace Tanks.Server.Tests.Weapons
         {
             WeaponInput input = default;
 
-            _scheduler.Schedule(_weapon, input, 10, 0.05f);
+            _scheduler.Schedule(_owner, input, 10, 0.05f);
 
             Assert.AreEqual(0, _scheduler.ScheduledCount);
         }

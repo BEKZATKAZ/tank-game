@@ -15,54 +15,6 @@ MonoBehaviour:
   m_TableCollectionName: Items
   m_TableCollectionNameGuidString: 72df8041cb1f65b40958c98981ef1561
   m_Entries:
-  - m_Id: 1898613006336
-    m_Key: item.no_room_for_error.name
-    m_Metadata:
-      m_Items: []
-  - m_Id: 2067794452480
-    m_Key: item.no_room_for_error.description
-    m_Metadata:
-      m_Items: []
-  - m_Id: 73022222852096
-    m_Key: item.no_room_for_error.tagline
-    m_Metadata:
-      m_Items: []
-  - m_Id: 70567816814592
-    m_Key: item.health_up.name
-    m_Metadata:
-      m_Items: []
-  - m_Id: 70680580677632
-    m_Key: item.health_up.description
-    m_Metadata:
-      m_Items: []
-  - m_Id: 74361057271808
-    m_Key: item.health_up.tagline
-    m_Metadata:
-      m_Items: []
-  - m_Id: 71017257459712
-    m_Key: item.random_teleport.name
-    m_Metadata:
-      m_Items: []
-  - m_Id: 71319167655936
-    m_Key: item.random_teleport.description
-    m_Metadata:
-      m_Items: []
-  - m_Id: 74540846112768
-    m_Key: item.random_teleport.tagline
-    m_Metadata:
-      m_Items: []
-  - m_Id: 71503196938240
-    m_Key: item.weapon_machine-gun.name
-    m_Metadata:
-      m_Items: []
-  - m_Id: 71606984990720
-    m_Key: item.weapon_machine-gun.description
-    m_Metadata:
-      m_Items: []
-  - m_Id: 75199460892672
-    m_Key: item.weapon_machine-gun.tagline
-    m_Metadata:
-      m_Items: []
   - m_Id: 75812378730496
     m_Key: item.tier.uncommon
     m_Metadata:
@@ -81,6 +33,174 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 76081032290304
     m_Key: item.tier.legendary
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1898613006336
+    m_Key: item.no-room-for-error.name
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2067794452480
+    m_Key: item.no-room-for-error.description
+    m_Metadata:
+      m_Items: []
+  - m_Id: 73022222852096
+    m_Key: item.no-room-for-error.tagline
+    m_Metadata:
+      m_Items: []
+  - m_Id: 70567816814592
+    m_Key: item.health-up.name
+    m_Metadata:
+      m_Items: []
+  - m_Id: 70680580677632
+    m_Key: item.health-up.description
+    m_Metadata:
+      m_Items: []
+  - m_Id: 25105894847504384
+    m_Key: item.health-up-mini.name
+    m_Metadata:
+      m_Items: []
+  - m_Id: 25106182220242944
+    m_Key: item.health-up-mini.description
+    m_Metadata:
+      m_Items: []
+  - m_Id: 71017257459712
+    m_Key: item.random-teleport.name
+    m_Metadata:
+      m_Items: []
+  - m_Id: 71319167655936
+    m_Key: item.random-teleport.description
+    m_Metadata:
+      m_Items: []
+  - m_Id: 74540846112768
+    m_Key: item.random-teleport.tagline
+    m_Metadata:
+      m_Items: []
+  - m_Id: 71503196938240
+    m_Key: item.weapon_machine-gun.name
+    m_Metadata:
+      m_Items: []
+  - m_Id: 71606984990720
+    m_Key: item.weapon_machine-gun.description
+    m_Metadata:
+      m_Items: []
+  - m_Id: 75199460892672
+    m_Key: item.weapon_machine-gun.tagline
+    m_Metadata:
+      m_Items: []
+  - m_Id: 24637296295239680
+    m_Key: item.missing-texture.name
+    m_Metadata:
+      m_Items: []
+  - m_Id: 24637799422976000
+    m_Key: item.missing-texture.description
+    m_Metadata:
+      m_Items: []
+  - m_Id: 24638048178757632
+    m_Key: item.missing-texture.tagline
+    m_Metadata:
+      m_Items: []
+  - m_Id: 24638443533852672
+    m_Key: item.unlucky-shot.name
+    m_Metadata:
+      m_Items: []
+  - m_Id: 24639211494137856
+    m_Key: item.unlucky-shot.description
+    m_Metadata:
+      m_Items: []
+  - m_Id: 24639686226436096
+    m_Key: item.unlucky-shot.tagline
+    m_Metadata:
+      m_Items: []
+  - m_Id: 24646271011086336
+    m_Key: item.weapon_twin-barrel.name
+    m_Metadata:
+      m_Items: []
+  - m_Id: 24646440532271104
+    m_Key: item.weapon_twin-barrel.description
+    m_Metadata:
+      m_Items: []
+  - m_Id: 24647016879972352
+    m_Key: item.weapon_twin-barrel.tagline
+    m_Metadata:
+      m_Items: []
+  - m_Id: 25157885992853504
+    m_Key: item.jar-of-powder.name
+    m_Metadata:
+      m_Items: []
+  - m_Id: 25158317096001536
+    m_Key: item.jar-of-powder.tagline
+    m_Metadata:
+      m_Items: []
+  - m_Id: 25158649037414400
+    m_Key: item.heavy-treads.name
+    m_Metadata:
+      m_Items: []
+  - m_Id: 25158904093040640
+    m_Key: item.heavy-treads.tagline
+    m_Metadata:
+      m_Items: []
+  - m_Id: 25362945230200832
+    m_Key: item.rapid-loader.name
+    m_Metadata:
+      m_Items: []
+  - m_Id: 25372714284310528
+    m_Key: item.beeswax-armor.name
+    m_Metadata:
+      m_Items: []
+  - m_Id: 25372870668935168
+    m_Key: item.beeswax-armor.description
+    m_Metadata:
+      m_Items: []
+  - m_Id: 25373363868753920
+    m_Key: item.beeswax-armor.tagline
+    m_Metadata:
+      m_Items: []
+  - m_Id: 25751314284109824
+    m_Key: item.bloodlust.name
+    m_Metadata:
+      m_Items: []
+  - m_Id: 25751396253392896
+    m_Key: item.bloodlust.description
+    m_Metadata:
+      m_Items: []
+  - m_Id: 25753328636354560
+    m_Key: item.bloodlust.tagline
+    m_Metadata:
+      m_Items: []
+  - m_Id: 26193936811253760
+    m_Key: item.weapon_bomb-launcher.name
+    m_Metadata:
+      m_Items: []
+  - m_Id: 26194437552431104
+    m_Key: item.weapon_bomb-launcher.description
+    m_Metadata:
+      m_Items: []
+  - m_Id: 26196113726332928
+    m_Key: item.weapon_bomb-launcher.tagline
+    m_Metadata:
+      m_Items: []
+  - m_Id: 26441192122572800
+    m_Key: item.weapon_freezing-gun.name
+    m_Metadata:
+      m_Items: []
+  - m_Id: 26441382044852224
+    m_Key: item.weapon_freezing-gun.description
+    m_Metadata:
+      m_Items: []
+  - m_Id: 26442908607930368
+    m_Key: item.weapon_freezing-gun.tagline
+    m_Metadata:
+      m_Items: []
+  - m_Id: 26924141402087424
+    m_Key: item.true-balance.name
+    m_Metadata:
+      m_Items: []
+  - m_Id: 26924559217680384
+    m_Key: item.true-balance.description
+    m_Metadata:
+      m_Items: []
+  - m_Id: 26926915934183424
+    m_Key: item.true-balance.tagline
     m_Metadata:
       m_Items: []
   m_Metadata:

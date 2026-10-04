@@ -1,8 +1,7 @@
 ﻿using NSubstitute;
+using NSubstitute.ReceivedExtensions;
 using NUnit.Framework;
-using Tanks.Core.Helpers;
 using Tanks.Core.Lobbies.Sessions;
-using Tanks.Server.Entities;
 using Tanks.Shared;
 using Tanks.Shared.Entities;
 using Tanks.Shared.Entities.Health;
@@ -18,6 +17,7 @@ namespace Tanks.Server.Tests
         private IEntityService _entityService;
         private IMessageBus _bus;
         private ISessionSettingsService _settings;
+        private IDamageService _damageService;
         private DangerZone _component;
 
         [SetUp]
@@ -25,6 +25,7 @@ namespace Tanks.Server.Tests
         {
             _entityService = Substitute.For<IEntityService>();
             _bus = Substitute.For<IMessageBus>();
+            _damageService = Substitute.For<IDamageService>();
 
             _settings = Substitute.For<ISessionSettingsService>();
             _settings.GetSettings().DangerZone.Returns(new DangerZoneSettings
@@ -34,7 +35,7 @@ namespace Tanks.Server.Tests
                 DamagePerSecond = 10
             });
 
-            _component = new DangerZone(_entityService, _bus, _settings);
+            _component = new DangerZone(_entityService, _bus, _settings, _damageService);
             _component.Initialize(Substitute.For<IDangerZoneBehaviour>());
         }
 
@@ -95,15 +96,13 @@ namespace Tanks.Server.Tests
 
             _component.Tick(16, 1); // +1 second
 
-            insideSafeArea.GetBehaviour<IHealthBehaviour>()
-                .Require<IAuthoritativeHealth>()
-                .DidNotReceiveWithAnyArgs()
-                .Damage(Arg.Any<PositiveFloat>());
+            _damageService
+                .DidNotReceive()
+                .Damage(10, insideSafeArea, null, Arg.Any<HealthEventId>(), false);
 
-            outsideSafeArea.GetBehaviour<IHealthBehaviour>()
-                .Require<IAuthoritativeHealth>()
+            _damageService
                 .Received(1)
-                .Damage(10, Arg.Any<IEntityBehaviour>(), Arg.Any<HealthEventId>());
+                .Damage(10, outsideSafeArea, null, Arg.Any<HealthEventId>(), false);
 
             // Damages every (1 / tickDelta)
             _component.Tick(17, 0.05f);
@@ -111,10 +110,9 @@ namespace Tanks.Server.Tests
             _component.Tick(19, 0.05f);
             _component.Tick(20, 0.05f); // Damages
 
-            outsideSafeArea.GetBehaviour<IHealthBehaviour>()
-                .Require<IAuthoritativeHealth>()
+            _damageService
                 .Received(2)
-                .Damage(10, Arg.Any<IEntityBehaviour>(), Arg.Any<HealthEventId>());
+                .Damage(10, outsideSafeArea, null, Arg.Any<HealthEventId>(), false);
         }
 
         private IEntityBehaviour CreateEntity(float2 position)

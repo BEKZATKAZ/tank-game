@@ -22,7 +22,7 @@ namespace Tanks.Client.Weapons
         public void Handle(WeaponUsed message)
         {
             _audioPlayer.PlayOneShotAttached(
-                path: "event:/SFX/Shoot",
+                path: $"event:/SFX/Weapons/{message.Weapon.Value.Name}/Fire",
                 target: Transform,
                 useDefault: Behaviour.Entity.IsPossessed);
 

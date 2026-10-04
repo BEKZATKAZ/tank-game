@@ -28,7 +28,9 @@ namespace Tanks.Client.Entities.Health
             _particlePlayer = particlePlayer;
             _spectatorService = spectatorService;
             _cameraShake = cameraShake;
+
             _bus = bus;
+            _bus.RegisterHandler<GameStartedFromServer>(this);
         }
 
         private readonly IVisualService _particlePlayer;
@@ -92,7 +94,6 @@ namespace Tanks.Client.Entities.Health
         protected override void OnInitialize()
         {
             Behaviour.RegisterMessageHandler(this);
-            _bus.RegisterHandler<GameStartedFromServer>(this);
         }
 
         protected override void OnDestroy()

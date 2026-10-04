@@ -2,13 +2,13 @@
 <objects serializationModel="Studio.02.03.00">
 	<object class="Event" id="{1153b588-697b-4262-b958-61fe1f649917}">
 		<property name="name">
-			<value>Shoot</value>
+			<value>Fire</value>
 		</property>
 		<property name="outputFormat">
-			<value>1</value>
+			<value>0</value>
 		</property>
 		<relationship name="folder">
-			<destination>{1a2d1abd-52ae-47b1-9671-4db7b4aef1bf}</destination>
+			<destination>{cc8faa61-9ce8-4c8a-8f9a-3fb82c174eb8}</destination>
 		</relationship>
 		<relationship name="mixer">
 			<destination>{ba0e6648-ae04-4627-8021-6fe2347af21f}</destination>
@@ -112,7 +112,7 @@
 			<value>10</value>
 		</property>
 		<property name="maximumDistance">
-			<value>150</value>
+			<value>80</value>
 		</property>
 		<property name="overrideRange">
 			<value>true</value>

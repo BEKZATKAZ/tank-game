@@ -8,6 +8,22 @@ namespace Tanks.Editor.Items
 {
     public static class ItemGenerator
     {
+        private static void WriteToAsset<T>(T asset, string path) where T : Object
+        {
+            T existingAsset = AssetDatabase.LoadAssetAtPath<T>(path);
+
+            if (existingAsset == false)
+            {
+                AssetDatabase.CreateAsset(asset, path);
+                return;
+            }
+
+            EditorUtility.CopySerialized(asset, existingAsset);
+            existingAsset.name = Path.GetFileNameWithoutExtension(path);
+
+            EditorUtility.SetDirty(existingAsset);
+        }
+
         [MenuItem("Tools/Game/Generate Item Files")]
         public static void Generate()
         {
@@ -41,7 +57,8 @@ namespace Tanks.Editor.Items
                 sharedConfig.InitializeFromEditor(
                     editorConfig.Identifier,
                     editorConfig.Tier,
-                    editorConfig.Stats);
+                    editorConfig.PlayerStats,
+                    editorConfig.ItemStats);
 
                 sharedConfig.InitializeActionsFromEditor(
                     editorConfig.OnPickUpActions);
@@ -71,8 +88,10 @@ namespace Tanks.Editor.Items
                 clientDatabase.AddFromEditor(clientConfig);
             }
 
-            AssetDatabase.CreateAsset(sharedDatabase, sharedDatabasePath);
-            AssetDatabase.CreateAsset(clientDatabase, clientDatabasePath);
+            WriteToAsset(sharedDatabase, sharedDatabasePath);
+            WriteToAsset(clientDatabase, clientDatabasePath);
+
+            AssetDatabase.SaveAssets();
         }
     }
 }
