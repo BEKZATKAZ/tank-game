@@ -1,66 +1,76 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
-using Tanks.Core.Helpers;
 using Tanks.Shared.Items.Data;
-using Unity.Mathematics;
 
 namespace Tanks.Server.Items.Pickups
 {
-    public class ItemChooser
+    public sealed class ItemChooser
     {
         public ItemChooser(
             IEnumerable<IItemConfig> items,
-            Dictionary<ItemTier, PositiveFloat> chanceWeights,
+            IReadOnlyDictionary<ItemTier, int> itemCounts,
             int seed)
         {
-            _random = new System.Random(seed);
-            _chanceWeights = new Dictionary<ItemTier, PositiveFloat>(chanceWeights);
+            _random = new Random(seed);
+            _itemCounts = itemCounts;
 
             _byTier = items
                 .GroupBy(x => x.Tier)
                 .ToDictionary(k => k.Key, v => v.ToArray());
-
-            foreach (ItemTier tier in System.Enum.GetValues(typeof(ItemTier)))
-            {
-                if (_byTier.ContainsKey(tier)) continue;
-
-                // Prevent randomly spawning items with unexisting tiers
-                _chanceWeights.Remove(tier);
-
-                UnityEngine.Debug.LogFormat("No items were registered with tier '{0}'", tier);
-            }
-
-            // Calculate after removing missing tiers
-            _totalChance = _chanceWeights.Values.Sum(x => x);
         }
 
-        private readonly Dictionary<ItemTier, PositiveFloat> _chanceWeights;
-        private readonly Dictionary<ItemTier, IItemConfig[]> _byTier;
-        private readonly System.Random _random;
-        private readonly float _totalChance;
+        private readonly IReadOnlyDictionary<ItemTier, int> _itemCounts;
+        private readonly IReadOnlyDictionary<ItemTier, IItemConfig[]> _byTier;
+        private readonly Queue<IItemConfig> _queue = new();
+        private readonly Random _random;
 
-        public IItemConfig ChooseRandomItem(PositiveFloatOrZero alpha)
+        public IItemConfig ChooseNext()
         {
-            float roll = math.min(alpha * _totalChance, _totalChance - 0.00001f);
-            float accumulated = 0;
-            ItemTier selectedTier = default;
+            if (_queue.Count == 0) CreateBalancedQueue();
+            return _queue.Dequeue();
+        }
 
-            foreach (var (tier, chance) in _chanceWeights)
+        private void CreateBalancedQueue()
+        {
+            int totalCount = _itemCounts.Sum(x => x.Value);
+
+            // Storing tuples since spans don't allow reference types
+            // Using Span to minimize GC usage
+            Span<(ItemTier, int)> buffer = stackalloc (ItemTier, int)[totalCount];
+
+            FillBuffer(buffer);
+            ShuffleBuffer(buffer);
+
+            foreach ((ItemTier tier, int index) in buffer)
             {
-                accumulated += chance;
-                if (roll >= accumulated) continue;
-
-                selectedTier = tier;
-                break;
+                _queue.Enqueue(_byTier[tier][index]);
             }
+        }
 
-            if (_byTier.TryGetValue(selectedTier, out var items) == false || items.Length == 0)
+        private void FillBuffer(Span<(ItemTier, int)> buffer)
+        {
+            int totalIndex = 0;
+
+            foreach ((ItemTier tier, int count) in _itemCounts)
             {
-                throw new System.InvalidOperationException(
-                    $"No items registered for tier '{selectedTier}'");
-            }
+                IItemConfig[] itemsPerTier = _byTier[tier];
 
-            return items[_random.Next(items.Length)];
+                for (int i = 0; i < count; i++)
+                {
+                    int index = _random.Next(itemsPerTier.Length);
+                    buffer[totalIndex++] = (tier, index);
+                }
+            }
+        }
+
+        private void ShuffleBuffer(Span<(ItemTier, int)> buffer)
+        {
+            for (int i = buffer.Length - 1; i > 0; i--)
+            {
+                int j = _random.Next(i + 1);
+                (buffer[i], buffer[j]) = (buffer[j], buffer[i]);
+            }
         }
     }
 }

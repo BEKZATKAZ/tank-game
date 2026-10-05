@@ -38,8 +38,18 @@ namespace Tanks.Server.Tests.Items
                 MinDistanceToPlayers = 2
             });
 
+            IPickupSpawnBehaviour behaviour = Substitute.For<IPickupSpawnBehaviour>();
+            behaviour.ItemCounts.Returns(new Dictionary<ItemTier, int>()
+            {
+                [ItemTier.Uncommon] = 35,
+                [ItemTier.Rare] = 24,
+                [ItemTier.Epic] = 10,
+                [ItemTier.Unstable] = 5,
+                [ItemTier.Legendary] = 1
+            });
+
             _component = new PickupSpawner(items, bus, _settings);
-            _component.Initialize(Substitute.For<IPickupSpawnBehaviour>());
+            _component.Initialize(behaviour);
         }
 
         [TestCase(1)]

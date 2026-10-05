@@ -1,5 +1,6 @@
 ﻿using NUnit.Framework;
 using System.Collections.Generic;
+using System.Linq;
 using Tanks.Core.Helpers;
 using Tanks.Server.Items.Pickups;
 using Tanks.Shared.Items;
@@ -28,13 +29,13 @@ namespace Tanks.Server.Tests.Items
 
     public class ItemChooserTests
     {
-        private static readonly Dictionary<ItemTier, PositiveFloat> _chanceRatios = new()
+        private static readonly Dictionary<ItemTier, int> _itemCounts = new()
         {
-            [ItemTier.Uncommon] = 50,
-            [ItemTier.Rare] = 30,
-            [ItemTier.Epic] = 12,
-            [ItemTier.Unstable] = 6,
-            [ItemTier.Legendary] = 2
+            [ItemTier.Uncommon] = 35,
+            [ItemTier.Rare] = 24,
+            [ItemTier.Epic] = 10,
+            [ItemTier.Unstable] = 5,
+            [ItemTier.Legendary] = 1
         };
 
         private static readonly IItemConfig[] _items =
@@ -62,31 +63,29 @@ namespace Tanks.Server.Tests.Items
         [SetUp]
         public void Setup()
         {
-            _chooser = new ItemChooser(_items, _chanceRatios, seed: 123);
+            _chooser = new ItemChooser(_items, _itemCounts, seed: 123);
         }
 
-        [TestCase(0.0f, ItemTier.Uncommon)]
-        [TestCase(0.1f, ItemTier.Uncommon)]
-        [TestCase(0.2f, ItemTier.Uncommon)]
-        [TestCase(0.3f, ItemTier.Uncommon)]
-        [TestCase(0.4f, ItemTier.Uncommon)]
-        [TestCase(0.5f, ItemTier.Rare)]
-        [TestCase(0.6f, ItemTier.Rare)]
-        [TestCase(0.7f, ItemTier.Rare)]
-        [TestCase(0.8f, ItemTier.Epic)]
-        [TestCase(0.9f, ItemTier.Epic)]
-        [TestCase(0.95f, ItemTier.Unstable)]
-        [TestCase(0.97f, ItemTier.Unstable)]
-        [TestCase(0.99f, ItemTier.Legendary)]
-        [TestCase(1.0f, ItemTier.Legendary)]
-        public void Choose_ReturnsExpectedTier(float alpha, ItemTier expectedTier)
+        [TestCase(1)]
+        [TestCase(5)]
+        [TestCase(20)]
+        public void ChooseNext_ReturnsExpectedTimes(int loops)
         {
-            for (int i = 0; i < 100; i++)
-            {
-                IItemConfig config = _chooser.ChooseRandomItem(alpha);
+            int totalCount = _itemCounts.Sum(x => x.Value);
 
-                Assert.AreEqual(expectedTier, config.Tier,
-                    $"Tier dismatch, iteration: {i + 1}");
+            for (int i = 0; i < loops; i++)
+            {
+                Dictionary<ItemTier, int> result = Enumerable.Range(0, totalCount)
+                    .Select(_ => _chooser.ChooseNext())
+                    .GroupBy(x => x.Tier)
+                    .ToDictionary(k => k.Key, v => v.Count());
+
+                Assert.That(result.Count, Is.EqualTo(_itemCounts.Count), "Some items were lost");
+
+                foreach ((ItemTier tier, int count) in result)
+                {
+                    Assert.That(_itemCounts[tier], Is.EqualTo(count));
+                }
             }
         }
     }

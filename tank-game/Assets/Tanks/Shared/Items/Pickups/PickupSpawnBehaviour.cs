@@ -1,6 +1,7 @@
 ﻿using System.Buffers;
 using System.Collections.Generic;
 using Tanks.Shared.Generation;
+using Tanks.Shared.Items.Data;
 using Tanks.Shared.Messaging;
 using Unity.Mathematics;
 using Unity.Netcode;
@@ -20,6 +21,8 @@ namespace Tanks.Shared.Items.Pickups
 
     public interface IPickupSpawnBehaviour : INetworkBehaviourExtended
     {
+        IReadOnlyDictionary<ItemTier, int> ItemCounts { get; }
+
         void SpawnEveryoneRpc(PickupSpawned payload);
         void DespawnEveryoneRpc(PickupId id);
     }
@@ -27,11 +30,15 @@ namespace Tanks.Shared.Items.Pickups
     public sealed class PickupSpawnBehaviour :
         NetworkBehaviourExtended, IPickupSpawnBehaviour, IMessageHandler<TilemapGenerated>
     {
+        [SerializeField] private Dictionary<ItemTier, int> _itemCounts;
+
         [Inject] private readonly IMessageBus _bus;
         [Inject] private readonly IObjectResolver _container;
 
         private readonly Dictionary<PickupId, PickupBehaviour> _pickups = new();
         private ObjectPool<PickupBehaviour> _pool;
+
+        public IReadOnlyDictionary<ItemTier, int> ItemCounts => _itemCounts;
 
         [Rpc(SendTo.Everyone, InvokePermission = RpcInvokePermission.Server)]
         public void SpawnEveryoneRpc(PickupSpawned payload)

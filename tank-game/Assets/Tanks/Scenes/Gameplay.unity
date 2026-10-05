@@ -699,6 +699,17 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Tanks.Shared::Tanks.Shared.Items.Pickups.PickupSpawnBehaviour
   ShowTopMostFoldoutHeaderGroup: 1
+  _itemCounts:
+  - key: 0
+    value: 40
+  - key: 1
+    value: 31
+  - key: 2
+    value: 20
+  - key: 3
+    value: 8
+  - key: 4
+    value: 1
 --- !u!4 &415803225
 Transform:
   m_ObjectHideFlags: 0

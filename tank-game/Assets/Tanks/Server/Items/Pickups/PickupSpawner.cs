@@ -1,7 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using System.Security.Cryptography;
-using Tanks.Core.Helpers;
 using Tanks.Core.Lobbies.Sessions;
 using Tanks.Shared;
 using Tanks.Shared.Adapters;
@@ -55,19 +54,10 @@ namespace Tanks.Server.Items.Pickups
 
         protected override void OnInitialize()
         {
-            Dictionary<ItemTier, PositiveFloat> chanceRatios = new()
-            {
-                [ItemTier.Uncommon] = 50,
-                [ItemTier.Rare] = 30,
-                [ItemTier.Epic] = 12,
-                [ItemTier.Unstable] = 6,
-                [ItemTier.Legendary] = 2
-            };
-
             ItemSpawnSettings settings = _settings.GetSettings().ItemSpawn;
             int seed = RandomNumberGenerator.GetInt32(int.MaxValue);
 
-            _chooser = new ItemChooser(_items.Items, chanceRatios, seed);
+            _chooser = new ItemChooser(_items.Items, Behaviour.ItemCounts, seed);
             _random = Random.CreateFromIndex((uint)(seed ^ 23));
 
             CurrentCooldown = _random.NextFloat(
@@ -96,7 +86,7 @@ namespace Tanks.Server.Items.Pickups
             _lastPickupId = new PickupId(_lastPickupId.Value + 1);
             _elapsed = 0;
 
-            IItemConfig item = _chooser.ChooseRandomItem(_random.NextFloat(0, 1f));
+            IItemConfig item = _chooser.ChooseNext();
             TilemapGenerated message = _lastTilemapGeneratedMessage.Value;
 
             int wallWidth = message.Settings.WallWidth;
