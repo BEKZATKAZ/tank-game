@@ -1,17 +1,20 @@
-﻿using Tanks.Shared.Entities;
+﻿using Tanks.Core.Helpers;
+using Tanks.Shared.Entities;
 using Tanks.Shared.Entities.Health;
 using Unity.Mathematics;
 using VContainer;
 
 namespace Tanks.Shared.Weapons.Projectiles.Modules
 {
-    public sealed class DirectDamageModule : ProjectileModuleBehaviourBase
+    public sealed class DirectDamageModule : DamageModuleBase
     {
         public ushort NearDamage = 20;
         public ushort FarDamage = 10;
 
         public byte MinTime = 1;
         public byte MaxTime = 10;
+
+        public override PositiveFloat MaxDamage => math.max((float)NearDamage, FarDamage);
 
         private IDamageService _service;
 

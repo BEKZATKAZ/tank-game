@@ -8,6 +8,8 @@ namespace Tanks.Shared.Driving
 {
     public interface ITankDriveBehaviour : INetworkBehaviourExtended
     {
+        float DefaultSpeed { get; }
+
         void EmitTireTracks(bool left, bool right);
         void Tick(float throttle, float steering, float deltaTime);
     }
@@ -15,6 +17,12 @@ namespace Tanks.Shared.Driving
     [RequireComponent(typeof(Rigidbody2D), typeof(StatOwnerBehaviour))]
     public sealed class TankDriveBehaviour : NetworkBehaviourExtended, ITankDriveBehaviour
     {
+        [SerializeField]
+        private byte _defaultSpeed = 10;
+
+        [SerializeField]
+        private byte _rearSpeed = 7;
+
         [Required]
         [SerializeField]
         private TrailRenderer _leftTire;
@@ -27,6 +35,7 @@ namespace Tanks.Shared.Driving
         private StatOwnerBehaviour _statOwner;
         private ArcadeDriver _driver;
 
+        public float DefaultSpeed => _defaultSpeed;
         public Rigidbody2D Rigidbody { get; private set; }
         public IVelocity Velocity { get; private set; }
 
@@ -41,8 +50,8 @@ namespace Tanks.Shared.Driving
             _driver = new ArcadeDriver(new ArcadeDriverSettings
             {
                 AccelerationTime = 0.3f,
-                MaxSpeed = 10,
-                ReverseSpeed = 7,
+                MaxSpeed = _defaultSpeed,
+                ReverseSpeed = _rearSpeed,
                 SteeringSpeed = Angle.FromDegrees(240)
             });
         }

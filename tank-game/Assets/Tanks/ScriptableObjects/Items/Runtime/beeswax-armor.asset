@@ -20,7 +20,7 @@ MonoBehaviour:
     value:
       Duration: 30
       Value: 50
-      ValueType: 1
+      ValueType: 0
   - key: 1
     value:
       Duration: 30

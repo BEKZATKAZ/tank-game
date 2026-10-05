@@ -183,6 +183,42 @@
     width: 500px;
 }
 
+.stats {
+    position: absolute;
+    left: 0;
+    height: 100%;
+    justify-content: center;
+    padding-top: 70px;
+    padding-left: 70px;
+}
+
+.stat {
+    flex-direction: row;
+    -unity-text-align: middle-left;
+    margin-bottom: 8px;
+    opacity: 0.5
+}
+
+.stat-icon {
+    width: 64px;
+    height: 52px;
+    -unity-background-scale-mode: scale-to-fit;
+}
+
+.stat-value {
+    margin-left: 15px;
+    font-size: 32px;
+    opacity: 0.75;
+    -unity-font-style: bold;
+}
+
+.stat-change {
+    margin-left: 30px;
+    font-size: 26px;
+    opacity: 0.5;
+    -unity-font-style: bold;
+}
+
 .transition-overlay {
     position: absolute;
     width: 100%;

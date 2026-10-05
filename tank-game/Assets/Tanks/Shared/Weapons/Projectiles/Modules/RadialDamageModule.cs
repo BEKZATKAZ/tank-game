@@ -1,4 +1,5 @@
 ﻿using System;
+using Tanks.Core.Helpers;
 using Tanks.Shared.Entities;
 using Tanks.Shared.Entities.Health;
 using Tanks.Utils;
@@ -8,11 +9,13 @@ using VContainer;
 
 namespace Tanks.Shared.Weapons.Projectiles.Modules
 {
-    public sealed class RadialDamageModule : ProjectileModuleBehaviourBase
+    public sealed class RadialDamageModule : DamageModuleBase
     {
         public byte Radius = 3;
         public ushort NearDamage = 40;
         public ushort FarDamage = 20;
+
+        public override PositiveFloat MaxDamage => math.max((float)NearDamage, FarDamage);
 
         private IDamageService _service;
 

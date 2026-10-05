@@ -1,139 +1,117 @@
-using System;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using Tanks.Client.Entities;
-using Tanks.Client.Entities.Health;
+using Tanks.Server.Weapons.Projectiles;
+using Tanks.Shared.Driving;
 using Tanks.Shared.Entities;
-using Tanks.Shared.Entities.Health;
-using Tanks.Shared.Messaging;
+using Tanks.Shared.Stats;
+using Tanks.Shared.Weapons;
+using Tanks.Shared.Weapons.Projectiles.Modules;
 using Tanks.Utils;
 using Unity.Mathematics;
-using UnityEngine;
 
 namespace Tanks.UI.Gameplay.PlayerStats
 {
-    public sealed class PlayerStatsViewModel :
-        IViewModel,
-        IMessageHandler<HealthChangedFromPrediction>,
-        IMessageHandler<HealthChangedFromServer>,
-        IDisposable
+    public sealed class StatChanges
     {
-        public PlayerStatsViewModel(IMessageBus bus, IClientEntityService clientEntityService)
+        public float CurrentValue { get; set; }
+        public float Change { get; set; }
+    }
+
+    public sealed class PlayerStatsViewModel : IViewModel, IDisposable
+    {
+        public PlayerStatsViewModel(IClientEntityService clientEntityService)
         {
+            _lastStats = new(new Dictionary<StatType, StatChanges>());
+
+            foreach (StatType type in Enum.GetValues(typeof(StatType)))
+            {
+                _lastStats.Value[type] = new StatChanges();
+            }
+
             _clientEntityService = clientEntityService;
-            _bus = bus;
+            _clientEntityService.Changed += OnPossessed;
 
-            _bus.RegisterHandler<HealthChangedFromPrediction>(this);
-            _bus.RegisterHandler<HealthChangedFromServer>(this);
-
-            _clientEntityService.Changed += OnPlayerChanged;
+            IEntityBehaviour possessed = _clientEntityService.GetPossessedEntity();
+            if (possessed is { IsValid: true }) OnPossessed(null, possessed);
         }
 
-        public BindableProperty<float> InstantHealthOverlay { get; } = new(1);
-        public BindableProperty<float> RedHealthOverlay { get; } = new(1);
-        public BindableProperty<Color> TankColor { get; } = new(Color.white);
+        public IReadOnlyBindableProperty<IDictionary<StatType, StatChanges>> Stats => _lastStats;
 
-        private readonly IMessageBus _bus;
         private readonly IClientEntityService _clientEntityService;
-        private float _lastFrozenTime;
-        private float _currentTime;
-        private float _latestAuthoritativeOverlay = 1;
+        private readonly BindableProperty<IDictionary<StatType, StatChanges>> _lastStats;
+
+        private IStatOwnerBehaviour _statOwner;
+        private IWeaponHolderBehaviour _weaponHolder;
+        private ITankDriveBehaviour _driveBehaviour;
+
+        private IReadOnlyWeapon _currentWeapon;
+        private float _cachedBaseDamage;
 
         public void Dispose()
         {
-            _clientEntityService.Changed -= OnPlayerChanged;
-            _bus.UnregisterHandler<HealthChangedFromPrediction>(this);
-            _bus.UnregisterHandler<HealthChangedFromServer>(this);
+            _clientEntityService.Changed -= OnPossessed;
         }
 
-        public void Handle(HealthChangedFromServer message, IMessageSender sender)
+        public void Update()
         {
-            if (message.Target.IsPossessed == false) return;
+            if (_statOwner is null) return;
 
-            OnHealthChanged(message.OldState, message.AuthoritativeState);
-            _latestAuthoritativeOverlay = InstantHealthOverlay.Value;
-
-            // Authoritative health arrives, overlay unfreezes
-            _lastFrozenTime = -1;
-        }
-
-        public void Handle(HealthChangedFromPrediction message, IMessageSender sender)
-        {
-            if (message.Target.IsPossessed == false) return;
-            OnHealthChanged(message.OldState, message.NewState);
-
-            // Freeze overlay and wait for authoritative health
-            _lastFrozenTime = _currentTime;
-        }
-
-        public void Tick(float deltaTime)
-        {
-            _currentTime += deltaTime;
-
-            float elapsed = _currentTime - _lastFrozenTime;
-            float timeout = 2;
-
-            // Wait until authoritative health arrives or timeout in 2 seconds
-            if (_lastFrozenTime >= 0)
+            if (_currentWeapon != _weaponHolder.CurrentWeapon)
             {
-                if (elapsed < timeout) return;
-                _lastFrozenTime = -1;
-
-                // Reset back to latest state if no new authoritative state arrived
-                InstantHealthOverlay.Value = _latestAuthoritativeOverlay;
+                _currentWeapon = _weaponHolder.CurrentWeapon;
+                if (_currentWeapon != null) _cachedBaseDamage = GetBaseDamage();
             }
 
-            UpdateColor(deltaTime);
-            UpdateRedOverlay(deltaTime);
-        }
+            bool hasChanged = false;
+            float weaponCooldown = _weaponHolder.CurrentWeapon.Cooldown.DurationSeconds;
 
-        private void OnPlayerChanged(IEntityBehaviour previous, IEntityBehaviour current)
-        {
-            HealthState state = current.GetBehaviour<IHealthBehaviour>().ServerState.Value;
-            OnHealthChanged(state, state);
-            TankColor.Value = Color.white;
-        }
-
-        private void OnHealthChanged(in HealthState oldState, in HealthState newState)
-        {
-            float old = oldState.Current;
-            float current = newState.Current;
-            float max = newState.Max;
-
-            InstantHealthOverlay.Value = current / max;
-            if (old == current) return;
-
-            TankColor.Value = old > current ? Color.red : Color.green;
-        }
-
-        private void UpdateColor(float deltaTime)
-        {
-            if (TankColor.Value == Color.white) return;
-
-            float t = deltaTime * 5;
-            TankColor.Value = Color.Lerp(TankColor.Value, Color.white, t);
-        }
-
-        private void UpdateRedOverlay(float deltaTime)
-        {
-            float target = InstantHealthOverlay.Value;
-
-            if (RedHealthOverlay.Value == target) return;
-
-            // Instant if healed
-            if (RedHealthOverlay.Value < target)
+            foreach ((StatType type, StatChanges changes) in _lastStats.Value)
             {
-                RedHealthOverlay.Value = target;
-                return;
+                float baseValue = type switch
+                {
+                    StatType.Damage => _cachedBaseDamage,
+                    StatType.Speed => _driveBehaviour.DefaultSpeed,
+                    StatType.RateOfFire => weaponCooldown <= math.EPSILON ? 0 : 1f / weaponCooldown,
+                    _ => 0
+                };
+
+                float stat = _statOwner.GetStat(type, baseValue);
+                float change = stat - changes.CurrentValue;
+
+                if (math.abs(change) < math.EPSILON)
+                {
+                    _lastStats.Value[type].Change = 0;
+                    continue;
+                }
+
+                _lastStats.Value[type].CurrentValue = stat;
+                _lastStats.Value[type].Change = change;
+
+                hasChanged = true;
             }
 
-            // Prevent unnoticeable UI changes
-            if (math.abs(RedHealthOverlay.Value - target) < 0.001f)
-            {
-                RedHealthOverlay.Value = target;
-                return;
-            }
+            if (hasChanged) _lastStats.ForceRefresh();
+        }
 
-            float t = deltaTime * 5;
-            RedHealthOverlay.Value = math.lerp(RedHealthOverlay.Value, target, t);
+        private float GetBaseDamage()
+        {
+            if (_currentWeapon.UseAction is not ProjectileLaunchAction launch) return 0;
+
+            DamageModuleBase[] damageModules = launch.Config.Prefab
+                .GetComponentsInChildren<DamageModuleBase>();
+
+            if (damageModules is not { Length: > 0 }) return 0;
+
+            return damageModules.Max(x => x.MaxDamage);
+        }
+
+        private void OnPossessed(IEntityBehaviour previous, IEntityBehaviour current)
+        {
+            _statOwner = current?.GetBehaviour<IStatOwnerBehaviour>();
+            _weaponHolder = current?.GetBehaviour<IWeaponHolderBehaviour>();
+            _driveBehaviour = current?.GetBehaviour<ITankDriveBehaviour>();
         }
     }
 }

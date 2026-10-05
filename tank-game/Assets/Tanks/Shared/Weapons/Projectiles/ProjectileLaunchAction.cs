@@ -18,18 +18,19 @@ namespace Tanks.Server.Weapons.Projectiles
             _pool.TryInitializePool(actionConfig.Value.Prefab);
 
             _muzzlePoint = muzzlePoint;
-            _actionConfig = actionConfig;
+            Config = actionConfig;
         }
+
+        public ProjectileLaunchActionConfig Config { get; }
 
         private readonly ITransform _muzzlePoint;
         private readonly IProjectilePoolService _pool;
-        private readonly ProjectileLaunchActionConfig _actionConfig;
 
         public void Use(IWeaponHolderBehaviour owner, ShotId id)
         {
-            string prefabName = _actionConfig.Prefab.Name;
+            string prefabName = Config.Prefab.Name;
 
-            for (ushort value = 1; value <= _actionConfig.ProjectileCount; value++)
+            for (ushort value = 1; value <= Config.ProjectileCount; value++)
             {
                 ProjectileId projectileId = new ProjectileId(id, value);
 
@@ -38,8 +39,8 @@ namespace Tanks.Server.Weapons.Projectiles
                     continue;
                 }
 
-                float t = (value - 0.5f) / _actionConfig.ProjectileCount;
-                float spread = _actionConfig.SpreadDegrees;
+                float t = (value - 0.5f) / Config.ProjectileCount;
+                float spread = Config.SpreadDegrees;
 
                 float offset = math.lerp(-spread, spread, t);
                 Angle rotation = _muzzlePoint.WorldRotation + Angle.FromDegrees(offset);

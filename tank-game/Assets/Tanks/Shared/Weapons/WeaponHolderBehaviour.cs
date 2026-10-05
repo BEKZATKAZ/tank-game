@@ -6,6 +6,7 @@ using Tanks.Shared.Entities;
 using Tanks.Shared.Messaging;
 using Tanks.Shared.Stats;
 using Tanks.Utils;
+using Unity.Mathematics;
 using Unity.Netcode;
 using UnityEngine;
 using VContainer;
@@ -106,8 +107,14 @@ namespace Tanks.Shared.Weapons
 
         public float GetDeltaMultiplier()
         {
-            float baseRateOfFire = 1f / _currentWeapon.Cooldown.DurationSeconds;
+            float cooldown = _currentWeapon.Cooldown.DurationSeconds;
+
+            // Avoid diving by zero
+            if (cooldown <= math.EPSILON) return 1;
+
+            float baseRateOfFire = 1 / cooldown;
             float rateOfFire = _statOwner.GetStat(StatType.RateOfFire, baseRateOfFire);
+
             return rateOfFire / baseRateOfFire;
         }
 

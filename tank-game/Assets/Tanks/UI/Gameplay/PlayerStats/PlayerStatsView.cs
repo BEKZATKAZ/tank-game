@@ -1,40 +1,45 @@
-﻿using NaughtyAttributes;
-using UnityEngine;
+﻿using System.Collections.Generic;
+using System.Linq;
+using Tanks.Shared.Stats;
 using UnityEngine.UIElements;
 
 namespace Tanks.UI.Gameplay.PlayerStats
 {
     public sealed class PlayerStatsView : ViewBase<PlayerStatsViewModel>
     {
-        [Required]
-        [SerializeField]
-        private Material _tankMaterial;
-
         private VisualElement _root;
+        private Dictionary<StatType, PlayerStatElement> _stats;
 
         protected override VisualElement GetRootElement() => _root;
 
         protected override void Initialize(VisualElement root)
         {
             _root = root.Q("PlayerStats");
-            _root.Q("PlayerTank").style.unityMaterial = _tankMaterial;
+
+            _stats = _root
+                .Query<PlayerStatElement>(className: "stat")
+                .Build()
+                .ToDictionary(k => k.Type);
         }
 
         protected override void Bind(PlayerStatsViewModel viewModel)
         {
-            viewModel.InstantHealthOverlay.Bind(
-                x => _tankMaterial.SetFloat("_InstantOverlay", x));
+            viewModel.Stats.Bind(UpdateStats);
+        }
 
-            viewModel.RedHealthOverlay.Bind(
-                x => _tankMaterial.SetFloat("_RedOverlay", x));
-
-            viewModel.TankColor.Bind(
-                x => _tankMaterial.SetColor("_TankColor", x));
+        private void UpdateStats(IDictionary<StatType, StatChanges> stats)
+        {
+            foreach ((StatType type, StatChanges newState) in stats)
+            {
+                PlayerStatElement element = _stats[type];
+                element.Value = newState.CurrentValue;
+                element.Change = newState.Change;
+            }
         }
 
         private void LateUpdate()
         {
-            ViewModel?.Tick(Time.deltaTime);
+            ViewModel?.Update();
         }
     }
 }

@@ -12,6 +12,7 @@ namespace Tanks.Shared.Weapons
         IReadOnlyAmmo Ammo { get; }
         IReadOnlyCooldown Cooldown { get; }
         IReadOnlyUseMode UseMode { get; }
+        IUseAction UseAction { get; }
         IRecoilConfig Recoil { get; }
     }
 
@@ -22,13 +23,13 @@ namespace Tanks.Shared.Weapons
         public IReadOnlyAmmo Ammo => _ammo;
         public IReadOnlyCooldown Cooldown => _cooldown;
         public IReadOnlyUseMode UseMode => _useMode;
+        public IUseAction UseAction { get; private set; } 
         public IRecoilConfig Recoil { get; private set; }
         public string Name { get; private set; }
 
         private IAmmo _ammo;
         private ICooldown _cooldown;
         private IUseMode _useMode;
-        private IUseAction _useAction;
 
         public void Initialize(
             string name,
@@ -41,7 +42,7 @@ namespace Tanks.Shared.Weapons
             _ammo = ammo.Value;
             _cooldown = cooldown.Value;
             _useMode = useMode.Value;
-            _useAction = useAction.Value;
+            UseAction = useAction.Value;
             Recoil = recoil.Value;
             Name = name;
         }
@@ -58,7 +59,7 @@ namespace Tanks.Shared.Weapons
 
             _ammo.Consume();
             _cooldown.Use();
-            _useAction.Use(owner, id);
+            UseAction.Use(owner, id);
 
             Used?.Invoke(id);
             return true;

@@ -18,6 +18,7 @@ namespace Tanks.UI.Gameplay
             builder.Register<StartCountdownViewModel>(Lifetime.Transient);
             builder.Register<EliminatedViewModel>(Lifetime.Transient);
             builder.Register<ItemDescriptionViewModel>(Lifetime.Transient);
+            builder.Register<PlayerHealthViewModel>(Lifetime.Transient);
             builder.Register<PlayerStatsViewModel>(Lifetime.Transient);
             builder.Register<GameStatsViewModel>(Lifetime.Transient);
             builder.Register<TimerViewModel>(Lifetime.Transient);

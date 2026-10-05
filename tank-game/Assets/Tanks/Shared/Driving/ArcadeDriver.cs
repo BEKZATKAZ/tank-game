@@ -7,8 +7,8 @@ namespace Tanks.Shared.Driving
     public struct ArcadeDriverSettings
     {
         public PositiveFloat AccelerationTime;
-        public PositiveFloat MaxSpeed;
-        public PositiveFloat ReverseSpeed;
+        public byte MaxSpeed;
+        public byte ReverseSpeed;
         public Angle SteeringSpeed;
     }
 

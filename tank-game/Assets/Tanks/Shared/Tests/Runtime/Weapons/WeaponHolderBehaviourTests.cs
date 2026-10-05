@@ -16,24 +16,7 @@ namespace Tanks.Shared.Tests.Runtime.Weapons
         [SetUp]
         public void Setup()
         {
-            Weapon weapon = new Weapon();
-
-            IAmmoConfig ammoConfig = Substitute.For<IAmmoConfig>();
-            ammoConfig.DefaultAmount.Returns(10);
-            ammoConfig.MaxAmount.Returns(10);
-            ammoConfig.RegenerationDelay.Returns(2);
-            ammoConfig.RegenerationDuration.Returns(5);
-
-            IRecoilConfig recoilConfig = Substitute.For<IRecoilConfig>();
-            recoilConfig.DurationSeconds.Returns(1);
-            recoilConfig.Amount.Returns(10);
-
-            weapon.Initialize("default",
-                new RegeneratingAmmo(ammoConfig),
-                new Cooldown(0.2f),
-                new FullAutomaticUseMode(),
-                new NoUseAction(),
-                recoilConfig.AsRequired());
+            Weapon weapon = CreateWeapon(cooldown: 0.2f, ammo: 10);
 
             _behaviour = new GameObject().AddComponent<WeaponHolderBehaviour>();
             _statOwner = _behaviour.GetComponent<StatOwnerBehaviour>();
@@ -47,7 +30,7 @@ namespace Tanks.Shared.Tests.Runtime.Weapons
             };
 
             _behaviour.SetDefault(weapon);
-            _behaviour.SwitchTo(weapon);
+            _behaviour.SwitchToDefault();
         }
 
         [TearDown]
@@ -76,6 +59,34 @@ namespace Tanks.Shared.Tests.Runtime.Weapons
             float expected = stat / baseRateOfFire;
 
             Assert.That(_behaviour.GetDeltaMultiplier(), Is.EqualTo(expected));
+            Weapon weaponWithNoCooldown = CreateWeapon(cooldown: 0, ammo: 10);
+
+            _behaviour.SwitchTo(weaponWithNoCooldown);
+            Assert.That(_behaviour.GetDeltaMultiplier(), Is.EqualTo(1), "Should not divide by zero");
+        }
+
+        private Weapon CreateWeapon(float cooldown, int ammo)
+        {
+            Weapon weapon = new Weapon();
+
+            IAmmoConfig ammoConfig = Substitute.For<IAmmoConfig>();
+            ammoConfig.DefaultAmount.Returns(ammo);
+            ammoConfig.MaxAmount.Returns(ammo);
+            ammoConfig.RegenerationDelay.Returns(2);
+            ammoConfig.RegenerationDuration.Returns(5);
+
+            IRecoilConfig recoilConfig = Substitute.For<IRecoilConfig>();
+            recoilConfig.DurationSeconds.Returns(1);
+            recoilConfig.Amount.Returns(10);
+
+            weapon.Initialize("default",
+                new RegeneratingAmmo(ammoConfig),
+                cooldown <= 0 ? new NoCooldown() : new Cooldown(cooldown),
+                new FullAutomaticUseMode(),
+                new NoUseAction(),
+                recoilConfig.AsRequired());
+
+            return weapon;
         }
     }
 }

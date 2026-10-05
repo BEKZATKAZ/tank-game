@@ -11,7 +11,7 @@
         </ui:VisualElement>
     </ui:VisualElement>
     <ui:Label text="GO!" name="StartText" class="start-counter" style="display: none;"/>
-    <ui:VisualElement name="EliminatedContainer" class="eliminated" style="display: flex;">
+    <ui:VisualElement name="EliminatedContainer" class="eliminated" style="display: none;">
         <ui:Label name="EliminatedText" focusable="true" class="eliminated-title">
             <Bindings>
                 <UnityEngine.Localization.LocalizedString property="text" table="GUID:be3c65f295ea4a545a8406a0bc7b68e6" entry="Id(34970492928)"/>
@@ -19,13 +19,20 @@
         </ui:Label>
         <ui:Label name="EliminatedSubtitle" text="" enable-rich-text="false" class="eliminated-subtitle"/>
     </ui:VisualElement>
-    <ui:VisualElement name="PlayerStats" class="player-stats">
-        <ui:VisualElement name="PlayerTank" class="player-stats__tank" style="-unity-material: url(&quot;project://database/Assets/Tanks/Shaders/TankHP.shadergraph?fileID=-876546973899608171&amp;guid=30d36fd8c31436746931c48cd0dac5af&amp;type=3#TankHP&quot;);"/>
-    </ui:VisualElement>
     <ui:VisualElement name="Timer" class="timer" style="flex-grow: 1;">
         <ui:Label text="45" name="TimerCounter" class="timer-counter"/>
     </ui:VisualElement>
-    <ui:VisualElement name="GameStats" class="game-stats">
+    <ui:VisualElement name="PlayerHealth" class="player-stats">
+        <ui:VisualElement name="PlayerTank" class="player-stats__tank" style="-unity-material: url(&quot;project://database/Assets/Tanks/Shaders/TankHP.shadergraph?fileID=-876546973899608171&amp;guid=30d36fd8c31436746931c48cd0dac5af&amp;type=3#TankHP&quot;);"/>
+    </ui:VisualElement>
+    <ui:VisualElement name="PlayerStats" class="stats">
+        <Tanks.UI.Gameplay.PlayerStats.PlayerStatElement icon="project://database/Assets/Tanks/Art/Stats/Stat_Speed.png?fileID=21300000&amp;guid=fde38c6e8dcbbde4e816c132830850fb&amp;type=3#Stat_Speed" name="Speed" type="Speed"/>
+        <Tanks.UI.Gameplay.PlayerStats.PlayerStatElement icon="project://database/Assets/Tanks/Art/Stats/Stat_Damage.png?fileID=21300000&amp;guid=eec19d99c7c71174d878e2a2f6a5f780&amp;type=3#Stat_Damage" name="Damage" type="Damage"/>
+        <Tanks.UI.Gameplay.PlayerStats.PlayerStatElement icon="project://database/Assets/Tanks/Art/Stats/Stat_Defense.png?fileID=21300000&amp;guid=9fbdfbfa6f6cef440a231d9caa5d75ec&amp;type=3#Stat_Defense" name="Defense" type="Defense"/>
+        <Tanks.UI.Gameplay.PlayerStats.PlayerStatElement icon="project://database/Assets/Tanks/Art/Stats/Stat_RateOfFire.png?fileID=21300000&amp;guid=90a6e73b2aa18f943bb30c72fecf6a46&amp;type=3#Stat_RateOfFire" name="RateOfFire" type="RateOfFire"/>
+        <Tanks.UI.Gameplay.PlayerStats.PlayerStatElement icon="project://database/Assets/Tanks/Art/Stats/Stat_Resistance.png?fileID=21300000&amp;guid=c808a429597b0f94d9deec1a6f801d8b&amp;type=3#Stat_Resistance" name="Resistance" type="Resistance"/>
+    </ui:VisualElement>
+    <ui:VisualElement name="GameStats" class="game-stats" style="display: none;">
         <ui:VisualElement name="GameStatsContainer" class="game-stats__container">
             <ui:Label name="GameStatsHeader" text="Statistics - Round 1" class="game-stats__header"/>
             <ui:VisualElement name="GameStatsListHeader" class="game-stats__list-header" style="flex-grow: 1;">
