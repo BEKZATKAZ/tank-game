@@ -103,10 +103,21 @@
 	</object>
 	<object class="MixerBusPanner" id="{73f0e9d8-3b1c-46c1-96bc-0bf6791c5263}" />
 	<object class="SingleSound" id="{6e8d78aa-1ddf-4629-9b5f-6da1ac7f13b2}">
+		<relationship name="modulators">
+			<destination>{8e3f7653-6162-453e-bc56-f77df1785e78}</destination>
+		</relationship>
 		<relationship name="audioFile">
 			<destination>{4ccbccb4-8e86-4eee-8055-48596809f6ec}</destination>
 		</relationship>
 	</object>
 	<object class="MixerBusFader" id="{8030c827-c3e5-4e82-a7d1-41c114544fe3}" />
 	<object class="MixerBusFader" id="{d61fd716-d046-43d7-8e29-4e0eb2a43bad}" />
+	<object class="RandomizerModulator" id="{8e3f7653-6162-453e-bc56-f77df1785e78}">
+		<property name="nameOfPropertyBeingModulated">
+			<value>pitch</value>
+		</property>
+		<property name="amount">
+			<value>0.5</value>
+		</property>
+	</object>
 </objects>
