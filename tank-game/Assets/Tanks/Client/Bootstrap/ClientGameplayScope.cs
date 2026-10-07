@@ -23,10 +23,6 @@ namespace Tanks.Client.Bootstrap
     {
         [Required]
         [SerializeField]
-        private UnityClientItemDatabase _clientItemDatabase;
-
-        [Required]
-        [SerializeField]
         private CameraFollowService _cameraFollowService;
 
         [Required]
@@ -61,12 +57,12 @@ namespace Tanks.Client.Bootstrap
             builder.Register<ICameraMainService, CameraMainService>(Lifetime.Singleton);
             builder.Register<ISpectatorService, SpectatorService>(Lifetime.Singleton);
 
+            builder.Register<IClientItemDatabase, ClientItemDatabase>(Lifetime.Singleton);
             builder.Register<IHitstopService, HitstopService>(Lifetime.Singleton);
             builder.Register<IStressService, StressService>(Lifetime.Singleton);
             builder.Register<IShotIdGenerator, ShotIdGenerator>(Lifetime.Singleton);
             builder.Register<IDamageService, DamagePredictionService>(Lifetime.Singleton);
 
-            builder.RegisterComponent(_clientItemDatabase).As<IClientItemDatabase>();
             builder.RegisterComponent(_shakeService).As<ICameraShakeService>();
             builder.RegisterComponent(_cameraFollowService).As<ICameraFollowService>();
             builder.RegisterComponent(_visualService).As<IVisualService>();

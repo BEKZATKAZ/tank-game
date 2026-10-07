@@ -18,10 +18,8 @@ MonoBehaviour:
   _itemStats:
   - key: health
     value:
-      Name: 
       Value: 20
       ValueType: 0
-  _itemStatsa: []
   _onPickUpActions: []
   _iconMaterial: {fileID: -876546973899608171, guid: 9680fbb573735774aaa7e0c722f9aad3, type: 3}
   _icon: {fileID: 21300000, guid: 32cf6a55194f4a6419be620f821a5f86, type: 3}

@@ -50,9 +50,11 @@ namespace Tanks.Editor.Items
 
             foreach (string guid in guids)
             {
-                var editorConfig = AssetDatabase.LoadAssetByGUID<EditorItemConfig>(new GUID(guid));
-                var sharedConfig = ScriptableObject.CreateInstance<ItemConfig>();
-                var clientConfig = ScriptableObject.CreateInstance<ClientItemConfig>();
+                EditorItemConfig editorConfig = AssetDatabase
+                    .LoadAssetByGUID<EditorItemConfig>(new GUID(guid));
+
+                ItemConfig sharedConfig = new ItemConfig();
+                ClientItemConfig clientConfig = new ClientItemConfig();
 
                 sharedConfig.InitializeFromEditor(
                     editorConfig.Identifier,
@@ -75,21 +77,18 @@ namespace Tanks.Editor.Items
                     editorConfig.OnSpawnSound.Path,
                     editorConfig.OnPickUpSound.Path);
 
-                string sharedConfigName = $"{editorConfig.Identifier}.asset";
-                string clientConfigName = $"{editorConfig.Identifier} (Client).asset";
-
-                string sharedConfigPath = Path.Combine(itemsPath, sharedConfigName);
-                string clientConfigPath = Path.Combine(itemsPath, clientConfigName);
-
-                AssetDatabase.CreateAsset(sharedConfig, sharedConfigPath);
-                AssetDatabase.CreateAsset(clientConfig, clientConfigPath);
-
                 sharedDatabase.AddFromEditor(sharedConfig);
                 clientDatabase.AddFromEditor(clientConfig);
             }
 
             WriteToAsset(sharedDatabase, sharedDatabasePath);
             WriteToAsset(clientDatabase, clientDatabasePath);
+
+            AddressableUtility.MarkAddressable(
+                sharedDatabasePath, "Gameplay-Shared", "SharedItemDatabase");
+
+            AddressableUtility.MarkAddressable(
+                clientDatabasePath, "Gameplay-Client", "ClientItemDatabase");
 
             AssetDatabase.SaveAssets();
         }

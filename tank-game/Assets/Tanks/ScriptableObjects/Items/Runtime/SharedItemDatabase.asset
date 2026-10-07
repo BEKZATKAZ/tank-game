@@ -13,19 +13,171 @@ MonoBehaviour:
   m_Name: SharedItemDatabase
   m_EditorClassIdentifier: Tanks.Shared::Tanks.Shared.Items.Data.SharedItemDatabaseConfig
   _items:
-  - {fileID: 11400000, guid: 8ac943f82c3455347a20b2cad480a511, type: 2}
-  - {fileID: 11400000, guid: 795a61a731f45e1439e2a278f85b2dd9, type: 2}
-  - {fileID: 11400000, guid: 904cfe9a26932994d89e75055410382d, type: 2}
-  - {fileID: 11400000, guid: e29866518060c1f49adc6015603ec47a, type: 2}
-  - {fileID: 11400000, guid: 975958698c2b4e749826a069f1f569e9, type: 2}
-  - {fileID: 11400000, guid: ef3a244f78ba1fd45b053ca0a0f2ae33, type: 2}
-  - {fileID: 11400000, guid: 43bcbd4f285f9a9498ab5f49faa27e38, type: 2}
-  - {fileID: 11400000, guid: 08ac37487e1027e45b42ed69e3c71acf, type: 2}
-  - {fileID: 11400000, guid: f48ef1c73ac150641901dcac2c4bad5a, type: 2}
-  - {fileID: 11400000, guid: 79211a8057a22ce459ef41cfa6446b1b, type: 2}
-  - {fileID: 11400000, guid: 59ca0261fbdffe04a900663bba47a550, type: 2}
-  - {fileID: 11400000, guid: 79f61734a4eec60498a8658b173ab6bd, type: 2}
-  - {fileID: 11400000, guid: 102aadcf505fe904da4658877909aeb4, type: 2}
-  - {fileID: 11400000, guid: 98f146097858e5947a6b19150e57fcee, type: 2}
-  - {fileID: 11400000, guid: 77bed75eb5ea0fd4d8498af02e5e5420, type: 2}
-  - {fileID: 11400000, guid: 8046bafe58b451f4ba9e36e96cfe2a28, type: 2}
+  - _identifier: bloodlust
+    _tier: 2
+    _onPickUpActions: []
+    _playerStats: []
+    _itemStats:
+    - key: damage
+      value:
+        Value: 15
+        ValueType: 1
+    - key: interval
+      value:
+        Value: 10
+        ValueType: 0
+  - _identifier: jar-of-powder
+    _tier: 2
+    _onPickUpActions: []
+    _playerStats:
+    - key: 0
+      value:
+        Duration: -1
+        Value: 50
+        ValueType: 1
+    _itemStats: []
+  - _identifier: weapon_bomb-launcher
+    _tier: 2
+    _onPickUpActions:
+    - {fileID: 11400000, guid: 3858939155c585f49a14e3a4ef34f436, type: 2}
+    _playerStats: []
+    _itemStats: []
+  - _identifier: weapon_twin-barrel
+    _tier: 2
+    _onPickUpActions:
+    - {fileID: 11400000, guid: fc8bfd5a8d77c8b4b9d62558a41ddea2, type: 2}
+    _playerStats: []
+    _itemStats: []
+  - _identifier: beeswax-armor
+    _tier: 4
+    _onPickUpActions: []
+    _playerStats:
+    - key: 2
+      value:
+        Duration: 30
+        Value: 50
+        ValueType: 0
+    - key: 1
+      value:
+        Duration: 30
+        Value: 35
+        ValueType: 1
+    _itemStats: []
+  - _identifier: health-up
+    _tier: 1
+    _onPickUpActions: []
+    _playerStats: []
+    _itemStats:
+    - key: health
+      value:
+        Value: 60
+        ValueType: 0
+  - _identifier: heavy-treads
+    _tier: 1
+    _onPickUpActions: []
+    _playerStats:
+    - key: 2
+      value:
+        Duration: -1
+        Value: 10
+        ValueType: 0
+    - key: 3
+      value:
+        Duration: -1
+        Value: 3.5
+        ValueType: 0
+    - key: 1
+      value:
+        Duration: -1
+        Value: -16
+        ValueType: 1
+    _itemStats: []
+  - _identifier: random-teleport
+    _tier: 1
+    _onPickUpActions: []
+    _playerStats: []
+    _itemStats: []
+  - _identifier: weapon_freezing-gun
+    _tier: 1
+    _onPickUpActions:
+    - {fileID: 11400000, guid: ee336958eeb3eb9438896c99ca8404bb, type: 2}
+    _playerStats: []
+    _itemStats: []
+  - _identifier: weapon_machine-gun
+    _tier: 1
+    _onPickUpActions:
+    - {fileID: 11400000, guid: 9c6d8bae6749bca42b5f9e18b842165f, type: 2}
+    _playerStats: []
+    _itemStats: []
+  - _identifier: health-up-mini
+    _tier: 0
+    _onPickUpActions: []
+    _playerStats: []
+    _itemStats:
+    - key: health
+      value:
+        Value: 20
+        ValueType: 0
+  - _identifier: rapid-loader
+    _tier: 0
+    _onPickUpActions: []
+    _playerStats:
+    - key: 4
+      value:
+        Duration: -1
+        Value: 0.4
+        ValueType: 0
+    _itemStats: []
+  - _identifier: missing-texture
+    _tier: 3
+    _onPickUpActions: []
+    _playerStats:
+    - key: 1
+      value:
+        Duration: -1
+        Value: 0.5
+        ValueType: 0
+    _itemStats: []
+  - _identifier: no-room-for-error
+    _tier: 3
+    _onPickUpActions: []
+    _playerStats:
+    - key: 0
+      value:
+        Duration: -1
+        Value: 99999
+        ValueType: 1
+    - key: 2
+      value:
+        Duration: -1
+        Value: -99999
+        ValueType: 1
+    _itemStats: []
+  - _identifier: true-balance
+    _tier: 3
+    _onPickUpActions: []
+    _playerStats:
+    - key: 0
+      value:
+        Duration: -1
+        Value: -10
+        ValueType: 1
+    - key: 4
+      value:
+        Duration: -1
+        Value: 100
+        ValueType: 1
+    _itemStats:
+    - key: heal
+      value:
+        Value: 5
+        ValueType: 0
+  - _identifier: unlucky-shot
+    _tier: 3
+    _onPickUpActions: []
+    _playerStats: []
+    _itemStats:
+    - key: damage
+      value:
+        Value: 60
+        ValueType: 0

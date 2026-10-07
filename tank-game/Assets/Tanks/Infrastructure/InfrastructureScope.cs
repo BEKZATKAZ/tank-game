@@ -1,4 +1,5 @@
 ﻿using NaughtyAttributes;
+using System;
 using Tanks.Core;
 using Tanks.Core.Common.Processes;
 using Tanks.Core.Common.Scenes;
@@ -23,6 +24,12 @@ namespace Tanks.Infrastructure
         [Required]
         [SerializeField]
         private SessionSettingsService _sessionSettings;
+
+        [Header("Environments")]
+        [SerializeField] private EnvironmentSettings _production;
+#if DEBUG
+        [SerializeField] private EnvironmentSettings _development;
+#endif
 
         private void AddUseCases(IContainerBuilder builder)
         {
@@ -65,6 +72,17 @@ namespace Tanks.Infrastructure
 
         protected override void Configure(IContainerBuilder builder)
         {
+            EnvironmentSettings env;
+#if DEBUG
+            env = _development;
+#else
+            env = _production;
+#endif
+
+            CcdManager.EnvironmentName = env.EnvironmentName;
+            CcdManager.BucketId = env.GetBucketId();
+            CcdManager.Badge = "latest";
+
             AddServices(builder);
             AddUseCases(builder);
 

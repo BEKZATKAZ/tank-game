@@ -54,7 +54,7 @@ namespace Tanks.Client.Bootstrap
 
         public async void Handle(PlayerReadyRequested message)
         {
-            _sceneLoader.Progress = 0.75f;
+            _sceneLoader.Progress = 0.8f;
 
             if (_isInitialized == false)
             {

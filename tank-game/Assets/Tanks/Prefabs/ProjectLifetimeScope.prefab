@@ -50,6 +50,16 @@ MonoBehaviour:
   autoRun: 1
   autoInjectGameObjects: []
   _sessionSettings: {fileID: 7364344595562203027}
+  _production:
+    _environmentName: production
+    _windowsBucketId: f80dcfb0-09df-45f7-94fa-3991a635b59e
+    _macOSBucketId: dde7371a-b94f-4c13-bb4b-181cc9bd3f3f
+    _linuxBucketId: 82fbe36a-5d38-46ba-b554-fc0e11a81ff2
+  _development:
+    _environmentName: development
+    _windowsBucketId: b7ea8746-a9b5-4a8c-808a-bd338cc524c1
+    _macOSBucketId: 982315b9-7569-457e-bd6d-e04bd3dbc76d
+    _linuxBucketId: f514a592-8f0d-41e1-97c9-2c0505c563bc
 --- !u!1 &5149883749617549379
 GameObject:
   m_ObjectHideFlags: 0

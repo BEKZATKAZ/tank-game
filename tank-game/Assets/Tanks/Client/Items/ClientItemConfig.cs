@@ -1,4 +1,5 @@
 using NaughtyAttributes;
+using System;
 using Tanks.Shared.Items;
 using UnityEngine;
 
@@ -16,14 +17,9 @@ namespace Tanks.Client.Items
         Color AccentColor { get; }
     }
 
-    public class ClientItemConfig : ScriptableObject, IClientItemConfig
+    [Serializable]
+    public sealed class ClientItemConfig : IClientItemConfig
     {
-        [InfoBox(
-            "This scriptable object is automatically generated " +
-            "and should be managed from an EditorItemConfig asset.",
-            type: EInfoBoxType.Warning
-        )]
-
         [ReadOnly]
         [SerializeField]
         private string _identifier;

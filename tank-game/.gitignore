@@ -132,3 +132,6 @@ fmod_editor.log
 
 # Code Coverage results
 **/CodeCoverage
+
+# CCD Builds
+**/[Cc]cdBuildData

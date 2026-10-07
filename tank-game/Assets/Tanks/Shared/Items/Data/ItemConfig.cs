@@ -33,7 +33,8 @@ namespace Tanks.Shared.Items.Data
         ItemStat GetStat(string name);
     }
 
-    public sealed class ItemConfig : ScriptableObject, IItemConfig
+    [Serializable]
+    public sealed class ItemConfig : IItemConfig
     {
         [ReadOnly]
         [SerializeField]

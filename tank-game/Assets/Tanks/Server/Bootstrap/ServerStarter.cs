@@ -6,6 +6,7 @@ using Tanks.Core.Common.Processes;
 using Tanks.Core.Lobbies.Payloads;
 using Tanks.Core.Lobbies.Responses;
 using Tanks.Core.Lobbies.Sessions;
+using Tanks.Shared.Items;
 using Unity.Netcode;
 using Unity.Netcode.Transports.UTP;
 using Unity.Services.Relay;
@@ -17,6 +18,7 @@ namespace Tanks.Server.Bootstrap
 {
     public sealed class ServerStarter : MonoBehaviour
     {
+        [Inject] private readonly IItemDatabase _sharedItemDatabase;
         [Inject] private readonly ISessionSettingsService _settings;
         [Inject] private readonly IServerCommunicationService _server;
         [Inject] private readonly IAuthService _auth;
@@ -79,6 +81,7 @@ namespace Tanks.Server.Bootstrap
         {
             try
             {
+                await _sharedItemDatabase.WaitForInitializationAsync();
                 await AuthenticateAsync();
 
                 // Stand by

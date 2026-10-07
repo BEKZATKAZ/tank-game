@@ -2,6 +2,7 @@
 using Newtonsoft.Json;
 using System.Linq;
 using System.Text;
+using Tanks.Client.Items;
 using Tanks.Core;
 using Tanks.Core.Common.Processes;
 using Tanks.Core.Common.Scenes;
@@ -9,6 +10,7 @@ using Tanks.Core.Lobbies.Payloads;
 using Tanks.Core.Lobbies.Responses;
 using Tanks.Core.Lobbies.Sessions;
 using Tanks.Shared.Bootstrap;
+using Tanks.Shared.Items;
 using Unity.Multiplayer.PlayMode;
 using Unity.Netcode;
 using Unity.Netcode.Transports.UTP;
@@ -25,6 +27,8 @@ namespace Tanks.Client.Bootstrap
         [Inject] private readonly ISessionSettingsService _settings;
         [Inject] private readonly IClientCommunicationService _client;
         [Inject] private readonly ISceneLoader _sceneLoader;
+        [Inject] private readonly IItemDatabase _sharedItemDatabase;
+        [Inject] private readonly IClientItemDatabase _clientItemDatabase;
 
         public async UniTask SetupRelayAsync(LoadGameplay data)
         {
@@ -85,6 +89,13 @@ namespace Tanks.Client.Bootstrap
             _sceneLoader.StartLoadingAsync(new LoadMenus(), withTips: false);
         }
 
+        private UniTask InitializeItemsAsync()
+        {
+            UniTask shared = _sharedItemDatabase.WaitForInitializationAsync();
+            UniTask client = _clientItemDatabase.WaitForInitializationAsync();
+            return UniTask.WhenAll(shared, client);
+        }
+
         private async void Start()
         {
 #if UNITY_EDITOR
@@ -94,12 +105,15 @@ namespace Tanks.Client.Bootstrap
             }
 #endif
 
+            await InitializeItemsAsync();
+            _sceneLoader.Progress = 0.6f;
+
             LoadGameplay data = _sceneLoader.GetLoadingParameters<LoadGameplay>();
 
             if (string.IsNullOrWhiteSpace(data.JoinCode)) SetupLocalhost();
             else await SetupRelayAsync(data);
 
-            _sceneLoader.Progress = 0.6f;
+            _sceneLoader.Progress = 0.7f;
 
             string json = JsonConvert.SerializeObject(new ClientConnectionPayload
             {

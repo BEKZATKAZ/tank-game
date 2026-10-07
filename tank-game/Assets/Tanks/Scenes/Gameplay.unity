@@ -195,7 +195,6 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 1405575641}
   - {fileID: 315083340}
   - {fileID: 1421461475}
   - {fileID: 253405766}
@@ -802,51 +801,6 @@ Transform:
   - {fileID: 672862980}
   m_Father: {fileID: 208528453}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &517382954
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 517382956}
-  - component: {fileID: 517382955}
-  m_Layer: 0
-  m_Name: Client Item Database
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!114 &517382955
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 517382954}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4b0e0579cc18a2742a545fee3a267178, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Tanks.Client::Tanks.Client.Items.UnityClientItemDatabase
-  _database: {fileID: 11400000, guid: 9683cb47058d4a1428ccc6199719d054, type: 2}
---- !u!4 &517382956
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 517382954}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 1788789114}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &644923460
 GameObject:
   m_ObjectHideFlags: 0
@@ -1430,7 +1384,6 @@ MonoBehaviour:
   - {fileID: 415803222}
   - {fileID: 1183163571}
   _projectilePool: {fileID: 315083342}
-  _itemDatabase: {fileID: 1405575642}
   _teamService: {fileID: 1421461476}
   _lagCompensation: {fileID: 253405767}
   _lifetime: {fileID: 2095325337}
@@ -1680,51 +1633,6 @@ Camera:
   m_OcclusionCulling: 0
   m_StereoConvergence: 10
   m_StereoSeparation: 0.022
---- !u!1 &1405575640
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1405575641}
-  - component: {fileID: 1405575642}
-  m_Layer: 0
-  m_Name: Item Database
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &1405575641
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1405575640}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 23867538}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1405575642
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1405575640}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 877f0758bad483448953d0954b68f713, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Tanks.Shared::Tanks.Shared.Items.UnityItemDatabase
-  _database: {fileID: 11400000, guid: 0dfd10d4d4a72314e9c333eaf3656722, type: 2}
 --- !u!1 &1421461474
 GameObject:
   m_ObjectHideFlags: 0
@@ -2226,10 +2134,8 @@ MonoBehaviour:
   - {fileID: 415803222}
   - {fileID: 1183163571}
   _projectilePool: {fileID: 315083342}
-  _itemDatabase: {fileID: 1405575642}
   _teamService: {fileID: 1421461476}
   _lagCompensation: {fileID: 253405767}
-  _clientItemDatabase: {fileID: 517382955}
   _cameraFollowService: {fileID: 824819784}
   _shakeService: {fileID: 51623415}
   _visualService: {fileID: 2109703091}
@@ -2273,7 +2179,6 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 517382956}
   - {fileID: 824819785}
   - {fileID: 51623416}
   - {fileID: 2109703090}
