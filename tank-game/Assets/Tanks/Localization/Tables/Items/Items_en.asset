@@ -24,7 +24,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 2067794452480
-    m_Localized: You deal an absurd amount of damage, but a single hit could be your undoing.
+    m_Localized: Deal an absurd amount of damage, but a single hit could be your undoing.
     m_Metadata:
       m_Items: []
   - m_Id: 70567816814592
@@ -32,7 +32,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 70680580677632
-    m_Localized: You restore {health} HP.
+    m_Localized: Restore {health} HP.
     m_Metadata:
       m_Items:
       - rid: 937747718553469026
@@ -53,15 +53,15 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 73022222852096
-    m_Localized: There's no point of return
+    m_Localized: Kill or die. There's no room for error...
     m_Metadata:
       m_Items: []
   - m_Id: 74540846112768
-    m_Localized: Flee with a lil twist
+    m_Localized: Flee with a lil twist. Random, actually.
     m_Metadata:
       m_Items: []
   - m_Id: 75199460892672
-    m_Localized: Just be careful
+    m_Localized: This weapon fires fast ASF.
     m_Metadata:
       m_Items: []
   - m_Id: 75812378730496
@@ -93,7 +93,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 24638048178757632
-    m_Localized: Hide the tracks!
+    m_Localized: Now no one can see you, neither can you.
     m_Metadata:
       m_Items: []
   - m_Id: 24638443533852672
@@ -106,7 +106,7 @@ MonoBehaviour:
       m_Items:
       - rid: 937747718553469026
   - m_Id: 24639686226436096
-    m_Localized: One got unlucky
+    m_Localized: One got unlucky and took damage, all 'cause of you.
     m_Metadata:
       m_Items: []
   - m_Id: 24646271011086336
@@ -118,7 +118,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 24647016879972352
-    m_Localized: Close Encounters - Face to Face
+    m_Localized: Get a big gun, big damage.
     m_Metadata:
       m_Items: []
   - m_Id: 25105894847504384
@@ -126,7 +126,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 25106182220242944
-    m_Localized: You restore {health} HP.
+    m_Localized: Restore {health} HP.
     m_Metadata:
       m_Items:
       - rid: 937747718553469026
@@ -135,7 +135,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 25158317096001536
-    m_Localized: More gunpowder!
+    m_Localized: Deal more damage, more gunpowder!
     m_Metadata:
       m_Items: []
   - m_Id: 25158649037414400
@@ -143,7 +143,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 25158904093040640
-    m_Localized: Heavier doesn't mean fatter
+    m_Localized: Become heavier but more protected. Heavier doesn't mean fatter, right?
     m_Metadata:
       m_Items: []
   - m_Id: 25362945230200832
@@ -159,7 +159,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 25373363868753920
-    m_Localized: It all begins now
+    m_Localized: Gain enough defense and speed to destroy everyone. It all begins now.
     m_Metadata:
       m_Items: []
   - m_Id: 25751314284109824
@@ -172,7 +172,7 @@ MonoBehaviour:
       m_Items:
       - rid: 937747718553469026
   - m_Id: 25753328636354560
-    m_Localized: Berserker's bloodlust
+    m_Localized: Deal more damage as you lose HP.
     m_Metadata:
       m_Items: []
   - m_Id: 26193936811253760
@@ -184,7 +184,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 26196113726332928
-    m_Localized: Big gun - Big decision
+    m_Localized: Fire once, but any collision will cause an explosion.
     m_Metadata:
       m_Items: []
   - m_Id: 26441192122572800
@@ -196,7 +196,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 26442908607930368
-    m_Localized: Freeze!
+    m_Localized: Deal no damage, but freeze whoever you hit one time.
     m_Metadata:
       m_Items: []
   - m_Id: 26924141402087424
@@ -209,9 +209,26 @@ MonoBehaviour:
       m_Items:
       - rid: 937747718553469026
   - m_Id: 26926915934183424
-    m_Localized: Untrue balance
+    m_Localized: Others heal as you fire, but you fire faster.
     m_Metadata:
       m_Items: []
+  - m_Id: 27916745065324544
+    m_Localized: You restored a large amount of HP!
+    m_Metadata:
+      m_Items: []
+  - m_Id: 27916975806570496
+    m_Localized: You restored a little HP!
+    m_Metadata:
+      m_Items: []
+  - m_Id: 27918120339857408
+    m_Localized: 'Fire weapons a lil'' faster. '
+    m_Metadata:
+      m_Items: []
+  - m_Id: 27924629891276800
+    m_Localized: You picked up {item}
+    m_Metadata:
+      m_Items:
+      - rid: 937747718553469026
   references:
     version: 2
     RefIds:
@@ -225,3 +242,4 @@ MonoBehaviour:
         - id: 25106182220242944
         - id: 25751396253392896
         - id: 26924559217680384
+        - id: 27924629891276800

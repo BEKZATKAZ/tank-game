@@ -27,7 +27,15 @@ namespace Tanks.UI.Gameplay.ItemDescription
             viewModel.Description.Bind(x => _description.text = x);
             viewModel.TierName.Bind(x => _tier.text = x);
 
-            viewModel.AccentColor.Bind(x => _tier.style.color = x);
+            viewModel.AccentColor.Bind(x =>
+            {
+                _tier.style.color = x;
+                _container.style.borderTopColor = x;
+                _container.style.borderRightColor = x;
+                _container.style.borderBottomColor = x;
+                _container.style.borderLeftColor = x;
+            });
+
             viewModel.Icon.Bind(x => _icon.style.backgroundImage = new StyleBackground(x));
             viewModel.Opacity.Bind(x => _container.style.opacity = x);
         }

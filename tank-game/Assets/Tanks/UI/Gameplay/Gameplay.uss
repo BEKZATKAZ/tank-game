@@ -1,9 +1,9 @@
 :root {
     --text-color: rgb(243, 243, 243);
     --text-secondary-color: rgb(205, 205, 205);
-    --font-regular: url("/Assets/Tanks/UI/Fonts/Tektur/Tektur-Regular.ttf");
-    --font-heavy: url("/Assets/Tanks/UI/Fonts/Tektur/Tektur-ExtraBold.ttf");
-    --font-black: url("/Assets/Tanks/UI/Fonts/Tektur/Tektur-Black.ttf");
+    --font-regular: url("project://database/Assets/Tanks/UI/Fonts/Tektur/Tektur-Regular.ttf?fileID=12800000&guid=5d22f6dbc7f666049806741c1e64720b&type=3#Tektur-Regular");
+    --font-heavy: url("project://database/Assets/Tanks/UI/Fonts/Tektur/Tektur-ExtraBold.ttf?fileID=12800000&guid=f027ce80bdea4164a98c0cbc98e33c59&type=3#Tektur-ExtraBold");
+    --font-black: url("project://database/Assets/Tanks/UI/Fonts/Tektur/Tektur-Black.ttf?fileID=12800000&guid=45f7b32b4f832744ebbabf86a666ecac&type=3#Tektur-Black");
 }
 
 * {
@@ -44,34 +44,39 @@
 }
 
 .item-description {
-    margin: 150px 200px 0 0;
+    margin: 80px 80px 0 0;
+    padding: 10px;
     position: absolute;
     top: 0;
     right: 0;
-    min-width: 400px;
+    min-width: 450px;
     max-width: 600px;
-    background-color: rgba(0, 0, 0, 0.94);
+    background-color: rgba(0, 0, 0, 0.75);
     border-radius: 10px;
+    border-width: 3px;
+    border-color: var(--text-color);
     transition: opacity 0.1s Ease 0s;
+    filter: drop-shadow(0 0 20 black);
 }
 
 .item-description__header {
-    padding: 10px;
+    padding: 10px 40px 10px 10px;
     flex-direction: row;
 }
 
 .item-description__name {
     padding: 0 10px;
-    font-size: 38px;
+    font-size: 34px;
     letter-spacing: 2px;
     -unity-font-definition: var(--font-black);
     -unity-text-align: middle-left;
 }
 
 .item-description__icon {
-    width: 64px;
-    height: 64px;
-    background-size: 70% 70%;
+    width: 46px;
+    height: 46px;
+    -unity-background-scale-mode: scale-to-fit;
+    scale: 0.75 0.75;
 }
 
 .item-description__body {
@@ -80,15 +85,60 @@
 
 .item-description__description {
     color: var(--text-secondary-color);
-    font-size: 24px;
+    font-size: 22px;
     letter-spacing: 2px;
     white-space: normal;
 }
 
 .item-description__tier {
     padding-top: 25px;
-    font-size: 24px;
+    font-size: 22px;
     -unity-font-style: bold;
+}
+
+.item-tagline {
+    position: absolute;
+    bottom: 0;
+    margin-bottom: 90px;
+    align-items: center;
+    width: 100%;
+    filter: drop-shadow(0 0 20 black);
+}
+
+.item-tagline__background {
+    flex-grow: 0;
+    flex-direction: row;
+    background-color: rgba(0, 0, 0, 0.75);
+    border-radius: 20px;
+    border-width: 3px;
+    border-color: var(--text-color);
+    padding: 22px;
+    min-width: 600px;
+    max-width: 1000px;
+    transition: opacity 0.1s Ease 0s;
+}
+
+.item-tagline__icon {
+    width: 68px;
+    height: 68px;
+    -unity-background-scale-mode: scale-to-fit;
+}
+
+.item-tagline__text-content {
+    flex-direction: column;
+    font-size: 22px;
+    margin: 0 60px 0 20px;
+}
+
+.item-tagline__name {
+    -unity-font-definition: var(--font-black);
+    margin-bottom: 8px;
+    font-size: 24px;
+}
+
+.item-tagline__text {
+    color: var(--text-secondary-color);
+    white-space: normal;
 }
 
 .player-stats {
@@ -196,7 +246,7 @@
     flex-direction: row;
     -unity-text-align: middle-left;
     margin-bottom: 8px;
-    opacity: 0.5
+    opacity: 0.5;
 }
 
 .stat-icon {

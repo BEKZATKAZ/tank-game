@@ -35,6 +35,10 @@ MonoBehaviour:
     m_Key: item.tier.legendary
     m_Metadata:
       m_Items: []
+  - m_Id: 27924629891276800
+    m_Key: item.tagline-header
+    m_Metadata:
+      m_Items: []
   - m_Id: 1898613006336
     m_Key: item.no-room-for-error.name
     m_Metadata:
@@ -55,12 +59,20 @@ MonoBehaviour:
     m_Key: item.health-up.description
     m_Metadata:
       m_Items: []
+  - m_Id: 27916745065324544
+    m_Key: item.health-up.tagline
+    m_Metadata:
+      m_Items: []
   - m_Id: 25105894847504384
     m_Key: item.health-up-mini.name
     m_Metadata:
       m_Items: []
   - m_Id: 25106182220242944
     m_Key: item.health-up-mini.description
+    m_Metadata:
+      m_Items: []
+  - m_Id: 27916975806570496
+    m_Key: item.health-up-mini.tagline
     m_Metadata:
       m_Items: []
   - m_Id: 71017257459712
@@ -141,6 +153,10 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 25362945230200832
     m_Key: item.rapid-loader.name
+    m_Metadata:
+      m_Items: []
+  - m_Id: 27918120339857408
+    m_Key: item.rapid-loader.tagline
     m_Metadata:
       m_Items: []
   - m_Id: 25372714284310528

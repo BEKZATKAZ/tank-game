@@ -6,7 +6,9 @@ namespace Tanks.Utils
     {
         private void Awake()
         {
+#if UNITY_EDITOR
             if (Application.isEditor) return;
+#endif
             Destroy(gameObject);
         }
     }

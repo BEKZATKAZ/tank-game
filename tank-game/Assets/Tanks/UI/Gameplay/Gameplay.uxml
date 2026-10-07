@@ -1,13 +1,13 @@
 <ui:UXML xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
     <Style src="project://database/Assets/Tanks/UI/Gameplay/Gameplay.uss?fileID=7433441132597879392&amp;guid=bb33b2d21da019b438ce1d0ab390cff8&amp;type=3#Gameplay"/>
-    <ui:VisualElement name="ItemDescriptionContainer" class="item-description">
+    <ui:VisualElement name="ItemDescriptionContainer" class="item-description" style="border-left-color: rgb(0, 255, 255); border-right-color: rgb(0, 255, 255); border-top-color: rgb(0, 255, 255); border-bottom-color: rgb(0, 255, 255);">
         <ui:VisualElement name="Header" class="item-description__header">
-            <ui:VisualElement name="ItemIcon" class="item-description__icon" style="background-image: url(&quot;project://database/Assets/Tanks/Art/Items/Item_HP.png?fileID=2800000&amp;guid=2b35aef68fadf5243a92005fb41c4ed0&amp;type=3#Item_HP&quot;);"/>
-            <ui:Label text="Health Up" enable-rich-text="false" emoji-fallback-support="false" name="ItemName" class="item-description__name"/>
+            <ui:VisualElement name="ItemIcon" class="item-description__icon" style="background-image: url(&quot;project://database/Assets/Tanks/Art/Items/Item_HP.png?fileID=21300000&amp;guid=2b35aef68fadf5243a92005fb41c4ed0&amp;type=3#Item_HP&quot;);"/>
+            <ui:Label text="Large Health Up" enable-rich-text="false" emoji-fallback-support="false" name="ItemName" class="item-description__name"/>
         </ui:VisualElement>
         <ui:VisualElement name="Body" class="item-description__body">
-            <ui:Label text="You restore &lt;color=#0f0&gt;40&lt;/color&gt; HP" name="ItemDescription" class="item-description__description"/>
-            <ui:Label text="Uncommon" enable-rich-text="false" emoji-fallback-support="false" name="ItemTier" class="item-description__tier" style="color: rgb(0, 255, 51); -unity-text-align: middle-left;"/>
+            <ui:Label text="Restore &lt;color=#0f0&gt;60&lt;/color&gt; HP" name="ItemDescription" class="item-description__description"/>
+            <ui:Label text="Rare" enable-rich-text="false" emoji-fallback-support="false" name="ItemTier" class="item-description__tier" style="color: rgb(0, 255, 255); -unity-text-align: middle-left;"/>
         </ui:VisualElement>
     </ui:VisualElement>
     <ui:Label text="GO!" name="StartText" class="start-counter" style="display: none;"/>
@@ -21,6 +21,15 @@
     </ui:VisualElement>
     <ui:VisualElement name="Timer" class="timer" style="flex-grow: 1;">
         <ui:Label text="45" name="TimerCounter" class="timer-counter"/>
+    </ui:VisualElement>
+    <ui:VisualElement name="ItemTagline" class="item-tagline">
+        <ui:VisualElement name="Background" class="item-tagline__background" style="border-left-color: rgb(0, 255, 255); border-right-color: rgb(0, 255, 255); border-top-color: rgb(0, 255, 255); border-bottom-color: rgb(0, 255, 255);">
+            <ui:VisualElement name="Icon" class="item-tagline__icon" style="background-image: url(&quot;project://database/Assets/Tanks/Art/Items/Item_Teleport.png?fileID=21300000&amp;guid=49ec673f03073f646b1e7b6bb887f057&amp;type=3#Item_Teleport&quot;);"/>
+            <ui:VisualElement name="TextContent" class="item-tagline__text-content">
+                <ui:Label text="You picked up &lt;color=#0ff&gt;Random Teleport&lt;/color&gt;" name="Header" class="item-tagline__name"/>
+                <ui:Label text="Flee with a lil twist. Random, actually." name="Tagline" class="item-tagline__text"/>
+            </ui:VisualElement>
+        </ui:VisualElement>
     </ui:VisualElement>
     <ui:VisualElement name="PlayerHealth" class="player-stats">
         <ui:VisualElement name="PlayerTank" class="player-stats__tank" style="-unity-material: url(&quot;project://database/Assets/Tanks/Shaders/TankHP.shadergraph?fileID=-876546973899608171&amp;guid=30d36fd8c31436746931c48cd0dac5af&amp;type=3#TankHP&quot;);"/>

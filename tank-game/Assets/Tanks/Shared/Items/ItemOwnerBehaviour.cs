@@ -14,6 +14,7 @@ namespace Tanks.Shared.Items
 {
     public struct ItemPickedUp
     {
+        public IItemOwnerBehaviour Owner;
         public ItemIdentifier ItemId;
         public PickupId PickupId;
     }
@@ -79,6 +80,7 @@ namespace Tanks.Shared.Items
 
             ItemPickedUp message = new ItemPickedUp
             {
+                Owner = this,
                 ItemId = item.Identifier,
                 PickupId = pickupId
             };

@@ -1434,7 +1434,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Unity.Multiplayer.Tools.NetworkSimulator.Runtime::Unity.Multiplayer.Tools.NetworkSimulator.Runtime.NetworkSimulator
   m_PresetAsset: {fileID: 0}
   m_PresetReference:
-    rid: 937747767850958951
+    rid: 5824281486010613760
   m_Scenario:
     rid: -2
   m_IsScenarioSettingsFolded: 0
@@ -1444,7 +1444,7 @@ MonoBehaviour:
     RefIds:
     - rid: -2
       type: {class: , ns: , asm: }
-    - rid: 937747767850958951
+    - rid: 5824281486010613760
       type: {class: NetworkSimulatorPreset, ns: Unity.Multiplayer.Tools.NetworkSimulator.Runtime, asm: Unity.Multiplayer.Tools.NetworkSimulator.Runtime}
       data:
         <Name>k__BackingField: 'Home Cable [Optimal real-world scenario]'
@@ -2196,6 +2196,7 @@ GameObject:
   - component: {fileID: 1821635258}
   - component: {fileID: 1821635260}
   - component: {fileID: 1821635257}
+  - component: {fileID: 1821635262}
   - component: {fileID: 1821635256}
   - component: {fileID: 1821635255}
   - component: {fileID: 1821635254}
@@ -2353,6 +2354,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2ade09174c2b67449bd481cd716505be, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Tanks.UI::Tanks.UI.Gameplay.PlayerStats.PlayerStatsView
+  _showOnPlay: 1
+--- !u!114 &1821635262
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1821635251}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ba9847f1d7674a54b9c77f6efe936fb6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Tanks.UI::Tanks.UI.Gameplay.ItemTagline.ItemTaglineView
   _showOnPlay: 1
 --- !u!1 &2095325335
 GameObject:
