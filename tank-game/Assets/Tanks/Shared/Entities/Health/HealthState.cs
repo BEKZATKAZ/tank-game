@@ -9,7 +9,7 @@ namespace Tanks.Shared.Entities.Health
     {
         public HealthState(float current, PositiveFloat max)
         {
-            Current = math.clamp(current, 0, max);
+            Current = math.min(current, max);
             Max = max;
         }
 

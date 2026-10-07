@@ -24,7 +24,7 @@ MonoBehaviour:
     value:
       Duration: -1
       Value: -99999
-      ValueType: 1
+      ValueType: 0
   _itemStats: []
   _onPickUpActions: []
   _iconMaterial: {fileID: -876546973899608171, guid: 9680fbb573735774aaa7e0c722f9aad3, type: 3}

@@ -24,7 +24,7 @@ namespace Tanks.Client.Entities.Health
             float old = message.OldState.Current;
 
             DamagePreviewText text = _service.Play<DamagePreviewText>(VisualType.DamageText);
-            text.Initialize(old - current, Transform);
+            text.Initialize(old - current, message.NewState, Transform);
             text.Animate();
         }
 

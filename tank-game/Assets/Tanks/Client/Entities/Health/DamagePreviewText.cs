@@ -1,5 +1,6 @@
 ﻿using Tanks.Core.Helpers;
 using Tanks.Shared.Adapters;
+using Tanks.Shared.Entities.Health;
 using Unity.Mathematics;
 using UnityEngine;
 using UnityEngine.UI;
@@ -10,10 +11,11 @@ namespace Tanks.Client.Entities.Health
     {
         [SerializeField] private Animation _animation;
         [SerializeField] private Text _text;
+        [SerializeField] private Gradient _color;
 
         public ITransform Transform { get; private set; }
 
-        public void Initialize(PositiveFloat damage, ITransform at)
+        public void Initialize(PositiveFloat damage, HealthState state, ITransform at)
         {
             float maxOffset = 2;
             int value = (int)-math.ceil(damage);
@@ -21,7 +23,9 @@ namespace Tanks.Client.Entities.Health
             float x = UnityEngine.Random.Range(-maxOffset, maxOffset);
             float y = UnityEngine.Random.Range(-maxOffset, maxOffset);
 
+            _text.color = _color.Evaluate(1 - state.NormalizedCurrent);
             _text.text = value.ToString();
+
             Transform.WorldPosition = at.WorldPosition + new float2(x, y);
         }
 
