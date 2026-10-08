@@ -20,6 +20,9 @@ namespace Tanks.Client.Weapons.Projectiles.Modules
 
         private void Emit()
         {
+            // In case Emit() is called after destroying
+            if (Transform.IsValid == false) return;
+
             if (string.IsNullOrWhiteSpace(SoundPath) == false)
             {
                 _audioPlayer.PlayOneShot(SoundPath, Transform.WorldPosition);
