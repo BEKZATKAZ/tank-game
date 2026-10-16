@@ -4,7 +4,6 @@ using Tanks.Core.Helpers;
 using Tanks.Shared.Entities;
 using Tanks.Shared.Entities.Health;
 using Tanks.Shared.Stats;
-using Unity.Android.Gradle.Manifest;
 
 namespace Tanks.Shared.Tests.Entities
 {
@@ -51,9 +50,11 @@ namespace Tanks.Shared.Tests.Entities
             _service = new TestDamageService();
 
             _target = Substitute.For<IEntityBehaviour>();
+            _target.IsValid.Returns(true);
             _targetStatOwner = _target.GetBehaviour<IStatOwnerBehaviour>();
 
             _from = Substitute.For<IEntityBehaviour>();
+            _from.IsValid.Returns(true);
             _fromStatOwner = _from.GetBehaviour<IStatOwnerBehaviour>();
         }
 

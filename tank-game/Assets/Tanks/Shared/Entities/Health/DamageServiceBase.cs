@@ -33,6 +33,8 @@ namespace Tanks.Shared.Entities.Health
             HealthEventId eventId = default,
             bool includeStats = true)
         {
+            if (target is not { IsValid: true }) return;
+
             if (includeStats == false)
             {
                 OnDamage(baseAmount, target, from, eventId);
@@ -43,8 +45,8 @@ namespace Tanks.Shared.Entities.Health
             IStatOwnerBehaviour fromStat = from?.GetBehaviour<IStatOwnerBehaviour>();
 
             float damage = fromStat?.GetStat(StatType.Damage, baseAmount) ?? baseAmount;
-            float defense = targetStat.GetStat(StatType.Defense, 0);
-            float multiplier = targetStat.GetDiminishingReturns(StatType.Defense, defense);
+            float defense = targetStat?.GetStat(StatType.Defense, 0) ?? 0;
+            float multiplier = targetStat?.GetDiminishingReturns(StatType.Defense, defense) ?? 1;
 
             OnDamage(damage * multiplier, target, from, eventId);
         }

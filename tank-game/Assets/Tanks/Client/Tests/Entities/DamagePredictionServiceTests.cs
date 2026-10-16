@@ -16,8 +16,12 @@ namespace Tanks.Client.Tests.Entities
         public void Setup()
         {
             _service = new DamagePredictionService();
+
             _target = Substitute.For<IEntityBehaviour>();
+            _target.IsValid.Returns(true);
+
             _from = Substitute.For<IEntityBehaviour>();
+            _from.IsValid.Returns(true);
         }
 
         [TestCase(1)]

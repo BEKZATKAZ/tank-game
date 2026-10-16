@@ -11,6 +11,8 @@ namespace Tanks.Utils
             Value = new ArraySegment<T>(rented, 0, length);
         }
 
+        public readonly int Length => Value.Count;
+
         public readonly ArraySegment<T> Value;
 
         public readonly ref T this[int index]
@@ -22,6 +24,10 @@ namespace Tanks.Utils
             }
         }
 
-        public void Dispose() => ArrayPool<T>.Shared.Return(Value.Array);
+        public void Dispose()
+        {
+            if (Value.Array is null) return;
+            ArrayPool<T>.Shared.Return(Value.Array);
+        }
     }
 }

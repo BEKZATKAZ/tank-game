@@ -201,7 +201,7 @@ SpriteRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: -876546973899608171, guid: 702854eb5e90157489af206e407bf4c9, type: 3}
+  - {fileID: -876546973899608171, guid: e50707936a4c16f48ae4a0d14be54e9d, type: 3}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -643,8 +643,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3292918371251932073}
-  - component: {fileID: 4548154268584116575}
   - component: {fileID: 708933980109114886}
+  - component: {fileID: 4548154268584116575}
   m_Layer: 3
   m_Name: Turret
   m_TagString: Untagged
@@ -669,19 +669,6 @@ Transform:
   - {fileID: 7816664068059968979}
   m_Father: {fileID: 2254764853037302780}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &4548154268584116575
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6365904690334269285}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7d88cef1f1c2562449f4533be54c6fa0, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Tanks.Shared::Tanks.Shared.Player.PlayerTurretBehaviour
-  ShowTopMostFoldoutHeaderGroup: 1
 --- !u!114 &708933980109114886
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -728,6 +715,19 @@ MonoBehaviour:
   SwitchTransformSpaceWhenParented: 0
   Interpolate: 1
   SlerpPosition: 0
+--- !u!114 &4548154268584116575
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6365904690334269285}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7d88cef1f1c2562449f4533be54c6fa0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Tanks.Shared::Tanks.Shared.Player.PlayerTurretBehaviour
+  ShowTopMostFoldoutHeaderGroup: 1
 --- !u!1 &7957595091881639732
 GameObject:
   m_ObjectHideFlags: 0
@@ -876,7 +876,7 @@ LineRenderer:
     colorGradient:
       serializedVersion: 2
       key0: {r: 1, g: 1, b: 1, a: 0.1254902}
-      key1: {r: 1, g: 1, b: 1, a: 0.03137255}
+      key1: {r: 1, g: 1, b: 1, a: 0.1254902}
       key2: {r: 1, g: 1, b: 1, a: 0}
       key3: {r: 0, g: 0, b: 0, a: 0}
       key4: {r: 0, g: 0, b: 0, a: 0}
@@ -927,14 +927,16 @@ GameObject:
   - component: {fileID: 224988897999633473}
   - component: {fileID: -5868504751458930755}
   - component: {fileID: 4726866452998294922}
+  - component: {fileID: 3197157395556612071}
   - component: {fileID: 4951854778658437301}
+  - component: {fileID: 800330406925637}
   - component: {fileID: 7554069972906333062}
   - component: {fileID: 9163817232548363890}
   - component: {fileID: 7538523708768715558}
   - component: {fileID: 1217353675794160710}
   - component: {fileID: 5075868166914636794}
-  - component: {fileID: 3197157395556612071}
   - component: {fileID: 3623627063252432586}
+  - component: {fileID: 2776071564906462077}
   m_Layer: 3
   m_Name: Player
   m_TagString: Untagged
@@ -1125,6 +1127,20 @@ MonoBehaviour:
   UseRigidBodyForMotion: 0
   AutoUpdateKinematicState: 1
   AutoSetKinematicOnDespawn: 1
+--- !u!114 &3197157395556612071
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7983979346145053049}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 98879b9ab6dcaa144b3a62632c846223, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Tanks.Shared::Tanks.Shared.Entities.EntityBehaviour
+  ShowTopMostFoldoutHeaderGroup: 1
+  _size: {x: 3.815, y: 2.5}
 --- !u!114 &4951854778658437301
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1138,6 +1154,25 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Tanks.Shared::Tanks.Shared.Health.HealthBehaviour
   ShowTopMostFoldoutHeaderGroup: 1
+  _initialHealth: 100
+--- !u!114 &800330406925637
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7983979346145053049}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6a175f31a2b87f6419230ed5336d9d02, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Tanks.Client::Tanks.Client.Entities.EntityVisuals
+  _config: {fileID: 11400000, guid: c9bfeada551588147aea6ab7dec70e5a, type: 2}
+  _customHitParticle: {fileID: 0}
+  _customDestroyParticle: {fileID: 0}
+  _bodySprites:
+  - {fileID: 998581430350831358}
+  - {fileID: 6982754619946961884}
 --- !u!114 &7554069972906333062
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1211,20 +1246,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: Tanks.Shared::Tanks.Shared.Effects.EffectOwnerBehaviour
   ShowTopMostFoldoutHeaderGroup: 1
   Config: {fileID: 11400000, guid: d366b18758300954f91ad705d79b296c, type: 2}
---- !u!114 &3197157395556612071
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7983979346145053049}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 98879b9ab6dcaa144b3a62632c846223, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Tanks.Shared::Tanks.Shared.Entities.EntityBehaviour
-  ShowTopMostFoldoutHeaderGroup: 1
-  _size: {x: 3.815, y: 2.5}
 --- !u!114 &3623627063252432586
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1238,6 +1259,17 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Tanks.Shared::Tanks.Shared.Teams.TeamParticipantBehaviour
   ShowTopMostFoldoutHeaderGroup: 1
+--- !u!1652712579 &2776071564906462077
+MultiplayerRolesData:
+  m_ObjectHideFlags: 2
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7983979346145053049}
+  m_GameObjectRolesMask: 3
+  m_ComponentsRolesMasks:
+  - m_Object: {fileID: 800330406925637}
+    m_RolesMask: 1
 --- !u!1 &8209453605761370274
 GameObject:
   m_ObjectHideFlags: 0
@@ -1352,7 +1384,7 @@ SpriteRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: -876546973899608171, guid: 702854eb5e90157489af206e407bf4c9, type: 3}
+  - {fileID: -876546973899608171, guid: e50707936a4c16f48ae4a0d14be54e9d, type: 3}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0

@@ -81,7 +81,7 @@ namespace Tanks.Shared
 
         public T GetBehaviour<T>() where T : INetworkBehaviourExtended
         {
-            return GetComponent<T>();
+            return this ? GetComponent<T>() : default;
         }
 
         public T Require<T>() where T : INetworkComponent
@@ -228,10 +228,10 @@ namespace Tanks.Shared
             OnInitialize();
         }
 
-        protected void ForceInitialize() => OnNetworkSpawn();
         protected virtual void Awake() => Transform = new UnityTransform(transform);
         protected virtual void OnInitialize() { }
 
+        public void ForceInitialize() => OnNetworkSpawn();
         public virtual void OnTick(int tick, float tickDelta) { }
         public virtual void OnLateTick(int tick, float tickDelta) { }
     }

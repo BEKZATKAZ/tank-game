@@ -30,13 +30,13 @@ MonoBehaviour:
       Default: 8
   _itemSpawn:
     CooldownSeconds:
-      Values: 09000000060000000300000001000000i
-      Default: 3
+      Values: 0c000000090000000600000003000000i
+      Default: 6
     MinDistanceToPlayers: 1
   _dangerZone:
     StartDelaySeconds:
       Values: 050000000f0000001e0000002d0000003c000000i
-      Default: 15
+      Default: 30
     DurationSeconds:
       Values: 0a000000140000001e00000028000000320000003c000000i
       Default: 40

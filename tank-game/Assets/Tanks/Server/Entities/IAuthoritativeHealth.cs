@@ -21,10 +21,15 @@ namespace Tanks.Server.Entities
     public sealed class AuthoritativeHealth :
         NetworkComponent<IHealthBehaviour>, IAuthoritativeHealth
     {
-        private HealthState _state = new HealthState(100, 100);
+        private HealthState _state;
 
         public HealthState GetState() => _state;
-        public void SetState(in HealthState newState) => _state = newState;
+
+        public void SetState(in HealthState newState)
+        {
+            _state = newState;
+            Behaviour.UpdateStateEveryoneRpc(_state);
+        }
 
         public void Damage(
             PositiveFloat amount,
@@ -39,6 +44,12 @@ namespace Tanks.Server.Entities
         {
             _state = new HealthState(_state.Current + amount, _state.Max);
             Behaviour.UpdateStateEveryoneRpc(_state, from?.Id ?? default);
+        }
+
+        protected override void OnInitialize()
+        {
+            float initial = Behaviour.InitialHealth;
+            _state = new HealthState(initial, initial);
         }
     }
 }

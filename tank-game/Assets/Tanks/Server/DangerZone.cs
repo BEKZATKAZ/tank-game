@@ -100,6 +100,9 @@ namespace Tanks.Server
             {
                 float2 center = entity.Transform.WorldPosition;
 
+                // For pooled entities outside the map
+                if (math.any(center < -100)) continue;
+
                 if (rect.Overlaps(new Rect(center.x, center.y, 0.01f, 0.01f))) continue;
 
                 HealthEventId eventId = HealthEventId

@@ -2,6 +2,7 @@
 using Tanks.Shared.Generation;
 using Tanks.Shared.Messaging;
 using Tanks.Shared.Teams;
+using Tanks.Utils;
 using Unity.Mathematics;
 using Unity.Netcode;
 using UnityEngine;
@@ -30,14 +31,20 @@ namespace Tanks.Shared.Bootstrap
             EmitMessage(new PlayerReadyRequested { SecretHandle = secretHandle });
         }
 
-        [Rpc(SendTo.Everyone, InvokePermission = RpcInvokePermission.Server)]
-		public void GenerateTilemapEveryoneRpc(
+        [Rpc(SendTo.NotServer, InvokePermission = RpcInvokePermission.Server)]
+        private void GenerateTilemapClientRpc(
+            TilemapGenerationSettings settings, Vector2Int resolution)
+        {
+            GenerateTilemap(settings, resolution).Dispose();
+        }
+
+		public TemporaryArrayResult<GeneratedTile> GenerateTilemap(
 			TilemapGenerationSettings settings, Vector2Int resolution)
 		{
 			int2 newResolution = new int2(resolution.x, resolution.y);
 
 			_tilemap.Clear(settings, newResolution);
-			Bounds bounds = _tilemap.Spawn(settings, newResolution);
+			var tiles = _tilemap.Spawn(settings, newResolution, out Bounds bounds);
 
 			TilemapGenerated message = new TilemapGenerated
 			{
@@ -48,6 +55,9 @@ namespace Tanks.Shared.Bootstrap
 
             EmitMessage(message);
 			_bus.Publish(message, this);
+
+            if (IsServer) GenerateTilemapClientRpc(settings, resolution);
+            return tiles;
         }
 
 		[Rpc(SendTo.Server)]

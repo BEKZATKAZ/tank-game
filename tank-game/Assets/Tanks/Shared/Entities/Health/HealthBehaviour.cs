@@ -28,6 +28,7 @@ namespace Tanks.Shared.Entities.Health
     {
         IEntityBehaviour Entity { get; }
         IReadOnlyBindableProperty<HealthState> ServerState { get; }
+        float InitialHealth { get; }
 
         IEnumerable<SpriteRenderer> GetAllSpriteRenderers();
 
@@ -40,11 +41,15 @@ namespace Tanks.Shared.Entities.Health
     [RequireComponent(typeof(EntityBehaviour))]
     public class HealthBehaviour : NetworkBehaviourExtended, IHealthBehaviour, IMessageSender
     {
+        [SerializeField] private ushort _initialHealth = 100;
+        [SerializeField] private bool _despawnOnZeroHealth = true;
+
         [Inject] private readonly IMessageBus _bus;
         [Inject] private readonly IEntityService _entityService;
 
         public IEntityBehaviour Entity { get; private set; }
         public IReadOnlyBindableProperty<HealthState> ServerState => _serverState;
+        public float InitialHealth => _initialHealth;
 
         private readonly BindableProperty<HealthState> _serverState = new();
 
@@ -86,7 +91,7 @@ namespace Tanks.Shared.Entities.Health
             EmitMessage(died);
             _bus.Publish(died, this);
 
-            if (IsServer) NetworkObject.Despawn();
+            if (_despawnOnZeroHealth && IsServer) NetworkObject.Despawn();
         }
 
         public IEnumerable<SpriteRenderer> GetAllSpriteRenderers()
@@ -98,7 +103,7 @@ namespace Tanks.Shared.Entities.Health
         {
             base.Awake();
             Entity = GetComponent<EntityBehaviour>();
-            _serverState.Value = new HealthState(100, 100);
+            _serverState.Value = new HealthState(_initialHealth, _initialHealth);
         }
     }
 }

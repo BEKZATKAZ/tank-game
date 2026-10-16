@@ -5,7 +5,7 @@
         PickupId PickupId { get; }
         ItemIdentifier ItemId { get; }
 
-        void Initialize(PickupSpawned payload, PickupSpawnBehaviour spawner);
+        void Initialize(PickupSpawned payload, PickupId id, IPickupSpawnBehaviour spawner);
         void DespawnEveryoneRpc();
     }
 
@@ -14,16 +14,16 @@
         public PickupId PickupId { get; private set; }
         public ItemIdentifier ItemId { get; private set; }
 
-        private PickupSpawnBehaviour _spawner;
+        private IPickupSpawnBehaviour _spawner;
 
         public void DespawnEveryoneRpc()
         {
             _spawner.DespawnEveryoneRpc(PickupId);
         }
 
-        public void Initialize(PickupSpawned payload, PickupSpawnBehaviour spawner)
+        public void Initialize(PickupSpawned payload, PickupId id, IPickupSpawnBehaviour spawner)
         {
-            PickupId = payload.PickupId;
+            PickupId = id;
             ItemId = payload.ItemId;
             _spawner = spawner;
             EmitMessage(payload);

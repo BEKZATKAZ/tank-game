@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using Tanks.Shared.Generation.Mazes;
+using Tanks.Utils;
 using Unity.Mathematics;
 using UnityEngine;
 using UnityEngine.Tilemaps;
@@ -34,10 +35,11 @@ namespace Tanks.Shared.Generation
 
         public Tilemap Tilemap { get; private set; }
 
-        public Bounds Spawn(TilemapGenerationSettings settings, int2 resolution)
+        public TemporaryArrayResult<GeneratedTile> Spawn(
+            TilemapGenerationSettings settings, int2 resolution, out Bounds bounds)
         {
             using var cells = _mazeGenerator.Generate(settings.Seed, resolution);
-            using var tiles = _tilemapGenerator.Generate(cells.Value, settings, resolution);
+            var tiles = _tilemapGenerator.Generate(cells.Value, settings, resolution);
 
             // Should end at the very top right corner
             // Not at the very last tile origin
@@ -50,7 +52,8 @@ namespace Tanks.Shared.Generation
             FillBackground(center);
             FillForeground(tiles.Value.AsSpan());
 
-            return new Bounds(center, size + math.forward());
+            bounds = new Bounds(center, size + math.forward());
+            return tiles;
         }
 
         public void Clear(TilemapGenerationSettings settings, int2 resolution)

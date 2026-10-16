@@ -20,12 +20,13 @@
   <Project Path="Tanks.Audio.csproj" />
   <Project Path="Tanks.Client.Tests.Runtime.csproj" />
   <Project Path="Tanks.Infrastructure.csproj" />
+  <Project Path="Tanks.Server.Tests.Runtime.csproj" />
   <Project Path="Tanks.Infrastructure.Tests.csproj" />
   <Project Path="Tanks.Core.Tests.csproj" />
   <Project Path="CFXRRuntime.csproj" />
   <Project Path="FMODUnityResonanceEditor.csproj" />
   <Project Path="Tanks.Infrastructure.Tests.Runtime.csproj" />
   <Project Path="Tanks.Localization.Tests.csproj" />
-  <Project Path="Tanks.Server.Tests.Runtime.csproj" />
   <Project Path="FMODUnityHaptics.csproj" />
+  <Project Path="Tanks.Editor.TestHelpers.csproj" />
 </Solution>

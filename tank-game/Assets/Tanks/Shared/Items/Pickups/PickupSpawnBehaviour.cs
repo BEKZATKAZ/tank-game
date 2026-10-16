@@ -14,7 +14,6 @@ namespace Tanks.Shared.Items.Pickups
 {
     public struct PickupSpawned : INetworkSerializeByMemcpy
     {
-        public PickupId PickupId;
         public ItemIdentifier ItemId;
         public float2 WorldPosition;
     }
@@ -37,17 +36,20 @@ namespace Tanks.Shared.Items.Pickups
 
         private readonly Dictionary<PickupId, PickupBehaviour> _pickups = new();
         private ObjectPool<PickupBehaviour> _pool;
+        private PickupId _lastPickupId;
 
         public IReadOnlyDictionary<ItemTier, int> ItemCounts => _itemCounts;
 
         [Rpc(SendTo.Everyone, InvokePermission = RpcInvokePermission.Server)]
         public void SpawnEveryoneRpc(PickupSpawned payload)
         {
+            _lastPickupId = new PickupId(_lastPickupId.Value + 1);
+
             PickupBehaviour instance = _pool.Get();
-            _pickups[payload.PickupId] = instance;
+            _pickups[_lastPickupId] = instance;
 
             instance.Transform.WorldPosition = payload.WorldPosition;
-            instance.Initialize(payload, this);
+            instance.Initialize(payload, _lastPickupId, this);
         }
 
         [Rpc(SendTo.Everyone, InvokePermission = RpcInvokePermission.Server)]

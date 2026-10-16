@@ -1,5 +1,6 @@
 ﻿using Tanks.Shared.Generation;
 using Tanks.Shared.Teams;
+using Tanks.Utils;
 using Unity.Mathematics;
 using UnityEngine;
 
@@ -25,7 +26,9 @@ namespace Tanks.Shared.Bootstrap
 
     public interface IGameStartBehaviour : INetworkBehaviourExtended
     {
-        void GenerateTilemapEveryoneRpc(TilemapGenerationSettings settings, Vector2Int resolution);
+        TemporaryArrayResult<GeneratedTile> GenerateTilemap(
+            TilemapGenerationSettings settings, Vector2Int resolution);
+
         void SendReadyConfirmationServerRpc(int secretHandle);
         void RequestReadyConfirmation(ulong clientId, int secretHandle);
 

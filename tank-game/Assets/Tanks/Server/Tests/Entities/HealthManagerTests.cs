@@ -12,8 +12,11 @@ namespace Tanks.Server.Tests.Entities
         [SetUp]
         public void Setup()
         {
+            IHealthBehaviour behaviour = Substitute.For<IHealthBehaviour>();
+            behaviour.InitialHealth.Returns(100);
+
             _component = new AuthoritativeHealth();
-            _component.Initialize(Substitute.For<IHealthBehaviour>());
+            _component.Initialize(behaviour);
         }
 
         [TestCase(1)]

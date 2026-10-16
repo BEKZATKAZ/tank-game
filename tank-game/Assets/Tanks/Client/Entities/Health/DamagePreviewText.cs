@@ -26,6 +26,7 @@ namespace Tanks.Client.Entities.Health
             _text.color = _color.Evaluate(1 - state.NormalizedCurrent);
             _text.text = value.ToString();
 
+            Transform ??= new UnityTransform(transform);
             Transform.WorldPosition = at.WorldPosition + new float2(x, y);
         }
 
@@ -34,11 +35,6 @@ namespace Tanks.Client.Entities.Health
             AnimationState state = _animation["DamagePreview_Popup"];
             state.speed = UnityEngine.Random.Range(0.75f, 1.25f);
             _animation.Play(state.name);
-        }
-
-        private void Awake()
-        {
-            Transform = new UnityTransform(transform);
         }
     }
 }

@@ -3,6 +3,7 @@ using Tanks.Shared.Entities;
 using Tanks.Shared.Entities.Health;
 using Tanks.Shared.Items;
 using Tanks.Shared.Items.Behaviours;
+using Tanks.Shared.Teams;
 using UnityEngine;
 
 namespace Tanks.Client.Items.Behaviours.OnPickup
@@ -39,6 +40,9 @@ namespace Tanks.Client.Items.Behaviours.OnPickup
 
             foreach (IEntityBehaviour entity in _entityService.GetAllEntities())
             {
+                // Ignore crates and other non-player entities
+                if (entity.GetBehaviour<ITeamParticipantBehaviour>() is null) continue;
+
                 SetSpriteVisibility(entity, isVisible: false);
             }
         }
@@ -52,6 +56,9 @@ namespace Tanks.Client.Items.Behaviours.OnPickup
 
             foreach (IEntityBehaviour entity in _entityService.GetAllEntities())
             {
+                // Ignore crates and other non-player entities
+                if (entity.GetBehaviour<ITeamParticipantBehaviour>() is null) continue;
+
                 IItemOwnerBehaviour itemOwner = entity.GetBehaviour<IItemOwnerBehaviour>();
 
                 if (itemOwner is null) continue;

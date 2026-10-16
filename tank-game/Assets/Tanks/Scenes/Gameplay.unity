@@ -426,7 +426,7 @@ GameObject:
   m_Layer: 0
   m_Name: === CLIENT ONLY ===
   m_TagString: Untagged
-  m_Icon: {fileID: 0}
+  m_Icon: {fileID: 2800000, guid: b2ce704e56cc84fb3b347499263c6244, type: 3}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
@@ -462,6 +462,69 @@ Transform:
   - {fileID: 1821635252}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &210262173
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 210262174}
+  - component: {fileID: 210262175}
+  m_Layer: 0
+  m_Name: Crate Spawner
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &210262174
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 210262173}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 819411462}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &210262175
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 210262173}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 063300780e0db174b8816e023c0d7570, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Tanks.Server::Tanks.Server.Generation.Crates.CrateSpawner
+  _cratePrefabs:
+  - key: 0
+    value: {fileID: 1974842185725616913, guid: 7131f00af6c480b4abd83001e218748e, type: 3}
+  - key: 2
+    value: {fileID: 5526169902453907121, guid: 64862ff5a0786f944ba22adc4786245f, type: 3}
+  - key: 1
+    value: {fileID: 2536579091533127069, guid: 5396daf04bc837c4d8cd0e3b9b46c8d1, type: 3}
+  _settings:
+    ClusterDensity: 8
+    MinMaxCratesPerCluster:
+      x: 4
+      y: 12
+    ClusterRadius: 8
+    MinClusterDistance: 30
+    CornerBias: 6
+    EpicCrateCount: 3
+    EpicRadius: 2
+    RareCrateDensity: 10
+    MinSingleCrateDistance: 30
 --- !u!1 &223801261
 GameObject:
   m_ObjectHideFlags: 0
@@ -654,7 +717,7 @@ GameObject:
   m_Layer: 0
   m_Name: Pickup Spawner
   m_TagString: Untagged
-  m_Icon: {fileID: 0}
+  m_Icon: {fileID: 2800000, guid: 2b35aef68fadf5243a92005fb41c4ed0, type: 3}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
@@ -699,16 +762,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: Tanks.Shared::Tanks.Shared.Items.Pickups.PickupSpawnBehaviour
   ShowTopMostFoldoutHeaderGroup: 1
   _itemCounts:
-  - key: 0
-    value: 40
-  - key: 1
-    value: 31
-  - key: 2
-    value: 20
   - key: 3
-    value: 8
+    value: 4
   - key: 4
     value: 1
+  - key: 1
+    value: 20
+  - key: 2
+    value: 15
 --- !u!4 &415803225
 Transform:
   m_ObjectHideFlags: 0
@@ -737,7 +798,7 @@ GameObject:
   m_Layer: 0
   m_Name: === SERVER ONLY ===
   m_TagString: Untagged
-  m_Icon: {fileID: 0}
+  m_Icon: {fileID: 2800000, guid: 3fe892784421e47f5aa40c2784a6cb3e, type: 3}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
@@ -913,6 +974,7 @@ Transform:
   m_Children:
   - {fileID: 71442779}
   - {fileID: 1201526859}
+  - {fileID: 210262174}
   m_Father: {fileID: 450927606}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &824819783
@@ -1191,7 +1253,7 @@ GameObject:
   m_Layer: 0
   m_Name: Bootstrap
   m_TagString: Untagged
-  m_Icon: {fileID: 0}
+  m_Icon: {fileID: 2800000, guid: eff50cd7d22a34292bdd2d83400f3312, type: 3}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
@@ -1387,6 +1449,8 @@ MonoBehaviour:
   _teamService: {fileID: 1421461476}
   _lagCompensation: {fileID: 253405767}
   _lifetime: {fileID: 2095325337}
+  _pickupSpawner: {fileID: 415803224}
+  _crateSpawner: {fileID: 210262175}
 --- !u!1 &1261939162
 GameObject:
   m_ObjectHideFlags: 0
@@ -1434,7 +1498,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Unity.Multiplayer.Tools.NetworkSimulator.Runtime::Unity.Multiplayer.Tools.NetworkSimulator.Runtime.NetworkSimulator
   m_PresetAsset: {fileID: 0}
   m_PresetReference:
-    rid: 5824281486010613760
+    rid: 5824281639991902315
   m_Scenario:
     rid: -2
   m_IsScenarioSettingsFolded: 0
@@ -1444,7 +1508,7 @@ MonoBehaviour:
     RefIds:
     - rid: -2
       type: {class: , ns: , asm: }
-    - rid: 5824281486010613760
+    - rid: 5824281639991902315
       type: {class: NetworkSimulatorPreset, ns: Unity.Multiplayer.Tools.NetworkSimulator.Runtime, asm: Unity.Multiplayer.Tools.NetworkSimulator.Runtime}
       data:
         <Name>k__BackingField: 'Home Cable [Optimal real-world scenario]'
@@ -1828,7 +1892,7 @@ GameObject:
   m_Layer: 0
   m_Name: Tilemap
   m_TagString: Untagged
-  m_Icon: {fileID: 0}
+  m_Icon: {fileID: 2800000, guid: ffc58b5d1d8a6ed489be30f7a1291b1e, type: 3}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 4
   m_IsActive: 1

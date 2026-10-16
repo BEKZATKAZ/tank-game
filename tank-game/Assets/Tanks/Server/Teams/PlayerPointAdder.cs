@@ -29,6 +29,9 @@ namespace Tanks.Server.Teams
 
         public void Handle(Died message, IMessageSender sender = null)
         {
+            // Discard non-player entities
+            if (message.Target.GetBehaviour<ITeamParticipantBehaviour>() is null) return;
+
             PlayerState from;
 
             if (AreTeammates(message.Target, message.From))

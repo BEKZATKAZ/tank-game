@@ -26,6 +26,8 @@ namespace Tanks.UI.Gameplay.Eliminated
                 // Prevent animation at the start of the game
                 if (string.IsNullOrEmpty(x)) return;
 
+                _container.style.opacity = 1;
+
                 LMotion.Create(from: 1f, to: 0f, duration: 1.25f)
                     .WithDelay(1.2f)
                     .WithEase(Ease.OutSine)

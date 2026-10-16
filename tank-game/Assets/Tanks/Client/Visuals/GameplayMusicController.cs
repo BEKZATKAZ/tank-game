@@ -6,6 +6,7 @@ using Tanks.Client.Bootstrap;
 using Tanks.Client.Input;
 using Tanks.Shared.Entities.Health;
 using Tanks.Shared.Messaging;
+using Tanks.Shared.Teams;
 using Unity.Netcode;
 using UnityEngine;
 using VContainer;
@@ -62,6 +63,9 @@ namespace Tanks.Client.Visuals
 
         public async void Handle(Died message, IMessageSender sender)
         {
+            // Discard non-player entities
+            if (message.Target.GetBehaviour<ITeamParticipantBehaviour>() is null) return;
+
             // Let player objects destroy before processing
             await UniTask.DelayFrame(2);
 
