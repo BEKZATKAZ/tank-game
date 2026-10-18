@@ -98,11 +98,11 @@ namespace Tanks.Shared.Stats
             StatTypeParameters parameters = Config.GetParameters(type);
             int diminishingBase = parameters.DiminishingBase;
 
-            return diminishingBase switch
+            return value switch
             {
                 > 0 => diminishingBase / (diminishingBase + value),
-                < 0 => -diminishingBase / (diminishingBase - value),
-                0 => value,
+                < 0 => 1 + (-value / diminishingBase),
+                _ => 1
             };
         }
 

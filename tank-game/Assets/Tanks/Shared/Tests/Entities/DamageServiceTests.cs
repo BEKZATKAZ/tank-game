@@ -75,6 +75,14 @@ namespace Tanks.Shared.Tests.Entities
             }
         }
 
+        [TestCase(-1)]
+        [TestCase(-100)]
+        [TestCase(-99999)]
+        public void Damage_NegativeDefense_DealsPositiveDamage(float defense)
+        {
+            AssertDamageWithStats(amount: 18, damageBonus: 1000, defense);
+        }
+
         [Test]
         public void Heal_CallsOnHeal()
         {
@@ -89,10 +97,19 @@ namespace Tanks.Shared.Tests.Entities
             }
         }
 
+        private static float GetDiminishingReturns(float value, int diminishingBase)
+        {
+            return value switch
+            {
+                > 0 => diminishingBase / (diminishingBase + value),
+                < 0 => 1 + (-value / diminishingBase),
+                _ => 1,
+            };
+        }
+
         private void AssertDamageWithStats(PositiveFloat amount, float damageBonus, float defense)
         {
-            float constant = 50;
-            float multiplier = constant / (constant + defense);
+            float multiplier = GetDiminishingReturns(defense, 50);
             float fullDamage = amount + damageBonus;
 
             float expectedDamage = fullDamage * multiplier;
