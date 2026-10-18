@@ -164,8 +164,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Tanks.Client::Tanks.Client.Visuals.GameplayMusicController
   _musicPaths:
-  - event:/Music/Music2
   - event:/Music/Music1
+  - event:/Music/Music2
+  - event:/Music/Music3
+  - event:/Music/Music4
 --- !u!1 &23867537
 GameObject:
   m_ObjectHideFlags: 0

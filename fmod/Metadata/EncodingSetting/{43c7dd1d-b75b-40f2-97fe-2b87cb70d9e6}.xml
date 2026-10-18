@@ -4,9 +4,6 @@
 		<property name="encodingFormat">
 			<value>3</value>
 		</property>
-		<property name="quality">
-			<value>60</value>
-		</property>
 		<property name="sampleRateMode">
 			<value>2</value>
 		</property>

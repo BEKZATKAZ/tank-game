@@ -65,11 +65,7 @@
 	<object class="GroupTrack" id="{11a641c5-6c90-4df6-998a-5727a3a19f13}">
 		<relationship name="modules">
 			<destination>{eb22d443-c193-456c-9d3d-fb5acfa24f3a}</destination>
-			<destination>{ddd7a206-e37e-4c66-ad5e-c078366f8ab3}</destination>
-			<destination>{95a513f9-c293-4dc8-9eee-85954c2c7945}</destination>
-			<destination>{b570e9ad-9aa2-43b4-b09a-4f17ff7affb8}</destination>
-			<destination>{b296803c-37bf-4aaa-b245-b9e3cc22cea1}</destination>
-			<destination>{8a2e964c-a4a0-4e5c-9e57-b0b010120078}</destination>
+			<destination>{380c6e68-5f78-4ef1-b31d-5f9a243221fb}</destination>
 		</relationship>
 		<relationship name="mixerGroup">
 			<destination>{3a2d3a38-472b-4816-9cae-8bc16869f34b}</destination>
@@ -78,11 +74,7 @@
 	<object class="Timeline" id="{3ca2a5bb-9aa5-41db-97b8-3eb8653c40c7}">
 		<relationship name="modules">
 			<destination>{eb22d443-c193-456c-9d3d-fb5acfa24f3a}</destination>
-			<destination>{ddd7a206-e37e-4c66-ad5e-c078366f8ab3}</destination>
-			<destination>{95a513f9-c293-4dc8-9eee-85954c2c7945}</destination>
-			<destination>{b570e9ad-9aa2-43b4-b09a-4f17ff7affb8}</destination>
-			<destination>{b296803c-37bf-4aaa-b245-b9e3cc22cea1}</destination>
-			<destination>{8a2e964c-a4a0-4e5c-9e57-b0b010120078}</destination>
+			<destination>{380c6e68-5f78-4ef1-b31d-5f9a243221fb}</destination>
 		</relationship>
 		<relationship name="markers">
 			<destination>{e98c5037-265a-431d-8078-c364d1dc4149}</destination>
@@ -111,80 +103,24 @@
 	<object class="MixerBusPanner" id="{6d5a04bd-3f0a-4029-a457-f05f2f9701a6}" />
 	<object class="SingleSound" id="{eb22d443-c193-456c-9d3d-fb5acfa24f3a}">
 		<property name="length">
-			<value>53.800000000000004</value>
+			<value>65.799999999999997</value>
 		</property>
 		<property name="timelockedOffset">
-			<value>0.76602158273381293</value>
+			<value>0.7639167241549224</value>
 		</property>
 		<relationship name="audioFile">
 			<destination>{823b2d1b-ee30-45c5-8fa7-ec0e6475ee3c}</destination>
 		</relationship>
 	</object>
-	<object class="SingleSound" id="{ddd7a206-e37e-4c66-ad5e-c078366f8ab3}">
+	<object class="SingleSound" id="{380c6e68-5f78-4ef1-b31d-5f9a243221fb}">
 		<property name="start">
-			<value>54</value>
-		</property>
-		<property name="length">
-			<value>6</value>
-		</property>
-		<property name="timelockedOffset">
-			<value>36.766021582733813</value>
-		</property>
-		<relationship name="audioFile">
-			<destination>{823b2d1b-ee30-45c5-8fa7-ec0e6475ee3c}</destination>
-		</relationship>
-	</object>
-	<object class="SingleSound" id="{95a513f9-c293-4dc8-9eee-85954c2c7945}">
-		<property name="start">
-			<value>53.800000000000004</value>
+			<value>65.799999999999997</value>
 		</property>
 		<property name="length">
 			<value>0.19999999999999574</value>
 		</property>
 		<property name="timelockedOffset">
-			<value>42.566021582733818</value>
-		</property>
-		<relationship name="audioFile">
-			<destination>{823b2d1b-ee30-45c5-8fa7-ec0e6475ee3c}</destination>
-		</relationship>
-	</object>
-	<object class="SingleSound" id="{b570e9ad-9aa2-43b4-b09a-4f17ff7affb8}">
-		<property name="start">
-			<value>60</value>
-		</property>
-		<property name="length">
-			<value>6</value>
-		</property>
-		<property name="timelockedOffset">
-			<value>36.766021582733813</value>
-		</property>
-		<relationship name="audioFile">
-			<destination>{823b2d1b-ee30-45c5-8fa7-ec0e6475ee3c}</destination>
-		</relationship>
-	</object>
-	<object class="SingleSound" id="{b296803c-37bf-4aaa-b245-b9e3cc22cea1}">
-		<property name="start">
-			<value>66</value>
-		</property>
-		<property name="length">
-			<value>6</value>
-		</property>
-		<property name="timelockedOffset">
-			<value>36.766021582733813</value>
-		</property>
-		<relationship name="audioFile">
-			<destination>{823b2d1b-ee30-45c5-8fa7-ec0e6475ee3c}</destination>
-		</relationship>
-	</object>
-	<object class="SingleSound" id="{8a2e964c-a4a0-4e5c-9e57-b0b010120078}">
-		<property name="start">
-			<value>72</value>
-		</property>
-		<property name="length">
-			<value>6</value>
-		</property>
-		<property name="timelockedOffset">
-			<value>36.766021582733813</value>
+			<value>60.563916724154929</value>
 		</property>
 		<relationship name="audioFile">
 			<destination>{823b2d1b-ee30-45c5-8fa7-ec0e6475ee3c}</destination>
@@ -231,19 +167,16 @@
 		<relationship name="markerTrack">
 			<destination>{cbe5e7f9-ad65-453d-bd7d-34d572316f51}</destination>
 		</relationship>
-		<relationship name="triggerConditions">
-			<destination>{791a5afe-30cf-40f4-9002-674a297e41a5}</destination>
-		</relationship>
 	</object>
 	<object class="TransitionRegion" id="{41ab6b69-ff1a-47fb-924d-c446d7ded696}">
 		<property name="position">
 			<value>0</value>
 		</property>
 		<property name="length">
-			<value>23.25</value>
+			<value>24</value>
 		</property>
 		<property name="quantizationInterval">
-			<value>5</value>
+			<value>3</value>
 		</property>
 		<relationship name="timeline">
 			<destination>{3ca2a5bb-9aa5-41db-97b8-3eb8653c40c7}</destination>
@@ -260,7 +193,7 @@
 	</object>
 	<object class="NamedMarker" id="{7fb61886-58a4-4b62-ad8c-791f3876cc33}">
 		<property name="position">
-			<value>23.25</value>
+			<value>24</value>
 		</property>
 		<property name="name">
 			<value>Part 2</value>
@@ -277,7 +210,7 @@
 			<value>42</value>
 		</property>
 		<property name="length">
-			<value>36</value>
+			<value>24</value>
 		</property>
 		<relationship name="timeline">
 			<destination>{3ca2a5bb-9aa5-41db-97b8-3eb8653c40c7}</destination>
@@ -299,20 +232,6 @@
 		</relationship>
 	</object>
 	<object class="MixerBusPanner" id="{40542844-2559-46fc-b15a-1d2f61ba48ac}" />
-	<object class="ParameterCondition" id="{791a5afe-30cf-40f4-9002-674a297e41a5}">
-		<property name="minimum">
-			<value>0.50499999523162842</value>
-		</property>
-		<property name="maximum">
-			<value>1</value>
-		</property>
-		<property name="isInverted">
-			<value>true</value>
-		</property>
-		<relationship name="parameter">
-			<destination>{8118d315-beed-42a0-9ce6-ec217445fb9a}</destination>
-		</relationship>
-	</object>
 	<object class="ParameterCondition" id="{55deb975-e9e9-4553-aafc-caf49bafc2e1}">
 		<property name="minimum">
 			<value>0.5</value>
