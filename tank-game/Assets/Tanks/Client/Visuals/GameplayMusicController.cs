@@ -5,6 +5,7 @@ using Tanks.Audio;
 using Tanks.Client.Bootstrap;
 using Tanks.Client.Input;
 using Tanks.Shared.Entities.Health;
+using Tanks.Shared.Generation;
 using Tanks.Shared.Messaging;
 using Tanks.Shared.Teams;
 using Unity.Netcode;
@@ -14,7 +15,10 @@ using VContainer;
 namespace Tanks.Client.Visuals
 {
     public sealed class GameplayMusicController :
-        MonoBehaviour, IMessageHandler<Died>, IMessageHandler<GameStartedFromClient>
+        MonoBehaviour,
+        IMessageHandler<Died>,
+        IMessageHandler<TilemapGenerated>,
+        IMessageHandler<GameStartedFromClient>
     {
         [SerializeField] private string[] _musicPaths;
 
@@ -24,7 +28,7 @@ namespace Tanks.Client.Visuals
         private IStressService _stress;
         private IInputService<ManualDriveInput> _driveInput;
         private IInputService<TurretInput> _turretInput;
-        private int _currentMusicIndex;
+        private int _currentMusicIndex = 0;
 
         [Inject]
         public void Inject(
@@ -34,12 +38,6 @@ namespace Tanks.Client.Visuals
             IInputService<ManualDriveInput> driveInput,
             IInputService<TurretInput> turretInput)
         {
-            for (int i = _musicPaths.Length - 1; i > 0; i--)
-            {
-                int j = UnityEngine.Random.Range(0, i + 1);
-                (_musicPaths[i], _musicPaths[j]) = (_musicPaths[j], _musicPaths[i]);
-            }
-
             _audioFactory = audioFactory;
             _bus = bus;
             _stress = stress;
@@ -47,7 +45,22 @@ namespace Tanks.Client.Visuals
             _turretInput = turretInput;
 
             _bus.RegisterHandler<Died>(this);
+            _bus.RegisterHandler<TilemapGenerated>(this);
             _bus.RegisterHandler<GameStartedFromClient>(this);
+        }
+
+        public void Handle(TilemapGenerated message, IMessageSender sender)
+        {
+            if (_currentMusicIndex >= 0) return;
+
+            // Sync music
+            var random = new Unity.Mathematics.Random(message.Settings.Seed ^ 31);
+
+            for (int i = _musicPaths.Length - 1; i > 0; i--)
+            {
+                int j = random.NextInt(i + 1);
+                (_musicPaths[i], _musicPaths[j]) = (_musicPaths[j], _musicPaths[i]);
+            }
         }
 
         public async void Handle(GameStartedFromClient message, IMessageSender sender)
@@ -117,6 +130,7 @@ namespace Tanks.Client.Visuals
             if (_bus is null) return;
 
             _bus.UnregisterHandler<Died>(this);
+            _bus.UnregisterHandler<TilemapGenerated>(this);
             _bus.UnregisterHandler<GameStartedFromClient>(this);
 
             DisposeMusic();
