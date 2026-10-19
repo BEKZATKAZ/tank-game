@@ -1,0 +1,245 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e9620f8c34305754d8cc9a7e49e852d9, type: 3}
+  m_Name: Items_fr
+  m_EditorClassIdentifier: Unity.Localization::UnityEngine.Localization.Tables.StringTable
+  m_LocaleId:
+    m_Code: fr
+  m_SharedData: {fileID: 11400000, guid: 72df8041cb1f65b40958c98981ef1561, type: 2}
+  m_Metadata:
+    m_Items:
+    - rid: 5824281740147687477
+  m_TableData:
+  - m_Id: 27924629891276800
+    m_Localized: "Vous avez ramass\xE9 {item}"
+    m_Metadata:
+      m_Items:
+      - rid: 5824281740147687477
+  - m_Id: 70680580677632
+    m_Localized: "Vous restaurez {health} unit\xE9s de sant\xE9."
+    m_Metadata:
+      m_Items:
+      - rid: 5824281740147687477
+  - m_Id: 25106182220242944
+    m_Localized: "Vous restaurez {health} unit\xE9s de sant\xE9."
+    m_Metadata:
+      m_Items:
+      - rid: 5824281740147687477
+  - m_Id: 24639211494137856
+    m_Localized: "Un joueur choisi au hasard parmi tous les joueurs, vous y compris, aura la malchance de recevoir {damage} points de d\xE9g\xE2ts de nulle part."
+    m_Metadata:
+      m_Items:
+      - rid: 5824281740147687477
+  - m_Id: 25751396253392896
+    m_Localized: "Pour chaque {interval} de sant\xE9 manquante, vous subissez {damage} points de d\xE9g\xE2ts. Cependant, cet objet ne peut \xEAtre ramass\xE9 qu'une seule fois, sinon vous mourrez."
+    m_Metadata:
+      m_Items:
+      - rid: 5824281740147687477
+  - m_Id: 26924559217680384
+    m_Localized: "\xC0 chaque tir, tous les joueurs, sauf vous, r\xE9cup\xE8rent {heal} points de vie. Les joueurs \xE9quip\xE9s de cet objet ne sont pas affect\xE9s. Votre cadence de tir est doubl\xE9e. Veillez \xE0 infliger plus de d\xE9g\xE2ts que vous n'en ratez."
+    m_Metadata:
+      m_Items:
+      - rid: 5824281740147687477
+  - m_Id: 75812378730496
+    m_Localized: Inhabituel
+    m_Metadata:
+      m_Items: []
+  - m_Id: 75907253886976
+    m_Localized: Rare
+    m_Metadata:
+      m_Items: []
+  - m_Id: 75961305882624
+    m_Localized: "\xC9pique"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 76011700445184
+    m_Localized: Instable
+    m_Metadata:
+      m_Items: []
+  - m_Id: 76081032290304
+    m_Localized: "L\xE9gendaire"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1898613006336
+    m_Localized: "Pas de droit \xE0 l'erreur"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2067794452480
+    m_Localized: "Vous infligez des d\xE9g\xE2ts absurdes, mais un seul coup peut vous \xEAtre fatal."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 73022222852096
+    m_Localized: Tuer ou mourir. Aucune marge d'erreur...
+    m_Metadata:
+      m_Items: []
+  - m_Id: 70567816814592
+    m_Localized: Grande trousse de soin
+    m_Metadata:
+      m_Items: []
+  - m_Id: 27916745065324544
+    m_Localized: "Vous avez recouvr\xE9 une grande partie de votre sant\xE9 !"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 25105894847504384
+    m_Localized: Petite trousse de soin
+    m_Metadata:
+      m_Items: []
+  - m_Id: 27916975806570496
+    m_Localized: "Vous avez restaur\xE9 des points de vie !"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 71017257459712
+    m_Localized: "T\xE9l\xE9portation - Al\xE9atoire"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 71319167655936
+    m_Localized: "Envie de sensations fortes\_? T\xE9l\xE9portez-vous vers un lieu al\xE9atoire, m\xEAme en zone dangereuse."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 74540846112768
+    m_Localized: "Une \xE9vasion qui a un hic. Un hic accidentel, en r\xE9alit\xE9."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 71503196938240
+    m_Localized: Arme automatique
+    m_Metadata:
+      m_Items: []
+  - m_Id: 71606984990720
+    m_Localized: "Une arme dot\xE9e d'une cadence de tir nettement sup\xE9rieure, mais infligeant beaucoup moins de d\xE9g\xE2ts."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 75199460892672
+    m_Localized: Cette arme tire incroyablement vite.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 24637296295239680
+    m_Localized: Texture manquante
+    m_Metadata:
+      m_Items: []
+  - m_Id: 24637799422976000
+    m_Localized: "Ils ne peuvent pas vous voir, vous ne pouvez pas les voir. Si vous poss\xE9dez d\xE9j\xE0 cet objet, vous dispara\xEEtrez vous-m\xEAme\u2026 Au moins, vous gagnerez en vitesse."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 24638048178757632
+    m_Localized: Maintenant, personne ne vous voit, et vous ne voyez personne.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 24638443533852672
+    m_Localized: Coup (mal)chanceux
+    m_Metadata:
+      m_Items: []
+  - m_Id: 24639686226436096
+    m_Localized: "L'un d'eux a eu la malchance de subir des d\xE9g\xE2ts, et tout cela \xE0 cause de vous."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 24646271011086336
+    m_Localized: Coffres jumeaux
+    m_Metadata:
+      m_Items: []
+  - m_Id: 24646440532271104
+    m_Localized: "Une arme tirant deux projectiles explosifs. Id\xE9ale pour le combat rapproch\xE9."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 24647016879972352
+    m_Localized: "Vous avez obtenu une grosse arme qui inflige de gros d\xE9g\xE2ts."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 25157885992853504
+    m_Localized: "Bo\xEEte de poudre \xE0 canon"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 25158317096001536
+    m_Localized: "Plus vous infligez de d\xE9g\xE2ts, plus vous utilisez de poudre !"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 25158649037414400
+    m_Localized: Marches lourdes
+    m_Metadata:
+      m_Items: []
+  - m_Id: 25158904093040640
+    m_Localized: "Vous \xEAtes plus lourd, mais vous \xEAtes mieux prot\xE9g\xE9. Plus lourd ne veut pas dire plus gros, n'est-ce pas ?"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 25362945230200832
+    m_Localized: Chargeur rapide
+    m_Metadata:
+      m_Items: []
+  - m_Id: 27918120339857408
+    m_Localized: Vous tirez un peu plus vite que d'habitude.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 25372714284310528
+    m_Localized: Armure d'abeille
+    m_Metadata:
+      m_Items: []
+  - m_Id: 25372870668935168
+    m_Localized: "Gagnez temporairement suffisamment de protection et de vitesse pour an\xE9antir tous les ennemis sur la carte."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 25373363868753920
+    m_Localized: "Vous avez acquis suffisamment de protection et de vitesse pour tous les an\xE9antir. Ce n'est que le d\xE9but."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 25751314284109824
+    m_Localized: Soif de sang
+    m_Metadata:
+      m_Items: []
+  - m_Id: 25753328636354560
+    m_Localized: "Vous infligez plus de d\xE9g\xE2ts \xE0 mesure que votre sant\xE9 diminue."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 26193936811253760
+    m_Localized: lance-bombes
+    m_Metadata:
+      m_Items: []
+  - m_Id: 26194437552431104
+    m_Localized: "Une arme qui lance une seule bombe. \xC0 l'impact, la bombe explose, projetant de nombreux fragments dans une large zone. Chaque fragment inflige des d\xE9g\xE2ts mineurs. Cette arme ne peut tirer qu'une seule fois."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 26196113726332928
+    m_Localized: Un seul tir suffit, mais toute collision provoquera une explosion.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 26441192122572800
+    m_Localized: Pistolet Frigorifique
+    m_Metadata:
+      m_Items: []
+  - m_Id: 26441382044852224
+    m_Localized: "Cette arme n'inflige aucun d\xE9g\xE2t, mais lorsqu'elle touche sa cible, elle r\xE9duit consid\xE9rablement la vitesse et la cadence de tir du joueur pendant quelques secondes. Cette arme ne peut tirer qu'une seule fois."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 26442908607930368
+    m_Localized: "Vous n'infligez aucun d\xE9g\xE2t, mais vous immobilisez instantan\xE9ment toute personne touch\xE9e une fois."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 26924141402087424
+    m_Localized: "Un v\xE9ritable \xE9quilibre ?"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 26926915934183424
+    m_Localized: "Les autres gu\xE9rissent quand vous tirez, mais vous tirez plus vite."
+    m_Metadata:
+      m_Items: []
+  references:
+    version: 2
+    RefIds:
+    - rid: 5824281740147687477
+      type: {class: SmartFormatTag, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_Entries: 
+        m_SharedEntries:
+        - id: 27924629891276800
+        - id: 70680580677632
+        - id: 25106182220242944
+        - id: 24639211494137856
+        - id: 25751396253392896
+        - id: 26924559217680384

@@ -21,13 +21,11 @@ MonoBehaviour:
   - m_Id: 9594953728
     m_Localized: 'Projectiles ricochet off the walls, don''t fire for no reason
 
-      unless
-      you see an enemy.'
+      unless you see an enemy.'
     m_Metadata:
       m_Items: []
   - m_Id: 1127561519104
-    m_Localized: Various items spawn all over the map, but read their descriptions
-      before picking them up.
+    m_Localized: Various items spawn all over the map, but read their descriptions before picking them up.
     m_Metadata:
       m_Items: []
   - m_Id: 2198761594880
@@ -35,8 +33,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 2424410955776
-    m_Localized: Keep an eye on the timer - it shows when the danger zone starts
-      and its duration.
+    m_Localized: Keep an eye on the timer - it shows when the danger zone starts and its duration.
     m_Metadata:
       m_Items: []
   - m_Id: 3757503373312
@@ -44,32 +41,31 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 4690362720256
-    m_Localized: Unstable items are among the rarest, yet the most complex. Use them
-      at your own risk.
+    m_Localized: Unstable items are among the rarest, yet the most complex. Use them at your own risk.
     m_Metadata:
       m_Items: []
   - m_Id: 6446383587328
-    m_Localized: The standard weapon has an infinite supply of ammo, but it needs
-      to be reloaded.
+    m_Localized: The standard weapon has an infinite supply of ammo, but it needs to be reloaded.
     m_Metadata:
       m_Items: []
   - m_Id: 7583602008064
-    m_Localized: You can also find weapons among the items. Just watch out for the
-      recoil.
+    m_Localized: You can also find weapons among the items. Just watch out for the recoil.
     m_Metadata:
       m_Items: []
   - m_Id: 8203172012032
-    m_Localized: Each item belongs to a tier. They can be distinguished by their
-      characteristic sound and color.
+    m_Localized: Each item belongs to a tier. They can be distinguished by their characteristic sound and color.
     m_Metadata:
       m_Items: []
   - m_Id: 9527674494976
-    m_Localized: Wanna gamble? With this item you can end up anywhere, even inside
-      the danger zone.
+    m_Localized: Wanna gamble? With this item you can end up anywhere, even inside the danger zone.
     m_Metadata:
       m_Items: []
   - m_Id: 10569631883264
     m_Localized: Don't waste fuel. There's no fuel in this game.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7943608060043264
+    m_Localized: Crates can drop unstable items at a small chance.
     m_Metadata:
       m_Items: []
   references:

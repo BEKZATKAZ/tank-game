@@ -135,3 +135,7 @@ fmod_editor.log
 
 # CCD Builds
 **/[Cc]cdBuildData
+
+# Dedicated gitignore folders
+**/[Gg]it[Ii]gnored/
+**/[Gg]it[Ii]gnored.meta

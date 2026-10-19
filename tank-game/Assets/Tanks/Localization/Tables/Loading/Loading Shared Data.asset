@@ -59,6 +59,10 @@ MonoBehaviour:
     m_Key: loading.tip.dont-waste-fuel
     m_Metadata:
       m_Items: []
+  - m_Id: 7943608060043264
+    m_Key: loading.tip.unstable-item-drop
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:

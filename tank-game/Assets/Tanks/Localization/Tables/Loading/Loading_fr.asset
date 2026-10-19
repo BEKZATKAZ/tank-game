@@ -1,0 +1,73 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e9620f8c34305754d8cc9a7e49e852d9, type: 3}
+  m_Name: Loading_fr
+  m_EditorClassIdentifier: Unity.Localization::UnityEngine.Localization.Tables.StringTable
+  m_LocaleId:
+    m_Code: fr
+  m_SharedData: {fileID: 11400000, guid: 8a7fe4fa637c3cb4d9a09d65255608c7, type: 2}
+  m_Metadata:
+    m_Items: []
+  m_TableData:
+  - m_Id: 9594953728
+    m_Localized: 'Les projectiles ricochent sur les murs, ne tirez pas sans raison
+
+      sauf si vous voyez un ennemi.'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2198761594880
+    m_Localized: "La carte est g\xE9n\xE9r\xE9e al\xE9atoirement, gardez cela \xE0 l'esprit."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2424410955776
+    m_Localized: "Surveillez le minuteur\_: il indique le d\xE9but de la zone de danger et sa dur\xE9e."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3757503373312
+    m_Localized: "Si vous vous autod\xE9truisez, vous obtiendrez -1 point."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1127561519104
+    m_Localized: Divers objets apparaissent un peu partout sur la carte, mais lisez leur description avant de les ramasser.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4690362720256
+    m_Localized: "Les objets instables sont parmi les plus rares, mais aussi les plus complexes. Utilisez-les \xE0 vos risques et p\xE9rils."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6446383587328
+    m_Localized: "L'arme standard dispose de munitions illimit\xE9es, mais elle doit \xEAtre recharg\xE9e."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7583602008064
+    m_Localized: "Vous trouverez \xE9galement des armes parmi les objets. Attention au recul\_!"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 8203172012032
+    m_Localized: "Chaque \xE9l\xE9ment appartient \xE0 un niveau. Ils se distinguent par leur son et leur couleur caract\xE9ristiques."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9527674494976
+    m_Localized: "Envie de tenter votre chance ? Avec cet objet, vous pouvez vous retrouver n'importe o\xF9, m\xEAme en zone dangereuse."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 10569631883264
+    m_Localized: Ne gaspillez pas de carburant. Il n'y a pas de carburant dans ce jeu.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7943608060043264
+    m_Localized: "Les caisses peuvent contenir des objets instables, mais il y a une faible probabilit\xE9."
+    m_Metadata:
+      m_Items: []
+  references:
+    version: 2
+    RefIds: []

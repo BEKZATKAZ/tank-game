@@ -1,0 +1,215 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e9620f8c34305754d8cc9a7e49e852d9, type: 3}
+  m_Name: Menus_fr
+  m_EditorClassIdentifier: Unity.Localization::UnityEngine.Localization.Tables.StringTable
+  m_LocaleId:
+    m_Code: fr
+  m_SharedData: {fileID: 11400000, guid: 34510603f8b6d1a44b1b2ffa9aa551c9, type: 2}
+  m_Metadata:
+    m_Items:
+    - rid: 5824281740147687470
+  m_TableData:
+  - m_Id: 5433757098532864
+    m_Localized: Le lobby de {name}
+    m_Metadata:
+      m_Items:
+      - rid: 5824281740147687470
+  - m_Id: 6919344674529280
+    m_Localized: Bienvenue sur {name} !
+    m_Metadata:
+      m_Items:
+      - rid: 5824281740147687470
+  - m_Id: 5429100515123200
+    m_Localized: '{username} a rejoint le lobby'
+    m_Metadata:
+      m_Items:
+      - rid: 5824281740147687470
+  - m_Id: 5429284712177664
+    m_Localized: "{username} s'est d\xE9connect\xE9 du lobby"
+    m_Metadata:
+      m_Items:
+      - rid: 5824281740147687470
+  - m_Id: 6608482260705280
+    m_Localized: "{count} lobbies trouv\xE9s !"
+    m_Metadata:
+      m_Items:
+      - rid: 5824281740147687470
+  - m_Id: 3701267455500288
+    m_Localized: Synchronisation verticale
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3337773761650688
+    m_Localized: Volume de l'interface
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3337645382393856
+    m_Localized: Volume SFX
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3715272152670208
+    m_Localized: "Fen\xEAtre"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3717298093776896
+    m_Localized: "R\xE9solution d'\xE9cran"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3714690427871232
+    m_Localized: "Mode \xE9cran"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3715168490446848
+    m_Localized: "Plein \xE9cran fen\xEAtr\xE9"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3715105701715968
+    m_Localized: "Plein \xE9cran"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3641288212045824
+    m_Localized: REVENIR
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3638901065867264
+    m_Localized: "PAR D\xC9FAUT"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3701799150641152
+    m_Localized: "Activ\xE9"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3706300725157888
+    m_Localized: "D\xE9sactiv\xE9"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3337490075705344
+    m_Localized: Volume musical
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3337205144051712
+    m_Localized: "Volume ma\xEEtre"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4793871635013632
+    m_Localized: Langue
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3713258257604608
+    m_Localized: Limite de FPS
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3638632466833408
+    m_Localized: APPLIQUER
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3244510153236480
+    m_Localized: TUTORIEL
+    m_Metadata:
+      m_Items: []
+  - m_Id: 289292115968
+    m_Localized: "PARAM\xC8TRES"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 27659821056
+    m_Localized: QUITTER LE JEU
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3245362964291584
+    m_Localized: "CR\xC9ER UN LOBBY"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3244736305913856
+    m_Localized: TROUVER UN LOBBY
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5068842412236800
+    m_Localized: COMMENCER
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5099162528342016
+    m_Localized: QUITTER LE LOBBY
+    m_Metadata:
+      m_Items: []
+  - m_Id: 20387375585124352
+    m_Localized: "D\xE9marrage du serveur"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6152229935865856
+    m_Localized: "Cr\xE9ation du lobby"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6894076769558528
+    m_Localized: Rejoindre le lobby
+    m_Metadata:
+      m_Items: []
+  - m_Id: 19202858845429760
+    m_Localized: Sortie du lobby
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5086135213056000
+    m_Localized: Envoyer
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5219211482193920
+    m_Localized: Message
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5085350316171264
+    m_Localized: Chat
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6608185362702336
+    m_Localized: Rechercher le lobby
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6610305478516736
+    m_Localized: REJOINDRE
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6520909764976640
+    m_Localized: Recherche...
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6516982222905344
+    m_Localized: "Aucun lobby n'a \xE9t\xE9 trouv\xE9"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 19179996239585280
+    m_Localized: Lobby
+    m_Metadata:
+      m_Items: []
+  - m_Id: 19180675230294016
+    m_Localized: "Param\xE8tres"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 19189575547576320
+    m_Localized: "Pr\xE9paration du serveur..."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 19189660226379776
+    m_Localized: Connexion au serveur...
+    m_Metadata:
+      m_Items: []
+  references:
+    version: 2
+    RefIds:
+    - rid: 5824281740147687470
+      type: {class: SmartFormatTag, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_Entries: 
+        m_SharedEntries:
+        - id: 5433757098532864
+        - id: 6919344674529280
+        - id: 5429100515123200
+        - id: 5429284712177664
+        - id: 6608482260705280

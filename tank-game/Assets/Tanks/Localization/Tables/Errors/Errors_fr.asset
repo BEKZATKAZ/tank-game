@@ -1,0 +1,91 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e9620f8c34305754d8cc9a7e49e852d9, type: 3}
+  m_Name: Errors_fr
+  m_EditorClassIdentifier: Unity.Localization::UnityEngine.Localization.Tables.StringTable
+  m_LocaleId:
+    m_Code: fr
+  m_SharedData: {fileID: 11400000, guid: 034deb129b9dd5842973b131521ca8de, type: 2}
+  m_Metadata:
+    m_Items: []
+  m_TableData:
+  - m_Id: 8684789760
+    m_Localized: "Une erreur s'est produite. Veuillez r\xE9essayer."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 214359618314240
+    m_Localized: ERREUR
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5444695711744
+    m_Localized: OK
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1051715732725760
+    m_Localized: "Nom d'utilisateur d\xE9j\xE0 pris."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1049871174295552
+    m_Localized: "Nom d'utilisateur trop court. Veuillez choisir un nom d'utilisateur d'au moins 3 caract\xE8res."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 675254177849344
+    m_Localized: Oh, du calme, du calme ! Vous faites trop de demandes !
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1071924076544
+    m_Localized: Le lobby n'est plus disponible.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 632541372416
+    m_Localized: "Lobby introuvable. Il est peut-\xEAtre ferm\xE9 ou n'existe plus."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 14073502426947584
+    m_Localized: "Impossible de cr\xE9er le lobby. Veuillez r\xE9essayer."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 14708398786830336
+    m_Localized: "Impossible de rejoindre le lobby. Veuillez r\xE9essayer."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 13262707732471808
+    m_Localized: "Oups ! Nous n'avons pas pu vous retirer du lobby. Veuillez r\xE9essayer."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 13688554381598720
+    m_Localized: "Impossible de d\xE9marrer le serveur. Veuillez r\xE9essayer."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 13688838436642816
+    m_Localized: "D\xE9lai d'attente du serveur d\xE9pass\xE9."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 14704694973128704
+    m_Localized: Le lobby est plein.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 14705904262275072
+    m_Localized: "D\xE9lai d'attente d\xE9pass\xE9."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 14708559386730496
+    m_Localized: Version du lobby incompatible.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 14710554747166720
+    m_Localized: "Le lobby a \xE9t\xE9 dissous."
+    m_Metadata:
+      m_Items: []
+  references:
+    version: 2
+    RefIds: []

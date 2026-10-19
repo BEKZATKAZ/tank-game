@@ -1,0 +1,57 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e9620f8c34305754d8cc9a7e49e852d9, type: 3}
+  m_Name: Gameplay_fr
+  m_EditorClassIdentifier: Unity.Localization::UnityEngine.Localization.Tables.StringTable
+  m_LocaleId:
+    m_Code: fr
+  m_SharedData: {fileID: 11400000, guid: be3c65f295ea4a545a8406a0bc7b68e6, type: 2}
+  m_Metadata:
+    m_Items:
+    - rid: 5824281740147687475
+  m_TableData:
+  - m_Id: 155103748096
+    m_Localized: Par {name}
+    m_Metadata:
+      m_Items:
+      - rid: 5824281740147687475
+  - m_Id: 3952752743374848
+    m_Localized: Statistiques - Tour {round}
+    m_Metadata:
+      m_Items:
+      - rid: 5824281740147687475
+  - m_Id: 34970492928
+    m_Localized: "\xC9LIMIN\xC9(E)"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4674600525824
+    m_Localized: De vos propres mains
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4262694868180992
+    m_Localized: VICTOIRE
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4262755660423168
+    m_Localized: "D\xC9FAITE"
+    m_Metadata:
+      m_Items: []
+  references:
+    version: 2
+    RefIds:
+    - rid: 5824281740147687475
+      type: {class: SmartFormatTag, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_Entries: 
+        m_SharedEntries:
+        - id: 155103748096
+        - id: 3952752743374848

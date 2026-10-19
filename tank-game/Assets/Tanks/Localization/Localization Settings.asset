@@ -70,7 +70,7 @@ MonoBehaviour:
           rid: -2
         m_AsynchronousBehaviour: 0
         m_UseFallback: 0
-        m_MissingTranslationState: 1
+        m_MissingTranslationState: 0
         m_NoTranslationFoundMessage: No translation found for '{key}' in {table.TableCollectionName}
         m_SmartFormat:
           rid: 5098954891418402852
@@ -102,8 +102,8 @@ MonoBehaviour:
     - rid: 5098954891418402853
       type: {class: SmartSettings, ns: UnityEngine.Localization.SmartFormat.Core.Settings, asm: Unity.Localization}
       data:
-        m_FormatErrorAction: 0
-        m_ParseErrorAction: 0
+        m_FormatErrorAction: 2
+        m_ParseErrorAction: 2
         m_CaseSensitivity: 0
         m_ConvertCharacterStringLiterals: 1
     - rid: 5098954891418402854
