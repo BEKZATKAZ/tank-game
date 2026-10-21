@@ -23,6 +23,9 @@ MonoBehaviour:
   m_OverrideGlobalSceneList: 1
   m_Scenes:
   - m_enabled: 1
+    m_path: Assets/Tanks/Scenes/SplashScreen.unity
+    m_guid: a805fe70858a7a147968a120e2ead6aa
+  - m_enabled: 1
     m_path: Assets/Tanks/Scenes/ClientBoot.unity
     m_guid: 5c4dd58a3e5379b4f959bf81675f617b
   - m_enabled: 1

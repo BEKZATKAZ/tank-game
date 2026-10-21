@@ -13,10 +13,10 @@
   <Project Path="FMODUnity.csproj" />
   <Project Path="Tanks.Utils.Tests.csproj" />
   <Project Path="Tanks.Core.csproj" />
+  <Project Path="Tanks.UI.Tests.csproj" />
   <Project Path="Tanks.Shared.Tests.Runtime.csproj" />
   <Project Path="Tanks.Utils.csproj" />
   <Project Path="FMODUnityResonance.csproj" />
-  <Project Path="Tanks.UI.Tests.csproj" />
   <Project Path="Tanks.Audio.csproj" />
   <Project Path="Tanks.Client.Tests.Runtime.csproj" />
   <Project Path="Tanks.Infrastructure.csproj" />

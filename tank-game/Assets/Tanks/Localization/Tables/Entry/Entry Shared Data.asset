@@ -15,6 +15,14 @@ MonoBehaviour:
   m_TableCollectionName: Entry
   m_TableCollectionNameGuidString: c65a4f9d9da4a46468c02bed143a7960
   m_Entries:
+  - m_Id: 23467932791562240
+    m_Key: entry.health-warning.title
+    m_Metadata:
+      m_Items: []
+  - m_Id: 23467932837699584
+    m_Key: entry.health-warning.content
+    m_Metadata:
+      m_Items: []
   - m_Id: 22173671424
     m_Key: entry.username.confirm
     m_Metadata:

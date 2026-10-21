@@ -1,0 +1,16 @@
+<ui:UXML xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
+    <Style src="project://database/Assets/Tanks/UI/SplashScreen/SplashScreen.uss?fileID=7433441132597879392&amp;guid=4c67b2f16ef91d548971344ea8d2e99a&amp;type=3#SplashScreen"/>
+    <ui:VisualElement name="FMOD" class="fmod-logo" style="background-image: url(&quot;project://database/Assets/Plugins/FMOD/images/FMODLogoWhite.png?fileID=21300000&amp;guid=8fd8ccb8d7e81d943b28ea7975c7185d&amp;type=3#FMODLogoWhite&quot;);"/>
+    <ui:VisualElement name="Warning" class="health-warning">
+        <ui:Label name="WarningTitle" class="health-warning__title" style="-unity-font-definition: url(&quot;project://database/Assets/Tanks/UI/Fonts/Tektur/Tektur-Black.ttf?fileID=12800000&amp;guid=45f7b32b4f832744ebbabf86a666ecac&amp;type=3#Tektur-Black&quot;);">
+            <Bindings>
+                <UnityEngine.Localization.LocalizedString property="text" table="GUID:c65a4f9d9da4a46468c02bed143a7960" entry="Id(23467932791562240)"/>
+            </Bindings>
+        </ui:Label>
+        <ui:Label name="WarningContent" class="health-warning__content">
+            <Bindings>
+                <UnityEngine.Localization.LocalizedString property="text" table="GUID:c65a4f9d9da4a46468c02bed143a7960" entry="Id(23467932837699584)"/>
+            </Bindings>
+        </ui:Label>
+    </ui:VisualElement>
+</ui:UXML>

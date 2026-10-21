@@ -1,0 +1,30 @@
+.health-warning {
+	width: 100%;
+	height: 100%;
+	padding: 100px 300px;
+	align-items: center;
+	justify-content: center;
+}
+
+.health-warning__title {
+	color: #ff0f0f;
+	font-size: 48px;
+	width: 100%;
+	padding: 0 0 0 18px;
+}
+
+.health-warning__content {
+	color: rgb(215, 215, 215);
+	font-size: 28px;
+	white-space: normal;
+}
+
+.fmod-logo {
+	position: absolute;
+	bottom: 0;
+	right: 0;
+	width: 128px;
+	height: 32px;
+	margin: 40px 30px;
+	-unity-background-image-tint-color: rgb(245, 245, 245);
+}

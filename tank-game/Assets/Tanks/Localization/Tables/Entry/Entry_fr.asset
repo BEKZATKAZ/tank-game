@@ -30,6 +30,14 @@ MonoBehaviour:
     m_Localized: CHOISISSEZ UN NOM D'UTILISATEUR
     m_Metadata:
       m_Items: []
+  - m_Id: 23467932791562240
+    m_Localized: AVERTISSEMENT SANITAIRE
+    m_Metadata:
+      m_Items: []
+  - m_Id: 23467932837699584
+    m_Localized: "Ce jeu contient des lumi\xE8res clignotantes et des mouvements de cam\xE9ra rapides susceptibles de provoquer une g\xEAne, des vertiges, des naus\xE9es ou des crises d'\xE9pilepsie chez les personnes photosensibles. Si vous ressentez des vertiges, des naus\xE9es, des troubles de la vision, une d\xE9sorientation ou tout autre sympt\xF4me inhabituel pendant que vous jouez, arr\xEAtez imm\xE9diatement de jouer."
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds: []
