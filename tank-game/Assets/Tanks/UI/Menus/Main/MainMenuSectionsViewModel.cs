@@ -1,8 +1,11 @@
 using Cysharp.Threading.Tasks;
 using Tanks.Core;
+using Tanks.Core.Common.Scenes;
 using Tanks.Core.Lobbies;
+using Tanks.Core.Lobbies.Payloads;
 using Tanks.Core.Lobbies.UseCases;
 using Tanks.Localization;
+using Tanks.Shared.Playground;
 using Tanks.UI.Menus.Dialogs;
 using Tanks.UI.Menus.Loading;
 using Tanks.Utils;
@@ -19,6 +22,7 @@ namespace Tanks.UI.Menus.Main
             ILoadingScreenService loading,
             IDialogScreenService dialog,
             IMenuNavigation navigation,
+            ISceneLoader sceneLoader,
             IRunServerUseCase runServer)
         {
             _auth = auth;
@@ -27,6 +31,7 @@ namespace Tanks.UI.Menus.Main
             _loading = loading;
             _dialog = dialog;
             _navigation = navigation;
+            _sceneLoader = sceneLoader;
             _runServer = runServer;
         }
 
@@ -38,6 +43,7 @@ namespace Tanks.UI.Menus.Main
         private readonly ILoadingScreenService _loading;
         private readonly IDialogScreenService _dialog;
         private readonly IMenuNavigation _navigation;
+        private readonly ISceneLoader _sceneLoader;
         private readonly IRunServerUseCase _runServer;
 
         public void OpenSection(MainMenuSection section)
@@ -48,6 +54,24 @@ namespace Tanks.UI.Menus.Main
         public void ShowQuitGameConfirmation()
         {
             _dialog.ShowConfirmation("quit");
+        }
+
+        public async UniTaskVoid OpenTutorial()
+        {
+            _localization.TryGet("Menus", "menu.lobby.starting-server", out var starting);
+            _loading.Begin(starting);
+
+            ResultType started = await _runServer.RunAsync(RequestedServerScene.Playground);
+
+            if (started.IsSuccess == false)
+            {
+                _dialog.ShowErrorFromCode("error.lobby", started.ErrorCode);
+                _loading.End();
+                return;
+            }
+
+            await _sceneLoader.StartLoadingAsync(new LoadPlayground());
+            _loading.End();
         }
 
         public async UniTaskVoid CreateLobby()

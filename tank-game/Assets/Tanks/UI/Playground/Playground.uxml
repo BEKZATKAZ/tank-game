@@ -1,0 +1,6 @@
+<ui:UXML xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
+    <Style src="project://database/Assets/Tanks/UI/Playground/Playground.uss?fileID=7433441132597879392&amp;guid=3200e24812c70714a86c822615ffddc8&amp;type=3#Playground"/>
+    <ui:VisualElement name="Prompt" class="tutorial-prompt">
+        <ui:Label name="PromptText" text="Aim at the crates and clear your way."/>
+    </ui:VisualElement>
+</ui:UXML>

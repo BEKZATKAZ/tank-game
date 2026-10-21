@@ -43,6 +43,24 @@ namespace Tanks.Server.Generation.Crates
             _pools[tier].Release(instance);
         }
 
+        public ICrateBehaviour Spawn(GeneratedCrate crate)
+        {
+            ICrateBehaviour instance = _pools[crate.Tier].Get();
+
+            // Add 1 (x:1, y:1) to count from bottom left corner
+            instance.Transform.WorldPosition = crate.Position + 1;
+
+            if (_activeCrates.TryGetValue(crate.Tier, out List<ICrateBehaviour> list) == false)
+            {
+                list = new List<ICrateBehaviour>();
+                _activeCrates.Add(crate.Tier, list);
+            }
+
+            list.Add(instance);
+
+            return instance;
+        }
+
         public void Spawn(ReadOnlySpan<GeneratedTile> tiles, uint seed)
         {
             using var crates = _generator.Generate(tiles, seed, new CrateGenerationSettings
@@ -60,21 +78,7 @@ namespace Tanks.Server.Generation.Crates
                 MinSingleCrateDistance = 30
             });
 
-            foreach (GeneratedCrate crate in crates.Value)
-            {
-                ICrateBehaviour instance = _pools[crate.Tier].Get();
-
-                // Add 1 (x:1, y:1) to count from bottom left corner
-                instance.Transform.WorldPosition = crate.Position + 1;
-
-                if (_activeCrates.TryGetValue(crate.Tier, out List<ICrateBehaviour> list) == false)
-                {
-                    list = new List<ICrateBehaviour>();
-                    _activeCrates.Add(crate.Tier, list);
-                }
-
-                list.Add(instance);
-            }
+            foreach (GeneratedCrate crate in crates.Value) Spawn(crate);
         }
 
         public void Clear()
@@ -116,7 +120,7 @@ namespace Tanks.Server.Generation.Crates
         private void DestroyInstance(ICrateBehaviour instance)
         {
             if (instance is not CrateBehaviour behaviour) return;
-            Destroy(behaviour.gameObject);
+            if (behaviour) Destroy(behaviour.gameObject);
         }
 
         private void Awake()

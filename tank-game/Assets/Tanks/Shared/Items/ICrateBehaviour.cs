@@ -6,5 +6,6 @@ namespace Tanks.Shared.Items
     public interface ICrateBehaviour : INetworkBehaviourExtended
     {
         IReadOnlyDictionary<ItemTier, float> Chances { get; }
+        bool CanDropItems { get; set; }
     }
 }

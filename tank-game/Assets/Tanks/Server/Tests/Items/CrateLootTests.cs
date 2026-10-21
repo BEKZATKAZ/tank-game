@@ -14,8 +14,6 @@ namespace Tanks.Server.Tests.Items
 {
     public class CrateLootTests
     {
-        // ── Deterministic random stub ──────────────────────────────────────────
-
         private sealed class FixedRandom : Random
         {
             private readonly double _nextDoubleValue;
@@ -47,6 +45,7 @@ namespace Tanks.Server.Tests.Items
         {
             ICrateBehaviour behaviour = Substitute.For<ICrateBehaviour>();
             behaviour.Chances.Returns(chances);
+            behaviour.CanDropItems.Returns(true);
 
             IHealthBehaviour health = Substitute.For<IHealthBehaviour>();
             behaviour.GetBehaviour<IHealthBehaviour>().Returns(health);
@@ -94,14 +93,12 @@ namespace Tanks.Server.Tests.Items
             spawner.DidNotReceive().SpawnEveryoneRpc(Arg.Any<PickupSpawned>());
         }
 
-        // ── Tests ──────────────────────────────────────────────────────────────
-
         [Test]
         public void Handle_HundredPercentChance_SpawnsSingleItem()
         {
             ICrateBehaviour behaviour = MakeBehaviour(new Dictionary<ItemTier, float>
             {
-                [ItemTier.Uncommon] = 1f
+                [ItemTier.Uncommon] = 1
             });
 
             IItemConfig[] items =
@@ -114,7 +111,7 @@ namespace Tanks.Server.Tests.Items
             CrateLoot loot = CreateLoot(
                 behaviour,
                 items,
-                new FixedRandom(nextDoubleValue: 0.0),
+                new FixedRandom(nextDoubleValue: 0),
                 out IPickupSpawnBehaviour spawner);
 
             loot.Handle(new Died());
@@ -128,13 +125,10 @@ namespace Tanks.Server.Tests.Items
         {
             ICrateBehaviour behaviour = MakeBehaviour(new Dictionary<ItemTier, float>
             {
-                [ItemTier.Rare] = 0f
+                [ItemTier.Rare] = 0
             });
 
-            IItemConfig[] items =
-            {
-                MakeItem(ItemTier.Rare, "rare-a")
-            };
+            IItemConfig[] items = { MakeItem(ItemTier.Rare, "rare-a") };
 
             // NextDouble = 0.0 → 0.0 is NOT > 0.0 → always fails
             CrateLoot loot = CreateLoot(
@@ -144,7 +138,28 @@ namespace Tanks.Server.Tests.Items
                 out IPickupSpawnBehaviour spawner);
 
             loot.Handle(new Died());
+            AssertNothingSpawned(spawner);
+        }
 
+        [Test]
+        public void Handle_CannotDropItems_DoesNotSpawnItems()
+        {
+            ICrateBehaviour behaviour = MakeBehaviour(new Dictionary<ItemTier, float>
+            {
+                [ItemTier.Rare] = 1
+            });
+
+            behaviour.CanDropItems.Returns(false);
+            IItemConfig[] items = { MakeItem(ItemTier.Rare, "rare-a") };
+
+            // NextDouble = 0.0 → 0.0 is NOT > 0.0 → always fails
+            CrateLoot loot = CreateLoot(
+                behaviour,
+                items,
+                new FixedRandom(nextDoubleValue: 0.0),
+                out IPickupSpawnBehaviour spawner);
+
+            loot.Handle(new Died());
             AssertNothingSpawned(spawner);
         }
 
@@ -156,10 +171,7 @@ namespace Tanks.Server.Tests.Items
                 [ItemTier.Epic] = 0.3f
             });
 
-            IItemConfig[] items =
-            {
-                MakeItem(ItemTier.Epic, "epic-a")
-            };
+            IItemConfig[] items = { MakeItem(ItemTier.Epic, "epic-a") };
 
             // NextDouble = 0.5 → 0.3 is NOT > 0.5 → fails
             CrateLoot loot = CreateLoot(
@@ -169,7 +181,6 @@ namespace Tanks.Server.Tests.Items
                 out IPickupSpawnBehaviour spawner);
 
             loot.Handle(new Died());
-
             AssertNothingSpawned(spawner);
         }
 
@@ -181,10 +192,7 @@ namespace Tanks.Server.Tests.Items
                 [ItemTier.Legendary] = 0.8f
             });
 
-            IItemConfig[] items =
-            {
-                MakeItem(ItemTier.Legendary, "legendary-a")
-            };
+            IItemConfig[] items = { MakeItem(ItemTier.Legendary, "legendary-a") };
 
             // NextDouble = 0.5 → 0.8 > 0.5 → passes
             CrateLoot loot = CreateLoot(
@@ -231,8 +239,7 @@ namespace Tanks.Server.Tests.Items
         [Test]
         public void Handle_EmptyChancesDictionary_SpawnsNothing()
         {
-            ICrateBehaviour behaviour = MakeBehaviour(
-                new Dictionary<ItemTier, float>());
+            ICrateBehaviour behaviour = MakeBehaviour(new Dictionary<ItemTier, float>());
 
             CrateLoot loot = CreateLoot(
                 behaviour,
@@ -241,7 +248,6 @@ namespace Tanks.Server.Tests.Items
                 out IPickupSpawnBehaviour spawner);
 
             loot.Handle(new Died());
-
             AssertNothingSpawned(spawner);
         }
 
@@ -250,9 +256,9 @@ namespace Tanks.Server.Tests.Items
         {
             ICrateBehaviour behaviour = MakeBehaviour(new Dictionary<ItemTier, float>
             {
-                [ItemTier.Uncommon] = 1.0f,
-                [ItemTier.Rare] = 1.0f,
-                [ItemTier.Epic] = 1.0f
+                [ItemTier.Uncommon] = 1,
+                [ItemTier.Rare] = 1,
+                [ItemTier.Epic] = 1
             });
 
             IItemConfig[] items =

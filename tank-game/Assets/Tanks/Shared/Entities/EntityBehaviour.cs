@@ -29,8 +29,23 @@ namespace Tanks.Shared.Entities
         public bool IsPossessed { get; private set; }
         public bool IsValid => this;
 
+        private bool _isAddedToService;
+
         [Rpc(SendTo.Everyone, InvokePermission = RpcInvokePermission.Server)]
-        public void SetIdEveryoneRpc(EntityId value) => Id = value;
+        public void SetIdEveryoneRpc(EntityId value)
+        {
+            if (Id != default) _service?.RemoveEntity(this);
+            Id = value;
+
+            if (value != default) _service?.AddEntity(this);
+            _isAddedToService = _service != null;
+        }
+
+        protected override void OnInitialize()
+        {
+            if (_isAddedToService || Id == default) return;
+            _service.AddEntity(this);
+        }
 
         public override void OnDestroy()
         {
@@ -38,7 +53,6 @@ namespace Tanks.Shared.Entities
             _service?.RemoveEntity(this);
         }
 
-        protected override void OnInitialize() => _service.AddEntity(this);
         public void MarkAsPossessed() => IsPossessed = true;
         public void MarkAsUnpossessed() => IsPossessed = false;
     }

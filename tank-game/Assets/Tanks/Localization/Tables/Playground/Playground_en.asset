@@ -1,0 +1,71 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e9620f8c34305754d8cc9a7e49e852d9, type: 3}
+  m_Name: Playground_en
+  m_EditorClassIdentifier: Unity.Localization::UnityEngine.Localization.Tables.StringTable
+  m_LocaleId:
+    m_Code: en
+  m_SharedData: {fileID: 11400000, guid: 12dab06b313a1ba45af24c6919d43810, type: 2}
+  m_Metadata:
+    m_Items: []
+  m_TableData:
+  - m_Id: 13864755200
+    m_Localized: RARE
+    m_Metadata:
+      m_Items: []
+  - m_Id: 102733668352
+    m_Localized: EPIC
+    m_Metadata:
+      m_Items: []
+  - m_Id: 225882628096
+    m_Localized: REGULAR
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5560085209088
+    m_Localized: Aim at the crates and clear your way.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5560089403392
+    m_Localized: You have found a secret!
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5560089403393
+    m_Localized: Random items can drop from crates. Try breaking 'em!
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5560089403394
+    m_Localized: Think twice before picking up items of this tier. They might ruin your game, or someone else's. You can drive past, or...
+    m_Metadata:
+      m_Items: []
+  - m_Id: 13200479707136
+    m_Localized: Great! Drive forward until the next point.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 17125819768832
+    m_Localized: WASD - DRIVE
+    m_Metadata:
+      m_Items: []
+  - m_Id: 17125828157440
+    m_Localized: LMB - FIRE
+    m_Metadata:
+      m_Items: []
+  - m_Id: 24958305001472
+    m_Localized: EXIT
+    m_Metadata:
+      m_Items: []
+  - m_Id: 223570351841280
+    m_Localized: This is all you have to know, now you're ready for a real game!
+    m_Metadata:
+      m_Items: []
+  references:
+    version: 2
+    RefIds: []

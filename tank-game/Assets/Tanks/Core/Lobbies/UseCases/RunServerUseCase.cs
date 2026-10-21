@@ -10,7 +10,9 @@ namespace Tanks.Core.Lobbies.UseCases
 {
     public interface IRunServerUseCase
     {
-        UniTask<ResultType> RunAsync();
+        UniTask<ResultType> RunAsync(
+            RequestedServerScene scene = RequestedServerScene.Gameplay,
+            bool authorize = true);
     }
 
     public sealed class RunServerUseCase : IRunServerUseCase
@@ -40,13 +42,22 @@ namespace Tanks.Core.Lobbies.UseCases
         private readonly IClientCommunicationService _client;
         private int _lastServerProcessId = -1;
 
-        public async UniTask<ResultType> RunAsync()
+        public async UniTask<ResultType> RunAsync(
+            RequestedServerScene scene = RequestedServerScene.Gameplay,
+            bool authorize = true)
         {
+            LoadSceneRequest sceneRequest = new LoadSceneRequest
+            {
+                Scene = scene
+            };
+
 #if UNITY_EDITOR
             if (Application.isEditor && Application.isPlaying)
             {
                 // Skips only when running in Unity or in tests
-                return Result.Success();
+
+                return await _client
+                    .SendRequestAsync<LoadSceneRequest, LoadSceneRequest>(sceneRequest);
             }
 #endif
             try
@@ -58,6 +69,23 @@ namespace Tanks.Core.Lobbies.UseCases
             {
                 Debug.LogException(ex);
                 return Result.Failure("failed-to-start-server");
+            }
+
+            using CancellationTokenSource sceneTimeout = new CancellationTokenSource(15000);
+
+            ResultType<LoadSceneRequest> sceneLoad = await _client
+                .SendRequestAsync<LoadSceneRequest, LoadSceneRequest>(
+                    sceneRequest, sceneTimeout.Token);
+
+            if (sceneLoad.IsSuccess == false)
+            {
+                _service.KillById(_lastServerProcessId);
+                return sceneLoad;
+            }
+
+            if (authorize == false)
+            {
+                return Result.Success();
             }
 
             using CancellationTokenSource timeout = new CancellationTokenSource(15000);

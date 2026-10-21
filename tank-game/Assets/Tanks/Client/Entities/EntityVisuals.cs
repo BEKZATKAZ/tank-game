@@ -174,7 +174,15 @@ namespace Tanks.Client.Entities.Runtime
 
             if (string.IsNullOrWhiteSpace(path) == false)
             {
-                _audioPlayer.PlayOneShotAttached(path, _health.Transform, _health.Entity.IsPossessed);
+                // Playback from the main camera if the local player watches this entity
+                if (_health.Entity.IsPossessed)
+                {
+                    _audioPlayer.PlayOneShotAttached(path, _health.Transform, useDefault: true);
+                }
+                else
+                {
+                    _audioPlayer.PlayOneShot(path, _health.Transform.WorldPosition);
+                }
             }
 
             if (_config.DestoryVisualType != VisualType.None)

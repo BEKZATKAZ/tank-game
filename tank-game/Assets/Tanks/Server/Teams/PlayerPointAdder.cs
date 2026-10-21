@@ -74,7 +74,7 @@ namespace Tanks.Server.Teams
             ITeamParticipantBehaviour participant = target
                 .GetBehaviour<ITeamParticipantBehaviour>();
 
-            if (participant is null) return false;
+            if (participant is not { State: not null }) return false;
 
             state = participant.State;
             state.AddPoints(type, amount);

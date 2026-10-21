@@ -397,7 +397,7 @@ namespace Tanks.Client.Tests.Entities
         {
             _audioPlayer
                 .Received(1)
-                .PlayOneShotAttached(expectedPath, _health.Transform, Arg.Any<bool>());
+                .PlayOneShot(expectedPath, _health.Transform.WorldPosition);
         }
 
         private void AssertDestroySoundNotPlayed(string path)

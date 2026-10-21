@@ -88,7 +88,7 @@ namespace Tanks.Server.Items.Pickups
 
         protected override void OnInitialize()
         {
-            ItemSpawnSettings settings = _settings.GetSettings().ItemSpawn;
+            ItemSpawnSettings settings = _settings.GetSettings()?.ItemSpawn ?? default;
             int seed = RandomNumberGenerator.GetInt32(int.MaxValue);
 
             _chooser = new ItemChooser(_items.Items, Behaviour.ItemCounts, seed);

@@ -3,6 +3,7 @@ using Tanks.Shared.Items;
 using Tanks.Shared.Items.Data;
 using Tanks.Shared.Items.Pickups;
 using Tanks.Shared.Stats;
+using Tanks.Utils;
 using Unity.Mathematics;
 using UnityEngine;
 
@@ -13,24 +14,32 @@ namespace Tanks.Server.Items.Pickups
         public PickupArea(IItemDatabase database)
         {
             _database = database;
-            _radius = 1.5f;
-            _layerMask = 1 << 3;
         }
 
         private readonly IItemDatabase _database;
-        private readonly float _radius;
-        private readonly int _layerMask;
 
         public bool CheckArea(out IItemOwnerBehaviour detected)
         {
             float2 origin = Transform.WorldPosition;
-            Collider2D target = Physics2D.OverlapCircle(origin, _radius, _layerMask);
+
+            using TemporaryArrayResult<Collider2D> buffer = new(8);
+
+            int count = Physics2D.OverlapCircle(origin, radius: 0.1f, new ContactFilter2D
+            {
+                useTriggers = false,
+                layerMask = 1 << 3
+            }, buffer.Value.Array);
+
             detected = null;
 
-            if (target == false) return false;
-            if (target.TryGetComponent(out detected) == false) return false;
+            if (count <= 0) return false;
 
-            return true;
+            for (int i = 0; i < count; i++)
+            {
+                if (buffer[i].TryGetComponent(out detected)) return true;
+            }
+
+            return false;
         }
 
         public void PickUp(

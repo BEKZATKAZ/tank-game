@@ -21,11 +21,13 @@ namespace Tanks.UI.Menus.Main
 
             Button hostLobbyButton = root.Q<Button>("HostLobbyButton");
             Button findLobbyButton = root.Q<Button>("JoinLobbyButton");
+            Button tutorialButton = root.Q<Button>("TutorialButton");
             Button settingsButton = root.Q<Button>("SettingsButton");
             Button quitButton = root.Q<Button>("QuitButton");
 
             hostLobbyButton.clicked += OpenLobby;
             findLobbyButton.clicked += OpenFindLobby;
+            tutorialButton.clicked += OpenTutorial;
             settingsButton.clicked += OpenSettings;
             quitButton.clicked += QuitGame;
         }
@@ -40,6 +42,7 @@ namespace Tanks.UI.Menus.Main
 
         private void OpenLobby() => ViewModel.CreateLobby().Forget();
         private void OpenFindLobby() => ViewModel.OpenSection(MainMenuSection.FindLobby);
+        private void OpenTutorial() => ViewModel.OpenTutorial().Forget();
         private void OpenSettings() => ViewModel.OpenSection(MainMenuSection.Settings);
         private void QuitGame() => ViewModel.ShowQuitGameConfirmation();
 

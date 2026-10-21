@@ -12,6 +12,7 @@ using Unity.Netcode.Transports.UTP;
 using Unity.Services.Relay;
 using Unity.Services.Relay.Models;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using VContainer;
 
 namespace Tanks.Server.Bootstrap
@@ -68,11 +69,9 @@ namespace Tanks.Server.Bootstrap
 #endif
         }
 
-        private async UniTask<PrepareServerRequest> WaitForRequestAsync()
+        private async UniTask<T> WaitForRequestAsync<T>()
         {
-            ResultType<PrepareServerRequest> start = await _server
-                .ExpectRequestAsync<PrepareServerRequest>();
-
+            ResultType<T> start = await _server.ExpectRequestAsync<T>();
             if (start.IsSuccess) return start.Value;
             throw new Exception("Failed to receive start request");
         }
@@ -81,11 +80,23 @@ namespace Tanks.Server.Bootstrap
         {
             try
             {
+                LoadSceneRequest sceneRequest = await WaitForRequestAsync<LoadSceneRequest>();
+                await _server.RespondToRequestAsync(new LoadSceneRequest());
+
+                if (sceneRequest.Scene is RequestedServerScene.Playground)
+                {
+                    // Remove current network manager so it doesn't replace new
+                    Destroy(NetworkManager.Singleton.gameObject);
+
+                    SceneManager.LoadScene("Playground");
+                    return;
+                }
+
                 await _sharedItemDatabase.WaitForInitializationAsync();
                 await AuthenticateAsync();
 
                 // Stand by
-                PrepareServerRequest request = await WaitForRequestAsync();
+                PrepareServerRequest request = await WaitForRequestAsync<PrepareServerRequest>();
 
                 SessionSettings settings = SessionSettingsMapper
                     .FromLobby(request.Settings, _settings.DefaultSettings);

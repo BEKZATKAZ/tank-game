@@ -221,7 +221,8 @@ namespace Tanks.Shared
                 }
                 catch (Exception ex)
                 {
-                    Debug.LogException(ex);
+                    Debug.LogErrorFormat(
+                        "Initialization of {0} has thrown {1}", componentType.Name, ex);
                 }
             }
 

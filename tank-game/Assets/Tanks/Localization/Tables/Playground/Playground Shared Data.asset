@@ -1,0 +1,76 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5b11a58205ec3474ca216360e9fa74a8, type: 3}
+  m_Name: Playground Shared Data
+  m_EditorClassIdentifier: Unity.Localization::UnityEngine.Localization.Tables.SharedTableData
+  m_TableCollectionName: Playground
+  m_TableCollectionNameGuidString: 12dab06b313a1ba45af24c6919d43810
+  m_Entries:
+  - m_Id: 17125819768832
+    m_Key: tutorial.drive-controls
+    m_Metadata:
+      m_Items: []
+  - m_Id: 17125828157440
+    m_Key: tutorial.turret-controls
+    m_Metadata:
+      m_Items: []
+  - m_Id: 225882628096
+    m_Key: tutorial.regular-crates-plural
+    m_Metadata:
+      m_Items: []
+  - m_Id: 13864755200
+    m_Key: tutorial.rare-crates-plural
+    m_Metadata:
+      m_Items: []
+  - m_Id: 102733668352
+    m_Key: tutorial.epic-crates-plural
+    m_Metadata:
+      m_Items: []
+  - m_Id: 24958305001472
+    m_Key: tutorial.exit
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5560085209088
+    m_Key: tutorial.prompt.clear-way
+    m_Metadata:
+      m_Items: []
+  - m_Id: 13200479707136
+    m_Key: tutorial.prompt.drive-forward
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5560089403392
+    m_Key: tutorial.prompt.secret-way
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5560089403393
+    m_Key: tutorial.prompt.looting-crates
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5560089403394
+    m_Key: tutorial.prompt.unstable-items
+    m_Metadata:
+      m_Items: []
+  - m_Id: 223570351841280
+    m_Key: tutorial.prompt.conclusion
+    m_Metadata:
+      m_Items: []
+  m_Metadata:
+    m_Items: []
+  m_KeyGenerator:
+    rid: 5824281784617009255
+  references:
+    version: 2
+    RefIds:
+    - rid: 5824281784617009255
+      type: {class: DistributedUIDGenerator, ns: UnityEngine.Localization.Tables, asm: Unity.Localization}
+      data:
+        m_CustomEpoch: 1792508588154

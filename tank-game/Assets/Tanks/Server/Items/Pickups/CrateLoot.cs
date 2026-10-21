@@ -33,7 +33,7 @@ namespace Tanks.Server.Items.Pickups
 
         public void Handle(Died message)
         {
-            SpawnLoot();
+            if (Behaviour.CanDropItems) SpawnLoot();
             _crateSpawner.Return(Behaviour);
         }
 

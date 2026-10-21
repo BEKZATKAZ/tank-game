@@ -6,6 +6,7 @@ using System.Linq;
 using Tanks.Core.Lobbies.Sessions;
 using Tanks.Server.Bootstrap;
 using Tanks.Server.Generation;
+using Tanks.Server.Generation.Crates;
 using Tanks.Shared.Bootstrap;
 using Tanks.Shared.Generation;
 using Tanks.Shared.Items;
@@ -20,6 +21,11 @@ namespace Tanks.Server.Tests.Bootstrap
         public int SpawnCallCount { get; private set; }
         public int ReturnCallCount { get; private set; }
         public int ClearCallCount { get; private set; }
+
+        public ICrateBehaviour Spawn(GeneratedCrate crate)
+        {
+            return null;
+        }
 
         public void Spawn(ReadOnlySpan<GeneratedTile> tiles, uint seed)
         {

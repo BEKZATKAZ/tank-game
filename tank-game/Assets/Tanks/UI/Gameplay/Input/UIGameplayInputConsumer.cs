@@ -3,6 +3,7 @@ using Tanks.Client.Input;
 using Tanks.Shared;
 using Tanks.Shared.Bootstrap;
 using Tanks.Shared.Messaging;
+using Tanks.Shared.Playground;
 using Tanks.UI.Gameplay.GameStats;
 using UnityEngine;
 using UnityEngine.UIElements;
@@ -12,6 +13,7 @@ namespace Tanks.UI.Gameplay.Input
 {
     public sealed class UIGameplayInputConsumer :
         MonoBehaviour,
+        IMessageHandler<PlaygroundStartedFromServer>,
         IMessageHandler<GameStartedFromServer>,
         IMessageHandler<EndGameFromServer>
     {
@@ -48,14 +50,22 @@ namespace Tanks.UI.Gameplay.Input
         private void Start()
         {
             _gameplayUI.rootVisualElement.style.display = DisplayStyle.None;
+            _bus.RegisterHandler<PlaygroundStartedFromServer>(this);
             _bus.RegisterHandler<GameStartedFromServer>(this);
             _bus.RegisterHandler<EndGameFromServer>(this);
         }
 
         private void OnDestroy()
         {
+            _bus?.UnregisterHandler<PlaygroundStartedFromServer>(this);
             _bus?.UnregisterHandler<GameStartedFromServer>(this);
             _bus?.UnregisterHandler<EndGameFromServer>(this);
+        }
+
+        public void Handle(PlaygroundStartedFromServer message, IMessageSender sender)
+        {
+            _isGameEnded = false;
+            _gameplayUI.rootVisualElement.style.display = DisplayStyle.Flex;
         }
 
         public void Handle(GameStartedFromServer message, IMessageSender sender)

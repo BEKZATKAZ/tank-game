@@ -25,16 +25,21 @@ namespace Tanks.Core.Tests.Lobbies.UseCases
             _service = Substitute.For<IProcessService>();
             _client = Substitute.For<IClientCommunicationService>();
             _useCase = new RunServerUseCase(_auth, _service, _client);
-        }
 
-        [Test]
-        public void RunAsync_RemovesDuplicates()
-        {
             _client
                 .SendRequestAsync<AuthenticateServerRequest, ServerAuthReady>(
                     Arg.Any<AuthenticateServerRequest>(), Arg.Any<CancellationToken>())
                 .Returns(Task.FromResult(Result.Success(new ServerAuthReady { AuthCode = "test" })));
 
+            _client
+                .SendRequestAsync<LoadSceneRequest, LoadSceneRequest>(
+                    Arg.Any<LoadSceneRequest>(), Arg.Any<CancellationToken>())
+                .Returns(Task.FromResult(Result.Success(new LoadSceneRequest())));
+        }
+
+        [Test]
+        public void RunAsync_RemovesDuplicates()
+        {
             _service.Launch(Arg.Any<string>(), Arg.Any<string>()).Returns(100);
             _useCase.RunAsync().Forget();
 
@@ -45,13 +50,24 @@ namespace Tanks.Core.Tests.Lobbies.UseCases
         }
 
         [Test]
+        public async Task RunAsync_NoAuthFlag_SkipsAuth()
+        {
+            ResultType result = await _useCase.RunAsync(authorize: false);
+            Assert.True(result.IsSuccess);
+
+            _service
+                .Received(1)
+                .Launch(RunServerUseCase.SERVER_PATH, RunServerUseCase.SERVER_ARGUMENTS);
+
+            await _client
+                .DidNotReceiveWithAnyArgs()
+                .SendRequestAsync<AuthenticateServerRequest, ServerAuthReady>(
+                    default, default);
+        }
+
+        [Test]
         public async Task RunAsync_StartsServer_Authenticates()
         {
-            _client
-                .SendRequestAsync<AuthenticateServerRequest, ServerAuthReady>(
-                    Arg.Any<AuthenticateServerRequest>(), Arg.Any<CancellationToken>())
-                .Returns(Task.FromResult(Result.Success(new ServerAuthReady { AuthCode = "test" })));
-
             _auth
                 .ConfirmCodeAsync("test")
                 .Returns(UniTask.FromResult(Result.Success()));

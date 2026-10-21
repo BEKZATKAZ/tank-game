@@ -1,0 +1,12 @@
+.tutorial-prompt {
+	background-color: black;
+	color: rgb(245, 245, 245);
+	padding: 10px;
+	font-size: 26px;
+	filter: drop-shadow(0 0 20 black);
+	-unity-text-align: middle-center;
+}
+
+.tutorial-prompt .unity-label {
+	white-space: normal;
+}
