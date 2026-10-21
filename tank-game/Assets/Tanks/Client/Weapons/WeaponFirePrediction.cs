@@ -18,6 +18,8 @@ namespace Tanks.Client.Weapons
 
         private RingBuffer8<ClientShot> _fireBuffer;
         private bool _isHoldingDown;
+        private bool _isUsing;
+        private IReadOnlyWeapon _lastUsedWeapon;
 
         protected override void OnTick(int tick, float tickDelta)
         {
@@ -29,7 +31,7 @@ namespace Tanks.Client.Weapons
             float affectedTickDelta = tickDelta * Behaviour.GetDeltaMultiplier();
 
             // Send nothing if the weapon was not used
-            if (Behaviour.WeaponTick(affectedTickDelta, _isHoldingDown, shotId) == false) return;
+            if (Behaviour.WeaponTick(affectedTickDelta, _isUsing, shotId) == false) return;
 
             // Send many inputs at once to avoid packet loss
             _fireBuffer = _fireBuffer.Add(new ClientShot(tick, shotId));
@@ -41,6 +43,19 @@ namespace Tanks.Client.Weapons
         protected override void OnUpdate(float deltaTime)
         {
             _isHoldingDown = _input.Read().Fire;
+
+            // First update
+            _lastUsedWeapon ??= Behaviour.CurrentWeapon;
+
+            // Prevent using default weapon right after current weapon runs out
+            if (_isUsing == false && _isHoldingDown == false)
+            {
+                _lastUsedWeapon = Behaviour.CurrentWeapon;
+                _isUsing = false;
+                return;
+            }
+
+            _isUsing = _isHoldingDown && _lastUsedWeapon == Behaviour.CurrentWeapon;
         }
 
         protected override void OnInitialize()
