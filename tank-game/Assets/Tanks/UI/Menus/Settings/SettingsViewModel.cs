@@ -29,7 +29,7 @@ namespace Tanks.UI.Menus.Settings
 
         public void Unbind(Action<int> callback)
         {
-            _service.Bind(_targetSetting, callback);
+            _service.Unbind(_targetSetting, callback);
         }
 
         public void Write(PlayerSetting type, int value)
