@@ -55,7 +55,7 @@
                     </Bindings>
                 </ui:Label>
                 <ui:ScrollView horizontal-scroller-visibility="Hidden" name="" class="menu-content" style="flex-grow: 1;">
-                    <Tanks.UI.Menus.Settings.Elements.SettingDropdown choices="," choice-keys="English,Русский" name="Language" type="Language">
+                    <Tanks.UI.Menus.Settings.Elements.SettingDropdown choices="," choice-keys="English,Русский,Français" name="Language" type="Language">
                         <Bindings>
                             <UnityEngine.Localization.LocalizedString property="Label" table="GUID:34510603f8b6d1a44b1b2ffa9aa551c9" entry="Id(4793871635013632)"/>
                             <UnityEngine.Localization.LocalizedString property="Choices" table="GUID:34510603f8b6d1a44b1b2ffa9aa551c9" entry="Id(3701799150641152)"/>
@@ -66,7 +66,7 @@
                             <UnityEngine.Localization.LocalizedString property="Label" table="GUID:34510603f8b6d1a44b1b2ffa9aa551c9" entry="Id(3717298093776896)"/>
                         </Bindings>
                     </Tanks.UI.Menus.Settings.Elements.SettingScreenResolution>
-                    <Tanks.UI.Menus.Settings.Elements.SettingDropdown choices="," choice-keys="menu.settings.screen-windowed,menu.settings.screen-fullscreen-windowed,menu.settings.screen-fullscreen" name="FullscreenMode" type="FullscreenMode">
+                    <Tanks.UI.Menus.Settings.Elements.SettingDropdown choices="," choice-keys="menu.settings.screen-fullscreen,menu.settings.screen-fullscreen-windowed,menu.settings.screen-windowed" name="FullscreenMode" type="FullscreenMode">
                         <Bindings>
                             <UnityEngine.Localization.LocalizedString property="Label" table="GUID:34510603f8b6d1a44b1b2ffa9aa551c9" entry="Id(3714690427871232)"/>
                             <UnityEngine.Localization.LocalizedString property="Choices" table="GUID:34510603f8b6d1a44b1b2ffa9aa551c9" entry="Id(3701799150641152)"/>

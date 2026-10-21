@@ -1,8 +1,11 @@
-﻿using System.Collections.Generic;
+﻿using Cysharp.Threading.Tasks;
+using System;
+using System.Collections.Generic;
 using System.Linq;
-using Unity.Scripting.LifecycleManagement;
+using UnityEngine;
+using UnityEngine.AddressableAssets;
+using UnityEngine.Localization;
 using UnityEngine.Localization.Settings;
-using UnityEngine.Localization.Tables;
 using UnityEngine.UIElements;
 
 namespace Tanks.UI.Menus.Settings.Elements
@@ -18,12 +21,9 @@ namespace Tanks.UI.Menus.Settings.Elements
 
             Add(_dropdown);
             _dropdown.RegisterValueChangedCallback(x => Value = _dropdown.index);
-            
-        }
 
-        [AutoStaticsCleanup]
-        private static readonly StringTable _table =
-            LocalizationSettings.StringDatabase.GetTable("Menus");
+            LocalizationSettings.SelectedLocaleChanged += OnLocaleChanged;
+        }
 
         [UxmlAttribute]
         public List<string> ChoiceKeys
@@ -32,15 +32,59 @@ namespace Tanks.UI.Menus.Settings.Elements
             set
             {
                 _choiceKeys = value ?? new List<string>();
-
-                _dropdown.choices = _choiceKeys
-                    .Select(x => _table.GetEntry(x)?.Value ?? x)
-                    .ToList();
+                RefreshChoicesAsync(_choiceKeys.ToList()).Forget();
+                NotifyPropertyChanged(nameof(ChoiceKeys));
             }
         }
 
         private readonly DropdownField _dropdown;
-        private List<string> _choiceKeys;
+        private List<string> _choiceKeys = new List<string>();
+        private int _refreshVersion;
+
+        private async UniTask RefreshChoicesAsync(List<string> keys)
+        {
+            int version = ++_refreshVersion;
+            var choices = new List<string>(keys.Count);
+
+            try
+            {
+                await LocalizationSettings.InitializationOperation.Task;
+
+                foreach (string key in keys)
+                {
+                    var handle = LocalizationSettings.StringDatabase
+                        .GetLocalizedStringAsync("Menus", key);
+
+                    string text;
+
+                    try { text = await handle.Task; }
+                    finally { Addressables.Release(handle); }
+
+                    choices.Add(string.IsNullOrWhiteSpace(text) ? key : text);
+                }
+
+                // Ignore an outdated request if the locale or keys changed.
+                if (version != _refreshVersion) return;
+
+                int previousIndex = _dropdown.index;
+                _dropdown.choices = choices;
+
+                if (previousIndex >= 0 && previousIndex < choices.Count)
+                {
+                    _dropdown.index = previousIndex;
+                }
+            }
+            catch (Exception ex)
+            {
+                Debug.LogException(ex);
+            }
+        }
+
+        public override void OnDestroyed()
+        {
+            LocalizationSettings.SelectedLocaleChanged -= OnLocaleChanged;
+            _refreshVersion++;
+        }
 
         protected override void OnLabelChanged(string newLabel)
         {
@@ -56,6 +100,11 @@ namespace Tanks.UI.Menus.Settings.Elements
             }
 
             base.OnValueChanged(newValue);
+        }
+
+        private void OnLocaleChanged(Locale locale)
+        {
+            RefreshChoicesAsync(_choiceKeys.ToList()).Forget();
         }
     }
 }

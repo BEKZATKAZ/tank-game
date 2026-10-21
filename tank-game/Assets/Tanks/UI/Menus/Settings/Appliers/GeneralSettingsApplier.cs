@@ -24,6 +24,7 @@ namespace Tanks.UI.Menus.Settings
             _localization.SetLocale((GameLanguage)index switch
             {
                 GameLanguage.Russian => "ru",
+                GameLanguage.French => "fr",
                 GameLanguage.English or _ => "en"
             });
         }

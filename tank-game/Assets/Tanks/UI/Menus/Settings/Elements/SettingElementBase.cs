@@ -49,6 +49,8 @@ namespace Tanks.UI.Menus.Settings.Elements
         private string _label;
         private int _value;
 
+        public virtual void OnDestroyed() { }
+
         public void SetValueWithoutNotify(int value)
         {
             _withNotify = false;

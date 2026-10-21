@@ -25,6 +25,11 @@ namespace Tanks.UI.Menus.Settings
             _settings = _root.Query<SettingElementBase>().Build().ToArray();
         }
 
+        protected override void OnDestroy()
+        {
+            foreach (SettingElementBase setting in _settings) setting.OnDestroyed();
+        }
+
         protected override void Bind(SettingsViewModel viewModel)
         {
             _applyButton.clicked += ViewModel.ApplyChanges;

@@ -40,6 +40,7 @@ namespace Tanks.UI
 
         protected abstract VisualElement GetRootElement();
         protected abstract void Initialize(VisualElement root);
+        protected virtual void OnDestroy() { }
 
         protected virtual void Bind(T viewModel) { }
         protected virtual void Unbind(T viewModel) { }

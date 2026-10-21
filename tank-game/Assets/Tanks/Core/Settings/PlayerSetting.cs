@@ -19,6 +19,7 @@
     public enum GameLanguage
     {
         English,
-        Russian
+        Russian,
+        French
     }
 }
