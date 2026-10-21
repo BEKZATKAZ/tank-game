@@ -1,12 +1,12 @@
 ﻿using NSubstitute;
 using NUnit.Framework;
+using System.Threading.Tasks;
+using Tanks.Client.Entities;
 using Tanks.Client.Entities.Health;
 using Tanks.Client.Player;
 using Tanks.Core.Helpers;
-using Tanks.Shared;
 using Tanks.Shared.Entities;
 using Tanks.Shared.Entities.Health;
-using Tanks.Shared.Messaging;
 using Unity.Mathematics;
 
 namespace Tanks.Client.Tests.Entities
@@ -14,18 +14,21 @@ namespace Tanks.Client.Tests.Entities
     public class SpectatorSwitchTests
     {
         private ISpectatorService _spectatorService;
+        private IClientEntityService _clientEntityService;
         private SpectatorSwitch _component;
 
         [SetUp]
         public void Setup()
         {
+            _clientEntityService = Substitute.For<IClientEntityService>();
             _spectatorService = Substitute.For<ISpectatorService>();
-            _component = new SpectatorSwitch(_spectatorService, Substitute.For<IMessageBus>());
+
+            _component = new SpectatorSwitch(_clientEntityService, _spectatorService);
             _component.Initialize(Substitute.For<IHealthBehaviour>());
         }
 
         [Test]
-        public void Explode_NextRoundStarted_CancelsSpectating()
+        public async Task Explode_NextRoundStarted_CancelsSpectating()
         {
             IEntityBehaviour from = Substitute.For<IEntityBehaviour>();
             float2 position = new float2(10, 20);
@@ -40,15 +43,14 @@ namespace Tanks.Client.Tests.Entities
                 WorldPosition = position
             });
 
-            _component.Update(deltaTime: 1.9f);
-            _component.Handle(new GameStartedFromServer());
+            _clientEntityService.GetPossessedEntity().IsValid.Returns(true);
+            await Task.Delay(3000);
 
-            _component.Update(deltaTime: 0.12f);
             _spectatorService.DidNotReceiveWithAnyArgs().Spectate(default);
         }
 
         [Test]
-        public void Explode_LocalPlayer_SpectatesOther()
+        public async Task Explode_LocalPlayer_SpectatesOther()
         {
             IEntityBehaviour from = Substitute.For<IEntityBehaviour>();
             float2 position = new float2(10, 20);
@@ -65,13 +67,13 @@ namespace Tanks.Client.Tests.Entities
                 WorldPosition = position
             });
 
-            _component.Update(deltaTime: 2.5f);
+            await Task.Delay(4000);
 
             _spectatorService.Received(1).Spectate(from.AsRequired());
         }
 
         [Test]
-        public void Explode_OtherPlayer_DoesNothing()
+        public async Task Explode_OtherPlayer_DoesNothing()
         {
             IEntityBehaviour localPlayer = Substitute.For<IEntityBehaviour>();
             IEntityBehaviour otherPlayer = Substitute.For<IEntityBehaviour>();
@@ -90,7 +92,7 @@ namespace Tanks.Client.Tests.Entities
                 WorldPosition = position
             });
 
-            _component.Update(deltaTime: 5);
+            await Task.Delay(3000);
 
             _spectatorService
                 .DidNotReceiveWithAnyArgs()

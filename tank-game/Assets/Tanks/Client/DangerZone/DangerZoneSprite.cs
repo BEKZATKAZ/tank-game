@@ -55,7 +55,7 @@ namespace Tanks.Client.DangerZone
 
         public void Handle(DangerZoneStarted message)
         {
-            _stress.SetMinStress(0.5f);
+            _stress.AddStress(1f / _settings.GetSettings().DesiredPlayerCount);
 
             _maxSize = message.StartSize;
             _currentSize = _maxSize;

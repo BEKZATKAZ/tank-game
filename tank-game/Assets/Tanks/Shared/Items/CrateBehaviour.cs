@@ -9,6 +9,6 @@ namespace Tanks.Shared.Items
         [SerializeField] private Dictionary<ItemTier, float> _chances = new();
 
         public IReadOnlyDictionary<ItemTier, float> Chances => _chances;
-        public bool CanDropItems { get; set; }
+        public bool CanDropItems { get; set; } = true;
     }
 }

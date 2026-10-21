@@ -83,12 +83,18 @@ namespace Tanks.Client.Visuals
             await UniTask.DelayFrame(2);
 
             var allClients = NetworkManager.Singleton.ConnectedClients;
-            int eliminatedCount = allClients.Count(x => x.Value.PlayerObject == false);
-            int remaining = allClients.Count - eliminatedCount;
 
-            if (remaining > 2)
+            int totalClientCount = allClients.Count - 1;
+
+            int eliminatedCount = allClients
+                .Where(x => x.Key > 0)
+                .Count(x => x.Value.PlayerObject == false);
+
+            int remaining = totalClientCount - eliminatedCount;
+
+            if (remaining > 1)
             {
-                _stress.AddStress(1f / allClients.Count);
+                _stress.AddStress((1f / totalClientCount) + 0.01f);
                 return;
             }
 

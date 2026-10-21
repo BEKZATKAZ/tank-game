@@ -220,7 +220,7 @@ MonoBehaviour:
   - key: 0
     value: 0.4
   - key: 3
-    value: 0.05
+    value: 0.04
 --- !u!61 &4117567523113653689
 BoxCollider2D:
   m_ObjectHideFlags: 0

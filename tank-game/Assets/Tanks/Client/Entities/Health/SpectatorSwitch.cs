@@ -13,28 +13,27 @@ namespace Tanks.Client.Entities.Health
 {
     public sealed class SpectatorSwitch :
         NetworkComponent<IHealthBehaviour>,
-        INetworkMessageHandler<Died>,
-        IMessageHandler<GameStartedFromServer>
+        INetworkMessageHandler<Died>
     {
         public SpectatorSwitch(
-            ISpectatorService spectatorService,
-            IMessageBus bus)
+            IClientEntityService clientEntityService,
+            ISpectatorService spectatorService)
         {
+            _clientEntityService = clientEntityService;
             _spectatorService = spectatorService;
-            _bus = bus;
-            _bus.RegisterHandler<GameStartedFromServer>(this);
         }
 
+        private readonly IClientEntityService _clientEntityService;
         private readonly ISpectatorService _spectatorService;
-        private readonly IMessageBus _bus;
-
-        private IEntityBehaviour _eliminatedFrom;
-        private float2 _eliminatedPosition;
-        private float _lastEliminatedTime = -1;
-        private float _lastTime;
 
         private void Spectate(IEntityBehaviour eliminatedFrom, float2 worldPosition)
         {
+            // Already restarted
+            if (_clientEntityService.GetPossessedEntity() is { IsValid: true })
+            {
+                return;
+            }
+
             IEntityBehaviour newTarget = eliminatedFrom;
 
             if (newTarget is null || newTarget.IsValid == false)
@@ -50,39 +49,18 @@ namespace Tanks.Client.Entities.Health
             _spectatorService.Spectate(newTarget.AsRequired());
         }
 
-        public void Handle(Died message)
+        public async void Handle(Died message)
         {
             if (message.Target is not { IsPossessed: true }) return;
 
-            _lastEliminatedTime = _lastTime;
-            _eliminatedFrom = message.From;
-            _eliminatedPosition = message.WorldPosition;
-        }
+            await UniTask.Delay(2000);
 
-        public void Handle(GameStartedFromServer message, IMessageSender sender = null)
-        {
-            _lastEliminatedTime = -1;
+            Spectate(message.From, message.WorldPosition);
         }
 
         protected override void OnInitialize()
         {
             Behaviour.RegisterMessageHandler(this);
-        }
-
-        protected override void OnDestroy()
-        {
-            _bus.UnregisterHandler<GameStartedFromServer>(this);
-        }
-
-        protected override void OnUpdate(float deltaTime)
-        {
-            _lastTime += deltaTime;
-
-            if (_lastEliminatedTime < 0) return;
-            if (_lastTime - _lastEliminatedTime < 2) return;
-
-            _lastEliminatedTime = -1;
-            Spectate(_eliminatedFrom, _eliminatedPosition);
         }
     }
 }

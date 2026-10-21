@@ -73,7 +73,7 @@ namespace Tanks.Server.Bootstrap
         {
             ResultType<T> start = await _server.ExpectRequestAsync<T>();
             if (start.IsSuccess) return start.Value;
-            throw new Exception("Failed to receive start request");
+            throw new Exception("Failed to receive start request - " + start.ErrorCode);
         }
 
         private async void Start()

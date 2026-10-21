@@ -11,6 +11,7 @@ using Tanks.Core.Lobbies.Responses;
 using Tanks.Core.Lobbies.Sessions;
 using Tanks.Shared.Bootstrap;
 using Tanks.Shared.Items;
+using Unity.Multiplayer;
 using Unity.Multiplayer.PlayMode;
 using Unity.Netcode;
 using Unity.Netcode.Transports.UTP;
@@ -44,16 +45,25 @@ namespace Tanks.Client.Bootstrap
             transport.SetRelayServerData(allocation.ToRelayServerData("dtls"));
         }
 
-        private void SetupLocalhost()
+        private async UniTask SetupLocalhost()
         {
 #if UNITY_EDITOR
-            // Fire and forget
-            _ = _client.SendRequestAsync<PrepareServerRequest, ServerStandBy>(
-                new PrepareServerRequest
-                {
-                    IsLocalhost = true,
-                    Settings = SessionSettingsMapper.FromDefaultToLobby(_settings.DefaultSettings)
-                });
+            if (CurrentPlayer.IsMainEditor)
+            {
+                await _client.SendRequestAsync<LoadSceneRequest, LoadSceneRequest>(
+                    new LoadSceneRequest
+                    {
+                        Scene = RequestedServerScene.Gameplay
+                    });
+
+                // Fire and forget
+                _ = _client.SendRequestAsync<PrepareServerRequest, ServerStandBy>(
+                    new PrepareServerRequest
+                    {
+                        IsLocalhost = true,
+                        Settings = SessionSettingsMapper.FromDefaultToLobby(_settings.DefaultSettings)
+                    });
+            }
 
             SessionSettings defaultSettings = SessionSettingsMapper
                 .FromLobby(default, _settings.DefaultSettings);
@@ -66,6 +76,7 @@ namespace Tanks.Client.Bootstrap
             Destroy(oldTransport);
 
             UnityTransport newTransport = manager.gameObject.AddComponent<UnityTransport>();
+            newTransport.MaxPacketQueueSize = 1024;
             manager.NetworkConfig.NetworkTransport = newTransport;
         }
 
@@ -110,7 +121,7 @@ namespace Tanks.Client.Bootstrap
 
             LoadGameplay data = _sceneLoader.GetLoadingParameters<LoadGameplay>();
 
-            if (string.IsNullOrWhiteSpace(data.JoinCode)) SetupLocalhost();
+            if (string.IsNullOrWhiteSpace(data.JoinCode)) await SetupLocalhost();
             else await SetupRelayAsync(data);
 
             _sceneLoader.Progress = 0.7f;
