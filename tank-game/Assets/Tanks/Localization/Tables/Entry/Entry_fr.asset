@@ -38,6 +38,10 @@ MonoBehaviour:
     m_Localized: "Ce jeu contient des lumi\xE8res clignotantes et des mouvements de cam\xE9ra rapides susceptibles de provoquer une g\xEAne, des vertiges, des naus\xE9es ou des crises d'\xE9pilepsie chez les personnes photosensibles. Si vous ressentez des vertiges, des naus\xE9es, des troubles de la vision, une d\xE9sorientation ou tout autre sympt\xF4me inhabituel pendant que vous jouez, arr\xEAtez imm\xE9diatement de jouer."
     m_Metadata:
       m_Items: []
+  - m_Id: 23510397867220992
+    m_Localized: "J'ai lu et j'accepte la [Politique de confidentialit\xE9]."
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds: []

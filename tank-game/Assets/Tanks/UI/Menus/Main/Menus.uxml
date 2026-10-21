@@ -1,8 +1,5 @@
 <ui:UXML xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
     <Style src="project://database/Assets/Tanks/UI/Menus/Styles/MainMenu.uss?fileID=7433441132597879392&amp;guid=e77348697c99f3b4795a79682c5e1415&amp;type=3#MainMenu"/>
-    <ui:VisualElement name="Header">
-        <ui:Label text="USERNAME" enable-rich-text="false"/>
-    </ui:VisualElement>
     <ui:VisualElement name="Content" style="flex-grow: 1;">
         <ui:VisualElement name="Buttons">
             <ui:Label text="T.A.N.K.S." name="GameTitle"/>

@@ -1,3 +1,7 @@
+* {
+	color: rgb(245, 245, 245);
+}
+
 #EntryRoot {
 	flex-grow: 1;
 	justify-content: center;
@@ -6,19 +10,34 @@
 
 #AccountSetup {
 	padding: 30px;
-	border-width: 2px;
+	border-width: 4px;
+	border-radius: 20px;
 }
 
 #AccountSetupHeader {
 	font-size: 42px;
-	margin-bottom: 20px;
+	margin-bottom: 15px;
 	-unity-text-align: middle-center;
-	-unity-font-style: bold;
+}
+
+#Consent {
+	flex-direction: row-reverse;
+	font-size: 24px;
+	margin-bottom: 20px;
+}
+
+#Consent .unity-toggle__input {
+	flex: 0 0 auto;
+	margin-right: 15px;
+}
+
+#Consent .unity-label {
+	flex-grow: 1;
 }
 
 .unity-text-field {
-	font-size: 32px;
-	margin-bottom: 20px;
+	font-size: 28px;
+	margin-bottom: 50px;
 	border-width: 2px;
 }
 

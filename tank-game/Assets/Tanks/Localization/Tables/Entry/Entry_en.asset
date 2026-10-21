@@ -38,6 +38,10 @@ MonoBehaviour:
     m_Localized: This game contains flashing lights and rapid camera movements that may cause discomfort, dizziness, nausea, or seizures in people with photosensitive epilepsy. If you experience dizziness, nausea, altered vision, disorientation, or any unusual symptoms while playing, stop immediately.
     m_Metadata:
       m_Items: []
+  - m_Id: 23510397867220992
+    m_Localized: I have read and agree to the [Privacy Policy].
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds: []
