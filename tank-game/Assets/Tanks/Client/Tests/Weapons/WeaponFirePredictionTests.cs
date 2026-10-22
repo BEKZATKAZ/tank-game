@@ -2,6 +2,7 @@
 using NUnit.Framework;
 using Tanks.Client.Input;
 using Tanks.Client.Weapons;
+using Tanks.Shared.Adapters;
 using Tanks.Shared.Weapons;
 
 namespace Tanks.Client.Tests.Weapons
@@ -26,11 +27,14 @@ namespace Tanks.Client.Tests.Weapons
         {
             _component.Behaviour.IsLocalPlayer.Returns(true);
             _input.Read().Returns(new TurretInput { Fire = true });
+            ITransform muzzle = Substitute.For<ITransform>();
+            _component.Behaviour.MuzzlePoint.Returns(muzzle);
 
             // First shot
             int tickBefore = 105;
             ulong ownerId = _component.Behaviour.OwnerClientId;
             ShotId shotIdBefore = _idGenerator.GenerateShotId(ownerId, tickBefore);
+            muzzle.WorldRotation.Returns(Angle.FromDegrees(45));
 
             _component.Behaviour.WeaponTick(Arg.Any<float>(), true, shotIdBefore).Returns(true);
             _component.Update(0.01f);
@@ -39,12 +43,13 @@ namespace Tanks.Client.Tests.Weapons
             _component.Behaviour
                 .Received(1)
                 .SendInputServerRpc(Arg.Is<WeaponInput>(
-                    x => AssertClientShot(x.FireBuffer.H, tickBefore, shotIdBefore)));
+                    x => AssertClientShot(x.FireBuffer.H, tickBefore, shotIdBefore, Angle.FromDegrees(45))));
 
             // Second shot
             int tickAfter = tickBefore + 5;
             ShotId shotIdAfter = _idGenerator.GenerateShotId(ownerId, tickAfter);
-            ClientShot previousShot = new ClientShot(tickBefore, shotIdBefore);
+            ClientShot previousShot = new ClientShot(tickBefore, shotIdBefore, Angle.FromDegrees(45));
+            muzzle.WorldRotation.Returns(Angle.FromDegrees(90));
 
             _component.Behaviour.WeaponTick(Arg.Any<float>(), true, shotIdAfter).Returns(true);
             _component.Update(0.01f);
@@ -53,7 +58,7 @@ namespace Tanks.Client.Tests.Weapons
             _component.Behaviour
                 .Received(1)
                 .SendInputServerRpc(Arg.Is<WeaponInput>(x =>
-                    AssertClientShot(x.FireBuffer.H, tickAfter, shotIdAfter) &&
+                    AssertClientShot(x.FireBuffer.H, tickAfter, shotIdAfter, Angle.FromDegrees(90)) &&
                     AssertClientShot(previousShot, x.FireBuffer.G)));
         }
 
@@ -73,14 +78,16 @@ namespace Tanks.Client.Tests.Weapons
         }
 
         private static bool AssertClientShot(
-            ClientShot actual, int expectedTick, ShotId expectedShotId)
+            ClientShot actual, int expectedTick, ShotId expectedShotId, Angle expectedDirection)
         {
-            return actual.ClientTick == expectedTick && actual.Id == expectedShotId;
+            return actual.ClientTick == expectedTick && actual.Id == expectedShotId &&
+                   actual.Direction == expectedDirection;
         }
 
         private static bool AssertClientShot(ClientShot expected, ClientShot actual)
         {
-            return actual.ClientTick == expected.ClientTick && actual.Id == expected.Id;
+            return actual.ClientTick == expected.ClientTick && actual.Id == expected.Id &&
+                   actual.Direction == expected.Direction;
         }
     }
 }

@@ -14,7 +14,8 @@ namespace Tanks.Server.Weapons
             Behaviour.UseWeaponClientRpc(new WeaponUsedFromServer
             {
                 ServerTick = _lastTick,
-                Id = message.ShotId
+                Id = message.ShotId,
+                Direction = message.Owner.ShotDirection ?? message.Owner.MuzzlePoint.WorldRotation
             });
         }
 

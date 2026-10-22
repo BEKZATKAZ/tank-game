@@ -17,6 +17,7 @@ namespace Tanks.Shared.Weapons
     {
         public int ServerTick;
         public ShotId Id;
+        public Angle Direction;
     }
 
     public struct WeaponUsed
@@ -30,14 +31,16 @@ namespace Tanks.Shared.Weapons
     public readonly struct ClientShot
     {
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public ClientShot(int tick, ShotId id)
+        public ClientShot(int tick, ShotId id, Angle direction = default)
         {
             ClientTick = tick;
             Id = id;
+            Direction = direction;
         }
 
         public readonly int ClientTick;
         public readonly ShotId Id;
+        public readonly Angle Direction;
     }
 
     [StructLayout(LayoutKind.Sequential)]
@@ -53,6 +56,7 @@ namespace Tanks.Shared.Weapons
         IReadOnlyWeapon CurrentWeapon { get; }
         IReadOnlyWeapon DefaultWeapon { get; }
         ITransform MuzzlePoint { get; }
+        Angle? ShotDirection { get; }
         IVelocity Velocity { get; }
         IEntityBehaviour Entity { get; }
 
@@ -61,6 +65,7 @@ namespace Tanks.Shared.Weapons
 
         float GetDeltaMultiplier();
         bool WeaponTick(float deltaTime, bool isHoldingDown, ShotId id);
+        bool WeaponTick(float deltaTime, bool isHoldingDown, ShotId id, Angle direction);
 
         void SwitchTo(Required<Weapon> weapon);
         void SwitchToDefault();
@@ -77,6 +82,7 @@ namespace Tanks.Shared.Weapons
         public IReadOnlyWeapon DefaultWeapon => _defaultWeapon;
 
         public ITransform MuzzlePoint { get; private set; }
+        public Angle? ShotDirection { get; private set; }
         public IVelocity Velocity { get; private set; }
         public IEntityBehaviour Entity { get; private set; }
 
@@ -136,6 +142,20 @@ namespace Tanks.Shared.Weapons
             
             _defaultWeapon.Tick(this, isHoldingDown: false, deltaTime, id);
             return used;
+        }
+
+        public bool WeaponTick(float deltaTime, bool isHoldingDown, ShotId id, Angle direction)
+        {
+            ShotDirection = direction;
+
+            try
+            {
+                return WeaponTick(deltaTime, isHoldingDown, id);
+            }
+            finally
+            {
+                ShotDirection = null;
+            }
         }
 
         private void OnWeaponUsed(ShotId id)

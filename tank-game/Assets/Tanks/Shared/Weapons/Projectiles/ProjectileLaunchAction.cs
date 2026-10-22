@@ -43,7 +43,7 @@ namespace Tanks.Server.Weapons.Projectiles
                 float spread = Config.SpreadDegrees;
 
                 float offset = math.lerp(-spread, spread, t);
-                Angle rotation = _muzzlePoint.WorldRotation + Angle.FromDegrees(offset);
+                Angle rotation = (owner.ShotDirection ?? _muzzlePoint.WorldRotation) + Angle.FromDegrees(offset);
 
                 projectile.Transform.WorldPosition = _muzzlePoint.WorldPosition;
                 projectile.Transform.WorldRotation = rotation;

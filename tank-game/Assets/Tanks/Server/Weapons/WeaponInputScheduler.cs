@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
+using Tanks.Shared.Adapters;
 using Tanks.Shared.Weapons;
 using Unity.Collections;
 using Unity.Mathematics;
@@ -12,14 +13,16 @@ namespace Tanks.Server.Weapons
     public readonly struct ScheduledShot
     {
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public ScheduledShot(int tick, ShotId id)
+        public ScheduledShot(int tick, ShotId id, Angle direction = default)
         {
             Tick = tick;
             Id = id;
+            Direction = direction;
         }
 
         public readonly int Tick;
         public readonly ShotId Id;
+        public readonly Angle Direction;
     }
 
     public sealed class WeaponInputScheduler : IDisposable
@@ -94,7 +97,7 @@ namespace Tanks.Server.Weapons
                     _lastScheduledClientTick = shot.ClientTick;
                     _lastScheduledServerTick = scheduledTick;
 
-                    _scheduledShots.Enqueue(new ScheduledShot(scheduledTick, shot.Id));
+                    _scheduledShots.Enqueue(new ScheduledShot(scheduledTick, shot.Id, shot.Direction));
                     LastProcessedClientTick = shot.ClientTick;
 
                     Debug.Log(

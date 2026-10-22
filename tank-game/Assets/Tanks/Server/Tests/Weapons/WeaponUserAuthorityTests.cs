@@ -1,6 +1,7 @@
 ﻿using NSubstitute;
 using NUnit.Framework;
 using Tanks.Server.Weapons;
+using Tanks.Shared.Adapters;
 using Tanks.Shared.Weapons;
 using Tanks.Utils;
 
@@ -61,10 +62,10 @@ namespace Tanks.Server.Tests.Weapons
         {
             _component.Scheduler.LastProcessedClientTick = 10;
 
-            _component.Handle(CreateInput(11, new ShotId(1)));
+            _component.Handle(CreateInput(11, new ShotId(1), Angle.FromDegrees(60)));
             _component.Tick(1, 0.1f);
 
-            _component.Behaviour.Received(1).WeaponTick(0.1f, true, new ShotId(1));
+            _component.Behaviour.Received(1).WeaponTick(0.1f, true, new ShotId(1), Angle.FromDegrees(60));
         }
 
         [Test]
@@ -75,10 +76,10 @@ namespace Tanks.Server.Tests.Weapons
             _component.Tick(1, 0.1f);
 
             _component.Behaviour.Received(1)
-                .WeaponTick(0.1f, true, new ShotId(20));
+                .WeaponTick(0.1f, true, new ShotId(20), default);
 
             _component.Behaviour.DidNotReceive()
-                .WeaponTick(Arg.Any<float>(), true, new ShotId(10));
+                .WeaponTick(Arg.Any<float>(), true, new ShotId(10), Arg.Any<Angle>());
         }
 
         [Test]
@@ -88,7 +89,7 @@ namespace Tanks.Server.Tests.Weapons
             _component.Handle(CreateInput(10, new ShotId(10)));
 
             _component.Tick(1, 0.1f);
-            _component.Behaviour.Received(1).WeaponTick(0.1f, true, new ShotId(20));
+            _component.Behaviour.Received(1).WeaponTick(0.1f, true, new ShotId(20), default);
         }
 
         [Test]
@@ -98,8 +99,8 @@ namespace Tanks.Server.Tests.Weapons
             _component.Handle(CreateInput(10, new ShotId(20)));
             _component.Tick(1, 0.1f);
 
-            _component.Behaviour.Received(1).WeaponTick(0.1f, true, new ShotId(20));
-            _component.Behaviour.DidNotReceive().WeaponTick(Arg.Any<float>(), true, new ShotId(10));
+            _component.Behaviour.Received(1).WeaponTick(0.1f, true, new ShotId(20), default);
+            _component.Behaviour.DidNotReceive().WeaponTick(Arg.Any<float>(), true, new ShotId(10), Arg.Any<Angle>());
         }
 
         [Test]
@@ -110,7 +111,7 @@ namespace Tanks.Server.Tests.Weapons
             _component.Tick(1, 0.1f);
             _component.Tick(2, 0.1f);
 
-            _component.Behaviour.Received(1).WeaponTick(0.1f, true, new ShotId(123));
+            _component.Behaviour.Received(1).WeaponTick(0.1f, true, new ShotId(123), default);
         }
 
         [Test]
@@ -120,12 +121,12 @@ namespace Tanks.Server.Tests.Weapons
             _component.Behaviour.Received(1).WeaponTick(0.1f, false, default);
         }
 
-        private static WeaponInput CreateInput(int clientTick, ShotId shotId)
+        private static WeaponInput CreateInput(int clientTick, ShotId shotId, Angle direction = default)
         {
             WeaponInput input = new WeaponInput
             {
                 FireBuffer = new RingBuffer8<ClientShot>()
-                    .Add(new ClientShot(clientTick, shotId))
+                    .Add(new ClientShot(clientTick, shotId, direction))
             };
 
             return input;

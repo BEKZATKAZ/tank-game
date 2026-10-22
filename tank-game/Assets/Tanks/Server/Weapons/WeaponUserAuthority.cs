@@ -41,7 +41,7 @@ namespace Tanks.Server.Weapons
         protected override void OnInitialize()
         {
             Scheduler = new WeaponInputScheduler(
-                shoot: (shot, deltaTime) => Behaviour.WeaponTick(deltaTime, true, shot.Id),
+                shoot: (shot, deltaTime) => Behaviour.WeaponTick(deltaTime, true, shot.Id, shot.Direction),
                 fallback: deltaTime => Behaviour.WeaponTick(deltaTime, false, default));
 
             Behaviour.RegisterMessageHandler(this);

@@ -1,6 +1,7 @@
 ﻿using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 using Tanks.Shared;
+using Tanks.Shared.Adapters;
 using Tanks.Shared.Weapons;
 using Unity.Collections;
 
@@ -10,14 +11,16 @@ namespace Tanks.Client.Weapons
     public readonly struct ScheduledClientShot
     {
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public ScheduledClientShot(int tick, ShotId id)
+        public ScheduledClientShot(int tick, ShotId id, Angle direction)
         {
             Tick = tick;
             Id = id;
+            Direction = direction;
         }
 
         public readonly int Tick;
         public readonly ShotId Id;
+        public readonly Angle Direction;
     }
 
     public sealed class WeaponUseHandler :
@@ -28,7 +31,7 @@ namespace Tanks.Client.Weapons
 
         public void Handle(WeaponUsedFromServer message)
         {
-            _scheduledShots.Enqueue(new ScheduledClientShot(message.ServerTick, message.Id));
+            _scheduledShots.Enqueue(new ScheduledClientShot(message.ServerTick, message.Id, message.Direction));
         }
 
         protected override void OnTick(int tick, float tickDelta)
@@ -57,7 +60,8 @@ namespace Tanks.Client.Weapons
                 Behaviour.WeaponTick(
                     affectedTickDelta,
                     isHoldingDown: true,
-                    shot.Id
+                    shot.Id,
+                    shot.Direction
                 );
 
                 _scheduledShots.Dequeue();

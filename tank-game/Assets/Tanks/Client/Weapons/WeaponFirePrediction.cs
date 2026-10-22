@@ -1,5 +1,6 @@
 using Tanks.Client.Input;
 using Tanks.Shared;
+using Tanks.Shared.Adapters;
 using Tanks.Shared.Weapons;
 using Tanks.Utils;
 
@@ -29,12 +30,13 @@ namespace Tanks.Client.Weapons
 
             // Predict rate of fire
             float affectedTickDelta = tickDelta * Behaviour.GetDeltaMultiplier();
+            Angle direction = Behaviour.MuzzlePoint.WorldRotation;
 
             // Send nothing if the weapon was not used
             if (Behaviour.WeaponTick(affectedTickDelta, _isUsing, shotId) == false) return;
 
             // Send many inputs at once to avoid packet loss
-            _fireBuffer = _fireBuffer.Add(new ClientShot(tick, shotId));
+            _fireBuffer = _fireBuffer.Add(new ClientShot(tick, shotId, direction));
             Behaviour.SendInputServerRpc(new WeaponInput { FireBuffer = _fireBuffer });
 
             _isHoldingDown = false;

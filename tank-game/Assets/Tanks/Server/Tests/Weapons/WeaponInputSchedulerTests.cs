@@ -1,6 +1,7 @@
 ﻿using NSubstitute;
 using NUnit.Framework;
 using Tanks.Server.Weapons;
+using Tanks.Shared.Adapters;
 using Tanks.Shared.Weapons;
 using Tanks.Shared.Weapons.Data;
 using Tanks.Utils;
@@ -23,6 +24,7 @@ namespace Tanks.Server.Tests.Weapons
 
             Assert.AreEqual(expected.Id, shot.Id, "Shot ID dismatch");
             Assert.AreEqual(expected.Tick, shot.Tick, "Shot tick dismatch");
+            Assert.AreEqual(expected.Direction, shot.Direction, "Shot direction dismatch");
 
             return true;
         }
@@ -58,9 +60,9 @@ namespace Tanks.Server.Tests.Weapons
         {
             RingBuffer8<ClientShot> buffer = default;
 
-            buffer = buffer.Add(new ClientShot(10, new ShotId(1)));
-            buffer = buffer.Add(new ClientShot(11, new ShotId(2)));
-            buffer = buffer.Add(new ClientShot(12, new ShotId(3)));
+            buffer = buffer.Add(new ClientShot(10, new ShotId(1), Angle.FromDegrees(10)));
+            buffer = buffer.Add(new ClientShot(11, new ShotId(2), Angle.FromDegrees(20)));
+            buffer = buffer.Add(new ClientShot(12, new ShotId(3), Angle.FromDegrees(30)));
 
             WeaponInput input = new()
             {
@@ -70,9 +72,9 @@ namespace Tanks.Server.Tests.Weapons
             // Cooldown = 0.15 / 0.05 = 3 ticks
             _expected = new[]
             {
-                new ScheduledShot(9, new ShotId(1)),
-                new ScheduledShot(12, new ShotId(2)),
-                new ScheduledShot(15, new ShotId(3)),
+                new ScheduledShot(9, new ShotId(1), Angle.FromDegrees(10)),
+                new ScheduledShot(12, new ShotId(2), Angle.FromDegrees(20)),
+                new ScheduledShot(15, new ShotId(3), Angle.FromDegrees(30)),
             };
 
             _scheduler.Schedule(_owner, input, 9, 0.05f);

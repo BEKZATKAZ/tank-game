@@ -1,6 +1,7 @@
 ﻿using NSubstitute;
 using NUnit.Framework;
 using Tanks.Server.Weapons;
+using Tanks.Shared.Adapters;
 using Tanks.Shared.Weapons;
 
 namespace Tanks.Server.Tests.Weapons
@@ -22,11 +23,16 @@ namespace Tanks.Server.Tests.Weapons
         [TestCase(100)]
         public void Handle_SendsClientRpc(int id)
         {
-            _component.Handle(new WeaponUsed { ShotId = new ShotId(id) });
+            IWeaponHolderBehaviour owner = Substitute.For<IWeaponHolderBehaviour>();
+            owner.ShotDirection.Returns((Angle?)Angle.FromDegrees(75));
+
+            _component.Handle(new WeaponUsed { Owner = owner, ShotId = new ShotId(id) });
 
             _component.Behaviour
                 .Received(1)
-                .UseWeaponClientRpc(new WeaponUsedFromServer { Id = new ShotId(id) });
+                .UseWeaponClientRpc(Arg.Is<WeaponUsedFromServer>(message =>
+                    message.Id == new ShotId(id) &&
+                    message.Direction == Angle.FromDegrees(75)));
         }
     }
 }
