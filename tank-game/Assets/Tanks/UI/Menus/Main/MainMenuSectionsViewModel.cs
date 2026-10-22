@@ -53,7 +53,7 @@ namespace Tanks.UI.Menus.Main
 
         public void ShowQuitGameConfirmation()
         {
-            _dialog.ShowConfirmation("quit");
+            _dialog.ShowConfirmation("quit", onYes: Application.Quit);
         }
 
         public async UniTaskVoid OpenTutorial()
@@ -70,7 +70,7 @@ namespace Tanks.UI.Menus.Main
                 return;
             }
 
-            await _sceneLoader.StartLoadingAsync(new LoadPlayground());
+            _sceneLoader.StartLoading(new LoadPlayground());
             _loading.End();
         }
 

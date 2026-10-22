@@ -1,6 +1,7 @@
 using Cysharp.Threading.Tasks;
 using NSubstitute;
 using NUnit.Framework;
+using System;
 using Tanks.Core;
 using Tanks.Core.Common;
 using Tanks.Core.Common.Scenes;
@@ -58,19 +59,20 @@ namespace Tanks.UI.Tests.Menus
         public void ShowQuitGameConfirmation_OpensDialog()
         {
             ViewModel.ShowQuitGameConfirmation();
-            _dialog.Received(1).ShowConfirmation("quit");
+            _dialog.Received(1).ShowConfirmation("quit", Arg.Any<Action>());
         }
 
         [Test]
         public void OpenTutorial_Success_LoadsPlayground()
         {
-            _runServer.RunAsync(RequestedServerScene.Playground).Returns(UniTask.FromResult(Result.Success()));
-            _sceneLoader.StartLoadingAsync(Arg.Any<LoadPlayground>(), true, true)
-                .Returns(UniTask.CompletedTask);
+            _runServer
+                .RunAsync(RequestedServerScene.Playground)
+                .Returns(UniTask.FromResult(Result.Success()));
 
+            _sceneLoader.StartLoading(Arg.Any<LoadPlayground>(), true, true);
             ViewModel.OpenTutorial().Forget();
 
-            _sceneLoader.Received(1).StartLoadingAsync(Arg.Any<LoadPlayground>(), true, true);
+            _sceneLoader.Received(1).StartLoading(Arg.Any<LoadPlayground>(), true, true);
             _loading.Received(1).End();
             _dialog.DidNotReceiveWithAnyArgs().ShowErrorFromCode(default, default);
         }
@@ -86,7 +88,7 @@ namespace Tanks.UI.Tests.Menus
             _dialog.Received(1).ShowErrorFromCode("error.lobby", "start-failed");
             _loading.Received(1).End();
             _sceneLoader.DidNotReceiveWithAnyArgs()
-                .StartLoadingAsync(Arg.Any<LoadPlayground>(), true, true);
+                .StartLoading(Arg.Any<LoadPlayground>(), true, true);
         }
 
         [Test]
