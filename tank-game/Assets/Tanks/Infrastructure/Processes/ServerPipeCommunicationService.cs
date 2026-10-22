@@ -3,6 +3,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Tanks.Core;
 using Tanks.Core.Common.Processes;
+using UnityEngine;
 
 namespace Tanks.Infrastructure.Processes
 {
@@ -19,6 +20,7 @@ namespace Tanks.Infrastructure.Processes
             CancellationToken cancellation = default)
         {
             if (Pipe.IsConnected == false) await WaitForConnectionAsync(cancellation);
+            Debug.LogFormat("Expecting request of type '{0}'", typeof(TPayload).Name);
             return await ReadAsync<TPayload>(cancellation);
         }
 
@@ -26,11 +28,13 @@ namespace Tanks.Infrastructure.Processes
             TResponse message, CancellationToken cancellation = default)
         {
             if (Pipe.IsConnected == false) await WaitForConnectionAsync(cancellation);
+            Debug.LogFormat("Responding of type '{0}'", typeof(TResponse).Name);
             return await SendAsync(message, cancellation);
         }
 
         protected override Task WaitForConnectionAsync(CancellationToken cancellation = default)
         {
+            Debug.Log("Waiting for connection");
             using CancellationTokenSource cts = GetCancellation(cancellation);
             return Pipe.WaitForConnectionAsync(cts.Token);
         }

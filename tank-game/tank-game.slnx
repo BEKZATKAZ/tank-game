@@ -11,6 +11,7 @@
   <Project Path="Tanks.Editor.csproj" />
   <Project Path="FMODUnityEditor.csproj" />
   <Project Path="FMODUnity.csproj" />
+  <Project Path="Tanks.Infrastructure.Tests.Runtime.csproj" />
   <Project Path="Tanks.Utils.Tests.csproj" />
   <Project Path="Tanks.Core.csproj" />
   <Project Path="Tanks.UI.Tests.csproj" />
@@ -25,7 +26,6 @@
   <Project Path="Tanks.Core.Tests.csproj" />
   <Project Path="CFXRRuntime.csproj" />
   <Project Path="FMODUnityResonanceEditor.csproj" />
-  <Project Path="Tanks.Infrastructure.Tests.Runtime.csproj" />
   <Project Path="Tanks.Localization.Tests.csproj" />
   <Project Path="FMODUnityHaptics.csproj" />
   <Project Path="Tanks.Editor.TestHelpers.csproj" />

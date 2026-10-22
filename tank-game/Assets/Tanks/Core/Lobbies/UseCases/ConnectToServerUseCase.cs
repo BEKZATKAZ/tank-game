@@ -1,5 +1,4 @@
-﻿using Cysharp.Threading.Tasks;
-using Tanks.Core.Common.Scenes;
+﻿using Tanks.Core.Common.Scenes;
 using Tanks.Core.Lobbies.Sessions;
 
 namespace Tanks.Core.Lobbies.UseCases
@@ -20,11 +19,11 @@ namespace Tanks.Core.Lobbies.UseCases
 
         public void Load(string joinCode, SessionSettings settings)
         {
-            _loader.StartLoadingAsync(new LoadGameplay
+            _loader.StartLoading(new LoadGameplay
             {
                 JoinCode = joinCode,
                 Settings = settings
-            }).Forget();
+            });
         }
     }
 }

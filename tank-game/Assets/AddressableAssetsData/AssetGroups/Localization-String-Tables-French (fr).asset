@@ -66,6 +66,7 @@ MonoBehaviour:
     m_ReadOnly: 1
     m_SerializedLabels:
     - Locale-fr
+    - Preload
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: dc09d565980ea2649a07bf9627c0d906
     m_Address: Playground_fr

@@ -23,15 +23,11 @@ namespace Tanks.Client.Bootstrap
         private NativeArray<ushort> _indices;
 
         private Material _gradientMaterial;
-        private Texture2D _gradient;
         private Mesh _vignetteMesh;
 
         public void Handle(TilemapGenerated message)
         {
-            if (_gradientMaterial == false)
-            {
-                CreateVignette(message.Settings.WallWidth, pixelsPerUnit: 16);
-            }
+            if (_gradientMaterial == false) CreateVignette(message.Settings.WallWidth);
 
             PositiveFloat width = message.Settings.WallWidth + 2;
             RecalculateVignette(message.Bounds.min, message.Bounds.max, width);
@@ -65,34 +61,8 @@ namespace Tanks.Client.Bootstrap
             _vignetteMesh.RecalculateBounds();
         }
 
-        private void CreateGradient(int wallWidth, int pixelsPerUnit)
+        private void CreateVignette(int wallWidth)
         {
-            int height = pixelsPerUnit * wallWidth;
-
-            _gradient = new Texture2D(1, height, TextureFormat.RGBA32, mipChain: false)
-            {
-                wrapMode = TextureWrapMode.Clamp,
-                filterMode = FilterMode.Point,
-                anisoLevel = 0
-            };
-
-            Color32[] pixels = new Color32[height];
-
-            for (int i = 0; i < height; i++)
-            {
-                float t = i / (height - 1f);
-                float alpha = math.cos(t * math.PIHALF);
-                pixels[i] = new Color32(0, 0, 0, (byte)math.round(alpha * 255));
-            }
-
-            _gradient.SetPixelData(pixels, mipLevel: 0);
-            _gradient.Apply(false, false);
-        }
-
-        private void CreateVignette(int wallWidth, int pixelsPerUnit)
-        {
-            CreateGradient(wallWidth, pixelsPerUnit);
-
             GameObject vignette = new GameObject("Vignette",
                 typeof(MeshFilter), typeof(MeshRenderer));
 
@@ -103,21 +73,11 @@ namespace Tanks.Client.Bootstrap
             var renderer = vignette.GetComponent<MeshRenderer>();
             renderer.shadowCastingMode = ShadowCastingMode.Off;
 
-            _gradientMaterial = new Material(Shader.Find("Universal Render Pipeline/Unlit"))
+            _gradientMaterial = new Material(Shader.Find("Shader Graphs/VignetteGradient"))
             {
                 name = "Gradient",
                 renderQueue = (int)RenderQueue.Transparent
             };
-
-            _gradientMaterial.EnableKeyword("_SURFACE_TYPE_TRANSPARENT");
-            _gradientMaterial.SetTexture("_BaseMap", _gradient);
-            _gradientMaterial.SetColor("_BaseColor", Color.white);
-            _gradientMaterial.SetFloat("_SrcBlend", 5);
-            _gradientMaterial.SetFloat("_DstBlend", 10);
-            _gradientMaterial.SetFloat("_Surface", 1);
-            _gradientMaterial.SetFloat("_ZWrite", 0);
-            _gradientMaterial.SetFloat("_DstBlendAlpha", 10);
-            _gradientMaterial.SetFloat("_Cull", 0);
 
             _vignetteMesh = new Mesh
             {
@@ -172,7 +132,6 @@ namespace Tanks.Client.Bootstrap
         protected override void OnDestroy()
         {
             if (_vignetteMesh) Object.Destroy(_vignetteMesh);
-            if (_gradient) Object.Destroy(_gradient);
             if (_gradientMaterial) Object.Destroy(_gradientMaterial);
 
             if (_vertices.IsCreated) _vertices.Dispose();

@@ -33,6 +33,7 @@ MonoBehaviour:
     m_ReadOnly: 1
     m_SerializedLabels:
     - Locale-ru
+    - Preload
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 30c96294e7ece1342aaa0992404b44e9
     m_Address: Gameplay_ru

@@ -50,11 +50,10 @@ namespace Tanks.Client.Bootstrap
 #if UNITY_EDITOR
             if (CurrentPlayer.IsMainEditor)
             {
-                await _client.SendRequestAsync<LoadSceneRequest, LoadSceneRequest>(
-                    new LoadSceneRequest
-                    {
-                        Scene = RequestedServerScene.Gameplay
-                    });
+                await _client.SendRequestAsync(new LoadSceneRequest
+                {
+                    Scene = RequestedServerScene.Gameplay
+                });
 
                 // Fire and forget
                 _ = _client.SendRequestAsync<PrepareServerRequest, ServerStandBy>(
@@ -97,7 +96,7 @@ namespace Tanks.Client.Bootstrap
         private void OnConnectionEvent(NetworkManager manager, ConnectionEventData e)
         {
             if (e.EventType != ConnectionEvent.ClientDisconnected) return;
-            _sceneLoader.StartLoadingAsync(new LoadMenus(), withTips: false);
+            _sceneLoader.StartLoading(new LoadMenus(), withTips: false);
         }
 
         private UniTask InitializeItemsAsync()
@@ -112,7 +111,7 @@ namespace Tanks.Client.Bootstrap
 #if UNITY_EDITOR
             if (_sceneLoader.IsLoading == false)
             {
-                _sceneLoader.StartLoadingAsync(new LoadGameplay(), loadActualScene: false).Forget();
+                _sceneLoader.StartLoading(new LoadGameplay(), loadActualScene: false);
             }
 #endif
 

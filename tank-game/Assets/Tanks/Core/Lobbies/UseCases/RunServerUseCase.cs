@@ -55,9 +55,7 @@ namespace Tanks.Core.Lobbies.UseCases
             if (Application.isEditor && Application.isPlaying)
             {
                 // Skips only when running in Unity or in tests
-
-                return await _client
-                    .SendRequestAsync<LoadSceneRequest, LoadSceneRequest>(sceneRequest);
+                return await _client.SendRequestAsync(sceneRequest);
             }
 #endif
             try
@@ -72,10 +70,7 @@ namespace Tanks.Core.Lobbies.UseCases
             }
 
             using CancellationTokenSource sceneTimeout = new CancellationTokenSource(15000);
-
-            ResultType<LoadSceneRequest> sceneLoad = await _client
-                .SendRequestAsync<LoadSceneRequest, LoadSceneRequest>(
-                    sceneRequest, sceneTimeout.Token);
+            ResultType sceneLoad = await _client.SendRequestAsync(sceneRequest, sceneTimeout.Token);
 
             if (sceneLoad.IsSuccess == false)
             {

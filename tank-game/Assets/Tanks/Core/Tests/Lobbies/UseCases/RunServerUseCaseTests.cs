@@ -32,9 +32,8 @@ namespace Tanks.Core.Tests.Lobbies.UseCases
                 .Returns(Task.FromResult(Result.Success(new ServerAuthReady { AuthCode = "test" })));
 
             _client
-                .SendRequestAsync<LoadSceneRequest, LoadSceneRequest>(
-                    Arg.Any<LoadSceneRequest>(), Arg.Any<CancellationToken>())
-                .Returns(Task.FromResult(Result.Success(new LoadSceneRequest())));
+                .SendRequestAsync(Arg.Any<LoadSceneRequest>(), Arg.Any<CancellationToken>())
+                .Returns(Task.FromResult(Result.Success()));
         }
 
         [Test]
