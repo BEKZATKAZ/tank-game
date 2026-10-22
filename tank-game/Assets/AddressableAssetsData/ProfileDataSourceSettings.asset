@@ -21,6 +21,24 @@ MonoBehaviour:
       m_Value: production
     - m_Suffix: LoadPath
       m_Value: https://fbefba5d-b81a-4c54-95f9-ef85b666d0d1.client-api.unity3dusercontent.com/client_api/v1/environments/{CcdManager.EnvironmentName}/buckets/{CcdManager.BucketId}/release_by_badge/{CcdManager.Badge}/entry_by_path/content/?path=
+  - m_GroupTypePrefix: Automatic
+    m_Variables:
+    - m_Suffix: BuildPath
+      m_Value: CCDBuildData/9b5034ad-8ca7-4fc8-8231-b73ec1dd3546/f80dcfb0-09df-45f7-94fa-3991a635b59e/latest
+    - m_Suffix: CcdBadgeName
+      m_Value: latest
+    - m_Suffix: CcdBucketId
+      m_Value: f80dcfb0-09df-45f7-94fa-3991a635b59e
+    - m_Suffix: CcdBucketName
+      m_Value: StandaloneWindows64
+    - m_Suffix: Environmentid
+      m_Value: 9b5034ad-8ca7-4fc8-8231-b73ec1dd3546
+    - m_Suffix: Environmentname
+      m_Value: production
+    - m_Suffix: LoadPath
+      m_Value: https://fbefba5d-b81a-4c54-95f9-ef85b666d0d1.client-api.unity3dusercontent.com/client_api/v1/environments/production/buckets/f80dcfb0-09df-45f7-94fa-3991a635b59e/release_by_badge/latest/entry_by_path/content/?path=
+    - m_Suffix: PromoteOnly
+      m_Value: False
   - m_GroupTypePrefix: Built-In
     m_Variables:
     - m_Suffix: BuildPath
@@ -115,24 +133,6 @@ MonoBehaviour:
       m_Value: production
     - m_Suffix: LoadPath
       m_Value: https://fbefba5d-b81a-4c54-95f9-ef85b666d0d1.client-api.unity3dusercontent.com/client_api/v1/environments/production/buckets/dde7371a-b94f-4c13-bb4b-181cc9bd3f3f/release_by_badge/latest/entry_by_path/content/?path=
-    - m_Suffix: PromoteOnly
-      m_Value: False
-  - m_GroupTypePrefix: CCD.fbefba5d-b81a-4c54-95f9-ef85b666d0d1.9b5034ad-8ca7-4fc8-8231-b73ec1dd3546.f80dcfb0-09df-45f7-94fa-3991a635b59e.latest
-    m_Variables:
-    - m_Suffix: BuildPath
-      m_Value: CCDBuildData/9b5034ad-8ca7-4fc8-8231-b73ec1dd3546/f80dcfb0-09df-45f7-94fa-3991a635b59e/latest
-    - m_Suffix: CcdBadgeName
-      m_Value: latest
-    - m_Suffix: CcdBucketId
-      m_Value: f80dcfb0-09df-45f7-94fa-3991a635b59e
-    - m_Suffix: CcdBucketName
-      m_Value: StandaloneWindows64
-    - m_Suffix: Environmentid
-      m_Value: 9b5034ad-8ca7-4fc8-8231-b73ec1dd3546
-    - m_Suffix: Environmentname
-      m_Value: production
-    - m_Suffix: LoadPath
-      m_Value: https://fbefba5d-b81a-4c54-95f9-ef85b666d0d1.client-api.unity3dusercontent.com/client_api/v1/environments/production/buckets/f80dcfb0-09df-45f7-94fa-3991a635b59e/release_by_badge/latest/entry_by_path/content/?path=
     - m_Suffix: PromoteOnly
       m_Value: False
   environments:

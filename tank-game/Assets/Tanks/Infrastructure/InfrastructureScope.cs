@@ -23,6 +23,10 @@ namespace Tanks.Infrastructure
     {
         [Required]
         [SerializeField]
+        private UnitySceneLoader _sceneLoader;
+
+        [Required]
+        [SerializeField]
         private SessionSettingsService _sessionSettings;
 
         [Header("Environments")]
@@ -45,7 +49,6 @@ namespace Tanks.Infrastructure
 
             builder.Register<IFileSystem, DriveFileSystem>(Lifetime.Singleton);
             builder.Register<IResourceLoader, AddressablesLoader>(Lifetime.Singleton);
-            builder.Register<ISceneLoader, UnitySceneLoader>(Lifetime.Singleton);
 
             builder.Register<ILobbyService, UGSLobbyService>(Lifetime.Singleton);
             builder.Register<IAuthService, UGSAuthService>(Lifetime.Singleton);
@@ -68,6 +71,7 @@ namespace Tanks.Infrastructure
             builder.Register<ISettingsService, JsonSettingsService>(Lifetime.Singleton);
 
             builder.RegisterComponent(_sessionSettings).As<ISessionSettingsService>();
+            builder.RegisterComponent(_sceneLoader).As<ISceneLoader>();
         }
 
         protected override void Configure(IContainerBuilder builder)

@@ -66,7 +66,7 @@ namespace Tanks.UI.Entry.AccountSetup
 
         public void EnterMainMenu()
         {
-            _sceneLoader.StartLoadingAsync(new LoadMenus(), withTips: false).Forget();
+            _sceneLoader.StartLoading(new LoadMenus(), withTips: false, loadUntil: 1);
         }
     }
 }

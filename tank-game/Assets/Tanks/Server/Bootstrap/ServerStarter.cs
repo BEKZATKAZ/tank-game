@@ -1,6 +1,7 @@
 ﻿using Cysharp.Threading.Tasks;
 using System;
 using System.Threading;
+using System.Threading.Tasks;
 using Tanks.Core;
 using Tanks.Core.Common.Processes;
 using Tanks.Core.Lobbies.Payloads;
@@ -26,7 +27,7 @@ namespace Tanks.Server.Bootstrap
 
         private IRelayService Relay => RelayService.Instance;
 
-        private async UniTask<string> SetupRelayAsync(int playerCount)
+        private async Task<string> SetupRelayAsync(int playerCount)
         {
             Allocation allocation = await Relay.CreateAllocationAsync(playerCount);
             string joinCode = await Relay.GetJoinCodeAsync(allocation.AllocationId);
@@ -50,7 +51,7 @@ namespace Tanks.Server.Bootstrap
             return "";
         }
 
-        private async UniTask AuthenticateAsync()
+        private async Task AuthenticateAsync()
         {
             await _auth.InitializeAsync();
 
@@ -69,7 +70,7 @@ namespace Tanks.Server.Bootstrap
 #endif
         }
 
-        private async UniTask<T> WaitForRequestAsync<T>()
+        private async Task<T> WaitForRequestAsync<T>()
         {
             ResultType<T> start = await _server.ExpectRequestAsync<T>();
             if (start.IsSuccess) return start.Value;
@@ -81,7 +82,6 @@ namespace Tanks.Server.Bootstrap
             try
             {
                 LoadSceneRequest sceneRequest = await WaitForRequestAsync<LoadSceneRequest>();
-                await _server.RespondToRequestAsync(new LoadSceneRequest());
 
                 if (sceneRequest.Scene is RequestedServerScene.Playground)
                 {

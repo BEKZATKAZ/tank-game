@@ -1,6 +1,6 @@
 # Privacy Policy
 
-**Last updated:** October 21, 2026
+**Last updated:** October 22, 2026
 **Game:** T.A.N.K.S.
 **Developer:** BEKZATKAZ
 **Contact:** bekzatkaz.games@gmail.com
@@ -13,7 +13,7 @@ The Game provides online multiplayer functionality using Unity Gaming Services. 
 
 ## 2. Information We Collect
 
-The Game uses Unity services to provide account authentication and online multiplayer functionality.
+The Game uses Unity services to provide account authentication and online multiplayer functionality. The Game also uses Unity Diagnostics to help identify and troubleshoot technical problems.
 
 Depending on the services used and your activity in the Game, the following information may be processed:
 
@@ -21,6 +21,7 @@ Depending on the services used and your activity in the Game, the following info
 - **Networking information:** Unity Lobby and Unity Relay process certain connection-related information. Unity documents IP addresses and Authentication Player IDs as data collected by Relay, and IP addresses and Authentication Player IDs as data collected by Lobby.
 - **Lobby information:** Information such as lobby membership, lobby settings, player identifiers, and connection status may be processed to create, discover, join, and maintain multiplayer sessions.
 - **Gameplay information:** Information such as player actions and game state may be transmitted between players or processed by the Game to synchronize multiplayer gameplay.
+- **Diagnostic information:** Unity Diagnostics may collect technical information, including exception reports, crash reports, session-related information, and an installation-specific identifier. This information helps identify errors, troubleshoot technical problems, and maintain the stability of the Game. The exact information collected depends on the diagnostic services and settings enabled.
 
 We may access or review lobby information available to us through the services to operate the Game, troubleshoot connection problems, or maintain multiplayer functionality.
 
@@ -40,6 +41,8 @@ We use information to:
 - Protect the Game against abuse and unauthorized activity.
 - Respond to privacy requests and comply with applicable legal obligations.
 
+We also use diagnostic information processed through Unity Diagnostics to identify and investigate crashes, exceptions, and other technical problems.
+
 ## 4. Third-Party Services
 
 The Game uses services provided by Unity Technologies:
@@ -48,18 +51,21 @@ The Game uses services provided by Unity Technologies:
 - **Unity Lobby:** Supports multiplayer lobby creation, discovery, and management.
 - **Unity Relay:** Relays multiplayer network traffic between players.
 - **Unity Netcode for GameObjects:** Synchronizes networked gameplay.
+- **Unity Diagnostics:** Helps identify crashes, exceptions, and other technical problems by processing diagnostic information.
 
 These services may process information as described in Section 2. Unity processes information under its applicable terms and privacy documentation.
 
 For more information, see the [Unity Privacy Policy](https://unity.com/legal/game-player-and-app-user-privacy-policy).
 
-Unity may use its own service providers to operate these services. Information may therefore be processed by Unity and its relevant service providers as necessary to provide multiplayer functionality.
+Unity may use its own service providers to operate these services. Information may therefore be processed by Unity and its relevant service providers as necessary to provide multiplayer functionality and diagnostic services.
 
 ## 5. Data Sharing
 
 We do not sell personal information.
 
-Information may be processed by Unity Technologies and its relevant service providers to provide authentication and multiplayer functionality. Information may also be disclosed where required by law or when necessary to protect the security and integrity of the Game.
+Information may be processed by Unity Technologies and its relevant service providers to provide authentication and multiplayer functionality, as well as diagnostic services.
+
+Information may also be disclosed where required by law or when necessary to protect the security and integrity of the Game.
 
 We do not use advertising or analytics services in the Game.
 
@@ -67,7 +73,7 @@ We do not use advertising or analytics services in the Game.
 
 Information is retained according to the purposes for which it is processed, applicable legal requirements, and the retention practices of the relevant service providers.
 
-Unity services have different retention periods. For example, Unity documents a 30-day retention period for personal data collected by Relay. Lobby logs containing player identifiers may also be retained for up to 30 days. Unity Authentication has separate retention and deletion procedures.
+Unity services have different retention periods. For example, Unity documents a 30-day retention period for personal data collected by Relay. Lobby logs containing player identifiers may also be retained for up to 30 days. Unity Authentication has separate retention and deletion procedures. Diagnostic information is retained according to the applicable Unity Diagnostics retention practices.
 
 Information stored directly by us, if any, will be retained only as long as reasonably necessary for its intended purpose or as required by law.
 

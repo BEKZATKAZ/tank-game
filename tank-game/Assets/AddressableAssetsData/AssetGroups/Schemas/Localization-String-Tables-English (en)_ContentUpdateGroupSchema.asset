@@ -13,4 +13,4 @@ MonoBehaviour:
   m_Name: Localization-String-Tables-English (en)_ContentUpdateGroupSchema
   m_EditorClassIdentifier: Unity.Addressables.Editor::UnityEditor.AddressableAssets.Settings.GroupSchemas.ContentUpdateGroupSchema
   m_Group: {fileID: 11400000, guid: 01beba3df2b244e4383f235e5d825b40, type: 2}
-  m_StaticContent: 0
+  m_StaticContent: 1

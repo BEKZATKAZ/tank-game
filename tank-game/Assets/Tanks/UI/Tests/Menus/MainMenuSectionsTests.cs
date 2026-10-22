@@ -66,7 +66,7 @@ namespace Tanks.UI.Tests.Menus
         public void OpenTutorial_Success_LoadsPlayground()
         {
             _runServer
-                .RunAsync(RequestedServerScene.Playground)
+                .RunAsync(RequestedServerScene.Playground, authorize: false)
                 .Returns(UniTask.FromResult(Result.Success()));
 
             _sceneLoader.StartLoading(Arg.Any<LoadPlayground>(), true, true);
@@ -80,7 +80,7 @@ namespace Tanks.UI.Tests.Menus
         [Test]
         public void OpenTutorial_ServerFailure_ShowsError()
         {
-            _runServer.RunAsync(RequestedServerScene.Playground)
+            _runServer.RunAsync(RequestedServerScene.Playground, authorize: false)
                 .Returns(UniTask.FromResult(Result.Failure("start-failed")));
 
             ViewModel.OpenTutorial().Forget();
@@ -96,13 +96,17 @@ namespace Tanks.UI.Tests.Menus
         {
             ILocalizedString name = Substitute.For<ILocalizedString>();
             name.Get().Returns("Player's lobby");
-            _localization.TryGet("Menus", "menu.lobby.default-name", out Arg.Any<ILocalizedString>())
+
+            _localization
+                .TryGet("Menus", "menu.lobby.default-name", out Arg.Any<ILocalizedString>())
                 .Returns(args =>
                 {
                     args[2] = name;
                     return true;
                 });
+
             _runServer.RunAsync().Returns(UniTask.FromResult(Result.Success()));
+
             _lobbies.HostLobbyAsync("Player's lobby", 4)
                 .Returns(UniTask.FromResult(Result.Success(new LobbyState())));
 

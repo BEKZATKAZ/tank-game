@@ -1,4 +1,3 @@
-using Cysharp.Threading.Tasks;
 using System;
 
 namespace Tanks.Core.Common.Scenes
@@ -15,8 +14,8 @@ namespace Tanks.Core.Common.Scenes
         T GetLoadingParameters<T>() where T : ISceneParameters;
         void EndLoading<T>() where T : ISceneParameters;
 
-        UniTask StartLoadingAsync<T>(
-            T parameters, bool withTips = true, bool loadActualScene = true)
+        void StartLoading<T>(
+            T parameters, bool withTips = true, bool loadActualScene = true, float loadUntil = 0.5f)
             where T : ISceneParameters;
     }
 }

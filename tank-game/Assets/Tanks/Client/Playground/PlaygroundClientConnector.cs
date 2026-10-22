@@ -25,7 +25,7 @@ namespace Tanks.Client.Playground
         private void OnConnectionEvent(NetworkManager manager, ConnectionEventData e)
         {
             if (e.EventType != ConnectionEvent.ClientDisconnected) return;
-            _sceneLoader.StartLoadingAsync(new LoadMenus(), withTips: false);
+            _sceneLoader.StartLoading(new LoadMenus(), withTips: false);
         }
 
         private async void Start()
@@ -33,9 +33,7 @@ namespace Tanks.Client.Playground
 #if UNITY_EDITOR
             if (_sceneLoader.IsLoading == false)
             {
-                _sceneLoader
-                    .StartLoadingAsync(new LoadPlayground(), loadActualScene: false)
-                    .Forget();
+                _sceneLoader.StartLoading(new LoadPlayground(), loadActualScene: false);
             }
 #endif
 

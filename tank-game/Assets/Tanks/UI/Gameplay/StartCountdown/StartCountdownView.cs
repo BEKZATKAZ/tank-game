@@ -37,7 +37,7 @@ namespace Tanks.UI.Gameplay.StartCountdown
             viewModel.TransitionOpacity.Bind(x => _transitionOverlay.style.opacity = x);
         }
 
-        private void OnDestroy()
+        protected override void OnDestroy()
         {
             if (_instance is null) return;
             _instance.Stop(false);

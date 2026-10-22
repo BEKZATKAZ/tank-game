@@ -61,7 +61,8 @@ namespace Tanks.UI.Menus.Main
             _localization.TryGet("Menus", "menu.lobby.starting-server", out var starting);
             _loading.Begin(starting);
 
-            ResultType started = await _runServer.RunAsync(RequestedServerScene.Playground);
+            ResultType started = await _runServer.RunAsync(
+                RequestedServerScene.Playground, authorize: false);
 
             if (started.IsSuccess == false)
             {
