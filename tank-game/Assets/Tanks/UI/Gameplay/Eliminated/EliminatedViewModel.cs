@@ -31,7 +31,7 @@ namespace Tanks.UI.Gameplay.Eliminated
             if (message.Target.IsPossessed == false) return;
 
             // Prevent writing the same values (it will not be updated)
-            EliminatedBy.Value = "";
+            EliminatedBy.Value = null;
 
             if (message.From == message.Target)
             {
@@ -43,12 +43,16 @@ namespace Tanks.UI.Gameplay.Eliminated
             ITeamParticipantBehaviour participant = message.From?
                 .GetBehaviour<ITeamParticipantBehaviour>();
 
-            if (participant is null) return;
+            if (participant is null)
+            {
+                EliminatedBy.Value = "";
+                return;
+            }
 
             _localization.TryGet("Gameplay", "gameplay.eliminated-by", out var by);
             by?.AddVariable("name", participant.State.DisplayName);
 
-            EliminatedBy.Value = by?.Get();
+            EliminatedBy.Value = by?.Get() ?? "";
         }
     }
 }

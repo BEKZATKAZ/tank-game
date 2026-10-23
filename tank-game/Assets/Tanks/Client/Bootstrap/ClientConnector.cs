@@ -11,7 +11,6 @@ using Tanks.Core.Lobbies.Responses;
 using Tanks.Core.Lobbies.Sessions;
 using Tanks.Shared.Bootstrap;
 using Tanks.Shared.Items;
-using Unity.Multiplayer;
 using Unity.Multiplayer.PlayMode;
 using Unity.Netcode;
 using Unity.Netcode.Transports.UTP;
@@ -113,6 +112,8 @@ namespace Tanks.Client.Bootstrap
             {
                 _sceneLoader.StartLoading(new LoadGameplay(), loadActualScene: false);
             }
+
+            _client.Reinitialize();
 #endif
 
             await InitializeItemsAsync();

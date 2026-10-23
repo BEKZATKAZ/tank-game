@@ -24,7 +24,7 @@ namespace Tanks.UI.Gameplay.Eliminated
                 _subtitle.text = x;
 
                 // Prevent animation at the start of the game
-                if (string.IsNullOrEmpty(x)) return;
+                if (x is null) return;
 
                 _container.style.opacity = 1;
 
