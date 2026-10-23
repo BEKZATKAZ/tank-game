@@ -4,6 +4,7 @@ using Tanks.UI.Gameplay.GameStats;
 using Tanks.UI.Gameplay.Input;
 using Tanks.UI.Gameplay.ItemDescription;
 using Tanks.UI.Gameplay.ItemTagline;
+using Tanks.UI.Gameplay.Killfeed;
 using Tanks.UI.Gameplay.PlayerStats;
 using Tanks.UI.Gameplay.StartCountdown;
 using Tanks.UI.Gameplay.Timer;
@@ -27,6 +28,7 @@ namespace Tanks.UI.Gameplay
 
             builder.Register<GameStatsViewModel>(Lifetime.Transient);
             builder.Register<TimerViewModel>(Lifetime.Transient);
+            builder.Register<KillfeedViewModel>(Lifetime.Transient);
 
             builder.Register<
                 IInputService<UIGameplayInput>,

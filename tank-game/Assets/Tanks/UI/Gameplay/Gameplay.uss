@@ -269,6 +269,40 @@
     -unity-font-style: bold;
 }
 
+.killfeed {
+    position: absolute;
+    top: 40px;
+    right: 40px;
+    align-items: flex-end;
+    overflow: visible;
+}
+
+.killfeed__entry {
+    flex-direction: row;
+    align-items: center;
+    margin-bottom: 8px;
+    padding: 8px 16px;
+    background-color: rgba(0, 0, 0, 0.75);
+    border-radius: 8px;
+    font-size: 24px;
+    -unity-font-definition: var(--font-heavy);
+}
+
+.killfeed__name {
+    max-width: 300px;
+    text-overflow: ellipsis;
+    -unity-text-align: middle-left;
+}
+
+.killfeed__skull {
+    width: 28px;
+    height: 28px;
+    margin-left: 12px;
+    margin-right: 12px;
+    background-image: url("project://database/Assets/Plugins/Layer%20Lab/2D%20Icons-PictoIconPack01/PictoIcon_256/Icon_PictoIcon_Skull.Png?fileID=21300000&guid=13ab7e8c2a8f546c19a75f878cc8934b&type=3#Icon_PictoIcon_Skull");
+    -unity-background-scale-mode: scale-to-fit;
+}
+
 .transition-overlay {
     position: absolute;
     width: 100%;
