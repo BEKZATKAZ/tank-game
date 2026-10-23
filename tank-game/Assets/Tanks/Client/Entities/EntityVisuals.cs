@@ -166,10 +166,31 @@ namespace Tanks.Client.Entities.Runtime
         private void PredictDestroy(IEntityBehaviour target, IEntityBehaviour from)
         {
             IEntityBehaviour localPlayer = _entityService.GetPossessedEntity();
+
+            bool isLocalPlayer = target == localPlayer;
+            bool isFromLocalPlayer = from == localPlayer;
+
+            if (_health.OwnerClientId > 0 && (isLocalPlayer || isFromLocalPlayer))
+            {
+                _cameraShake.AddShake(new CameraImpulse(
+                    position: _health.Transform.WorldPosition,
+                    amplitude: 3,
+                    frequency: 1.5f,
+                    radius: isLocalPlayer ? 1000 : isFromLocalPlayer ? 40 : 10,
+                    duration: 3));
+
+                _cameraShake.AddShake(new CameraImpulse(
+                    position: _health.Transform.WorldPosition,
+                    amplitude: 0.4f,
+                    frequency: 30,
+                    radius: isLocalPlayer ? 1000 : isFromLocalPlayer ? 20 : 5,
+                    duration: 1.2f));
+            }
+
             string path;
 
-            if (target == localPlayer) path = _config.DestroyBySelfSoundPath;
-            else if (from == localPlayer) path = _config.DestroyByPlayerSoundPath;
+            if (isLocalPlayer) path = _config.DestroyBySelfSoundPath;
+            else if (isFromLocalPlayer) path = _config.DestroyByPlayerSoundPath;
             else path = _config.DestroyByOtherSoundPath;
 
             if (string.IsNullOrWhiteSpace(path) == false)
