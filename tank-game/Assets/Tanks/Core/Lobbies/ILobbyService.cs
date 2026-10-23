@@ -16,6 +16,7 @@ namespace Tanks.Core.Lobbies
         UniTask<ResultType<LobbyState>> HostLobbyAsync(string name, uint maxPlayers);
         UniTask<ResultType<LobbyState>> UpdateLobbyAsync(LobbyUpdateRequest options);
         UniTask<ResultType> LeaveLobbyAsync();
+        UniTask<ResultType> SetReadyAsync(bool ready);
 
         UniTask<ResultType<IEnumerable<LobbySearchState>>> FindLobbiesAsync(string name = null);
         UniTask<ResultType<LobbyState>> JoinLobbyAsync(LobbyAddress address);

@@ -66,7 +66,6 @@ namespace Tanks.Infrastructure.Lobbies
             destination.Name.Value = from.Name;
             destination.HostId.Value = from.HostId;
 
-            destination.Players.Value = from.Players.ToDictionary(k => k.Id, v => MapPlayer(v));
             destination.LobbyData.Clear();
 
             if (from.Data is { Count: > 0 })
@@ -78,6 +77,7 @@ namespace Tanks.Infrastructure.Lobbies
             }
 
             destination.Refresh();
+            destination.Players.Value = from.Players.ToDictionary(k => k.Id, v => MapPlayer(v));
             return destination;
         }
 

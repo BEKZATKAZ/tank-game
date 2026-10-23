@@ -1,12 +1,11 @@
 ﻿using Cysharp.Threading.Tasks;
 using System;
 using System.Collections.Generic;
-using System.Linq;
+using System.Threading.Tasks;
 using Tanks.Core;
 using Tanks.Core.Common;
 using Tanks.Core.Lobbies;
 using Tanks.Core.Lobbies.Payloads;
-using Tanks.Utils;
 using Unity.Services.Lobbies;
 using Unity.Services.Lobbies.Models;
 using UnityEngine;
@@ -32,6 +31,7 @@ namespace Tanks.Infrastructure.Lobbies
 
         private readonly IAuthService _auth;
         private ILobbyEvents _lobbyEvents;
+        private Lobby _lobby;
 
         private async UniTask SubscribeToEventsAsync()
         {
@@ -40,13 +40,7 @@ namespace Tanks.Infrastructure.Lobbies
             if (id.Value is null) return;
             LobbyEventCallbacks callbacks = new LobbyEventCallbacks();
 
-            callbacks.PlayerJoined += OnPlayerJoined;
-            callbacks.PlayerLeft += OnPlayerLeft;
-            callbacks.LobbyDeleted += OnLobbyDeleted;
-
-            callbacks.DataAdded += OnDataChanged;
-            callbacks.DataChanged += OnDataChanged;
-            callbacks.DataRemoved += OnDataChanged;
+            callbacks.LobbyChanged += OnLobbyChanged;
 
             _lobbyEvents = await Service.SubscribeToLobbyEventsAsync(id.Value, callbacks);
         }
@@ -61,44 +55,63 @@ namespace Tanks.Infrastructure.Lobbies
         private void OnLobbyDeleted()
         {
             CurrentLobbyState.Id.Value = default;
+            _lobby = null;
+            CurrentLobbyState.Players.Value = new Dictionary<string, LobbyPlayerState>();
             LobbyDeleted?.Invoke();
         }
 
-        private void OnDataChanged(Dictionary<string, ChangedOrRemovedLobbyValue<DataObject>> data)
+        private void OnLobbyChanged(ILobbyChanges changes)
         {
-            UGSLobbyMapper.MergeChangedData(data, CurrentLobbyState);
+            if (changes.LobbyDeleted)
+            {
+                OnLobbyDeleted();
+                return;
+            }
+
+            if (_lobby == null) return;
+            var previous = new Dictionary<string, LobbyPlayerState>(CurrentLobbyState.Players.Value);
+            changes.ApplyToLobby(_lobby);
+            UGSLobbyMapper.MapLobby(_lobby, CurrentLobbyState);
+
+            foreach (var player in CurrentLobbyState.Players.Value)
+            {
+                if (previous.ContainsKey(player.Key) == false) PlayerJoined?.Invoke(player.Value);
+            }
+
+            foreach (var player in previous)
+            {
+                if (CurrentLobbyState.Players.Value.ContainsKey(player.Key) == false) PlayerLeft?.Invoke(player.Value);
+            }
         }
 
-        private void OnPlayerJoined(List<LobbyPlayerJoined> players)
+        private async Task<Lobby> RememberAsync(Task<Lobby> request)
         {
-            foreach (LobbyPlayerJoined player in players)
+            Lobby lobby = await request;
+            if (_lobby == null || _lobby.Id != lobby.Id || lobby.Version >= _lobby.Version)
             {
-                LobbyPlayerState mapped = UGSLobbyMapper.MapPlayer(player.Player);
-                CurrentLobbyState.Players.Value[mapped.UserId] = mapped;
-                PlayerJoined?.Invoke(mapped);
+                _lobby = lobby;
             }
 
-            CurrentLobbyState.Players.ForceRefresh();
+            return _lobby;
         }
 
-        private void OnPlayerLeft(List<int> players)
+        public async UniTask<ResultType> SetReadyAsync(bool ready)
         {
-            using var toRemove = new TemporaryArrayResult<string>(players.Count);
-
-            for (int i = 0; i < players.Count; i++)
+            LobbyId lobbyId = CurrentLobbyState.Id.Value;
+            string userId = _auth.CurrentProfile.UserId.Value;
+            if (lobbyId.Value == null || CurrentLobbyState.Status.Value != LobbyStatus.WaitingForPlayers)
             {
-                int playerIndex = players[i];
-                string id = CurrentLobbyState.Players.Value.Skip(playerIndex).FirstOrDefault().Key;
-                toRemove[i] = id;
+                return Result.Failure("failed-to-update");
             }
 
-            for (int i = 0; i < players.Count; i++)
-            {
-                CurrentLobbyState.Players.Value.Remove(toRemove[i], out LobbyPlayerState removed);
-                PlayerLeft?.Invoke(removed);
-            }
-
-            CurrentLobbyState.Players.ForceRefresh();
+            return await UGSLobbyMapper.MapAsync(() => RememberAsync(Service.UpdatePlayerAsync(
+                lobbyId.Value, userId, new UpdatePlayerOptions
+                {
+                    Data = new Dictionary<string, PlayerDataObject>
+                    {
+                        ["ready"] = new(VisibilityOptions.Member, ready.ToString())
+                    }
+                })), CurrentLobbyState, errorCode: "failed-to-update");
         }
 
         private Player CreatePlayerData()
@@ -107,7 +120,8 @@ namespace Tanks.Infrastructure.Lobbies
 
             return new Player(id: profile.UserId.Value, data: new()
             {
-                ["username"] = new(VisibilityOptions.Member, profile.DisplayName.Value)
+                ["username"] = new(VisibilityOptions.Member, profile.DisplayName.Value),
+                ["ready"] = new(VisibilityOptions.Member, bool.FalseString)
             });
         }
 
@@ -129,10 +143,10 @@ namespace Tanks.Infrastructure.Lobbies
         public async UniTask<ResultType<LobbyState>> HostLobbyAsync(string name, uint maxPlayers)
         {
             var result = await UGSLobbyMapper.MapAsync(
-                () => Service.CreateLobbyAsync(name, (int)maxPlayers, new()
+                () => RememberAsync(Service.CreateLobbyAsync(name, (int)maxPlayers, new()
                 {
                     Player = CreatePlayerData()
-                }), CurrentLobbyState, errorCode: "failed-to-create");
+                })), CurrentLobbyState, errorCode: "failed-to-create");
 
             await SubscribeToEventsAsync();
             HeartbeatAsync().Forget();
@@ -143,10 +157,10 @@ namespace Tanks.Infrastructure.Lobbies
         public async UniTask<ResultType<LobbyState>> JoinLobbyAsync(LobbyAddress address)
         {
             var result = await UGSLobbyMapper.MapAsync(
-                () => Service.JoinLobbyByCodeAsync(address.Value, new()
+                () => RememberAsync(Service.JoinLobbyByCodeAsync(address.Value, new()
                 {
                     Player = CreatePlayerData()
-                }), CurrentLobbyState, errorCode: "failed-to-join");
+                })), CurrentLobbyState, errorCode: "failed-to-join");
 
             await SubscribeToEventsAsync();
             return result;
@@ -155,10 +169,10 @@ namespace Tanks.Infrastructure.Lobbies
         public async UniTask<ResultType<LobbyState>> JoinLobbyAsync(LobbyId id)
         {
             var result = await UGSLobbyMapper.MapAsync(
-                () => Service.JoinLobbyByIdAsync(id.Value, new()
+                () => RememberAsync(Service.JoinLobbyByIdAsync(id.Value, new()
                 {
                     Player = CreatePlayerData()
-                }), CurrentLobbyState, errorCode: "failed-to-join");
+                })), CurrentLobbyState, errorCode: "failed-to-join");
 
             await SubscribeToEventsAsync();
             return result;
@@ -168,11 +182,11 @@ namespace Tanks.Infrastructure.Lobbies
         {
             LobbyId lobbyId = CurrentLobbyState.Id.Value;
 
-            return UGSLobbyMapper.MapAsync(() => Service.UpdateLobbyAsync(lobbyId.Value, new()
+            return UGSLobbyMapper.MapAsync(() => RememberAsync(Service.UpdateLobbyAsync(lobbyId.Value, new()
             {
                 Name = options.Name,
                 Data = UGSLobbyMapper.MapDataToUpdate(options)
-            }), CurrentLobbyState, errorCode: "failed-to-update");
+            })), CurrentLobbyState, errorCode: "failed-to-update");
         }
 
         public async UniTask<ResultType> LeaveLobbyAsync()
@@ -193,6 +207,8 @@ namespace Tanks.Infrastructure.Lobbies
 
                 await UnsubscribeFromEventsAsync();
                 CurrentLobbyState.Id.Value = default;
+                _lobby = null;
+                CurrentLobbyState.Players.Value = new Dictionary<string, LobbyPlayerState>();
 
                 return Result.Success();
             }

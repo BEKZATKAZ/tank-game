@@ -132,8 +132,8 @@ MonoBehaviour:
     m_Localized: TROUVER UN LOBBY
     m_Metadata:
       m_Items: []
-  - m_Id: 5068842412236800
-    m_Localized: COMMENCER
+  - m_Id: 31253156946468864
+    m_Localized: "PR\xCAT"
     m_Metadata:
       m_Items: []
   - m_Id: 5099162528342016
@@ -198,6 +198,18 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 19189660226379776
     m_Localized: Connexion au serveur...
+    m_Metadata:
+      m_Items: []
+  - m_Id: 20387375585124353
+    m_Localized: "Pr\xEAt"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 20387375585124354
+    m_Localized: ANNULER
+    m_Metadata:
+      m_Items: []
+  - m_Id: 20387375585124355
+    m_Localized: "Pas pr\xEAt"
     m_Metadata:
       m_Items: []
   references:

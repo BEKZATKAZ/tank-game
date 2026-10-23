@@ -20,10 +20,7 @@
                             <UnityEngine.Localization.LocalizedString property="text" table="GUID:34510603f8b6d1a44b1b2ffa9aa551c9" entry="Id(5099162528342016)"/>
                         </Bindings>
                     </Tanks.UI.Elements.CustomButton>
-                    <Tanks.UI.Elements.CustomButton name="StartButton" style="background-image: url(&quot;project://database/Assets/Plugins/Layer%20Lab/2D%20Icons-PictoIconPack01/PictoIcon_256/Icon_PictoIcon_Control_Play.Png?fileID=2800000&amp;guid=89a5ae9f9ca3648d99ebe68370a1de31&amp;type=3#Icon_PictoIcon_Control_Play&quot;);">
-                        <Bindings>
-                            <UnityEngine.Localization.LocalizedString property="text" table="GUID:34510603f8b6d1a44b1b2ffa9aa551c9" entry="Id(5068842412236800)"/>
-                        </Bindings>
+                    <Tanks.UI.Elements.CustomButton name="ReadyButton" style="background-image: url(&quot;project://database/Assets/Plugins/Layer%20Lab/2D%20Icons-PictoIconPack01/PictoIcon_256/Icon_PictoIcon_Control_Play.Png?fileID=2800000&amp;guid=89a5ae9f9ca3648d99ebe68370a1de31&amp;type=3#Icon_PictoIcon_Control_Play&quot;);">
                     </Tanks.UI.Elements.CustomButton>
                 </ui:VisualElement>
             </ui:VisualElement>

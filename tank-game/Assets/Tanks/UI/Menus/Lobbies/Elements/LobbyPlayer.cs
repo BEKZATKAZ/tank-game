@@ -11,7 +11,10 @@ namespace Tanks.UI.Menus.Lobbies.Elements
             _username = new Label(Username);
             _username.AddToClassList("lobby-player__username");
 
+            _readiness = new Label();
+            _readiness.AddToClassList("lobby-player__readiness");
             Add(_username);
+            Add(_readiness);
             AddToClassList("lobby-player");
         }
 
@@ -27,6 +30,13 @@ namespace Tanks.UI.Menus.Lobbies.Elements
             }
         }
 
+        public string Readiness
+        {
+            get => _readiness.text;
+            set => _readiness.text = value;
+        }
+
+        private readonly Label _readiness;
         private readonly Label _username;
 
         private string _usernameValue = "Username";

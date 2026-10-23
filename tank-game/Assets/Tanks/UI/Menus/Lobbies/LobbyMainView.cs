@@ -10,7 +10,7 @@ namespace Tanks.UI.Menus.Lobbies
     {
         private VisualElement _root;
         private ScrollView _playerList;
-        private Button _startButton;
+        private Button _readyButton;
 
         protected override VisualElement GetRootElement() => _root;
 
@@ -20,22 +20,28 @@ namespace Tanks.UI.Menus.Lobbies
             _playerList = root.Q<ScrollView>();
 
             Button leaveButton = root.Q<Button>("LeaveButton");
-            _startButton = root.Q<Button>("StartButton");
+            _readyButton = root.Q<Button>("ReadyButton");
 
             leaveButton.clicked += LeaveLobby;
-            _startButton.clicked += StartGame;
+            _readyButton.clicked += ToggleReady;
         }
 
         protected override void Bind(LobbyMainViewModel viewModel)
         {
             viewModel.Players.Bind(OnPlayersUpdated);
-            viewModel.CanStartGame.Bind(x => _startButton.enabledSelf = x);
-            viewModel.IsHost.Bind(x => _startButton.style.display = x ? DisplayStyle.Flex : 0);
+            viewModel.CanToggleReady.Bind(OnCanToggleReadyChanged);
+            viewModel.ReadyButtonText.Bind(OnReadyButtonTextChanged);
+            viewModel.ReadyText.Bind(OnReadinessTextChanged);
+            viewModel.NotReadyText.Bind(OnReadinessTextChanged);
         }
 
         protected override void Unbind(LobbyMainViewModel viewModel)
         {
             viewModel.Players.Unbind(OnPlayersUpdated);
+            viewModel.CanToggleReady.Unbind(OnCanToggleReadyChanged);
+            viewModel.ReadyButtonText.Unbind(OnReadyButtonTextChanged);
+            viewModel.ReadyText.Unbind(OnReadinessTextChanged);
+            viewModel.NotReadyText.Unbind(OnReadinessTextChanged);
         }
 
         private void OnPlayersUpdated(IDictionary<string, LobbyPlayerState> players)
@@ -46,7 +52,10 @@ namespace Tanks.UI.Menus.Lobbies
             {
                 LobbyPlayer playerView = new LobbyPlayer
                 {
-                    Username = player.DisplayName
+                    Username = player.DisplayName,
+                    Readiness = player.IsReady
+                        ? ViewModel.ReadyText.Value
+                        : ViewModel.NotReadyText.Value
                 };
 
                 _playerList.Add(playerView);
@@ -54,6 +63,9 @@ namespace Tanks.UI.Menus.Lobbies
         }
 
         private void LeaveLobby() => ViewModel.LeaveLobbyConfirmation();
-        private void StartGame() => ViewModel.StartGameAsync().Forget();
+        private void OnCanToggleReadyChanged(bool value) => _readyButton.SetEnabled(value);
+        private void OnReadyButtonTextChanged(string value) => _readyButton.text = value;
+        private void OnReadinessTextChanged(string value) => OnPlayersUpdated(ViewModel.Players.Value);
+        private void ToggleReady() => ViewModel.ToggleReadyAsync().Forget();
     }
 }

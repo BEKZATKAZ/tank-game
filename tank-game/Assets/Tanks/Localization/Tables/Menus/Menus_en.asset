@@ -107,8 +107,8 @@ MonoBehaviour:
     m_Localized: Language
     m_Metadata:
       m_Items: []
-  - m_Id: 5068842412236800
-    m_Localized: START
+  - m_Id: 31253156946468864
+    m_Localized: READY
     m_Metadata:
       m_Items: []
   - m_Id: 5085350316171264
@@ -198,6 +198,18 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 20387375585124352
     m_Localized: Starting server
+    m_Metadata:
+      m_Items: []
+  - m_Id: 20387375585124353
+    m_Localized: Ready
+    m_Metadata:
+      m_Items: []
+  - m_Id: 20387375585124354
+    m_Localized: CANCEL
+    m_Metadata:
+      m_Items: []
+  - m_Id: 20387375585124355
+    m_Localized: Not ready
     m_Metadata:
       m_Items: []
   references:

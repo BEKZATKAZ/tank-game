@@ -72,6 +72,12 @@
 
 .lobby-player__username {
     font-size: 32px;
+    flex-grow: 1;
+}
+
+.lobby-player__readiness {
+    font-size: 24px;
+    -unity-text-align: middle-right;
 }
 
 .chat-message {

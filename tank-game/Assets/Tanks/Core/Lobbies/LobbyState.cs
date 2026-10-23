@@ -13,6 +13,9 @@ namespace Tanks.Core.Lobbies
             get => Data.TryGetValue("username", out string username) ? username : UserId;
         }
 
+        public readonly bool IsReady => Data != null &&
+            Data.TryGetValue("ready", out string ready) && bool.TryParse(ready, out bool value) && value;
+
         public string UserId;
         public IDictionary<string, string> Data;
     }
