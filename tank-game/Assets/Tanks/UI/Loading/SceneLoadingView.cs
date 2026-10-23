@@ -1,6 +1,7 @@
 ﻿using Cysharp.Threading.Tasks;
 using LitMotion;
 using System;
+using System.Threading;
 using Unity.Mathematics;
 using UnityEngine;
 using UnityEngine.UIElements;
@@ -18,25 +19,33 @@ namespace Tanks.UI.Loading
         private ProgressBar _progress;
         private Label _title;
         private Label _tip;
+        private CancellationTokenSource _tipCancellation;
 
         protected override VisualElement GetRootElement() => _root;
 
-        private async UniTaskVoid TipLoop()
+        private async UniTask TipLoop(
+            SceneLoadingViewModel viewModel, CancellationToken cancellationToken)
         {
-            while (ViewModel != null)
+            while (true)
             {
-                _tip.text = await ViewModel.GetNextTipAsync();
+                _tip.text = await viewModel.GetNextTipAsync()
+                    .AttachExternalCancellation(cancellationToken);
+
+                cancellationToken.ThrowIfCancellationRequested();
 
                 await LMotion
                     .Create(0f, 1f, _tipFadeDuration)
-                    .Bind(x => _tipContainer.style.opacity = x);
+                    .Bind(x => _tipContainer.style.opacity = x)
+                    .ToUniTask(cancellationToken);
 
                 await UniTask
-                    .Delay(TimeSpan.FromSeconds(_tipDuration));
+                    .Delay(TimeSpan.FromSeconds(_tipDuration),
+                        cancellationToken: cancellationToken);
 
                 await LMotion
                     .Create(1f, 0f, _tipFadeDuration)
-                    .Bind(x => _tipContainer.style.opacity = x);
+                    .Bind(x => _tipContainer.style.opacity = x)
+                    .ToUniTask(cancellationToken);
             }
         }
 
@@ -54,15 +63,48 @@ namespace Tanks.UI.Loading
 
         protected override void Bind(SceneLoadingViewModel viewModel)
         {
-            ViewModel.Progress.Bind(x => _progress.value = x);
+            viewModel.Progress.Bind(OnProgressChanged);
+            viewModel.IsLoading.Bind(OnLoadingChanged);
+        }
 
-            ViewModel.IsLoading.Bind(x =>
-            {
-                _root.style.display = x ? DisplayStyle.Flex : DisplayStyle.None;
-                _loadingCamera.gameObject.SetActive(x);
-            });
+        protected override void Unbind(SceneLoadingViewModel viewModel)
+        {
+            viewModel.Progress.Unbind(OnProgressChanged);
+            viewModel.IsLoading.Unbind(OnLoadingChanged);
+            StopTips();
+        }
 
-            if (ViewModel.WithTips) TipLoop().Forget();
+        protected override void OnDestroy()
+        {
+            if (ViewModel is null) return;
+            Unbind(ViewModel);
+            ViewModel.Dispose();
+        }
+
+        private void OnProgressChanged(float progress) => _progress.value = progress;
+
+        private void OnLoadingChanged(bool isLoading)
+        {
+            _root.style.display = isLoading ? DisplayStyle.Flex : DisplayStyle.None;
+            _loadingCamera.gameObject.SetActive(isLoading);
+
+            StopTips();
+            if (isLoading == false || ViewModel.WithTips == false) return;
+
+            _tipContainer.style.display = DisplayStyle.Flex;
+            _tipCancellation = new CancellationTokenSource();
+            TipLoop(ViewModel, _tipCancellation.Token).Forget();
+        }
+
+        private void StopTips()
+        {
+            _tipCancellation?.Cancel();
+            _tipCancellation?.Dispose();
+            _tipCancellation = null;
+
+            _tip.text = "";
+            _tipContainer.style.opacity = 0;
+            _tipContainer.style.display = DisplayStyle.None;
         }
 
         private void LateUpdate()
