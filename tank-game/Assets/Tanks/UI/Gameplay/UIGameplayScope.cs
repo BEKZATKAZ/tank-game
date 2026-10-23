@@ -3,6 +3,7 @@ using Tanks.UI.Gameplay.Eliminated;
 using Tanks.UI.Gameplay.GameStats;
 using Tanks.UI.Gameplay.Input;
 using Tanks.UI.Gameplay.ItemDescription;
+using Tanks.UI.Gameplay.ItemList;
 using Tanks.UI.Gameplay.ItemTagline;
 using Tanks.UI.Gameplay.Killfeed;
 using Tanks.UI.Gameplay.PlayerStats;
@@ -22,6 +23,7 @@ namespace Tanks.UI.Gameplay
 
             builder.Register<ItemDescriptionViewModel>(Lifetime.Transient);
             builder.Register<ItemTaglineViewModel>(Lifetime.Transient);
+            builder.Register<ItemListViewModel>(Lifetime.Transient);
 
             builder.Register<PlayerHealthViewModel>(Lifetime.Transient);
             builder.Register<PlayerStatsViewModel>(Lifetime.Transient);

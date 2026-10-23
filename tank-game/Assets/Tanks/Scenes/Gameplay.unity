@@ -2195,6 +2195,7 @@ GameObject:
   - component: {fileID: 1821635259}
   - component: {fileID: 1821635253}
   - component: {fileID: 1821635263}
+  - component: {fileID: 1821635264}
   m_Layer: 0
   m_Name: UI
   m_TagString: Untagged
@@ -2217,6 +2218,19 @@ Transform:
   m_Children: []
   m_Father: {fileID: 208528453}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1821635264
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1821635251}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 27ee70f2e994451e8c11a63b256fcbcc, type: 3}
+  m_Name:
+  m_EditorClassIdentifier: Tanks.UI::Tanks.UI.Gameplay.ItemList.ItemListView
+  _showOnPlay: 1
 --- !u!114 &1821635263
 MonoBehaviour:
   m_ObjectHideFlags: 0

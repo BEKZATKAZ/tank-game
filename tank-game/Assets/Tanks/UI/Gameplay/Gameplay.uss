@@ -303,6 +303,35 @@
     -unity-background-scale-mode: scale-to-fit;
 }
 
+.item-list {
+    position: absolute;
+    right: 80px;
+    width: 210px;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+    overflow: visible;
+    opacity: 0.5;
+}
+
+.item-list__icon {
+    width: 50px;
+    height: 50px;
+    margin: 10px;
+    flex-shrink: 0;
+    -unity-background-scale-mode: scale-to-fit;
+    overflow: visible;
+}
+
+.item-list__count {
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    font-size: 24px;
+    -unity-font-definition: var(--font-heavy);
+    text-shadow: 1px 1px 2px black;
+}
+
 .transition-overlay {
     position: absolute;
     width: 100%;

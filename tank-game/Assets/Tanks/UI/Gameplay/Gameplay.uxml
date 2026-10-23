@@ -32,6 +32,7 @@
     <ui:VisualElement name="Timer" class="timer" style="flex-grow: 1;">
         <ui:Label text="45" name="TimerCounter" class="timer-counter"/>
     </ui:VisualElement>
+    <Tanks.UI.Gameplay.ItemList.ItemListElement name="ItemList"/>
     <ui:VisualElement name="ItemDescriptionContainer" class="item-description" style="border-left-color: rgb(0, 255, 255); border-right-color: rgb(0, 255, 255); border-top-color: rgb(0, 255, 255); border-bottom-color: rgb(0, 255, 255);">
         <ui:VisualElement name="Header" class="item-description__header">
             <ui:VisualElement name="ItemIcon" class="item-description__icon" style="background-image: url(&quot;project://database/Assets/Tanks/Art/Items/Item_HP.png?fileID=21300000&amp;guid=2b35aef68fadf5243a92005fb41c4ed0&amp;type=3#Item_HP&quot;);"/>
