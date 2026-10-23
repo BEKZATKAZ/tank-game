@@ -21,6 +21,7 @@ namespace Tanks.Server.Tests.Bootstrap
         public int SpawnCallCount { get; private set; }
         public int ReturnCallCount { get; private set; }
         public int ClearCallCount { get; private set; }
+        public Action OnSpawn { get; set; }
 
         public ICrateBehaviour Spawn(GeneratedCrate crate)
         {
@@ -30,6 +31,7 @@ namespace Tanks.Server.Tests.Bootstrap
         public void Spawn(ReadOnlySpan<GeneratedTile> tiles, uint seed)
         {
             SpawnCallCount++;
+            OnSpawn?.Invoke();
         }
 
         public void Return(ICrateBehaviour instance)
@@ -114,6 +116,65 @@ namespace Tanks.Server.Tests.Bootstrap
                 {
                     Assert.That(math.distance(positions[i], positions[j]), Is.GreaterThan(0f));
                 }
+            }
+        }
+
+        [TestCase(false)]
+        [TestCase(true)]
+        public void Handle_AvoidsCratesMovedDuringSpawning(bool pooled)
+        {
+            bool autoSyncTransforms = Physics2D.autoSyncTransforms;
+            var crate = new GameObject("Spawn blocker");
+
+            try
+            {
+                Physics2D.autoSyncTransforms = false;
+                crate.transform.position = new Vector3(-999, -999);
+                if (pooled) crate.AddComponent<BoxCollider2D>();
+                Physics2D.SyncTransforms();
+
+                _crateSpawner.OnSpawn = () =>
+                {
+                    if (pooled == false) crate.AddComponent<BoxCollider2D>();
+                    crate.transform.position = new Vector3(7.5f, 7.5f);
+                };
+
+                _settings.GetSettings().MapGeneration.Returns(new MapGenerationSettings
+                {
+                    Resolution = new Vector2Int(2, 1),
+                    WallWidth = 5
+                });
+                _clientService.GetConnectedClientIds().Returns(new[] { 1ul });
+
+                _component.Handle(new PrepareGameRequested());
+
+                Assert.That(SpawnedPositions(), Is.EqualTo(new[] { new float2(17.5f, 7.5f) }));
+            }
+            finally
+            {
+                UnityEngine.Object.DestroyImmediate(crate);
+                Physics2D.autoSyncTransforms = autoSyncTransforms;
+            }
+        }
+
+        [Test]
+        public void Handle_DoesNotSpawnWhenAllCandidatesAreBlocked()
+        {
+            var wall = new GameObject("Spawn blocker");
+
+            try
+            {
+                wall.transform.position = new Vector3(20, 15);
+                wall.AddComponent<BoxCollider2D>().size = new Vector2(50, 40);
+                _clientService.GetConnectedClientIds().Returns(new[] { 1ul });
+
+                _component.Handle(new PrepareGameRequested());
+
+                Assert.That(SpawnedPositions(), Is.Empty);
+            }
+            finally
+            {
+                UnityEngine.Object.DestroyImmediate(wall);
             }
         }
 

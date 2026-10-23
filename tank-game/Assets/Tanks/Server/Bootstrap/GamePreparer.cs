@@ -42,10 +42,10 @@ namespace Tanks.Server.Bootstrap
             var settings = GenerateSettings(wallWidth);
 
             using var tiles = GenerateMap(settings, resolution);
-            Physics2D.SyncTransforms();
 
             _crateSpawner.Clear();
             _crateSpawner.Spawn(tiles.Value.AsSpan(), settings.Seed);
+            Physics2D.SyncTransforms();
 
             SpawnPlayers(wallWidth, resolution);
             Behaviour.WaitForPlayers();

@@ -51,6 +51,7 @@ namespace Tanks.Shared.Generation
 
             FillBackground(center);
             FillForeground(tiles.Value.AsSpan());
+            GetComponent<TilemapCollider2D>().ProcessTilemapChanges();
 
             bounds = new Bounds(center, size + math.forward());
             return tiles;
