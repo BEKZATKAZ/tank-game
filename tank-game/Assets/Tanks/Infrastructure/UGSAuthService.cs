@@ -92,13 +92,15 @@ namespace Tanks.Infrastructure
 
         private PlayerProfileResult PostSignIn()
         {
+            string displayName = Service.PlayerName?.Split('#')[0] ?? "";
+
             CurrentProfile.UserId.Value = Service.PlayerId;
-            CurrentProfile.DisplayName.Value = Service.PlayerName;
+            CurrentProfile.DisplayName.Value = displayName;
 
             return new PlayerProfileResult
             {
                 UserId = Service.PlayerId,
-                DisplayName = Service.PlayerName
+                DisplayName = displayName
             };
         }
     }
