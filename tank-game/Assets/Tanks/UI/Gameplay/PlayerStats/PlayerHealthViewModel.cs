@@ -89,7 +89,9 @@ namespace Tanks.UI.Gameplay.PlayerStats
         {
             HealthState state = current.GetBehaviour<IHealthBehaviour>().ServerState.Value;
             OnHealthChanged(state, state);
+
             TankColor.Value = Color.white;
+            _latestAuthoritativeOverlay = state.Current;
         }
 
         private void OnHealthChanged(in HealthState oldState, in HealthState newState)
