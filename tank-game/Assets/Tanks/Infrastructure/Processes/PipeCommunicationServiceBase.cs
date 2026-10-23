@@ -15,26 +15,37 @@ namespace Tanks.Infrastructure.Processes
     public abstract class PipeCommunicationServiceBase<TPipe> : IDisposable
         where TPipe : PipeStream
     {
-        protected PipeCommunicationServiceBase(TPipe pipe)
+        protected PipeCommunicationServiceBase(Func<TPipe> pipeCreation)
         {
-            Pipe = pipe;
-            BaseCancellation = new CancellationTokenSource();
-
-            _reader = new StreamReader(pipe, new UTF8Encoding(false), true, 1024, leaveOpen: true);
-            _writer = new StreamWriter(pipe, new UTF8Encoding(false), 1024, leaveOpen: true);
+            _pipeCreation = pipeCreation;
         }
 
-        protected TPipe Pipe { get; }
-        protected CancellationTokenSource BaseCancellation { get; }
+        protected TPipe Pipe { get; private set; }
+        protected CancellationTokenSource BaseCancellation { get; private set; }
 
-        private readonly StreamReader _reader;
-        private readonly StreamWriter _writer;
+        private readonly Func<TPipe> _pipeCreation;
+        private StreamReader _reader;
+        private StreamWriter _writer;
 
         public void Dispose()
         {
-            BaseCancellation.Cancel();
-            Pipe.Dispose();
-            BaseCancellation.Dispose();
+            BaseCancellation?.Cancel();
+            Pipe?.Dispose();
+            BaseCancellation?.Dispose();
+
+            Pipe = null;
+            BaseCancellation = null;
+        }
+
+        public void Reinitialize()
+        {
+            Dispose();
+
+            Pipe = _pipeCreation();
+            BaseCancellation = new CancellationTokenSource();
+
+            _reader = new StreamReader(Pipe, new UTF8Encoding(false), true, 1024, leaveOpen: true);
+            _writer = new StreamWriter(Pipe, new UTF8Encoding(false), 1024, leaveOpen: true);
         }
 
         public string ToJson<T>(T message)

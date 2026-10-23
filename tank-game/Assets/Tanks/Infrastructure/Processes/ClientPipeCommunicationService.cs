@@ -12,7 +12,7 @@ namespace Tanks.Infrastructure.Processes
         IClientCommunicationService
     {
         public ClientPipeCommunicationService() :
-            base(new NamedPipeClientStream(
+            base(() => new NamedPipeClientStream(
                 ".", "tank-game.pipe", PipeDirection.InOut, PipeOptions.Asynchronous))
         {
 

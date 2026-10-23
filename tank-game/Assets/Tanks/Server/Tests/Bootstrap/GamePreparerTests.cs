@@ -123,12 +123,10 @@ namespace Tanks.Server.Tests.Bootstrap
         [TestCase(true)]
         public void Handle_AvoidsCratesMovedDuringSpawning(bool pooled)
         {
-            bool autoSyncTransforms = Physics2D.autoSyncTransforms;
             var crate = new GameObject("Spawn blocker");
 
             try
             {
-                Physics2D.autoSyncTransforms = false;
                 crate.transform.position = new Vector3(-999, -999);
                 if (pooled) crate.AddComponent<BoxCollider2D>();
                 Physics2D.SyncTransforms();
@@ -153,7 +151,6 @@ namespace Tanks.Server.Tests.Bootstrap
             finally
             {
                 UnityEngine.Object.DestroyImmediate(crate);
-                Physics2D.autoSyncTransforms = autoSyncTransforms;
             }
         }
 

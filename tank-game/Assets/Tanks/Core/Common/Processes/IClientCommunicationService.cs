@@ -5,6 +5,8 @@ namespace Tanks.Core.Common.Processes
 {
     public interface IClientCommunicationService
     {
+        void Reinitialize();
+
         Task<ResultType<TResponse>> SendRequestAsync<TPayload, TResponse>(
             TPayload message, CancellationToken cancellation = default);
 

@@ -12,6 +12,7 @@ using Unity.Netcode;
 using Unity.Netcode.Transports.UTP;
 using Unity.Services.Relay;
 using Unity.Services.Relay.Models;
+using UnityEditor.PackageManager;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using VContainer;
@@ -81,6 +82,7 @@ namespace Tanks.Server.Bootstrap
         {
             try
             {
+                _server.Reinitialize();
                 LoadSceneRequest sceneRequest = await WaitForRequestAsync<LoadSceneRequest>();
 
                 if (sceneRequest.Scene is RequestedServerScene.Playground)

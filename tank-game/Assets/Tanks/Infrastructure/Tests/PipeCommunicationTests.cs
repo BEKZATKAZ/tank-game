@@ -63,6 +63,7 @@ namespace Tanks.Infrastructure.Tests
                 stdout: standalone ? null : OnStdout,
                 stderr: standalone ? null : OnStderr);
 
+            _pipe.Reinitialize();
             using CancellationTokenSource timeout = new CancellationTokenSource(10000);
 
             ResultType<TestData> response = await _pipe
@@ -88,10 +89,13 @@ namespace Tanks.Infrastructure.Tests
                 "--pipe-name tank-game.pipe " +
                 $"--reads \"{_pipe.ToJson(dataToSend).Replace("\"", "\\\"")}\"");
 
+            _pipe.Reinitialize();
             using CancellationTokenSource timeout = new CancellationTokenSource(10000);
 
             ResultType response = await _pipe.SendRequestAsync(dataToSend, timeout.Token);
             Assert.True(response.IsSuccess, $"Request failed: {response.ErrorCode}");
+
+            _pipe.Reinitialize();
         }
 
         private void CompareData(TestData expected, TestData actual)

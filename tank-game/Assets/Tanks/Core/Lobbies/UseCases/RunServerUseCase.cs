@@ -51,6 +51,8 @@ namespace Tanks.Core.Lobbies.UseCases
                 Scene = scene
             };
 
+            _client.Reinitialize();
+
 #if UNITY_EDITOR
             if (Application.isEditor && Application.isPlaying)
             {
