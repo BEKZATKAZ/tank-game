@@ -2,6 +2,7 @@ using Cysharp.Threading.Tasks;
 using NSubstitute;
 using NUnit.Framework;
 using System;
+using System.Threading.Tasks;
 using Tanks.Core;
 using Tanks.Core.Common;
 using Tanks.Core.Common.Scenes;
@@ -108,7 +109,7 @@ namespace Tanks.UI.Tests.Menus
             _runServer.RunAsync().Returns(UniTask.FromResult(Result.Success()));
 
             _lobbies.HostLobbyAsync("Player's lobby", 4)
-                .Returns(UniTask.FromResult(Result.Success(new LobbyState())));
+                .Returns(Task.FromResult(Result.Success(new LobbyState())));
 
             ViewModel.CreateLobby().Forget();
 
@@ -134,8 +135,9 @@ namespace Tanks.UI.Tests.Menus
         public void CreateLobby_HostFailure_ShowsError()
         {
             _runServer.RunAsync().Returns(UniTask.FromResult(Result.Success()));
+
             _lobbies.HostLobbyAsync("My lobby", 4)
-                .Returns(UniTask.FromResult(Result.Failure<LobbyState>("host-failed")));
+                .Returns(Task.FromResult(Result.Failure<LobbyState>("host-failed")));
 
             ViewModel.CreateLobby().Forget();
 

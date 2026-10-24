@@ -31,7 +31,7 @@ namespace Tanks.Core.Tests.Lobbies.UseCases
                     x => x.Name == newName &&
                     x.JoinCode == null &&
                     x.Status == null))
-                .Returns(UniTask.FromResult(Result.Success<LobbyState>(null)));
+                .Returns(Task.FromResult(Result.Success<LobbyState>(null)));
 
             ResultType result = await _useCase.RenameAsync(newName);
             Assert.True(result.IsSuccess);

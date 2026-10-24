@@ -51,7 +51,7 @@ namespace Tanks.UI.Tests.Menus.Lobbies
                 new LobbySearchState { Name = queryName }
             };
 
-            var tcs = new UniTaskCompletionSource<ResultType<IEnumerable<LobbySearchState>>>();
+            var tcs = new TaskCompletionSource<ResultType<IEnumerable<LobbySearchState>>>();
 
             _service.FindLobbiesAsync(queryName).Returns(tcs.Task);
             ViewModel.RefreshAsync().Forget();
@@ -78,7 +78,7 @@ namespace Tanks.UI.Tests.Menus.Lobbies
 
             _service
                 .FindLobbiesAsync(Arg.Any<string>())
-                .Returns(UniTask.FromResult(result));
+                .Returns(Task.FromResult(result));
 
             await ViewModel.RefreshAsync();
             _dialog.Received(1).ShowErrorFromCode(Arg.Any<string>(), errorCode);
@@ -90,7 +90,7 @@ namespace Tanks.UI.Tests.Menus.Lobbies
         {
             MockLocalizationReturn("Menus", "menu.lobby.joining", "Joining lobby");
 
-            var tcs = new UniTaskCompletionSource<ResultType<LobbyState>>();
+            var tcs = new TaskCompletionSource<ResultType<LobbyState>>();
             _service.JoinLobbyAsync(Arg.Any<LobbyId>()).Returns(tcs.Task);
             ViewModel.JoinLobbyAsync(new LobbyId(id)).Forget();
 
@@ -109,7 +109,7 @@ namespace Tanks.UI.Tests.Menus.Lobbies
         {
             _service
                 .JoinLobbyAsync(Arg.Any<LobbyId>())
-                .Returns(UniTask.FromResult(Result.Failure<LobbyState>(errorCode)));
+                .Returns(Task.FromResult(Result.Failure<LobbyState>(errorCode)));
 
             await ViewModel.JoinLobbyAsync(new LobbyId("some_address"));
             _loading.Received(1).End();

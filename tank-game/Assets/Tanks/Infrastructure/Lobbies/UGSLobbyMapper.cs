@@ -18,7 +18,7 @@ namespace Tanks.Infrastructure.Lobbies
 {
     public static class UGSLobbyMapper
     {
-        public static async UniTask<ResultType<LobbyState>> MapAsync(
+        public static async Task<ResultType<LobbyState>> MapAsync(
             Func<Task<Lobby>> task, LobbyState destination, string errorCode = "unknown")
         {
             try
@@ -37,7 +37,7 @@ namespace Tanks.Infrastructure.Lobbies
             }
         }
 
-        public static async UniTask<ResultType<IEnumerable<LobbySearchState>>> MapAsync(
+        public static async Task<ResultType<IEnumerable<LobbySearchState>>> MapAsync(
             Func<Task<QueryResponse>> task)
         {
             try

@@ -41,7 +41,7 @@ namespace Tanks.Core.Tests.Lobbies.UseCases
             _lobbyService
                 .UpdateLobbyAsync(
                     Arg.Is<LobbyUpdateRequest>(x => x.Status == LobbyStatus.PreparingServer))
-                .Returns(UniTask.FromResult(Result.Failure<LobbyState>("lobby-error")));
+                .Returns(Task.FromResult(Result.Failure<LobbyState>("lobby-error")));
 
             ResultType<string> result = await _useCase.PrepareAsync();
 
@@ -56,7 +56,7 @@ namespace Tanks.Core.Tests.Lobbies.UseCases
 
             _lobbyService
                 .UpdateLobbyAsync(Arg.Any<LobbyUpdateRequest>())
-                .Returns(UniTask.FromResult(Result.Success<LobbyState>(null)));
+                .Returns(Task.FromResult(Result.Success<LobbyState>(null)));
 
             ResultType<string> result = await _useCase.PrepareAsync();
 
@@ -86,7 +86,7 @@ namespace Tanks.Core.Tests.Lobbies.UseCases
 
             _lobbyService
                 .UpdateLobbyAsync(Arg.Any<LobbyUpdateRequest>())
-                .Returns(UniTask.FromResult(Result.Success<LobbyState>(null)));
+                .Returns(Task.FromResult(Result.Success<LobbyState>(null)));
 
             ResultType<string> result = await _useCase.PrepareAsync();
 
@@ -107,8 +107,8 @@ namespace Tanks.Core.Tests.Lobbies.UseCases
                 .Returns(_ =>
                 {
                     return ++callCount == 1
-                        ? UniTask.FromResult(Result.Success<LobbyState>(null))
-                        : UniTask.FromResult(Result.Failure<LobbyState>("connecting-error"));
+                        ? Task.FromResult(Result.Success<LobbyState>(null))
+                        : Task.FromResult(Result.Failure<LobbyState>("connecting-error"));
                 });
 
             ResultType<string> result = await _useCase.PrepareAsync();

@@ -13,6 +13,7 @@ using Tanks.UI.Menus;
 using Tanks.UI.Menus.Dialogs;
 using Tanks.UI.Menus.Loading;
 using Tanks.UI.Menus.Lobbies;
+using System.Threading.Tasks;
 
 namespace Tanks.UI.Tests.Menus.Lobbies
 {
@@ -124,14 +125,18 @@ namespace Tanks.UI.Tests.Menus.Lobbies
         public void ToggleReady_DisablesUntilResponse_ReportsFailure(bool success)
         {
             EnterLobby(false);
-            var task = new UniTaskCompletionSource<ResultType>();
+            var task = new TaskCompletionSource<ResultType>();
+
             _service.SetReadyAsync(true).Returns(task.Task);
             ViewModel.ToggleReadyAsync().Forget();
             ViewModel.ToggleReadyAsync().Forget();
+
             Assert.That(ViewModel.CanToggleReady.Value, Is.False);
             _service.Received(1).SetReadyAsync(true);
+
             task.TrySetResult(success ? Result.Success() : Result.Failure("ready-error"));
             Assert.That(ViewModel.CanToggleReady.Value, Is.True);
+
             if (success == false) _dialog.Received(1).ShowErrorFromCode("error.lobby", "ready-error");
         }
 
@@ -140,8 +145,10 @@ namespace Tanks.UI.Tests.Menus.Lobbies
         {
             EnterLobby(false);
             SetPlayer("test-id", true);
-            _service.SetReadyAsync(false).Returns(UniTask.FromResult(Result.Success()));
+
+            _service.SetReadyAsync(false).Returns(Task.FromResult(Result.Success()));
             ViewModel.ToggleReadyAsync().Forget();
+
             _service.Received(1).SetReadyAsync(false);
         }
 
@@ -159,17 +166,32 @@ namespace Tanks.UI.Tests.Menus.Lobbies
         public void FailedStartup_RestoresWaiting_RequiresHostToUnreadyBeforeRetry()
         {
             EnterLobby();
-            _prepareServer.PrepareAsync().Returns(UniTask.FromResult(Result.Failure<string>("start-error")));
-            var restored = UniTask.FromResult(Result.Success(_service.CurrentLobbyState));
+
+            _prepareServer
+                .PrepareAsync()
+                .Returns(UniTask.FromResult(Result.Failure<string>("start-error")));
+            
+            var restored = Task.FromResult(Result.Success(_service.CurrentLobbyState));
             _service.UpdateLobbyAsync(Arg.Any<LobbyUpdateRequest>()).Returns(restored);
+
             SetPlayer("test-id", true);
             _dialog.Received(1).ShowErrorFromCode("error.lobby", "start-error");
-            Assert.That(_service.CurrentLobbyState.Status.Value, Is.EqualTo(LobbyStatus.WaitingForPlayers));
-            _service.Received(1).UpdateLobbyAsync(Arg.Is<LobbyUpdateRequest>(x => x.Status == LobbyStatus.WaitingForPlayers));
+
+            Assert.That(
+                _service.CurrentLobbyState.Status.Value,
+                Is.EqualTo(LobbyStatus.WaitingForPlayers));
+            
+            _service
+                .Received(1)
+                .UpdateLobbyAsync(Arg.Is<LobbyUpdateRequest>(
+                    x => x.Status == LobbyStatus.WaitingForPlayers));
+            
             _service.CurrentLobbyState.Players.ForceRefresh();
             _prepareServer.Received(1).PrepareAsync();
+
             SetPlayer("test-id", false);
             SetPlayer("test-id", true);
+
             _prepareServer.Received(2).PrepareAsync();
         }
 
@@ -188,7 +210,7 @@ namespace Tanks.UI.Tests.Menus.Lobbies
         [TestCase(false)]
         public void Leave_ConfirmationYes(bool isSuccess)
         {
-            var task = new UniTaskCompletionSource<ResultType>();
+            var task = new TaskCompletionSource<ResultType>();
             _service.LeaveLobbyAsync().Returns(task.Task);
 
             // Clicks yes

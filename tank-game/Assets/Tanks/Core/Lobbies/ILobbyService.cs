@@ -1,6 +1,6 @@
-﻿using Cysharp.Threading.Tasks;
-using System;
+﻿using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using Tanks.Core.Lobbies.Payloads;
 
 namespace Tanks.Core.Lobbies
@@ -13,13 +13,13 @@ namespace Tanks.Core.Lobbies
 
         LobbyState CurrentLobbyState { get; }
 
-        UniTask<ResultType<LobbyState>> HostLobbyAsync(string name, uint maxPlayers);
-        UniTask<ResultType<LobbyState>> UpdateLobbyAsync(LobbyUpdateRequest options);
-        UniTask<ResultType> LeaveLobbyAsync();
-        UniTask<ResultType> SetReadyAsync(bool ready);
+        Task<ResultType<LobbyState>> HostLobbyAsync(string name, uint maxPlayers);
+        Task<ResultType<LobbyState>> UpdateLobbyAsync(LobbyUpdateRequest options);
+        Task<ResultType> LeaveLobbyAsync();
+        Task<ResultType> SetReadyAsync(bool ready);
 
-        UniTask<ResultType<IEnumerable<LobbySearchState>>> FindLobbiesAsync(string name = null);
-        UniTask<ResultType<LobbyState>> JoinLobbyAsync(LobbyAddress address);
-        UniTask<ResultType<LobbyState>> JoinLobbyAsync(LobbyId id);
+        Task<ResultType<IEnumerable<LobbySearchState>>> FindLobbiesAsync(string name = null);
+        Task<ResultType<LobbyState>> JoinLobbyAsync(LobbyAddress address);
+        Task<ResultType<LobbyState>> JoinLobbyAsync(LobbyId id);
     }
 }

@@ -1,5 +1,4 @@
-﻿using Cysharp.Threading.Tasks;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Tanks.Core;
@@ -33,7 +32,7 @@ namespace Tanks.Infrastructure.Lobbies
         private ILobbyEvents _lobbyEvents;
         private Lobby _lobby;
 
-        private async UniTask SubscribeToEventsAsync()
+        private async Task SubscribeToEventsAsync()
         {
             LobbyId id = CurrentLobbyState.Id.Value;
 
@@ -45,7 +44,7 @@ namespace Tanks.Infrastructure.Lobbies
             _lobbyEvents = await Service.SubscribeToLobbyEventsAsync(id.Value, callbacks);
         }
 
-        private async UniTask UnsubscribeFromEventsAsync()
+        private async Task UnsubscribeFromEventsAsync()
         {
             if (_lobbyEvents is null) return;
             await _lobbyEvents.UnsubscribeAsync();
@@ -69,7 +68,8 @@ namespace Tanks.Infrastructure.Lobbies
             }
 
             if (_lobby == null) return;
-            var previous = new Dictionary<string, LobbyPlayerState>(CurrentLobbyState.Players.Value);
+
+            Dictionary<string, LobbyPlayerState> previous = new(CurrentLobbyState.Players.Value);
             changes.ApplyToLobby(_lobby);
             UGSLobbyMapper.MapLobby(_lobby, CurrentLobbyState);
 
@@ -80,13 +80,15 @@ namespace Tanks.Infrastructure.Lobbies
 
             foreach (var player in previous)
             {
-                if (CurrentLobbyState.Players.Value.ContainsKey(player.Key) == false) PlayerLeft?.Invoke(player.Value);
+                if (CurrentLobbyState.Players.Value.ContainsKey(player.Key)) continue;
+                PlayerLeft?.Invoke(player.Value);
             }
         }
 
         private async Task<Lobby> RememberAsync(Task<Lobby> request)
         {
             Lobby lobby = await request;
+
             if (_lobby == null || _lobby.Id != lobby.Id || lobby.Version >= _lobby.Version)
             {
                 _lobby = lobby;
@@ -95,10 +97,11 @@ namespace Tanks.Infrastructure.Lobbies
             return _lobby;
         }
 
-        public async UniTask<ResultType> SetReadyAsync(bool ready)
+        public async Task<ResultType> SetReadyAsync(bool ready)
         {
             LobbyId lobbyId = CurrentLobbyState.Id.Value;
             string userId = _auth.CurrentProfile.UserId.Value;
+            
             if (lobbyId.Value == null || CurrentLobbyState.Status.Value != LobbyStatus.WaitingForPlayers)
             {
                 return Result.Failure("failed-to-update");
@@ -125,7 +128,7 @@ namespace Tanks.Infrastructure.Lobbies
             });
         }
 
-        public UniTask<ResultType<IEnumerable<LobbySearchState>>> FindLobbiesAsync(string name = null)
+        public Task<ResultType<IEnumerable<LobbySearchState>>> FindLobbiesAsync(string name = null)
         {
             return UGSLobbyMapper.MapAsync(() => Service.QueryLobbiesAsync(new QueryLobbiesOptions()
             {
@@ -140,7 +143,7 @@ namespace Tanks.Infrastructure.Lobbies
             }));
         }
 
-        public async UniTask<ResultType<LobbyState>> HostLobbyAsync(string name, uint maxPlayers)
+        public async Task<ResultType<LobbyState>> HostLobbyAsync(string name, uint maxPlayers)
         {
             var result = await UGSLobbyMapper.MapAsync(
                 () => RememberAsync(Service.CreateLobbyAsync(name, (int)maxPlayers, new()
@@ -149,12 +152,13 @@ namespace Tanks.Infrastructure.Lobbies
                 })), CurrentLobbyState, errorCode: "failed-to-create");
 
             await SubscribeToEventsAsync();
-            HeartbeatAsync().Forget();
+
+            _ = Task.Run(HeartbeatAsync);
 
             return result;
         }
 
-        public async UniTask<ResultType<LobbyState>> JoinLobbyAsync(LobbyAddress address)
+        public async Task<ResultType<LobbyState>> JoinLobbyAsync(LobbyAddress address)
         {
             var result = await UGSLobbyMapper.MapAsync(
                 () => RememberAsync(Service.JoinLobbyByCodeAsync(address.Value, new()
@@ -166,7 +170,7 @@ namespace Tanks.Infrastructure.Lobbies
             return result;
         }
 
-        public async UniTask<ResultType<LobbyState>> JoinLobbyAsync(LobbyId id)
+        public async Task<ResultType<LobbyState>> JoinLobbyAsync(LobbyId id)
         {
             var result = await UGSLobbyMapper.MapAsync(
                 () => RememberAsync(Service.JoinLobbyByIdAsync(id.Value, new()
@@ -178,7 +182,7 @@ namespace Tanks.Infrastructure.Lobbies
             return result;
         }
 
-        public UniTask<ResultType<LobbyState>> UpdateLobbyAsync(LobbyUpdateRequest options)
+        public Task<ResultType<LobbyState>> UpdateLobbyAsync(LobbyUpdateRequest options)
         {
             LobbyId lobbyId = CurrentLobbyState.Id.Value;
 
@@ -189,7 +193,7 @@ namespace Tanks.Infrastructure.Lobbies
             })), CurrentLobbyState, errorCode: "failed-to-update");
         }
 
-        public async UniTask<ResultType> LeaveLobbyAsync()
+        public async Task<ResultType> LeaveLobbyAsync()
         {
             try
             {
@@ -207,6 +211,7 @@ namespace Tanks.Infrastructure.Lobbies
 
                 await UnsubscribeFromEventsAsync();
                 CurrentLobbyState.Id.Value = default;
+
                 _lobby = null;
                 CurrentLobbyState.Players.Value = new Dictionary<string, LobbyPlayerState>();
 
@@ -219,17 +224,17 @@ namespace Tanks.Infrastructure.Lobbies
             }
         }
 
-        private async UniTaskVoid HeartbeatAsync()
+        private async Task HeartbeatAsync()
         {
             LobbyId currentId = CurrentLobbyState.Id.Value;
 
             while (currentId.Value == CurrentLobbyState.Id.Value.Value)
             {
-                await UniTask.Delay(15000);
-
+                await Task.Delay(15000);
                 if (currentId.Value != CurrentLobbyState.Id.Value.Value) return;
 
                 await Service.SendHeartbeatPingAsync(currentId.Value);
+                Debug.Log("Lobby heartbeat");
             }
         }
     }

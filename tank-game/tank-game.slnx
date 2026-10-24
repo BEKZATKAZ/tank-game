@@ -8,6 +8,7 @@
   <Project Path="Tanks.Shared.csproj" />
   <Project Path="Tanks.Localization.csproj" />
   <Project Path="Tanks.Shared.Tests.csproj" />
+  <Project Path="Tanks.Infrastructure.Tests.csproj" />
   <Project Path="Tanks.Editor.csproj" />
   <Project Path="FMODUnityEditor.csproj" />
   <Project Path="FMODUnity.csproj" />
@@ -22,7 +23,6 @@
   <Project Path="Tanks.Client.Tests.Runtime.csproj" />
   <Project Path="Tanks.Infrastructure.csproj" />
   <Project Path="Tanks.Server.Tests.Runtime.csproj" />
-  <Project Path="Tanks.Infrastructure.Tests.csproj" />
   <Project Path="Tanks.Core.Tests.csproj" />
   <Project Path="CFXRRuntime.csproj" />
   <Project Path="FMODUnityResonanceEditor.csproj" />
