@@ -1,5 +1,4 @@
-﻿using Tanks.Shared;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.UIElements;
 
 namespace Tanks.UI.Gameplay.Timer
@@ -8,6 +7,7 @@ namespace Tanks.UI.Gameplay.Timer
     {
         private VisualElement _root;
         private Label _counter;
+        private Label _label;
 
         protected override VisualElement GetRootElement() => _root;
 
@@ -15,11 +15,13 @@ namespace Tanks.UI.Gameplay.Timer
         {
             _root = root.Q("Timer");
             _counter = _root.Q<Label>("TimerCounter");
+            _label = _root.Q<Label>("TimerText");
         }
 
         protected override void Bind(TimerViewModel viewModel)
         {
-            viewModel.Seconds.Bind(UpdateCounterText);
+            viewModel.Seconds.Bind(x => _counter.text = x);
+            viewModel.Label.Bind(x => _label.text = x);
             viewModel.CounterColor.Bind(x => _counter.style.color = x);
         }
 
@@ -27,12 +29,6 @@ namespace Tanks.UI.Gameplay.Timer
         {
             base.Update();
             ViewModel?.Tick(Time.deltaTime);
-        }
-
-        private void UpdateCounterText(int number)
-        {
-            if (number <= 0) _counter.text = "--";
-            else _counter.text = number.ToString("D2");
         }
     }
 }

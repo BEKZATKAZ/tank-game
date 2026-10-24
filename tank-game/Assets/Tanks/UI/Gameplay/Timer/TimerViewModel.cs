@@ -1,6 +1,7 @@
 using System;
 using Tanks.Client.Bootstrap;
 using Tanks.Core.Lobbies.Sessions;
+using Tanks.Localization;
 using Tanks.Shared;
 using Tanks.Shared.Messaging;
 using Tanks.Utils;
@@ -15,20 +16,26 @@ namespace Tanks.UI.Gameplay.Timer
         IMessageHandler<DangerZoneStarted>,
         IDisposable
     {
-        public TimerViewModel(IMessageBus bus, ISessionSettingsService settings)
+        public TimerViewModel(
+            IMessageBus bus,
+            ISessionSettingsService settings,
+            ILocalizationDatabase localization)
         {
             _bus = bus;
             _settings = settings;
+            _localization = localization;
 
             _bus.RegisterHandler<GameStartedFromClient>(this);
             _bus.RegisterHandler<DangerZoneStarted>(this);
         }
 
-        public BindableProperty<int> Seconds { get; } = new();
+        public BindableProperty<string> Seconds { get; } = new();
+        public BindableProperty<string> Label { get; } = new();
         public BindableProperty<Color> CounterColor { get; } = new();
 
         private readonly IMessageBus _bus;
         private readonly ISessionSettingsService _settings;
+        private readonly ILocalizationDatabase _localization;
 
         private float _seconds;
         private float _duration;
@@ -48,8 +55,11 @@ namespace Tanks.UI.Gameplay.Timer
             _duration = _settings.GetSettings().DangerZone.DurationSeconds;
             _seconds = _duration;
 
-            Seconds.Value = (int)math.ceil(_seconds);
+            Seconds.Value = ((int)math.ceil(_seconds)).ToString();
             CounterColor.Value = Color.orangeRed;
+
+            _localization.TryGet("Gameplay", "gameplay.timer.during-zone", out var zone);
+            Label.Value = zone?.Get();
         }
 
         public void Handle(GameStartedFromClient message, IMessageSender sender)
@@ -58,8 +68,11 @@ namespace Tanks.UI.Gameplay.Timer
             _seconds = _duration + message.AdaptedStartDelaySeconds;
             _isDangerZoneStarted = false;
 
-            Seconds.Value = -1;
+            Seconds.Value = "";
             CounterColor.Value = new Color(0.95f, 0.95f, 0.95f);
+
+            _localization.TryGet("Gameplay", "gameplay.timer.before-zone", out var zone);
+            Label.Value = zone?.Get();
         }
 
         public void Tick(float deltaTime)
@@ -67,15 +80,31 @@ namespace Tanks.UI.Gameplay.Timer
             if (_seconds <= 0) return;
             _seconds = math.max(_seconds - deltaTime, 0);
 
-            if (_seconds > _duration) return;
-            int ceiled = (int)math.ceil(_seconds);
+            if (_seconds > _duration)
+            {
+                Label.Value = "";
+                return;
+            }
+            else if (Label.Value == "")
+            {
+                _localization.TryGet("Gameplay", "gameplay.timer.before-zone", out var before);
+                Label.Value = before?.Get();
+            }
 
-            if (Seconds.Value == ceiled) return;
-            Seconds.Value = ceiled;
+            Seconds.Value = ((int)math.ceil(_seconds)).ToString();
 
-            // Predict danger zone start
-            if (_isDangerZoneStarted || _seconds > 0) return;
-            Handle(new DangerZoneStarted(), null);
+            if (_seconds > 0) return;
+            _seconds = -1;
+
+            if (_isDangerZoneStarted == false)
+            {
+                Handle(new DangerZoneStarted(), null);
+                return;
+            }
+
+            _localization.TryGet("Gameplay", "gameplay.timer.after-zone", out var after);
+            Seconds.Value = after?.Get();
+            Label.Value = "";
         }
     }
 }

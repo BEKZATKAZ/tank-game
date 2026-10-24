@@ -162,12 +162,20 @@
 .timer {
     position: absolute;
     align-self: center;
+    text-shadow: 0 0 10px rgba(0, 0, 0, 0.95);
+    -unity-text-align: middle-center;
 }
 
 .timer-counter {
     font-size: 64px;
     letter-spacing: 5px;
     -unity-font-definition: var(--font-black);
+}
+
+.timer-text {
+    font-size: 20px;
+    color: var(--text-secondary-color);
+    -unity-font-style: bold;
 }
 
 .game-stats {

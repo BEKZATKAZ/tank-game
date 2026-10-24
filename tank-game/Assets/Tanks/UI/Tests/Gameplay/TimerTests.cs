@@ -2,6 +2,7 @@
 using NUnit.Framework;
 using Tanks.Client.Bootstrap;
 using Tanks.Core.Lobbies.Sessions;
+using Tanks.Localization;
 using Tanks.Shared;
 using Tanks.Shared.Messaging;
 using Tanks.UI.Gameplay.Timer;
@@ -13,12 +14,14 @@ namespace Tanks.UI.Tests.Gameplay
     {
         private IMessageBus _bus;
         private ISessionSettingsService _settings;
+        private ILocalizationDatabase _localization;
 
         protected override TimerViewModel CreateViewModel()
         {
             _bus = Substitute.For<IMessageBus>();
             _settings = Substitute.For<ISessionSettingsService>();
-            return new TimerViewModel(_bus, _settings);
+            _localization = Substitute.For<ILocalizationDatabase>();
+            return new TimerViewModel(_bus, _settings, _localization);
         }
 
         [Test]
@@ -38,7 +41,7 @@ namespace Tanks.UI.Tests.Gameplay
             ViewModel.Handle(new DangerZoneStarted(), null);
             ViewModel.Tick(deltaTime: 0.1f);
 
-            Assert.AreEqual(20, ViewModel.Seconds.Value,
+            Assert.AreEqual("20", ViewModel.Seconds.Value,
                 "Counter should reset as the danger zone starts");
 
             Assert.AreNotEqual(color, ViewModel.CounterColor.Value,
@@ -63,7 +66,7 @@ namespace Tanks.UI.Tests.Gameplay
             for (int second = dangerZoneDelay; second >= 1; second--)
             {
                 ViewModel.Tick(deltaTime: 1);
-                Assert.AreEqual(second, ViewModel.Seconds.Value, "Counter dismatch");
+                Assert.AreEqual(second.ToString(), ViewModel.Seconds.Value, "Counter dismatch");
             }
 
             Assert.AreEqual(color, ViewModel.CounterColor.Value,
@@ -71,7 +74,7 @@ namespace Tanks.UI.Tests.Gameplay
 
             ViewModel.Tick(deltaTime: 2.5f);
 
-            Assert.AreEqual(20, ViewModel.Seconds.Value,
+            Assert.AreEqual("20", ViewModel.Seconds.Value,
                 "Counter should reset as the danger zone starts");
 
             Assert.AreNotEqual(color, ViewModel.CounterColor.Value,

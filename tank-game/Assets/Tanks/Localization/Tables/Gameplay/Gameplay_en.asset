@@ -45,6 +45,18 @@ MonoBehaviour:
     m_Localized: DEFEAT
     m_Metadata:
       m_Items: []
+  - m_Id: 18358814057652224
+    m_Localized: BEFORE ZONE STARTS
+    m_Metadata:
+      m_Items: []
+  - m_Id: 18358814103789568
+    m_Localized: UNTIL ZONE COLLAPES
+    m_Metadata:
+      m_Items: []
+  - m_Id: 18358814103789569
+    m_Localized: SURVIVE
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:

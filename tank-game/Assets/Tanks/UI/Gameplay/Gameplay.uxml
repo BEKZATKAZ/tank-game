@@ -31,6 +31,7 @@
     <ui:VisualElement name="Killfeed" picking-mode="Ignore" class="killfeed"/>
     <ui:VisualElement name="Timer" class="timer" style="flex-grow: 1;">
         <ui:Label text="45" name="TimerCounter" class="timer-counter"/>
+        <ui:Label text="BEFORE ZONE STARTS" name="TimerText" class="timer-text"/>
     </ui:VisualElement>
     <Tanks.UI.Gameplay.ItemList.ItemListElement name="ItemList"/>
     <ui:VisualElement name="ItemDescriptionContainer" class="item-description" style="border-left-color: rgb(0, 255, 255); border-right-color: rgb(0, 255, 255); border-top-color: rgb(0, 255, 255); border-bottom-color: rgb(0, 255, 255);">

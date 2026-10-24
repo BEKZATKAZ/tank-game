@@ -39,6 +39,18 @@ MonoBehaviour:
     m_Key: gameplay.defeat
     m_Metadata:
       m_Items: []
+  - m_Id: 18358814057652224
+    m_Key: gameplay.timer.before-zone
+    m_Metadata:
+      m_Items: []
+  - m_Id: 18358814103789568
+    m_Key: gameplay.timer.during-zone
+    m_Metadata:
+      m_Items: []
+  - m_Id: 18358814103789569
+    m_Key: gameplay.timer.after-zone
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:

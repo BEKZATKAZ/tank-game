@@ -45,6 +45,18 @@ MonoBehaviour:
     m_Localized: "D\xC9FAITE"
     m_Metadata:
       m_Items: []
+  - m_Id: 18358814057652224
+    m_Localized: "AVANT LE D\xC9BUT DE LA ZONE"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 18358814103789568
+    m_Localized: AVANT L'EFFONDREMENT DE LA ZONE
+    m_Metadata:
+      m_Items: []
+  - m_Id: 18358814103789569
+    m_Localized: SURVIVRE
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:
