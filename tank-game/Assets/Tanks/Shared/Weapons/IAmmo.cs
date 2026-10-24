@@ -46,10 +46,12 @@ namespace Tanks.Shared.Weapons
         public RegeneratingAmmo(IAmmoConfig config) : base(config.DefaultAmount)
         {
             _config = config;
+            _regenerationStartAmount = Current;
         }
 
         private readonly IAmmoConfig _config;
         private PositiveFloatOrZero _regenerationElapsed;
+        private ushort _regenerationStartAmount;
 
         public override void Tick(float deltaTime)
         {
@@ -62,16 +64,15 @@ namespace Tanks.Shared.Weapons
             float regenTime = _regenerationElapsed - _config.RegenerationDelay;
             float alpha = math.saturate(regenTime / _config.RegenerationDuration);
 
-            ushort missing = (ushort)(_config.MaxAmount - Current);
-            Current += (ushort)(missing * alpha);
-
-            if (Current >= _config.MaxAmount) Current = _config.MaxAmount;
+            Current = (ushort)math.min(_config.MaxAmount,
+                _regenerationStartAmount + _config.MaxAmount * alpha);
         }
 
         public override void Consume(ushort amount = 1)
         {
             base.Consume(amount);
             _regenerationElapsed = 0;
+            _regenerationStartAmount = Current;
         }
     }
 

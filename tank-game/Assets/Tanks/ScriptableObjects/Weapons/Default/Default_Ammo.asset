@@ -15,5 +15,5 @@ MonoBehaviour:
   _type: 1
   _defaultAmount: 10
   _maxAmount: 10
-  _regenerationDelay: 2
-  _regenerationDuration: 5
+  _regenerationDelay: 2.2
+  _regenerationDuration: 1
