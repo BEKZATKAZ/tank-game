@@ -6209,6 +6209,7 @@ GameObject:
   - component: {fileID: 1530439011}
   - component: {fileID: 1530439005}
   - component: {fileID: 1530439012}
+  - component: {fileID: 1530439014}
   - component: {fileID: 1530439013}
   m_Layer: 0
   m_Name: Gameplay UI
@@ -6257,6 +6258,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: de8349d95eb4481280ea619ea6d00e3d, type: 3}
   m_Name:
   m_EditorClassIdentifier: Tanks.UI::Tanks.UI.Gameplay.Killfeed.KillfeedView
+  _showOnPlay: 1
+--- !u!114 &1530439014
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1530439003}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f2d0dfaf331d4e3799c95a3f4219d92b, type: 3}
+  m_Name:
+  m_EditorClassIdentifier: Tanks.UI::Tanks.UI.Gameplay.PickupFeed.PickupFeedView
   _showOnPlay: 1
 --- !u!114 &1530439005
 MonoBehaviour:

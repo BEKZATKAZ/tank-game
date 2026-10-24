@@ -15,6 +15,10 @@ MonoBehaviour:
   m_TableCollectionName: Items
   m_TableCollectionNameGuidString: 72df8041cb1f65b40958c98981ef1561
   m_Entries:
+  - m_Id: 27924629891276801
+    m_Key: item.picked-up
+    m_Metadata:
+      m_Items: []
   - m_Id: 75812378730496
     m_Key: item.tier.uncommon
     m_Metadata:

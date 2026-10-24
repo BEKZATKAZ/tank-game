@@ -229,6 +229,10 @@ MonoBehaviour:
     m_Localized: "Les autres gu\xE9rissent quand vous tirez, mais vous tirez plus vite."
     m_Metadata:
       m_Items: []
+  - m_Id: 27924629891276801
+    m_Localized: "a ramassé"
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:

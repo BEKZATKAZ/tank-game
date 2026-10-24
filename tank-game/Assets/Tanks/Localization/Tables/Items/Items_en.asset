@@ -229,6 +229,10 @@ MonoBehaviour:
     m_Metadata:
       m_Items:
       - rid: 937747718553469026
+  - m_Id: 27924629891276801
+    m_Localized: "picked up"
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:

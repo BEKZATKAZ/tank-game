@@ -347,3 +347,33 @@
     background-color: var(--text-color);
     opacity: 0;
 }
+
+.pickup-feed {
+    position: absolute;
+    bottom: 40px;
+    right: 40px;
+    max-width: 50%;
+    align-items: flex-end;
+    overflow: visible;
+}
+
+.pickup-feed__entry {
+    border-width: 2px;
+    max-width: 100%;
+    margin-top: 8px;
+    margin-bottom: 0;
+}
+
+.pickup-feed__text {
+    flex-shrink: 1;
+    text-overflow: ellipsis;
+    -unity-text-align: middle-left;
+}
+
+.pickup-feed__icon {
+    width: 28px;
+    height: 28px;
+    flex-shrink: 0;
+    margin-left: 12px;
+    -unity-background-scale-mode: scale-to-fit;
+}
