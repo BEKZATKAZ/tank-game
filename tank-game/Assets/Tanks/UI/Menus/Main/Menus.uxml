@@ -84,22 +84,22 @@
                             <UnityEngine.Localization.LocalizedString property="Choices" table="GUID:34510603f8b6d1a44b1b2ffa9aa551c9" entry="Id(3701799150641152)"/>
                         </Bindings>
                     </Tanks.UI.Menus.Settings.Elements.SettingDropdown>
-                    <Tanks.UI.Menus.Settings.Elements.SliderSetting name="MasterVolume" type="MasterVolume">
+                    <Tanks.UI.Menus.Settings.Elements.SliderSetting name="MasterVolume" type="MasterVolume" enable-instant-preview="true">
                         <Bindings>
                             <UnityEngine.Localization.LocalizedString property="Label" table="GUID:34510603f8b6d1a44b1b2ffa9aa551c9" entry="Id(3337205144051712)"/>
                         </Bindings>
                     </Tanks.UI.Menus.Settings.Elements.SliderSetting>
-                    <Tanks.UI.Menus.Settings.Elements.SliderSetting name="MusicVolume" type="MusicVolume">
+                    <Tanks.UI.Menus.Settings.Elements.SliderSetting name="MusicVolume" type="MusicVolume" enable-instant-preview="true">
                         <Bindings>
                             <UnityEngine.Localization.LocalizedString property="Label" table="GUID:34510603f8b6d1a44b1b2ffa9aa551c9" entry="Id(3337490075705344)"/>
                         </Bindings>
                     </Tanks.UI.Menus.Settings.Elements.SliderSetting>
-                    <Tanks.UI.Menus.Settings.Elements.SliderSetting name="SFXVolume" type="SFXVolume">
+                    <Tanks.UI.Menus.Settings.Elements.SliderSetting name="SFXVolume" type="SFXVolume" enable-instant-preview="true">
                         <Bindings>
                             <UnityEngine.Localization.LocalizedString property="Label" table="GUID:34510603f8b6d1a44b1b2ffa9aa551c9" entry="Id(3337645382393856)"/>
                         </Bindings>
                     </Tanks.UI.Menus.Settings.Elements.SliderSetting>
-                    <Tanks.UI.Menus.Settings.Elements.SliderSetting name="UIVolume" type="UIVolume">
+                    <Tanks.UI.Menus.Settings.Elements.SliderSetting name="UIVolume" type="UIVolume" enable-instant-preview="true">
                         <Bindings>
                             <UnityEngine.Localization.LocalizedString property="Label" table="GUID:34510603f8b6d1a44b1b2ffa9aa551c9" entry="Id(3337773761650688)"/>
                         </Bindings>

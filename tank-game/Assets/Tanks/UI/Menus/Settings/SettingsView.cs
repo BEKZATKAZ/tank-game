@@ -43,6 +43,8 @@ namespace Tanks.UI.Menus.Settings
             {
                 viewModel.SetBindTarget(setting.Type);
                 viewModel.Bind(setting.SetValueWithoutNotify);
+
+                setting.Previewed += viewModel.PreviewChanges;
                 setting.ValueChanged += viewModel.Write;
             }
         }

@@ -10,7 +10,9 @@ namespace Tanks.Core.Settings
         void Initialize();
         void Write(PlayerSetting type, int value);
 
+        void PreviewChanges(PlayerSetting setting, int newValue);
         void RevertChanges();
+
         void ResetToDefaults();
         void ApplyChanges();
     }

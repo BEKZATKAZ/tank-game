@@ -13,9 +13,15 @@ namespace Tanks.UI.Menus.Settings.Elements
             AddToClassList("setting");
         }
 
+        public event Action<PlayerSetting, int> Previewed;
+
         [UxmlAttribute]
         [CreateProperty]
         public PlayerSetting Type { get; set; }
+
+        [UxmlAttribute]
+        [CreateProperty]
+        public bool EnableInstantPreview { get; set; }
 
         [UxmlAttribute]
         [CreateProperty]
@@ -67,6 +73,7 @@ namespace Tanks.UI.Menus.Settings.Elements
         protected virtual void OnValueChanged(int newValue)
         {
             NotifyPropertyChanged(nameof(Value));
+            if (EnableInstantPreview) Previewed?.Invoke(Type, newValue);
         }
     }
 }

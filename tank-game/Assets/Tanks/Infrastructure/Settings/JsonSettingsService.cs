@@ -21,6 +21,7 @@ namespace Tanks.Infrastructure.Settings
             .Combine(Application.persistentDataPath, "settings.json");
 
         private readonly ISettingsLoader _loader;
+        private readonly Dictionary<PlayerSetting, int> _oldValues = new();
         private readonly Dictionary<PlayerSetting, int> _newChanges = new();
         private readonly Dictionary<PlayerSetting, BindableProperty<int>> _settings = new();
 
@@ -28,13 +29,31 @@ namespace Tanks.Infrastructure.Settings
 
         public void RevertChanges()
         {
-            _newChanges.Clear();
-
-            foreach (BindableProperty<int> setting in _settings.Values)
+            foreach (var newChange in _newChanges.ToDictionary(k => k.Key, v => v.Value))
             {
-                // Mimics reset
-                setting.ForceRefresh();
+                if (_oldValues.TryGetValue(newChange.Key, out int oldValue) == false)
+                {
+                    oldValue = _settings[newChange.Key].Value;
+                }
+
+                int newValue = newChange.Value;
+
+                if (oldValue == newValue)
+                {
+                    // Mimics reset
+                    _settings[newChange.Key].ForceRefresh();
+                    continue;
+                }
+
+                _settings[newChange.Key].Value = oldValue;
             }
+        }
+
+        public void PreviewChanges(PlayerSetting setting, int newValue)
+        {
+            _oldValues.TryAdd(setting, _settings[setting].Value);
+            _newChanges[setting] = newValue;
+            _settings[setting].Value = newValue;
         }
 
         public void Bind(PlayerSetting type, Action<int> callback)
@@ -51,14 +70,20 @@ namespace Tanks.Infrastructure.Settings
         {
             Dictionary<PlayerSetting, int> result = _loader.Load(FilePath);
 
-            if (_settings is null || _settings.Count == 0)
+            if (_settings.Count == 0)
             {
-                foreach (var setting in result) _settings[setting.Key] = new(setting.Value);
+                foreach (var setting in result)
+                {
+                    _settings[setting.Key] = new BindableProperty<int>(setting.Value);
+                    _oldValues[setting.Key] = setting.Value;
+                }
+
                 return;
             }
 
             foreach (var setting in result)
             {
+                _oldValues[setting.Key] = setting.Value;
                 _settings[setting.Key].Value = setting.Value;
             }
         }
@@ -71,7 +96,12 @@ namespace Tanks.Infrastructure.Settings
 
         public void ApplyChanges()
         {
-            foreach (var setting in _newChanges) _settings[setting.Key].Value = setting.Value;
+            foreach (var setting in _newChanges)
+            {
+                _settings[setting.Key].Value = setting.Value;
+                _oldValues[setting.Key] = setting.Value;
+            }
+
             _newChanges.Clear();
 
             var result = _settings.Select(x => KeyValuePair.Create(x.Key, x.Value.Value));

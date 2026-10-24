@@ -22,6 +22,11 @@ namespace Tanks.UI.Menus.Settings
             _targetSetting = targetSetting;
         }
 
+        public void PreviewChanges(PlayerSetting setting, int newValue)
+        {
+            _service.PreviewChanges(setting, newValue);
+        }
+
         public void Bind(Action<int> callback)
         {
             _service.Bind(_targetSetting, callback);
