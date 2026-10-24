@@ -4,6 +4,7 @@ using Tanks.Shared.Entities.Health;
 using Tanks.Shared.Items;
 using Tanks.Shared.Items.Behaviours;
 using Tanks.Shared.Teams;
+using Unity.Mathematics;
 using UnityEngine;
 
 namespace Tanks.Server.Items.Behaviours.OnPickup
@@ -33,12 +34,22 @@ namespace Tanks.Server.Items.Behaviours.OnPickup
 
             foreach (IEntityBehaviour player in alivePlayers)
             {
-                if (Random.Range(0, count++) > 0) continue;
+                if (UnityEngine.Random.Range(0, count++) > 0) continue;
                 chosenPlayer = player;
             }
 
             uint damage = (uint)Config.GetStat("damage").Value;
             HealthEventId eventId = HealthEventId.Create(GetType(), Time.time);
+
+            int currentHealth = chosenPlayer
+                .GetBehaviour<IHealthBehaviour>().ServerState.Value.Current;
+
+            if (currentHealth <= 1) return;
+
+            int remaining = (int)(currentHealth - damage);
+
+            // Leave 1 HP if lethal
+            if (remaining < 0) damage -= (uint)math.abs(remaining);
 
             // Don't count stats for pure damage
             _damageService.Damage(

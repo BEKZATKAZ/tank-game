@@ -6,6 +6,7 @@ using Tanks.Shared.Entities;
 using Tanks.Shared.Entities.Health;
 using Tanks.Shared.Items.Data;
 using Tanks.Shared.Tests.Items;
+using Unity.Mathematics;
 
 namespace Tanks.Server.Tests.Items.Behaviours
 {
@@ -35,6 +36,11 @@ namespace Tanks.Server.Tests.Items.Behaviours
                 {
                     IEntityBehaviour entity = Substitute.For<IEntityBehaviour>();
                     entity.IsValid.Returns(true);
+
+                    entity
+                        .GetBehaviour<IHealthBehaviour>().ServerState.Value
+                        .Returns(new HealthState(100, 100));
+
                     return entity;
                 })
                 .ToArray();
@@ -42,13 +48,50 @@ namespace Tanks.Server.Tests.Items.Behaviours
             _entityService.GetAllEntities().Returns(entities);
 
             Behaviour.OnPickup(MockOwner);
+            uint expectedDamage = (uint)Config.GetStat("damage").Value;
 
             _damageService.Received(1).Damage(
-                (uint)Config.GetStat("damage").Value,
+                expectedDamage,
                 Arg.Is<IEntityBehaviour>(x => entities.Contains(x)),
-                MockOwner.Entity,
-                Arg.Any<HealthEventId>(),
-                false);
+                MockOwner.Entity, Arg.Any<HealthEventId>(), false);
+        }
+
+        [TestCase(59)]
+        [TestCase(10)]
+        [TestCase(2)]
+        public void PickUp_Lethal_LeavesOneHP(int remainingHealth)
+        {
+            IEntityBehaviour entity = Substitute.For<IEntityBehaviour>();
+
+            entity.IsValid.Returns(true);
+            entity
+                .GetBehaviour<IHealthBehaviour>().ServerState.Value
+                .Returns(new HealthState(remainingHealth, 100));
+
+            _entityService.GetAllEntities().Returns(new IEntityBehaviour[] { entity });
+            Behaviour.OnPickup(MockOwner);
+
+            uint expectedDamage = (uint)math.max(remainingHealth, 1);
+
+            _damageService.Received(1).Damage(
+                expectedDamage, entity, MockOwner.Entity, Arg.Any<HealthEventId>(), false);
+        }
+
+        [Test]
+        public void PickUp_OneHP_DoesNothing()
+        {
+            IEntityBehaviour entity = Substitute.For<IEntityBehaviour>();
+
+            entity.IsValid.Returns(true);
+            entity
+                .GetBehaviour<IHealthBehaviour>().ServerState.Value
+                .Returns(new HealthState(1, 100));
+
+            _entityService.GetAllEntities().Returns(new IEntityBehaviour[] { entity });
+            Behaviour.OnPickup(MockOwner);
+
+            _damageService.DidNotReceiveWithAnyArgs().Damage(
+                default, default, default, default, default);
         }
     }
 }
