@@ -9,7 +9,10 @@ namespace Tanks.Client.Visuals
         public VisualEntry(GameObject instance)
         {
             Instance = instance;
-            Transform = new UnityTransform(instance.transform);
+            Transform = new UnityTransform(instance.transform)
+            {
+                WorldPosition = -999
+            };
         }
 
         public GameObject Instance { get; }
