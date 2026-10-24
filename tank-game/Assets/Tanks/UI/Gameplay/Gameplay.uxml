@@ -20,6 +20,7 @@
     </ui:VisualElement>
     <ui:VisualElement name="PlayerHealth" class="player-stats">
         <ui:VisualElement name="PlayerTank" class="player-stats__tank" style="-unity-material: url(&quot;project://database/Assets/Tanks/Shaders/TankHP.shadergraph?fileID=-876546973899608171&amp;guid=30d36fd8c31436746931c48cd0dac5af&amp;type=3#TankHP&quot;);"/>
+        <ui:VisualElement name="PlayerAmmo" picking-mode="Ignore" class="player-ammo"/>
     </ui:VisualElement>
     <ui:VisualElement name="PlayerStats" class="stats">
         <Tanks.UI.Gameplay.PlayerStats.PlayerStatElement icon="project://database/Assets/Tanks/Art/Stats/Stat_Speed.png?fileID=21300000&amp;guid=fde38c6e8dcbbde4e816c132830850fb&amp;type=3#Stat_Speed" name="Speed" type="Speed"/>

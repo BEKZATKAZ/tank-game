@@ -7,24 +7,32 @@ namespace Tanks.Shared.Weapons
 {
     public interface IReadOnlyAmmo
     {
-        bool CanConsume(int amount = 1);
+        ushort Current { get; }
+        ushort Max { get; }
+
+        bool CanConsume(ushort amount = 1);
     }
 
     public interface IAmmo : IReadOnlyAmmo
     {
-        void Consume(int amount = 1);
+        void Consume(ushort amount = 1);
         void Tick(float deltaTime);
     }
 
     public class FixedAmmo : IAmmo
     {
-        public FixedAmmo(int current) => Current = current;
+        public FixedAmmo(ushort current)
+        {
+            Current = current;
+            Max = current;
+        }
 
-        public int Current { get; protected set; }
+        public ushort Current { get; protected set; }
+        public ushort Max { get; }
 
-        public bool CanConsume(int amount = 1) => Current - amount >= 0;
+        public bool CanConsume(ushort amount = 1) => Current - amount >= 0;
 
-        public virtual void Consume(int amount = 1)
+        public virtual void Consume(ushort amount = 1)
         {
             if (amount <= 0 || amount > Current) throw new ArgumentOutOfRangeException();
             Current -= amount;
@@ -54,13 +62,13 @@ namespace Tanks.Shared.Weapons
             float regenTime = _regenerationElapsed - _config.RegenerationDelay;
             float alpha = math.saturate(regenTime / _config.RegenerationDuration);
 
-            int missing = _config.MaxAmount - Current;
-            Current += (int)(missing * alpha);
+            ushort missing = (ushort)(_config.MaxAmount - Current);
+            Current += (ushort)(missing * alpha);
 
             if (Current >= _config.MaxAmount) Current = _config.MaxAmount;
         }
 
-        public override void Consume(int amount = 1)
+        public override void Consume(ushort amount = 1)
         {
             base.Consume(amount);
             _regenerationElapsed = 0;
@@ -69,8 +77,11 @@ namespace Tanks.Shared.Weapons
 
     public sealed class InfiniteAmmo : IAmmo
     {
-        public bool CanConsume(int amount = 1) => true;
-        public void Consume(int amount = 1) { }
+        public ushort Current => 1;
+        public ushort Max => 1;
+
+        public bool CanConsume(ushort amount = 1) => true;
+        public void Consume(ushort amount = 1) { }
         public void Tick(float deltaTime) { }
     }
 }

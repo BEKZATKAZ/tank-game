@@ -8,8 +8,8 @@ namespace Tanks.Shared.Weapons.Data
     {
         AmmoType Type { get; }
 
-        int DefaultAmount { get; }
-        int MaxAmount { get; }
+        ushort DefaultAmount { get; }
+        ushort MaxAmount { get; }
 
         float RegenerationDelay { get; }
         float RegenerationDuration { get; }
@@ -32,11 +32,11 @@ namespace Tanks.Shared.Weapons.Data
 
         [ShowIf("IsMagazineBased")]
         [SerializeField]
-        private int _defaultAmount = 10;
+        private ushort _defaultAmount = 10;
 
         [ShowIf("_type", AmmoType.Regenerating)]
         [SerializeField]
-        private int _maxAmount = 10;
+        private ushort _maxAmount = 10;
 
         [ShowIf("_type", AmmoType.Regenerating)]
         [Range(0, 5)]
@@ -49,8 +49,8 @@ namespace Tanks.Shared.Weapons.Data
         private float _regenerationDuration = 5;
 
         public AmmoType Type => _type;
-        public int DefaultAmount => _defaultAmount;
-        public int MaxAmount => _maxAmount;
+        public ushort DefaultAmount => _defaultAmount;
+        public ushort MaxAmount => _maxAmount;
         public float RegenerationDelay => _regenerationDelay;
         public float RegenerationDuration => _regenerationDuration;
 

@@ -65,7 +65,7 @@ namespace Tanks.Shared.Tests.Runtime.Weapons
             Assert.That(_behaviour.GetDeltaMultiplier(), Is.EqualTo(1), "Should not divide by zero");
         }
 
-        private Weapon CreateWeapon(float cooldown, int ammo)
+        private Weapon CreateWeapon(float cooldown, ushort ammo)
         {
             Weapon weapon = new Weapon();
 

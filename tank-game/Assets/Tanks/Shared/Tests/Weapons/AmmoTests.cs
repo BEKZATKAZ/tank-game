@@ -9,8 +9,8 @@ namespace Tanks.Shared.Tests.Weapons
     {
         public AmmoType Type { get; set; }
 
-        public int DefaultAmount { get; set; }
-        public int MaxAmount { get; set; }
+        public ushort DefaultAmount { get; set; }
+        public ushort MaxAmount { get; set; }
 
         public float RegenerationDelay { get; set; }
         public float RegenerationDuration { get; set; }
@@ -20,11 +20,10 @@ namespace Tanks.Shared.Tests.Weapons
 
     public class AmmoTests
     {
-        [TestCase(int.MinValue)]
-        [TestCase(int.MaxValue)]
-        [TestCase(0)]
-        [TestCase(1)]
-        public void InfiniteAmmo_CanAlwaysConsume(int amount)
+        [TestCase(ushort.MaxValue)]
+        [TestCase((ushort)0)]
+        [TestCase((ushort)1)]
+        public void InfiniteAmmo_CanAlwaysConsume(ushort amount)
         {
             IAmmo ammo = new InfiniteAmmo();
             Assert.True(ammo.CanConsume(amount), "Someone redefined infinity");
@@ -47,12 +46,11 @@ namespace Tanks.Shared.Tests.Weapons
             Assert.False(ammo.CanConsume(1), "Should not be able to consume any more ammo");
         }
 
-        [TestCase(int.MinValue)]
-        [TestCase(int.MaxValue)]
-        [TestCase(11)]
-        [TestCase(-1)]
-        [TestCase(0)]
-        public void FixedAmmo_Overflow_Throws(int amount)
+        [TestCase(ushort.MaxValue)]
+        [TestCase((ushort)1000)]
+        [TestCase((ushort)11)]
+        [TestCase((ushort)0)]
+        public void FixedAmmo_Overflow_Throws(ushort amount)
         {
             IAmmo ammo = new FixedAmmo(10);
             Assert.Throws<ArgumentOutOfRangeException>(() => ammo.Consume(amount));
