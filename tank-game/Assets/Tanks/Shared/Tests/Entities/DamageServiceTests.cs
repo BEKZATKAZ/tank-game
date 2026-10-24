@@ -4,19 +4,20 @@ using Tanks.Core.Helpers;
 using Tanks.Shared.Entities;
 using Tanks.Shared.Entities.Health;
 using Tanks.Shared.Stats;
+using Unity.Mathematics;
 
 namespace Tanks.Shared.Tests.Entities
 {
     public sealed class TestDamageService : DamageServiceBase
     {
-        public PositiveFloat FullAmount;
+        public uint FullAmount;
         public IEntityBehaviour Target;
         public IEntityBehaviour From;
         public HealthEventId EventId;
         public int Received;
 
         protected override void OnDamage(
-            PositiveFloat fullAmount,
+            uint fullAmount,
             IEntityBehaviour target,
             IEntityBehaviour from = null,
             HealthEventId eventId = default)
@@ -28,7 +29,7 @@ namespace Tanks.Shared.Tests.Entities
             EventId = eventId;
         }
 
-        protected override void OnHeal(PositiveFloat amount, IEntityBehaviour target)
+        protected override void OnHeal(uint amount, IEntityBehaviour target)
         {
             Received++;
             FullAmount = amount;
@@ -61,7 +62,7 @@ namespace Tanks.Shared.Tests.Entities
         [Test]
         public void Damage_CallsOnDamage()
         {
-            for (float amount = 20; amount <= 100; amount += 20)
+            for (uint amount = 20; amount <= 100; amount += 20)
             {
                 AssertDamageWithoutStats(amount);
 
@@ -86,7 +87,7 @@ namespace Tanks.Shared.Tests.Entities
         [Test]
         public void Heal_CallsOnHeal()
         {
-            for (float amount = 20; amount <= 100; amount += 20)
+            for (uint amount = 20; amount <= 100; amount += 20)
             {
                 _service.Received = 0;
                 _service.Heal(amount, _target);
@@ -107,13 +108,13 @@ namespace Tanks.Shared.Tests.Entities
             };
         }
 
-        private void AssertDamageWithStats(PositiveFloat amount, float damageBonus, float defense)
+        private void AssertDamageWithStats(uint amount, float damageBonus, float defense)
         {
             float multiplier = GetDiminishingReturns(defense, 50);
             float fullDamage = amount + damageBonus;
 
-            float expectedDamage = fullDamage * multiplier;
-            float expectedDamageWithoutBonus = amount * multiplier;
+            float expectedDamage = (uint)math.ceil(fullDamage * multiplier);
+            float expectedDamageWithoutBonus = (uint)math.ceil(amount * multiplier);
 
             _fromStatOwner
                 .GetStat(StatType.Damage, amount)
@@ -131,7 +132,7 @@ namespace Tanks.Shared.Tests.Entities
             _service.Damage(amount, _target, _from, includeStats: true);
 
             Assert.That(_service.Received, Is.EqualTo(1));
-            Assert.AreEqual(expectedDamage, _service.FullAmount, delta: 0.01f);
+            Assert.AreEqual(expectedDamage, _service.FullAmount);
 
             Assert.That(_service.Target, Is.EqualTo(_target));
             Assert.That(_service.From, Is.EqualTo(_from));
@@ -139,10 +140,10 @@ namespace Tanks.Shared.Tests.Entities
             // With target, but no from
             _service.Damage(amount, target: _target, from: null, includeStats: true);
             Assert.That(_service.Received, Is.EqualTo(2));
-            Assert.AreEqual(expectedDamageWithoutBonus, _service.FullAmount, delta: 0.01f);
+            Assert.AreEqual(expectedDamageWithoutBonus, _service.FullAmount);
         }
 
-        private void AssertDamageWithoutStats(PositiveFloat amount)
+        private void AssertDamageWithoutStats(uint amount)
         {
             _service.Received = 0;
             _service.Damage(amount, _target, _from, includeStats: false);

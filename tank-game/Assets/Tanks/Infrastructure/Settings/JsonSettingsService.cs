@@ -25,7 +25,11 @@ namespace Tanks.Infrastructure.Settings
         private readonly Dictionary<PlayerSetting, int> _newChanges = new();
         private readonly Dictionary<PlayerSetting, BindableProperty<int>> _settings = new();
 
-        public void Write(PlayerSetting type, int value) => _newChanges[type] = value;
+        public void Write(PlayerSetting type, int value)
+        {
+            _oldValues.TryAdd(type, _settings[type].Value);
+            _newChanges[type] = value;
+        }
 
         public void RevertChanges()
         {
@@ -47,6 +51,9 @@ namespace Tanks.Infrastructure.Settings
 
                 _settings[newChange.Key].Value = oldValue;
             }
+
+            _newChanges.Clear();
+            _oldValues.Clear();
         }
 
         public void PreviewChanges(PlayerSetting setting, int newValue)
@@ -70,12 +77,14 @@ namespace Tanks.Infrastructure.Settings
         {
             Dictionary<PlayerSetting, int> result = _loader.Load(FilePath);
 
+            _oldValues.Clear();
+            _settings.Clear();
+
             if (_settings.Count == 0)
             {
                 foreach (var setting in result)
                 {
                     _settings[setting.Key] = new BindableProperty<int>(setting.Value);
-                    _oldValues[setting.Key] = setting.Value;
                 }
 
                 return;
@@ -83,7 +92,6 @@ namespace Tanks.Infrastructure.Settings
 
             foreach (var setting in result)
             {
-                _oldValues[setting.Key] = setting.Value;
                 _settings[setting.Key].Value = setting.Value;
             }
         }
@@ -99,10 +107,10 @@ namespace Tanks.Infrastructure.Settings
             foreach (var setting in _newChanges)
             {
                 _settings[setting.Key].Value = setting.Value;
-                _oldValues[setting.Key] = setting.Value;
             }
 
             _newChanges.Clear();
+            _oldValues.Clear();
 
             var result = _settings.Select(x => KeyValuePair.Create(x.Key, x.Value.Value));
             _loader.Save(FilePath, result);

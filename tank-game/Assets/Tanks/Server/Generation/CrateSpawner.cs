@@ -104,8 +104,8 @@ namespace Tanks.Server.Generation.Crates
 
             if (health is null) return;
 
-            float initialHealth = healthBehaviour.InitialHealth;
-            health.SetState(new HealthState(initialHealth, initialHealth));
+            uint initialHealth = healthBehaviour.InitialHealth;
+            health.SetState(new HealthState((int)initialHealth, initialHealth));
         }
 
         private CrateBehaviour CreateInstance(CrateBehaviour prefab)

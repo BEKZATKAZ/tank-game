@@ -116,8 +116,8 @@ namespace Tanks.Client.Entities.Runtime
         {
             if (_health.Entity.IsPossessed) return;
 
-            float previous = message.OldState.Current;
-            float current = message.NewState.Current;
+            int previous = message.OldState.Current;
+            int current = message.NewState.Current;
 
             DamagePreviewText text = _visualService.Play<DamagePreviewText>(VisualType.DamageText);
             text.Initialize(previous - current, message.NewState, _health.Transform);

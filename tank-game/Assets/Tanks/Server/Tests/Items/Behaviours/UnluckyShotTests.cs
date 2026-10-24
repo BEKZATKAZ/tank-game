@@ -44,7 +44,7 @@ namespace Tanks.Server.Tests.Items.Behaviours
             Behaviour.OnPickup(MockOwner);
 
             _damageService.Received(1).Damage(
-                Config.GetStat("damage").Value,
+                (uint)Config.GetStat("damage").Value,
                 Arg.Is<IEntityBehaviour>(x => entities.Contains(x)),
                 MockOwner.Entity,
                 Arg.Any<HealthEventId>(),

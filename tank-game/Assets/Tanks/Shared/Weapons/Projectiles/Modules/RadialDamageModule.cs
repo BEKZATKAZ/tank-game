@@ -62,7 +62,9 @@ namespace Tanks.Shared.Weapons.Projectiles.Modules
                 foreach (ref float2 point in points)
                 {
                     float2 direction = point - center;
-                    float distance = math.length(direction);
+
+                    // Using floor for deterministic damage
+                    float distance = math.floor(math.length(direction));
 
                     if (distance <= math.EPSILON)
                     {
@@ -80,7 +82,9 @@ namespace Tanks.Shared.Weapons.Projectiles.Modules
                     float t = 1 - math.saturate(distance / Radius);
                     float damage = math.lerp(FarDamage, NearDamage, t);
 
-                    _service.Damage(damage, health.Entity, from, eventId, includeStats: true);
+                    uint realDamage = (uint)math.ceil(damage);
+                    _service.Damage(realDamage, health.Entity, from, eventId, includeStats: true);
+
                     break;
                 }
             }

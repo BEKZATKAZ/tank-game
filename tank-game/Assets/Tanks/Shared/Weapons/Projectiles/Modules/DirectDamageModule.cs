@@ -28,9 +28,10 @@ namespace Tanks.Shared.Weapons.Projectiles.Modules
         {
             float t = math.unlerp(MinTime, MaxTime, Projectile.ElapsedSeconds);
             float damage = math.lerp(NearDamage, FarDamage, math.saturate(t));
+            uint realDamage = (uint)math.ceil(damage);
 
             HealthEventId eventId = HealthEventId.Create(GetType(), Id);
-            _service.Damage(damage, target, from, eventId, includeStats: true);
+            _service.Damage(realDamage, target, from, eventId, includeStats: true);
         }
     }
 }

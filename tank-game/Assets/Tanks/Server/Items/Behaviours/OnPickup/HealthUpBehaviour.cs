@@ -14,7 +14,7 @@ namespace Tanks.Server.Items.Behaviours.OnPickup
                 .GetBehaviour<IHealthBehaviour>()
                 .Require<IAuthoritativeHealth>();
 
-            health.Heal(Config.GetStat("health").Value);
+            health.Heal((uint)Config.GetStat("health").Value);
         }
     }
 
@@ -27,7 +27,7 @@ namespace Tanks.Server.Items.Behaviours.OnPickup
                 .GetBehaviour<IHealthBehaviour>()
                 .Require<IAuthoritativeHealth>();
 
-            health.Heal(Config.GetStat("health").Value);
+            health.Heal((uint)Config.GetStat("health").Value);
         }
     }
 }

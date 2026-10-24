@@ -20,7 +20,7 @@ namespace Tanks.Server.Tests.Items.Behaviours
         {
             Behaviour.OnPickup(MockOwner);
             var health = MockOwner.GetBehaviour<IHealthBehaviour>().Require<IAuthoritativeHealth>();
-            health.Received(1).Heal(Config.GetStat("health").Value);
+            health.Received(1).Heal((uint)Config.GetStat("health").Value);
         }
     }
 }

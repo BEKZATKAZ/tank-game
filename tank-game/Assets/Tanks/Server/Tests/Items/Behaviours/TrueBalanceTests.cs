@@ -52,7 +52,7 @@ namespace Tanks.Server.Tests.Items.Behaviours
 
             Behaviour.OnFire(MockOwner, default);
 
-            float healAmount = Config.GetStat("heal").Value;
+            uint healAmount = (uint)Config.GetStat("heal").Value;
 
             foreach (IEntityBehaviour entity in allEntities)
             {

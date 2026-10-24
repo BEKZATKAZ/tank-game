@@ -76,9 +76,9 @@ namespace Tanks.Client.Tests.Entities
         }
 
         [TestCase(50, 80)]
-        [TestCase(50, 50.0001f)]
+        [TestCase(50, 51)]
         [TestCase(50, 50)]
-        public void Handle_Prediction_NoDamage_DoesNothing(float oldHealth, float newHealth)
+        public void Handle_Prediction_NoDamage_DoesNothing(int oldHealth, int newHealth)
         {
             HealthChangedFromPrediction message = CreatePredictionMessage(oldHealth, newHealth);
             _visuals.Handle(message);
@@ -423,8 +423,8 @@ namespace Tanks.Client.Tests.Entities
         }
 
         private static HealthChangedFromPrediction CreatePredictionMessage(
-            float oldHealth,
-            float newHealth,
+            int oldHealth,
+            int newHealth,
             IEntityBehaviour target = null,
             IEntityBehaviour from = null)
         {
@@ -438,7 +438,7 @@ namespace Tanks.Client.Tests.Entities
         }
 
         private static HealthChangedFromServer CreateServerMessage(
-            float authoritativeHealth,
+            int authoritativeHealth,
             IEntityBehaviour target = null,
             IEntityBehaviour from = null)
         {

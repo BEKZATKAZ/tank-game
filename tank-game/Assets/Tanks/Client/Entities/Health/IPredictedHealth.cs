@@ -1,5 +1,4 @@
-﻿using Tanks.Core.Helpers;
-using Tanks.Shared;
+﻿using Tanks.Shared;
 using Tanks.Shared.Entities;
 using Tanks.Shared.Entities.Health;
 using Tanks.Shared.Messaging;
@@ -22,11 +21,11 @@ namespace Tanks.Client.Entities.Health
         HealthState GetState();
 
         void Damage(
-            PositiveFloat amount,
+            uint amount,
             IEntityBehaviour from = null,
             HealthEventId damageId = default);
 
-        void Heal(PositiveFloat amount, IEntityBehaviour from = null);
+        void Heal(uint amount, IEntityBehaviour from = null);
     }
 
     public sealed class PredictedHealth :
@@ -56,22 +55,22 @@ namespace Tanks.Client.Entities.Health
         }
 
         public void Damage(
-            PositiveFloat amount,
+            uint amount,
             IEntityBehaviour from = null,
             HealthEventId eventId = default)
         {
             if (TryEnqueueHealthEvent(eventId) == false)  return;
 
             HealthState oldState = _state;
-            _state = new HealthState(_state.Current - amount, _state.Max);
+            _state = new HealthState((int)(_state.Current - amount), _state.Max);
 
             EmitChangedMessages(oldState, from, eventId);
         }
 
-        public void Heal(PositiveFloat amount, IEntityBehaviour from = null)
+        public void Heal(uint amount, IEntityBehaviour from = null)
         {
             HealthState oldState = _state;
-            _state = new HealthState(_state.Current + amount, _state.Max);
+            _state = new HealthState((int)(_state.Current + amount), _state.Max);
             EmitChangedMessages(oldState, from, default);
         }
 

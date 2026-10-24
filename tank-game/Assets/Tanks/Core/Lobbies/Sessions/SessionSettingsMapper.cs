@@ -47,7 +47,7 @@ namespace Tanks.Core.Lobbies.Sessions
                     DurationSeconds = dangerZone.DurationSeconds
                         .CorrectValue(from.DangerZone.DurationSeconds),
 
-                    DamagePerSecond = dangerZone.DamagePerSecond
+                    DamagePerSecond = (uint)dangerZone.DamagePerSecond
                         .CorrectValue(from.DangerZone.DamagePerSecond)
                 }
             };

@@ -43,7 +43,7 @@ namespace Tanks.Server.Tests.Items.Behaviours
 
             // Kills on second pickup
             _damageService.Received(1)
-                .Damage(float.MaxValue, MockOwner.Entity, MockOwner.Entity, includeStats: false);
+                .Damage(uint.MaxValue, MockOwner.Entity, MockOwner.Entity, includeStats: false);
         }
 
         [Test]

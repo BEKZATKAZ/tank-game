@@ -24,7 +24,7 @@ namespace Tanks.Server.Items.Behaviours.OnFire
 
         public override void OnFire(IItemOwnerBehaviour owner, WeaponUsed message)
         {
-            ItemStat healStat = Config.GetStat("heal");
+            uint healStat = (uint)(Config.GetStat("heal").Value);
 
             foreach (IEntityBehaviour entity in _entityService.GetAllEntities())
             {
@@ -33,7 +33,7 @@ namespace Tanks.Server.Items.Behaviours.OnFire
                 // Players with this item are not affected
                 if (statOwner is null || statOwner.Items.Contains(Config.Identifier)) continue;
 
-                _damageService.Heal(healStat.Value, entity);
+                _damageService.Heal(healStat, entity);
             }
         }
     }

@@ -33,7 +33,7 @@ namespace Tanks.Core.Lobbies.Sessions
     {
         public int StartDelaySeconds;
         public int DurationSeconds;
-        public int DamagePerSecond;
+        public uint DamagePerSecond;
     }
 
     [Serializable]

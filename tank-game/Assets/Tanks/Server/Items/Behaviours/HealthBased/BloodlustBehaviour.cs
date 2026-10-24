@@ -28,7 +28,7 @@ namespace Tanks.Server.Items.Behaviours.HealthBased
             if (statOwner.HasStat(StatId))
             {
                 _damageService.Damage(
-                    float.MaxValue, owner.Entity, owner.Entity, includeStats: false);
+                    uint.MaxValue, owner.Entity, owner.Entity, includeStats: false);
 
                 return;
             }

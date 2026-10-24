@@ -1,33 +1,33 @@
-﻿using Tanks.Core.Helpers;
-using Tanks.Shared.Stats;
+﻿using Tanks.Shared.Stats;
+using Unity.Mathematics;
 
 namespace Tanks.Shared.Entities.Health
 {
     public interface IDamageService
     {
         void Damage(
-            PositiveFloat baseAmount,
+            uint baseAmount,
             IEntityBehaviour target,
             IEntityBehaviour from = null,
             HealthEventId eventId = default,
             bool includeStats = true);
 
-        void Heal(PositiveFloat amount, IEntityBehaviour target);
+        void Heal(uint amount, IEntityBehaviour target);
     }
 
     public abstract class DamageServiceBase : IDamageService
     {
         protected abstract void OnDamage(
-            PositiveFloat fullAmount,
+            uint fullAmount,
             IEntityBehaviour target,
             IEntityBehaviour from = null,
             HealthEventId eventId = default);
 
         protected abstract void OnHeal(
-            PositiveFloat amount, IEntityBehaviour target);
+            uint amount, IEntityBehaviour target);
 
         public void Damage(
-            PositiveFloat baseAmount,
+            uint baseAmount,
             IEntityBehaviour target,
             IEntityBehaviour from = null,
             HealthEventId eventId = default,
@@ -46,12 +46,14 @@ namespace Tanks.Shared.Entities.Health
 
             float damage = fromStat?.GetStat(StatType.Damage, baseAmount) ?? baseAmount;
             float defense = targetStat?.GetStat(StatType.Defense, 0) ?? 0;
-            float multiplier = targetStat?.GetDiminishingReturns(StatType.Defense, defense) ?? 1;
 
-            OnDamage(damage * multiplier, target, from, eventId);
+            float multiplier = targetStat?.GetDiminishingReturns(StatType.Defense, defense) ?? 1;
+            float finalDamage = damage * multiplier;
+
+            OnDamage((uint)math.ceil(finalDamage), target, from, eventId);
         }
 
-        public void Heal(PositiveFloat amount, IEntityBehaviour target)
+        public void Heal(uint amount, IEntityBehaviour target)
         {
             OnHeal(amount, target);
         }

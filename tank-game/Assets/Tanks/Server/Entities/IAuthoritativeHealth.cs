@@ -11,11 +11,11 @@ namespace Tanks.Server.Entities
         void SetState(in HealthState newState);
 
         void Damage(
-            PositiveFloat amount, 
+            uint amount, 
             IEntityBehaviour from = null, 
             HealthEventId eventId = default);
 
-        void Heal(PositiveFloat amount, IEntityBehaviour from = null);
+        void Heal(uint amount, IEntityBehaviour from = null);
     }
 
     public sealed class AuthoritativeHealth :
@@ -32,24 +32,24 @@ namespace Tanks.Server.Entities
         }
 
         public void Damage(
-            PositiveFloat amount,
+            uint amount,
             IEntityBehaviour from = null,
             HealthEventId eventId = default)
         {
-            _state = new HealthState(_state.Current - amount, _state.Max);
+            _state = new HealthState((int)(_state.Current - amount), _state.Max);
             Behaviour.UpdateStateEveryoneRpc(_state, from?.Id ?? default, eventId);
         }
 
-        public void Heal(PositiveFloat amount, IEntityBehaviour from = null)
+        public void Heal(uint amount, IEntityBehaviour from = null)
         {
-            _state = new HealthState(_state.Current + amount, _state.Max);
+            _state = new HealthState((int)(_state.Current + amount), _state.Max);
             Behaviour.UpdateStateEveryoneRpc(_state, from?.Id ?? default);
         }
 
         protected override void OnInitialize()
         {
-            float initial = Behaviour.InitialHealth;
-            _state = new HealthState(initial, initial);
+            uint initial = Behaviour.InitialHealth;
+            _state = new HealthState((int)initial, initial);
         }
     }
 }

@@ -24,10 +24,10 @@ namespace Tanks.Client.Tests.Entities
             _from.IsValid.Returns(true);
         }
 
-        [TestCase(1)]
-        [TestCase(10)]
-        [TestCase(100)]
-        public void Damage_PredictsDamage(float amount)
+        [TestCase(1u)]
+        [TestCase(10u)]
+        [TestCase(100u)]
+        public void Damage_PredictsDamage(uint amount)
         {
             HealthEventId eventId = HealthEventId.Create(GetType(), 123);
 
@@ -40,10 +40,10 @@ namespace Tanks.Client.Tests.Entities
             health.Received(1).Damage(amount, _from, eventId);
         }
 
-        [TestCase(1)]
-        [TestCase(10)]
-        [TestCase(100)]
-        public void Heal_PredictsHeal(float amount)
+        [TestCase(1u)]
+        [TestCase(10u)]
+        [TestCase(100u)]
+        public void Heal_PredictsHeal(uint amount)
         {
             _service.Heal(amount, _target);
 

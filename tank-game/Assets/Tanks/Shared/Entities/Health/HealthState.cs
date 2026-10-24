@@ -1,5 +1,4 @@
 using System;
-using Tanks.Core.Helpers;
 using Unity.Mathematics;
 using Unity.Netcode;
 
@@ -7,15 +6,15 @@ namespace Tanks.Shared.Entities.Health
 {
     public readonly struct HealthState : IEquatable<HealthState>, INetworkSerializeByMemcpy
     {
-        public HealthState(float current, PositiveFloat max)
+        public HealthState(int current, uint max)
         {
-            Current = math.min(current, max);
+            Current = (int)math.min(current, max);
             Max = max;
         }
 
         public readonly float NormalizedCurrent => Current / Max;
-        public readonly float Current;
-        public readonly float Max;
+        public readonly int Current;
+        public readonly uint Max;
 
         public override string ToString() => $"{{ Current: {Current}, Max: {Max} }}";
         public override int GetHashCode() => HashCode.Combine(Current, Max);

@@ -13,21 +13,21 @@ namespace Tanks.Server.Tests.Entities
         public void Setup()
         {
             IHealthBehaviour behaviour = Substitute.For<IHealthBehaviour>();
-            behaviour.InitialHealth.Returns(100);
+            behaviour.InitialHealth.Returns(100u);
 
             _component = new AuthoritativeHealth();
             _component.Initialize(behaviour);
         }
 
-        [TestCase(1)]
-        [TestCase(45)]
-        [TestCase(90)]
-        public void Damage_ReducesHP(float amount)
+        [TestCase(1u)]
+        [TestCase(45u)]
+        [TestCase(90u)]
+        public void Damage_ReducesHP(uint amount)
         {
-            float max = _component.GetState().Max;
+            uint max = _component.GetState().Max;
             _component.Damage(amount);
 
-            HealthState expected = new HealthState(100 - amount, max);
+            HealthState expected = new HealthState(100 - (int)amount, max);
             HealthState actual = _component.GetState();
 
             Assert.AreEqual(expected, actual, "Wrong state");
@@ -39,10 +39,10 @@ namespace Tanks.Server.Tests.Entities
         [TestCase(45)]
         [TestCase(90)]
         [TestCase(1000)]
-        public void Heal_RestoresHPUpToMax(float amount)
+        public void Heal_RestoresHPUpToMax(int amount)
         {
             _component.SetState(new HealthState(50, 150));
-            _component.Heal(amount);
+            _component.Heal((uint)amount);
 
             HealthState expected = new HealthState(50 + amount, 150);
             HealthState actual = _component.GetState();

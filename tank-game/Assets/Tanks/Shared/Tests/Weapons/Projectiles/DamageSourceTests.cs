@@ -5,6 +5,7 @@ using Tanks.Shared.Entities.Health;
 using Tanks.Shared.Weapons;
 using Tanks.Shared.Weapons.Projectiles;
 using Tanks.Shared.Weapons.Projectiles.Modules;
+using Unity.Mathematics;
 using UnityEngine;
 
 namespace Tanks.Shared.Tests.Weapons.Projectiles
@@ -35,10 +36,10 @@ namespace Tanks.Shared.Tests.Weapons.Projectiles
             if (_component) Object.DestroyImmediate(_component.gameObject);
         }
 
-        [TestCase(50, 10)]
-        [TestCase(2, 1)]
-        [TestCase(100, 200)]
-        public void NearFar_EvaluatesCorrectly(int near, int far)
+        [TestCase(50u, 10u)]
+        [TestCase(2u, 1u)]
+        [TestCase(100u, 200u)]
+        public void NearFar_EvaluatesCorrectly(uint near, uint far)
         {
             _component.NearDamage = (ushort)near;
             _component.FarDamage = (ushort)far;
@@ -59,10 +60,10 @@ namespace Tanks.Shared.Tests.Weapons.Projectiles
             AssertDamage(far);
 
             _component.Projectile.ElapsedSeconds.Returns(6);
-            AssertDamage((far + near) * 0.5f);
+            AssertDamage((ushort)math.ceil((far + near) * 0.5f));
         }
 
-        private void AssertDamage(float expectedAmount)
+        private void AssertDamage(uint expectedAmount)
         {
             HealthEventId eventId = HealthEventId.Create(_component.GetType(), _component.Id);
             _service.ClearReceivedCalls();

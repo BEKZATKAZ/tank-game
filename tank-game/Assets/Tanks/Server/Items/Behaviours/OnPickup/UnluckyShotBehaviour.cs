@@ -37,7 +37,7 @@ namespace Tanks.Server.Items.Behaviours.OnPickup
                 chosenPlayer = player;
             }
 
-            float damage = Config.GetStat("damage").Value;
+            uint damage = (uint)Config.GetStat("damage").Value;
             HealthEventId eventId = HealthEventId.Create(GetType(), Time.time);
 
             // Don't count stats for pure damage

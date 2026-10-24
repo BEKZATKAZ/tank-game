@@ -1,5 +1,4 @@
-﻿using Tanks.Core.Helpers;
-using Tanks.Shared.Entities;
+﻿using Tanks.Shared.Entities;
 using Tanks.Shared.Entities.Health;
 
 namespace Tanks.Server.Entities
@@ -7,7 +6,7 @@ namespace Tanks.Server.Entities
     public sealed class AuthoritativeDamageService : DamageServiceBase
     {
         protected override void OnDamage(
-            PositiveFloat fullAmount,
+            uint fullAmount,
             IEntityBehaviour target,
             IEntityBehaviour from = null,
             HealthEventId eventId = default)
@@ -19,7 +18,7 @@ namespace Tanks.Server.Entities
             targetHealth.Damage(fullAmount, from, eventId);
         }
 
-        protected override void OnHeal(PositiveFloat amount, IEntityBehaviour target)
+        protected override void OnHeal(uint amount, IEntityBehaviour target)
         {
             IAuthoritativeHealth targetHealth = target
                 .GetBehaviour<IHealthBehaviour>()

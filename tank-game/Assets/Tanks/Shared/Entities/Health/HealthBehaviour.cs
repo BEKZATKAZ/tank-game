@@ -28,7 +28,7 @@ namespace Tanks.Shared.Entities.Health
     {
         IEntityBehaviour Entity { get; }
         IReadOnlyBindableProperty<HealthState> ServerState { get; }
-        float InitialHealth { get; }
+        uint InitialHealth { get; }
 
         IEnumerable<SpriteRenderer> GetAllSpriteRenderers();
 
@@ -49,7 +49,7 @@ namespace Tanks.Shared.Entities.Health
 
         public IEntityBehaviour Entity { get; private set; }
         public IReadOnlyBindableProperty<HealthState> ServerState => _serverState;
-        public float InitialHealth => _initialHealth;
+        public uint InitialHealth => _initialHealth;
 
         private readonly BindableProperty<HealthState> _serverState = new();
 
