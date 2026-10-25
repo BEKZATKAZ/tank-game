@@ -23,7 +23,7 @@ namespace Tanks.Client.Entities.Health
             float y = UnityEngine.Random.Range(-maxOffset, maxOffset);
 
             _text.color = _color.Evaluate(1 - state.NormalizedCurrent);
-            _text.text = damage.ToString();
+            _text.text = (-damage).ToString();
 
             Transform ??= new UnityTransform(transform);
             Transform.WorldPosition = at.WorldPosition + new float2(x, y);

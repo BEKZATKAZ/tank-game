@@ -5,7 +5,6 @@ using Tanks.UI.Menus.Loading;
 using Tanks.UI.Menus.Lobbies;
 using Tanks.UI.Menus.Main;
 using Tanks.UI.Menus.Settings;
-using Tanks.UI.Menus.Settings.Appliers;
 using Tanks.UI.Menus.Transitions;
 using UnityEngine;
 using VContainer;
@@ -32,25 +31,13 @@ namespace Tanks.UI.Menus
             builder.Register<LoadingViewModel>(Lifetime.Transient);
             builder.Register<DialogScreenViewModel>(Lifetime.Transient);
             builder.Register<MainMenuSectionsViewModel>(Lifetime.Transient);
-            builder.Register<SettingsViewModel>(Lifetime.Transient);
+            builder.RegisterSettings();
             builder.Register<CopyrightViewModel>(Lifetime.Transient);
 
             builder.Register<LobbyBrowserViewModel>(Lifetime.Transient);
             builder.Register<LobbySectionsViewModel>(Lifetime.Transient);
             builder.Register<LobbyMainViewModel>(Lifetime.Transient);
             builder.Register<LobbyChatViewModel>(Lifetime.Transient);
-
-            builder.Register<GeneralSettingsApplier>(Lifetime.Singleton);
-            builder.Register<GraphicsSettingsApplier>(Lifetime.Singleton);
-            builder.Register<AudioSettingsApplier>(Lifetime.Singleton);
-
-            builder.RegisterBuildCallback(resolver =>
-            {
-                // Create appliers
-                resolver.Resolve<GeneralSettingsApplier>();
-                resolver.Resolve<GraphicsSettingsApplier>();
-                resolver.Resolve<AudioSettingsApplier>();
-            });
         }
     }
 }

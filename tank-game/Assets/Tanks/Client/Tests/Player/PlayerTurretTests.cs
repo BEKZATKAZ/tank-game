@@ -20,6 +20,7 @@ namespace Tanks.Client.Tests.Player
         public void Setup()
         {
             _input = Substitute.For<IInputService<TurretInput>>();
+            _input.IsEnabled.Returns(true);
             _cameraService = Substitute.For<ICameraMainService>();
 
             _component = new PlayerTurret(_input, _cameraService);
@@ -28,6 +29,17 @@ namespace Tanks.Client.Tests.Player
 
             _mainCamera = Substitute.For<ICamera>();
             _cameraService.Get().Returns(_mainCamera);
+        }
+
+        [Test]
+        public void Update_InputDisabled_DoesNotRotateTurret()
+        {
+            _input.IsEnabled.Returns(false);
+
+            _component.Update(0.01f);
+
+            _input.DidNotReceive().Read();
+            _component.Behaviour.DidNotReceiveWithAnyArgs().Tick(default, default);
         }
 
         [TestCase(0.5f, 0)]

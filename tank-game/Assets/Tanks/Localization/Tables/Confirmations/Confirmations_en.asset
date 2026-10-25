@@ -42,6 +42,14 @@ MonoBehaviour:
     m_Localized: LEAVE LOBBY
     m_Metadata:
       m_Items: []
+  - m_Id: 40000000000000003
+    m_Localized: QUIT TO MAIN MENU
+    m_Metadata:
+      m_Items: []
+  - m_Id: 40000000000000004
+    m_Localized: Are you sure you want to leave the current game and return to the main menu?
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds: []

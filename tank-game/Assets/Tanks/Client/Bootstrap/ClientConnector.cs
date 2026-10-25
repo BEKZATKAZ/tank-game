@@ -97,6 +97,7 @@ namespace Tanks.Client.Bootstrap
         private void OnConnectionEvent(NetworkManager manager, ConnectionEventData e)
         {
             if (e.EventType != ConnectionEvent.ClientDisconnected) return;
+            if (_sceneLoader.IsLoading) return;
             _sceneLoader.StartLoading(new LoadMenus(), withTips: false);
         }
 

@@ -40,6 +40,7 @@ namespace Tanks.Client.Player
 
         protected override void OnUpdate(float deltaTime)
         {
+            if (_input.IsEnabled == false) return;
             TurretInput input = _input.Read();
 
             float2 direction = _input.CurrentScheme switch

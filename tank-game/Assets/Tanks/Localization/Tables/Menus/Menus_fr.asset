@@ -212,6 +212,14 @@ MonoBehaviour:
     m_Localized: "Pas pr\xEAt"
     m_Metadata:
       m_Items: []
+  - m_Id: 40000000000000001
+    m_Localized: "REPRENDRE"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 40000000000000002
+    m_Localized: "RETOUR AU MENU PRINCIPAL"
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:

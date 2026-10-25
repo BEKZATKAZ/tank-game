@@ -1,0 +1,77 @@
+<ui:UXML xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
+    <ui:VisualElement name="SettingsMenu" style="flex-grow: 1; display: none;">
+        <ui:Label name="" class="menu-header">
+            <Bindings>
+                <UnityEngine.Localization.LocalizedString property="text" table="GUID:34510603f8b6d1a44b1b2ffa9aa551c9" entry="Id(289292115968)"/>
+            </Bindings>
+        </ui:Label>
+        <ui:ScrollView horizontal-scroller-visibility="Hidden" name="" class="menu-content" style="flex-grow: 1;">
+            <Tanks.UI.Menus.Settings.Elements.SettingDropdown choices="," choice-keys="English,Русский,Français" name="Language" type="Language">
+                <Bindings>
+                    <UnityEngine.Localization.LocalizedString property="Label" table="GUID:34510603f8b6d1a44b1b2ffa9aa551c9" entry="Id(4793871635013632)"/>
+                    <UnityEngine.Localization.LocalizedString property="Choices" table="GUID:34510603f8b6d1a44b1b2ffa9aa551c9" entry="Id(3701799150641152)"/>
+                </Bindings>
+            </Tanks.UI.Menus.Settings.Elements.SettingDropdown>
+            <Tanks.UI.Menus.Settings.Elements.SettingScreenResolution name="ScreenResolution" type="ScreenResolutionIndex">
+                <Bindings>
+                    <UnityEngine.Localization.LocalizedString property="Label" table="GUID:34510603f8b6d1a44b1b2ffa9aa551c9" entry="Id(3717298093776896)"/>
+                </Bindings>
+            </Tanks.UI.Menus.Settings.Elements.SettingScreenResolution>
+            <Tanks.UI.Menus.Settings.Elements.SettingDropdown choices="," choice-keys="menu.settings.screen-fullscreen,menu.settings.screen-fullscreen-windowed,menu.settings.screen-windowed" name="FullscreenMode" type="FullscreenMode">
+                <Bindings>
+                    <UnityEngine.Localization.LocalizedString property="Label" table="GUID:34510603f8b6d1a44b1b2ffa9aa551c9" entry="Id(3714690427871232)"/>
+                    <UnityEngine.Localization.LocalizedString property="Choices" table="GUID:34510603f8b6d1a44b1b2ffa9aa551c9" entry="Id(3701799150641152)"/>
+                </Bindings>
+            </Tanks.UI.Menus.Settings.Elements.SettingDropdown>
+            <Tanks.UI.Menus.Settings.Elements.SettingDropdown choices="," choice-keys="menu.settings.off,menu.settings.on" name="VSync" type="VSync">
+                <Bindings>
+                    <UnityEngine.Localization.LocalizedString property="Label" table="GUID:34510603f8b6d1a44b1b2ffa9aa551c9" entry="Id(3701267455500288)"/>
+                    <UnityEngine.Localization.LocalizedString property="Choices" table="GUID:34510603f8b6d1a44b1b2ffa9aa551c9" entry="Id(3701799150641152)"/>
+                </Bindings>
+            </Tanks.UI.Menus.Settings.Elements.SettingDropdown>
+            <Tanks.UI.Menus.Settings.Elements.SettingDropdown choices="," choice-keys="30,60,120,240" name="FrameRate" type="FrameRateIndex">
+                <Bindings>
+                    <UnityEngine.Localization.LocalizedString property="Label" table="GUID:34510603f8b6d1a44b1b2ffa9aa551c9" entry="Id(3713258257604608)"/>
+                    <UnityEngine.Localization.LocalizedString property="Choices" table="GUID:34510603f8b6d1a44b1b2ffa9aa551c9" entry="Id(3701799150641152)"/>
+                </Bindings>
+            </Tanks.UI.Menus.Settings.Elements.SettingDropdown>
+            <Tanks.UI.Menus.Settings.Elements.SliderSetting name="MasterVolume" type="MasterVolume" enable-instant-preview="true">
+                <Bindings>
+                    <UnityEngine.Localization.LocalizedString property="Label" table="GUID:34510603f8b6d1a44b1b2ffa9aa551c9" entry="Id(3337205144051712)"/>
+                </Bindings>
+            </Tanks.UI.Menus.Settings.Elements.SliderSetting>
+            <Tanks.UI.Menus.Settings.Elements.SliderSetting name="MusicVolume" type="MusicVolume" enable-instant-preview="true">
+                <Bindings>
+                    <UnityEngine.Localization.LocalizedString property="Label" table="GUID:34510603f8b6d1a44b1b2ffa9aa551c9" entry="Id(3337490075705344)"/>
+                </Bindings>
+            </Tanks.UI.Menus.Settings.Elements.SliderSetting>
+            <Tanks.UI.Menus.Settings.Elements.SliderSetting name="SFXVolume" type="SFXVolume" enable-instant-preview="true">
+                <Bindings>
+                    <UnityEngine.Localization.LocalizedString property="Label" table="GUID:34510603f8b6d1a44b1b2ffa9aa551c9" entry="Id(3337645382393856)"/>
+                </Bindings>
+            </Tanks.UI.Menus.Settings.Elements.SliderSetting>
+            <Tanks.UI.Menus.Settings.Elements.SliderSetting name="UIVolume" type="UIVolume" enable-instant-preview="true">
+                <Bindings>
+                    <UnityEngine.Localization.LocalizedString property="Label" table="GUID:34510603f8b6d1a44b1b2ffa9aa551c9" entry="Id(3337773761650688)"/>
+                </Bindings>
+            </Tanks.UI.Menus.Settings.Elements.SliderSetting>
+        </ui:ScrollView>
+        <ui:VisualElement name="SettingsButtons">
+            <Tanks.UI.Elements.CustomButton name="ApplyButton" style="background-image: url(&quot;project://database/Assets/Plugins/Layer%20Lab/2D%20Icons-PictoIconPack01/PictoIcon_256/Icon_PictoIcon_Check.Png?fileID=21300000&amp;guid=02718b8b81f644dd5bb80349ad58b8ad&amp;type=3#Icon_PictoIcon_Check&quot;);">
+                <Bindings>
+                    <UnityEngine.Localization.LocalizedString property="text" table="GUID:34510603f8b6d1a44b1b2ffa9aa551c9" entry="Id(3638632466833408)"/>
+                </Bindings>
+            </Tanks.UI.Elements.CustomButton>
+            <Tanks.UI.Elements.CustomButton name="RevertButton" style="background-image: url(&quot;project://database/Assets/Plugins/Layer%20Lab/2D%20Icons-PictoIconPack01/PictoIcon_256/Icon_PictoIcon_Back.Png?fileID=21300000&amp;guid=ab31ece68847a4ee795dde79c8617c80&amp;type=3#Icon_PictoIcon_Back&quot;);">
+                <Bindings>
+                    <UnityEngine.Localization.LocalizedString property="text" table="GUID:34510603f8b6d1a44b1b2ffa9aa551c9" entry="Id(3641288212045824)"/>
+                </Bindings>
+            </Tanks.UI.Elements.CustomButton>
+            <Tanks.UI.Elements.CustomButton name="ResetToDefaultsButton" style="background-image: url(&quot;project://database/Assets/Plugins/Layer%20Lab/2D%20Icons-PictoIconPack01/PictoIcon_256/Icon_PictoIcon_Reset.Png?fileID=21300000&amp;guid=90f674be647fc400e8657272c7c7e3cc&amp;type=3#Icon_PictoIcon_Reset&quot;);">
+                <Bindings>
+                    <UnityEngine.Localization.LocalizedString property="text" table="GUID:34510603f8b6d1a44b1b2ffa9aa551c9" entry="Id(3638901065867264)"/>
+                </Bindings>
+            </Tanks.UI.Elements.CustomButton>
+        </ui:VisualElement>
+    </ui:VisualElement>
+</ui:UXML>

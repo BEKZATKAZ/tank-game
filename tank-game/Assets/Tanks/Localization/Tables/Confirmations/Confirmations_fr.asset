@@ -42,6 +42,14 @@ MonoBehaviour:
     m_Localized: QUITTER LE LOBBY
     m_Metadata:
       m_Items: []
+  - m_Id: 40000000000000003
+    m_Localized: RETOUR AU MENU PRINCIPAL
+    m_Metadata:
+      m_Items: []
+  - m_Id: 40000000000000004
+    m_Localized: "\xCAtes-vous s\xFBr de vouloir quitter la partie en cours et revenir au menu principal ?"
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds: []

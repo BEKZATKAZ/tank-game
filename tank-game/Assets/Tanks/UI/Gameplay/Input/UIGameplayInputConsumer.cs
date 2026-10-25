@@ -6,6 +6,7 @@ using Tanks.Shared.Bootstrap;
 using Tanks.Shared.Messaging;
 using Tanks.Shared.Playground;
 using Tanks.UI.Gameplay.GameStats;
+using Tanks.UI.Gameplay.Pause;
 using UnityEngine;
 using UnityEngine.UIElements;
 using VContainer;
@@ -29,6 +30,7 @@ namespace Tanks.UI.Gameplay.Input
         [Inject] private readonly IInputService<UIGameplayInput> _input;
         [Inject] private readonly IMessageBus _bus;
         [Inject] private readonly ISpectatorService _spectator;
+        [Inject] private readonly PauseMenuViewModel _pause;
 
         private bool _isGameEnded;
         private VisualElement _spectatorControls;
@@ -37,6 +39,13 @@ namespace Tanks.UI.Gameplay.Input
 
         private void LateUpdate()
         {
+            if (_pause.IsOpen)
+            {
+                if (_gameStats.IsVisible) _gameStats.Hide();
+                _spectatorControls.style.display = DisplayStyle.None;
+                return;
+            }
+
             UIGameplayInput input = _input.Read();
             UpdateSpectatorControls(input);
 

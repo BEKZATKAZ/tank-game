@@ -12,7 +12,7 @@ namespace Tanks.Shared.Entities.Health
             Max = max;
         }
 
-        public readonly float NormalizedCurrent => Current / Max;
+        public readonly float NormalizedCurrent => math.saturate((float)Current / Max);
         public readonly int Current;
         public readonly uint Max;
 

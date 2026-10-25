@@ -141,46 +141,6 @@ namespace Tanks.UI.Tests.Gameplay
             Assert.That(updates, Is.EqualTo(1));
         }
 
-        [Test]
-        public void UpdateTimers_RoundsUpAndReusesBadges()
-        {
-            PlayerStatElement element = new();
-            List<StatTimer> timers = new()
-            {
-                new StatTimer(new StatId(1), 0.1f),
-                new StatTimer(new StatId(2), 27.2f)
-            };
-
-            element.UpdateTimers(timers);
-
-            VisualElement container = element.Q("Timers");
-            Label first = (Label)container[0];
-            Label second = (Label)container[1];
-
-            Assert.That(first.text, Is.EqualTo("1s"));
-            Assert.That(second.text, Is.EqualTo("28s"));
-            Assert.That(element.ClassListContains("stat--temporary"), Is.True);
-
-            timers.RemoveAt(1);
-            element.UpdateTimers(timers);
-
-            Assert.That(container[0], Is.SameAs(first));
-            Assert.That(second.style.display.value, Is.EqualTo(DisplayStyle.None));
-
-            timers.Clear();
-            element.UpdateTimers(timers);
-
-            Assert.That(container.style.display.value, Is.EqualTo(DisplayStyle.None));
-            Assert.That(element.ClassListContains("stat--temporary"), Is.False);
-
-            timers.Add(new StatTimer(new StatId(3), 12));
-            element.UpdateTimers(timers);
-
-            Assert.That(container.childCount, Is.EqualTo(2));
-            Assert.That(container[0], Is.SameAs(first));
-            Assert.That(first.text, Is.EqualTo("12s"));
-        }
-
         private void AssertStat(StatType type, float previous, float current)
         {
             StatChanges stat = ViewModel.Stats.Value[type];

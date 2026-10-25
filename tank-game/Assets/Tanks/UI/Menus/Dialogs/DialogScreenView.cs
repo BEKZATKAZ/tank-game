@@ -64,14 +64,16 @@ namespace Tanks.UI.Menus.Dialogs
 
         private void OnYesConfirmed()
         {
-            ViewModel.ConfirmationYes();
+            DialogScreenViewModel viewModel = ViewModel;
             Hide();
+            viewModel.ConfirmationYes();
         }
 
         private void OnNoConfirmed()
         {
-            ViewModel.ConfirmationNo();
+            DialogScreenViewModel viewModel = ViewModel;
             Hide();
+            viewModel.ConfirmationNo();
         }
     }
 }

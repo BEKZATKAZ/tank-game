@@ -349,6 +349,16 @@ namespace Tanks.Client.Input
             ""id"": ""395a6c68-e712-4a77-8a02-cc1c10c68c34"",
             ""actions"": [
                 {
+                    ""name"": ""Pause"",
+                    ""type"": ""Button"",
+                    ""id"": ""7281545a-4cdd-47f9-9ef1-2b41d6044ac1"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false,
+                    ""priority"": 0
+                },
+                {
                     ""name"": ""GameStats"",
                     ""type"": ""Button"",
                     ""id"": ""130fffed-9bdf-45fa-b10f-d630c9793c56"",
@@ -380,6 +390,28 @@ namespace Tanks.Client.Input
                 }
             ],
             ""bindings"": [
+                {
+                    ""name"": """",
+                    ""id"": ""07a205c4-58cd-4058-bc48-6137334c14cb"",
+                    ""path"": ""<Keyboard>/escape"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": "";Keyboard & Mouse"",
+                    ""action"": ""Pause"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""aefbd724-b2cb-4ee8-9cf4-d1ebda36219e"",
+                    ""path"": ""<Gamepad>/start"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": "";Gamepad"",
+                    ""action"": ""Pause"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
                 {
                     ""name"": """",
                     ""id"": ""19eed45c-7a13-4cac-b195-f7a616039a65"",
@@ -489,6 +521,7 @@ namespace Tanks.Client.Input
             m_Turret_Fire = m_Turret.FindAction("Fire", throwIfNotFound: true);
             // UI
             m_UI = asset.FindActionMap("UI", throwIfNotFound: true);
+            m_UI_Pause = m_UI.FindAction("Pause", throwIfNotFound: true);
             m_UI_GameStats = m_UI.FindAction("GameStats", throwIfNotFound: true);
             m_UI_PreviousSpectatorTarget = m_UI.FindAction("PreviousSpectatorTarget", throwIfNotFound: true);
             m_UI_NextSpectatorTarget = m_UI.FindAction("NextSpectatorTarget", throwIfNotFound: true);
@@ -788,6 +821,7 @@ namespace Tanks.Client.Input
         // UI
         private readonly InputActionMap m_UI;
         private List<IUIActions> m_UIActionsCallbackInterfaces = new List<IUIActions>();
+        private readonly InputAction m_UI_Pause;
         private readonly InputAction m_UI_GameStats;
         private readonly InputAction m_UI_PreviousSpectatorTarget;
         private readonly InputAction m_UI_NextSpectatorTarget;
@@ -802,6 +836,10 @@ namespace Tanks.Client.Input
             /// Construct a new instance of the input action map wrapper class.
             /// </summary>
             public UIActions(@Controls wrapper) { m_Wrapper = wrapper; }
+            /// <summary>
+            /// Provides access to the underlying input action "UI/Pause".
+            /// </summary>
+            public InputAction @Pause => m_Wrapper.m_UI_Pause;
             /// <summary>
             /// Provides access to the underlying input action "UI/GameStats".
             /// </summary>
@@ -840,6 +878,9 @@ namespace Tanks.Client.Input
             {
                 if (instance == null || m_Wrapper.m_UIActionsCallbackInterfaces.Contains(instance)) return;
                 m_Wrapper.m_UIActionsCallbackInterfaces.Add(instance);
+                @Pause.started += instance.OnPause;
+                @Pause.performed += instance.OnPause;
+                @Pause.canceled += instance.OnPause;
                 @GameStats.started += instance.OnGameStats;
                 @GameStats.performed += instance.OnGameStats;
                 @GameStats.canceled += instance.OnGameStats;
@@ -860,6 +901,9 @@ namespace Tanks.Client.Input
             /// <seealso cref="UIActions" />
             private void UnregisterCallbacks(IUIActions instance)
             {
+                @Pause.started -= instance.OnPause;
+                @Pause.performed -= instance.OnPause;
+                @Pause.canceled -= instance.OnPause;
                 @GameStats.started -= instance.OnGameStats;
                 @GameStats.performed -= instance.OnGameStats;
                 @GameStats.canceled -= instance.OnGameStats;
@@ -979,6 +1023,13 @@ namespace Tanks.Client.Input
         /// <seealso cref="UIActions.RemoveCallbacks(IUIActions)" />
         public interface IUIActions
         {
+            /// <summary>
+            /// Method invoked when associated input action "Pause" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+            /// </summary>
+            /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
+            /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
+            /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
+            void OnPause(InputAction.CallbackContext context);
             /// <summary>
             /// Method invoked when associated input action "GameStats" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
             /// </summary>

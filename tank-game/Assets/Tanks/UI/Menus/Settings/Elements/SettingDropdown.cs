@@ -16,11 +16,12 @@ namespace Tanks.UI.Menus.Settings.Elements
         public SettingDropdown()
         {
             _dropdown = new DropdownField(Label);
-            ChoiceKeys = new List<string>();
             Value = 0;
 
             Add(_dropdown);
             _dropdown.RegisterValueChangedCallback(x => Value = _dropdown.index);
+            RegisterCallback<AttachToPanelEvent>(OnAttachedToPanel);
+            RegisterCallback<DetachFromPanelEvent>(OnDetachedFromPanel);
 
             LocalizationSettings.SelectedLocaleChanged += OnLocaleChanged;
         }
@@ -32,7 +33,7 @@ namespace Tanks.UI.Menus.Settings.Elements
             set
             {
                 _choiceKeys = value ?? new List<string>();
-                RefreshChoicesAsync(_choiceKeys.ToList()).Forget();
+                if (panel != null) RefreshChoicesAsync(_choiceKeys.ToList()).Forget();
                 NotifyPropertyChanged(nameof(ChoiceKeys));
             }
         }
@@ -46,9 +47,16 @@ namespace Tanks.UI.Menus.Settings.Elements
             int version = ++_refreshVersion;
             var choices = new List<string>(keys.Count);
 
+            if (keys.Count == 0)
+            {
+                _dropdown.choices = choices;
+                return;
+            }
+
             try
             {
                 await LocalizationSettings.InitializationOperation.Task;
+                if (version != _refreshVersion) return;
 
                 foreach (string key in keys)
                 {
@@ -83,6 +91,8 @@ namespace Tanks.UI.Menus.Settings.Elements
         public override void OnDestroyed()
         {
             LocalizationSettings.SelectedLocaleChanged -= OnLocaleChanged;
+            UnregisterCallback<AttachToPanelEvent>(OnAttachedToPanel);
+            UnregisterCallback<DetachFromPanelEvent>(OnDetachedFromPanel);
             _refreshVersion++;
         }
 
@@ -104,7 +114,18 @@ namespace Tanks.UI.Menus.Settings.Elements
 
         private void OnLocaleChanged(Locale locale)
         {
+            if (panel is null) return;
             RefreshChoicesAsync(_choiceKeys.ToList()).Forget();
+        }
+
+        private void OnAttachedToPanel(AttachToPanelEvent evt)
+        {
+            RefreshChoicesAsync(_choiceKeys.ToList()).Forget();
+        }
+
+        private void OnDetachedFromPanel(DetachFromPanelEvent evt)
+        {
+            _refreshVersion++;
         }
     }
 }

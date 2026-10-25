@@ -11,6 +11,8 @@ namespace Tanks.UI.Menus.Dialogs
         [SerializeField] private StudioEventEmitter _music;
         [SerializeField] private EventReference _errorSound;
 
+        public bool IsVisible => _view.IsVisible;
+
         public void ShowConfirmation(string code, Action onYes = null, Action onNo = null)
         {
             _view.Show();
@@ -29,6 +31,7 @@ namespace Tanks.UI.Menus.Dialogs
 
         private async UniTaskVoid MusicCutoffAsync()
         {
+            if (_music == false) return;
             _music.SetParameter("MainMenuMusicCutoff", 1, ignoreseekspeed: false);
 
             while (_view.IsVisible)

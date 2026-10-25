@@ -39,6 +39,14 @@ MonoBehaviour:
     m_Key: confirm.leave-lobby.header
     m_Metadata:
       m_Items: []
+  - m_Id: 40000000000000003
+    m_Key: confirm.quit-to-menu.header
+    m_Metadata:
+      m_Items: []
+  - m_Id: 40000000000000004
+    m_Key: confirm.quit-to-menu.message
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:

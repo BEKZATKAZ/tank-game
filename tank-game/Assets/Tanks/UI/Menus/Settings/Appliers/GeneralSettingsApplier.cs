@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Cysharp.Threading.Tasks;
+using System;
 using Tanks.Core.Settings;
 using Tanks.Localization;
 
@@ -18,9 +19,20 @@ namespace Tanks.UI.Menus.Settings
 
         private readonly ISettingsService _settings;
         private readonly ILocalizationDatabase _localization;
+        private int _languageVersion;
+        private bool _disposed;
 
         private void ApplyGameLanguage(int index)
         {
+            if (_disposed) return;
+            ApplyGameLanguageAsync(index, ++_languageVersion).Forget();
+        }
+
+        private async UniTask ApplyGameLanguageAsync(int index, int version)
+        {
+            await _localization.WaitForInitializationAsync();
+            if (_disposed || version != _languageVersion) return;
+
             _localization.SetLocale((GameLanguage)index switch
             {
                 GameLanguage.Russian => "ru",
@@ -31,6 +43,9 @@ namespace Tanks.UI.Menus.Settings
 
         public void Dispose()
         {
+            if (_disposed) return;
+            _disposed = true;
+
             _settings.Unbind(PlayerSetting.Language, ApplyGameLanguage);
         }
     }

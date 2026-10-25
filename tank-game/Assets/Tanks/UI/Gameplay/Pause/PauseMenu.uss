@@ -1,0 +1,31 @@
+#PauseOverlay {
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.55);
+    justify-content: center;
+    align-items: center;
+}
+
+#PauseContent {
+    flex-direction: row;
+    max-height: 90%;
+    max-width: 95%;
+}
+
+#PauseContent #Buttons {
+    justify-content: center;
+    margin-right: 30px;
+    min-width: 460px;
+}
+
+#PauseContent #Menu {
+    width: 1150px;
+    max-height: 850px;
+}
+
+#PauseContent .unity-button:focus {
+    border-color: var(--accent-color);
+}

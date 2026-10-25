@@ -212,6 +212,14 @@ MonoBehaviour:
     m_Localized: "\u041D\u0435 \u0433\u043E\u0442\u043E\u0432"
     m_Metadata:
       m_Items: []
+  - m_Id: 40000000000000001
+    m_Localized: "ПРОДОЛЖИТЬ"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 40000000000000002
+    m_Localized: "ВЫЙТИ В ГЛАВНОЕ МЕНЮ"
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:
