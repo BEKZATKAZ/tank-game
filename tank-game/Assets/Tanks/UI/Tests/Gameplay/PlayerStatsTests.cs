@@ -9,6 +9,7 @@ using Tanks.Shared.Stats;
 using Tanks.Shared.Weapons;
 using Tanks.UI.Gameplay.PlayerStats;
 using Unity.Mathematics;
+using UnityEngine.UIElements;
 
 namespace Tanks.UI.Tests.Gameplay
 {
@@ -70,6 +71,114 @@ namespace Tanks.UI.Tests.Gameplay
             AssertStat(StatType.Speed, baseSpeed, baseSpeed * 1.5f);
             AssertStat(StatType.Defense, 0, -10);
             AssertStat(StatType.RateOfFire, baseRateOfFire, baseRateOfFire * 2);
+        }
+
+        [Test]
+        public void Update_TimersChangedWithoutStatChange_RefreshesInExpiryOrder()
+        {
+            IEntityBehaviour player = CreatePossessedEntity();
+            IStatOwnerBehaviour statOwner = player.GetBehaviour<IStatOwnerBehaviour>();
+            List<StatTimer> timers = new()
+            {
+                new StatTimer(new StatId(1), 28),
+                new StatTimer(new StatId(2), 12)
+            };
+
+            statOwner.When(owner => owner.GetStatTimers(StatType.Speed, Arg.Any<List<StatTimer>>()))
+                .Do(args => args.Arg<List<StatTimer>>().AddRange(timers));
+
+            ViewModel.Update();
+
+            int updates = 0;
+            ViewModel.Stats.Bind(_ => updates++);
+            updates = 0;
+
+            timers[1] = new StatTimer(new StatId(2), 11);
+            ViewModel.Update();
+
+            StatChanges speed = ViewModel.Stats.Value[StatType.Speed];
+
+            Assert.That(updates, Is.EqualTo(1));
+            Assert.That(speed.CurrentValue, Is.EqualTo(10));
+            Assert.That(speed.Change, Is.Zero);
+            Assert.That(speed.Timers[0].Id, Is.EqualTo(new StatId(2)));
+            Assert.That(speed.Timers[0].RemainingSeconds, Is.EqualTo(11));
+            Assert.That(speed.Timers[1].RemainingSeconds, Is.EqualTo(28));
+
+            ViewModel.Update();
+
+            Assert.That(updates, Is.EqualTo(1));
+
+            timers[0] = new StatTimer(new StatId(1), 27.9f);
+            ViewModel.Update();
+
+            Assert.That(updates, Is.EqualTo(1));
+
+            timers.Clear();
+            ViewModel.Update();
+
+            Assert.That(updates, Is.EqualTo(2));
+            Assert.That(speed.Timers, Is.Empty);
+        }
+
+        [TestCase(false)]
+        [TestCase(true)]
+        public void OnPossessed_ChangedOrLost_ClearsTimersImmediately(bool lost)
+        {
+            IClientEntityService service = Substitute.For<IClientEntityService>();
+            using PlayerStatsViewModel viewModel = new(service);
+            IEntityBehaviour previous = CreatePossessedEntity();
+
+            viewModel.Stats.Value[StatType.Speed].Timers.Add(new StatTimer(new StatId(1), 10));
+
+            int updates = 0;
+            viewModel.Stats.Bind(_ => updates++);
+            updates = 0;
+
+            service.Changed += Raise.Event<PossessedEntityChanged>(previous, lost ? null : CreatePossessedEntity());
+
+            Assert.That(viewModel.Stats.Value[StatType.Speed].Timers, Is.Empty);
+            Assert.That(updates, Is.EqualTo(1));
+        }
+
+        [Test]
+        public void UpdateTimers_RoundsUpAndReusesBadges()
+        {
+            PlayerStatElement element = new();
+            List<StatTimer> timers = new()
+            {
+                new StatTimer(new StatId(1), 0.1f),
+                new StatTimer(new StatId(2), 27.2f)
+            };
+
+            element.UpdateTimers(timers);
+
+            VisualElement container = element.Q("Timers");
+            Label first = (Label)container[0];
+            Label second = (Label)container[1];
+
+            Assert.That(first.text, Is.EqualTo("1s"));
+            Assert.That(second.text, Is.EqualTo("28s"));
+            Assert.That(element.ClassListContains("stat--temporary"), Is.True);
+
+            timers.RemoveAt(1);
+            element.UpdateTimers(timers);
+
+            Assert.That(container[0], Is.SameAs(first));
+            Assert.That(second.style.display.value, Is.EqualTo(DisplayStyle.None));
+
+            timers.Clear();
+            element.UpdateTimers(timers);
+
+            Assert.That(container.style.display.value, Is.EqualTo(DisplayStyle.None));
+            Assert.That(element.ClassListContains("stat--temporary"), Is.False);
+
+            timers.Add(new StatTimer(new StatId(3), 12));
+            element.UpdateTimers(timers);
+
+            Assert.That(container.childCount, Is.EqualTo(2));
+            Assert.That(container[0], Is.SameAs(first));
+            Assert.That(first.text, Is.EqualTo("12s"));
         }
 
         private void AssertStat(StatType type, float previous, float current)

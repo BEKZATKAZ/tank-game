@@ -11,6 +11,7 @@ namespace Tanks.Shared.Stats
 
         private readonly Dictionary<StatType, Dictionary<StatId, AppliedStat>> _applied = new();
         private int _lastTick;
+        private float _tickDelta;
 
         [Rpc(SendTo.Everyone, InvokePermission = RpcInvokePermission.Server)]
         private void OverrideStatEveryoneRpc(StatOverriddenFromServer message)
@@ -110,6 +111,25 @@ namespace Tanks.Shared.Stats
             return math.clamp(sum, parameters.MinValue, parameters.MaxValue);
         }
 
+        public void GetStatTimers(StatType type, List<StatTimer> results)
+        {
+            results.Clear();
+
+            if (_applied.TryGetValue(type, out var stats) == false) return;
+
+            foreach ((StatId id, AppliedStat stat) in stats)
+            {
+                if (stat.Duration <= 0) continue;
+
+                float elapsedSeconds = (_lastTick - stat.AppliedTick) * _tickDelta;
+                float remainingSeconds = stat.Duration - elapsedSeconds;
+
+                if (remainingSeconds <= 0) continue;
+
+                results.Add(new StatTimer(id, remainingSeconds));
+            }
+        }
+
         public float GetDiminishingReturns(StatType type, float value)
         {
             StatTypeParameters parameters = Config.GetParameters(type);
@@ -126,6 +146,7 @@ namespace Tanks.Shared.Stats
         public override void OnTick(int tick, float tickDelta)
         {
             _lastTick = tick;
+            _tickDelta = tickDelta;
 
             foreach (var stats in _applied.Values)
             {

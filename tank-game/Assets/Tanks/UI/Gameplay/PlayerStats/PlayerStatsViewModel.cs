@@ -17,6 +17,7 @@ namespace Tanks.UI.Gameplay.PlayerStats
     {
         public float CurrentValue { get; set; }
         public float Change { get; set; }
+        public List<StatTimer> Timers { get; } = new();
     }
 
     public sealed class PlayerStatsViewModel : IViewModel, IDisposable
@@ -41,6 +42,7 @@ namespace Tanks.UI.Gameplay.PlayerStats
 
         private readonly IClientEntityService _clientEntityService;
         private readonly BindableProperty<IDictionary<StatType, StatChanges>> _lastStats;
+        private readonly List<StatTimer> _timerBuffer = new();
 
         private IStatOwnerBehaviour _statOwner;
         private IWeaponHolderBehaviour _weaponHolder;
@@ -69,6 +71,8 @@ namespace Tanks.UI.Gameplay.PlayerStats
 
             foreach ((StatType type, StatChanges changes) in _lastStats.Value)
             {
+                hasChanged |= UpdateTimers(type, changes.Timers);
+
                 float baseValue = type switch
                 {
                     StatType.Damage => _cachedBaseDamage,
@@ -107,11 +111,51 @@ namespace Tanks.UI.Gameplay.PlayerStats
             return damageModules.Max(x => x.MaxDamage);
         }
 
+        private bool UpdateTimers(StatType type, List<StatTimer> timers)
+        {
+            _timerBuffer.Clear();
+            _statOwner.GetStatTimers(type, _timerBuffer);
+
+            _timerBuffer.Sort((left, right) =>
+            {
+                int comparison = left.RemainingSeconds.CompareTo(right.RemainingSeconds);
+
+                return comparison != 0 ? comparison : left.Id.Value.CompareTo(right.Id.Value);
+            });
+
+            bool hasChanged = timers.Count != _timerBuffer.Count;
+
+            for (int i = 0; i < timers.Count && hasChanged == false; i++)
+            {
+                hasChanged = timers[i].Id.Equals(_timerBuffer[i].Id) == false ||
+                    math.ceil(timers[i].RemainingSeconds) != math.ceil(_timerBuffer[i].RemainingSeconds);
+            }
+
+            timers.Clear();
+            timers.AddRange(_timerBuffer);
+
+            return hasChanged;
+        }
+
         private void OnPossessed(IEntityBehaviour previous, IEntityBehaviour current)
         {
             _statOwner = current?.GetBehaviour<IStatOwnerBehaviour>();
             _weaponHolder = current?.GetBehaviour<IWeaponHolderBehaviour>();
             _driveBehaviour = current?.GetBehaviour<ITankDriveBehaviour>();
+
+            _currentWeapon = null;
+            _cachedBaseDamage = 0;
+
+            bool hasTimers = false;
+
+            foreach (StatChanges changes in _lastStats.Value.Values)
+            {
+                hasTimers |= changes.Timers.Count > 0;
+                changes.Timers.Clear();
+                changes.Change = 0;
+            }
+
+            if (hasTimers) _lastStats.ForceRefresh();
         }
     }
 }

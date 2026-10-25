@@ -1,9 +1,12 @@
-﻿namespace Tanks.Shared.Stats
+﻿using System.Collections.Generic;
+
+namespace Tanks.Shared.Stats
 {
     public interface IStatOwnerBehaviour : INetworkBehaviourExtended
     {
         float GetStat(StatType type, float baseValue);
         float GetDiminishingReturns(StatType type, float value);
+        void GetStatTimers(StatType type, List<StatTimer> results);
 
         bool HasStat(StatId id);
 

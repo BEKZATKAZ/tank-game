@@ -1,5 +1,6 @@
 using NUnit.Framework;
 using System;
+using System.Collections.Generic;
 using Tanks.Shared.Stats;
 using UnityEngine;
 
@@ -125,6 +126,69 @@ namespace Tanks.Shared.Tests.Stats
 
             Assert.AreEqual(1, _owner.GetStat(StatType.RateOfFire, baseValue),
                 "All stats should run out");
+        }
+
+        [Test]
+        public void GetStatTimers_StackedModifiers_UsesSimulationTime()
+        {
+            _owner.OnTick(100, 0.25f);
+
+            StatId first = _owner.AddStat(StatType.Speed, StatValueType.Flat, 5, duration: 10);
+            StatId second = _owner.AddStat(StatType.Speed, StatValueType.Percent, 50, duration: 20);
+            _owner.AddStat(StatType.Defense, StatValueType.Flat, 5, duration: 30);
+            List<StatTimer> timers = new();
+
+            _owner.OnTick(108, 0.25f);
+            _owner.GetStatTimers(StatType.Speed, timers);
+
+            Assert.That(timers.Count, Is.EqualTo(2));
+            Assert.That(timers.Find(timer => timer.Id.Equals(first)).RemainingSeconds, Is.EqualTo(8));
+            Assert.That(timers.Find(timer => timer.Id.Equals(second)).RemainingSeconds, Is.EqualTo(18));
+        }
+
+        [Test]
+        public void GetStatTimers_RefreshedModifier_RestartsCountdown()
+        {
+            StatId id = _owner.AddStat(StatType.Speed, StatValueType.Flat, 5, duration: 10);
+            List<StatTimer> timers = new();
+
+            _owner.OnTick(8, 0.25f);
+
+            _owner.OverrideStat(id, StatType.Speed, StatValueType.Flat, 5, duration: 20);
+            _owner.GetStatTimers(StatType.Speed, timers);
+
+            Assert.That(timers.Count, Is.EqualTo(1));
+            Assert.That(timers[0].Id, Is.EqualTo(id));
+            Assert.That(timers[0].RemainingSeconds, Is.EqualTo(20));
+        }
+
+        [Test]
+        public void GetStatTimers_ExpiredOrPermanentModifiers_AreExcluded()
+        {
+            StatId permanent = _owner.AddStat(StatType.Speed, StatValueType.Flat, 5);
+            _owner.AddStat(StatType.Speed, StatValueType.Flat, 5, duration: 0);
+            _owner.AddStat(StatType.Speed, StatValueType.Flat, 5, duration: 1);
+            List<StatTimer> timers = new();
+
+            _owner.GetStatTimers(StatType.Speed, timers);
+
+            Assert.That(timers.Count, Is.EqualTo(1));
+
+            _owner.OnTick(4, 0.25f);
+            _owner.GetStatTimers(StatType.Speed, timers);
+
+            Assert.That(timers, Is.Empty);
+            Assert.That(_owner.HasStat(permanent), Is.True);
+        }
+
+        [Test]
+        public void GetStatTimers_MissingStat_ClearsPreviousResults()
+        {
+            List<StatTimer> timers = new() { new StatTimer(new StatId(1), 10) };
+
+            _owner.GetStatTimers(StatType.Speed, timers);
+
+            Assert.That(timers, Is.Empty);
         }
 
         [Test]

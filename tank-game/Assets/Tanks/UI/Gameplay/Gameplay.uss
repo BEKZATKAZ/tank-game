@@ -295,6 +295,28 @@
     -unity-background-scale-mode: scale-to-fit;
 }
 
+.stat--temporary {
+    opacity: 1;
+}
+
+.stat-timers {
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-items: center;
+    align-self: center;
+    max-width: 300px;
+    margin-left: 16px;
+}
+
+.stat-timer {
+    margin-right: 8px;
+    padding: 2px 8px;
+    border-radius: 6px;
+    background-color: rgba(0, 0, 0, 0.75);
+    font-size: 22px;
+    -unity-font-style: bold;
+}
+
 .stat-value {
     margin-left: 15px;
     font-size: 32px;

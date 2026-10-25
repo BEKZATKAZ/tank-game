@@ -34,6 +34,7 @@ namespace Tanks.UI.Gameplay.PlayerStats
                 PlayerStatElement element = _stats[type];
                 element.Value = newState.CurrentValue;
                 element.Change = newState.Change;
+                element.UpdateTimers(newState.Timers);
             }
         }
 
