@@ -47,6 +47,8 @@ namespace Tanks.Client.Bootstrap
         private async UniTask SetupLocalhost()
         {
 #if UNITY_EDITOR
+            if (_client.IsConnected == false) _client.Reinitialize();
+
             if (CurrentPlayer.IsMainEditor)
             {
                 await _client.SendRequestAsync(new LoadSceneRequest

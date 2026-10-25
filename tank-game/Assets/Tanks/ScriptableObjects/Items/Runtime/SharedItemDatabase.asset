@@ -36,6 +36,35 @@ MonoBehaviour:
         Value: 50
         ValueType: 1
     _itemStats: []
+  - _identifier: stats-light
+    _tier: 2
+    _onPickUpActions: []
+    _playerStats: []
+    _itemStats:
+    - key: damage-boost
+      value:
+        Value: 50
+        ValueType: 1
+    - key: speed-boost
+      value:
+        Value: 25
+        ValueType: 1
+    - key: defense-boost
+      value:
+        Value: 15
+        ValueType: 0
+    - key: rate-of-fire-boost
+      value:
+        Value: 40
+        ValueType: 1
+    - key: resistance-boost
+      value:
+        Value: 5
+        ValueType: 0
+    - key: interval
+      value:
+        Value: 9
+        ValueType: 0
   - _identifier: weapon_bomb-launcher
     _tier: 2
     _onPickUpActions:
@@ -63,6 +92,27 @@ MonoBehaviour:
         Value: 35
         ValueType: 1
     _itemStats: []
+  - _identifier: burst-of-adrenaline
+    _tier: 1
+    _onPickUpActions: []
+    _playerStats: []
+    _itemStats:
+    - key: duration
+      value:
+        Value: 7.5
+        ValueType: 0
+    - key: health-threshold
+      value:
+        Value: 20
+        ValueType: 0
+    - key: speed-boost
+      value:
+        Value: 50
+        ValueType: 1
+    - key: rate-of-fire-boost
+      value:
+        Value: 50
+        ValueType: 1
   - _identifier: health-up
     _tier: 1
     _onPickUpActions: []
@@ -118,6 +168,16 @@ MonoBehaviour:
       value:
         Value: 20
         ValueType: 0
+  - _identifier: pillow-protection
+    _tier: 0
+    _onPickUpActions: []
+    _playerStats:
+    - key: 2
+      value:
+        Duration: -1
+        Value: 3
+        ValueType: 0
+    _itemStats: []
   - _identifier: rapid-loader
     _tier: 0
     _onPickUpActions: []
@@ -128,6 +188,76 @@ MonoBehaviour:
         Value: 0.4
         ValueType: 0
     _itemStats: []
+  - _identifier: rusty-part
+    _tier: 0
+    _onPickUpActions: []
+    _playerStats:
+    - key: 0
+      value:
+        Duration: -1
+        Value: 1.5
+        ValueType: 0
+    _itemStats: []
+  - _identifier: slippery-soap
+    _tier: 0
+    _onPickUpActions: []
+    _playerStats:
+    - key: 1
+      value:
+        Duration: -1
+        Value: 1
+        ValueType: 0
+    - key: 3
+      value:
+        Duration: -1
+        Value: -2
+        ValueType: 0
+    _itemStats: []
+  - _identifier: dna-reconstruction
+    _tier: 3
+    _onPickUpActions: []
+    _playerStats: []
+    _itemStats:
+    - key: damage-boost
+      value:
+        Value: 60
+        ValueType: 1
+    - key: damage-penalty
+      value:
+        Value: -40
+        ValueType: 1
+    - key: speed-boost
+      value:
+        Value: 60
+        ValueType: 1
+    - key: speed-penalty
+      value:
+        Value: -40
+        ValueType: 1
+    - key: defense-boost
+      value:
+        Value: 25
+        ValueType: 0
+    - key: defense-penalty
+      value:
+        Value: -20
+        ValueType: 0
+    - key: resistance-boost
+      value:
+        Value: 10
+        ValueType: 0
+    - key: resistance-penalty
+      value:
+        Value: -10
+        ValueType: 0
+    - key: rate-of-fire-boost
+      value:
+        Value: 60
+        ValueType: 1
+    - key: rate-of-fire-penalty
+      value:
+        Value: -40
+        ValueType: 1
   - _identifier: missing-texture
     _tier: 3
     _onPickUpActions: []
@@ -153,6 +283,15 @@ MonoBehaviour:
         Value: -99999
         ValueType: 0
     _itemStats: []
+  - _identifier: re-reroll
+    _tier: 3
+    _onPickUpActions: []
+    _playerStats: []
+    _itemStats:
+    - key: interval
+      value:
+        Value: 5
+        ValueType: 0
   - _identifier: true-balance
     _tier: 3
     _onPickUpActions: []

@@ -230,7 +230,102 @@ MonoBehaviour:
       m_Items:
       - rid: 937747718553469026
   - m_Id: 27924629891276801
-    m_Localized: "picked up"
+    m_Localized: picked up
+    m_Metadata:
+      m_Items: []
+  - m_Id: 34421328096747520
+    m_Localized: Pillow Protection
+    m_Metadata:
+      m_Items: []
+  - m_Id: 34421328138690560
+    m_Localized: Not an airbag, but still useful.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 34421328138690561
+    m_Localized: Slightly gain defense,
+    m_Metadata:
+      m_Items: []
+  - m_Id: 34421328138690562
+    m_Localized: Slippery Soap
+    m_Metadata:
+      m_Items: []
+  - m_Id: 34421328138690563
+    m_Localized: Trust me, you will feel the effect when you drive forward and shoot backwards.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 34421328138690564
+    m_Localized: Gain speed but lose resistance
+    m_Metadata:
+      m_Items: []
+  - m_Id: 34421328138690565
+    m_Localized: Rusty Part
+    m_Metadata:
+      m_Items: []
+  - m_Id: 34421328138690566
+    m_Localized: Despite its rust, you will deal more damage.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 34421328138690567
+    m_Localized: Deal slightly more damage
+    m_Metadata:
+      m_Items: []
+  - m_Id: 34421328138690571
+    m_Localized: Burst of Adrenaline
+    m_Metadata:
+      m_Items: []
+  - m_Id: 34421328138690572
+    m_Localized: When below {health-threshold} HP, gain speed and rate of fire for {duration} seconds. Works only once per round.
+    m_Metadata:
+      m_Items:
+      - rid: 937747718553469026
+  - m_Id: 34421328138690573
+    m_Localized: Flee or fight on the verge of death.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 34421328138690574
+    m_Localized: Re-ReRoll
+    m_Metadata:
+      m_Items: []
+  - m_Id: 34421328138690575
+    m_Localized: This thing shuffles your stats every {interval} seconds. Stats with a value of zero are ignored and not affected. Some stats might hit their cap.
+    m_Metadata:
+      m_Items:
+      - rid: 937747718553469026
+  - m_Id: 34421328138690576
+    m_Localized: Now your stats have a life on their own.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 34446604776202240
+    m_Localized: Stats Light
+    m_Metadata:
+      m_Items: []
+  - m_Id: 34446604822339584
+    m_Localized: Every {interval} seconds, your stats increase one by one. Only one stat can be affected at a time, previous stats get back to normal. Once it passes the last stat, the cycle repeats from the first stat.
+    m_Metadata:
+      m_Items:
+      - rid: 937747718553469026
+  - m_Id: 34446604822339585
+    m_Localized: Even stats tailor for the traffic.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 34446604822339586
+    m_Localized: DNA Reconstruction
+    m_Metadata:
+      m_Items: []
+  - m_Id: 34446604822339587
+    m_Localized: 'Boosts one random stat and weakens another.
+
+
+      Damage, speed and rate of fire: {damage-boost} / {damage-penalty}.
+
+      Defense: +{defense-boost} / {defense-penalty}.
+
+      Resistance: +{resistance-boost} / {resistance-penalty}.'
+    m_Metadata:
+      m_Items:
+      - rid: 937747718553469026
+  - m_Id: 34446604822339588
+    m_Localized: Evolution comes at a price.
     m_Metadata:
       m_Items: []
   references:
@@ -247,3 +342,7 @@ MonoBehaviour:
         - id: 25751396253392896
         - id: 26924559217680384
         - id: 27924629891276800
+        - id: 34446604822339584
+        - id: 34421328138690572
+        - id: 34421328138690575
+        - id: 34446604822339587

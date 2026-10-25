@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using Tanks.Shared.Entities;
 using Tanks.Shared.Entities.Health;
 using Tanks.Shared.Items.Behaviours;
@@ -55,8 +56,15 @@ namespace Tanks.Shared.Items
             {
                 foreach (ItemBehaviourBase behaviour in _database.GetBehaviours(item))
                 {
-                    behaviour.OnHealthChanged(
-                        this, message.From, message.OldState, message.AuthoritativeState);
+                    try
+                    {
+                        behaviour.OnHealthChanged(
+                            this, message.From, message.OldState, message.AuthoritativeState);
+                    }
+                    catch (Exception ex)
+                    {
+                        Debug.LogException(ex);
+                    }
                 }
             }
         }
@@ -69,7 +77,8 @@ namespace Tanks.Shared.Items
             {
                 foreach (ItemBehaviourBase behaviour in _database.GetBehaviours(item))
                 {
-                    behaviour.OnFire(this, message);
+                    try { behaviour.OnFire(this, message); }
+                    catch (Exception ex) { Debug.LogException(ex); }
                 }
             }
         }
@@ -97,7 +106,8 @@ namespace Tanks.Shared.Items
 
             foreach (ItemBehaviourBase behaviour in _database.GetBehaviours(item.Identifier))
             {
-                behaviour.OnPickup(this);
+                try { behaviour.OnPickup(this); }
+                catch (Exception ex) { Debug.LogException(ex); }
             }
         }
 
@@ -118,6 +128,29 @@ namespace Tanks.Shared.Items
         {
             _bus?.UnregisterHandler<HealthChangedFromServer>(this);
             _bus?.UnregisterHandler<WeaponUsed>(this);
+
+            foreach (ItemIdentifier item in _items)
+            {
+                foreach (ItemBehaviourBase behaviour in _database.GetBehaviours(item))
+                {
+                    try { behaviour.OnDestroy(this); }
+                    catch (Exception ex) { Debug.LogException(ex); }
+                }
+            }
+
+            base.OnDestroy();
+        }
+
+        public override void OnTick(int tick, float tickDelta)
+        {
+            foreach (ItemIdentifier item in _items)
+            {
+                foreach (ItemBehaviourBase behaviour in _database.GetBehaviours(item))
+                {
+                    try { behaviour.OnTick(this, tick, tickDelta); }
+                    catch (Exception ex) { Debug.LogException(ex); }
+                }
+            }
         }
     }
 }

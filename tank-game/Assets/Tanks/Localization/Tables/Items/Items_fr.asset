@@ -198,7 +198,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 26193936811253760
-    m_Localized: lance-bombes
+    m_Localized: Lance-bombes
     m_Metadata:
       m_Items: []
   - m_Id: 26194437552431104
@@ -230,7 +230,95 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 27924629891276801
-    m_Localized: "a ramassé"
+    m_Localized: "a ramass\xE9"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 34421328096747520
+    m_Localized: Protection du coussin
+    m_Metadata:
+      m_Items: []
+  - m_Id: 34421328138690560
+    m_Localized: "Ce n'est pas un coussin de s\xE9curit\xE9, mais c'est utile."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 34421328138690561
+    m_Localized: "Vous augmentez l\xE9g\xE8rement votre d\xE9fense."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 34421328138690562
+    m_Localized: Savon glissant
+    m_Metadata:
+      m_Items: []
+  - m_Id: 34421328138690563
+    m_Localized: "Croyez-moi, vous en ressentirez l'effet en conduisant vers l'avant et en tirant vers l'arri\xE8re."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 34421328138690564
+    m_Localized: "Vous augmentez votre vitesse mais perdez en r\xE9sistance."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 34421328138690565
+    m_Localized: "Pi\xE8ce de rechange rouill\xE9e"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 34421328138690566
+    m_Localized: "Malgr\xE9 sa rouille, vous causerez plus de d\xE9g\xE2ts."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 34421328138690567
+    m_Localized: "Vous infligez l\xE9g\xE8rement plus de d\xE9g\xE2ts."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 34421328138690571
+    m_Localized: "Pouss\xE9e d'adr\xE9naline"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 34421328138690572
+    m_Localized: "Lorsque vos points de vie sont inf\xE9rieurs \xE0 {health-threshold}, votre vitesse et votre cadence de tir augmentent pendant {duration} secondes. Cet effet ne s'applique qu'une seule fois par manche."
+    m_Metadata:
+      m_Items:
+      - rid: 5824281740147687477
+  - m_Id: 34421328138690573
+    m_Localized: Fuir ou combattre au seuil de la mort.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 34421328138690574
+    m_Localized: Re-Relancer
+    m_Metadata:
+      m_Items: []
+  - m_Id: 34421328138690575
+    m_Localized: "Ce syst\xE8me m\xE9lange vos stats toutes les {interval} secondes. Les stats avec une valeur de z\xE9ro sont ignor\xE9es et ne sont pas affect\xE9es. Certaines peuvent atteindre la limite."
+    m_Metadata:
+      m_Items:
+      - rid: 5824281740147687477
+  - m_Id: 34421328138690576
+    m_Localized: Maintenant, vos stats vivent leur vie.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 34446604776202240
+    m_Localized: Feu des stats
+    m_Metadata:
+      m_Items: []
+  - m_Id: 34446604822339584
+    m_Localized: "Toutes les {interval} secondes, vos stats augmentent tour \xE0 tour. Une seule stat peut \xEAtre active \xE0 la fois, les stats pr\xE9c\xE9dentes reviennent \xE0 leur \xE9tat initial. Apr\xE8s la derni\xE8re stat, le cycle recommence avec la premi\xE8re."
+    m_Metadata:
+      m_Items:
+      - rid: 5824281740147687477
+  - m_Id: 34446604822339585
+    m_Localized: "Apr\xE8s tout, m\xEAme les stats sont ajust\xE9es en fonction du trafic."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 34446604822339586
+    m_Localized: Reconstruction de l'ADN
+    m_Metadata:
+      m_Items: []
+  - m_Id: 34446604822339587
+    m_Localized: "Augmente une stat al\xE9atoire et diminue une autre.\n\nD\xE9g\xE2ts, vitesse et cadence de tir\_: {damage-boost} / {damage-penalty}.\nD\xE9fense\_: {defense-boost} / {defense-penalty}.\nR\xE9sistance\_: {resistance-boost} / {resistance-penalty}."
+    m_Metadata:
+      m_Items:
+      - rid: 5824281740147687477
+  - m_Id: 34446604822339588
+    m_Localized: "L'\xE9volution a un prix."
     m_Metadata:
       m_Items: []
   references:
@@ -247,3 +335,7 @@ MonoBehaviour:
         - id: 24639211494137856
         - id: 25751396253392896
         - id: 26924559217680384
+        - id: 34446604822339584
+        - id: 34421328138690572
+        - id: 34421328138690575
+        - id: 34446604822339587

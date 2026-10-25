@@ -18,6 +18,8 @@ namespace Tanks.Infrastructure.Processes
 
         }
 
+        public bool IsConnected => Pipe.IsConnected;
+
         public async Task<ResultType<TResponse>> SendRequestAsync<TPayload, TResponse>(
             TPayload message, CancellationToken cancellation = default)
         {

@@ -223,6 +223,90 @@ MonoBehaviour:
     m_Key: item.true-balance.tagline
     m_Metadata:
       m_Items: []
+  - m_Id: 34421328096747520
+    m_Key: item.pillow-protection.name
+    m_Metadata:
+      m_Items: []
+  - m_Id: 34421328138690560
+    m_Key: item.pillow-protection.description
+    m_Metadata:
+      m_Items: []
+  - m_Id: 34421328138690561
+    m_Key: item.pillow-protection.tagline
+    m_Metadata:
+      m_Items: []
+  - m_Id: 34421328138690562
+    m_Key: item.slippery-soap.name
+    m_Metadata:
+      m_Items: []
+  - m_Id: 34421328138690563
+    m_Key: item.slippery-soap.description
+    m_Metadata:
+      m_Items: []
+  - m_Id: 34421328138690564
+    m_Key: item.slippery-soap.tagline
+    m_Metadata:
+      m_Items: []
+  - m_Id: 34421328138690565
+    m_Key: item.rusty-part.name
+    m_Metadata:
+      m_Items: []
+  - m_Id: 34421328138690566
+    m_Key: item.rusty-part.description
+    m_Metadata:
+      m_Items: []
+  - m_Id: 34421328138690567
+    m_Key: item.rusty-part.tagline
+    m_Metadata:
+      m_Items: []
+  - m_Id: 34446604776202240
+    m_Key: item.stats-light.name
+    m_Metadata:
+      m_Items: []
+  - m_Id: 34446604822339584
+    m_Key: item.stats-light.description
+    m_Metadata:
+      m_Items: []
+  - m_Id: 34446604822339585
+    m_Key: item.stats-light.tagline
+    m_Metadata:
+      m_Items: []
+  - m_Id: 34421328138690571
+    m_Key: item.burst-of-adrenaline.name
+    m_Metadata:
+      m_Items: []
+  - m_Id: 34421328138690572
+    m_Key: item.burst-of-adrenaline.description
+    m_Metadata:
+      m_Items: []
+  - m_Id: 34421328138690573
+    m_Key: item.burst-of-adrenaline.tagline
+    m_Metadata:
+      m_Items: []
+  - m_Id: 34421328138690574
+    m_Key: item.re-reroll.name
+    m_Metadata:
+      m_Items: []
+  - m_Id: 34421328138690575
+    m_Key: item.re-reroll.description
+    m_Metadata:
+      m_Items: []
+  - m_Id: 34421328138690576
+    m_Key: item.re-reroll.tagline
+    m_Metadata:
+      m_Items: []
+  - m_Id: 34446604822339586
+    m_Key: item.dna-reconstruction.name
+    m_Metadata:
+      m_Items: []
+  - m_Id: 34446604822339587
+    m_Key: item.dna-reconstruction.description
+    m_Metadata:
+      m_Items: []
+  - m_Id: 34446604822339588
+    m_Key: item.dna-reconstruction.tagline
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:

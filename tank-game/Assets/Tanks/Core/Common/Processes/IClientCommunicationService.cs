@@ -5,6 +5,8 @@ namespace Tanks.Core.Common.Processes
 {
     public interface IClientCommunicationService
     {
+        bool IsConnected { get; }
+
         void Reinitialize();
 
         Task<ResultType<TResponse>> SendRequestAsync<TPayload, TResponse>(

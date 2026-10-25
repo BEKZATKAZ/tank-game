@@ -13,5 +13,7 @@
         void OverrideStat(
             StatId id, StatType type, StatValueType valueType,
             float value, float duration = -1);
+
+        void RemoveStat(StatId id);
     }
 }

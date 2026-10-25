@@ -34,8 +34,8 @@ MonoBehaviour:
     Path: event:/SFX/Items/Spawn/Epic
   _onPickUpSound:
     Guid:
-      Data1: -142053412
-      Data2: 1337692162
-      Data3: -979845698
-      Data4: 1522215570
-    Path: event:/SFX/Items/PickUp/Weapon_Equip
+      Data1: -1315899026
+      Data2: 1327456050
+      Data3: -508354939
+      Data4: -2110062427
+    Path: event:/SFX/Items/PickUp/Uncommon

@@ -1,0 +1,60 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5b60dbfe321d8e641a52b5ac43b22c42, type: 3}
+  m_Name: StatsLight
+  m_EditorClassIdentifier: Tanks.Editor::Tanks.Editor.Items.EditorItemConfig
+  _identifier: stats-light
+  _tier: 2
+  _playerStats: []
+  _itemStats:
+  - key: damage-boost
+    value:
+      Value: 50
+      ValueType: 1
+  - key: speed-boost
+    value:
+      Value: 30
+      ValueType: 1
+  - key: defense-boost
+    value:
+      Value: 15
+      ValueType: 0
+  - key: rate-of-fire-boost
+    value:
+      Value: 40
+      ValueType: 1
+  - key: resistance-boost
+    value:
+      Value: 6
+      ValueType: 0
+  - key: interval
+    value:
+      Value: 7.5
+      ValueType: 0
+  _onPickUpActions: []
+  _iconMaterial: {fileID: -876546973899608171, guid: 9680fbb573735774aaa7e0c722f9aad3, type: 3}
+  _icon: {fileID: 21300000, guid: 988ad0680f1a6724e990eb060db5d3d8, type: 3}
+  _accentColor: {r: 1, g: 0.2, b: 0.3019608, a: 1}
+  _onSpawnSound:
+    Guid:
+      Data1: 1641514831
+      Data2: 1092752869
+      Data3: -38409047
+      Data4: -848172992
+    Path: event:/SFX/Items/Spawn/Epic
+  _onPickUpSound:
+    Guid:
+      Data1: -1315899026
+      Data2: 1327456050
+      Data3: -508354939
+      Data4: -2110062427
+    Path: event:/SFX/Items/PickUp/Uncommon

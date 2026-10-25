@@ -1,0 +1,41 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5b60dbfe321d8e641a52b5ac43b22c42, type: 3}
+  m_Name: RustyPart
+  m_EditorClassIdentifier: Tanks.Editor::Tanks.Editor.Items.EditorItemConfig
+  _identifier: rusty-part
+  _tier: 0
+  _playerStats:
+  - key: 0
+    value:
+      Duration: -1
+      Value: 1.5
+      ValueType: 0
+  _itemStats: []
+  _onPickUpActions: []
+  _iconMaterial: {fileID: -876546973899608171, guid: 9680fbb573735774aaa7e0c722f9aad3, type: 3}
+  _icon: {fileID: 21300000, guid: 3e52a7855033e3e49aea0d93dd2729f5, type: 3}
+  _accentColor: {r: 0.25490198, g: 1, b: 0.34901962, a: 1}
+  _onSpawnSound:
+    Guid:
+      Data1: 0
+      Data2: 0
+      Data3: 0
+      Data4: 0
+    Path: 
+  _onPickUpSound:
+    Guid:
+      Data1: -1315899026
+      Data2: 1327456050
+      Data3: -508354939
+      Data4: -2110062427
+    Path: event:/SFX/Items/PickUp/Uncommon

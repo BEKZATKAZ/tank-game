@@ -71,6 +71,23 @@ namespace Tanks.Shared.Stats
             return id;
         }
 
+        public void RemoveStat(StatId id)
+        {
+            foreach (var stats in _applied)
+            {
+                if (stats.Value.Remove(id) == false) continue;
+
+                OverrideStatEveryoneRpc(new StatOverriddenFromServer
+                {
+                    Duration = 0,
+                    Id = id,
+                    Type = stats.Key,
+                    Value = 0,
+                    ValueType = StatValueType.Flat
+                });
+            }
+        }
+
         public float GetStat(StatType type, float baseValue)
         {
             if (_applied.TryGetValue(type, out var stats) == false) return baseValue;

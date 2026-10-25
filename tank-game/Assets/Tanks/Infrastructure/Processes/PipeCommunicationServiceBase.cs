@@ -132,6 +132,7 @@ namespace Tanks.Infrastructure.Processes
 
         protected CancellationTokenSource GetCancellation(CancellationToken local)
         {
+            BaseCancellation ??= new CancellationTokenSource();
             return CancellationTokenSource.CreateLinkedTokenSource(local, BaseCancellation.Token);
         }
 
