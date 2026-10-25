@@ -22,9 +22,9 @@ MonoBehaviour:
     Resolution:
       Values:
       - {x: 5, y: 4}
-      - {x: 8, y: 5}
-      - {x: 10, y: 6}
-      Default: {x: 5, y: 4}
+      - {x: 7, y: 5}
+      - {x: 9, y: 6}
+      Default: {x: 7, y: 5}
     WallWidth:
       Values: 06000000080000000a000000i
       Default: 8
