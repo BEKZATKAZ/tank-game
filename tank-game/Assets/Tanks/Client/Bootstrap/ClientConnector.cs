@@ -6,6 +6,7 @@ using Tanks.Client.Items;
 using Tanks.Core;
 using Tanks.Core.Common.Processes;
 using Tanks.Core.Common.Scenes;
+using Tanks.Core.Lobbies;
 using Tanks.Core.Lobbies.Payloads;
 using Tanks.Core.Lobbies.Responses;
 using Tanks.Core.Lobbies.Sessions;
@@ -24,6 +25,7 @@ namespace Tanks.Client.Bootstrap
     public sealed class ClientConnector : MonoBehaviour
     {
         [Inject] private readonly IAuthService _auth;
+        [Inject] private readonly ILobbyService _lobbyService;
         [Inject] private readonly ISessionSettingsService _settings;
         [Inject] private readonly IClientCommunicationService _client;
         [Inject] private readonly ISceneLoader _sceneLoader;
@@ -118,6 +120,12 @@ namespace Tanks.Client.Bootstrap
 
             _client.Reinitialize();
 #endif
+
+            // Prevent stale lobbies
+            if (string.IsNullOrWhiteSpace(_lobbyService.CurrentLobbyState.Id.Value.Value) == false)
+            {
+                _ = _lobbyService.LeaveLobbyAsync();
+            }
 
             await InitializeItemsAsync();
             _sceneLoader.Progress = 0.6f;

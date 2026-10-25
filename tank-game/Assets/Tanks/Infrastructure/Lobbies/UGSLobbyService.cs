@@ -231,6 +231,8 @@ namespace Tanks.Infrastructure.Lobbies
             while (currentId.Value == CurrentLobbyState.Id.Value.Value)
             {
                 await Task.Delay(15000);
+
+                if (Application.isPlaying == false) return;
                 if (currentId.Value != CurrentLobbyState.Id.Value.Value) return;
 
                 await Service.SendHeartbeatPingAsync(currentId.Value);
