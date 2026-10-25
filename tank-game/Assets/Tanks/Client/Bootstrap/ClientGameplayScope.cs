@@ -56,6 +56,7 @@ namespace Tanks.Client.Bootstrap
             builder.Register<IClientEntityService, ClientEntityService>(Lifetime.Singleton);
             builder.Register<ICameraMainService, CameraMainService>(Lifetime.Singleton);
             builder.Register<ISpectatorService, SpectatorService>(Lifetime.Singleton);
+            builder.Register<ISpectatorTargetProvider, SpectatorTargetProvider>(Lifetime.Singleton);
 
             builder.Register<IClientItemDatabase, ClientItemDatabase>(Lifetime.Singleton);
             builder.Register<IHitstopService, HitstopService>(Lifetime.Singleton);

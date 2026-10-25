@@ -57,6 +57,14 @@ MonoBehaviour:
     m_Localized: SURVIVRE
     m_Metadata:
       m_Items: []
+  - m_Id: 18358814103789570
+    m_Localized: "PR\xC9C\xC9DENT"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 18358814103789571
+    m_Localized: SUIVANT
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:

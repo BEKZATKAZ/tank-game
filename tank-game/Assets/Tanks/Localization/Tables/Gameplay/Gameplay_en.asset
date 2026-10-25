@@ -57,6 +57,14 @@ MonoBehaviour:
     m_Localized: SURVIVE
     m_Metadata:
       m_Items: []
+  - m_Id: 18358814103789570
+    m_Localized: PREVIOUS
+    m_Metadata:
+      m_Items: []
+  - m_Id: 18358814103789571
+    m_Localized: NEXT
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:

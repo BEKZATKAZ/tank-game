@@ -43,6 +43,34 @@
     -unity-text-align: middle-center;
 }
 
+.spectator-controls {
+    position: absolute;
+    bottom: 40px;
+    left: 0;
+    right: 0;
+    flex-direction: row;
+    justify-content: center;
+}
+
+.spectator-controls__button {
+    margin: 0 12px;
+    padding: 12px 24px;
+    font-size: 24px;
+    -unity-font-definition: var(--font-heavy);
+    background-color: rgba(0, 0, 0, 0.75);
+    border-color: var(--text-color);
+    border-width: 2px;
+    border-radius: 6px;
+}
+
+.spectator-controls__button:hover {
+    background-color: rgba(70, 70, 70, 0.9);
+}
+
+.spectator-controls__button:disabled {
+    opacity: 0.4;
+}
+
 .item-description {
     margin: 80px 80px 0 0;
     padding: 10px;

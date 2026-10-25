@@ -60,5 +60,17 @@
             </ui:ScrollView>
         </ui:VisualElement>
     </ui:VisualElement>
-    <ui:VisualElement name="TransitionOverlay" class="transition-overlay"/>
+    <ui:VisualElement name="SpectatorControls" class="spectator-controls" style="display: none;" picking-mode="Ignore">
+        <Tanks.UI.Elements.CustomButton name="PreviousSpectatorTarget" focusable="false" class="spectator-controls__button">
+            <Bindings>
+                <UnityEngine.Localization.LocalizedString property="text" table="GUID:be3c65f295ea4a545a8406a0bc7b68e6" entry="gameplay.spectator.previous"/>
+            </Bindings>
+        </Tanks.UI.Elements.CustomButton>
+        <Tanks.UI.Elements.CustomButton name="NextSpectatorTarget" focusable="false" class="spectator-controls__button">
+            <Bindings>
+                <UnityEngine.Localization.LocalizedString property="text" table="GUID:be3c65f295ea4a545a8406a0bc7b68e6" entry="gameplay.spectator.next"/>
+            </Bindings>
+        </Tanks.UI.Elements.CustomButton>
+    </ui:VisualElement>
+    <ui:VisualElement name="TransitionOverlay" picking-mode="Ignore" class="transition-overlay"/>
 </ui:UXML>

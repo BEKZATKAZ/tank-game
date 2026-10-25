@@ -2,6 +2,7 @@
     "name": "Tanks.UI.Tests",
     "rootNamespace": "",
     "references": [
+        "GUID:eec0964c48f6f4e40bc3ec2257ccf8c5",
         "GUID:0d8f1684e64ea0f43b8a5b3bc55e15eb",
         "GUID:2d8ca1202255a4243a9ebca3a433072c",
         "GUID:a8530e1fb85cd2d4697ff66150ef161b",

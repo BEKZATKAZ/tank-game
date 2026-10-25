@@ -264,6 +264,24 @@
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": false
+                },
+                {
+                    "name": "PreviousSpectatorTarget",
+                    "type": "Button",
+                    "id": "c74d3876-a620-455e-9217-90dc051f1bac",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "NextSpectatorTarget",
+                    "type": "Button",
+                    "id": "a6ce6096-4941-427f-be34-5055dcd6d174",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
                 }
             ],
             "bindings": [
@@ -286,6 +304,50 @@
                     "processors": "",
                     "groups": ";Gamepad",
                     "action": "GameStats",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "5c613e37-1144-4482-afc4-68899400b772",
+                    "path": "<Keyboard>/a",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": ";Keyboard & Mouse",
+                    "action": "PreviousSpectatorTarget",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "efbba6b7-a38b-40e5-b9ea-82e0644c9fa9",
+                    "path": "<Gamepad>/leftShoulder",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": ";Gamepad",
+                    "action": "PreviousSpectatorTarget",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "84cdbc48-d0e3-4297-a7d5-def4bff0b44f",
+                    "path": "<Keyboard>/d",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": ";Keyboard & Mouse",
+                    "action": "NextSpectatorTarget",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "1da9d181-3013-43ac-a7b0-bca3a4534547",
+                    "path": "<Gamepad>/rightShoulder",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": ";Gamepad",
+                    "action": "NextSpectatorTarget",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

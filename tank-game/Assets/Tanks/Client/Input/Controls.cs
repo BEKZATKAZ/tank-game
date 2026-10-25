@@ -357,6 +357,26 @@ namespace Tanks.Client.Input
                     ""interactions"": """",
                     ""initialStateCheck"": false,
                     ""priority"": 0
+                },
+                {
+                    ""name"": ""PreviousSpectatorTarget"",
+                    ""type"": ""Button"",
+                    ""id"": ""c74d3876-a620-455e-9217-90dc051f1bac"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false,
+                    ""priority"": 0
+                },
+                {
+                    ""name"": ""NextSpectatorTarget"",
+                    ""type"": ""Button"",
+                    ""id"": ""a6ce6096-4941-427f-be34-5055dcd6d174"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false,
+                    ""priority"": 0
                 }
             ],
             ""bindings"": [
@@ -379,6 +399,50 @@ namespace Tanks.Client.Input
                     ""processors"": """",
                     ""groups"": "";Gamepad"",
                     ""action"": ""GameStats"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""5c613e37-1144-4482-afc4-68899400b772"",
+                    ""path"": ""<Keyboard>/a"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": "";Keyboard & Mouse"",
+                    ""action"": ""PreviousSpectatorTarget"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""efbba6b7-a38b-40e5-b9ea-82e0644c9fa9"",
+                    ""path"": ""<Gamepad>/leftShoulder"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": "";Gamepad"",
+                    ""action"": ""PreviousSpectatorTarget"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""84cdbc48-d0e3-4297-a7d5-def4bff0b44f"",
+                    ""path"": ""<Keyboard>/d"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": "";Keyboard & Mouse"",
+                    ""action"": ""NextSpectatorTarget"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""1da9d181-3013-43ac-a7b0-bca3a4534547"",
+                    ""path"": ""<Gamepad>/rightShoulder"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": "";Gamepad"",
+                    ""action"": ""NextSpectatorTarget"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -426,6 +490,8 @@ namespace Tanks.Client.Input
             // UI
             m_UI = asset.FindActionMap("UI", throwIfNotFound: true);
             m_UI_GameStats = m_UI.FindAction("GameStats", throwIfNotFound: true);
+            m_UI_PreviousSpectatorTarget = m_UI.FindAction("PreviousSpectatorTarget", throwIfNotFound: true);
+            m_UI_NextSpectatorTarget = m_UI.FindAction("NextSpectatorTarget", throwIfNotFound: true);
         }
 
         ~@Controls()
@@ -723,6 +789,8 @@ namespace Tanks.Client.Input
         private readonly InputActionMap m_UI;
         private List<IUIActions> m_UIActionsCallbackInterfaces = new List<IUIActions>();
         private readonly InputAction m_UI_GameStats;
+        private readonly InputAction m_UI_PreviousSpectatorTarget;
+        private readonly InputAction m_UI_NextSpectatorTarget;
         /// <summary>
         /// Provides access to input actions defined in input action map "UI".
         /// </summary>
@@ -738,6 +806,14 @@ namespace Tanks.Client.Input
             /// Provides access to the underlying input action "UI/GameStats".
             /// </summary>
             public InputAction @GameStats => m_Wrapper.m_UI_GameStats;
+            /// <summary>
+            /// Provides access to the underlying input action "UI/PreviousSpectatorTarget".
+            /// </summary>
+            public InputAction @PreviousSpectatorTarget => m_Wrapper.m_UI_PreviousSpectatorTarget;
+            /// <summary>
+            /// Provides access to the underlying input action "UI/NextSpectatorTarget".
+            /// </summary>
+            public InputAction @NextSpectatorTarget => m_Wrapper.m_UI_NextSpectatorTarget;
             /// <summary>
             /// Provides access to the underlying input action map instance.
             /// </summary>
@@ -767,6 +843,12 @@ namespace Tanks.Client.Input
                 @GameStats.started += instance.OnGameStats;
                 @GameStats.performed += instance.OnGameStats;
                 @GameStats.canceled += instance.OnGameStats;
+                @PreviousSpectatorTarget.started += instance.OnPreviousSpectatorTarget;
+                @PreviousSpectatorTarget.performed += instance.OnPreviousSpectatorTarget;
+                @PreviousSpectatorTarget.canceled += instance.OnPreviousSpectatorTarget;
+                @NextSpectatorTarget.started += instance.OnNextSpectatorTarget;
+                @NextSpectatorTarget.performed += instance.OnNextSpectatorTarget;
+                @NextSpectatorTarget.canceled += instance.OnNextSpectatorTarget;
             }
 
             /// <summary>
@@ -781,6 +863,12 @@ namespace Tanks.Client.Input
                 @GameStats.started -= instance.OnGameStats;
                 @GameStats.performed -= instance.OnGameStats;
                 @GameStats.canceled -= instance.OnGameStats;
+                @PreviousSpectatorTarget.started -= instance.OnPreviousSpectatorTarget;
+                @PreviousSpectatorTarget.performed -= instance.OnPreviousSpectatorTarget;
+                @PreviousSpectatorTarget.canceled -= instance.OnPreviousSpectatorTarget;
+                @NextSpectatorTarget.started -= instance.OnNextSpectatorTarget;
+                @NextSpectatorTarget.performed -= instance.OnNextSpectatorTarget;
+                @NextSpectatorTarget.canceled -= instance.OnNextSpectatorTarget;
             }
 
             /// <summary>
@@ -898,6 +986,20 @@ namespace Tanks.Client.Input
             /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
             /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
             void OnGameStats(InputAction.CallbackContext context);
+            /// <summary>
+            /// Method invoked when associated input action "PreviousSpectatorTarget" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+            /// </summary>
+            /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
+            /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
+            /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
+            void OnPreviousSpectatorTarget(InputAction.CallbackContext context);
+            /// <summary>
+            /// Method invoked when associated input action "NextSpectatorTarget" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+            /// </summary>
+            /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
+            /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
+            /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
+            void OnNextSpectatorTarget(InputAction.CallbackContext context);
         }
     }
 }
