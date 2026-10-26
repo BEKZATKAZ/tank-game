@@ -168,6 +168,8 @@ MonoBehaviour:
   - event:/Music/Music2
   - event:/Music/Music3
   - event:/Music/Music4
+  - event:/Music/Music5
+  - event:/Music/Music6
 --- !u!1 &23867537
 GameObject:
   m_ObjectHideFlags: 0
