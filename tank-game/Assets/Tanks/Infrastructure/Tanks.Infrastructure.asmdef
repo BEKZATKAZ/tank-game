@@ -2,6 +2,7 @@
     "name": "Tanks.Infrastructure",
     "rootNamespace": "",
     "references": [
+        "Unity.Services.Vivox",
         "GUID:776d03a35f1b52c4a9aed9f56d7b4229",
         "GUID:2d8ca1202255a4243a9ebca3a433072c",
         "GUID:3f93f6c48cdbd804796618c781f92e56",

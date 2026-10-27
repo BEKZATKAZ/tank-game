@@ -22,6 +22,7 @@ namespace Tanks.UI.Tests.Menus
     {
         private IAuthService _auth;
         private ILobbyService _lobbies;
+        private ILobbyChatService _chat;
         private ILocalizationDatabase _localization;
         private ILoadingScreenService _loading;
         private IDialogScreenService _dialog;
@@ -33,6 +34,10 @@ namespace Tanks.UI.Tests.Menus
         {
             _auth = Substitute.For<IAuthService>();
             _lobbies = Substitute.For<ILobbyService>();
+            _chat = Substitute.For<ILobbyChatService>();
+            _chat.ConnectAsync(Arg.Any<LobbyId>()).Returns(Task.FromResult(Result.Success()));
+            _chat.DisconnectAsync().Returns(Task.FromResult(Result.Success()));
+            _lobbies.LeaveLobbyAsync().Returns(Task.FromResult(Result.Success()));
             _localization = Substitute.For<ILocalizationDatabase>();
             _loading = Substitute.For<ILoadingScreenService>();
             _dialog = Substitute.For<IDialogScreenService>();
@@ -45,7 +50,7 @@ namespace Tanks.UI.Tests.Menus
             _auth.CurrentProfile.Returns(profile);
 
             return new MainMenuSectionsViewModel(
-                _auth, _lobbies, _localization, _loading, _dialog,
+                _auth, new EnterLobbyUseCase(_lobbies, _chat), _localization, _loading, _dialog,
                 _navigation, _sceneLoader, _runServer);
         }
 
@@ -144,6 +149,42 @@ namespace Tanks.UI.Tests.Menus
             _dialog.Received(1).ShowErrorFromCode("error.lobby", "host-failed");
             _navigation.DidNotReceiveWithAnyArgs().Navigate(default);
             _loading.Received(1).End();
+        }
+
+        [Test]
+        public void CreateLobby_WaitsForChatBeforeEndingLoading()
+        {
+            _runServer.RunAsync().Returns(UniTask.FromResult(Result.Success()));
+            _lobbies.HostLobbyAsync(Arg.Any<string>(), Arg.Any<uint>())
+                .Returns(Task.FromResult(Result.Success(new LobbyState())));
+            var connected = new TaskCompletionSource<ResultType>();
+            _chat.ConnectAsync(Arg.Any<LobbyId>()).Returns(connected.Task);
+
+            ViewModel.CreateLobby().Forget();
+
+            _loading.DidNotReceive().End();
+            _navigation.DidNotReceive().Navigate(MenuType.Lobby);
+
+            connected.SetResult(Result.Success());
+
+            _loading.Received(1).End();
+            _navigation.Received(1).Navigate(MenuType.Lobby);
+        }
+
+        [Test]
+        public void CreateLobby_ChatFailure_LeavesAndKeepsMainMenu()
+        {
+            _runServer.RunAsync().Returns(UniTask.FromResult(Result.Success()));
+            _lobbies.HostLobbyAsync(Arg.Any<string>(), Arg.Any<uint>())
+                .Returns(Task.FromResult(Result.Success(new LobbyState())));
+            _chat.ConnectAsync(Arg.Any<LobbyId>()).Returns(Task.FromResult(Result.Failure("chat-unavailable")));
+
+            ViewModel.CreateLobby().Forget();
+
+            _lobbies.Received(1).LeaveLobbyAsync();
+            _loading.Received(1).End();
+            _dialog.Received(1).ShowErrorFromCode("error.lobby", "chat-unavailable");
+            _navigation.DidNotReceive().Navigate(MenuType.Lobby);
         }
     }
 }

@@ -1,6 +1,8 @@
-﻿using Cysharp.Threading.Tasks;
+using Cysharp.Threading.Tasks;
 using System.Linq;
+using Tanks.Core;
 using Tanks.Core.Lobbies;
+using Tanks.Core.Lobbies.UseCases;
 using Tanks.Localization;
 using Tanks.UI.Menus.Dialogs;
 using Tanks.UI.Menus.Loading;
@@ -15,13 +17,15 @@ namespace Tanks.UI.Menus.Lobbies
             ILocalizationDatabase localization,
             ILoadingScreenService loading,
             IDialogScreenService dialog,
-            IMenuNavigation navigation)
+            IMenuNavigation navigation,
+            IEnterLobbyUseCase enterLobby)
         {
             _service = service;
             _localization = localization;
             _loading = loading;
             _dialog = dialog;
             _navigation = navigation;
+            _enterLobby = enterLobby;
         }
 
         public BindableProperty<string> QueryName { get; } = new("");
@@ -34,6 +38,7 @@ namespace Tanks.UI.Menus.Lobbies
         private readonly ILoadingScreenService _loading;
         private readonly IDialogScreenService _dialog;
         private readonly IMenuNavigation _navigation;
+        private readonly IEnterLobbyUseCase _enterLobby;
 
         public async UniTask RefreshAsync()
         {
@@ -69,11 +74,19 @@ namespace Tanks.UI.Menus.Lobbies
             _localization.TryGet("Menus", "menu.lobby.joining", out ILocalizedString joining);
             _loading.Begin(joining);
 
-            var result = await _service.JoinLobbyAsync(id);
-            _loading.End();
+            ResultType<LobbyState> result;
+
+            try
+            {
+                result = await _enterLobby.JoinAsync(id);
+            }
+            finally
+            {
+                _loading.End();
+            }
 
             if (result.IsSuccess) _navigation.Navigate(MenuType.Lobby);
-            else _dialog.ShowErrorFromCode("error.lobby", result.ErrorCode);
+            else if (result.ErrorCode != "cancelled") _dialog.ShowErrorFromCode("error.lobby", result.ErrorCode);
         }
     }
 }

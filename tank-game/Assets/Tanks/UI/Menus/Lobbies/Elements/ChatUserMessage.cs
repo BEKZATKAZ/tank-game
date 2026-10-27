@@ -43,7 +43,10 @@ namespace Tanks.UI.Menus.Lobbies.Elements
 
         protected override void UpdateText()
         {
-            ContentLabel.text = $"<{_usernameHexColor}><b>{_usernameValue}:</b></color> {Content}";
+            string message = $"<noparse>{Content}</noparse>";
+
+            ContentLabel.enableRichText = true;
+            ContentLabel.text = $"<color={_usernameHexColor}>{_usernameValue}</color>: {message}";
         }
     }
 }

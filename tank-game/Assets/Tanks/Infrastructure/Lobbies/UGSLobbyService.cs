@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Threading;
 using System.Threading.Tasks;
 using Tanks.Core;
 using Tanks.Core.Common;
@@ -13,11 +14,14 @@ using static Unity.Services.Lobbies.Models.PlayerDataObject;
 
 namespace Tanks.Infrastructure.Lobbies
 {
-    public sealed class UGSLobbyService : Core.Lobbies.ILobbyService
+    public sealed class UGSLobbyService : Core.Lobbies.ILobbyService, IDisposable
     {
         public UGSLobbyService(IAuthService auth)
         {
             _auth = auth;
+
+            CurrentLobbyState.Id.Bind(OnLobbyIdChanged);
+            Application.quitting += Dispose;
         }
 
         public LobbyState CurrentLobbyState { get; private set; } = new();
@@ -26,11 +30,34 @@ namespace Tanks.Infrastructure.Lobbies
         public event Action<LobbyPlayerState> PlayerLeft;
         public event Action LobbyDeleted;
 
-        private Unity.Services.Lobbies.ILobbyService Service => LobbyService.Instance;
+        private Unity.Services.Lobbies.ILobbyService Service => _service ?? LobbyService.Instance;
 
         private readonly IAuthService _auth;
+        private readonly Func<TimeSpan, CancellationToken, Task> _heartbeatDelay = Task.Delay;
+
+        private Unity.Services.Lobbies.ILobbyService _service;
         private ILobbyEvents _lobbyEvents;
         private Lobby _lobby;
+
+        private CancellationTokenSource _heartbeatCancellation;
+        private Task _heartbeatTask = Task.CompletedTask;
+        private string _heartbeatLobbyId;
+        private bool _disposed;
+
+        public void Dispose()
+        {
+            if (_disposed) return;
+
+            _disposed = true;
+            Application.quitting -= Dispose;
+            CurrentLobbyState.Id.Unbind(OnLobbyIdChanged);
+            StopHeartbeat();
+        }
+
+        private void OnLobbyIdChanged(LobbyId id)
+        {
+            if (id.Value != _heartbeatLobbyId) StopHeartbeat();
+        }
 
         private async Task SubscribeToEventsAsync()
         {
@@ -151,9 +178,10 @@ namespace Tanks.Infrastructure.Lobbies
                     Player = CreatePlayerData()
                 })), CurrentLobbyState, errorCode: "failed-to-create");
 
-            await SubscribeToEventsAsync();
+            if (result.IsSuccess == false) return result;
 
-            _ = Task.Run(HeartbeatAsync);
+            StartHeartbeat();
+            await SubscribeToEventsAsync();
 
             return result;
         }
@@ -209,6 +237,7 @@ namespace Tanks.Infrastructure.Lobbies
                     await Service.RemovePlayerAsync(lobbyId.Value, userId);
                 }
 
+                StopHeartbeat();
                 await UnsubscribeFromEventsAsync();
                 CurrentLobbyState.Id.Value = default;
 
@@ -224,19 +253,63 @@ namespace Tanks.Infrastructure.Lobbies
             }
         }
 
-        private async Task HeartbeatAsync()
+        private void StartHeartbeat()
         {
-            LobbyId currentId = CurrentLobbyState.Id.Value;
+            string id = CurrentLobbyState.Id.Value.Value;
+            if (_heartbeatLobbyId == id && _heartbeatTask.IsCompleted == false) return;
 
-            while (currentId.Value == CurrentLobbyState.Id.Value.Value)
+            StopHeartbeat();
+            if (IsCurrentHost(id) == false) return;
+
+            _heartbeatLobbyId = id;
+            _heartbeatCancellation = new CancellationTokenSource();
+            _heartbeatTask = HeartbeatAsync(id, _heartbeatCancellation.Token);
+        }
+
+        private void StopHeartbeat()
+        {
+            _heartbeatCancellation?.Cancel();
+            _heartbeatCancellation?.Dispose();
+            _heartbeatCancellation = null;
+            _heartbeatLobbyId = null;
+        }
+
+        private bool IsCurrentHost(string id)
+        {
+            return _disposed == false && string.IsNullOrEmpty(id) == false &&
+                CurrentLobbyState.Id.Value.Value == id &&
+                CurrentLobbyState.HostId.Value == _auth.CurrentProfile.UserId.Value;
+        }
+
+        private async Task HeartbeatAsync(string id, CancellationToken cancellation)
+        {
+            while (cancellation.IsCancellationRequested == false && IsCurrentHost(id))
             {
-                await Task.Delay(15000);
+                try
+                {
+                    await Service.SendHeartbeatPingAsync(id);
 
-                if (Application.isPlaying == false) return;
-                if (currentId.Value != CurrentLobbyState.Id.Value.Value) return;
+                    if (cancellation.IsCancellationRequested || IsCurrentHost(id) == false) return;
 
-                await Service.SendHeartbeatPingAsync(currentId.Value);
-                Debug.Log("Lobby heartbeat");
+                    Debug.Log("Lobby heartbeat");
+                }
+                catch (Exception ex)
+                {
+                    if (cancellation.IsCancellationRequested || IsCurrentHost(id) == false) return;
+
+                    Debug.LogWarning($"Lobby heartbeat failed: {ex.Message}");
+                }
+
+                if (cancellation.IsCancellationRequested || IsCurrentHost(id) == false) return;
+
+                try
+                {
+                    await _heartbeatDelay(TimeSpan.FromSeconds(15), cancellation);
+                }
+                catch (OperationCanceledException) when (cancellation.IsCancellationRequested)
+                {
+                    return;
+                }
             }
         }
     }

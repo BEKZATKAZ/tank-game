@@ -83,6 +83,18 @@ MonoBehaviour:
     m_Key: error.lobby.lobby-disbanded
     m_Metadata:
       m_Items: []
+  - m_Id: 14710554747166721
+    m_Key: error.lobby.chat-unavailable
+    m_Metadata:
+      m_Items: []
+  - m_Id: 14710554747166722
+    m_Key: error.lobby.chat-send-failed
+    m_Metadata:
+      m_Items: []
+  - m_Id: 14710554747166723
+    m_Key: error.lobby.chat-invalid-message
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:

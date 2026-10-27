@@ -17,7 +17,7 @@ namespace Tanks.UI.Menus.Main
     {
         public MainMenuSectionsViewModel(
             IAuthService auth,
-            ILobbyService lobbyService,
+            IEnterLobbyUseCase enterLobby,
             ILocalizationDatabase localization,
             ILoadingScreenService loading,
             IDialogScreenService dialog,
@@ -26,7 +26,7 @@ namespace Tanks.UI.Menus.Main
             IRunServerUseCase runServer)
         {
             _auth = auth;
-            _lobbyService = lobbyService;
+            _enterLobby = enterLobby;
             _localization = localization;
             _loading = loading;
             _dialog = dialog;
@@ -38,7 +38,7 @@ namespace Tanks.UI.Menus.Main
         public BindableProperty<MainMenuSection> Section { get; } = new();
 
         private readonly IAuthService _auth;
-        private readonly ILobbyService _lobbyService;
+        private readonly IEnterLobbyUseCase _enterLobby;
         private readonly ILocalizationDatabase _localization;
         private readonly ILoadingScreenService _loading;
         private readonly IDialogScreenService _dialog;
@@ -101,11 +101,19 @@ namespace Tanks.UI.Menus.Main
             _localization.TryGet("Menus", "menu.lobby.creating", out var creating);
             _loading.Begin(creating);
 
-            ResultType result = await _lobbyService.HostLobbyAsync(lobbyName, 4);
-            _loading.End();
+            ResultType result;
+
+            try
+            {
+                result = await _enterLobby.HostAsync(lobbyName, 4);
+            }
+            finally
+            {
+                _loading.End();
+            }
 
             if (result.IsSuccess) _navigation.Navigate(MenuType.Lobby);
-            else _dialog.ShowErrorFromCode("error.lobby", result.ErrorCode);
+            else if (result.ErrorCode != "cancelled") _dialog.ShowErrorFromCode("error.lobby", result.ErrorCode);
         }
     }
 }

@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using Tanks.Core;
 using Tanks.Core.Lobbies;
+using Tanks.Core.Lobbies.UseCases;
 using Tanks.Localization;
 using Tanks.UI.Menus;
 using Tanks.UI.Menus.Dialogs;
@@ -16,6 +17,7 @@ namespace Tanks.UI.Tests.Menus.Lobbies
     public class LobbyBrowserTests : ViewModelTestBase<LobbyBrowserViewModel>
     {
         private ILobbyService _service;
+        private ILobbyChatService _chat;
         private ILocalizationDatabase _localization;
         private ILoadingScreenService _loading;
         private IDialogScreenService _dialog;
@@ -24,13 +26,17 @@ namespace Tanks.UI.Tests.Menus.Lobbies
         protected override LobbyBrowserViewModel CreateViewModel()
         {
             _service = Substitute.For<ILobbyService>();
+            _chat = Substitute.For<ILobbyChatService>();
+            _chat.ConnectAsync(Arg.Any<LobbyId>()).Returns(Task.FromResult(Result.Success()));
+            _chat.DisconnectAsync().Returns(Task.FromResult(Result.Success()));
+            _service.LeaveLobbyAsync().Returns(Task.FromResult(Result.Success()));
             _localization = Substitute.For<ILocalizationDatabase>();
             _loading = Substitute.For<ILoadingScreenService>();
             _dialog = Substitute.For<IDialogScreenService>();
             _navigation = Substitute.For<IMenuNavigation>();
 
             return new LobbyBrowserViewModel(
-                _service, _localization, _loading, _dialog, _navigation);
+                _service, _localization, _loading, _dialog, _navigation, new EnterLobbyUseCase(_service, _chat));
         }
 
         [TestCase("some name")]
@@ -116,6 +122,30 @@ namespace Tanks.UI.Tests.Menus.Lobbies
 
             _dialog.Received(1).ShowErrorFromCode(Arg.Any<string>(), errorCode);
             _navigation.DidNotReceiveWithAnyArgs().Navigate(MenuType.Lobby);
+        }
+
+        [Test]
+        public async Task Join_WaitsForChatAndRollbackBeforeEndingLoading()
+        {
+            _service.JoinLobbyAsync(Arg.Any<LobbyId>()).Returns(Task.FromResult(Result.Success(new LobbyState())));
+            var connected = new TaskCompletionSource<ResultType>();
+            var left = new TaskCompletionSource<ResultType>();
+            _chat.ConnectAsync(Arg.Any<LobbyId>()).Returns(connected.Task);
+            _service.LeaveLobbyAsync().Returns(left.Task);
+
+            Task joining = ViewModel.JoinLobbyAsync(new LobbyId("lobby")).AsTask();
+            _loading.DidNotReceive().End();
+
+            connected.SetResult(Result.Failure("chat-unavailable"));
+            _loading.DidNotReceive().End();
+            _navigation.DidNotReceive().Navigate(MenuType.Lobby);
+
+            left.SetResult(Result.Success());
+            await joining;
+
+            _loading.Received(1).End();
+            _dialog.Received(1).ShowErrorFromCode("error.lobby", "chat-unavailable");
+            _navigation.DidNotReceive().Navigate(MenuType.Lobby);
         }
 
         private void MockLocalizationReturn(string tableName, string entryName, string expected)

@@ -41,6 +41,7 @@ namespace Tanks.Infrastructure
             builder.Register<IPrepareServerUseCase, PrepareServerUseCase>(Lifetime.Singleton);
             builder.Register<IConnectToServerUseCase, ConnectToServerUseCase>(Lifetime.Singleton);
             builder.Register<IRenameLobbyUseCase, RenameLobbyUseCase>(Lifetime.Singleton);
+            builder.Register<IEnterLobbyUseCase, EnterLobbyUseCase>(Lifetime.Singleton);
         }
 
         private void AddServices(IContainerBuilder builder)
@@ -51,6 +52,7 @@ namespace Tanks.Infrastructure
             builder.Register<IResourceLoader, AddressablesLoader>(Lifetime.Singleton);
 
             builder.Register<ILobbyService, UGSLobbyService>(Lifetime.Singleton);
+            builder.Register<ILobbyChatService, VivoxLobbyChatService>(Lifetime.Singleton);
             builder.Register<IAuthService, UGSAuthService>(Lifetime.Singleton);
 
             if (role is MultiplayerRoleFlags.Client)

@@ -9,6 +9,7 @@ namespace Tanks.UI.Menus.Lobbies.Elements
         public ChatMessage()
         {
             ContentLabel = new Label();
+            ContentLabel.enableRichText = false;
             Add(ContentLabel);
             AddToClassList("chat-message");
             UpdateText();

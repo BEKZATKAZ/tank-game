@@ -35,6 +35,12 @@ namespace Tanks.Infrastructure.Tests.Lobbies
             return new Player(id: id, data: data);
         }
 
+        [TearDown]
+        public void TearDown()
+        {
+            _service.Dispose();
+        }
+
         private void Apply(ILobbyChanges changes)
         {
             typeof(UGSLobbyService).GetMethod("OnLobbyChanged", BindingFlags.Instance | BindingFlags.NonPublic)
@@ -54,7 +60,7 @@ namespace Tanks.Infrastructure.Tests.Lobbies
         [Test]
         public void PlayerDataChange_RefreshesReadinessOnBothClients()
         {
-            var other = new UGSLobbyService(Substitute.For<IAuthService>());
+            using var other = new UGSLobbyService(Substitute.For<IAuthService>());
             UGSLobbyMapper.MapLobby(_lobby, other.CurrentLobbyState);
             var changes = Substitute.For<ILobbyChanges>();
             changes.When(x => x.ApplyToLobby(_lobby)).Do(_ =>
