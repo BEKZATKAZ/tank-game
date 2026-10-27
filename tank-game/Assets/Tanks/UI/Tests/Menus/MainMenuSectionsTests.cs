@@ -113,13 +113,13 @@ namespace Tanks.UI.Tests.Menus
 
             _runServer.RunAsync().Returns(UniTask.FromResult(Result.Success()));
 
-            _lobbies.HostLobbyAsync("Player's lobby", 4)
+            _lobbies.HostLobbyAsync("Player's lobby", 8)
                 .Returns(Task.FromResult(Result.Success(new LobbyState())));
 
             ViewModel.CreateLobby().Forget();
 
             name.Received(1).AddVariable("name", "Player");
-            _lobbies.Received(1).HostLobbyAsync("Player's lobby", 4);
+            _lobbies.Received(1).HostLobbyAsync("Player's lobby", 8);
             _navigation.Received(1).Navigate(MenuType.Lobby);
             _loading.Received(1).End();
         }
@@ -141,7 +141,7 @@ namespace Tanks.UI.Tests.Menus
         {
             _runServer.RunAsync().Returns(UniTask.FromResult(Result.Success()));
 
-            _lobbies.HostLobbyAsync("My lobby", 4)
+            _lobbies.HostLobbyAsync("My lobby", 8)
                 .Returns(Task.FromResult(Result.Failure<LobbyState>("host-failed")));
 
             ViewModel.CreateLobby().Forget();

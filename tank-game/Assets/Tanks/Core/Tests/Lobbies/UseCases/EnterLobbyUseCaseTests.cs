@@ -109,7 +109,7 @@ namespace Tanks.Core.Tests.Lobbies.UseCases
             _chat.ConnectAsync(Arg.Any<LobbyId>()).Returns(Task.FromResult(Result.Failure("chat-unavailable")));
             _service.LeaveLobbyAsync().Returns(Task.FromResult(Result.Failure("failed-to-leave")));
 
-            ResultType<LobbyState> result = await _useCase.HostAsync("lobby", 4);
+            ResultType<LobbyState> result = await _useCase.HostAsync("lobby", 8);
 
             Assert.That(result.ErrorCode, Is.EqualTo("failed-to-leave"));
             Assert.That(result.IsSuccess, Is.False);
@@ -119,7 +119,7 @@ namespace Tanks.Core.Tests.Lobbies.UseCases
         {
             return route switch
             {
-                0 => _useCase.HostAsync("lobby", 4),
+                0 => _useCase.HostAsync("lobby", 8),
                 1 => _useCase.JoinAsync(_lobby.Id.Value),
                 _ => _useCase.JoinAsync(new LobbyAddress("code"))
             };

@@ -111,8 +111,8 @@ namespace Tanks.Server.Bootstrap
             }
 
             if (_clientService.ConnectedClientCount > 0) return;
+            if (NetworkManager.Singleton) NetworkManager.Singleton.Shutdown();
 
-            NetworkManager.Singleton.Shutdown();
             Application.Quit();
         }
     }

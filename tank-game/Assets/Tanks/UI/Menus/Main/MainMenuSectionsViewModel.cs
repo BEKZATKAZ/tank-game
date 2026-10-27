@@ -105,7 +105,7 @@ namespace Tanks.UI.Menus.Main
 
             try
             {
-                result = await _enterLobby.HostAsync(lobbyName, 4);
+                result = await _enterLobby.HostAsync(lobbyName, 8);
             }
             finally
             {
