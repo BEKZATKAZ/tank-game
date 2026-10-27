@@ -94,6 +94,15 @@ namespace Tanks.Server.Bootstrap
 
         public void OnClientDisconnected(ulong clientId)
         {
+            // Shutdown if the host leaves
+            if (clientId == 0)
+            {
+                Debug.Log("Host left, shutting down");
+                NetworkManager.Singleton.Shutdown();
+                Application.Quit();
+                return;
+            }
+
             _clientService.RemoveClient(clientId);
 
             if (_teamService.TryGetTeamByPlayerId(clientId, out Team team))
@@ -103,6 +112,7 @@ namespace Tanks.Server.Bootstrap
 
             if (_clientService.ConnectedClientCount > 0) return;
 
+            NetworkManager.Singleton.Shutdown();
             Application.Quit();
         }
     }
