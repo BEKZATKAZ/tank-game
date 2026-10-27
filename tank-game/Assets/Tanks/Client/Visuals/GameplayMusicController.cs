@@ -28,7 +28,7 @@ namespace Tanks.Client.Visuals
         private IStressService _stress;
         private IInputService<ManualDriveInput> _driveInput;
         private IInputService<TurretInput> _turretInput;
-        private int _currentMusicIndex = 0;
+        private int _currentMusicIndex = -1;
 
         [Inject]
         public void Inject(
@@ -54,7 +54,7 @@ namespace Tanks.Client.Visuals
             if (_currentMusicIndex >= 0) return;
 
             // Sync music
-            var random = new Unity.Mathematics.Random(message.Settings.Seed ^ 31);
+            var random = new Unity.Mathematics.Random(message.Settings.Seed);
 
             for (int i = _musicPaths.Length - 1; i > 0; i--)
             {
@@ -108,6 +108,8 @@ namespace Tanks.Client.Visuals
 
         private void PlayNext()
         {
+            if (_currentMusicIndex < 0) _currentMusicIndex = 0;
+
             _music = _audioFactory.CreateInstance(_musicPaths[_currentMusicIndex]);
             _music.SetVolume(0.8f);
 
