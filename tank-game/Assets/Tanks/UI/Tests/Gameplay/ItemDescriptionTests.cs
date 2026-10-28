@@ -3,6 +3,7 @@ using NUnit.Framework;
 using Tanks.Client.Items;
 using Tanks.Client.Items.Pickups;
 using Tanks.Localization;
+using Tanks.Shared.Generation;
 using Tanks.Shared.Items;
 using Tanks.Shared.Items.Data;
 using Tanks.Shared.Items.Pickups;
@@ -129,6 +130,18 @@ namespace Tanks.UI.Tests.Gameplay
 
             Assert.AreEqual(0, ViewModel.Opacity.Value,
                 "No pick-ups were registered before, the view should be hidden");
+        }
+
+        [Test]
+        public void ResetRound_HidesImmediately()
+        {
+            ItemIdentifier id = new ItemIdentifier("id1");
+
+            ViewModel.Handle(new PickupAreaEntered { ItemId = id, PickupId = new(1) }, null);
+            Assert.AreEqual(ViewModel.Opacity.Value, 1);
+
+            ViewModel.Handle(new TilemapGenerated(), null);
+            Assert.AreEqual(ViewModel.Opacity.Value, 0);
         }
     }
 }

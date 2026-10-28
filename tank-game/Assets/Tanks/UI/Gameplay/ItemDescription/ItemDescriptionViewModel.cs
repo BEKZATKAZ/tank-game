@@ -7,6 +7,7 @@ using System.Text.RegularExpressions;
 using Tanks.Client.Items;
 using Tanks.Client.Items.Pickups;
 using Tanks.Localization;
+using Tanks.Shared.Generation;
 using Tanks.Shared.Items;
 using Tanks.Shared.Items.Data;
 using Tanks.Shared.Items.Pickups;
@@ -19,6 +20,7 @@ namespace Tanks.UI.Gameplay.ItemDescription
 {
     public sealed class ItemDescriptionViewModel :
         IViewModel,
+        IMessageHandler<TilemapGenerated>,
         IMessageHandler<PickupAreaEntered>,
         IMessageHandler<PickupAreaLeft>,
         IDisposable
@@ -30,6 +32,7 @@ namespace Tanks.UI.Gameplay.ItemDescription
             IMessageBus bus)
         {
             _bus = bus;
+            _bus.RegisterHandler<TilemapGenerated>(this);
             _bus.RegisterHandler<PickupAreaEntered>(this);
             _bus.RegisterHandler<PickupAreaLeft>(this);
 
@@ -166,6 +169,12 @@ namespace Tanks.UI.Gameplay.ItemDescription
             Icon.Value = clientConfig.Icon;
             AccentColor.Value = clientConfig.AccentColor;
             Opacity.Value = 1;
+        }
+
+        public void Handle(TilemapGenerated message, IMessageSender sender)
+        {
+            _enteredPickups.Clear();
+            Opacity.Value = 0;
         }
 
         public void Handle(PickupAreaLeft message, IMessageSender sender)
