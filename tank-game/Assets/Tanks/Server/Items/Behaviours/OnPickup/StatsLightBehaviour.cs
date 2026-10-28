@@ -70,14 +70,8 @@ namespace Tanks.Server.Items.Behaviours.OnPickup
         {
             int index = _entries.FindIndex(x => x.TargetId == owner.Entity.Id);
             if (index == -1) return;
-            if (_entries[index].ActiveStatId is StatId id)
-            {
-                owner.GetBehaviour<IStatOwnerBehaviour>()?.RemoveStat(id);
-            }
             _entries.RemoveAt(index);
         }
-
-        public override void Reset() => _entries.Clear();
 
         public override void OnTick(IItemOwnerBehaviour owner, int tick, float tickDelta)
         {

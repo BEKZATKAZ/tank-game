@@ -1,5 +1,10 @@
-﻿using Tanks.Shared.Stats;
+﻿using System;
+using System.Linq;
+using Tanks.Shared.Items;
+using Tanks.Shared.Items.Behaviours;
+using Tanks.Shared.Stats;
 using Unity.Mathematics;
+using UnityEngine;
 
 namespace Tanks.Shared.Entities.Health
 {
@@ -49,6 +54,17 @@ namespace Tanks.Shared.Entities.Health
 
             float multiplier = targetStat?.GetDiminishingReturns(StatType.Defense, defense) ?? 1;
             float finalDamage = damage * multiplier;
+
+            IItemOwnerBehaviour fromItemOwner = from?.GetBehaviour<IItemOwnerBehaviour>();
+
+            if (fromItemOwner is not null)
+            {
+                foreach (ItemBehaviourBase behaviour in fromItemOwner.GetAllBehaviours())
+                {
+                    try { behaviour.OnDealDamage(target, fromItemOwner, ref finalDamage); }
+                    catch (Exception ex) { Debug.LogException(ex); }
+                }
+            }
 
             OnDamage((uint)math.ceil(finalDamage), target, from, eventId);
         }

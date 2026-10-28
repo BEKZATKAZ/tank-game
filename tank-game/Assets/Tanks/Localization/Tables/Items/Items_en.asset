@@ -242,7 +242,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 34421328138690561
-    m_Localized: Slightly gain defense,
+    m_Localized: Slightly gain defense.
     m_Metadata:
       m_Items: []
   - m_Id: 34421328138690562
@@ -254,7 +254,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 34421328138690564
-    m_Localized: Gain speed but lose resistance
+    m_Localized: Gain speed but lose resistance.
     m_Metadata:
       m_Items: []
   - m_Id: 34421328138690565
@@ -266,7 +266,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 34421328138690567
-    m_Localized: Deal slightly more damage
+    m_Localized: Deal slightly more damage.
     m_Metadata:
       m_Items: []
   - m_Id: 34421328138690571
@@ -328,6 +328,97 @@ MonoBehaviour:
     m_Localized: Evolution comes at a price.
     m_Metadata:
       m_Items: []
+  - m_Id: 35240567506427904
+    m_Localized: Supplies In The Fridge
+    m_Metadata:
+      m_Items: []
+  - m_Id: 35240567560953856
+    m_Localized: Whenever you gain any HP, your lowest stat gains {increase}, and your highest gains {decrease}.
+    m_Metadata:
+      m_Items:
+      - rid: 937747718553469026
+  - m_Id: 35240567560953857
+    m_Localized: Two for the price of one.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 35299638754369538
+    m_Localized: MAX lvl
+    m_Metadata:
+      m_Items: []
+  - m_Id: 35299638754369539
+    m_Localized: All your stats are maxed for {duration} seconds.
+    m_Metadata:
+      m_Items:
+      - rid: 937747718553469026
+  - m_Id: 35299638754369540
+    m_Localized: Yes, this is totally legal.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 35315045817081856
+    m_Localized: Lucky Shot
+    m_Metadata:
+      m_Items: []
+  - m_Id: 35315045817081857
+    m_Localized: Each third hit from you deals {damage} more damage.
+    m_Metadata:
+      m_Items:
+      - rid: 937747718553469026
+  - m_Id: 35315045817081858
+    m_Localized: Deal more damage on each third hit.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 35493227904065536
+    m_Localized: Thorns
+    m_Metadata:
+      m_Items: []
+  - m_Id: 35493227946008576
+    m_Localized: Whenever you take damage, {damage} of the damage is reflected to the one who decided to mess with you.
+    m_Metadata:
+      m_Items:
+      - rid: 937747718553469026
+  - m_Id: 35493227946008577
+    m_Localized: Even this game has commission.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 35493227946008578
+    m_Localized: Negative Speed Limit
+    m_Metadata:
+      m_Items: []
+  - m_Id: 35493227946008579
+    m_Localized: Take {damage} damage whenever you drive forward, but self damage is reduced by {decrease}.
+    m_Metadata:
+      m_Items:
+      - rid: 937747718553469026
+  - m_Id: 35493227946008580
+    m_Localized: Backwards tech - Best tech.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 35508022451593216
+    m_Localized: Chicken Egg
+    m_Metadata:
+      m_Items: []
+  - m_Id: 35508022451593217
+    m_Localized: Deal {damage} more damage if the hit player has {threshold} HP or more.
+    m_Metadata:
+      m_Items:
+      - rid: 937747718553469026
+  - m_Id: 35508022451593218
+    m_Localized: Better not miss the first one.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 35511987285221376
+    m_Localized: Self-Conscious
+    m_Metadata:
+      m_Items: []
+  - m_Id: 35511987289415680
+    m_Localized: You fire unbelievably fast, but self damage is increased by {damage}.
+    m_Metadata:
+      m_Items:
+      - rid: 937747718553469026
+  - m_Id: 35511987289415681
+    m_Localized: There is still a right for mistakes, still...
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:
@@ -346,3 +437,10 @@ MonoBehaviour:
         - id: 34421328138690572
         - id: 34421328138690575
         - id: 34446604822339587
+        - id: 35240567560953856
+        - id: 35508022451593217
+        - id: 35299638754369539
+        - id: 35315045817081857
+        - id: 35493227946008576
+        - id: 35493227946008579
+        - id: 35511987289415680

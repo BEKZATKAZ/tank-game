@@ -62,12 +62,6 @@ namespace Tanks.Server.Items.Behaviours.OnPickup
             _entries.Remove(owner.Entity.Id);
         }
 
-        public override void Reset()
-        {
-            foreach (PlayerEntry entry in _entries.Values) RemoveStats(entry);
-            _entries.Clear();
-        }
-
         private void RemoveStats(PlayerEntry entry)
         {
             foreach (StatId id in entry.StatIds) entry.StatOwner.RemoveStat(id);

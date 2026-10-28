@@ -321,6 +321,97 @@ MonoBehaviour:
     m_Localized: "L'\xE9volution a un prix."
     m_Metadata:
       m_Items: []
+  - m_Id: 35240567506427904
+    m_Localized: "Fournitures dans le r\xE9frig\xE9rateur"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 35240567560953856
+    m_Localized: "Chaque fois que vous gagnez des points de vie, votre stat la plus basse augmente {increase} et votre stat la plus \xE9lev\xE9e diminue {decrease}."
+    m_Metadata:
+      m_Items:
+      - rid: 5824281740147687477
+  - m_Id: 35240567560953857
+    m_Localized: Deux pour le prix d'un.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 35299638754369538
+    m_Localized: Niveau MAX
+    m_Metadata:
+      m_Items: []
+  - m_Id: 35299638754369539
+    m_Localized: Toutes vos stats sont au maximum pendant {duration} secondes.
+    m_Metadata:
+      m_Items:
+      - rid: 5824281740147687477
+  - m_Id: 35299638754369540
+    m_Localized: "Oui, c'est parfaitement l\xE9gal."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 35315045817081856
+    m_Localized: Coup de chance
+    m_Metadata:
+      m_Items: []
+  - m_Id: 35315045817081857
+    m_Localized: "Chaque troisi\xE8me coup port\xE9 par vous inflige {damage} d\xE9g\xE2ts suppl\xE9mentaires."
+    m_Metadata:
+      m_Items:
+      - rid: 5824281740147687477
+  - m_Id: 35315045817081858
+    m_Localized: "Infligez plus de d\xE9g\xE2ts \xE0 chaque troisi\xE8me coup."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 35493227904065536
+    m_Localized: "\xC9pines"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 35493227946008576
+    m_Localized: "Chaque fois que vous subissez des d\xE9g\xE2ts, {damage} de ces d\xE9g\xE2ts sont renvoy\xE9s \xE0 celui qui a d\xE9cid\xE9 de vous nuire."
+    m_Metadata:
+      m_Items:
+      - rid: 5824281740147687477
+  - m_Id: 35493227946008577
+    m_Localized: "M\xEAme ce jeu a une commission."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 35493227946008578
+    m_Localized: "Limite de vitesse n\xE9gative"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 35493227946008579
+    m_Localized: "Vous subissez {damage} d\xE9g\xE2ts chaque fois que vous avancez, mais les d\xE9g\xE2ts que vous vous infligez sont r\xE9duits de {decrease}."
+    m_Metadata:
+      m_Items:
+      - rid: 5824281740147687477
+  - m_Id: 35493227946008580
+    m_Localized: "Tech r\xE9trograde - Meilleure tech."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 35508022451593216
+    m_Localized: "\u0152uf de poule"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 35508022451593217
+    m_Localized: "Infligez {damage} d\xE9g\xE2ts suppl\xE9mentaires si le joueur touch\xE9 a {threshold} points de vie ou plus."
+    m_Metadata:
+      m_Items:
+      - rid: 5824281740147687477
+  - m_Id: 35508022451593218
+    m_Localized: Il ne faut surtout pas rater le premier.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 35511987285221376
+    m_Localized: Conscient de soi
+    m_Metadata:
+      m_Items: []
+  - m_Id: 35511987289415680
+    m_Localized: "Vous tirez \xE0 une vitesse incroyable, mais les d\xE9g\xE2ts que vous vous infligez sont augment\xE9s par {damage}."
+    m_Metadata:
+      m_Items:
+      - rid: 5824281740147687477
+  - m_Id: 35511987289415681
+    m_Localized: "Le droit \xE0 l'erreur existe, existe..."
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:
@@ -339,3 +430,10 @@ MonoBehaviour:
         - id: 34421328138690572
         - id: 34421328138690575
         - id: 34446604822339587
+        - id: 35240567560953856
+        - id: 35508022451593217
+        - id: 35299638754369539
+        - id: 35315045817081857
+        - id: 35493227946008576
+        - id: 35493227946008579
+        - id: 35511987289415680

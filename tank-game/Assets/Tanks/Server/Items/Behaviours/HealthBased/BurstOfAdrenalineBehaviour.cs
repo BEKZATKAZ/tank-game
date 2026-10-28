@@ -27,12 +27,18 @@ namespace Tanks.Server.Items.Behaviours.HealthBased
             TryActivate(owner, newState);
         }
 
-        public override void OnDestroy(IItemOwnerBehaviour owner) => _activated.Remove(owner.Entity.Id);
-        public override void Reset() => _activated.Clear();
+        public override void OnDestroy(IItemOwnerBehaviour owner)
+        {
+            _activated.Remove(owner.Entity.Id);
+        }
 
         private void TryActivate(IItemOwnerBehaviour owner, HealthState state)
         {
-            if (state.Current <= 0 || state.Current >= Config.GetStat("health-threshold").Value) return;
+            if (state.Current <= 0 || state.Current >= Config.GetStat("health-threshold").Value)
+            {
+                return;
+            }
+
             if (_activated.Contains(owner.Entity.Id)) return;
 
             IStatOwnerBehaviour statOwner = owner.GetBehaviour<IStatOwnerBehaviour>();

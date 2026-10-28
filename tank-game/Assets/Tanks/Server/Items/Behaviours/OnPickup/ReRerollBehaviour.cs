@@ -49,8 +49,6 @@ namespace Tanks.Server.Items.Behaviours.OnPickup
             _playerEntries.Remove(owner.Entity.Id);
         }
 
-        public override void Reset() => _playerEntries.Clear();
-
         public override void OnTick(IItemOwnerBehaviour owner, int tick, float tickDelta)
         {
             if (_playerEntries.TryGetValue(owner.Entity.Id, out var entry) == false) return;

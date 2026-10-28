@@ -79,20 +79,6 @@ namespace Tanks.Server.Tests.Items.Behaviours
             AssertBoosts(other);
         }
 
-        [TestCase(false)]
-        [TestCase(true)]
-        public void NextRound_CanActivateAgain(bool reset)
-        {
-            Behaviour.OnHealthChanged(MockOwner, null, default, new HealthState(19, 100));
-            if (reset) Behaviour.Reset();
-            else Behaviour.OnDestroy(MockOwner);
-            MockOwner.GetBehaviour<IStatOwnerBehaviour>().ClearReceivedCalls();
-
-            Behaviour.OnHealthChanged(MockOwner, null, default, new HealthState(19, 100));
-
-            AssertBoosts(MockOwner);
-        }
-
         [Test]
         public void Boosts_RealStats_ExpireAndDoNotReactivate()
         {

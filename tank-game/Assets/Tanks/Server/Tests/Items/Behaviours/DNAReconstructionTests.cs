@@ -161,24 +161,6 @@ namespace Tanks.Server.Tests.Items.Behaviours
         }
 
         [Test]
-        public void Reset_RemovesMutationsForAllOwners()
-        {
-            IItemOwnerBehaviour other = Substitute.For<IItemOwnerBehaviour>();
-            other.Entity.Id.Returns(new EntityId(2));
-            IStatOwnerBehaviour otherStats = other.GetBehaviour<IStatOwnerBehaviour>();
-            StatId otherId = StatIdGenerator.GenerateNext();
-            otherStats.AddStat(Arg.Any<StatType>(), Arg.Any<StatValueType>(), Arg.Any<float>(), -1).Returns(otherId);
-            Behaviour.OnPickup(MockOwner);
-            Behaviour.OnPickup(other);
-
-            Behaviour.Reset();
-            Behaviour.OnDestroy(MockOwner);
-
-            foreach (var stat in _added) _stats.Received(1).RemoveStat(stat.Id);
-            otherStats.Received(2).RemoveStat(otherId);
-        }
-
-        [Test]
         public void Destroy_ThenPickup_StartsFresh()
         {
             Behaviour.OnPickup(MockOwner);
@@ -201,7 +183,6 @@ namespace Tanks.Server.Tests.Items.Behaviours
 
             Assert.DoesNotThrow(() => Behaviour.OnPickup(MockOwner));
             Assert.DoesNotThrow(() => Behaviour.OnDestroy(MockOwner));
-            Assert.DoesNotThrow(() => Behaviour.Reset());
             Assert.That(_added, Is.Empty);
         }
 

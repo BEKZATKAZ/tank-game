@@ -307,6 +307,90 @@ MonoBehaviour:
     m_Key: item.dna-reconstruction.tagline
     m_Metadata:
       m_Items: []
+  - m_Id: 35240567506427904
+    m_Key: item.supplies-in-the-fridge.name
+    m_Metadata:
+      m_Items: []
+  - m_Id: 35240567560953856
+    m_Key: item.supplies-in-the-fridge.description
+    m_Metadata:
+      m_Items: []
+  - m_Id: 35240567560953857
+    m_Key: item.supplies-in-the-fridge.tagline
+    m_Metadata:
+      m_Items: []
+  - m_Id: 35508022451593216
+    m_Key: item.chicken-egg.name
+    m_Metadata:
+      m_Items: []
+  - m_Id: 35508022451593217
+    m_Key: item.chicken-egg.description
+    m_Metadata:
+      m_Items: []
+  - m_Id: 35508022451593218
+    m_Key: item.chicken-egg.tagline
+    m_Metadata:
+      m_Items: []
+  - m_Id: 35299638754369538
+    m_Key: item.max-level.name
+    m_Metadata:
+      m_Items: []
+  - m_Id: 35299638754369539
+    m_Key: item.max-level.description
+    m_Metadata:
+      m_Items: []
+  - m_Id: 35299638754369540
+    m_Key: item.max-level.tagline
+    m_Metadata:
+      m_Items: []
+  - m_Id: 35315045817081856
+    m_Key: item.lucky-shot.name
+    m_Metadata:
+      m_Items: []
+  - m_Id: 35315045817081857
+    m_Key: item.lucky-shot.description
+    m_Metadata:
+      m_Items: []
+  - m_Id: 35315045817081858
+    m_Key: item.lucky-shot.tagline
+    m_Metadata:
+      m_Items: []
+  - m_Id: 35511987285221376
+    m_Key: item.self-conscious.name
+    m_Metadata:
+      m_Items: []
+  - m_Id: 35511987289415680
+    m_Key: item.self-conscious.description
+    m_Metadata:
+      m_Items: []
+  - m_Id: 35511987289415681
+    m_Key: item.self-conscious.tagline
+    m_Metadata:
+      m_Items: []
+  - m_Id: 35493227904065536
+    m_Key: item.thorns.name
+    m_Metadata:
+      m_Items: []
+  - m_Id: 35493227946008576
+    m_Key: item.thorns.description
+    m_Metadata:
+      m_Items: []
+  - m_Id: 35493227946008577
+    m_Key: item.thorns.tagline
+    m_Metadata:
+      m_Items: []
+  - m_Id: 35493227946008578
+    m_Key: item.negative-speed-limit.name
+    m_Metadata:
+      m_Items: []
+  - m_Id: 35493227946008579
+    m_Key: item.negative-speed-limit.description
+    m_Metadata:
+      m_Items: []
+  - m_Id: 35493227946008580
+    m_Key: item.negative-speed-limit.tagline
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:

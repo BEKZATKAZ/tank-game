@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using Tanks.Shared.Entities;
 using Tanks.Shared.Entities.Health;
 using Tanks.Shared.Items.Behaviours;
@@ -25,6 +26,7 @@ namespace Tanks.Shared.Items
         IEnumerable<ItemIdentifier> Items { get; }
         IEntityBehaviour Entity { get; }
 
+        IEnumerable<ItemBehaviourBase> GetAllBehaviours();
         void PickupItem(IItemConfig item, in PickupId pickupId);
     }
 
@@ -47,6 +49,11 @@ namespace Tanks.Shared.Items
         public SpriteRenderer Accent => _accent;
 
         private readonly List<ItemIdentifier> _items = new();
+
+        public IEnumerable<ItemBehaviourBase> GetAllBehaviours()
+        {
+            return _items.SelectMany(x => _database.GetBehaviours(x));
+        }
 
         public void Handle(HealthChangedFromServer message, IMessageSender sender)
         {

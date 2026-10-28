@@ -100,20 +100,6 @@ namespace Tanks.Server.Tests.Items.Behaviours
         }
 
         [Test]
-        public void Destroy_RemovesActiveBoost()
-        {
-            IStatOwnerBehaviour stats = MockOwner.GetBehaviour<IStatOwnerBehaviour>();
-            StatId id = StatIdGenerator.GenerateNext();
-            stats.AddStat(Arg.Any<StatType>(), Arg.Any<StatValueType>(), Arg.Any<float>(), Arg.Any<float>()).Returns(id);
-            Behaviour.OnPickup(MockOwner);
-            Behaviour.OnTick(MockOwner, 0, 1);
-
-            Behaviour.OnDestroy(MockOwner);
-
-            stats.Received(1).RemoveStat(id);
-        }
-
-        [Test]
         public void Tick_OwnersHaveIndependentCycles()
         {
             IItemOwnerBehaviour other = Substitute.For<IItemOwnerBehaviour>();
@@ -126,17 +112,6 @@ namespace Tanks.Server.Tests.Items.Behaviours
 
             other.GetBehaviour<IStatOwnerBehaviour>().Received(1)
                 .AddStat(StatType.Speed, StatValueType.Percent, 25, 9);
-        }
-
-        [Test]
-        public void Reset_ClearsCycle()
-        {
-            Behaviour.OnPickup(MockOwner);
-            Behaviour.Reset();
-            Behaviour.OnTick(MockOwner, 0, 1);
-
-            MockOwner.GetBehaviour<IStatOwnerBehaviour>().DidNotReceiveWithAnyArgs()
-                .AddStat(default, default, default, default);
         }
     }
 }

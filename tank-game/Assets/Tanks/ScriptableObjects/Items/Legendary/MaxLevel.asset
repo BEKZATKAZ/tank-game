@@ -1,0 +1,65 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5b60dbfe321d8e641a52b5ac43b22c42, type: 3}
+  m_Name: MaxLevel
+  m_EditorClassIdentifier: Tanks.Editor::Tanks.Editor.Items.EditorItemConfig
+  _identifier: max-level
+  _tier: 4
+  _playerStats:
+  - key: 2
+    value:
+      Duration: 10
+      Value: 3.402823e+38
+      ValueType: 0
+  - key: 0
+    value:
+      Duration: 10
+      Value: 3.4028235e+38
+      ValueType: 0
+  - key: 1
+    value:
+      Duration: 10
+      Value: 3.4028235e+38
+      ValueType: 0
+  - key: 3
+    value:
+      Duration: 10
+      Value: 3.4028235e+38
+      ValueType: 0
+  - key: 4
+    value:
+      Duration: 10
+      Value: 3.4028235e+38
+      ValueType: 0
+  _itemStats:
+  - key: duration
+    value:
+      Value: 10
+      ValueType: 0
+  _onPickUpActions: []
+  _iconMaterial: {fileID: -876546973899608171, guid: 9680fbb573735774aaa7e0c722f9aad3, type: 3}
+  _icon: {fileID: 21300000, guid: 7e6441e57eca1af42b4051e06e73007b, type: 3}
+  _accentColor: {r: 1, g: 0.6572338, b: 0, a: 1}
+  _onSpawnSound:
+    Guid:
+      Data1: 1952977856
+      Data2: 1080400490
+      Data3: -879848808
+      Data4: 578334269
+    Path: event:/SFX/Items/Spawn/Legendary
+  _onPickUpSound:
+    Guid:
+      Data1: 0
+      Data2: 0
+      Data3: 0
+      Data4: 0
+    Path: 

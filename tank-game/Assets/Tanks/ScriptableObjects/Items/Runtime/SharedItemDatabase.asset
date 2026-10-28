@@ -36,6 +36,15 @@ MonoBehaviour:
         Value: 50
         ValueType: 1
     _itemStats: []
+  - _identifier: lucky-shot
+    _tier: 2
+    _onPickUpActions: []
+    _playerStats: []
+    _itemStats:
+    - key: damage
+      value:
+        Value: 30
+        ValueType: 1
   - _identifier: stats-light
     _tier: 2
     _onPickUpActions: []
@@ -47,7 +56,7 @@ MonoBehaviour:
         ValueType: 1
     - key: speed-boost
       value:
-        Value: 25
+        Value: 30
         ValueType: 1
     - key: defense-boost
       value:
@@ -59,12 +68,26 @@ MonoBehaviour:
         ValueType: 1
     - key: resistance-boost
       value:
-        Value: 5
+        Value: 6
         ValueType: 0
     - key: interval
       value:
-        Value: 9
+        Value: 7.5
         ValueType: 0
+  - _identifier: thorns
+    _tier: 2
+    _onPickUpActions: []
+    _playerStats:
+    - key: 2
+      value:
+        Duration: -1
+        Value: 5
+        ValueType: 0
+    _itemStats:
+    - key: damage
+      value:
+        Value: 25
+        ValueType: 1
   - _identifier: weapon_bomb-launcher
     _tier: 2
     _onPickUpActions:
@@ -92,6 +115,40 @@ MonoBehaviour:
         Value: 35
         ValueType: 1
     _itemStats: []
+  - _identifier: max-level
+    _tier: 4
+    _onPickUpActions: []
+    _playerStats:
+    - key: 2
+      value:
+        Duration: 10
+        Value: 3.402823e+38
+        ValueType: 0
+    - key: 0
+      value:
+        Duration: 10
+        Value: 3.4028235e+38
+        ValueType: 0
+    - key: 1
+      value:
+        Duration: 10
+        Value: 3.4028235e+38
+        ValueType: 0
+    - key: 3
+      value:
+        Duration: 10
+        Value: 3.4028235e+38
+        ValueType: 0
+    - key: 4
+      value:
+        Duration: 10
+        Value: 3.4028235e+38
+        ValueType: 0
+    _itemStats:
+    - key: duration
+      value:
+        Value: 10
+        ValueType: 0
   - _identifier: burst-of-adrenaline
     _tier: 1
     _onPickUpActions: []
@@ -147,6 +204,19 @@ MonoBehaviour:
     _onPickUpActions: []
     _playerStats: []
     _itemStats: []
+  - _identifier: supplies-in-the-fridge
+    _tier: 1
+    _onPickUpActions: []
+    _playerStats: []
+    _itemStats:
+    - key: increase
+      value:
+        Value: 3
+        ValueType: 0
+    - key: decrease
+      value:
+        Value: -1.5
+        ValueType: 0
   - _identifier: weapon_freezing-gun
     _tier: 1
     _onPickUpActions:
@@ -159,6 +229,19 @@ MonoBehaviour:
     - {fileID: 11400000, guid: 9c6d8bae6749bca42b5f9e18b842165f, type: 2}
     _playerStats: []
     _itemStats: []
+  - _identifier: chicken-egg
+    _tier: 0
+    _onPickUpActions: []
+    _playerStats: []
+    _itemStats:
+    - key: damage
+      value:
+        Value: 15
+        ValueType: 1
+    - key: threshold
+      value:
+        Value: 90
+        ValueType: 1
   - _identifier: health-up-mini
     _tier: 0
     _onPickUpActions: []
@@ -268,6 +351,29 @@ MonoBehaviour:
         Value: 0.5
         ValueType: 0
     _itemStats: []
+  - _identifier: negative-speed-limit
+    _tier: 3
+    _onPickUpActions: []
+    _playerStats:
+    - key: 1
+      value:
+        Duration: -1
+        Value: 2
+        ValueType: 0
+    - key: 3
+      value:
+        Duration: -1
+        Value: -4
+        ValueType: 0
+    _itemStats:
+    - key: damage
+      value:
+        Value: 6
+        ValueType: 0
+    - key: decrease
+      value:
+        Value: 90
+        ValueType: 1
   - _identifier: no-room-for-error
     _tier: 3
     _onPickUpActions: []
@@ -292,6 +398,20 @@ MonoBehaviour:
       value:
         Value: 5
         ValueType: 0
+  - _identifier: self-conscious
+    _tier: 3
+    _onPickUpActions: []
+    _playerStats:
+    - key: 4
+      value:
+        Duration: -1
+        Value: 5
+        ValueType: 0
+    _itemStats:
+    - key: damage
+      value:
+        Value: 100
+        ValueType: 1
   - _identifier: true-balance
     _tier: 3
     _onPickUpActions: []
