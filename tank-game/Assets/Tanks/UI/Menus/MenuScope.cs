@@ -6,6 +6,7 @@ using Tanks.UI.Menus.Lobbies;
 using Tanks.UI.Menus.Main;
 using Tanks.UI.Menus.Settings;
 using Tanks.UI.Menus.Transitions;
+using Unity.Netcode;
 using UnityEngine;
 using VContainer;
 using VContainer.Unity;
@@ -39,6 +40,12 @@ namespace Tanks.UI.Menus
             builder.Register<LobbyMainViewModel>(Lifetime.Transient);
             builder.Register<LobbyChatViewModel>(Lifetime.Transient);
             builder.Register<LobbySettingsViewModel>(Lifetime.Transient);
+
+            builder.RegisterBuildCallback(_ =>
+            {
+                // Leave the previous session completely
+                if (NetworkManager.Singleton) Destroy(NetworkManager.Singleton.gameObject);
+            });
         }
     }
 }
