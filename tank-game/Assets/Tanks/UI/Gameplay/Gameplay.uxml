@@ -61,7 +61,7 @@
             </ui:ScrollView>
         </ui:VisualElement>
     </ui:VisualElement>
-    <ui:VisualElement name="SpectatorControls" class="spectator-controls" style="display: none;" picking-mode="Ignore">
+    <ui:VisualElement name="SpectatorControls" picking-mode="Ignore" class="spectator-controls" style="display: none;">
         <Tanks.UI.Elements.CustomButton name="PreviousSpectatorTarget" focusable="false" class="spectator-controls__button">
             <Bindings>
                 <UnityEngine.Localization.LocalizedString property="text" table="GUID:be3c65f295ea4a545a8406a0bc7b68e6" entry="gameplay.spectator.previous"/>
