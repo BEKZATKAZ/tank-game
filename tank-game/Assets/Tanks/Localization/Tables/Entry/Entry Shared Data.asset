@@ -39,6 +39,34 @@ MonoBehaviour:
     m_Key: entry.consent
     m_Metadata:
       m_Items: []
+  - m_Id: 23520000000000000
+    m_Key: entry.privacy.title
+    m_Metadata:
+      m_Items: []
+  - m_Id: 23520000000000001
+    m_Key: entry.privacy.loading
+    m_Metadata:
+      m_Items: []
+  - m_Id: 23520000000000002
+    m_Key: entry.privacy.error
+    m_Metadata:
+      m_Items: []
+  - m_Id: 23520000000000003
+    m_Key: entry.privacy.agreement
+    m_Metadata:
+      m_Items: []
+  - m_Id: 23520000000000004
+    m_Key: entry.privacy.continue
+    m_Metadata:
+      m_Items: []
+  - m_Id: 23520000000000005
+    m_Key: entry.privacy.retry
+    m_Metadata:
+      m_Items: []
+  - m_Id: 23520000000000006
+    m_Key: entry.privacy.quit
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:

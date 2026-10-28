@@ -42,6 +42,34 @@ MonoBehaviour:
     m_Localized: "J'ai lu et j'accepte la [Politique de confidentialit\xE9]."
     m_Metadata:
       m_Items: []
+  - m_Id: 23520000000000000
+    m_Localized: 'POLITIQUE DE CONFIDENTIALITÉ'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 23520000000000001
+    m_Localized: 'Vérification de la politique et connexion...'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 23520000000000002
+    m_Localized: 'Impossible de continuer. Vérifiez votre connexion et réessayez. La connexion est bloquée tant que la politique actuelle n''est pas vérifiée et acceptée.'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 23520000000000003
+    m_Localized: 'J''ai lu et j''accepte cette Politique de confidentialité.'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 23520000000000004
+    m_Localized: 'CONTINUER'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 23520000000000005
+    m_Localized: 'RÉESSAYER'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 23520000000000006
+    m_Localized: 'QUITTER'
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds: []

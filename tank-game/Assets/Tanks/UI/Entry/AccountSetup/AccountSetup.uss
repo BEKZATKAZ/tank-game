@@ -20,21 +20,6 @@
 	-unity-text-align: middle-center;
 }
 
-#Consent {
-	flex-direction: row-reverse;
-	font-size: 24px;
-	margin-bottom: 20px;
-}
-
-#Consent .unity-toggle__input {
-	flex: 0 0 auto;
-	margin-right: 15px;
-}
-
-#Consent .unity-label {
-	flex-grow: 1;
-}
-
 .unity-text-field {
 	font-size: 28px;
 	margin-bottom: 50px;
@@ -51,4 +36,60 @@
 
 .unity-button {
 	border-width: 2px;
+}
+
+#PrivacyPolicy {
+    background-color: var(--bg-dark);
+    -unity-font-definition: var(--font-regular);
+    width: 90%;
+    max-width: 1050px;
+    max-height: 90%;
+    padding: 24px;
+    border-width: 4px;
+    border-radius: 20px;
+    flex-shrink: 1;
+}
+
+#PolicyHeader {
+    font-size: 36px;
+    -unity-text-align: middle-center;
+    margin-bottom: 12px;
+}
+
+#PolicyScroll {
+    height: 420px;
+    flex-shrink: 1;
+    margin-bottom: 24px;
+    background-color: rgba(0, 0, 0, 0.45);
+    padding: 12px;
+}
+
+#PolicyText, #PolicyError, #PolicyLoading, #PolicyConsent {
+    white-space: normal;
+    font-size: 20px;
+}
+
+#PolicyConsent {
+    margin-bottom: 16px;
+    flex-direction: row-reverse;
+    justify-content: flex-end;
+}
+
+#PolicyConsent .unity-toggle__input {
+    flex: 0 0 auto;
+    margin-right: 15px;
+}
+
+#PolicyActions {
+    flex-direction: row;
+    justify-content: flex-end;
+    flex-wrap: wrap;
+}
+
+#PolicyActions .unity-button {
+    min-width: 140px;
+    margin-left: 12px;
+    padding: 12px 20px;
+    -unity-text-align: middle-center;
+    font-size: 24px;
 }

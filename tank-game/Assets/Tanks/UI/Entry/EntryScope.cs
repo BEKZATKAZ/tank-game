@@ -1,4 +1,4 @@
-﻿using NaughtyAttributes;
+using NaughtyAttributes;
 using Tanks.Localization;
 using Tanks.UI.Entry.AccountSetup;
 using Tanks.UI.Menus.Dialogs;
@@ -18,6 +18,7 @@ namespace Tanks.UI.Entry
         {
             builder.RegisterComponent(_dialogScreenService).As<IDialogScreenService>();
             builder.RegisterLocalization(Lifetime.Singleton);
+            builder.Register<IPrivacyPolicyService, PrivacyPolicyService>(Lifetime.Singleton);
 
             builder.Register<DialogScreenViewModel>(Lifetime.Transient);
             builder.Register<AccountSetupViewModel>(Lifetime.Transient);

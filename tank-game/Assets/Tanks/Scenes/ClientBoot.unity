@@ -188,16 +188,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Tanks.UI::Tanks.UI.Entry.AccountSetup.AccountSetupView
   _showOnPlay: 1
-  _consent:
-    m_TableReference:
-      m_TableCollectionName: GUID:c65a4f9d9da4a46468c02bed143a7960
-    m_TableEntryReference:
-      m_KeyId: 23510397867220992
-      m_Key: 
-    m_FallbackState: 0
-    m_WaitForCompletion: 0
-    m_LocalVariables: []
-  _privacyPolicyLink: https://raw.githubusercontent.com/BEKZATKAZ/tank-game/refs/heads/main/tank-game/privacy-policy.md
   references:
     version: 2
     RefIds: []

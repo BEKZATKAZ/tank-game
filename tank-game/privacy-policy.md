@@ -1,125 +1,91 @@
 # Privacy Policy
 
-**Last updated:** October 22, 2026
+**Last updated:** October 28, 2026
 **Game:** T.A.N.K.S.
 **Developer:** BEKZATKAZ
 **Contact:** bekzatkaz.games@gmail.com
 
 ## 1. Introduction
 
-This Privacy Policy explains how BEKZATKAZ (“we,” “us,” or “our”) handles information when you play T.A.N.K.S. (“the Game”).
+BEKZATKAZ ("we", "us", or "our") is responsible for handling player information as described here. T.A.N.K.S. uses Unity Gaming Services for authentication, multiplayer, and lobby text chat.
 
-The Game provides online multiplayer functionality using Unity Gaming Services. This policy describes the information processed through these services, how it is used, and how you can contact us with privacy-related requests.
+Before sign-in, the Game retrieves this policy from GitHub. You can read it and quit without signing in. This check necessarily contacts GitHub before agreement; the agreement screen does not prevent that request or engine diagnostics running at startup.
 
 ## 2. Information We Collect
 
-The Game uses Unity services to provide account authentication and online multiplayer functionality. The Game also uses Unity Diagnostics to help identify and troubleshoot technical problems.
+- **Accounts:** Unity Authentication creates a player identifier and manages credentials. Anonymous sign-in still creates a service account. The Game stores your chosen display name; local authentication credentials can restore your account on later launches.
+- **Multiplayer:** Unity Lobby and Relay process player identifiers, IP addresses, lobby membership and settings, and connection information. Other players see your display name and relevant lobby information. Gameplay actions and state are transmitted to synchronize sessions.
+- **Lobby chat:** Vivox processes user and device identifiers, truncated IP addresses, channel membership, display names, messages, and message metadata such as sender and time. Messages are visible to lobby participants. The Game loads recent channel history, which can expose earlier messages to players who join later. Avoid sharing sensitive information in chat. Current channels are text-only; the Game does not enable Vivox voice chat or microphone capture.
+- **Diagnostics:** Unity engine diagnostics are enabled in the current project settings. Technical reports may contain device, operating system, installation identifier, and error information, depending on collection settings. Legacy Cloud Diagnostics crash reporting is disabled in this configuration. These are different Unity diagnostic features.
+- **Policy requests:** Every entry launch and retry downloads this document over HTTPS from raw.githubusercontent.com. GitHub and its delivery providers receive your IP address and connection/request information. The Game does not attach Unity credentials, player IDs, or messages to this request.
+- **Local agreement:** A SHA-256 fingerprint of the accepted policy is saved in local preferences. This is per installation, not an account-level cloud consent record; the Game does not upload it. Clearing local data may remove it.
+- **Correspondence:** Privacy requests involve your email address, request details, and information needed for identity verification and a response.
 
-Depending on the services used and your activity in the Game, the following information may be processed:
+We do not use Unity Analytics or advertising services in the current Game. Engine diagnostics are separate from Unity Analytics.
 
-- **Account information:** Unity Authentication generates a unique Unity Authentication Service ID (UAS ID) to identify players. Additional information, such as usernames, display names, or external identity-provider identifiers, may be processed if those features are enabled.
-- **Networking information:** Unity Lobby and Unity Relay process certain connection-related information. Unity documents IP addresses and Authentication Player IDs as data collected by Relay, and IP addresses and Authentication Player IDs as data collected by Lobby.
-- **Lobby information:** Information such as lobby membership, lobby settings, player identifiers, and connection status may be processed to create, discover, join, and maintain multiplayer sessions.
-- **Gameplay information:** Information such as player actions and game state may be transmitted between players or processed by the Game to synchronize multiplayer gameplay.
-- **Diagnostic information:** Unity Diagnostics may collect technical information, including exception reports, crash reports, session-related information, and an installation-specific identifier. This information helps identify errors, troubleshoot technical problems, and maintain the stability of the Game. The exact information collected depends on the diagnostic services and settings enabled.
-
-We may access or review lobby information available to us through the services to operate the Game, troubleshoot connection problems, or maintain multiplayer functionality.
-
-The exact information processed depends on the features enabled and how the Game is implemented.
-
-We do not use Unity Analytics or advertising services in the Game.
+**Planned features:** Unity Cloud Code (backend game logic) and Unity Cloud Save (persistent progress or settings) are planned, not active player-data flows in the current implementation. We will update this policy with the actual data, purposes, retention, and choices before activating them. Neither service currently stores your policy agreement.
 
 ## 3. How We Use Information
 
-We use information to:
+Information supports authentication and profiles, multiplayer connections, game synchronization, lobby chat and history, troubleshooting, security, policy checks, and privacy requests.
 
-- Authenticate players and support account functionality.
-- Create, discover, join, and manage multiplayer lobbies.
-- Establish and maintain multiplayer connections.
-- Synchronize gameplay between players.
-- Troubleshoot technical problems and maintain service functionality.
-- Protect the Game against abuse and unauthorized activity.
-- Respond to privacy requests and comply with applicable legal obligations.
-
-We also use diagnostic information processed through Unity Diagnostics to identify and investigate crashes, exceptions, and other technical problems.
+Where a legal basis is required, we rely on performance of requested services for necessary account and multiplayer processing; legitimate interests in reliability, security, and communicating policy changes, subject to your rights; applicable legal obligations; and specific consent where legally required. Agreeing to this policy does not waive privacy rights or authorize unrelated future processing.
 
 ## 4. Third-Party Services
 
-The Game uses services provided by Unity Technologies:
+Current providers are Unity (Authentication, Lobby, Relay, Vivox, and enabled engine diagnostics) and GitHub (policy hosting). They may use service providers to operate their services. Netcode for GameObjects synchronizes networked gameplay; it is software, not a separate hosted data-storage service.
 
-- **Unity Authentication:** Authenticates players and provides unique player identifiers.
-- **Unity Lobby:** Supports multiplayer lobby creation, discovery, and management.
-- **Unity Relay:** Relays multiplayer network traffic between players.
-- **Unity Netcode for GameObjects:** Synchronizes networked gameplay.
-- **Unity Diagnostics:** Helps identify crashes, exceptions, and other technical problems by processing diagnostic information.
+Official references:
 
-These services may process information as described in Section 2. Unity processes information under its applicable terms and privacy documentation.
+- [Unity Game Player and App User Privacy Policy](https://unity.com/legal/game-player-and-app-user-privacy-policy)
+- [Vivox privacy overview](https://docs.unity.com/en-us/vivox/privacy/privacy-overview)
+- [Unity Diagnostics privacy and consent](https://docs.unity.com/en-us/cloud/developer-data/privacy-and-consent)
+- [GitHub Privacy Statement](https://docs.github.com/en/site-policy/privacy-policies/github-general-privacy-statement)
+- Planned services: [Cloud Code privacy overview](https://docs.unity.com/en-us/cloud-code/3.0.0/privacy-overview) and [Cloud Save privacy overview](https://docs.unity.com/en-us/cloud-save/privacy-and-consent/overview).
 
-For more information, see the [Unity Privacy Policy](https://unity.com/legal/game-player-and-app-user-privacy-policy).
-
-Unity may use its own service providers to operate these services. Information may therefore be processed by Unity and its relevant service providers as necessary to provide multiplayer functionality and diagnostic services.
+Provider policies supplement this notice and do not replace our responsibilities for the Game.
 
 ## 5. Data Sharing
 
-We do not sell personal information.
-
-Information may be processed by Unity Technologies and its relevant service providers to provide authentication and multiplayer functionality, as well as diagnostic services.
-
-Information may also be disclosed where required by law or when necessary to protect the security and integrity of the Game.
-
-We do not use advertising or analytics services in the Game.
+We do not sell personal information or use it for targeted advertising. Providers process information for the features described above. Other players receive information needed for multiplayer and chat and may independently retain messages, for example in screenshots. Information may also be disclosed when legally required or necessary to protect players and service security.
 
 ## 6. Data Retention
 
-Information is retained according to the purposes for which it is processed, applicable legal requirements, and the retention practices of the relevant service providers.
+Authentication data follows Unity Authentication's account retention and deletion procedures. Multiplayer logs and diagnostic information follow the relevant service settings and retention requirements. Game state is used during sessions.
 
-Unity services have different retention periods. For example, Unity documents a 30-day retention period for personal data collected by Relay. Lobby logs containing player identifiers may also be retained for up to 30 days. Unity Authentication has separate retention and deletion procedures. Diagnostic information is retained according to the applicable Unity Diagnostics retention practices.
+Unity documents default Vivox retention of up to 30 days for user IDs, device IDs, and truncated IP addresses. Text history is available for 7 days by default and configurable for up to 6 months. Actual availability depends on service configuration. Requesting only recent messages does not shorten server retention; leaving a lobby or closing the Game does not delete Vivox history.
 
-Information stored directly by us, if any, will be retained only as long as reasonably necessary for its intended purpose or as required by law.
+The local agreement fingerprint remains until replaced by a later acceptance or removed with local preferences. GitHub retains request information under its privacy practices. Privacy correspondence is kept as needed to resolve requests and satisfy applicable legal requirements. Cloud Code and Cloud Save are planned and do not currently retain player information for the Game.
 
 ## 7. Data Security
 
-We take reasonable measures intended to protect information processed through the Game. However, no method of electronic transmission or storage is completely secure, and we cannot guarantee absolute security.
+We use reasonable measures intended to protect information, including HTTPS policy downloads and provider protections. No electronic storage or transmission method is completely secure.
 
 ## 8. Your Privacy Rights
 
-Depending on your location and applicable law, you may have the right to:
+Depending on your location, you may have rights to access, correct, delete, or obtain a portable copy of information; object to or restrict processing; withdraw consent where applicable; and complain to your local data protection authority. Withdrawal does not affect earlier lawful processing.
 
-- Request access to your personal information.
-- Request correction of inaccurate information.
-- Request deletion of your personal information.
-- Object to or restrict certain processing.
-- Exercise applicable rights concerning data portability and consent.
+Contact **bekzatkaz.games@gmail.com**. Include your player identifier if available and relevant details, but never send passwords or authentication tokens. We may need reasonable identity verification. We coordinate requests with relevant providers, including Vivox support for chat access or deletion where necessary. Deleting an Authentication account does not automatically delete data held in other services. Legal retention exceptions may apply.
 
-To submit a privacy request, contact us at **bekzatkaz.games@gmail.com**.
-
-We may need to verify your identity before responding. Some information may need to be retained where required by law.
-
-Because Unity operates some of the services used by the Game, certain requests may require additional steps involving Unity. Deleting a Unity Authentication account does not necessarily delete information held separately by other Unity services.
+You can decline by quitting before sign-in. Removing local acceptance causes a new prompt but does not delete server-side data. Contact us to withdraw consent or request deletion of already processed information. Losing local credentials can prevent recovery of an anonymous account.
 
 ## 9. Children's Privacy
 
-The Game is not specifically directed at children under the age of 13.
+The Game is not specifically directed at children under 13. Minimum ages and parental permission requirements vary by location. The agreement checkbox is not age verification or verified parental consent. Where legally required, a child's data must not be submitted without those safeguards.
 
-We do not knowingly collect personal information from children under 13 in circumstances where doing so would violate applicable law. Where parental consent or other safeguards are legally required, we will take appropriate steps to comply.
-
-If we become aware that personal information has been collected from a child in circumstances that require consent we do not have, we will take appropriate steps to address the situation, which may include obtaining the required consent or deleting the information.
-
-If you have concerns about a child's personal information, contact us at **bekzatkaz.games@gmail.com**.
+Contact us if you believe a child's information was collected without required permission. We will investigate and take appropriate steps, including coordinating deletion where required.
 
 ## 10. International Data Processing
 
-Unity's services may process information in countries other than your country of residence. Where required by applicable law, appropriate safeguards will be used for international data transfers.
+Unity, GitHub, and their providers may process information outside your country. Their privacy documentation describes international processing and transfer safeguards. We use applicable contractual and legal safeguards where required for processing on our behalf.
 
 ## 11. Changes to This Privacy Policy
 
-We may update this Privacy Policy to reflect changes to the Game, the services we use, our data practices, or applicable legal requirements.
+Updates are published here with a revised date. Before initializing Unity Gaming Services or signing in, the Game checks the hosted policy at each entry launch. Changed contents require agreement again on that installation, including for returning players. An unchanged, already accepted policy proceeds to sign-in. If downloading or validating the policy fails, sign-in is blocked and you can retry or quit. Internet access is required.
 
-The updated policy will be published at the location where this policy is made available. The “Last updated” date at the top will indicate when changes were made. Where required by law, we will provide additional notice or obtain consent.
+We provide additional notices or obtain specific consent where legally required before introducing new processing.
 
 ## 12. Contact Us
-
-If you have questions, concerns, or requests regarding this Privacy Policy or the Game's handling of personal information, contact:
 
 **Developer:** BEKZATKAZ
 **Email:** bekzatkaz.games@gmail.com

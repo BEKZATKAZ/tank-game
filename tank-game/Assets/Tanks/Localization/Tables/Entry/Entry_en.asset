@@ -42,6 +42,34 @@ MonoBehaviour:
     m_Localized: I have read and agree to the [Privacy Policy].
     m_Metadata:
       m_Items: []
+  - m_Id: 23520000000000000
+    m_Localized: 'PRIVACY POLICY'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 23520000000000001
+    m_Localized: 'Checking the policy and connecting...'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 23520000000000002
+    m_Localized: 'Unable to continue. Check your connection and retry. Sign-in is blocked until the current policy is verified and accepted.'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 23520000000000003
+    m_Localized: 'I have read and agree to this Privacy Policy.'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 23520000000000004
+    m_Localized: 'CONTINUE'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 23520000000000005
+    m_Localized: 'RETRY'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 23520000000000006
+    m_Localized: 'QUIT'
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds: []

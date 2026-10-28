@@ -2,7 +2,49 @@
     <Style src="project://database/Assets/Tanks/UI/Menus/Styles/MainMenu.uss?fileID=7433441132597879392&amp;guid=e77348697c99f3b4795a79682c5e1415&amp;type=3#MainMenu"/>
     <Style src="project://database/Assets/Tanks/UI/Entry/AccountSetup/AccountSetup.uss?fileID=7433441132597879392&amp;guid=d4de69de3ec3ae84c80b16cb102980a9&amp;type=3#AccountSetup"/>
     <ui:VisualElement name="EntryRoot">
-        <ui:VisualElement name="AccountSetup">
+        <ui:VisualElement name="PrivacyPolicy" style="display: none;">
+            <ui:Label name="PolicyHeader">
+                <Bindings>
+                    <UnityEngine.Localization.LocalizedString property="text" table="GUID:c65a4f9d9da4a46468c02bed143a7960" entry="entry.privacy.title"/>
+                </Bindings>
+            </ui:Label>
+            <ui:Label name="PolicyLoading">
+                <Bindings>
+                    <UnityEngine.Localization.LocalizedString property="text" table="GUID:c65a4f9d9da4a46468c02bed143a7960" entry="entry.privacy.loading"/>
+                </Bindings>
+            </ui:Label>
+            <ui:Label name="PolicyError" style="display: none;">
+                <Bindings>
+                    <UnityEngine.Localization.LocalizedString property="text" table="GUID:c65a4f9d9da4a46468c02bed143a7960" entry="entry.privacy.error"/>
+                </Bindings>
+            </ui:Label>
+            <ui:ScrollView name="PolicyScroll" mode="Vertical" style="display: none;">
+                <ui:Label name="PolicyText" enable-rich-text="false"/>
+            </ui:ScrollView>
+            <ui:Toggle name="PolicyConsent" style="display: none;">
+                <Bindings>
+                    <UnityEngine.Localization.LocalizedString property="label" table="GUID:c65a4f9d9da4a46468c02bed143a7960" entry="entry.privacy.agreement"/>
+                </Bindings>
+            </ui:Toggle>
+            <ui:VisualElement name="PolicyActions">
+                <Tanks.UI.Elements.CustomButton name="PolicyContinue" style="display: none;">
+                    <Bindings>
+                        <UnityEngine.Localization.LocalizedString property="text" table="GUID:c65a4f9d9da4a46468c02bed143a7960" entry="entry.privacy.continue"/>
+                    </Bindings>
+                </Tanks.UI.Elements.CustomButton>
+                <Tanks.UI.Elements.CustomButton name="PolicyRetry" style="display: none;">
+                    <Bindings>
+                        <UnityEngine.Localization.LocalizedString property="text" table="GUID:c65a4f9d9da4a46468c02bed143a7960" entry="entry.privacy.retry"/>
+                    </Bindings>
+                </Tanks.UI.Elements.CustomButton>
+                <Tanks.UI.Elements.CustomButton name="PolicyQuit">
+                    <Bindings>
+                        <UnityEngine.Localization.LocalizedString property="text" table="GUID:c65a4f9d9da4a46468c02bed143a7960" entry="entry.privacy.quit"/>
+                    </Bindings>
+                </Tanks.UI.Elements.CustomButton>
+            </ui:VisualElement>
+        </ui:VisualElement>
+        <ui:VisualElement name="AccountSetup" style="display: none;">
             <ui:Label name="AccountSetupHeader" style="-unity-font-definition: url(&quot;project://database/Assets/Tanks/UI/Fonts/Tektur/Tektur-Black.ttf?fileID=12800000&amp;guid=45f7b32b4f832744ebbabf86a666ecac&amp;type=3#Tektur-Black&quot;);">
                 <Bindings>
                     <UnityEngine.Localization.LocalizedString property="text" table="GUID:c65a4f9d9da4a46468c02bed143a7960" entry="Id(979284484096)"/>
@@ -13,7 +55,6 @@
                     <UnityEngine.Localization.LocalizedString property="placeholderText" table="GUID:c65a4f9d9da4a46468c02bed143a7960" entry="Id(286872002560)"/>
                 </Bindings>
             </ui:TextField>
-            <ui:Toggle name="Consent" label="I have read and agree to the [Privacy Policy]."/>
             <Tanks.UI.Elements.CustomButton name="ConfirmButton" style="background-image: url(&quot;project://database/Assets/Plugins/Layer%20Lab/2D%20Icons-PictoIconPack01/PictoIcon_256/Icon_PictoIcon_Control_Play.Png?fileID=21300000&amp;guid=89a5ae9f9ca3648d99ebe68370a1de31&amp;type=3#Icon_PictoIcon_Control_Play&quot;);">
                 <Bindings>
                     <UnityEngine.Localization.LocalizedString property="text" table="GUID:c65a4f9d9da4a46468c02bed143a7960" entry="Id(22173671424)"/>
