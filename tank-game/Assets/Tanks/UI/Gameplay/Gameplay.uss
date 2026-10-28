@@ -13,6 +13,37 @@
     color: var(--text-color);
 }
 
+.player-names {
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+}
+
+.player-name {
+    position: absolute;
+    translate: -50% -100%;
+    padding-bottom: 8px;
+    max-width: 260px;
+    font-size: 22px;
+    -unity-font-definition: var(--font-heavy);
+    -unity-text-align: middle-center;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    text-shadow: 1px 1px 1px rgb(0, 0, 0);
+}
+
+.spectator-controls__name {
+    align-self: center;
+    max-width: 320px;
+    font-size: 24px;
+    -unity-font-definition: var(--font-heavy);
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    text-shadow: 1px 1px 1px rgb(0, 0, 0);
+}
+
 .start-counter {
     position: absolute;
     width: 100%;

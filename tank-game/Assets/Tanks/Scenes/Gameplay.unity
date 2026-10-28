@@ -2380,6 +2380,7 @@ GameObject:
   - component: {fileID: 1821635265}
   - component: {fileID: 1821635264}
   - component: {fileID: 1821635266}
+  - component: {fileID: 1821635267}
   m_Layer: 0
   m_Name: UI
   m_TagString: Untagged
@@ -2718,6 +2719,19 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Tanks.Client::Tanks.Client.Visuals.VisualService
   _database: {fileID: 11400000, guid: cf6d66b9c89b0c041a5d6225840b6488, type: 2}
+--- !u!114 &1821635267
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1821635251}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0896090686d14be2a9936b58a26b194a, type: 3}
+  m_Name:
+  m_EditorClassIdentifier: Tanks.UI::Tanks.UI.Gameplay.PlayerNames.PlayerNamesView
+  _showOnPlay: 1
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0

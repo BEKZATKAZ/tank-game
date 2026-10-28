@@ -1,5 +1,6 @@
 <ui:UXML xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
     <Style src="project://database/Assets/Tanks/UI/Gameplay/Gameplay.uss?fileID=7433441132597879392&amp;guid=bb33b2d21da019b438ce1d0ab390cff8&amp;type=3#Gameplay"/>
+    <ui:VisualElement name="PlayerNames" picking-mode="Ignore" class="player-names"/>
     <ui:Label text="GO!" name="StartText" class="start-counter" style="display: none;"/>
     <ui:VisualElement name="EliminatedContainer" class="eliminated" style="display: none;">
         <ui:Label name="EliminatedText" focusable="true" class="eliminated-title">
@@ -66,6 +67,7 @@
                 <UnityEngine.Localization.LocalizedString property="text" table="GUID:be3c65f295ea4a545a8406a0bc7b68e6" entry="gameplay.spectator.previous"/>
             </Bindings>
         </Tanks.UI.Elements.CustomButton>
+        <ui:Label name="SpectatorName" enable-rich-text="false" picking-mode="Ignore" class="spectator-controls__name"/>
         <Tanks.UI.Elements.CustomButton name="NextSpectatorTarget" focusable="false" class="spectator-controls__button">
             <Bindings>
                 <UnityEngine.Localization.LocalizedString property="text" table="GUID:be3c65f295ea4a545a8406a0bc7b68e6" entry="gameplay.spectator.next"/>
