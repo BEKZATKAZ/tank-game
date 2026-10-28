@@ -254,7 +254,11 @@ namespace Tanks.Infrastructure.Lobbies
 
                 StopHeartbeat();
                 await UnsubscribeFromEventsAsync();
+
                 CurrentLobbyState.Id.Value = default;
+                CurrentLobbyState.Settings.Value = default;
+                CurrentLobbyState.ServerConfirmedSettings.Value = default;
+                CurrentLobbyState.Status.Value = default;
 
                 _lobby = null;
                 CurrentLobbyState.Players.Value = new Dictionary<string, LobbyPlayerState>();
