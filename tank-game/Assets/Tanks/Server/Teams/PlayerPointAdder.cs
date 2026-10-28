@@ -49,6 +49,20 @@ namespace Tanks.Server.Teams
 
             if (target != null) Behaviour.SyncPlayerState(target);
             if (from != null) Behaviour.SyncPlayerState(from);
+
+            if (from is null || target is null || from.PlayerId == target.PlayerId) return;
+
+            ITeamParticipantBehaviour assistant = message.Assistant?
+                .GetBehaviour<ITeamParticipantBehaviour>();
+
+            if (assistant?.State is null) return;
+            if (assistant.State.PlayerId == from.PlayerId ||
+                assistant.State.PlayerId == target.PlayerId) return;
+
+            if (TryAddPointsTo(message.Assistant, PlayerPointType.Assistance, 1, out var helper))
+            {
+                Behaviour.SyncPlayerState(helper);
+            }
         }
 
         private bool AreTeammates(IEntityBehaviour a, IEntityBehaviour b)

@@ -8,10 +8,15 @@ using VContainer;
 
 namespace Tanks.Shared.Entities.Health
 {
+    public struct HealthDespawned
+    {
+    }
+
     public struct Died
     {
         public IEntityBehaviour Target;
         public IEntityBehaviour From;
+        public IEntityBehaviour Assistant;
         public float2 WorldPosition;
     }
 
@@ -35,7 +40,8 @@ namespace Tanks.Shared.Entities.Health
         void UpdateStateEveryoneRpc(
             HealthState state,
             EntityId from = default,
-            HealthEventId eventId = default);
+            HealthEventId eventId = default,
+            EntityId assistant = default);
     }
 
     [RequireComponent(typeof(EntityBehaviour))]
@@ -57,7 +63,8 @@ namespace Tanks.Shared.Entities.Health
         public void UpdateStateEveryoneRpc(
             HealthState newState,
             EntityId from = default,
-            HealthEventId eventId = default)
+            HealthEventId eventId = default,
+            EntityId assistant = default)
         {
             HealthState oldState = _serverState.Value;
 
@@ -85,6 +92,7 @@ namespace Tanks.Shared.Entities.Health
             {
                 Target = Entity,
                 From = fromEntity,
+                Assistant = _entityService.GetById(assistant),
                 WorldPosition = Transform.WorldPosition
             };
 
@@ -92,6 +100,12 @@ namespace Tanks.Shared.Entities.Health
             _bus.Publish(died, this);
 
             if (_despawnOnZeroHealth && IsServer) NetworkObject.Despawn();
+        }
+
+        public override void OnNetworkDespawn()
+        {
+            base.OnNetworkDespawn();
+            EmitMessage(new HealthDespawned());
         }
 
         public IEnumerable<SpriteRenderer> GetAllSpriteRenderers()

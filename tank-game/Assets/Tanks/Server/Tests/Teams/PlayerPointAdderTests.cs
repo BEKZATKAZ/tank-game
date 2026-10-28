@@ -70,6 +70,55 @@ namespace Tanks.Server.Tests.Teams
             DidAddPoints(playerId: 2, amount: -1, PlayerPointType.Eliminations, team);
         }
 
+        [TestCase(true)]
+        [TestCase(false)]
+        public void AssistedElimination_AddsAndSyncsOneAssistIncludingTeamkills(bool teamkill)
+        {
+            Team victimTeam = CreateTeam(101);
+            Team killerTeam = teamkill ? victimTeam : CreateTeam(102);
+            IEntityBehaviour victim = CreateEntity(1, victimTeam);
+            IEntityBehaviour killer = CreateEntity(2, killerTeam);
+            IEntityBehaviour helper = CreateEntity(3, victimTeam);
+
+            _component.Handle(new Died { Target = victim, From = killer, Assistant = helper });
+
+            DidAddPoints(3, 1, PlayerPointType.Assistance, victimTeam);
+            Assert.AreEqual(0, victimTeam.GetPlayer(3).Eliminations);
+            DidAddPoints(1, 1, PlayerPointType.Deaths, victimTeam);
+            DidAddPoints(2, teamkill ? -1 : 1, PlayerPointType.Eliminations, killerTeam);
+        }
+
+        [TestCase("environment")]
+        [TestCase("suicide")]
+        [TestCase("killer")]
+        [TestCase("victim")]
+        [TestCase("invalid")]
+        [TestCase("missing")]
+        public void IneligibleAssistant_DoesNotReceivePoints(string reason)
+        {
+            Team team = CreateTeam(101);
+            IEntityBehaviour victim = CreateEntity(1, team);
+            IEntityBehaviour killer = CreateEntity(2, team);
+            IEntityBehaviour helper = CreateEntity(3, team);
+
+            switch (reason)
+            {
+                case "environment": killer = null; break;
+                case "suicide": killer = victim; break;
+                case "killer": helper = killer; break;
+                case "victim": helper = victim; break;
+                case "invalid": helper.IsValid.Returns(false); break;
+                case "missing": helper = null; break;
+            }
+
+            _component.Handle(new Died { Target = victim, From = killer, Assistant = helper });
+
+            foreach (PlayerState player in team.Players)
+            {
+                Assert.AreEqual(0, player.Assistance);
+            }
+        }
+
         private void DidAddPoints(ulong playerId, int amount, PlayerPointType type, Team team)
         {
             Assert.AreEqual(amount, team.GetPlayer(playerId).GetPoints(type));

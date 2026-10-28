@@ -193,7 +193,50 @@ namespace Tanks.UI.Tests.Gameplay
             Assert.IsEmpty(ViewModel.Entries.Value);
         }
 
-        private static IEntityBehaviour CreateEntity(string displayName = null)
+        [Test]
+        public void Handle_AssistedKill_SnapshotsHelperBeforeSkull()
+        {
+            IEntityBehaviour helper = CreateEntity("Helper", 3);
+            ViewModel.Handle(new Died
+            {
+                From = CreateEntity("Killer", 1),
+                Assistant = helper,
+                Target = CreateEntity("Victim", 2)
+            }, null);
+
+            helper.GetBehaviour<ITeamParticipantBehaviour>().State.Returns(
+                new PlayerState(3, "Changed", default));
+
+            Assert.AreEqual("Killer + Helper", ViewModel.Entries.Value[0].From);
+            Assert.AreEqual("Victim", ViewModel.Entries.Value[0].Target);
+        }
+
+        [TestCase("environment")]
+        [TestCase("suicide")]
+        [TestCase("killer")]
+        [TestCase("victim")]
+        public void Handle_IneligibleAssistant_PreservesExistingFormat(string reason)
+        {
+            IEntityBehaviour killer = CreateEntity("Killer", 1);
+            IEntityBehaviour victim = CreateEntity("Victim", 2);
+            IEntityBehaviour helper = CreateEntity("Helper", 3);
+
+            switch (reason)
+            {
+                case "environment": killer = null; break;
+                case "suicide": killer = victim; break;
+                case "killer": helper = killer; break;
+                case "victim": helper = victim; break;
+            }
+
+            ViewModel.Handle(new Died { From = killer, Assistant = helper, Target = victim }, null);
+
+            Assert.AreEqual(killer is null || killer == victim ? "Victim" : "Killer",
+                ViewModel.Entries.Value[0].From);
+            Assert.AreEqual(killer is null ? null : "Victim", ViewModel.Entries.Value[0].Target);
+        }
+
+        private static IEntityBehaviour CreateEntity(string displayName = null, ulong playerId = 1)
         {
             IEntityBehaviour entity = Substitute.For<IEntityBehaviour>();
             ITeamParticipantBehaviour participant = null;
@@ -201,7 +244,7 @@ namespace Tanks.UI.Tests.Gameplay
             if (displayName != null)
             {
                 participant = Substitute.For<ITeamParticipantBehaviour>();
-                participant.State.Returns(new PlayerState(1, displayName, default));
+                participant.State.Returns(new PlayerState(playerId, displayName, default));
             }
 
             entity.GetBehaviour<ITeamParticipantBehaviour>().Returns(participant);

@@ -49,6 +49,16 @@ namespace Tanks.UI.Gameplay.Killfeed
             string firstName = (from ?? target).State?.DisplayName ?? "";
             string secondName = from != null && target != null ? target.State?.DisplayName : null;
 
+            var assistant = message.Assistant?.GetBehaviour<ITeamParticipantBehaviour>();
+
+            if (from?.State != null && target.State != null && assistant?.State != null &&
+                from.State.PlayerId != target.State.PlayerId &&
+                assistant.State.PlayerId != from.State.PlayerId &&
+                assistant.State.PlayerId != target.State.PlayerId)
+            {
+                firstName += $" + {assistant.State.DisplayName}";
+            }
+
             _entries.Insert(0, (new KillfeedEntry(firstName, secondName), 5));
             if (_entries.Count > 5) _entries.RemoveAt(_entries.Count - 1);
 
