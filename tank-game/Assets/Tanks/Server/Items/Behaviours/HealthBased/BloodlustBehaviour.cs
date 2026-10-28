@@ -1,3 +1,4 @@
+using System.Linq;
 using Tanks.Shared.Entities;
 using Tanks.Shared.Entities.Health;
 using Tanks.Shared.Items;
@@ -23,9 +24,7 @@ namespace Tanks.Server.Items.Behaviours.HealthBased
 
         public override void OnPickup(IItemOwnerBehaviour owner)
         {
-            IStatOwnerBehaviour statOwner = owner.GetBehaviour<IStatOwnerBehaviour>();
-
-            if (statOwner.HasStat(StatId))
+            if (owner.Items.Count(x => x == Config.Identifier) > 1)
             {
                 _damageService.Damage(
                     uint.MaxValue, owner.Entity, owner.Entity, includeStats: false);
@@ -34,6 +33,8 @@ namespace Tanks.Server.Items.Behaviours.HealthBased
             }
 
             IHealthBehaviour health = owner.GetBehaviour<IHealthBehaviour>();
+            IStatOwnerBehaviour statOwner = owner.GetBehaviour<IStatOwnerBehaviour>();
+
             Override(statOwner, health.ServerState.Value);
         }
 

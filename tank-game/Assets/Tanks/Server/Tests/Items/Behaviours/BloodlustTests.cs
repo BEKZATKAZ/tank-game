@@ -4,6 +4,7 @@ using NUnit.Framework;
 using System.Collections.Generic;
 using Tanks.Server.Items.Behaviours.HealthBased;
 using Tanks.Shared.Entities.Health;
+using Tanks.Shared.Items;
 using Tanks.Shared.Items.Data;
 using Tanks.Shared.Stats;
 using Tanks.Shared.Tests.Items;
@@ -34,10 +35,11 @@ namespace Tanks.Server.Tests.Items.Behaviours
             // Does not kill on first pickup
             _damageService.DidNotReceiveWithAnyArgs().Damage(default, default);
 
-            MockOwner
-                .GetBehaviour<IStatOwnerBehaviour>()
-                .HasStat(Behaviour.StatId)
-                .Returns(true);
+            MockOwner.Items.Returns(new ItemIdentifier[]
+            {
+                new ItemIdentifier("bloodlust"),
+                new ItemIdentifier("bloodlust")
+            });
 
             Behaviour.OnPickup(MockOwner);
 

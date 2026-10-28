@@ -2,6 +2,7 @@
 using NUnit.Framework;
 using System;
 using System.Collections.Generic;
+using System.Reflection;
 using Tanks.Shared.Items;
 using Tanks.Shared.Items.Behaviours;
 using Tanks.Shared.Items.Data;
@@ -27,8 +28,12 @@ namespace Tanks.Shared.Tests.Items
             MockOwner = Substitute.For<IItemOwnerBehaviour>();
             Config = Substitute.For<IItemConfig>();
 
+            ItemIdentifier id = typeof(T)
+                .GetCustomAttribute<ItemBehaviourAttribute>().TargetIdentifier;
+
             Config.ItemStats.Returns(_stats);
             Config.PlayerStats.Returns(_playerStats);
+            Config.Identifier.Returns(id);
             Config.GetStat(Arg.Any<string>()).Returns(args => Config.ItemStats[(string)args[0]]);
             
             InitializeConfig();
