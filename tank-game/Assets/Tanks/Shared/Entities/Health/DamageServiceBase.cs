@@ -1,10 +1,11 @@
 ﻿using System;
-using System.Linq;
+using Tanks.Core.Lobbies.Sessions;
 using Tanks.Shared.Items;
 using Tanks.Shared.Items.Behaviours;
 using Tanks.Shared.Stats;
 using Unity.Mathematics;
 using UnityEngine;
+using VContainer;
 
 namespace Tanks.Shared.Entities.Health
 {
@@ -22,14 +23,21 @@ namespace Tanks.Shared.Entities.Health
 
     public abstract class DamageServiceBase : IDamageService
     {
+        private ISessionSettingsService _settings;
+
         protected abstract void OnDamage(
             uint fullAmount,
             IEntityBehaviour target,
             IEntityBehaviour from = null,
             HealthEventId eventId = default);
 
-        protected abstract void OnHeal(
-            uint amount, IEntityBehaviour target);
+        protected abstract void OnHeal(uint amount, IEntityBehaviour target);
+
+        [Inject]
+        public void Construct(ISessionSettingsService settings)
+        {
+            _settings = settings;
+        }
 
         public void Damage(
             uint baseAmount,
@@ -54,6 +62,11 @@ namespace Tanks.Shared.Entities.Health
 
             float multiplier = targetStat?.GetDiminishingReturns(StatType.Defense, defense) ?? 1;
             float finalDamage = damage * multiplier;
+
+            if (target == from)
+            {
+                finalDamage *= _settings.GetSettings().SelfDamagePercent * 0.01f;
+            }
 
             IItemOwnerBehaviour fromItemOwner = from?.GetBehaviour<IItemOwnerBehaviour>();
 

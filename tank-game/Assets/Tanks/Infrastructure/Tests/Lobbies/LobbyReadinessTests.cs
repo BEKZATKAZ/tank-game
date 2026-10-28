@@ -156,6 +156,7 @@ namespace Tanks.Infrastructure.Tests.Lobbies
             var selected = new SessionSettingsFromLobby
             {
                 MaxScore = 30,
+                SelfDamagePercent = 200,
                 MapGeneration = new() { Size = MapSize.Large }
             };
             var data = UGSLobbyMapper.MapDataToUpdate(new LobbyUpdateRequest { Settings = selected });

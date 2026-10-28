@@ -18,6 +18,9 @@ MonoBehaviour:
   _maxScoreToReach:
     Values: 050000000f0000001e0000002d0000003c0000004b0000005a000000i
     Default: 15
+  _selfDamagePercent:
+    Values: 0500000019000000320000004b000000640000007d00000096000000af000000c80000002c01000090010000f4010000i
+    Default: 100
   _mapGeneration:
     Resolution:
       Values:

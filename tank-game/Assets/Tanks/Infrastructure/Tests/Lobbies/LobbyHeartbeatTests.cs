@@ -60,6 +60,7 @@ namespace Tanks.Infrastructure.Tests.Lobbies
             var defaults = Substitute.For<ISessionDefaultSettingsConfig>();
             defaults.DesiredPlayerCount.Returns(new PossibleIntegers(1, 2, 3, 4));
             defaults.MaxScoreToReach.Returns(new PossibleIntegers(5, 15, 30));
+            defaults.SelfDamagePercent.Returns(new PossibleIntegers(5, 100, 200) { Default = 100 });
             defaults.MapGeneration.Returns(new DefaultMapGeneration());
             defaults.ItemSpawn.Returns(new DefaultItemSpawn());
             defaults.DangerZone.Returns(new DefaultDangerZone());

@@ -279,6 +279,10 @@ MonoBehaviour:
     m_Key: menu.lobby.settings.item-spawn-rate.chaos
     m_Metadata:
       m_Items: []
+  - m_Id: 41000000000000018
+    m_Key: menu.lobby.settings.self-damage-percent
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:

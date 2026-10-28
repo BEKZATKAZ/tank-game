@@ -99,12 +99,14 @@ namespace Tanks.Core.Lobbies.Sessions
     {
         [SerializeField] private PossibleIntegers _desiredPlayerCount = new(1, 2, 3, 4, 5, 6, 7, 8);
         [SerializeField] private PossibleIntegers _maxScoreToReach = new(5, 15, 30, 45, 60, 75, 90);
+        [SerializeField] private PossibleIntegers _selfDamagePercent = new(5, 15, 25, 50, 75, 100, 125, 150, 175, 200, 300, 400, 500) { Default = 100 };
         [SerializeField] private DefaultMapGeneration _mapGeneration;
         [SerializeField] private DefaultItemSpawn _itemSpawn;
         [SerializeField] private DefaultDangerZone _dangerZone;
 
         public PossibleIntegers DesiredPlayerCount => _desiredPlayerCount;
         public PossibleIntegers MaxScoreToReach => _maxScoreToReach;
+        public PossibleIntegers SelfDamagePercent => _selfDamagePercent;
         public DefaultMapGeneration MapGeneration => _mapGeneration;
         public DefaultItemSpawn ItemSpawn => _itemSpawn;
         public DefaultDangerZone DangerZone => _dangerZone;

@@ -16,6 +16,7 @@ namespace Tanks.UI.Menus.Lobbies
     public enum LobbySetting
     {
         MaxScore,
+        SelfDamagePercent,
         MapSize,
         MapThickness,
         ItemSpawnRate,
@@ -92,13 +93,14 @@ namespace Tanks.UI.Menus.Lobbies
             return _localization.TryGet("Menus", key, out var text) ? text.Get() : key;
         }
 
-        private LobbySettingOption Numeric(LobbySetting type, string key, PossibleIntegers values, int current)
+        private LobbySettingOption Numeric(
+            LobbySetting type, string key, PossibleIntegers values, int current, string suffix = "")
         {
             return new LobbySettingOption
             {
                 Type = type,
                 Label = Localize("menu.lobby.settings." + key),
-                Choices = values.Values.Select(x => x.ToString()).ToList(),
+                Choices = values.Values.Select(x => x.ToString() + suffix).ToList(),
                 SelectedIndex = Array.IndexOf(values.Values, values.CorrectValue(current))
             };
         }
@@ -122,6 +124,8 @@ namespace Tanks.UI.Menus.Lobbies
             Settings.Value = new[]
             {
                 Numeric(LobbySetting.MaxScore, "max-score", _defaults.MaxScoreToReach, settings.MaxScore),
+                Numeric(LobbySetting.SelfDamagePercent, "self-damage-percent",
+                    _defaults.SelfDamagePercent, settings.SelfDamagePercent, "%"),
                 EnumOption(LobbySetting.MapSize, "map-size", settings.MapGeneration.Size),
                 EnumOption(LobbySetting.MapThickness, "wall-thickness", settings.MapGeneration.Thickness),
                 EnumOption(LobbySetting.ItemSpawnRate, "item-spawn-rate", settings.ItemSpawn.Rate),
@@ -158,6 +162,9 @@ namespace Tanks.UI.Menus.Lobbies
                 {
                     case LobbySetting.MaxScore:
                         settings.MaxScore = _defaults.MaxScoreToReach.Values[index];
+                        break;
+                    case LobbySetting.SelfDamagePercent:
+                        settings.SelfDamagePercent = _defaults.SelfDamagePercent.Values[index];
                         break;
                     case LobbySetting.MapSize:
                         settings.MapGeneration.Size = (MapSize)index;

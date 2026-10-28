@@ -20,11 +20,11 @@ namespace Tanks.Core.Tests.Lobbies.Sessions
         public void FromLobby_MapsValues()
         {
             var lobby = CreateLobby();
-
             var result = SessionSettingsMapper.FromLobby(lobby, _config);
 
             Assert.AreEqual(4, result.DesiredPlayerCount);
             Assert.AreEqual(45, result.MaxScore);
+            Assert.AreEqual(200, result.SelfDamagePercent);
             Assert.AreEqual(new Vector2Int(6, 4), result.MapGeneration.Resolution);
             Assert.AreEqual(7, result.MapGeneration.WallWidth);
             Assert.AreEqual(6, result.ItemSpawn.MaxCooldownSeconds);
@@ -42,6 +42,7 @@ namespace Tanks.Core.Tests.Lobbies.Sessions
 
             lobby.PlayerCount = 999;
             lobby.MaxScore = 999;
+            lobby.SelfDamagePercent = 999;
             lobby.MapGeneration.Size = (MapSize)999;
             lobby.MapGeneration.Thickness = (MapThickness)999;
             lobby.ItemSpawn.Rate = (ItemSpawnRate)999;
@@ -53,6 +54,7 @@ namespace Tanks.Core.Tests.Lobbies.Sessions
 
             Assert.AreEqual(1, result.DesiredPlayerCount);
             Assert.AreEqual(5, result.MaxScore);
+            Assert.AreEqual(100, result.SelfDamagePercent);
             Assert.AreEqual(new Vector2Int(3, 2), result.MapGeneration.Resolution);
             Assert.AreEqual(3, result.MapGeneration.WallWidth);
             Assert.AreEqual(30, result.ItemSpawn.MaxCooldownSeconds);
@@ -70,6 +72,7 @@ namespace Tanks.Core.Tests.Lobbies.Sessions
 
             Assert.AreEqual(1, result.PlayerCount);
             Assert.AreEqual(5, result.MaxScore);
+            Assert.AreEqual(100, result.SelfDamagePercent);
             Assert.AreEqual(MapSize.Small, result.MapGeneration.Size);
             Assert.AreEqual(MapThickness.Thin, result.MapGeneration.Thickness);
             Assert.AreEqual(ItemSpawnRate.Slow, result.ItemSpawn.Rate);
@@ -98,6 +101,29 @@ namespace Tanks.Core.Tests.Lobbies.Sessions
                 result.ItemSpawn.MinDistanceToPlayers);
         }
 
+        [TestCase(0)]
+        [TestCase(-1)]
+        [TestCase(999)]
+        public void FromLobby_InvalidSelfDamagePercent_UsesConfiguredDefault(int percent)
+        {
+            var settings = CreateLobby();
+            settings.SelfDamagePercent = percent;
+
+            var result = SessionSettingsMapper.FromLobby(settings, _config);
+
+            Assert.That(result.SelfDamagePercent, Is.EqualTo(100));
+        }
+
+        [Test]
+        public void FromDefaultToLobby_UsesConfiguredSelfDamageDefault()
+        {
+            _config.SelfDamagePercent.Returns(new PossibleIntegers(50, 100, 200) { Default = 200 });
+
+            var result = SessionSettingsMapper.FromDefaultToLobby(_config);
+
+            Assert.That(result.SelfDamagePercent, Is.EqualTo(200));
+        }
+
         private static ISessionDefaultSettingsConfig CreateConfig()
         {
             var config = Substitute.For<ISessionDefaultSettingsConfig>();
@@ -107,6 +133,9 @@ namespace Tanks.Core.Tests.Lobbies.Sessions
 
             config.MaxScoreToReach.Returns(
                 new PossibleIntegers(5, 15, 30, 45, 60, 75, 90));
+
+            config.SelfDamagePercent.Returns(
+                new PossibleIntegers(5, 25, 50, 100, 200, 500) { Default = 100 });
 
             config.MapGeneration.Returns(new DefaultMapGeneration
             {
@@ -151,6 +180,7 @@ namespace Tanks.Core.Tests.Lobbies.Sessions
             {
                 PlayerCount = 4,
                 MaxScore = 45,
+                SelfDamagePercent = 200,
 
                 MapGeneration = new MapGenerationSettingsFromLobby
                 {

@@ -31,6 +31,7 @@ namespace Tanks.Core.Tests.Lobbies.UseCases
             var defaults = Substitute.For<ISessionDefaultSettingsConfig>();
             defaults.DesiredPlayerCount.Returns(new PossibleIntegers(1, 2, 3, 4));
             defaults.MaxScoreToReach.Returns(new PossibleIntegers(5, 15, 30));
+            defaults.SelfDamagePercent.Returns(new PossibleIntegers(5, 100, 200) { Default = 100 });
             defaults.MapGeneration.Returns(new DefaultMapGeneration());
             defaults.ItemSpawn.Returns(new DefaultItemSpawn());
             defaults.DangerZone.Returns(new DefaultDangerZone());
@@ -132,6 +133,7 @@ namespace Tanks.Core.Tests.Lobbies.UseCases
             var selected = SessionSettingsMapper.FromDefaultToLobby(_settings.DefaultSettings);
             selected.MaxScore = 30;
             selected.MapGeneration.Size = MapSize.Large;
+            selected.SelfDamagePercent = 200;
             selected.MapGeneration.Thickness = MapThickness.Thick;
             selected.ItemSpawn.Rate = ItemSpawnRate.Chaos;
             selected.DangerZone.StartDelaySeconds = 60;

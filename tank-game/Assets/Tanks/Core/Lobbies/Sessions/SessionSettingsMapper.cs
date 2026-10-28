@@ -23,6 +23,9 @@ namespace Tanks.Core.Lobbies.Sessions
                 MaxScore = defaultConfig.MaxScoreToReach
                     .CorrectValue(from.MaxScore),
 
+                SelfDamagePercent = defaultConfig.SelfDamagePercent
+                    .CorrectValue(from.SelfDamagePercent),
+
                 MapGeneration = new MapGenerationSettings
                 {
                     Resolution = mapGeneration.Resolution
@@ -64,6 +67,7 @@ namespace Tanks.Core.Lobbies.Sessions
             {
                 PlayerCount = defaultConfig.DesiredPlayerCount.Default,
                 MaxScore = defaultConfig.MaxScoreToReach.Default,
+                SelfDamagePercent = defaultConfig.SelfDamagePercent.Default,
 
                 MapGeneration = new MapGenerationSettingsFromLobby
                 {

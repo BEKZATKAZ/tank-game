@@ -7,6 +7,7 @@ namespace Tanks.Core.Lobbies.Sessions
     {
         int DesiredPlayerCount { get; }
         int MaxScore { get; }
+        int SelfDamagePercent { get; }
 
         MapGenerationSettings MapGeneration { get; }
         ItemSpawnSettings ItemSpawn { get; }
@@ -41,6 +42,7 @@ namespace Tanks.Core.Lobbies.Sessions
     {
         public int DesiredPlayerCount { get; set; }
         public int MaxScore { get; set; }
+        public int SelfDamagePercent { get; set; }
 
         public MapGenerationSettings MapGeneration { get; set; }
         public ItemSpawnSettings ItemSpawn { get; set; }

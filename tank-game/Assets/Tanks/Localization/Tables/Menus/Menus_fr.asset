@@ -288,6 +288,10 @@ MonoBehaviour:
     m_Localized: "Chaos"
     m_Metadata:
       m_Items: []
+  - m_Id: 41000000000000018
+    m_Localized: "Dégâts auto-infligés"
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:
