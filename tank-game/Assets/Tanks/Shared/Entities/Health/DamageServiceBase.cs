@@ -65,7 +65,8 @@ namespace Tanks.Shared.Entities.Health
 
             if (target == from)
             {
-                finalDamage *= _settings.GetSettings().SelfDamagePercent * 0.01f;
+                int percent = _settings?.GetSettings()?.SelfDamagePercent ?? 100;
+                finalDamage *= percent * 0.01f;
             }
 
             IItemOwnerBehaviour fromItemOwner = from?.GetBehaviour<IItemOwnerBehaviour>();
