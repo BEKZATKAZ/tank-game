@@ -49,7 +49,7 @@ namespace Tanks.Server.Items.Behaviours.OnPickup
             int remaining = (int)(currentHealth - damage);
 
             // Leave 1 HP if lethal
-            if (remaining < 0) damage -= (uint)math.abs(remaining);
+            if (remaining < 0) damage -= (uint)math.abs(remaining) + 1;
 
             // Don't count stats for pure damage
             _damageService.Damage(

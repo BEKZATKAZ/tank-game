@@ -71,7 +71,7 @@ namespace Tanks.Server.Tests.Items.Behaviours
             _entityService.GetAllEntities().Returns(new IEntityBehaviour[] { entity });
             Behaviour.OnPickup(MockOwner);
 
-            uint expectedDamage = (uint)math.max(remainingHealth, 1);
+            uint expectedDamage = (uint)remainingHealth - 1;
 
             _damageService.Received(1).Damage(
                 expectedDamage, entity, MockOwner.Entity, Arg.Any<HealthEventId>(), false);
