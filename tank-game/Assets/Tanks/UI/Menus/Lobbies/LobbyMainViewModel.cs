@@ -38,6 +38,7 @@ namespace Tanks.UI.Menus.Lobbies
             _service.CurrentLobbyState.HostId.Bind(OnHostChanged);
 
             Players.Bind(OnPlayersChanged);
+            _service.CurrentLobbyState.IsUpdatingSettings.Bind(OnSettingsUpdatingChanged);
 
             _localization.LocaleChanged += OnLocaleChanged;
             RefreshText();
@@ -68,6 +69,11 @@ namespace Tanks.UI.Menus.Lobbies
         private void OnStatusChanged(LobbyStatus status) => RefreshReady();
         private void OnHostChanged(string hostId) => RefreshReady();
         private void OnLocaleChanged(string locale) => RefreshText();
+
+        private void OnSettingsUpdatingChanged(bool updating)
+        {
+            if (updating == false) TryStartGame();
+        }
 
         private string Localize(string entry, string fallback)
         {
@@ -104,6 +110,7 @@ namespace Tanks.UI.Menus.Lobbies
         private void TryStartGame()
         {
             if (_disposed || _starting || _updatingReady || _startFailed || IsHost == false) return;
+            if (_service.CurrentLobbyState.IsUpdatingSettings.Value) return;
             if (CanToggleReady.Value == false || Players.Value.Count == 0) return;
             if (Players.Value.Values.All(x => x.IsReady) == false) return;
 
@@ -186,6 +193,7 @@ namespace Tanks.UI.Menus.Lobbies
             _service.CurrentLobbyState.HostId.Unbind(OnHostChanged);
 
             Players.Unbind(OnPlayersChanged);
+            _service.CurrentLobbyState.IsUpdatingSettings.Unbind(OnSettingsUpdatingChanged);
             _localization.LocaleChanged -= OnLocaleChanged;
         }
 

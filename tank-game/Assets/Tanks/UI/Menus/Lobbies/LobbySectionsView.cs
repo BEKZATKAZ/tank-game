@@ -15,6 +15,10 @@ namespace Tanks.UI.Menus.Lobbies
         [SerializeField]
         private LobbyChatView _chatView;
 
+        [Required]
+        [SerializeField]
+        private LobbySettingsView _settingsView;
+
         private VisualElement _root;
         private Label _lobbyName;
         private Label _lobbyStatus;
@@ -32,6 +36,7 @@ namespace Tanks.UI.Menus.Lobbies
 
             _root.Q<Button>("MainButton").clicked += OnMainClicked;
             _root.Q<Button>("ChatButton").clicked += OnChatClicked;
+            _root.Q<Button>("SettingsButton").clicked += OnSettingsClicked;
         }
 
         protected override void Bind(LobbySectionsViewModel viewModel)
@@ -39,6 +44,7 @@ namespace Tanks.UI.Menus.Lobbies
             viewModel.LobbyName.Bind(OnLobbyNameUpdated);
             viewModel.Status.Bind(OnStatusUpdated);
             viewModel.IsChatOpen.Bind(OnChatOpenChanged);
+            viewModel.IsSettingsOpen.Bind(OnChatOpenChanged);
             viewModel.UnreadCount.Bind(OnUnreadCountChanged);
         }
 
@@ -47,6 +53,7 @@ namespace Tanks.UI.Menus.Lobbies
             viewModel.LobbyName.Unbind(OnLobbyNameUpdated);
             viewModel.Status.Unbind(OnStatusUpdated);
             viewModel.IsChatOpen.Unbind(OnChatOpenChanged);
+            viewModel.IsSettingsOpen.Unbind(OnChatOpenChanged);
             viewModel.UnreadCount.Unbind(OnUnreadCountChanged);
         }
 
@@ -64,11 +71,15 @@ namespace Tanks.UI.Menus.Lobbies
         private void OnStatusUpdated(string value) => _lobbyStatus.text = value;
         private void OnMainClicked() => ViewModel?.SetChatOpen(false);
         private void OnChatClicked() => ViewModel?.SetChatOpen(true);
+        private void OnSettingsClicked() => ViewModel?.OpenSettings();
 
         private void OnChatOpenChanged(bool open)
         {
-            _mainView.Root.style.display = open ? DisplayStyle.None : DisplayStyle.Flex;
-            _chatView.Root.style.display = open ? DisplayStyle.Flex : DisplayStyle.None;
+            bool chat = ViewModel.IsChatOpen.Value;
+            bool settings = ViewModel.IsSettingsOpen.Value;
+            _mainView.Root.style.display = chat || settings ? DisplayStyle.None : DisplayStyle.Flex;
+            _chatView.Root.style.display = chat ? DisplayStyle.Flex : DisplayStyle.None;
+            _settingsView.Root.style.display = settings ? DisplayStyle.Flex : DisplayStyle.None;
         }
 
         private void OnUnreadCountChanged(int count)

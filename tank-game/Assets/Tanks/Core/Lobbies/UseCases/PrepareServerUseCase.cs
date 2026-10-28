@@ -4,6 +4,7 @@ using Tanks.Core.Common.Processes;
 using Tanks.Core.Lobbies.Payloads;
 using Tanks.Core.Lobbies.Responses;
 using Tanks.Core.Lobbies.Sessions;
+using Tanks.Core.Lobbies.Sessions.DTOs;
 
 namespace Tanks.Core.Lobbies.UseCases
 {
@@ -30,22 +31,46 @@ namespace Tanks.Core.Lobbies.UseCases
 
         public async UniTask<ResultType<string>> PrepareAsync()
         {
-            // Prediction for host
-            _lobbyService.CurrentLobbyState.Status.Value = LobbyStatus.PreparingServer;
+            LobbyState lobby = _lobbyService.CurrentLobbyState;
+            LobbyId lobbyId = lobby.Id.Value;
+            SessionSettingsFromLobby settings;
+            await lobby.SettingsLock.WaitAsync();
 
-            ResultType starting = await _lobbyService.UpdateLobbyAsync(new LobbyUpdateRequest
+            try
             {
-                Status = LobbyStatus.PreparingServer
-            });
+                if (lobby.Id.Value.Value != lobbyId.Value ||
+                    lobby.Status.Value != LobbyStatus.WaitingForPlayers)
+                {
+                    return Result.Failure<string>("failed-to-update");
+                }
 
-            if (starting.IsSuccess == false)
-            {
-                return Result.Failure<string>(starting.ErrorCode);
+                // Lock editing before publishing the preparing status.
+                lobby.Status.Value = LobbyStatus.PreparingServer;
+
+                ResultType starting = await _lobbyService.UpdateLobbyAsync(new LobbyUpdateRequest
+                {
+                    Status = LobbyStatus.PreparingServer
+                });
+
+                if (starting.IsSuccess == false)
+                {
+                    return Result.Failure<string>(starting.ErrorCode);
+                }
+
+                if (lobby.Id.Value.Value != lobbyId.Value)
+                {
+                    return Result.Failure<string>("failed-to-update");
+                }
+
+                settings = lobby.LobbyData.ContainsKey("settings")
+                    ? lobby.Settings.Value
+                    : SessionSettingsMapper.FromDefaultToLobby(_settings.DefaultSettings);
+                settings.PlayerCount = lobby.Players.Value.Count;
             }
-
-            var defaultSettings = _settings.DefaultSettings;
-            var settings = SessionSettingsMapper.FromDefaultToLobby(defaultSettings);
-            settings.PlayerCount = _lobbyService.CurrentLobbyState.Players.Value.Count;
+            finally
+            {
+                lobby.SettingsLock.Release();
+            }
 
             using CancellationTokenSource timeout = new CancellationTokenSource(15000);
 

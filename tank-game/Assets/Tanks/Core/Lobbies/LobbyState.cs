@@ -1,5 +1,6 @@
 using Newtonsoft.Json;
 using System.Collections.Generic;
+using System.Threading;
 using Tanks.Core.Lobbies.Sessions;
 using Tanks.Core.Lobbies.Sessions.DTOs;
 using Tanks.Utils;
@@ -48,6 +49,8 @@ namespace Tanks.Core.Lobbies
         public BindableProperty<string> JoinCode { get; } = new();
         public BindableProperty<LobbyStatus> Status { get; } = new();
         public BindableProperty<SessionSettingsFromLobby> Settings { get; } = new();
+        public BindableProperty<bool> IsUpdatingSettings { get; } = new();
+        public SemaphoreSlim SettingsLock { get; } = new(1, 1);
         public BindableProperty<SessionSettings> ServerConfirmedSettings { get; } = new();
 
         public void Refresh()

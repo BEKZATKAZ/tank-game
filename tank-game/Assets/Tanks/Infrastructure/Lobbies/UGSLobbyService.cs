@@ -6,6 +6,7 @@ using Tanks.Core;
 using Tanks.Core.Common;
 using Tanks.Core.Lobbies;
 using Tanks.Core.Lobbies.Payloads;
+using Tanks.Core.Lobbies.Sessions;
 using Unity.Services.Lobbies;
 using Unity.Services.Lobbies.Models;
 using UnityEngine;
@@ -16,9 +17,10 @@ namespace Tanks.Infrastructure.Lobbies
 {
     public sealed class UGSLobbyService : Core.Lobbies.ILobbyService, IDisposable
     {
-        public UGSLobbyService(IAuthService auth)
+        public UGSLobbyService(IAuthService auth, ISessionSettingsService settings)
         {
             _auth = auth;
+            _settings = settings;
 
             CurrentLobbyState.Id.Bind(OnLobbyIdChanged);
             Application.quitting += Dispose;
@@ -33,6 +35,7 @@ namespace Tanks.Infrastructure.Lobbies
         private Unity.Services.Lobbies.ILobbyService Service => _service ?? LobbyService.Instance;
 
         private readonly IAuthService _auth;
+        private readonly ISessionSettingsService _settings;
         private readonly Func<TimeSpan, CancellationToken, Task> _heartbeatDelay = Task.Delay;
 
         private Unity.Services.Lobbies.ILobbyService _service;
@@ -175,7 +178,11 @@ namespace Tanks.Infrastructure.Lobbies
             var result = await UGSLobbyMapper.MapAsync(
                 () => RememberAsync(Service.CreateLobbyAsync(name, (int)maxPlayers, new()
                 {
-                    Player = CreatePlayerData()
+                    Player = CreatePlayerData(),
+                    Data = UGSLobbyMapper.MapDataToUpdate(new LobbyUpdateRequest
+                    {
+                        Settings = SessionSettingsMapper.FromDefaultToLobby(_settings.DefaultSettings)
+                    })
                 })), CurrentLobbyState, errorCode: "failed-to-create");
 
             if (result.IsSuccess == false) return result;
@@ -213,6 +220,14 @@ namespace Tanks.Infrastructure.Lobbies
         public Task<ResultType<LobbyState>> UpdateLobbyAsync(LobbyUpdateRequest options)
         {
             LobbyId lobbyId = CurrentLobbyState.Id.Value;
+
+            if (options.Settings.HasValue &&
+                (string.IsNullOrEmpty(lobbyId.Value) ||
+                CurrentLobbyState.HostId.Value != _auth.CurrentProfile.UserId.Value ||
+                CurrentLobbyState.Status.Value != LobbyStatus.WaitingForPlayers))
+            {
+                return Task.FromResult(Result.Failure<LobbyState>("failed-to-update"));
+            }
 
             return UGSLobbyMapper.MapAsync(() => RememberAsync(Service.UpdateLobbyAsync(lobbyId.Value, new()
             {

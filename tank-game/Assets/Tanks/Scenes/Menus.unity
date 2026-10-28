@@ -34002,6 +34002,7 @@ GameObject:
   - component: {fileID: 1926667008}
   - component: {fileID: 1926667010}
   - component: {fileID: 1926667012}
+  - component: {fileID: 1926667013}
   - component: {fileID: 1926667011}
   m_Layer: 5
   m_Name: Lobby
@@ -34076,6 +34077,7 @@ MonoBehaviour:
   _showOnPlay: 1
   _mainView: {fileID: 1926667010}
   _chatView: {fileID: 1926667012}
+  _settingsView: {fileID: 1926667013}
 --- !u!114 &1926667012
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -34088,6 +34090,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9348099cd15ae1c41b08548e768f7fab, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Tanks.UI::Tanks.UI.Menus.Lobbies.LobbyChatView
+  _showOnPlay: 1
+--- !u!114 &1926667013
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1926667007}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c6b0eb4fc5434dcb8d57fb6e01250f11, type: 3}
+  m_Name:
+  m_EditorClassIdentifier: Tanks.UI::Tanks.UI.Menus.Lobbies.LobbySettingsView
   _showOnPlay: 1
 --- !u!1660057539 &9223372036854775807
 SceneRoots:

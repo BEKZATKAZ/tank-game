@@ -8,6 +8,8 @@ using System.Threading.Tasks;
 using Tanks.Core;
 using Tanks.Core.Common;
 using Tanks.Core.Lobbies;
+using Tanks.Core.Lobbies.Payloads;
+using Tanks.Core.Lobbies.Sessions;
 using Tanks.Infrastructure.Lobbies;
 using Unity.Services.Lobbies;
 using Unity.Services.Lobbies.Models;
@@ -20,6 +22,7 @@ namespace Tanks.Infrastructure.Tests.Lobbies
         private Unity.Services.Lobbies.ILobbyService _sdk;
         private ILobbyEvents _events;
         private PlayerProfileState _profile;
+        private ISessionSettingsService _settings;
         private readonly Queue<TaskCompletionSource<bool>> _delays = new();
         private readonly List<TimeSpan> _intervals = new();
         private readonly List<CancellationToken> _tokens = new();
@@ -54,7 +57,16 @@ namespace Tanks.Infrastructure.Tests.Lobbies
             _sdk.SendHeartbeatPingAsync(Arg.Any<string>()).Returns(Task.CompletedTask);
             _sdk.DeleteLobbyAsync(Arg.Any<string>()).Returns(Task.CompletedTask);
 
-            _service = new UGSLobbyService(auth);
+            var defaults = Substitute.For<ISessionDefaultSettingsConfig>();
+            defaults.DesiredPlayerCount.Returns(new PossibleIntegers(1, 2, 3, 4));
+            defaults.MaxScoreToReach.Returns(new PossibleIntegers(5, 15, 30));
+            defaults.MapGeneration.Returns(new DefaultMapGeneration());
+            defaults.ItemSpawn.Returns(new DefaultItemSpawn());
+            defaults.DangerZone.Returns(new DefaultDangerZone());
+            _settings = Substitute.For<ISessionSettingsService>();
+            _settings.DefaultSettings.Returns(defaults);
+
+            _service = new UGSLobbyService(auth, _settings);
             SetField("_service", _sdk);
             SetField("_heartbeatDelay", (Func<TimeSpan, CancellationToken, Task>)DelayAsync);
         }
@@ -235,6 +247,21 @@ namespace Tanks.Infrastructure.Tests.Lobbies
             await _service.HostLobbyAsync("Lobby", 4);
 
             await _sdk.Received(2).SendHeartbeatPingAsync("lobby");
+        }
+
+        [Test]
+        public async Task Hosting_PublishesConfiguredDefaultSettings()
+        {
+            var expected = UGSLobbyMapper.MapDataToUpdate(new LobbyUpdateRequest
+            {
+                Settings = SessionSettingsMapper.FromDefaultToLobby(_settings.DefaultSettings)
+            });
+
+            await _service.HostLobbyAsync("Lobby", 4);
+
+            await _sdk.Received(1).CreateLobbyAsync("Lobby", 4, Arg.Is<CreateLobbyOptions>(x =>
+                x.Data["settings"].Visibility == DataObject.VisibilityOptions.Member &&
+                x.Data["settings"].Value == expected["settings"].Value));
         }
 
         private Task DelayAsync(TimeSpan duration, CancellationToken cancellation)

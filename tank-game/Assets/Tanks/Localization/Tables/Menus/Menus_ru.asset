@@ -220,6 +220,74 @@ MonoBehaviour:
     m_Localized: "ВЫЙТИ В ГЛАВНОЕ МЕНЮ"
     m_Metadata:
       m_Items: []
+  - m_Id: 41000000000000001
+    m_Localized: "Максимальный счёт"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 41000000000000002
+    m_Localized: "Размер карты"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 41000000000000003
+    m_Localized: "Толщина стен"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 41000000000000004
+    m_Localized: "Частота появления предметов"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 41000000000000005
+    m_Localized: "Задержка опасной зоны (с)"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 41000000000000006
+    m_Localized: "Длительность опасной зоны (с)"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 41000000000000007
+    m_Localized: "Урон опасной зоны в секунду"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 41000000000000008
+    m_Localized: "Маленькая"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 41000000000000009
+    m_Localized: "Средняя"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 41000000000000010
+    m_Localized: "Большая"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 41000000000000011
+    m_Localized: "Тонкие"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 41000000000000012
+    m_Localized: "Средние"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 41000000000000013
+    m_Localized: "Толстые"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 41000000000000014
+    m_Localized: "Медленно"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 41000000000000015
+    m_Localized: "Обычно"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 41000000000000016
+    m_Localized: "Быстро"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 41000000000000017
+    m_Localized: "Хаос"
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:

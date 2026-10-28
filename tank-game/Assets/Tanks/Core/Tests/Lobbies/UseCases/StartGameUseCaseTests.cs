@@ -8,6 +8,7 @@ using Tanks.Core.Lobbies;
 using Tanks.Core.Lobbies.Payloads;
 using Tanks.Core.Lobbies.Responses;
 using Tanks.Core.Lobbies.Sessions;
+using Tanks.Core.Lobbies.Sessions.DTOs;
 using Tanks.Core.Lobbies.UseCases;
 using UnityEngine;
 
@@ -26,6 +27,14 @@ namespace Tanks.Core.Tests.Lobbies.UseCases
             _client = Substitute.For<IClientCommunicationService>();
             _lobbyService = Substitute.For<ILobbyService>();
             _settings = Substitute.For<ISessionSettingsService>();
+
+            var defaults = Substitute.For<ISessionDefaultSettingsConfig>();
+            defaults.DesiredPlayerCount.Returns(new PossibleIntegers(1, 2, 3, 4));
+            defaults.MaxScoreToReach.Returns(new PossibleIntegers(5, 15, 30));
+            defaults.MapGeneration.Returns(new DefaultMapGeneration());
+            defaults.ItemSpawn.Returns(new DefaultItemSpawn());
+            defaults.DangerZone.Returns(new DefaultDangerZone());
+            _settings.DefaultSettings.Returns(defaults);
 
             _lobbyService.CurrentLobbyState.Returns(new LobbyState());
             _lobbyService.CurrentLobbyState.Players.Value.Add("player-1", default);
@@ -115,6 +124,75 @@ namespace Tanks.Core.Tests.Lobbies.UseCases
 
             Assert.That(result.IsSuccess, Is.False);
             Assert.That(result.ErrorCode, Is.EqualTo("connecting-error"));
+        }
+
+        [Test]
+        public async Task StartAsync_UsesPublishedSettingsAndActualPlayerCount()
+        {
+            var selected = SessionSettingsMapper.FromDefaultToLobby(_settings.DefaultSettings);
+            selected.MaxScore = 30;
+            selected.MapGeneration.Size = MapSize.Large;
+            selected.MapGeneration.Thickness = MapThickness.Thick;
+            selected.ItemSpawn.Rate = ItemSpawnRate.Chaos;
+            selected.DangerZone.StartDelaySeconds = 60;
+            selected.DangerZone.DurationSeconds = 50;
+            selected.DangerZone.DamagePerSecond = 100;
+            selected.PlayerCount = 8;
+            var lobby = _lobbyService.CurrentLobbyState;
+            lobby.LobbyData["settings"] = "published";
+            lobby.Settings.Value = selected;
+            _lobbyService.UpdateLobbyAsync(Arg.Any<LobbyUpdateRequest>())
+                .Returns(Task.FromResult(Result.Success(lobby)));
+            RequestReturns("JOIN");
+
+            await _useCase.PrepareAsync();
+
+            selected.PlayerCount = 3;
+            await _client.Received(1).SendRequestAsync<PrepareServerRequest, ServerStandBy>(
+                Arg.Is<PrepareServerRequest>(x => x.Settings.Equals(selected)), Arg.Any<CancellationToken>());
+        }
+
+        [Test]
+        public async Task StartAsync_WaitsForPendingSaveBeforeLockingSettings()
+        {
+            var lobby = _lobbyService.CurrentLobbyState;
+            await lobby.SettingsLock.WaitAsync();
+            _lobbyService.UpdateLobbyAsync(Arg.Any<LobbyUpdateRequest>())
+                .Returns(Task.FromResult(Result.Success(lobby)));
+            RequestReturns("JOIN");
+
+            Task<ResultType<string>> starting = _useCase.PrepareAsync().AsTask();
+            Assert.That(lobby.Status.Value, Is.EqualTo(LobbyStatus.WaitingForPlayers));
+            await _lobbyService.DidNotReceive().UpdateLobbyAsync(Arg.Any<LobbyUpdateRequest>());
+
+            var selected = SessionSettingsMapper.FromDefaultToLobby(_settings.DefaultSettings);
+            selected.MaxScore = 30;
+            lobby.LobbyData["settings"] = "published";
+            lobby.Settings.Value = selected;
+            lobby.SettingsLock.Release();
+            ResultType<string> result = await starting;
+
+            Assert.That(result.IsSuccess, Is.True);
+            Assert.That(lobby.Status.Value, Is.EqualTo(LobbyStatus.PreparingServer));
+            Assert.That(lobby.SettingsLock.CurrentCount, Is.EqualTo(1));
+            await _client.Received(1).SendRequestAsync<PrepareServerRequest, ServerStandBy>(
+                Arg.Is<PrepareServerRequest>(x => x.Settings.MaxScore == 30), Arg.Any<CancellationToken>());
+        }
+
+        [Test]
+        public async Task StartAsync_LobbyChangesWhileWaiting_DoesNotPrepare()
+        {
+            var lobby = _lobbyService.CurrentLobbyState;
+            await lobby.SettingsLock.WaitAsync();
+
+            Task<ResultType<string>> starting = _useCase.PrepareAsync().AsTask();
+            lobby.Id.Value = new LobbyId("next-lobby");
+            lobby.SettingsLock.Release();
+            ResultType<string> result = await starting;
+
+            Assert.That(result.IsSuccess, Is.False);
+            Assert.That(lobby.SettingsLock.CurrentCount, Is.EqualTo(1));
+            await _lobbyService.DidNotReceive().UpdateLobbyAsync(Arg.Any<LobbyUpdateRequest>());
         }
 
         private void RequestReturns(string joinCode)

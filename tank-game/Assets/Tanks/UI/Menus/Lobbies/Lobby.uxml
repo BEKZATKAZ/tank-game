@@ -41,6 +41,9 @@
                     <Tanks.UI.Elements.CustomButton name="SendButton" class="chat__send-button" style="background-image: url(&quot;project://database/Assets/Plugins/Layer%20Lab/2D%20Icons-PictoIconPack01/PictoIcon_256/Icon_PictoIcon_Send_1.Png?fileID=21300000&amp;guid=5488ea9efc75a409f9dfa625d0574c04&amp;type=3#Icon_PictoIcon_Send_1&quot;);"/>
                 </ui:VisualElement>
             </ui:VisualElement>
+            <ui:VisualElement name="LobbySettings" class="lobby__section lobby-settings" style="display: none;">
+                <ui:ScrollView horizontal-scroller-visibility="Hidden"/>
+            </ui:VisualElement>
         </ui:VisualElement>
         <ui:Label text="Starting server..." name="LobbyStatus" class="lobby__status"/>
     </ui:VisualElement>

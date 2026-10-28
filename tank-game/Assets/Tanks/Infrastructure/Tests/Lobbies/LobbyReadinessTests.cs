@@ -2,8 +2,13 @@ using NSubstitute;
 using NUnit.Framework;
 using System.Collections.Generic;
 using System.Reflection;
+using System.Threading.Tasks;
 using Tanks.Core;
+using Tanks.Core.Common;
 using Tanks.Core.Lobbies;
+using Tanks.Core.Lobbies.Payloads;
+using Tanks.Core.Lobbies.Sessions;
+using Tanks.Core.Lobbies.Sessions.DTOs;
 using Tanks.Infrastructure.Lobbies;
 using Unity.Services.Lobbies;
 using Unity.Services.Lobbies.Models;
@@ -18,7 +23,10 @@ namespace Tanks.Infrastructure.Tests.Lobbies
         [SetUp]
         public void Setup()
         {
-            _service = new UGSLobbyService(Substitute.For<IAuthService>());
+            var auth = Substitute.For<IAuthService>();
+            auth.CurrentProfile.Returns(new PlayerProfileState());
+            auth.CurrentProfile.UserId.Value = "host";
+            _service = new UGSLobbyService(auth, Substitute.For<ISessionSettingsService>());
             _lobby = new Lobby(id: "lobby", hostId: "host", players: new List<Player>
             {
                 Player("host", "False"), Player("guest", "False")
@@ -60,7 +68,7 @@ namespace Tanks.Infrastructure.Tests.Lobbies
         [Test]
         public void PlayerDataChange_RefreshesReadinessOnBothClients()
         {
-            using var other = new UGSLobbyService(Substitute.For<IAuthService>());
+            using var other = new UGSLobbyService(Substitute.For<IAuthService>(), Substitute.For<ISessionSettingsService>());
             UGSLobbyMapper.MapLobby(_lobby, other.CurrentLobbyState);
             var changes = Substitute.For<ILobbyChanges>();
             changes.When(x => x.ApplyToLobby(_lobby)).Do(_ =>
@@ -123,6 +131,43 @@ namespace Tanks.Infrastructure.Tests.Lobbies
             _service.CurrentLobbyState.Players.Bind(_ => observed = _service.CurrentLobbyState.Status.Value);
             UGSLobbyMapper.MapLobby(_lobby, _service.CurrentLobbyState);
             Assert.That(observed, Is.EqualTo(LobbyStatus.PreparingServer));
+        }
+
+        [TestCase("guest", LobbyStatus.WaitingForPlayers)]
+        [TestCase("host", LobbyStatus.PreparingServer)]
+        [TestCase("host", LobbyStatus.Connecting)]
+        public async Task SettingsUpdate_RejectsMembersAndStartedLobbies(string host, LobbyStatus status)
+        {
+            _service.CurrentLobbyState.HostId.Value = host;
+            _service.CurrentLobbyState.Status.Value = status;
+
+            var result = await _service.UpdateLobbyAsync(new LobbyUpdateRequest
+            {
+                Settings = new SessionSettingsFromLobby { MaxScore = 30 }
+            });
+
+            Assert.That(result.IsSuccess, Is.False);
+            Assert.That(result.ErrorCode, Is.EqualTo("failed-to-update"));
+        }
+
+        [Test]
+        public void SettingsUpdate_MapsMemberVisibleDataToEveryClient()
+        {
+            var selected = new SessionSettingsFromLobby
+            {
+                MaxScore = 30,
+                MapGeneration = new() { Size = MapSize.Large }
+            };
+            var data = UGSLobbyMapper.MapDataToUpdate(new LobbyUpdateRequest { Settings = selected });
+            Assert.That(data["settings"].Visibility, Is.EqualTo(DataObject.VisibilityOptions.Member));
+            _lobby.Data["settings"] = data["settings"];
+            var member = new LobbyState();
+
+            UGSLobbyMapper.MapLobby(_lobby, _service.CurrentLobbyState);
+            UGSLobbyMapper.MapLobby(_lobby, member);
+
+            Assert.That(_service.CurrentLobbyState.Settings.Value, Is.EqualTo(selected));
+            Assert.That(member.Settings.Value, Is.EqualTo(selected));
         }
     }
 }

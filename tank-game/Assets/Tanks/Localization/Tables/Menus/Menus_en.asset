@@ -220,6 +220,74 @@ MonoBehaviour:
     m_Localized: "QUIT TO MAIN MENU"
     m_Metadata:
       m_Items: []
+  - m_Id: 41000000000000001
+    m_Localized: "Maximum score"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 41000000000000002
+    m_Localized: "Map size"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 41000000000000003
+    m_Localized: "Wall thickness"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 41000000000000004
+    m_Localized: "Item spawn rate"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 41000000000000005
+    m_Localized: "Danger zone delay (s)"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 41000000000000006
+    m_Localized: "Danger zone duration (s)"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 41000000000000007
+    m_Localized: "Danger zone damage per second"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 41000000000000008
+    m_Localized: "Small"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 41000000000000009
+    m_Localized: "Medium"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 41000000000000010
+    m_Localized: "Large"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 41000000000000011
+    m_Localized: "Thin"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 41000000000000012
+    m_Localized: "Medium"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 41000000000000013
+    m_Localized: "Thick"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 41000000000000014
+    m_Localized: "Slow"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 41000000000000015
+    m_Localized: "Normal"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 41000000000000016
+    m_Localized: "Fast"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 41000000000000017
+    m_Localized: "Chaos"
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:

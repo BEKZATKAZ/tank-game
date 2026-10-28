@@ -53,6 +53,26 @@ namespace Tanks.UI.Tests.Menus.Lobbies
             Assert.AreSame(_lobby.Name, ViewModel.LobbyName);
         }
 
+        [Test]
+        public void SettingsTab_SwitchesExclusivelyAndPreservesChatUnread()
+        {
+            Receive("one");
+            ViewModel.OpenSettings();
+
+            Assert.That(ViewModel.IsSettingsOpen.Value, Is.True);
+            Assert.That(ViewModel.IsChatOpen.Value, Is.False);
+            Assert.That(ViewModel.UnreadCount.Value, Is.EqualTo(1));
+
+            ViewModel.SetChatOpen(true);
+            Assert.That(ViewModel.IsSettingsOpen.Value, Is.False);
+            Assert.That(ViewModel.UnreadCount.Value, Is.Zero);
+
+            ViewModel.OpenSettings();
+            ViewModel.SetChatOpen(false);
+            Assert.That(ViewModel.IsSettingsOpen.Value, Is.False);
+            Assert.That(ViewModel.IsChatOpen.Value, Is.False);
+        }
+
         [TestCase(LobbyStatus.PreparingServer, "menu.lobby.preparing-server")]
         [TestCase(LobbyStatus.Connecting, "menu.lobby.connecting")]
         public void Status_UsesLocalizedMessage(LobbyStatus status, string entry)

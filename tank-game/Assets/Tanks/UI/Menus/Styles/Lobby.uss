@@ -50,6 +50,33 @@
     padding: 20px;
 }
 
+.lobby-settings {
+    height: 560px;
+    flex-shrink: 1;
+}
+
+.lobby-settings > .unity-scroll-view {
+    flex-grow: 1;
+    min-height: 0;
+}
+
+.lobby-settings .setting {
+    font-size: 24px;
+    padding: 12px 8px;
+}
+
+.lobby-settings .unity-base-field__label {
+    min-width: 0;
+    width: 55%;
+    margin-right: 12px;
+    white-space: normal;
+}
+
+.lobby-settings .unity-base-field__input {
+    min-width: 0;
+    height: 48px;
+}
+
 .lobby__main-list {
     flex-grow: 1;
 }

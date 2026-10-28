@@ -41,6 +41,7 @@ namespace Tanks.UI.Menus.Lobbies
         public IReadOnlyBindableProperty<string> LobbyName { get; }
         public BindableProperty<string> Status { get; } = new();
         public BindableProperty<bool> IsChatOpen { get; } = new();
+        public BindableProperty<bool> IsSettingsOpen { get; } = new();
         public BindableProperty<int> UnreadCount { get; } = new();
 
         private readonly ILobbyService _service;
@@ -64,8 +65,15 @@ namespace Tanks.UI.Menus.Lobbies
 
         public void SetChatOpen(bool open)
         {
+            IsSettingsOpen.Value = false;
             IsChatOpen.Value = open;
             if (open) UnreadCount.Value = 0;
+        }
+
+        public void OpenSettings()
+        {
+            IsChatOpen.Value = false;
+            IsSettingsOpen.Value = true;
         }
 
         private void OnLobbyChanged(LobbyId id)
@@ -73,6 +81,7 @@ namespace Tanks.UI.Menus.Lobbies
             _received.Clear();
             UnreadCount.Value = 0;
             IsChatOpen.Value = false;
+            IsSettingsOpen.Value = false;
 
             foreach (LobbyChatMessage message in _chat.Messages)
             {

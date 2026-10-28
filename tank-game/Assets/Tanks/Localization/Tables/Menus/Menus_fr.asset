@@ -220,6 +220,74 @@ MonoBehaviour:
     m_Localized: "RETOUR AU MENU PRINCIPAL"
     m_Metadata:
       m_Items: []
+  - m_Id: 41000000000000001
+    m_Localized: "Score maximum"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 41000000000000002
+    m_Localized: "Taille de la carte"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 41000000000000003
+    m_Localized: "Épaisseur des murs"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 41000000000000004
+    m_Localized: "Fréquence des objets"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 41000000000000005
+    m_Localized: "Délai de la zone dangereuse (s)"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 41000000000000006
+    m_Localized: "Durée de la zone dangereuse (s)"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 41000000000000007
+    m_Localized: "Dégâts de la zone par seconde"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 41000000000000008
+    m_Localized: "Petite"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 41000000000000009
+    m_Localized: "Moyenne"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 41000000000000010
+    m_Localized: "Grande"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 41000000000000011
+    m_Localized: "Fins"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 41000000000000012
+    m_Localized: "Moyens"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 41000000000000013
+    m_Localized: "Épais"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 41000000000000014
+    m_Localized: "Lente"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 41000000000000015
+    m_Localized: "Normale"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 41000000000000016
+    m_Localized: "Rapide"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 41000000000000017
+    m_Localized: "Chaos"
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:

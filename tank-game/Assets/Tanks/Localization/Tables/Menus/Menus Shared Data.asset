@@ -211,6 +211,74 @@ MonoBehaviour:
     m_Key: menu.pause.quit-to-menu
     m_Metadata:
       m_Items: []
+  - m_Id: 41000000000000001
+    m_Key: menu.lobby.settings.max-score
+    m_Metadata:
+      m_Items: []
+  - m_Id: 41000000000000002
+    m_Key: menu.lobby.settings.map-size
+    m_Metadata:
+      m_Items: []
+  - m_Id: 41000000000000003
+    m_Key: menu.lobby.settings.wall-thickness
+    m_Metadata:
+      m_Items: []
+  - m_Id: 41000000000000004
+    m_Key: menu.lobby.settings.item-spawn-rate
+    m_Metadata:
+      m_Items: []
+  - m_Id: 41000000000000005
+    m_Key: menu.lobby.settings.danger-zone-delay
+    m_Metadata:
+      m_Items: []
+  - m_Id: 41000000000000006
+    m_Key: menu.lobby.settings.danger-zone-duration
+    m_Metadata:
+      m_Items: []
+  - m_Id: 41000000000000007
+    m_Key: menu.lobby.settings.danger-zone-damage
+    m_Metadata:
+      m_Items: []
+  - m_Id: 41000000000000008
+    m_Key: menu.lobby.settings.map-size.small
+    m_Metadata:
+      m_Items: []
+  - m_Id: 41000000000000009
+    m_Key: menu.lobby.settings.map-size.medium
+    m_Metadata:
+      m_Items: []
+  - m_Id: 41000000000000010
+    m_Key: menu.lobby.settings.map-size.large
+    m_Metadata:
+      m_Items: []
+  - m_Id: 41000000000000011
+    m_Key: menu.lobby.settings.wall-thickness.thin
+    m_Metadata:
+      m_Items: []
+  - m_Id: 41000000000000012
+    m_Key: menu.lobby.settings.wall-thickness.medium
+    m_Metadata:
+      m_Items: []
+  - m_Id: 41000000000000013
+    m_Key: menu.lobby.settings.wall-thickness.thick
+    m_Metadata:
+      m_Items: []
+  - m_Id: 41000000000000014
+    m_Key: menu.lobby.settings.item-spawn-rate.slow
+    m_Metadata:
+      m_Items: []
+  - m_Id: 41000000000000015
+    m_Key: menu.lobby.settings.item-spawn-rate.normal
+    m_Metadata:
+      m_Items: []
+  - m_Id: 41000000000000016
+    m_Key: menu.lobby.settings.item-spawn-rate.fast
+    m_Metadata:
+      m_Items: []
+  - m_Id: 41000000000000017
+    m_Key: menu.lobby.settings.item-spawn-rate.chaos
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:

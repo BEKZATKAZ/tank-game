@@ -38,6 +38,7 @@ namespace Tanks.UI.Menus
             builder.Register<LobbySectionsViewModel>(Lifetime.Transient);
             builder.Register<LobbyMainViewModel>(Lifetime.Transient);
             builder.Register<LobbyChatViewModel>(Lifetime.Transient);
+            builder.Register<LobbySettingsViewModel>(Lifetime.Transient);
         }
     }
 }

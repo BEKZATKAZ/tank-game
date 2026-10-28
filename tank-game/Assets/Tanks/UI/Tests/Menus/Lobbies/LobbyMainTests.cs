@@ -89,6 +89,21 @@ namespace Tanks.UI.Tests.Menus.Lobbies
             _prepareServer.Received(1).PrepareAsync();
         }
 
+        [TestCase(true, 1)]
+        [TestCase(false, 0)]
+        public void SettingsSave_DefersStartupAndRechecksReadiness(bool stillReady, int expectedStarts)
+        {
+            EnterLobby();
+            _service.CurrentLobbyState.IsUpdatingSettings.Value = true;
+            SetPlayer("test-id", true);
+            _prepareServer.DidNotReceive().PrepareAsync();
+
+            SetPlayer("test-id", stillReady);
+            _service.CurrentLobbyState.IsUpdatingSettings.Value = false;
+
+            _prepareServer.Received(expectedStarts).PrepareAsync();
+        }
+
         [Test]
         public void Guest_AllReady_DoesNotPrepareServer()
         {
