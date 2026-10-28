@@ -111,6 +111,10 @@ namespace Tanks.UI.Menus.Lobbies
             if (settings.DesiredPlayerCount == 0) return;
 
             string joinCode = _service.CurrentLobbyState.JoinCode.Value;
+
+            // Prevent loading gameplay on any lobby join
+            if (string.IsNullOrWhiteSpace(joinCode)) return;
+
             _connectToServer.Load(joinCode, settings);
         }
 
