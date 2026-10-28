@@ -7,6 +7,7 @@ using Tanks.Core.Common.Processes;
 using Tanks.Core.Lobbies.Payloads;
 using Tanks.Core.Lobbies.Responses;
 using Tanks.Core.Lobbies.Sessions;
+using Tanks.Core.Repositories;
 using Tanks.Shared.Items;
 using Unity.Netcode;
 using Unity.Netcode.Transports.UTP;
@@ -24,6 +25,7 @@ namespace Tanks.Server.Bootstrap
         [Inject] private readonly ISessionSettingsService _settings;
         [Inject] private readonly IServerCommunicationService _server;
         [Inject] private readonly IAuthService _auth;
+        [Inject] private readonly IResourceLoader _loader;
 
         private IRelayService Relay => RelayService.Instance;
 
@@ -82,6 +84,8 @@ namespace Tanks.Server.Bootstrap
             try
             {
                 _server.Reinitialize();
+                await _loader.InitializeAsync();
+
                 LoadSceneRequest sceneRequest = await WaitForRequestAsync<LoadSceneRequest>();
 
                 if (sceneRequest.Scene is RequestedServerScene.Playground)

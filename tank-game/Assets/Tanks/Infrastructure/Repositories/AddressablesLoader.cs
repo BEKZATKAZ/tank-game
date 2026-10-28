@@ -41,6 +41,11 @@ namespace Tanks.Infrastructure.Repositories
             finally { _pending.Remove(key); }
         }
 
+        public UniTask InitializeAsync()
+        {
+            return Addressables.InitializeAsync().ToUniTask();
+        }
+
         public UniTask<T> LoadAsync<T>(AssetReferenceT<T> asset) where T : Object
         {
             string key = asset.AssetGUID;

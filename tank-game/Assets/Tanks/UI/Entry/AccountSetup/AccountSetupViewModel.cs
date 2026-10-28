@@ -1,6 +1,7 @@
 using Cysharp.Threading.Tasks;
 using Tanks.Core;
 using Tanks.Core.Common.Scenes;
+using Tanks.Core.Repositories;
 using Tanks.UI.Menus.Dialogs;
 using Tanks.Utils;
 
@@ -10,15 +11,18 @@ namespace Tanks.UI.Entry.AccountSetup
     {
         public AccountSetupViewModel(
             IAuthService service,
+            IResourceLoader resourceLoader,
             IDialogScreenService dialog,
             ISceneLoader sceneLoader)
         {
             _service = service;
+            _resourceLoader = resourceLoader;
             _dialog = dialog;
             _sceneLoader = sceneLoader;
         }
 
         private readonly IAuthService _service;
+        private readonly IResourceLoader _resourceLoader;
         private readonly IDialogScreenService _dialog;
         private readonly ISceneLoader _sceneLoader;
 
@@ -66,6 +70,7 @@ namespace Tanks.UI.Entry.AccountSetup
 
         public void EnterMainMenu()
         {
+            _resourceLoader.InitializeAsync().Forget();
             _sceneLoader.StartLoading(new LoadMenus(), withTips: false, loadUntil: 1);
         }
     }

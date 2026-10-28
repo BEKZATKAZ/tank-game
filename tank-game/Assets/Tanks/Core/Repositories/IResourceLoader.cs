@@ -6,6 +6,7 @@ namespace Tanks.Core.Repositories
 {
     public interface IResourceLoader : System.IDisposable
     {
+        UniTask InitializeAsync();
         UniTask<T> LoadAsync<T>(AssetReferenceT<T> asset) where T : Object;
         UniTask<T> LoadAsync<T>(string key) where T : class;
 
