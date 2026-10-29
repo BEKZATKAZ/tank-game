@@ -104,10 +104,6 @@ namespace Tanks.UI.Gameplay.ItemDescription
 
                 string statType = type.ToString();
                 string statEntry = $"stat.{ToKebabCase(statType)}";
-
-                _localization.TryGet("Stats", statEntry, out var name);
-
-                string statName = name?.Get() ?? statType;
                 string value = stat.Value.ToString("+0.##;-0.##;0", CultureInfo.InvariantCulture);
 
                 // For example +150%, -150%
@@ -116,7 +112,11 @@ namespace Tanks.UI.Gameplay.ItemDescription
                     value += '%';
                 }
 
-                builder.Append($"{statName}: <color={color}><b>{value}</b></color>");
+                _localization.TryGet("Stats", statEntry, out var statLocalization);
+                string formattedValue = $"<color={color}><b>{value}</b></color>";
+
+                statLocalization?.AddVariable("value", formattedValue);
+                builder.Append(statLocalization?.Get() ?? statType);
 
                 if (stat.Duration < 0 || _localization.TryGet(
                     "Stats", "stat.duration-seconds", out var duration) == false) continue;

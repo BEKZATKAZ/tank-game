@@ -25,25 +25,30 @@ MonoBehaviour:
       m_Items:
       - rid: 5824281740147687480
   - m_Id: 12874899456
-    m_Localized: Dommage
+    m_Localized: "D\xE9g\xE2ts : {value}"
     m_Metadata:
-      m_Items: []
+      m_Items:
+      - rid: 5824281740147687480
   - m_Id: 69623832576
-    m_Localized: Vitesse
+    m_Localized: 'Vitesse : {value}'
     m_Metadata:
-      m_Items: []
+      m_Items:
+      - rid: 5824281740147687480
   - m_Id: 493271405518848
-    m_Localized: "D\xE9fense"
+    m_Localized: "D\xE9fense : {value}"
     m_Metadata:
-      m_Items: []
+      m_Items:
+      - rid: 5824281740147687480
   - m_Id: 494141786513408
-    m_Localized: "R\xE9sistance"
+    m_Localized: "R\xE9sistance : {value}"
     m_Metadata:
-      m_Items: []
+      m_Items:
+      - rid: 5824281740147687480
   - m_Id: 494276041990144
-    m_Localized: Cadence de tir
+    m_Localized: 'Cadence de tir : {value}'
     m_Metadata:
-      m_Items: []
+      m_Items:
+      - rid: 5824281740147687480
   references:
     version: 2
     RefIds:
@@ -53,3 +58,8 @@ MonoBehaviour:
         m_Entries: 
         m_SharedEntries:
         - id: 1198144639950848
+        - id: 12874899456
+        - id: 69623832576
+        - id: 493271405518848
+        - id: 494141786513408
+        - id: 494276041990144
