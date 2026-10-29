@@ -37,6 +37,7 @@ namespace Tanks.UI
         public bool IsVisible => Root.style.display != DisplayStyle.None;
 
         private bool _hasInitialized;
+        private VisualElement _previousFocus;
 
         protected abstract VisualElement GetRootElement();
         protected abstract void Initialize(VisualElement root);
@@ -58,12 +59,18 @@ namespace Tanks.UI
             ViewModel = _resolver.Resolve<T>();
             Bind(ViewModel);
             GetRootElement().style.display = DisplayStyle.Flex;
+            _previousFocus = Root.panel?.focusController.focusedElement as VisualElement;
+            Root.schedule.Execute(FocusFirstControl);
         }
 
         public override sealed void Hide()
         {
             _hasInitialized = true;
             GetRootElement().style.display = DisplayStyle.None;
+            if (CanFocus(_previousFocus))
+            {
+                _previousFocus.Focus();
+            }
 
             if (ViewModel is null) return;
             Unbind(ViewModel);
@@ -88,11 +95,46 @@ namespace Tanks.UI
 
         protected virtual void Update()
         {
+            if (_hasInitialized && ViewModel != null && Root.panel != null)
+            {
+                var focused = Root.panel.focusController.focusedElement as VisualElement;
+                if (CanFocus(focused) == false)
+                {
+                    FocusFirstControl();
+                }
+            }
+
             if (_hasInitialized) return;
             if (_resolver is null) return;
 
             if (ShowOnPlay) Show();
             else Hide();
+        }
+
+        protected virtual void FocusFirstControl()
+        {
+            if (Root.panel == null) return;
+
+            VisualElement first = null;
+            Root.Query<VisualElement>().ForEach(element =>
+            {
+                if (first != null || CanFocus(element) == false) return;
+                first = element;
+            });
+            first?.Focus();
+        }
+
+        private static bool CanFocus(VisualElement element)
+        {
+            if (element?.panel == null || element.focusable == false || element.tabIndex < 0) return false;
+            if (element.enabledInHierarchy == false || element.resolvedStyle.visibility != Visibility.Visible) return false;
+
+            for (VisualElement parent = element; parent != null; parent = parent.parent)
+            {
+                if (parent.resolvedStyle.display == DisplayStyle.None) return false;
+            }
+
+            return true;
         }
 
         private void Awake()

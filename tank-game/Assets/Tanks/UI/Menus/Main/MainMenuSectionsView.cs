@@ -18,6 +18,7 @@ namespace Tanks.UI.Menus.Main
         {
             _root = root;
             _menuContainer = root.Q("Menu");
+            _root.RegisterCallback<NavigationCancelEvent>(OnNavigationCancel);
 
             Button hostLobbyButton = root.Q<Button>("HostLobbyButton");
             Button findLobbyButton = root.Q<Button>("JoinLobbyButton");
@@ -41,6 +42,12 @@ namespace Tanks.UI.Menus.Main
         }
 
         private void OpenLobby() => ViewModel.CreateLobby().Forget();
+        private void OnNavigationCancel(NavigationCancelEvent evt)
+        {
+            if (ViewModel == null || _currentSection == null) return;
+            ViewModel.OpenSection(MainMenuSection.None);
+            evt.StopPropagation();
+        }
         private void OpenFindLobby() => ViewModel.OpenSection(MainMenuSection.FindLobby);
         private void OpenTutorial() => ViewModel.OpenTutorial().Forget();
         private void OpenSettings() => ViewModel.OpenSection(MainMenuSection.Settings);

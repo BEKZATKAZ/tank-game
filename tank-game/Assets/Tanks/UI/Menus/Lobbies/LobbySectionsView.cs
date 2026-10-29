@@ -29,6 +29,13 @@ namespace Tanks.UI.Menus.Lobbies
         protected override void Initialize(VisualElement root)
         {
             _root = root;
+            _root.RegisterCallback<NavigationCancelEvent>(evt =>
+            {
+                if (ViewModel == null) return;
+                if (!ViewModel.IsChatOpen.Value && !ViewModel.IsSettingsOpen.Value) return;
+                ViewModel.SetChatOpen(false);
+                evt.StopPropagation();
+            });
 
             _lobbyName = _root.Q<Label>("LobbyName");
             _lobbyStatus = _root.Q<Label>("LobbyStatus");

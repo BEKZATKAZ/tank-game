@@ -50,7 +50,7 @@
     padding: 16px 24px 16px 120px;
 }
 
-.unity-button:hover {
+.unity-button:hover, .unity-button:focus {
     background-color: white;
     border-color: white;
     color: black;

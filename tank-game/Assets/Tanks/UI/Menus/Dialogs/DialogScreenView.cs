@@ -18,6 +18,12 @@ namespace Tanks.UI.Menus.Dialogs
         protected override void Initialize(VisualElement root)
         {
             _root = root;
+            _root.RegisterCallback<FocusOutEvent>(evt => _root.schedule.Execute(() =>
+            {
+                if (ViewModel == null || !IsVisible || _root.panel == null) return;
+                var focused = _root.panel.focusController.focusedElement as VisualElement;
+                if (focused == null || !_root.Contains(focused)) FocusFirstControl();
+            }));
             _errorDialog = _root.Q("Error");
             _errorMessage = _errorDialog.Q<Label>("ErrorMessage");
 
@@ -32,6 +38,13 @@ namespace Tanks.UI.Menus.Dialogs
             confirmYes.clicked += OnYesConfirmed;
             confirmNo.clicked += OnNoConfirmed;
             errorOk.clicked += Hide;
+            _root.RegisterCallback<NavigationCancelEvent>(evt =>
+            {
+                if (ViewModel == null || !IsVisible) return;
+                if (_confirmationDialog.resolvedStyle.display != DisplayStyle.None) OnNoConfirmed();
+                else Hide();
+                evt.StopPropagation();
+            });
         }
 
         protected override void Bind(DialogScreenViewModel viewModel)
@@ -67,6 +80,16 @@ namespace Tanks.UI.Menus.Dialogs
             DialogScreenViewModel viewModel = ViewModel;
             Hide();
             viewModel.ConfirmationYes();
+        }
+
+        protected override void FocusFirstControl()
+        {
+            if (ViewModel == null || _root.panel == null) return;
+            if (_confirmationDialog.resolvedStyle.display != DisplayStyle.None)
+            {
+                _confirmationDialog.Q<Button>("NoButton").Focus();
+            }
+            else _errorDialog.Q<Button>().Focus();
         }
 
         private void OnNoConfirmed()
