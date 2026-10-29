@@ -218,7 +218,7 @@ MonoBehaviour:
   ShowTopMostFoldoutHeaderGroup: 1
   _chances:
   - key: 0
-    value: 0.4
+    value: 0.45
   - key: 3
     value: 0.04
 --- !u!61 &4117567523113653689
