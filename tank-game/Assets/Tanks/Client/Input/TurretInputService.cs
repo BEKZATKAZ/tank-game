@@ -14,10 +14,12 @@ namespace Tanks.Client.Input
     {
         public override TurretInput Read()
         {
+            Vector2 turn = Controls.Turret.Turn.ReadValue<Vector2>();
+
             return new TurretInput
             {
-                LookAtDirection = math.normalizesafe(Controls.Turret.Turn.ReadValue<Vector2>()),
-                PointerPosition = Controls.Turret.Turn.ReadValue<Vector2>(),
+                LookAtDirection = turn,
+                PointerPosition = Controls.Turret.PointerPosition.ReadValue<Vector2>(),
                 Fire = Controls.Turret.Fire.IsPressed()
             };
         }

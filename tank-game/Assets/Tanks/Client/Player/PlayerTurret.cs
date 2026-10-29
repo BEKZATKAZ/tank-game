@@ -34,7 +34,7 @@ namespace Tanks.Client.Player
 
         private float2 NormalizeDirectionOrKeepLast(float2 direction)
         {
-            if (math.lengthsq(direction) > 0.01f) _lastDirection = math.normalizesafe(direction);
+            if (math.lengthsq(direction) > 0.1f * 0.1f) _lastDirection = math.normalizesafe(direction);
             return _lastDirection;
         }
 

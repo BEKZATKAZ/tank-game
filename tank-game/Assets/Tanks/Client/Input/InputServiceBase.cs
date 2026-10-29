@@ -45,10 +45,11 @@ namespace Tanks.Client.Input
 
         private void OnActionChanged(object obj, InputActionChange change)
         {
-            if (change is not InputActionChange.ActionStarted) return;
+            if (change is not InputActionChange.ActionPerformed) return;
 
             InputAction action = (InputAction)obj;
 
+            if (action.actionMap?.asset != Controls.asset) return;
             if (action.activeControl is null) return;
 
             CurrentScheme = action.activeControl.device switch

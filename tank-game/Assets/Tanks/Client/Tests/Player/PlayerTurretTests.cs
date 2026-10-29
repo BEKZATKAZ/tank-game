@@ -67,12 +67,19 @@ namespace Tanks.Client.Tests.Player
         [TestCase(-1, 0)]
         [TestCase(0, 1)]
         [TestCase(0, -1)]
+        [TestCase(1, 1)]
+        [TestCase(-1, 1)]
+        [TestCase(1, -1)]
+        [TestCase(-1, -1)]
+        [TestCase(0.3f, 0.4f)]
+        [TestCase(0.101f, 0)]
         public void WithJoystick_CalculatesDirectionFromInput(float x, float y)
         {
-            float2 direction = math.normalizesafe(new float2(x, y));
+            float2 input = new float2(x, y);
+            float2 direction = math.normalizesafe(input);
 
             _input.CurrentScheme.Returns(InputScheme.Gamepad);
-            _input.Read().Returns(new TurretInput { LookAtDirection = direction });
+            _input.Read().Returns(new TurretInput { LookAtDirection = input });
 
             _component.Update(0.01f);
             _component.Behaviour.Received(1).Tick(direction, 0.01f);
@@ -83,6 +90,39 @@ namespace Tanks.Client.Tests.Player
             // When the joystick is untouched, keep the last direction
             _component.Update(0.01f);
             _component.Behaviour.Received(1).Tick(direction, 0.01f);
+        }
+
+        [TestCase(0, 0)]
+        [TestCase(0.099f, 0)]
+        [TestCase(0.1f, 0)]
+        [TestCase(-0.1f, 0)]
+        [TestCase(0, 0.1f)]
+        [TestCase(0.06f, 0.06f)]
+        public void WithJoystick_InsideDeadZone_KeepsLastDirection(float x, float y)
+        {
+            float2 direction = new float2(0, -1);
+
+            _input.CurrentScheme.Returns(InputScheme.Gamepad);
+            _input.Read().Returns(new TurretInput { LookAtDirection = direction });
+            _component.Update(0.01f);
+
+            _input.Read().Returns(new TurretInput { LookAtDirection = new float2(x, y) });
+            _component.Behaviour.ClearReceivedCalls();
+
+            _component.Update(0.01f);
+
+            _component.Behaviour.Received(1).Tick(direction, 0.01f);
+        }
+
+        [Test]
+        public void WithJoystick_InitiallyNeutral_DoesNotRequestRotation()
+        {
+            _input.CurrentScheme.Returns(InputScheme.Gamepad);
+            _input.Read().Returns(new TurretInput { LookAtDirection = float2.zero });
+
+            _component.Update(0.01f);
+
+            _component.Behaviour.Received(1).Tick(float2.zero, 0.01f);
         }
     }
 }

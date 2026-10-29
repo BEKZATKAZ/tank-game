@@ -183,15 +183,37 @@ namespace Tanks.Client.Input
                     ""isPartOfComposite"": true
                 },
                 {
-                    ""name"": """",
-                    ""id"": ""c46cc8d4-a874-43a8-988c-2a44c7ba3cee"",
-                    ""path"": ""<Gamepad>/leftStick/y"",
+                    ""name"": ""Pads"",
+                    ""id"": ""5ce119ac-d719-402c-a2fd-9e86fcf34877"",
+                    ""path"": ""1DAxis"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Throttle"",
+                    ""isComposite"": true,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": ""negative"",
+                    ""id"": ""d4c3777a-2577-4ecf-ae93-6495a29dffba"",
+                    ""path"": ""<Gamepad>/dpad/down"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": "";Gamepad"",
                     ""action"": ""Throttle"",
                     ""isComposite"": false,
-                    ""isPartOfComposite"": false
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""positive"",
+                    ""id"": ""41aac8c3-5008-48fb-aa1d-aaaaa9be69a5"",
+                    ""path"": ""<Gamepad>/dpad/up"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": "";Gamepad"",
+                    ""action"": ""Throttle"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
                 },
                 {
                     ""name"": ""AD"",
@@ -260,15 +282,70 @@ namespace Tanks.Client.Input
                     ""isPartOfComposite"": true
                 },
                 {
-                    ""name"": """",
-                    ""id"": ""7afada69-c2f4-4647-8c0d-1eb86406e803"",
-                    ""path"": ""<Gamepad>/leftStick/x"",
+                    ""name"": ""Pads"",
+                    ""id"": ""cd8e6960-b69b-4d91-b22f-8712ee662a74"",
+                    ""path"": ""1DAxis"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Steering"",
+                    ""isComposite"": true,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": ""negative"",
+                    ""id"": ""e6450a43-003c-4057-820b-2ba321569259"",
+                    ""path"": ""<Gamepad>/dpad/left"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": "";Gamepad"",
                     ""action"": ""Steering"",
                     ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""positive"",
+                    ""id"": ""6ef12c73-ad96-44fb-998e-0cc8e87b89a4"",
+                    ""path"": ""<Gamepad>/dpad/right"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": "";Gamepad"",
+                    ""action"": ""Steering"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""Bumpers"",
+                    ""id"": ""dddfef8d-f4dc-4441-b417-22a45d54584d"",
+                    ""path"": ""1DAxis"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Steering"",
+                    ""isComposite"": true,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": ""negative"",
+                    ""id"": ""e1505545-0153-4ef2-8804-0f696196490a"",
+                    ""path"": ""<Gamepad>/leftShoulder"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": "";Gamepad"",
+                    ""action"": ""Steering"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""positive"",
+                    ""id"": ""9dc1a1f5-8aa3-4a9c-8d6e-1d4fe125dfca"",
+                    ""path"": ""<Gamepad>/rightShoulder"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": "";Gamepad"",
+                    ""action"": ""Steering"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
                 }
             ]
         },
@@ -280,6 +357,16 @@ namespace Tanks.Client.Input
                     ""name"": ""Turn"",
                     ""type"": ""Value"",
                     ""id"": ""12297fb9-801b-4fe9-81b9-3c74f1984668"",
+                    ""expectedControlType"": ""Vector2"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": true,
+                    ""priority"": 0
+                },
+                {
+                    ""name"": ""PointerPosition"",
+                    ""type"": ""Value"",
+                    ""id"": ""ab34d16c-0bd1-4e92-9ba6-665ad7b69be7"",
                     ""expectedControlType"": ""Vector2"",
                     ""processors"": """",
                     ""interactions"": """",
@@ -305,7 +392,7 @@ namespace Tanks.Client.Input
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": "";Keyboard & Mouse"",
-                    ""action"": ""Turn"",
+                    ""action"": ""PointerPosition"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 },
@@ -352,7 +439,7 @@ namespace Tanks.Client.Input
                     ""name"": ""Pause"",
                     ""type"": ""Button"",
                     ""id"": ""7281545a-4cdd-47f9-9ef1-2b41d6044ac1"",
-                    ""expectedControlType"": ""Button"",
+                    ""expectedControlType"": """",
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false,
@@ -518,6 +605,7 @@ namespace Tanks.Client.Input
             // Turret
             m_Turret = asset.FindActionMap("Turret", throwIfNotFound: true);
             m_Turret_Turn = m_Turret.FindAction("Turn", throwIfNotFound: true);
+            m_Turret_PointerPosition = m_Turret.FindAction("PointerPosition", throwIfNotFound: true);
             m_Turret_Fire = m_Turret.FindAction("Fire", throwIfNotFound: true);
             // UI
             m_UI = asset.FindActionMap("UI", throwIfNotFound: true);
@@ -715,6 +803,7 @@ namespace Tanks.Client.Input
         private readonly InputActionMap m_Turret;
         private List<ITurretActions> m_TurretActionsCallbackInterfaces = new List<ITurretActions>();
         private readonly InputAction m_Turret_Turn;
+        private readonly InputAction m_Turret_PointerPosition;
         private readonly InputAction m_Turret_Fire;
         /// <summary>
         /// Provides access to input actions defined in input action map "Turret".
@@ -731,6 +820,10 @@ namespace Tanks.Client.Input
             /// Provides access to the underlying input action "Turret/Turn".
             /// </summary>
             public InputAction @Turn => m_Wrapper.m_Turret_Turn;
+            /// <summary>
+            /// Provides access to the underlying input action "Turret/PointerPosition".
+            /// </summary>
+            public InputAction @PointerPosition => m_Wrapper.m_Turret_PointerPosition;
             /// <summary>
             /// Provides access to the underlying input action "Turret/Fire".
             /// </summary>
@@ -764,6 +857,9 @@ namespace Tanks.Client.Input
                 @Turn.started += instance.OnTurn;
                 @Turn.performed += instance.OnTurn;
                 @Turn.canceled += instance.OnTurn;
+                @PointerPosition.started += instance.OnPointerPosition;
+                @PointerPosition.performed += instance.OnPointerPosition;
+                @PointerPosition.canceled += instance.OnPointerPosition;
                 @Fire.started += instance.OnFire;
                 @Fire.performed += instance.OnFire;
                 @Fire.canceled += instance.OnFire;
@@ -781,6 +877,9 @@ namespace Tanks.Client.Input
                 @Turn.started -= instance.OnTurn;
                 @Turn.performed -= instance.OnTurn;
                 @Turn.canceled -= instance.OnTurn;
+                @PointerPosition.started -= instance.OnPointerPosition;
+                @PointerPosition.performed -= instance.OnPointerPosition;
+                @PointerPosition.canceled -= instance.OnPointerPosition;
                 @Fire.started -= instance.OnFire;
                 @Fire.performed -= instance.OnFire;
                 @Fire.canceled -= instance.OnFire;
@@ -1008,6 +1107,13 @@ namespace Tanks.Client.Input
             /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
             /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
             void OnTurn(InputAction.CallbackContext context);
+            /// <summary>
+            /// Method invoked when associated input action "PointerPosition" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+            /// </summary>
+            /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
+            /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
+            /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
+            void OnPointerPosition(InputAction.CallbackContext context);
             /// <summary>
             /// Method invoked when associated input action "Fire" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
             /// </summary>
