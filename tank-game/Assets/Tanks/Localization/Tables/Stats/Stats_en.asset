@@ -20,25 +20,30 @@ MonoBehaviour:
     - rid: 5824281354781589609
   m_TableData:
   - m_Id: 12874899456
-    m_Localized: Damage
+    m_Localized: 'Damage: {value}'
     m_Metadata:
-      m_Items: []
+      m_Items:
+      - rid: 5824281354781589609
   - m_Id: 69623832576
-    m_Localized: Speed
+    m_Localized: 'Speed: {value}'
     m_Metadata:
-      m_Items: []
+      m_Items:
+      - rid: 5824281354781589609
   - m_Id: 493271405518848
-    m_Localized: Defense
+    m_Localized: 'Defense: {value}'
     m_Metadata:
-      m_Items: []
+      m_Items:
+      - rid: 5824281354781589609
   - m_Id: 494141786513408
-    m_Localized: Resistance
+    m_Localized: 'Resistance: {value}'
     m_Metadata:
-      m_Items: []
+      m_Items:
+      - rid: 5824281354781589609
   - m_Id: 494276041990144
-    m_Localized: Rate of Fire
+    m_Localized: 'Rate of Fire: {value}'
     m_Metadata:
-      m_Items: []
+      m_Items:
+      - rid: 5824281354781589609
   - m_Id: 1198144639950848
     m_Localized: '{seconds}s'
     m_Metadata:
@@ -53,3 +58,8 @@ MonoBehaviour:
         m_Entries: 
         m_SharedEntries:
         - id: 1198144639950848
+        - id: 12874899456
+        - id: 69623832576
+        - id: 493271405518848
+        - id: 494141786513408
+        - id: 494276041990144
