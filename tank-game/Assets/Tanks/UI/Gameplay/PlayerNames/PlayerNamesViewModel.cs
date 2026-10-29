@@ -41,8 +41,10 @@ namespace Tanks.UI.Gameplay.PlayerNames
         public void Tick()
         {
             _seen.Clear();
+
             ICamera camera = _camera.Get();
             IEntityBehaviour possessed = _clientEntity.GetPossessedEntity();
+
             SpectatorName = possessed is { IsValid: true, IsLocalPlayer: false }
                 ? possessed.GetBehaviour<ITeamParticipantBehaviour>()?.State?.DisplayName ?? ""
                 : "";
@@ -50,12 +52,16 @@ namespace Tanks.UI.Gameplay.PlayerNames
             foreach (IEntityBehaviour entity in _entities.GetAllEntities())
             {
                 if (entity is not { IsValid: true } || entity == possessed) continue;
-                if (entity.GetBehaviour<IHealthBehaviour>()?.ServerState.Value.Current is not > 0) continue;
+
+                if (entity.GetBehaviour<IHealthBehaviour>()?.ServerState.Value.Current is not > 0)
+                {
+                    continue;
+                }
 
                 PlayerState state = entity.GetBehaviour<ITeamParticipantBehaviour>()?.State;
                 if (state == null || state.IsEliminated) continue;
-
                 _seen.Add(entity);
+
                 if (_entries.TryGetValue(entity, out PlayerNameEntry entry) == false)
                 {
                     entry = new PlayerNameEntry();
@@ -65,18 +71,32 @@ namespace Tanks.UI.Gameplay.PlayerNames
                 entry.IsVisible = false;
                 if (camera == null) continue;
 
+                IEntityRenderer renderer = entity.Require<IEntityRenderer>();
+                if (renderer == null) continue;
+
+                int visibleSpriteCount = 0;
+
+                foreach (SpriteRenderer sprite in renderer.GetAllSpriteRenderers())
+                {
+                    if (sprite.enabled) visibleSpriteCount++;
+                }
+
+                if (visibleSpriteCount == 0) continue;
+
                 float2 position = entity.Transform.WorldPosition;
                 float2 viewport = camera.WorldToRenderedViewportPoint(position);
                 if (IsOnScreen(viewport) == false) continue;
 
                 position.y += entity.Size.y * 0.5f;
                 viewport = camera.WorldToRenderedViewportPoint(position);
-                if (IsOnScreen(viewport) == false) continue;
 
+                if (IsOnScreen(viewport) == false) continue;
                 Rect rect = camera.ViewportRect;
+
                 entry.ScreenPosition = new Vector2(
                     rect.x + viewport.x * rect.width,
                     1 - (rect.y + viewport.y * rect.height));
+
                 entry.DisplayName = state.DisplayName;
                 entry.IsVisible = true;
             }

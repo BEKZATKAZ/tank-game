@@ -2,6 +2,7 @@ using NSubstitute;
 using NUnit.Framework;
 using System.Collections.Generic;
 using System.Linq;
+using Tanks.Client.Entities;
 using Tanks.Client.Items.Behaviours.OnPickup;
 using Tanks.Shared.Entities;
 using Tanks.Shared.Entities.Health;
@@ -45,9 +46,9 @@ namespace Tanks.Client.Tests.Items.Behaviours
 
             foreach (IEntityBehaviour entity in _entityService.GetAllEntities())
             {
-                IHealthBehaviour health = entity.GetBehaviour<IHealthBehaviour>();
-                if (health is null) continue;
-                health.Received(1).GetAllSpriteRenderers();
+                IEntityRenderer renderer = entity.Require<IEntityRenderer>();
+                if (renderer is null) continue;
+                renderer.Received(1).GetAllSpriteRenderers();
             }
         }
 
@@ -58,15 +59,15 @@ namespace Tanks.Client.Tests.Items.Behaviours
             Behaviour.OnPickup(MockOwner);
 
             MockOwner.Entity
-                .GetBehaviour<IHealthBehaviour>()
+                .Require<IEntityRenderer>()
                 .Received(1)
                 .GetAllSpriteRenderers();
 
             foreach (IEntityBehaviour entity in _entityService.GetAllEntities())
             {
-                IHealthBehaviour health = entity.GetBehaviour<IHealthBehaviour>();
-                if (health is null) continue;
-                health.DidNotReceiveWithAnyArgs().GetAllSpriteRenderers();
+                IEntityRenderer renderer = entity.Require<IEntityRenderer>();
+                if (renderer is null) continue;
+                renderer.DidNotReceiveWithAnyArgs().GetAllSpriteRenderers();
             }
         }
 
@@ -93,19 +94,19 @@ namespace Tanks.Client.Tests.Items.Behaviours
 
             foreach (IEntityBehaviour entity in _entityService.GetAllEntities())
             {
-                IHealthBehaviour health = entity.GetBehaviour<IHealthBehaviour>();
-                if (health is null) continue;
+                IEntityRenderer renderer = entity.Require<IEntityRenderer>();
+                if (renderer is null) continue;
 
                 IItemOwnerBehaviour itemOwner = entity.GetBehaviour<IItemOwnerBehaviour>();
                 bool shouldNotReceive = itemOwner?.Items.Contains(Config.Identifier) ?? true;
 
                 if (shouldNotReceive)
                 {
-                    health.DidNotReceiveWithAnyArgs().GetAllSpriteRenderers();
+                    renderer.DidNotReceiveWithAnyArgs().GetAllSpriteRenderers();
                     continue;
                 }
-                
-                health.Received(1).GetAllSpriteRenderers();
+
+                renderer.Received(1).GetAllSpriteRenderers();
             }
         }
 
@@ -117,9 +118,9 @@ namespace Tanks.Client.Tests.Items.Behaviours
 
             foreach (IEntityBehaviour entity in _entityService.GetAllEntities())
             {
-                IHealthBehaviour health = entity.GetBehaviour<IHealthBehaviour>();
-                if (health is null) continue;
-                health.DidNotReceiveWithAnyArgs().GetAllSpriteRenderers();
+                IEntityRenderer renderer = entity.Require<IEntityRenderer>();
+                if (renderer is null) continue;
+                renderer.DidNotReceiveWithAnyArgs().GetAllSpriteRenderers();
             }
         }
     }

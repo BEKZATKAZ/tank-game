@@ -19,9 +19,12 @@ namespace Tanks.UI.Tests.Gameplay
         private IClientEntityService _clientEntity;
         private ICameraMainService _cameraService;
         private ICamera _camera;
+        private SpriteRenderer _spriteRenderer;
 
         protected override PlayerNamesViewModel CreateViewModel()
         {
+            _spriteRenderer = new GameObject("Player Sprite", typeof(SpriteRenderer)).GetComponent<SpriteRenderer>();
+
             _entities = new List<IEntityBehaviour>();
             IEntityService entities = Substitute.For<IEntityService>();
             entities.GetAllEntities().Returns(_entities);
@@ -34,6 +37,12 @@ namespace Tanks.UI.Tests.Gameplay
             _cameraService.Get().Returns(_camera);
 
             return new PlayerNamesViewModel(entities, _clientEntity, _cameraService);
+        }
+
+        [TearDown]
+        public void DestroySpriteRenderer()
+        {
+            Object.DestroyImmediate(_spriteRenderer.gameObject);
         }
 
         [Test]
@@ -183,6 +192,10 @@ namespace Tanks.UI.Tests.Gameplay
             entity.Transform.WorldPosition.Returns(position);
             entity.GetBehaviour<IHealthBehaviour>().ServerState.Value.Returns(new HealthState(100, 100));
             entity.GetBehaviour<ITeamParticipantBehaviour>().State.Returns(new PlayerState(1, name, default));
+
+            IEntityRenderer renderer = Substitute.For<IEntityRenderer>();
+            renderer.GetAllSpriteRenderers().Returns(new[] { _spriteRenderer });
+            entity.Require<IEntityRenderer>().Returns(renderer);
             _entities.Add(entity);
 
             return entity;

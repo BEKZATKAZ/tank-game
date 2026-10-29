@@ -35,8 +35,6 @@ namespace Tanks.Shared.Entities.Health
         IReadOnlyBindableProperty<HealthState> ServerState { get; }
         uint InitialHealth { get; }
 
-        IEnumerable<SpriteRenderer> GetAllSpriteRenderers();
-
         void UpdateStateEveryoneRpc(
             HealthState state,
             EntityId from = default,
@@ -106,11 +104,6 @@ namespace Tanks.Shared.Entities.Health
         {
             base.OnNetworkDespawn();
             EmitMessage(new HealthDespawned());
-        }
-
-        public IEnumerable<SpriteRenderer> GetAllSpriteRenderers()
-        {
-            return GetComponentsInChildren<SpriteRenderer>();
         }
 
         protected override void Awake()

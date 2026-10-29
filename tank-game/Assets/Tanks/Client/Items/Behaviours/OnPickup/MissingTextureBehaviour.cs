@@ -1,10 +1,12 @@
 ﻿using System.Linq;
+using Tanks.Client.Entities;
 using Tanks.Shared.Entities;
 using Tanks.Shared.Entities.Health;
 using Tanks.Shared.Items;
 using Tanks.Shared.Items.Behaviours;
 using Tanks.Shared.Teams;
 using UnityEngine;
+using UnityEngine.Rendering.Universal;
 
 namespace Tanks.Client.Items.Behaviours.OnPickup
 {
@@ -20,13 +22,18 @@ namespace Tanks.Client.Items.Behaviours.OnPickup
 
         private void SetSpriteVisibility(IEntityBehaviour entity, bool isVisible)
         {
-            IHealthBehaviour health = entity.GetBehaviour<IHealthBehaviour>();
+            IEntityRenderer renderer = entity.Require<IEntityRenderer>();
 
-            if (health is null) return;
+            if (renderer is null) return;
 
-            foreach (SpriteRenderer sprite in health.GetAllSpriteRenderers())
+            foreach (SpriteRenderer sprite in renderer.GetAllSpriteRenderers())
             {
                 sprite.enabled = isVisible;
+            }
+
+            foreach (Light2D light in renderer.GetAllLights())
+            {
+                light.enabled = isVisible;
             }
         }
 
@@ -64,12 +71,17 @@ namespace Tanks.Client.Items.Behaviours.OnPickup
                 if (itemOwner is null) continue;
                 if (itemOwner.Items.Contains(Config.Identifier)) continue;
 
-                IHealthBehaviour health = entity.GetBehaviour<IHealthBehaviour>();
-                if (health is null) continue;
+                IEntityRenderer renderer = entity.Require<IEntityRenderer>();
+                if (renderer is null) continue;
 
-                foreach (SpriteRenderer sprite in health.GetAllSpriteRenderers())
+                foreach (SpriteRenderer sprite in renderer.GetAllSpriteRenderers())
                 {
                     sprite.enabled = true;
+                }
+
+                foreach (Light2D light in renderer.GetAllLights())
+                {
+                    light.enabled = true;
                 }
             }
         }
