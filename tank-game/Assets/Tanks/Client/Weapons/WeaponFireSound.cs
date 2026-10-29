@@ -26,6 +26,16 @@ namespace Tanks.Client.Weapons
                 target: Transform,
                 useDefault: Behaviour.Entity.IsPossessed);
 
+            IReadOnlyAmmo ammo = message.Weapon.Value.Ammo;
+
+            if (ammo.Current <= ammo.Max * 0.3f)
+            {
+                _audioPlayer.PlayOneShotAttached(
+                    path: "event:/SFX/Weapons/LowAmmo",
+                    target: Transform,
+                    useDefault: Behaviour.Entity.IsPossessed);
+            }
+
             IRecoilConfig recoil = message.Weapon.Value.Recoil;
             bool isLocalPlayer = Behaviour.Entity.IsPossessed;
 

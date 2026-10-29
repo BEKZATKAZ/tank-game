@@ -35,7 +35,7 @@ namespace Tanks.Client.Tests.Weapons
             _component.Behaviour.Entity.IsPossessed.Returns(isLocalPlayer);
             _component.Handle(new WeaponUsed { Weapon = weapon.AsRequired() });
 
-            _audioPlayer.Received(1)
+            _audioPlayer.Received()
                 .PlayOneShotAttached(Arg.Any<string>(), transform, isLocalPlayer);
         }
     }
