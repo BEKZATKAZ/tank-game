@@ -1,4 +1,4 @@
-﻿using LitMotion;
+using LitMotion;
 using UnityEngine.UIElements;
 
 namespace Tanks.UI.Menus.Dialogs
@@ -12,11 +12,13 @@ namespace Tanks.UI.Menus.Dialogs
         private Label _confirmationHeader;
         private Label _confirmationMessage;
         private Label _errorMessage;
+        private DialogFocusScope _focusScope;
 
         protected override VisualElement GetRootElement() => _root;
 
         protected override void Initialize(VisualElement root)
         {
+            root.AddManipulator(new MenuHighlightManipulator());
             _root = root;
             _errorDialog = _root.Q("Error");
             _errorMessage = _errorDialog.Q<Label>("ErrorMessage");
@@ -60,6 +62,23 @@ namespace Tanks.UI.Menus.Dialogs
             _errorDialog.style.display = type is DialogType.Error
                 ? DisplayStyle.Flex
                 : DisplayStyle.None;
+
+            _focusScope ??= new DialogFocusScope(_root);
+            _focusScope.Focus(type is DialogType.Confirmation
+                ? _confirmationDialog.Q<Button>("NoButton")
+                : _errorDialog.Q<Button>("ErrorOkButton"));
+        }
+
+        protected override void Unbind(DialogScreenViewModel viewModel)
+        {
+            viewModel.Type.Unbind(OnTypeChanged);
+            _focusScope?.Dispose();
+            _focusScope = null;
+        }
+
+        protected override void OnDestroy()
+        {
+            _focusScope?.Dispose();
         }
 
         private void OnYesConfirmed()

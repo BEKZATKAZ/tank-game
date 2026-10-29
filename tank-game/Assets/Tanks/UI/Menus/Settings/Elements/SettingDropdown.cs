@@ -16,6 +16,9 @@ namespace Tanks.UI.Menus.Settings.Elements
         public SettingDropdown()
         {
             _dropdown = new DropdownField(Label);
+            _dropdown.pickingMode = PickingMode.Ignore;
+            _dropdown.labelElement.pickingMode = PickingMode.Ignore;
+            _dropdown.Q(className: DropdownField.inputUssClassName).pickingMode = PickingMode.Position;
             Value = 0;
 
             Add(_dropdown);

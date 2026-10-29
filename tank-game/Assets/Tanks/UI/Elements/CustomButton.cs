@@ -18,13 +18,13 @@ namespace Tanks.UI.Elements
         private void OnButtonHover(PointerEnterEvent e)
         {
             if (string.IsNullOrWhiteSpace(HoverSoundPath)) return;
-            RuntimeManager.PlayOneShot(HoverSoundPath);
+            if (enabledInHierarchy) RuntimeManager.PlayOneShot(HoverSoundPath);
         }
 
         private void OnButtonClicked()
         {
             if (string.IsNullOrWhiteSpace(ClickSoundPath)) return;
-            RuntimeManager.PlayOneShot(ClickSoundPath);
+            if (enabledInHierarchy) RuntimeManager.PlayOneShot(ClickSoundPath);
         }
     }
 }

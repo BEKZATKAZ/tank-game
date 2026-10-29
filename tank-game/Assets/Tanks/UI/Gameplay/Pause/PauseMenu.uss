@@ -25,7 +25,3 @@
     width: 1150px;
     max-height: 850px;
 }
-
-#PauseContent .unity-button:focus {
-    border-color: var(--accent-color);
-}

@@ -50,7 +50,7 @@
     padding: 16px 24px 16px 120px;
 }
 
-.unity-button:hover {
+.unity-button.menu-highlighted:enabled {
     background-color: white;
     border-color: white;
     color: black;
@@ -147,6 +147,19 @@
     min-width: 48px;
 }
 
+.setting .unity-base-popup-field.menu-highlighted:enabled .unity-base-popup-field__input {
+    background-color: white;
+    border-color: white;
+}
+
+.setting .unity-base-popup-field.menu-highlighted:enabled .unity-base-popup-field__text {
+    color: black;
+}
+
+.setting .unity-base-popup-field.menu-highlighted:enabled .unity-base-popup-field__arrow {
+    -unity-background-image-tint-color: black;
+}
+
 .setting .unity-base-slider__drag-container {
     height: 64px;
 }
@@ -163,6 +176,14 @@
     width: 10px;
     height: 100%;
     background-color: var(--accent-color);
+}
+
+.setting .unity-base-slider.menu-highlighted:enabled .unity-base-slider__tracker {
+    background-color: white;
+}
+
+.setting .unity-base-slider.menu-highlighted:enabled .unity-base-slider__dragger {
+    background-color: black;
 }
 
 .unity-scroller .unity-base-slider__tracker {
@@ -199,6 +220,22 @@
     font-size: 32px;
     padding: 20px 60px;
     border-radius: 5px;
+}
+
+.unity-text-field .unity-base-field__input {
+    --unity-cursor-color: white;
+}
+
+.unity-text-field.menu-highlighted:enabled .unity-base-field__input,
+#LobbySearchField.menu-highlighted:enabled .unity-base-field__input {
+    background-color: white;
+    border-color: white;
+    color: black;
+    --unity-cursor-color: black;
+}
+
+.unity-text-field.menu-highlighted:enabled .unity-text-element {
+    color: black;
 }
 
 #LobbyRefreshButton {

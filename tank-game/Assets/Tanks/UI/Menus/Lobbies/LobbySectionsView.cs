@@ -1,4 +1,4 @@
-﻿using NaughtyAttributes;
+using NaughtyAttributes;
 using Unity.Mathematics;
 using UnityEngine;
 using UnityEngine.UIElements;
@@ -28,6 +28,7 @@ namespace Tanks.UI.Menus.Lobbies
 
         protected override void Initialize(VisualElement root)
         {
+            root.AddManipulator(new MenuHighlightManipulator());
             _root = root;
 
             _lobbyName = _root.Q<Label>("LobbyName");

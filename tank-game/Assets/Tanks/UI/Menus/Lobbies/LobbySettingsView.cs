@@ -22,6 +22,10 @@ namespace Tanks.UI.Menus.Lobbies
                 var row = new VisualElement();
                 row.AddToClassList("setting");
                 var dropdown = new DropdownField { name = type.ToString() };
+                dropdown.pickingMode = PickingMode.Ignore;
+                dropdown.labelElement.pickingMode = PickingMode.Ignore;
+                dropdown.Q(className: DropdownField.inputUssClassName).pickingMode = PickingMode.Position;
+
                 dropdown.RegisterValueChangedCallback(_ =>
                 {
                     if (_refreshing == false && ViewModel != null)

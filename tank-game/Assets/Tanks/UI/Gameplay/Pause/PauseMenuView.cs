@@ -1,3 +1,4 @@
+using Tanks.UI.Menus;
 using Tanks.UI.Menus.Settings;
 using UnityEngine;
 using UnityEngine.UIElements;
@@ -18,6 +19,7 @@ namespace Tanks.UI.Gameplay.Pause
 
         protected override void Initialize(VisualElement root)
         {
+            root.AddManipulator(new MenuHighlightManipulator());
             _root = root;
             _root.pickingMode = PickingMode.Ignore;
             _overlay = root.Q("PauseOverlay");

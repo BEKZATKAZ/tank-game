@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+using UnityEngine;
 using UnityEngine.UIElements;
 
 namespace Tanks.UI.Menus.Main
@@ -16,6 +16,7 @@ namespace Tanks.UI.Menus.Main
 
         protected override void Initialize(VisualElement root)
         {
+            root.AddManipulator(new MenuHighlightManipulator());
             _root = root;
             _menuContainer = root.Q("Menu");
 

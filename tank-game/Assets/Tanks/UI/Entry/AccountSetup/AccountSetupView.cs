@@ -1,3 +1,4 @@
+using Tanks.UI.Menus;
 using UnityEngine;
 using UnityEngine.UIElements;
 
@@ -21,6 +22,7 @@ namespace Tanks.UI.Entry.AccountSetup
 
         protected override void Initialize(VisualElement root)
         {
+            root.AddManipulator(new MenuHighlightManipulator());
             _root = root;
             _container = root.Q("AccountSetup");
             _policyPanel = root.Q("PrivacyPolicy");
