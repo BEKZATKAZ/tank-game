@@ -25,10 +25,15 @@ MonoBehaviour:
       Duration: -1
       Value: -4
       ValueType: 0
+  - key: 4
+    value:
+      Duration: -1
+      Value: 100
+      ValueType: 1
   _itemStats:
   - key: damage
     value:
-      Value: 6
+      Value: 4
       ValueType: 0
   - key: decrease
     value:
