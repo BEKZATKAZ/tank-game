@@ -27,6 +27,7 @@ namespace Tanks.UI.Menus.Settings
 
         private void ApplyScreenResolution(int index)
         {
+            if (index < 0 || index >= Screen.resolutions.Length) return;
             Resolution resolution = Screen.resolutions[index];
             Screen.SetResolution(resolution.width, resolution.height, Screen.fullScreenMode);
         }
