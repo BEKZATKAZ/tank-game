@@ -8,6 +8,7 @@ namespace Tanks.Core.Lobbies.Sessions
             SessionSettingsFromLobby from,
             ISessionDefaultSettingsConfig defaultConfig)
         {
+            DefaultPlayerStats stats = defaultConfig.Stats;
             DefaultMapGeneration mapGeneration = defaultConfig.MapGeneration;
             DefaultItemSpawn itemSpawn = defaultConfig.ItemSpawn;
             DefaultDangerZone dangerZone = defaultConfig.DangerZone;
@@ -25,6 +26,15 @@ namespace Tanks.Core.Lobbies.Sessions
 
                 SelfDamagePercent = defaultConfig.SelfDamagePercent
                     .CorrectValue(from.SelfDamagePercent),
+
+                Stats = new PlayerStatSettings
+                {
+                    ForwardMovementSpeed = stats.ForwardMovementSpeed
+                        .CorrectValue(from.Stats.ForwardMovementSpeed),
+
+                    BackwardsMovementSpeed = stats.BackwardsMovementSpeed
+                        .CorrectValue(from.Stats.BackwardsMovementSpeed)
+                },
 
                 MapGeneration = new MapGenerationSettings
                 {
@@ -59,6 +69,7 @@ namespace Tanks.Core.Lobbies.Sessions
         public static SessionSettingsFromLobby FromDefaultToLobby(
             ISessionDefaultSettingsConfig defaultConfig)
         {
+            DefaultPlayerStats stats = defaultConfig.Stats;
             DefaultMapGeneration mapGeneration = defaultConfig.MapGeneration;
             DefaultItemSpawn itemSpawn = defaultConfig.ItemSpawn;
             DefaultDangerZone dangerZone = defaultConfig.DangerZone;
@@ -68,6 +79,12 @@ namespace Tanks.Core.Lobbies.Sessions
                 PlayerCount = defaultConfig.DesiredPlayerCount.Default,
                 MaxScore = defaultConfig.MaxScoreToReach.Default,
                 SelfDamagePercent = defaultConfig.SelfDamagePercent.Default,
+
+                Stats = new PlayerStatSettingsFromLobby
+                {
+                    ForwardMovementSpeed = stats.ForwardMovementSpeed.Default,
+                    BackwardsMovementSpeed = stats.BackwardsMovementSpeed.Default
+                },
 
                 MapGeneration = new MapGenerationSettingsFromLobby
                 {

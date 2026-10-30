@@ -38,6 +38,11 @@ namespace Tanks.UI.Tests.Menus.Lobbies
             _defaults.DesiredPlayerCount.Returns(new PossibleIntegers(1, 2, 3, 4));
             _defaults.MaxScoreToReach.Returns(new PossibleIntegers(5, 15, 30) { Default = 15 });
             _defaults.SelfDamagePercent.Returns(new PossibleIntegers(5, 25, 50, 100, 200, 500) { Default = 100 });
+            _defaults.Stats.Returns(new DefaultPlayerStats
+            {
+                ForwardMovementSpeed = new PossibleIntegers(8, 12, 20) { Default = 12 },
+                BackwardsMovementSpeed = new PossibleIntegers(9, 11, 15) { Default = 11 }
+            });
             _defaults.MapGeneration.Returns(new DefaultMapGeneration());
             _defaults.ItemSpawn.Returns(new DefaultItemSpawn());
             _defaults.DangerZone.Returns(new DefaultDangerZone());
@@ -70,19 +75,27 @@ namespace Tanks.UI.Tests.Menus.Lobbies
         [Test]
         public void Options_UseConfiguredValuesAndDefaults()
         {
-            Assert.That(ViewModel.Settings.Value.Count, Is.EqualTo(8));
+            Assert.That(ViewModel.Settings.Value.Count, Is.EqualTo(10));
             Assert.That(Option(LobbySetting.MaxScore).Choices, Is.EqualTo(new[] { "5", "15", "30" }));
             Assert.That(Option(LobbySetting.MaxScore).SelectedIndex, Is.EqualTo(1));
             Assert.That(ViewModel.Settings.Value[1].Type, Is.EqualTo(LobbySetting.SelfDamagePercent));
             Assert.That(Option(LobbySetting.SelfDamagePercent).Choices,
                 Is.EqualTo(new[] { "5%", "25%", "50%", "100%", "200%", "500%" }));
             Assert.That(Option(LobbySetting.SelfDamagePercent).SelectedIndex, Is.EqualTo(3));
+            Assert.That(ViewModel.Settings.Value[2].Type, Is.EqualTo(LobbySetting.ForwardMovementSpeed));
+            Assert.That(Option(LobbySetting.ForwardMovementSpeed).Choices, Is.EqualTo(new[] { "8", "12", "20" }));
+            Assert.That(Option(LobbySetting.ForwardMovementSpeed).SelectedIndex, Is.EqualTo(1));
+            Assert.That(ViewModel.Settings.Value[3].Type, Is.EqualTo(LobbySetting.BackwardsMovementSpeed));
+            Assert.That(Option(LobbySetting.BackwardsMovementSpeed).Choices, Is.EqualTo(new[] { "9", "11", "15" }));
+            Assert.That(Option(LobbySetting.BackwardsMovementSpeed).SelectedIndex, Is.EqualTo(1));
             Assert.That(Option(LobbySetting.MapSize).Choices.Count, Is.EqualTo(3));
             Assert.That(Option(LobbySetting.ItemSpawnRate).Choices.Count, Is.EqualTo(4));
         }
 
         [TestCase(LobbySetting.MaxScore)]
         [TestCase(LobbySetting.SelfDamagePercent)]
+        [TestCase(LobbySetting.ForwardMovementSpeed)]
+        [TestCase(LobbySetting.BackwardsMovementSpeed)]
         [TestCase(LobbySetting.MapSize)]
         [TestCase(LobbySetting.MapThickness)]
         [TestCase(LobbySetting.ItemSpawnRate)]
@@ -96,6 +109,8 @@ namespace Tanks.UI.Tests.Menus.Lobbies
             {
                 case LobbySetting.MaxScore: expected.MaxScore = _defaults.MaxScoreToReach.Values[0]; break;
                 case LobbySetting.SelfDamagePercent: expected.SelfDamagePercent = _defaults.SelfDamagePercent.Values[0]; break;
+                case LobbySetting.ForwardMovementSpeed: expected.Stats.ForwardMovementSpeed = _defaults.Stats.ForwardMovementSpeed.Values[0]; break;
+                case LobbySetting.BackwardsMovementSpeed: expected.Stats.BackwardsMovementSpeed = _defaults.Stats.BackwardsMovementSpeed.Values[0]; break;
                 case LobbySetting.MapSize: expected.MapGeneration.Size = MapSize.Medium; break;
                 case LobbySetting.MapThickness: expected.MapGeneration.Thickness = MapThickness.Medium; break;
                 case LobbySetting.ItemSpawnRate: expected.ItemSpawn.Rate = ItemSpawnRate.Normal; break;
@@ -115,6 +130,8 @@ namespace Tanks.UI.Tests.Menus.Lobbies
 
         [TestCase(LobbySetting.MaxScore)]
         [TestCase(LobbySetting.SelfDamagePercent)]
+        [TestCase(LobbySetting.ForwardMovementSpeed)]
+        [TestCase(LobbySetting.BackwardsMovementSpeed)]
         public async Task Member_CannotSaveButReceivesHostChanges(LobbySetting type)
         {
             _lobby.HostId.Value = "other";
@@ -126,6 +143,8 @@ namespace Tanks.UI.Tests.Menus.Lobbies
             var settings = _lobby.Settings.Value;
             settings.MaxScore = 30;
             settings.SelfDamagePercent = 50;
+            settings.Stats.ForwardMovementSpeed = 20;
+            settings.Stats.BackwardsMovementSpeed = 15;
             Confirm(settings);
             Assert.That(Option(type).SelectedIndex, Is.EqualTo(2));
         }
@@ -145,6 +164,8 @@ namespace Tanks.UI.Tests.Menus.Lobbies
 
         [TestCase(LobbySetting.MaxScore, 1)]
         [TestCase(LobbySetting.SelfDamagePercent, 3)]
+        [TestCase(LobbySetting.ForwardMovementSpeed, 1)]
+        [TestCase(LobbySetting.BackwardsMovementSpeed, 1)]
         public async Task FailedSave_RestoresConfirmedSelectionAndShowsError(LobbySetting type, int expectedIndex)
         {
             _service.UpdateLobbyAsync(Arg.Any<LobbyUpdateRequest>())
@@ -160,6 +181,8 @@ namespace Tanks.UI.Tests.Menus.Lobbies
 
         [TestCase(LobbySetting.MaxScore)]
         [TestCase(LobbySetting.SelfDamagePercent)]
+        [TestCase(LobbySetting.ForwardMovementSpeed)]
+        [TestCase(LobbySetting.BackwardsMovementSpeed)]
         public async Task PendingSave_BlocksFurtherEditsUntilConfirmed(LobbySetting type)
         {
             var completion = new TaskCompletionSource<ResultType<LobbyState>>();
@@ -174,6 +197,8 @@ namespace Tanks.UI.Tests.Menus.Lobbies
             var settings = _lobby.Settings.Value;
             settings.MaxScore = 30;
             settings.SelfDamagePercent = 50;
+            settings.Stats.ForwardMovementSpeed = 20;
+            settings.Stats.BackwardsMovementSpeed = 15;
             Confirm(settings);
             completion.SetResult(Result.Success(_lobby));
             await save;
@@ -191,6 +216,12 @@ namespace Tanks.UI.Tests.Menus.Lobbies
             await ViewModel.SetValueAsync(LobbySetting.SelfDamagePercent, -1);
             await ViewModel.SetValueAsync(LobbySetting.SelfDamagePercent, 6);
             await ViewModel.SetValueAsync(LobbySetting.SelfDamagePercent, 3);
+            await ViewModel.SetValueAsync(LobbySetting.ForwardMovementSpeed, -1);
+            await ViewModel.SetValueAsync(LobbySetting.ForwardMovementSpeed, 3);
+            await ViewModel.SetValueAsync(LobbySetting.ForwardMovementSpeed, 1);
+            await ViewModel.SetValueAsync(LobbySetting.BackwardsMovementSpeed, -1);
+            await ViewModel.SetValueAsync(LobbySetting.BackwardsMovementSpeed, 3);
+            await ViewModel.SetValueAsync(LobbySetting.BackwardsMovementSpeed, 1);
             await ViewModel.SetValueAsync((LobbySetting)999, 0);
             await _service.DidNotReceive().UpdateLobbyAsync(Arg.Any<LobbyUpdateRequest>());
         }
@@ -258,6 +289,12 @@ namespace Tanks.UI.Tests.Menus.Lobbies
             Assert.That(Option(LobbySetting.MaxScore).Choices[1], Is.EqualTo("15"));
             Assert.That(Option(LobbySetting.SelfDamagePercent).Label, Is.EqualTo("Translated"));
             Assert.That(Option(LobbySetting.SelfDamagePercent).Choices[3], Is.EqualTo("100%"));
+            Assert.That(Option(LobbySetting.ForwardMovementSpeed).Label, Is.EqualTo("Translated"));
+            Assert.That(Option(LobbySetting.ForwardMovementSpeed).SelectedIndex, Is.EqualTo(1));
+            Assert.That(Option(LobbySetting.ForwardMovementSpeed).Choices[1], Is.EqualTo("12"));
+            Assert.That(Option(LobbySetting.BackwardsMovementSpeed).Label, Is.EqualTo("Translated"));
+            Assert.That(Option(LobbySetting.BackwardsMovementSpeed).SelectedIndex, Is.EqualTo(1));
+            Assert.That(Option(LobbySetting.BackwardsMovementSpeed).Choices[1], Is.EqualTo("11"));
         }
 
         [Test]

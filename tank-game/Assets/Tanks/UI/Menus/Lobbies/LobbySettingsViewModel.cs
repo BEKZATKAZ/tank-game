@@ -17,6 +17,8 @@ namespace Tanks.UI.Menus.Lobbies
     {
         MaxScore,
         SelfDamagePercent,
+        ForwardMovementSpeed,
+        BackwardsMovementSpeed,
         MapSize,
         MapThickness,
         ItemSpawnRate,
@@ -126,6 +128,10 @@ namespace Tanks.UI.Menus.Lobbies
                 Numeric(LobbySetting.MaxScore, "max-score", _defaults.MaxScoreToReach, settings.MaxScore),
                 Numeric(LobbySetting.SelfDamagePercent, "self-damage-percent",
                     _defaults.SelfDamagePercent, settings.SelfDamagePercent, "%"),
+                Numeric(LobbySetting.ForwardMovementSpeed, "forward-movement-speed",
+                    _defaults.Stats.ForwardMovementSpeed, settings.Stats.ForwardMovementSpeed),
+                Numeric(LobbySetting.BackwardsMovementSpeed, "backwards-movement-speed",
+                    _defaults.Stats.BackwardsMovementSpeed, settings.Stats.BackwardsMovementSpeed),
                 EnumOption(LobbySetting.MapSize, "map-size", settings.MapGeneration.Size),
                 EnumOption(LobbySetting.MapThickness, "wall-thickness", settings.MapGeneration.Thickness),
                 EnumOption(LobbySetting.ItemSpawnRate, "item-spawn-rate", settings.ItemSpawn.Rate),
@@ -165,6 +171,12 @@ namespace Tanks.UI.Menus.Lobbies
                         break;
                     case LobbySetting.SelfDamagePercent:
                         settings.SelfDamagePercent = _defaults.SelfDamagePercent.Values[index];
+                        break;
+                    case LobbySetting.ForwardMovementSpeed:
+                        settings.Stats.ForwardMovementSpeed = _defaults.Stats.ForwardMovementSpeed.Values[index];
+                        break;
+                    case LobbySetting.BackwardsMovementSpeed:
+                        settings.Stats.BackwardsMovementSpeed = _defaults.Stats.BackwardsMovementSpeed.Values[index];
                         break;
                     case LobbySetting.MapSize:
                         settings.MapGeneration.Size = (MapSize)index;

@@ -292,6 +292,14 @@ MonoBehaviour:
     m_Localized: "Dégâts auto-infligés"
     m_Metadata:
       m_Items: []
+  - m_Id: 41000000000000019
+    m_Localized: "Vitesse de marche avant"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 41000000000000020
+    m_Localized: "Vitesse de marche arrière"
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:

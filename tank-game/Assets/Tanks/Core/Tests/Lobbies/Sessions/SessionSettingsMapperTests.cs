@@ -25,6 +25,8 @@ namespace Tanks.Core.Tests.Lobbies.Sessions
             Assert.AreEqual(4, result.DesiredPlayerCount);
             Assert.AreEqual(45, result.MaxScore);
             Assert.AreEqual(200, result.SelfDamagePercent);
+            Assert.AreEqual(20, result.Stats.ForwardMovementSpeed);
+            Assert.AreEqual(15, result.Stats.BackwardsMovementSpeed);
             Assert.AreEqual(new Vector2Int(6, 4), result.MapGeneration.Resolution);
             Assert.AreEqual(7, result.MapGeneration.WallWidth);
             Assert.AreEqual(6, result.ItemSpawn.MaxCooldownSeconds);
@@ -43,6 +45,8 @@ namespace Tanks.Core.Tests.Lobbies.Sessions
             lobby.PlayerCount = 999;
             lobby.MaxScore = 999;
             lobby.SelfDamagePercent = 999;
+            lobby.Stats.ForwardMovementSpeed = 999;
+            lobby.Stats.BackwardsMovementSpeed = 999;
             lobby.MapGeneration.Size = (MapSize)999;
             lobby.MapGeneration.Thickness = (MapThickness)999;
             lobby.ItemSpawn.Rate = (ItemSpawnRate)999;
@@ -55,6 +59,8 @@ namespace Tanks.Core.Tests.Lobbies.Sessions
             Assert.AreEqual(1, result.DesiredPlayerCount);
             Assert.AreEqual(5, result.MaxScore);
             Assert.AreEqual(100, result.SelfDamagePercent);
+            Assert.AreEqual(12, result.Stats.ForwardMovementSpeed);
+            Assert.AreEqual(11, result.Stats.BackwardsMovementSpeed);
             Assert.AreEqual(new Vector2Int(3, 2), result.MapGeneration.Resolution);
             Assert.AreEqual(3, result.MapGeneration.WallWidth);
             Assert.AreEqual(30, result.ItemSpawn.MaxCooldownSeconds);
@@ -73,6 +79,8 @@ namespace Tanks.Core.Tests.Lobbies.Sessions
             Assert.AreEqual(1, result.PlayerCount);
             Assert.AreEqual(5, result.MaxScore);
             Assert.AreEqual(100, result.SelfDamagePercent);
+            Assert.AreEqual(12, result.Stats.ForwardMovementSpeed);
+            Assert.AreEqual(11, result.Stats.BackwardsMovementSpeed);
             Assert.AreEqual(MapSize.Small, result.MapGeneration.Size);
             Assert.AreEqual(MapThickness.Thin, result.MapGeneration.Thickness);
             Assert.AreEqual(ItemSpawnRate.Slow, result.ItemSpawn.Rate);
@@ -137,6 +145,12 @@ namespace Tanks.Core.Tests.Lobbies.Sessions
             config.SelfDamagePercent.Returns(
                 new PossibleIntegers(5, 25, 50, 100, 200, 500) { Default = 100 });
 
+            config.Stats.Returns(new DefaultPlayerStats
+            {
+                ForwardMovementSpeed = new PossibleIntegers(8, 12, 20) { Default = 12 },
+                BackwardsMovementSpeed = new PossibleIntegers(9, 11, 15) { Default = 11 }
+            });
+
             config.MapGeneration.Returns(new DefaultMapGeneration
             {
                 Resolution = new PossibleVectorIntegers(
@@ -181,6 +195,12 @@ namespace Tanks.Core.Tests.Lobbies.Sessions
                 PlayerCount = 4,
                 MaxScore = 45,
                 SelfDamagePercent = 200,
+
+                Stats = new PlayerStatSettingsFromLobby
+                {
+                    ForwardMovementSpeed = 20,
+                    BackwardsMovementSpeed = 15
+                },
 
                 MapGeneration = new MapGenerationSettingsFromLobby
                 {

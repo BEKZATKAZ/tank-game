@@ -5,6 +5,7 @@
         PossibleIntegers DesiredPlayerCount { get; }
         PossibleIntegers MaxScoreToReach { get; }
         PossibleIntegers SelfDamagePercent { get; }
+        DefaultPlayerStats Stats { get; }
         DefaultMapGeneration MapGeneration { get; }
         DefaultItemSpawn ItemSpawn { get; }
         DefaultDangerZone DangerZone { get; }

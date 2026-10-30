@@ -72,6 +72,13 @@ namespace Tanks.Core.Lobbies.Sessions
     }
 
     [Serializable]
+    public class DefaultPlayerStats
+    {
+        public PossibleIntegers ForwardMovementSpeed = new(8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20);
+        public PossibleIntegers BackwardsMovementSpeed = new(8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20);
+    }
+
+    [Serializable]
     public class DefaultMapGeneration
     {
         public PossibleVectorIntegers Resolution = new(new(3, 2), new(6, 4), new(10, 8));
@@ -100,6 +107,7 @@ namespace Tanks.Core.Lobbies.Sessions
         [SerializeField] private PossibleIntegers _desiredPlayerCount = new(1, 2, 3, 4, 5, 6, 7, 8);
         [SerializeField] private PossibleIntegers _maxScoreToReach = new(5, 15, 30, 45, 60, 75, 90);
         [SerializeField] private PossibleIntegers _selfDamagePercent = new(5, 15, 25, 50, 75, 100, 125, 150, 175, 200, 300, 400, 500) { Default = 100 };
+        [SerializeField] private DefaultPlayerStats _stats;
         [SerializeField] private DefaultMapGeneration _mapGeneration;
         [SerializeField] private DefaultItemSpawn _itemSpawn;
         [SerializeField] private DefaultDangerZone _dangerZone;
@@ -107,6 +115,7 @@ namespace Tanks.Core.Lobbies.Sessions
         public PossibleIntegers DesiredPlayerCount => _desiredPlayerCount;
         public PossibleIntegers MaxScoreToReach => _maxScoreToReach;
         public PossibleIntegers SelfDamagePercent => _selfDamagePercent;
+        public DefaultPlayerStats Stats => _stats;
         public DefaultMapGeneration MapGeneration => _mapGeneration;
         public DefaultItemSpawn ItemSpawn => _itemSpawn;
         public DefaultDangerZone DangerZone => _dangerZone;

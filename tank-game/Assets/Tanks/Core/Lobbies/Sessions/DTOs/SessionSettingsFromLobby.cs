@@ -9,6 +9,7 @@ namespace Tanks.Core.Lobbies.Sessions.DTOs
         public int MaxScore;
         public int SelfDamagePercent;
 
+        public PlayerStatSettingsFromLobby Stats;
         public MapGenerationSettingsFromLobby MapGeneration;
         public ItemSpawnSettingsFromLobby ItemSpawn;
         public DangerZoneSettingsFromLobby DangerZone;

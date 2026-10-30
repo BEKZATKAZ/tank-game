@@ -1,8 +1,10 @@
 using NaughtyAttributes;
+using Tanks.Core.Lobbies.Sessions;
 using Tanks.Shared.Adapters;
 using Tanks.Shared.Stats;
 using Unity.Mathematics;
 using UnityEngine;
+using VContainer;
 
 namespace Tanks.Shared.Driving
 {
@@ -17,12 +19,6 @@ namespace Tanks.Shared.Driving
     [RequireComponent(typeof(Rigidbody2D), typeof(StatOwnerBehaviour))]
     public sealed class TankDriveBehaviour : NetworkBehaviourExtended, ITankDriveBehaviour
     {
-        [SerializeField]
-        private byte _defaultSpeed = 10;
-
-        [SerializeField]
-        private byte _rearSpeed = 7;
-
         [Required]
         [SerializeField]
         private TrailRenderer _leftTire;
@@ -31,27 +27,35 @@ namespace Tanks.Shared.Driving
         [SerializeField]
         private TrailRenderer _rightTire;
 
+        [Inject]
+        private readonly ISessionSettingsService _settings;
+
         private readonly RaycastHit2D[] _hitBuffer = new RaycastHit2D[1];
         private StatOwnerBehaviour _statOwner;
         private ArcadeDriver _driver;
 
-        public float DefaultSpeed => _defaultSpeed;
+        public float DefaultSpeed { get; private set; }
         public Rigidbody2D Rigidbody { get; private set; }
         public IVelocity Velocity { get; private set; }
 
         protected override void Awake()
         {
             base.Awake();
-
             Rigidbody = GetComponent<Rigidbody2D>();
             Velocity = new UnityVelocity(Rigidbody);
             _statOwner = GetComponent<StatOwnerBehaviour>();
+        }
+
+        protected override void OnInitialize()
+        {
+            DefaultSpeed = _settings.GetSettings()?.Stats.ForwardMovementSpeed ?? 10;
+            int backwardsSpeed = _settings.GetSettings()?.Stats.BackwardsMovementSpeed ?? 8;
 
             _driver = new ArcadeDriver(new ArcadeDriverSettings
             {
                 AccelerationTime = 0.3f,
-                MaxSpeed = _defaultSpeed,
-                ReverseSpeed = _rearSpeed,
+                MaxSpeed = (byte)DefaultSpeed,
+                ReverseSpeed = (byte)backwardsSpeed,
                 SteeringSpeed = Angle.FromDegrees(240)
             });
         }
