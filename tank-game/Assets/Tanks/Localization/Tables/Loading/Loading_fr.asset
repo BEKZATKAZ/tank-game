@@ -56,8 +56,8 @@ MonoBehaviour:
     m_Localized: "Chaque \xE9l\xE9ment appartient \xE0 un niveau. Ils se distinguent par leur son et leur couleur caract\xE9ristiques."
     m_Metadata:
       m_Items: []
-  - m_Id: 9527674494976
-    m_Localized: "Envie de tenter votre chance ? Avec cet objet, vous pouvez vous retrouver n'importe o\xF9, m\xEAme en zone dangereuse."
+  - m_Id: 12075842715213824
+    m_Localized: "En avan\xE7ant et en tirant vers l'arri\xE8re, vous pouvez vous propulser vers l'avant beaucoup plus vite qu'en conduisant."
     m_Metadata:
       m_Items: []
   - m_Id: 10569631883264
@@ -66,6 +66,22 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 7943608060043264
     m_Localized: "Les caisses peuvent contenir des objets instables, mais il y a une faible probabilit\xE9."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 12074306069028864
+    m_Localized: Certains objets fonctionneront bien avec votre build, d'autres non... Logique.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 12074306110971904
+    m_Localized: "Certains objets peuvent vous \xE9liminer instantan\xE9ment si vous les ramassez plus d'une fois. Lisez leur description."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 12074306110971905
+    m_Localized: "Surveillez vos stats \xE0 gauche, elles contiennent des informations utiles."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 12075842715213825
+    m_Localized: "Vous n'aimez pas les d\xE9g\xE2ts que vous vous infligez, ou vous en voulez davantage\_? Vous pouvez les ajuster dans les param\xE8tres du lobby."
     m_Metadata:
       m_Items: []
   references:

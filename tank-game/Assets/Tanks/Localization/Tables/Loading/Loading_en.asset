@@ -56,8 +56,8 @@ MonoBehaviour:
     m_Localized: Each item belongs to a tier. They can be distinguished by their characteristic sound and color.
     m_Metadata:
       m_Items: []
-  - m_Id: 9527674494976
-    m_Localized: Wanna gamble? With this item you can end up anywhere, even inside the danger zone.
+  - m_Id: 12075842715213824
+    m_Localized: When both driving forward and shooting backwards, you can launch yourself forward way faster than you drive.
     m_Metadata:
       m_Items: []
   - m_Id: 10569631883264
@@ -66,6 +66,22 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 7943608060043264
     m_Localized: Crates can drop unstable items at a small chance.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 12074306069028864
+    m_Localized: Some items will work well with your build, some won't... Logically.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 12074306110971904
+    m_Localized: Some items can instantly eliminate you if you pick them up more than once. Read their description.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 12074306110971905
+    m_Localized: Keep an eye on your stats on the left, they give you useful info.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 12075842715213825
+    m_Localized: Don't like self-damage, or want more? You can adjust it in the lobby settings.
     m_Metadata:
       m_Items: []
   references:

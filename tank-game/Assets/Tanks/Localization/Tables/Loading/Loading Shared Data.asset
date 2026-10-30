@@ -51,16 +51,32 @@ MonoBehaviour:
     m_Key: loading.tip.item-tiers
     m_Metadata:
       m_Items: []
-  - m_Id: 9527674494976
-    m_Key: loading.tip.random-teleport-item
-    m_Metadata:
-      m_Items: []
   - m_Id: 10569631883264
     m_Key: loading.tip.dont-waste-fuel
     m_Metadata:
       m_Items: []
   - m_Id: 7943608060043264
     m_Key: loading.tip.unstable-item-drop
+    m_Metadata:
+      m_Items: []
+  - m_Id: 12074306069028864
+    m_Key: loading.tip.some-items
+    m_Metadata:
+      m_Items: []
+  - m_Id: 12074306110971904
+    m_Key: loading.tip-fatal-double-pickups
+    m_Metadata:
+      m_Items: []
+  - m_Id: 12074306110971905
+    m_Key: loading.tip.stats
+    m_Metadata:
+      m_Items: []
+  - m_Id: 12075842715213824
+    m_Key: loading.tip.backwards-tech
+    m_Metadata:
+      m_Items: []
+  - m_Id: 12075842715213825
+    m_Key: loading.tip.self-damage-setting
     m_Metadata:
       m_Items: []
   m_Metadata:
