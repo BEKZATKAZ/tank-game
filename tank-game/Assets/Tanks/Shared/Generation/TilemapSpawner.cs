@@ -32,6 +32,7 @@ namespace Tanks.Shared.Generation
         [Inject] private readonly ITilemapGenerator _tilemapGenerator;
 
         private readonly Dictionary<DirectionFlags, Tile> _cachedTileAssets = new();
+        private MaterialPropertyBlock _backgroundProperties;
 
         public Tilemap Tilemap { get; private set; }
 
@@ -87,6 +88,15 @@ namespace Tanks.Shared.Generation
             _backgroundRenderer.drawMode = SpriteDrawMode.Tiled;
             _backgroundRenderer.tileMode = SpriteTileMode.Continuous;
             _backgroundRenderer.size = new Vector2(size.x, size.y);
+
+            Vector2 spriteSize = sprite.Sprite.rect.size / sprite.Sprite.pixelsPerUnit;
+
+            _backgroundProperties ??= new MaterialPropertyBlock();
+            _backgroundRenderer.GetPropertyBlock(_backgroundProperties);
+            _backgroundProperties.SetVector("_BackgroundDimensions",
+                new Vector4(size.x, size.y, spriteSize.x, spriteSize.y));
+
+            _backgroundRenderer.SetPropertyBlock(_backgroundProperties);
         }
 
         private void FillForeground(Span<GeneratedTile> tiles)
