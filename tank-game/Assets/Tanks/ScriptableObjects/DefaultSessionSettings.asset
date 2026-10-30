@@ -20,7 +20,7 @@ MonoBehaviour:
     Default: 10
   _selfDamagePercent:
     Values: 0500000019000000320000004b000000640000007d00000096000000af000000c80000002c01000090010000f4010000i
-    Default: 100
+    Default: 50
   _mapGeneration:
     Resolution:
       Values:
