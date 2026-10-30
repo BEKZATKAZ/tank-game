@@ -21,7 +21,7 @@ MonoBehaviour:
   - key: 1
     value:
       MinValue: 2
-      MaxValue: 15
+      MaxValue: 30
       DiminishingBase: 0
   - key: 2
     value:
