@@ -27,7 +27,7 @@ namespace Tanks.Client.Bootstrap
 
         public void Handle(TilemapGenerated message)
         {
-            if (_gradientMaterial == false) CreateVignette(message.Settings.WallWidth);
+            if (_gradientMaterial == false) CreateVignette();
 
             PositiveFloat width = message.Settings.WallWidth + 2;
             RecalculateVignette(message.Bounds.min, message.Bounds.max, width);
@@ -35,9 +35,9 @@ namespace Tanks.Client.Bootstrap
 
         private void RecalculateVignette(float3 min, float3 max, PositiveFloat width)
         {
-            float3 blO = min;
+            float3 blO = new float3(min.x, min.y, 0);
             float3 tlO = new float3(min.x, max.y, 0);
-            float3 trO = max;
+            float3 trO = new float3(max.x, max.y, 0);
             float3 brO = new float3(max.x, min.y, 0);
 
             float3 offset = new float3(width, width, 0);
@@ -61,13 +61,13 @@ namespace Tanks.Client.Bootstrap
             _vignetteMesh.RecalculateBounds();
         }
 
-        private void CreateVignette(int wallWidth)
+        private void CreateVignette()
         {
             GameObject vignette = new GameObject("Vignette",
                 typeof(MeshFilter), typeof(MeshRenderer));
 
             // Should be on top of others
-            vignette.transform.position = Vector3.back * wallWidth;
+            vignette.transform.position = Vector3.back;
 
             var filter = vignette.GetComponent<MeshFilter>();
             var renderer = vignette.GetComponent<MeshRenderer>();
