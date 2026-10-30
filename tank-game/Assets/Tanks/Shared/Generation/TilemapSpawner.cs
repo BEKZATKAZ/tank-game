@@ -49,7 +49,7 @@ namespace Tanks.Shared.Generation
             float3 size = new float3(gridResolution.x, gridResolution.y, 0);
             float3 center = size * 0.5f;
 
-            FillBackground(center);
+            FillBackground(center, size);
             FillForeground(tiles.Value.AsSpan());
             GetComponent<TilemapCollider2D>().ProcessTilemapChanges();
 
@@ -76,7 +76,7 @@ namespace Tanks.Shared.Generation
             }
         }
 
-        private void FillBackground(float3 center)
+        private void FillBackground(float3 center, float3 size)
         {
             TileSprite sprite = _config.GetBackground();
             if (sprite is null || sprite.Sprite == false) return;
@@ -84,6 +84,9 @@ namespace Tanks.Shared.Generation
             _backgroundRenderer.transform.position = center;
             _backgroundRenderer.sprite = sprite.Sprite;
             _backgroundRenderer.color = sprite.Tint;
+            _backgroundRenderer.drawMode = SpriteDrawMode.Tiled;
+            _backgroundRenderer.tileMode = SpriteTileMode.Continuous;
+            _backgroundRenderer.size = new Vector2(size.x, size.y);
         }
 
         private void FillForeground(Span<GeneratedTile> tiles)
