@@ -121,33 +121,33 @@ MonoBehaviour:
     _playerStats:
     - key: 2
       value:
-        Duration: 10
+        Duration: 5
         Value: 3.402823e+38
         ValueType: 0
     - key: 0
       value:
-        Duration: 10
-        Value: 3.4028235e+38
+        Duration: 5
+        Value: 3.402823e+38
         ValueType: 0
     - key: 1
       value:
-        Duration: 10
+        Duration: 5
         Value: 3.4028235e+38
         ValueType: 0
     - key: 3
       value:
-        Duration: 10
+        Duration: 5
         Value: 3.4028235e+38
         ValueType: 0
     - key: 4
       value:
-        Duration: 10
+        Duration: 5
         Value: 3.4028235e+38
         ValueType: 0
     _itemStats:
     - key: duration
       value:
-        Value: 10
+        Value: 5
         ValueType: 0
   - _identifier: burst-of-adrenaline
     _tier: 1
