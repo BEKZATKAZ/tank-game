@@ -1,23 +1,7 @@
-:root {
-    --text-color: rgb(243, 243, 243);
-    --text-secondary-color: rgb(205, 205, 205);
-    --font-regular: url("project://database/Assets/Tanks/UI/Fonts/Tektur/Tektur-Regular.ttf?fileID=12800000&guid=5d22f6dbc7f666049806741c1e64720b&type=3#Tektur-Regular");
-    --font-heavy: url("project://database/Assets/Tanks/UI/Fonts/Tektur/Tektur-ExtraBold.ttf?fileID=12800000&guid=f027ce80bdea4164a98c0cbc98e33c59&type=3#Tektur-ExtraBold");
-    --font-black: url("project://database/Assets/Tanks/UI/Fonts/Tektur/Tektur-Black.ttf?fileID=12800000&guid=45f7b32b4f832744ebbabf86a666ecac&type=3#Tektur-Black");
-}
-
-* {
-    margin: 0;
-    padding: 0;
-    overflow: hidden;
-    color: var(--text-color);
-}
-
 .spectator-controls__name {
     align-self: center;
     max-width: 320px;
     font-size: 24px;
-    -unity-font-definition: var(--font-heavy);
     white-space: nowrap;
     text-overflow: ellipsis;
     text-shadow: 1px 1px 1px rgb(0, 0, 0);
@@ -29,7 +13,6 @@
     height: 100%;
     font-size: 160px;
     text-shadow: 0 0 2px rgba(0, 0, 0, 0.95);
-    -unity-font-definition: var(--font-black);
     -unity-text-align: middle-center;
 }
 
@@ -42,7 +25,6 @@
     font-size: 80px;
     color: red;
     text-shadow: 4px 4px 0 rgba(0, 0, 0, 0.95);
-    -unity-font-definition: var(--font-black);
     -unity-text-align: middle-center;
 }
 
@@ -66,7 +48,6 @@
     margin: 0 12px;
     padding: 12px 24px;
     font-size: 24px;
-    -unity-font-definition: var(--font-heavy);
     background-color: rgba(0, 0, 0, 0.75);
     border-color: var(--text-color);
     border-width: 2px;
@@ -89,10 +70,6 @@
     right: 0;
     min-width: 450px;
     max-width: 600px;
-    background-color: rgba(0, 0, 0, 0.75);
-    border-radius: 10px;
-    border-width: 3px;
-    border-color: var(--text-color);
     transition: opacity 0.1s Ease 0s;
     filter: drop-shadow(0 0 20 black);
 }
@@ -106,15 +83,16 @@
     padding: 0 10px;
     font-size: 34px;
     letter-spacing: 2px;
-    -unity-font-definition: var(--font-black);
     -unity-text-align: middle-left;
+    -unity-font-style: bold;
 }
 
 .item-description__icon {
     width: 46px;
     height: 46px;
-    -unity-background-scale-mode: scale-to-fit;
     scale: 0.75 0.75;
+    -unity-background-scale-mode: scale-to-fit;
+    -unity-background-image-tint-color: white;
 }
 
 .item-description__body {
@@ -124,8 +102,8 @@
 .item-description__description {
     color: var(--text-secondary-color);
     font-size: 22px;
-    letter-spacing: 2px;
     white-space: normal;
+    -unity-text-align: upper-left;
 }
 
 .item-description__tier {
@@ -146,11 +124,7 @@
 .item-tagline__background {
     flex-grow: 0;
     flex-direction: row;
-    background-color: rgba(0, 0, 0, 0.75);
-    border-radius: 20px;
-    border-width: 3px;
-    border-color: var(--text-color);
-    padding: 22px;
+    padding: 32px;
     min-width: 600px;
     max-width: 1000px;
     transition: opacity 0.1s Ease 0s;
@@ -160,6 +134,7 @@
     width: 68px;
     height: 68px;
     -unity-background-scale-mode: scale-to-fit;
+    -unity-background-image-tint-color: white;
 }
 
 .item-tagline__text-content {
@@ -169,14 +144,16 @@
 }
 
 .item-tagline__name {
-    -unity-font-definition: var(--font-black);
-    margin-bottom: 8px;
+    margin-bottom: 2px;
     font-size: 24px;
+    -unity-text-align: middle-left;
+    -unity-font-style: bold;
 }
 
 .item-tagline__text {
     color: var(--text-secondary-color);
     white-space: normal;
+    -unity-text-align: middle-left;
 }
 
 .player-stats {
@@ -233,13 +210,12 @@
     position: absolute;
     align-self: center;
     text-shadow: 0 0 10px rgba(0, 0, 0, 0.95);
-    -unity-text-align: middle-center;
 }
 
 .timer-counter {
     font-size: 64px;
     letter-spacing: 5px;
-    -unity-font-definition: var(--font-black);
+    -unity-font-style: bold;
 }
 
 .timer-text {
@@ -258,19 +234,11 @@
     background-color: rgba(0, 0, 0, 0.5);
 }
 
-.game-stats__container {
-    background-color: rgba(0, 0, 0, 0.98);
-    border-color: var(--text-color);
-    border-width: 2px;
-    border-radius: 20px;
-}
-
 .game-stats__header {
-    font-size: 60px;
-    padding: 20px 40px;
-    margin-bottom: 20px;
-    -unity-font-definition: var(--font-black);
+    font-size: 48px;
+    padding: 30px;
     -unity-text-align: middle-center;
+    -unity-font-style: bold;
 }
 
 .game-stats__list-header {
@@ -278,7 +246,7 @@
 }
 
 .game-stats__list-header * {
-    width: 100px;
+    width: 120px;
     height: 40px;
     margin-bottom: 10px;
     -unity-background-image-tint-color: gray;
@@ -286,7 +254,7 @@
 }
 
 .game-stats__eliminations {
-    margin-left: 540px;
+    margin-left: 440px;
 }
 
 .game-stats .unity-scroll-view {
@@ -303,12 +271,13 @@
 .game-stats__player-assistance,
 .game-stats__player-deaths,
 .game-stats__player-victories {
-    width: 100px;
+    width: 120px;
     -unity-text-align: middle-center;
 }
 
 .game-stats__player-name {
-    width: 500px;
+    width: 400px;
+    -unity-text-align: middle-left;
 }
 
 .stats {
@@ -322,15 +291,16 @@
 
 .stat {
     flex-direction: row;
-    -unity-text-align: middle-left;
     margin-bottom: 8px;
     opacity: 0.5;
+    -unity-text-align: middle-left;
 }
 
 .stat-icon {
     width: 64px;
     height: 52px;
     -unity-background-scale-mode: scale-to-fit;
+    -unity-background-image-tint-color: white;
 }
 
 .stat--temporary {
@@ -352,21 +322,18 @@
     border-radius: 6px;
     background-color: rgba(0, 0, 0, 0.75);
     font-size: 22px;
-    -unity-font-style: bold;
 }
 
 .stat-value {
     margin-left: 15px;
     font-size: 32px;
     opacity: 0.75;
-    -unity-font-style: bold;
 }
 
 .stat-change {
     margin-left: 30px;
     font-size: 26px;
     opacity: 0.5;
-    -unity-font-style: bold;
 }
 
 .killfeed {
@@ -381,11 +348,8 @@
     flex-direction: row;
     align-items: center;
     margin-bottom: 8px;
-    padding: 8px 16px;
-    background-color: rgba(0, 0, 0, 0.75);
-    border-radius: 8px;
+    padding: 16px 32px;
     font-size: 24px;
-    -unity-font-definition: var(--font-heavy);
 }
 
 .killfeed__name {
@@ -399,8 +363,6 @@
     height: 28px;
     margin-left: 12px;
     margin-right: 12px;
-    background-image: url("project://database/Assets/Plugins/Layer%20Lab/2D%20Icons-PictoIconPack01/PictoIcon_256/Icon_PictoIcon_Skull.Png?fileID=21300000&guid=13ab7e8c2a8f546c19a75f878cc8934b&type=3#Icon_PictoIcon_Skull");
-    -unity-background-scale-mode: scale-to-fit;
 }
 
 .item-list {
@@ -419,8 +381,9 @@
     height: 50px;
     margin: 10px;
     flex-shrink: 0;
-    -unity-background-scale-mode: scale-to-fit;
     overflow: visible;
+    -unity-background-scale-mode: scale-to-fit;
+    -unity-background-image-tint-color: white;
 }
 
 .item-list__count {
@@ -428,8 +391,8 @@
     right: 0;
     bottom: 0;
     font-size: 24px;
-    -unity-font-definition: var(--font-heavy);
     text-shadow: 1px 1px 2px black;
+    -unity-font-style: bold;
 }
 
 .transition-overlay {
@@ -450,7 +413,6 @@
 }
 
 .pickup-feed__entry {
-    border-width: 2px;
     max-width: 100%;
     margin-top: 8px;
     margin-bottom: 0;
@@ -468,4 +430,5 @@
     flex-shrink: 0;
     margin-left: 12px;
     -unity-background-scale-mode: scale-to-fit;
+    -unity-background-image-tint-color: white;
 }

@@ -8,34 +8,43 @@ namespace Tanks.UI.Gameplay.Killfeed
     {
         public KillfeedElement()
         {
-            _from = new Label
+            _from = new Label("From")
             {
                 name = "From",
                 enableRichText = false,
                 pickingMode = PickingMode.Ignore
             };
 
-            _target = new Label
+            _target = new Label("Target")
             {
                 name = "Target",
                 enableRichText = false,
                 pickingMode = PickingMode.Ignore
             };
 
-            VisualElement skull = new VisualElement
+            Label skull = new Label("x")
             {
                 name = "Skull",
+                pickingMode = PickingMode.Ignore
+            };
+
+            VisualElement fill = new VisualElement
+            {
+                name = "Fill",
                 pickingMode = PickingMode.Ignore
             };
 
             _target.AddToClassList("killfeed__name");
             _from.AddToClassList("killfeed__name");
             skull.AddToClassList("killfeed__skull");
+            fill.AddToClassList("bg-fill");
 
+            Add(fill);
             Add(_from);
             Add(skull);
             Add(_target);
             AddToClassList("killfeed__entry");
+
             pickingMode = PickingMode.Ignore;
             RegisterCallback<DetachFromPanelEvent>(_ => CancelAnimations());
         }

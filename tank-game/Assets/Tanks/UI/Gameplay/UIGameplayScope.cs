@@ -15,6 +15,7 @@ using Tanks.UI.Gameplay.PlayerStats;
 using Tanks.UI.Gameplay.StartCountdown;
 using Tanks.UI.Gameplay.Timer;
 using Tanks.UI.Menus.Dialogs;
+using Tanks.UI.Menus.Sections;
 using Tanks.UI.Menus.Settings;
 using UnityEngine;
 using VContainer;
@@ -29,6 +30,7 @@ namespace Tanks.UI.Gameplay
         protected override void Configure(IContainerBuilder builder)
         {
             builder.Register<PauseMenuViewModel>(Lifetime.Singleton);
+            builder.Register<IMenuSectionService, PauseMenuSectionService>(Lifetime.Singleton);
             builder.Register<IGameplayExitService, GameplayExitService>(Lifetime.Singleton);
             builder.Register<DialogScreenViewModel>(Lifetime.Transient);
             builder.RegisterComponent(_pauseDialog).As<IDialogScreenService>();

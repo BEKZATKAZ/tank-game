@@ -1,4 +1,5 @@
 using LitMotion;
+using Tanks.UI.Elements;
 using UnityEngine.UIElements;
 
 namespace Tanks.UI.Gameplay.PickupFeed
@@ -8,7 +9,7 @@ namespace Tanks.UI.Gameplay.PickupFeed
     {
         public PickupFeedElement()
         {
-            _text = new Label
+            _text = new Label("Player picked up")
             {
                 name = "Text",
                 enableRichText = false,
@@ -21,9 +22,17 @@ namespace Tanks.UI.Gameplay.PickupFeed
                 pickingMode = PickingMode.Ignore
             };
 
+            _fill = new VisualElement
+            {
+                name = "Fill",
+                pickingMode = PickingMode.Ignore
+            };
+
             _text.AddToClassList("pickup-feed__text");
             _icon.AddToClassList("pickup-feed__icon");
+            _fill.AddToClassList("bg-fill");
 
+            Add(_fill);
             Add(_text);
             Add(_icon);
 
@@ -36,6 +45,7 @@ namespace Tanks.UI.Gameplay.PickupFeed
 
         private readonly Label _text;
         private readonly VisualElement _icon;
+        private readonly VisualElement _fill;
         private MotionHandle _slideMotion;
         private MotionHandle _fadeMotion;
 
@@ -43,11 +53,7 @@ namespace Tanks.UI.Gameplay.PickupFeed
         {
             _text.text = $"{entry.Player} {entry.PickedUp}";
             _icon.style.backgroundImage = new StyleBackground(entry.Icon);
-
-            style.borderTopColor = entry.AccentColor;
-            style.borderRightColor = entry.AccentColor;
-            style.borderBottomColor = entry.AccentColor;
-            style.borderLeftColor = entry.AccentColor;
+            _fill.SetSpriteBorderColor(entry.AccentColor);
         }
 
         public void Play()

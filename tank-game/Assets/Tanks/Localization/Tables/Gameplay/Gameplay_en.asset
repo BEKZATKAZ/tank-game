@@ -65,6 +65,22 @@ MonoBehaviour:
     m_Localized: NEXT
     m_Metadata:
       m_Items: []
+  - m_Id: 22050365577322496
+    m_Localized: Kills
+    m_Metadata:
+      m_Items: []
+  - m_Id: 22050365615071232
+    m_Localized: Assists
+    m_Metadata:
+      m_Items: []
+  - m_Id: 22050365615071233
+    m_Localized: Deaths
+    m_Metadata:
+      m_Items: []
+  - m_Id: 22050365615071234
+    m_Localized: Score
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:

@@ -47,7 +47,7 @@
 }
 
 .tip-text {
-    width: 700px;
+    width: 750px;
     font-size: 24px;
     color: var(--text-secondary-color);
     margin-bottom: 20px;

@@ -162,7 +162,7 @@ namespace Tanks.UI.Tests.Gameplay
         }
 
         [Test]
-        public void Element_ShowsPlainTextIconOnRightAndAccentOutline()
+        public void Element_ShowsPlainTextAndIconAboveFill()
         {
             Texture2D texture = new Texture2D(1, 1);
             Sprite icon = Sprite.Create(texture, new Rect(0, 0, 1, 1), Vector2.zero);
@@ -180,13 +180,13 @@ namespace Tanks.UI.Tests.Gameplay
 
                 Assert.AreEqual("<b>Player</b> picked up", text.text);
                 Assert.IsFalse(text.enableRichText);
-                Assert.AreSame(element.Q("Icon"), element[1]);
-                Assert.AreSame(icon, element[1].style.backgroundImage.value.sprite);
+                Assert.AreSame(element.Q("Fill"), element[0]);
+                Assert.IsTrue(element[0].ClassListContains("bg-fill"));
+                Assert.AreSame(text, element[1]);
+                Assert.AreSame(element.Q("Icon"), element[2]);
+                Assert.AreSame(icon, element[2].style.backgroundImage.value.sprite);
 
-                Assert.AreEqual(Color.cyan, element.style.borderTopColor.value);
-                Assert.AreEqual(Color.cyan, element.style.borderRightColor.value);
-                Assert.AreEqual(Color.cyan, element.style.borderBottomColor.value);
-                Assert.AreEqual(Color.cyan, element.style.borderLeftColor.value);
+                Assert.IsTrue(element.style.unityMaterial.value.IsEmpty());
             }
             finally
             {

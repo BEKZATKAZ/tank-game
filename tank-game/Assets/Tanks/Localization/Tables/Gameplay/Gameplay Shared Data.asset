@@ -59,6 +59,22 @@ MonoBehaviour:
     m_Key: gameplay.spectator.next
     m_Metadata:
       m_Items: []
+  - m_Id: 22050365577322496
+    m_Key: gameplay.stat.eliminations
+    m_Metadata:
+      m_Items: []
+  - m_Id: 22050365615071232
+    m_Key: gameplay.stat.assists
+    m_Metadata:
+      m_Items: []
+  - m_Id: 22050365615071233
+    m_Key: gameplay.stat.deaths
+    m_Metadata:
+      m_Items: []
+  - m_Id: 22050365615071234
+    m_Key: gameplay.stat.score
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:

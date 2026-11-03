@@ -4,24 +4,35 @@
     right: 0;
     top: 0;
     bottom: 0;
-    background-color: rgba(0, 0, 0, 0.55);
+    background-color: rgba(0, 0, 0, 0.75);
     justify-content: center;
-    align-items: center;
 }
 
 #PauseContent {
-    flex-direction: row;
-    max-height: 90%;
-    max-width: 95%;
-}
-
-#PauseContent #Buttons {
-    justify-content: center;
-    margin-right: 30px;
-    min-width: 460px;
+    flex-grow: 1;
+    width: 100%;
 }
 
 #PauseContent #Menu {
-    width: 1150px;
-    max-height: 850px;
+    flex-grow: 1;
+    min-height: 0;
+}
+
+#PauseContent .settings-section {
+    background-color: transparent;
+    min-height: 0;
+}
+
+#PauseContent .settings {
+    max-height: 90%;
+}
+
+#PauseContent .settings .unity-scroll-view {
+    flex-shrink: 1;
+    min-height: 0;
+}
+
+#PauseContent .setting,
+#PauseContent .settings-bottom {
+    flex-shrink: 0;
 }

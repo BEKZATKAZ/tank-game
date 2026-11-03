@@ -68,12 +68,14 @@ namespace Tanks.UI.Gameplay.Pause
             if (settingsOpen && _settings.IsVisible == false) _settings.Show();
             else if (settingsOpen == false) _settings.Hide();
 
+            _buttons.style.display = section is PauseMenuSection.Main ? DisplayStyle.Flex : DisplayStyle.None;
             _settingsContainer.style.display = settingsOpen ? DisplayStyle.Flex : DisplayStyle.None;
             _overlay.style.display = section is PauseMenuSection.Closed
                 ? DisplayStyle.None
                 : DisplayStyle.Flex;
 
             if (section is PauseMenuSection.Main) _resumeButton.Focus();
+            else if (settingsOpen) _settingsContainer.Q<Button>("BackButton").Focus();
         }
     }
 }

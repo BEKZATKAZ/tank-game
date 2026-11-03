@@ -1,10 +1,12 @@
-﻿using UnityEngine.UIElements;
+﻿using Tanks.UI.Elements;
+using UnityEngine.UIElements;
 
 namespace Tanks.UI.Gameplay.ItemDescription
 {
     public sealed class ItemDescriptionView : ViewBase<ItemDescriptionViewModel>
     {
         private VisualElement _container;
+        private VisualElement _fill;
         private VisualElement _icon;
         private Label _name;
         private Label _description;
@@ -15,6 +17,7 @@ namespace Tanks.UI.Gameplay.ItemDescription
         protected override void Initialize(VisualElement root)
         {
             _container = root.Q("ItemDescriptionContainer");
+            _fill = _container.Q("Fill");
             _icon = root.Q("ItemIcon");
             _name = _container.Q<Label>("ItemName");
             _description = _container.Q<Label>("ItemDescription");
@@ -30,10 +33,7 @@ namespace Tanks.UI.Gameplay.ItemDescription
             viewModel.AccentColor.Bind(x =>
             {
                 _tier.style.color = x;
-                _container.style.borderTopColor = x;
-                _container.style.borderRightColor = x;
-                _container.style.borderBottomColor = x;
-                _container.style.borderLeftColor = x;
+                _fill.SetSpriteBorderColor(x);
             });
 
             viewModel.Icon.Bind(x => _icon.style.backgroundImage = new StyleBackground(x));

@@ -1,4 +1,5 @@
 ﻿using LitMotion;
+using Tanks.UI.Elements;
 using UnityEngine.UIElements;
 
 namespace Tanks.UI.Gameplay.ItemTagline
@@ -7,6 +8,7 @@ namespace Tanks.UI.Gameplay.ItemTagline
     {
         private VisualElement _root;
         private VisualElement _background;
+        private VisualElement _fill;
         private VisualElement _icon;
         private Label _header;
         private Label _tagline;
@@ -18,6 +20,7 @@ namespace Tanks.UI.Gameplay.ItemTagline
         {
             _root = root.Q("ItemTagline");
             _background = _root.Q("Background");
+            _fill = _background.Q("Fill");
             _icon = _root.Q("Icon");
             _header = _root.Q<Label>("Header");
             _tagline = _root.Q<Label>("Tagline");
@@ -30,10 +33,7 @@ namespace Tanks.UI.Gameplay.ItemTagline
 
             viewModel.AccentColor.Bind(x =>
             {
-                _background.style.borderTopColor = x;
-                _background.style.borderRightColor = x;
-                _background.style.borderBottomColor = x;
-                _background.style.borderLeftColor = x;
+                _fill.SetSpriteBorderColor(x);
             });
 
             viewModel.Header.Bind(x => _header.text = x);

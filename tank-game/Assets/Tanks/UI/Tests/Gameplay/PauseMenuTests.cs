@@ -5,9 +5,12 @@ using System;
 using Tanks.Client.Input;
 using Tanks.Core;
 using Tanks.Core.Common.Scenes;
+using Tanks.Core.Settings;
 using Tanks.UI.Gameplay.Input;
 using Tanks.UI.Gameplay.Pause;
 using Tanks.UI.Menus.Dialogs;
+using Tanks.UI.Menus.Sections;
+using Tanks.UI.Menus.Settings;
 
 namespace Tanks.UI.Tests.Gameplay
 {
@@ -91,6 +94,47 @@ namespace Tanks.UI.Tests.Gameplay
             Assert.That(ViewModel.Section.Value, Is.EqualTo(PauseMenuSection.Main));
             _drive.DidNotReceive().Enable();
             _turret.DidNotReceive().Enable();
+        }
+
+        [Test]
+        public void SettingsBack_ReturnsToPauseWithoutRestoringInput()
+        {
+            ISettingsService settings = Substitute.For<ISettingsService>();
+            PauseMenuSectionService navigation = new(ViewModel);
+            SettingsViewModel settingsViewModel = new(settings, navigation);
+            ViewModel.Open();
+            ViewModel.OpenSettings();
+
+            settingsViewModel.Back();
+
+            Assert.That(ViewModel.Section.Value, Is.EqualTo(PauseMenuSection.Main));
+            _drive.DidNotReceive().Enable();
+            _turret.DidNotReceive().Enable();
+        }
+
+        [Test]
+        public void SettingsBack_DialogVisible_KeepsSettingsOpen()
+        {
+            PauseMenuSectionService navigation = new(ViewModel);
+            ViewModel.Open();
+            ViewModel.OpenSettings();
+            _dialog.IsVisible.Returns(true);
+
+            navigation.OpenSection(MenuSectionType.Main);
+
+            Assert.That(ViewModel.Section.Value, Is.EqualTo(PauseMenuSection.Settings));
+        }
+
+        [Test]
+        public void SettingsBack_MenuClosed_DoesNotOpenPause()
+        {
+            PauseMenuSectionService navigation = new(ViewModel);
+
+            navigation.OpenSection(MenuSectionType.Main);
+
+            Assert.That(ViewModel.IsOpen, Is.False);
+            _drive.DidNotReceive().Disable();
+            _turret.DidNotReceive().Disable();
         }
 
         [TestCase(false, false)]

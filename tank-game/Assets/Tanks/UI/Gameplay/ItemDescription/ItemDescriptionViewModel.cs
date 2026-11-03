@@ -113,7 +113,7 @@ namespace Tanks.UI.Gameplay.ItemDescription
                 }
 
                 _localization.TryGet("Stats", statEntry, out var statLocalization);
-                string formattedValue = $"<color={color}><b>{value}</b></color>";
+                string formattedValue = $"<color={color}>{value}</color>";
 
                 statLocalization?.AddVariable("value", formattedValue);
                 builder.Append(statLocalization?.Get() ?? statType);
