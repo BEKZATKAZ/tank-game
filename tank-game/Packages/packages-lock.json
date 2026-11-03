@@ -449,18 +449,6 @@
       },
       "url": "https://packages.unity.com"
     },
-    "com.unity.services.vivox": {
-      "version": "16.12.1",
-      "depth": 0,
-      "source": "registry",
-      "dependencies": {
-        "com.unity.modules.audio": "1.0.0",
-        "com.unity.services.core": "1.15.1",
-        "com.unity.settings-manager": "1.0.3",
-        "com.unity.nuget.newtonsoft-json": "3.0.2"
-      },
-      "url": "https://packages.unity.com"
-    },
     "com.unity.services.wire": {
       "version": "1.5.1",
       "depth": 1,
@@ -488,6 +476,17 @@
         "com.unity.searcher": "4.9.5",
         "com.unity.graph-authoring": "1.0.0"
       }
+    },
+    "com.unity.splines": {
+      "version": "2.9.2",
+      "depth": 0,
+      "source": "registry",
+      "dependencies": {
+        "com.unity.mathematics": "1.2.1",
+        "com.unity.modules.imgui": "1.0.0",
+        "com.unity.settings-manager": "1.0.3"
+      },
+      "url": "https://packages.unity.com"
     },
     "com.unity.test-framework": {
       "version": "1.8.0",

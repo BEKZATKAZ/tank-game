@@ -18,10 +18,18 @@ namespace Tanks.UI.Menus.Settings
 
         protected override void Initialize(VisualElement root)
         {
-            _root = root.Q("SettingsMenu");
+            _root = root.Q("SettingsSection");
+            _root.AddManipulator(new MenuHighlightManipulator());
+
             _applyButton = _root.Q<Button>("ApplyButton");
             _revertButton = _root.Q<Button>("RevertButton");
             _resetToDefaultsButton = _root.Q<Button>("ResetToDefaultsButton");
+
+            _applyButton.clicked += () => ViewModel.ApplyChanges();
+            _revertButton.clicked += () => ViewModel.RevertChanges();
+            _resetToDefaultsButton.clicked += () => ViewModel.ResetToDefaults();
+
+            _root.Q<Button>("BackButton").clicked += () => ViewModel.Back();
             _settings = _root.Query<SettingElementBase>().Build().ToArray();
         }
 
@@ -32,10 +40,6 @@ namespace Tanks.UI.Menus.Settings
 
         protected override void Bind(SettingsViewModel viewModel)
         {
-            _applyButton.clicked += ViewModel.ApplyChanges;
-            _revertButton.clicked += ViewModel.RevertChanges;
-            _resetToDefaultsButton.clicked += ViewModel.ResetToDefaults;
-
             viewModel.ApplyButtonEnabled.Bind(x => _applyButton.enabledSelf = x);
             viewModel.RevertButtonEnabled.Bind(x => _revertButton.enabledSelf = x);
 
@@ -52,10 +56,6 @@ namespace Tanks.UI.Menus.Settings
         protected override void Unbind(SettingsViewModel viewModel)
         {
             viewModel.RevertChanges();
-
-            _applyButton.clicked -= viewModel.ApplyChanges;
-            _revertButton.clicked -= viewModel.RevertChanges;
-            _resetToDefaultsButton.clicked -= viewModel.ResetToDefaults;
 
             foreach (SettingElementBase setting in _settings)
             {

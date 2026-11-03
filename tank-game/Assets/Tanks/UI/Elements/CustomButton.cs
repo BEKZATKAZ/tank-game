@@ -12,8 +12,8 @@ namespace Tanks.UI.Elements
             clicked += OnButtonClicked;
         }
 
-        [UxmlAttribute] public string HoverSoundPath { get; set; } = "event:/UI/Button/Hover";
-        [UxmlAttribute] public string ClickSoundPath { get; set; } = "event:/UI/Button/Click";
+        [UxmlAttribute] public string HoverSoundPath { get; set; } = "event:/UI/Hover";
+        [UxmlAttribute] public string ClickSoundPath { get; set; } = "event:/UI/Click_2";
 
         private void OnButtonHover(PointerEnterEvent e)
         {

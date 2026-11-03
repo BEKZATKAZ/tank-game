@@ -148,7 +148,7 @@ namespace Tanks.Infrastructure.Lobbies
             return result;
         }
 
-        private static string ReasonToErrorCode(LobbyExceptionReason reason)
+        internal static string ReasonToErrorCode(LobbyExceptionReason reason)
         {
             string input = reason.ToString();
 

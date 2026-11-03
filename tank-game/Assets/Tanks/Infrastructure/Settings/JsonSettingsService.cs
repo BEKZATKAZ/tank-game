@@ -78,7 +78,7 @@ namespace Tanks.Infrastructure.Settings
             Dictionary<PlayerSetting, int> result = _loader.Load(FilePath);
 
             _oldValues.Clear();
-            _settings.Clear();
+            _newChanges.Clear();
 
             if (_settings.Count == 0)
             {
@@ -92,7 +92,15 @@ namespace Tanks.Infrastructure.Settings
 
             foreach (var setting in result)
             {
-                _settings[setting.Key].Value = setting.Value;
+                BindableProperty<int> property = _settings[setting.Key];
+
+                if (property.Value == setting.Value)
+                {
+                    property.ForceRefresh();
+                    continue;
+                }
+
+                property.Value = setting.Value;
             }
         }
 

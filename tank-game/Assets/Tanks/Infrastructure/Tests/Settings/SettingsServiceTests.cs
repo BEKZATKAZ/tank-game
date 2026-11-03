@@ -53,6 +53,36 @@ namespace Tanks.Infrastructure.Tests.Settings
         }
 
         [Test]
+        public void ResetToDefaults_PreservesBindingsAndDiscardsPendingChanges()
+        {
+            _service.Initialize();
+
+            int music = 0;
+            int sfx = 0;
+            _service.Bind(PlayerSetting.MusicVolume, x => music = x);
+            _service.Bind(PlayerSetting.SFXVolume, x => sfx = x);
+
+            _service.PreviewChanges(PlayerSetting.MusicVolume, 20);
+            _service.Write(PlayerSetting.SFXVolume, 10);
+            sfx = 10;
+            _service.ResetToDefaults();
+
+            Assert.AreEqual(JsonSettingsLoader.Defaults[PlayerSetting.MusicVolume], music);
+            Assert.AreEqual(JsonSettingsLoader.Defaults[PlayerSetting.SFXVolume], sfx);
+
+            _service.ApplyChanges();
+            _service.RevertChanges();
+
+            Assert.AreEqual(JsonSettingsLoader.Defaults[PlayerSetting.MusicVolume], music);
+            Assert.AreEqual(JsonSettingsLoader.Defaults[PlayerSetting.SFXVolume], sfx);
+
+            _service.Write(PlayerSetting.MusicVolume, 30);
+            _service.ApplyChanges();
+
+            Assert.AreEqual(30, music);
+        }
+
+        [Test]
         public void Apply_SavesSettings()
         {
             _service.Initialize();

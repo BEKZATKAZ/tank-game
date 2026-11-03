@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
+using Newtonsoft.Json;
 using Tanks.Core;
 using Tanks.Core.Common;
 using Tanks.Core.Lobbies;
@@ -46,6 +47,7 @@ namespace Tanks.Infrastructure.Lobbies
         private Task _heartbeatTask = Task.CompletedTask;
         private string _heartbeatLobbyId;
         private bool _disposed;
+        private int _generation;
 
         public void Dispose()
         {
@@ -59,6 +61,7 @@ namespace Tanks.Infrastructure.Lobbies
 
         private void OnLobbyIdChanged(LobbyId id)
         {
+            _generation++;
             if (id.Value != _heartbeatLobbyId) StopHeartbeat();
         }
 
@@ -147,6 +150,60 @@ namespace Tanks.Infrastructure.Lobbies
                 })), CurrentLobbyState, errorCode: "failed-to-update");
         }
 
+        public async Task<ResultType> SendMessageAsync(string message)
+        {
+            LobbyId lobbyId = CurrentLobbyState.Id.Value;
+            string userId = _auth.CurrentProfile.UserId.Value;
+            int generation = _generation;
+
+            if (_disposed || string.IsNullOrEmpty(lobbyId.Value) || string.IsNullOrEmpty(userId) ||
+                CurrentLobbyState.Players.Value.ContainsKey(userId) == false ||
+                string.IsNullOrWhiteSpace(message) || message.Length > LobbyChatMessage.MaxMessageLength)
+            {
+                return Result.Failure("failed-to-update");
+            }
+
+            string json = JsonConvert.SerializeObject(new LobbyChatMessage.Payload
+            {
+                Id = Guid.NewGuid().ToString("N"),
+                Text = message
+            });
+
+            try
+            {
+                Lobby lobby = await Service.UpdatePlayerAsync(lobbyId.Value, userId, new UpdatePlayerOptions
+                {
+                    Data = new Dictionary<string, PlayerDataObject>
+                    {
+                        ["LastMessage"] = new(VisibilityOptions.Member, json)
+                    }
+                });
+
+                if (_disposed || generation != _generation || CurrentLobbyState.Id.Value.Value != lobbyId.Value)
+                {
+                    return Result.Failure("cancelled");
+                }
+
+                if (_lobby == null || lobby.Version >= _lobby.Version)
+                {
+                    _lobby = lobby;
+                    UGSLobbyMapper.MapLobby(lobby, CurrentLobbyState);
+                }
+
+                return Result.Success();
+            }
+            catch (LobbyServiceException ex)
+            {
+                Debug.LogException(ex);
+                return Result.Failure(UGSLobbyMapper.ReasonToErrorCode(ex.Reason));
+            }
+            catch (Exception ex)
+            {
+                Debug.LogException(ex);
+                return Result.Failure("failed-to-update");
+            }
+        }
+
         private Player CreatePlayerData()
         {
             PlayerProfileState profile = _auth.CurrentProfile;
@@ -154,7 +211,8 @@ namespace Tanks.Infrastructure.Lobbies
             return new Player(id: profile.UserId.Value, data: new()
             {
                 ["username"] = new(VisibilityOptions.Member, profile.DisplayName.Value),
-                ["ready"] = new(VisibilityOptions.Member, bool.FalseString)
+                ["ready"] = new(VisibilityOptions.Member, bool.FalseString),
+                ["LastMessage"] = new(VisibilityOptions.Member, "")
             });
         }
 

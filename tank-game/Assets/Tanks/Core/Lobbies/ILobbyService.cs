@@ -17,6 +17,7 @@ namespace Tanks.Core.Lobbies
         Task<ResultType<LobbyState>> UpdateLobbyAsync(LobbyUpdateRequest options);
         Task<ResultType> LeaveLobbyAsync();
         Task<ResultType> SetReadyAsync(bool ready);
+        Task<ResultType> SendMessageAsync(string message);
 
         Task<ResultType<IEnumerable<LobbySearchState>>> FindLobbiesAsync(string name = null);
         Task<ResultType<LobbyState>> JoinLobbyAsync(LobbyAddress address);

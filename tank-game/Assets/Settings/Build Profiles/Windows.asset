@@ -30,7 +30,7 @@ MonoBehaviour:
     m_guid: 5c4dd58a3e5379b4f959bf81675f617b
   - m_enabled: 1
     m_path: Assets/Tanks/Scenes/Menus.unity
-    m_guid: 440a5ef3c489e7544bb22ba51f5ab99e
+    m_guid: c9d244ece29ac7f439742a017f83c7d1
   - m_enabled: 1
     m_path: Assets/Tanks/Scenes/Loading.unity
     m_guid: e6d3d7e70c6b33a43bcd16391c4a6cf4

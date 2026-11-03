@@ -1,4 +1,5 @@
 <ui:UXML xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
+    <Style src="project://database/Assets/Tanks/UI/PlayerNames.uss?fileID=7433441132597879392&amp;guid=d709c0e2e2f94a7b81703dd81f41caf6&amp;type=3#PlayerNames"/>
     <Style src="project://database/Assets/Tanks/UI/Gameplay/Gameplay.uss?fileID=7433441132597879392&amp;guid=bb33b2d21da019b438ce1d0ab390cff8&amp;type=3#Gameplay"/>
     <ui:VisualElement name="PlayerNames" picking-mode="Ignore" class="player-names"/>
     <ui:Label text="GO!" name="StartText" class="start-counter" style="display: none;"/>

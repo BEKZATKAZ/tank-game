@@ -288,7 +288,7 @@ namespace Tanks.UI.Tests
             PrivacyPolicy policy = PrivacyPolicyService.Parse(File.ReadAllText("privacy-policy.md"));
 
             Assert.IsNotEmpty(policy.Hash);
-            StringAssert.Contains("Vivox", policy.Text);
+            StringAssert.Contains("Unity Lobby", policy.Text);
             StringAssert.Contains("Cloud Code", policy.Text);
             StringAssert.Contains("Cloud Save", policy.Text);
         }

@@ -2,6 +2,7 @@ using NSubstitute;
 using NUnit.Framework;
 using System;
 using Tanks.Core.Settings;
+using Tanks.UI.Menus.Sections;
 using Tanks.UI.Menus.Settings;
 
 namespace Tanks.UI.Tests.Menus
@@ -9,11 +10,13 @@ namespace Tanks.UI.Tests.Menus
     public class SettingsTests : ViewModelTestBase<SettingsViewModel>
     {
         private ISettingsService _service;
+        private IMenuSectionService _navigation;
 
         protected override SettingsViewModel CreateViewModel()
         {
             _service = Substitute.For<ISettingsService>();
-            return new SettingsViewModel(_service);
+            _navigation = Substitute.For<IMenuSectionService>();
+            return new SettingsViewModel(_service, _navigation);
         }
 
         [Test]
@@ -34,6 +37,14 @@ namespace Tanks.UI.Tests.Menus
             ViewModel.Unbind(callback);
 
             _service.Received(1).Unbind(PlayerSetting.MusicVolume, callback);
+        }
+
+        [Test]
+        public void Back_ReturnsToMainMenu()
+        {
+            ViewModel.Back();
+
+            _navigation.Received(1).OpenSection(MenuSectionType.Main, instant: false);
         }
 
         [Test]
@@ -61,6 +72,7 @@ namespace Tanks.UI.Tests.Menus
 
             Assert.IsFalse(ViewModel.ApplyButtonEnabled.Value);
             Assert.IsFalse(ViewModel.RevertButtonEnabled.Value);
+            _navigation.DidNotReceive().OpenSection(Arg.Any<MenuSectionType>(), Arg.Any<bool>());
         }
     }
 }

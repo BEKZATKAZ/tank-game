@@ -6,17 +6,15 @@ namespace Tanks.UI.Menus.Loading
 {
     public sealed class LoadingView : ViewBase<LoadingViewModel>
     {
-        private VisualElement _root;
         private Label _label;
 
         private readonly string[] _labelValue = new string[4];
 
-        protected override VisualElement GetRootElement() => _root;
+        protected override VisualElement GetRootElement() => _label;
 
         protected override void Initialize(VisualElement root)
         {
-            _root = root;
-            _label = _root.Q<Label>("Label");
+            _label = root.Q<Label>("LoadingLabel");
         }
 
         protected override void Bind(LoadingViewModel viewModel)
@@ -32,7 +30,7 @@ namespace Tanks.UI.Menus.Loading
 
             LMotion.Create(0f, 1f, 0.25f)
                 .WithEase(Ease.OutExpo)
-                .Bind(x => _root.style.opacity = x);
+                .Bind(x => _label.style.opacity = x);
         }
 
         private void LateUpdate()

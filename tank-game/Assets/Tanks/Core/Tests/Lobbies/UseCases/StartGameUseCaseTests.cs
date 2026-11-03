@@ -1,8 +1,10 @@
 using Cysharp.Threading.Tasks;
 using NSubstitute;
 using NUnit.Framework;
+using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
+using Tanks.Core.Common;
 using Tanks.Core.Common.Processes;
 using Tanks.Core.Lobbies;
 using Tanks.Core.Lobbies.Payloads;
@@ -20,6 +22,7 @@ namespace Tanks.Core.Tests.Lobbies.UseCases
         private ILobbyService _lobbyService;
         private ISessionSettingsService _settings;
         private PrepareServerUseCase _useCase;
+        private IAuthService _auth;
 
         [SetUp]
         public void SetUp()
@@ -39,11 +42,21 @@ namespace Tanks.Core.Tests.Lobbies.UseCases
             _settings.DefaultSettings.Returns(defaults);
 
             _lobbyService.CurrentLobbyState.Returns(new LobbyState());
-            _lobbyService.CurrentLobbyState.Players.Value.Add("player-1", default);
-            _lobbyService.CurrentLobbyState.Players.Value.Add("player-2", default);
-            _lobbyService.CurrentLobbyState.Players.Value.Add("player-3", default);
+            _lobbyService.CurrentLobbyState.Id.Value = new LobbyId("lobby");
+            _lobbyService.CurrentLobbyState.HostId.Value = "player-1";
+            foreach (string id in new[] { "player-1", "player-2", "player-3" })
+            {
+                _lobbyService.CurrentLobbyState.Players.Value.Add(id, new LobbyPlayerState
+                {
+                    UserId = id,
+                    Data = new Dictionary<string, string> { ["ready"] = "True" }
+                });
+            }
 
-            _useCase = new PrepareServerUseCase(_client, _lobbyService, _settings);
+            _auth = Substitute.For<IAuthService>();
+            _auth.CurrentProfile.Returns(new PlayerProfileState());
+            _auth.CurrentProfile.UserId.Value = "player-1";
+            _useCase = new PrepareServerUseCase(_client, _lobbyService, _auth, _settings);
         }
 
         [Test]
@@ -155,47 +168,36 @@ namespace Tanks.Core.Tests.Lobbies.UseCases
                 Arg.Is<PrepareServerRequest>(x => x.Settings.Equals(selected)), Arg.Any<CancellationToken>());
         }
 
-        [Test]
-        public async Task StartAsync_WaitsForPendingSaveBeforeLockingSettings()
+        [TestCase(false)]
+        [TestCase(true)]
+        public async Task StartAsync_RejectsUnreadyPlayersAndNonHosts(bool nonHost)
         {
-            var lobby = _lobbyService.CurrentLobbyState;
-            await lobby.SettingsLock.WaitAsync();
-            _lobbyService.UpdateLobbyAsync(Arg.Any<LobbyUpdateRequest>())
-                .Returns(Task.FromResult(Result.Success(lobby)));
-            RequestReturns("JOIN");
+            if (nonHost) _auth.CurrentProfile.UserId.Value = "player-2";
+            else _lobbyService.CurrentLobbyState.Players.Value["player-2"].Data["ready"] = "False";
 
-            Task<ResultType<string>> starting = _useCase.PrepareAsync().AsTask();
-            Assert.That(lobby.Status.Value, Is.EqualTo(LobbyStatus.WaitingForPlayers));
-            await _lobbyService.DidNotReceive().UpdateLobbyAsync(Arg.Any<LobbyUpdateRequest>());
-
-            var selected = SessionSettingsMapper.FromDefaultToLobby(_settings.DefaultSettings);
-            selected.MaxScore = 30;
-            lobby.LobbyData["settings"] = "published";
-            lobby.Settings.Value = selected;
-            lobby.SettingsLock.Release();
-            ResultType<string> result = await starting;
-
-            Assert.That(result.IsSuccess, Is.True);
-            Assert.That(lobby.Status.Value, Is.EqualTo(LobbyStatus.PreparingServer));
-            Assert.That(lobby.SettingsLock.CurrentCount, Is.EqualTo(1));
-            await _client.Received(1).SendRequestAsync<PrepareServerRequest, ServerStandBy>(
-                Arg.Is<PrepareServerRequest>(x => x.Settings.MaxScore == 30), Arg.Any<CancellationToken>());
-        }
-
-        [Test]
-        public async Task StartAsync_LobbyChangesWhileWaiting_DoesNotPrepare()
-        {
-            var lobby = _lobbyService.CurrentLobbyState;
-            await lobby.SettingsLock.WaitAsync();
-
-            Task<ResultType<string>> starting = _useCase.PrepareAsync().AsTask();
-            lobby.Id.Value = new LobbyId("next-lobby");
-            lobby.SettingsLock.Release();
-            ResultType<string> result = await starting;
+            ResultType<string> result = await _useCase.PrepareAsync();
 
             Assert.That(result.IsSuccess, Is.False);
-            Assert.That(lobby.SettingsLock.CurrentCount, Is.EqualTo(1));
             await _lobbyService.DidNotReceive().UpdateLobbyAsync(Arg.Any<LobbyUpdateRequest>());
+        }
+
+        [TestCase(false)]
+        [TestCase(true)]
+        public async Task StartAsync_RechecksLobbyAndReadinessAfterStartingUpdate(bool changeLobby)
+        {
+            var lobby = _lobbyService.CurrentLobbyState;
+            _lobbyService.UpdateLobbyAsync(Arg.Any<LobbyUpdateRequest>()).Returns(_ =>
+            {
+                if (changeLobby) lobby.Id.Value = new LobbyId("next-lobby");
+                else lobby.Players.Value["player-2"].Data["ready"] = "False";
+                return Task.FromResult(Result.Success(lobby));
+            });
+
+            ResultType<string> result = await _useCase.PrepareAsync();
+
+            Assert.That(result.IsSuccess, Is.False);
+            await _client.DidNotReceive().SendRequestAsync<PrepareServerRequest, ServerStandBy>(
+                Arg.Any<PrepareServerRequest>(), Arg.Any<CancellationToken>());
         }
 
         private void RequestReturns(string joinCode)

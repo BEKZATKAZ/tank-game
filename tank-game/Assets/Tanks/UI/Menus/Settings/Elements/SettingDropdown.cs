@@ -1,9 +1,6 @@
-﻿using Cysharp.Threading.Tasks;
-using System;
+﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using UnityEngine;
-using UnityEngine.AddressableAssets;
+using Unity.Properties;
 using UnityEngine.Localization;
 using UnityEngine.Localization.Settings;
 using UnityEngine.UIElements;
@@ -15,16 +12,22 @@ namespace Tanks.UI.Menus.Settings.Elements
     {
         public SettingDropdown()
         {
-            _dropdown = new DropdownField(Label);
-            _dropdown.pickingMode = PickingMode.Ignore;
-            _dropdown.labelElement.pickingMode = PickingMode.Ignore;
-            _dropdown.Q(className: DropdownField.inputUssClassName).pickingMode = PickingMode.Position;
-            Value = 0;
+            _label = new Label() { pickingMode = PickingMode.Ignore };
+            _label.AddToClassList("setting__label");
 
-            Add(_dropdown);
-            _dropdown.RegisterValueChangedCallback(x => Value = _dropdown.index);
-            RegisterCallback<AttachToPanelEvent>(OnAttachedToPanel);
-            RegisterCallback<DetachFromPanelEvent>(OnDetachedFromPanel);
+            _valueLabel = new Label() { pickingMode = PickingMode.Ignore };
+            _valueLabel.AddToClassList("setting-dropdown__value");
+
+            Button previous = new Button(PreviousValue) { text = "<" };
+            previous.AddToClassList("setting-dropdown__previous-button");
+
+            Button next = new Button(NextValue) { text = ">" };
+            next.AddToClassList("setting-dropdown__next-button");
+
+            Add(_label);
+            Add(previous);
+            Add(_valueLabel);
+            Add(next);
 
             LocalizationSettings.SelectedLocaleChanged += OnLocaleChanged;
         }
@@ -36,99 +39,78 @@ namespace Tanks.UI.Menus.Settings.Elements
             set
             {
                 _choiceKeys = value ?? new List<string>();
-                if (panel != null) RefreshChoicesAsync(_choiceKeys.ToList()).Forget();
                 NotifyPropertyChanged(nameof(ChoiceKeys));
+                OnValueChanged(Value);
             }
         }
 
-        private readonly DropdownField _dropdown;
-        private List<string> _choiceKeys = new List<string>();
-        private int _refreshVersion;
-
-        private async UniTask RefreshChoicesAsync(List<string> keys)
+        [UxmlAttribute]
+        [CreateProperty]
+        public bool LocalizeChoices
         {
-            int version = ++_refreshVersion;
-            var choices = new List<string>(keys.Count);
-
-            if (keys.Count == 0)
+            get => _localizeChoices;
+            set
             {
-                _dropdown.choices = choices;
-                return;
-            }
-
-            try
-            {
-                await LocalizationSettings.InitializationOperation.Task;
-                if (version != _refreshVersion) return;
-
-                foreach (string key in keys)
-                {
-                    var handle = LocalizationSettings.StringDatabase
-                        .GetLocalizedStringAsync("Menus", key);
-
-                    string text;
-
-                    try { text = await handle.Task; }
-                    finally { Addressables.Release(handle); }
-
-                    choices.Add(string.IsNullOrWhiteSpace(text) ? key : text);
-                }
-
-                // Ignore an outdated request if the locale or keys changed.
-                if (version != _refreshVersion) return;
-
-                int previousIndex = _dropdown.index;
-                _dropdown.choices = choices;
-
-                if (previousIndex >= 0 && previousIndex < choices.Count)
-                {
-                    _dropdown.index = previousIndex;
-                }
-            }
-            catch (Exception ex)
-            {
-                Debug.LogException(ex);
+                _localizeChoices = value;
+                NotifyPropertyChanged(nameof(LocalizeChoices));
+                OnValueChanged(Value);
             }
         }
+
+        private readonly Label _label;
+        private readonly Label _valueLabel;
+        private List<string> _choiceKeys = new List<string>();
+        private bool _localizeChoices;
 
         public override void OnDestroyed()
         {
             LocalizationSettings.SelectedLocaleChanged -= OnLocaleChanged;
-            UnregisterCallback<AttachToPanelEvent>(OnAttachedToPanel);
-            UnregisterCallback<DetachFromPanelEvent>(OnDetachedFromPanel);
-            _refreshVersion++;
+        }
+
+        protected override async void OnValueChanged(int newValue)
+        {
+            if (newValue < 0 || newValue >= _choiceKeys.Count) return;
+
+            base.OnValueChanged(newValue);
+
+            string choice = _choiceKeys[newValue];
+            string text = null;
+
+            if (LocalizeChoices)
+            {
+                try
+                {
+                    text = await LocalizationSettings.StringDatabase
+                        .GetLocalizedStringAsync("Menus", $"menu.settings.{choice}").Task;
+                }
+                catch (Exception) { }
+            }
+
+            _valueLabel.text = text ?? choice;
         }
 
         protected override void OnLabelChanged(string newLabel)
         {
-            _dropdown.label = newLabel;
+            _label.text = newLabel;
             base.OnLabelChanged(newLabel);
         }
 
-        protected override void OnValueChanged(int newValue)
+        private void PreviousValue()
         {
-            if (newValue >= 0 && newValue < _dropdown.choices.Count)
-            {
-                _dropdown.index = newValue;
-            }
+            if (Value <= 0) Value = _choiceKeys.Count - 1;
+            else Value--;
+        }
 
-            base.OnValueChanged(newValue);
+        private void NextValue()
+        {
+            if (Value >= _choiceKeys.Count - 1) Value = 0;
+            else Value++;
         }
 
         private void OnLocaleChanged(Locale locale)
         {
             if (panel is null) return;
-            RefreshChoicesAsync(_choiceKeys.ToList()).Forget();
-        }
-
-        private void OnAttachedToPanel(AttachToPanelEvent evt)
-        {
-            RefreshChoicesAsync(_choiceKeys.ToList()).Forget();
-        }
-
-        private void OnDetachedFromPanel(DetachFromPanelEvent evt)
-        {
-            _refreshVersion++;
+            OnValueChanged(Value);
         }
     }
 }

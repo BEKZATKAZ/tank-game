@@ -10,6 +10,7 @@ namespace Tanks.UI.Menus
         {
             target.RegisterCallback<PointerMoveEvent>(OnPointerMove, TrickleDown.TrickleDown);
             target.RegisterCallback<PointerOverEvent>(OnPointerOver, TrickleDown.TrickleDown);
+            target.RegisterCallback<PointerEnterEvent>(OnPointerEnter, TrickleDown.TrickleDown);
             target.RegisterCallback<PointerLeaveEvent>(OnPointerLeave);
             target.RegisterCallback<FocusInEvent>(OnFocusIn, TrickleDown.TrickleDown);
             target.RegisterCallback<AttachToPanelEvent>(OnAttachedToPanel);
@@ -22,6 +23,7 @@ namespace Tanks.UI.Menus
         {
             target.UnregisterCallback<PointerMoveEvent>(OnPointerMove, TrickleDown.TrickleDown);
             target.UnregisterCallback<PointerOverEvent>(OnPointerOver, TrickleDown.TrickleDown);
+            target.UnregisterCallback<PointerEnterEvent>(OnPointerEnter, TrickleDown.TrickleDown);
             target.UnregisterCallback<PointerLeaveEvent>(OnPointerLeave);
             target.UnregisterCallback<FocusInEvent>(OnFocusIn, TrickleDown.TrickleDown);
             target.UnregisterCallback<AttachToPanelEvent>(OnAttachedToPanel);
@@ -30,8 +32,15 @@ namespace Tanks.UI.Menus
 
         private void OnPointerMove(PointerMoveEvent evt) => UpdateHighlight(evt.target as VisualElement);
         private void OnPointerOver(PointerOverEvent evt) => UpdateHighlight(evt.target as VisualElement);
-        private void OnPointerLeave(PointerLeaveEvent evt) => UpdateHighlight(null);
+        private void OnPointerEnter(PointerEnterEvent evt) => UpdateHighlight(evt.target as VisualElement);
         private void OnFocusIn(FocusInEvent evt) => UpdateHighlight(evt.target as VisualElement);
+
+        private void OnPointerLeave(PointerLeaveEvent evt)
+        {
+            target.RemoveFromClassList(HighlightClass);
+            target.Query(className: HighlightClass).ForEach(highlighted =>
+                highlighted.RemoveFromClassList(HighlightClass));
+        }
 
         private void OnAttachedToPanel(AttachToPanelEvent evt)
         {
@@ -71,7 +80,12 @@ namespace Tanks.UI.Menus
                 if (highlighted != control) highlighted.RemoveFromClassList(HighlightClass);
             });
 
-            if (control != null && control.enabledInHierarchy) control.AddToClassList(HighlightClass);
+            if (control != null && control.enabledInHierarchy)
+            {
+                control.AddToClassList(HighlightClass);
+                control.GetFirstAncestorOfType<Settings.Elements.SettingElementBase>()
+                    ?.AddToClassList(HighlightClass);
+            }
         }
 
         private static VisualElement GetControl(VisualElement element)

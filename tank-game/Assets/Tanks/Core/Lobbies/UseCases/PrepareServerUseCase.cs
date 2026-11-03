@@ -18,60 +18,55 @@ namespace Tanks.Core.Lobbies.UseCases
         public PrepareServerUseCase(
             IClientCommunicationService client,
             ILobbyService lobbyService,
+            IAuthService auth,
             ISessionSettingsService settings)
         {
             _client = client;
             _lobbyService = lobbyService;
+            _auth = auth;
             _settings = settings;
         }
 
         private readonly IClientCommunicationService _client;
         private readonly ILobbyService _lobbyService;
+        private readonly IAuthService _auth;
         private readonly ISessionSettingsService _settings;
 
         public async UniTask<ResultType<string>> PrepareAsync()
         {
             LobbyState lobby = _lobbyService.CurrentLobbyState;
             LobbyId lobbyId = lobby.Id.Value;
-            SessionSettingsFromLobby settings;
-            await lobby.SettingsLock.WaitAsync();
 
-            try
+            if (string.IsNullOrEmpty(lobbyId.Value) ||
+                lobby.HostId.Value != _auth.CurrentProfile.UserId.Value ||
+                lobby.Status.Value != LobbyStatus.WaitingForPlayers || lobby.AllPlayersReady == false)
             {
-                if (lobby.Id.Value.Value != lobbyId.Value ||
-                    lobby.Status.Value != LobbyStatus.WaitingForPlayers)
-                {
-                    return Result.Failure<string>("failed-to-update");
-                }
-
-                // Lock editing before publishing the preparing status.
-                lobby.Status.Value = LobbyStatus.PreparingServer;
-
-                ResultType starting = await _lobbyService.UpdateLobbyAsync(new LobbyUpdateRequest
-                {
-                    Status = LobbyStatus.PreparingServer
-                });
-
-                if (starting.IsSuccess == false)
-                {
-                    return Result.Failure<string>(starting.ErrorCode);
-                }
-
-                if (lobby.Id.Value.Value != lobbyId.Value)
-                {
-                    return Result.Failure<string>("failed-to-update");
-                }
-
-                settings = lobby.LobbyData.ContainsKey("settings")
-                    ? lobby.Settings.Value
-                    : SessionSettingsMapper.FromDefaultToLobby(_settings.DefaultSettings);
-                settings.PlayerCount = lobby.Players.Value.Count;
-            }
-            finally
-            {
-                lobby.SettingsLock.Release();
+                return Result.Failure<string>("failed-to-update");
             }
 
+            lobby.Status.Value = LobbyStatus.PreparingServer;
+
+            ResultType starting = await _lobbyService.UpdateLobbyAsync(new LobbyUpdateRequest
+            {
+                Status = LobbyStatus.PreparingServer
+            });
+
+            if (starting.IsSuccess == false)
+            {
+                return Result.Failure<string>(starting.ErrorCode);
+            }
+
+            if (lobby.Id.Value.Value != lobbyId.Value ||
+                lobby.HostId.Value != _auth.CurrentProfile.UserId.Value || lobby.AllPlayersReady == false)
+            {
+                return Result.Failure<string>("failed-to-update");
+            }
+
+            SessionSettingsFromLobby settings = lobby.LobbyData.ContainsKey("settings")
+                ? lobby.Settings.Value
+                : SessionSettingsMapper.FromDefaultToLobby(_settings.DefaultSettings);
+
+            settings.PlayerCount = lobby.Players.Value.Count;
             using CancellationTokenSource timeout = new CancellationTokenSource(15000);
 
             ResultType<ServerStandBy> standBy = await _client

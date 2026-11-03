@@ -7,9 +7,14 @@ namespace Tanks.UI.Menus.Settings.Elements
     {
         public SliderSetting()
         {
-            _slider = new SliderInt(Label, MinValue, MaxValue);
-            _slider.pickingMode = PickingMode.Ignore;
+            _slider = new SliderInt(Label, MinValue, MaxValue)
+            {
+                pickingMode = PickingMode.Ignore
+            };
+
+            _slider.labelElement.AddToClassList("setting__label");
             _slider.labelElement.pickingMode = PickingMode.Ignore;
+
             _slider.Q(className: SliderInt.inputUssClassName).pickingMode = PickingMode.Position;
             _slider.RegisterValueChangedCallback(x => Value = x.newValue);
 

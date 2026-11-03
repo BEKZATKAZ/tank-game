@@ -1,21 +1,29 @@
 using System;
 using Tanks.Core.Settings;
+using Tanks.UI.Menus.Sections;
 using Tanks.Utils;
 
 namespace Tanks.UI.Menus.Settings
 {
     public sealed class SettingsViewModel : IViewModel
     {
-        public SettingsViewModel(ISettingsService service)
+        public SettingsViewModel(ISettingsService service, IMenuSectionService navigation)
         {
             _service = service;
+            _navigation = navigation;
         }
 
         public BindableProperty<bool> ApplyButtonEnabled { get; } = new();
         public BindableProperty<bool> RevertButtonEnabled { get; } = new();
 
         private readonly ISettingsService _service;
+        private readonly IMenuSectionService _navigation;
         private PlayerSetting _targetSetting;
+
+        public void Back()
+        {
+            _navigation.OpenSection(MenuSectionType.Main, instant: false);
+        }
 
         public void SetBindTarget(PlayerSetting targetSetting)
         {

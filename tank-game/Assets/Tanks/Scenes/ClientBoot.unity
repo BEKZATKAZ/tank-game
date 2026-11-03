@@ -188,9 +188,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Tanks.UI::Tanks.UI.Entry.AccountSetup.AccountSetupView
   _showOnPlay: 1
-  references:
-    version: 2
-    RefIds: []
 --- !u!1 &14385088
 GameObject:
   m_ObjectHideFlags: 0
@@ -486,7 +483,7 @@ MonoBehaviour:
       Data2: 1243578424
       Data3: -1452443491
       Data4: -110240814
-    Path: event:/UI/Dialog/Dialog_Error
+    Path: event:/UI/Dialog
 --- !u!4 &709058259
 Transform:
   m_ObjectHideFlags: 0

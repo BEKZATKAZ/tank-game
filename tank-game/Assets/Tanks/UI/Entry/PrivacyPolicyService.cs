@@ -40,7 +40,9 @@ namespace Tanks.UI.Entry
 
             using var sha256 = SHA256.Create();
             byte[] hash = sha256.ComputeHash(Encoding.UTF8.GetBytes(text));
-            return new PrivacyPolicy(text, BitConverter.ToString(hash).Replace("-", "").ToLowerInvariant());
+
+            string hashString = BitConverter.ToString(hash).Replace("-", "").ToLowerInvariant();
+            return new PrivacyPolicy(text, hashString);
         }
 
         public bool IsAccepted(PrivacyPolicy policy)

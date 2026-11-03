@@ -20,7 +20,7 @@ MonoBehaviour:
     - rid: 6704992630869852538
   m_TableData:
   - m_Id: 3245362964291584
-    m_Localized: HOST LOBBY
+    m_Localized: CREATE LOBBY
     m_Metadata:
       m_Items: []
   - m_Id: 289292115968
@@ -298,6 +298,22 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 41000000000000020
     m_Localized: Backwards movement speed
+    m_Metadata:
+      m_Items: []
+  - m_Id: 33761256270159872
+    m_Localized: PLAY
+    m_Metadata:
+      m_Items: []
+  - m_Id: 33762638788255744
+    m_Localized: EXTRAS
+    m_Metadata:
+      m_Items: []
+  - m_Id: 33779992972713984
+    m_Localized: BACK
+    m_Metadata:
+      m_Items: []
+  - m_Id: 34409516232040448
+    m_Localized: REFRESH
     m_Metadata:
       m_Items: []
   references:

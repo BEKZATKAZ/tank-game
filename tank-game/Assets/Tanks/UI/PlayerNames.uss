@@ -1,0 +1,29 @@
+.player-names {
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+}
+
+.player-name {
+    position: absolute;
+    translate: -50% -100%;
+    padding-bottom: 8px;
+    max-width: 260px;
+    font-size: 32px;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    text-shadow: 5px 5px 0 rgb(0, 0, 0);
+    -unity-text-align: middle-center;
+}
+
+.player-ready-check {
+    position: absolute;
+    translate: -50% -50%;
+    scale: 3 3;
+    width: 26px;
+    height: 24px;
+}
+
+

@@ -6,37 +6,39 @@
 }
 
 .dialog {
-	background-color: black;
-	border-width: 2px;
-	border-color: red;
-	border-radius: 20px;
 	min-width: 700px;
 	overflow: hidden;
+    background-image: var(--bg-image);
+	-unity-background-image-tint-color: red;
+}
+
+.dialog-fill {
+	flex-grow: 1;
+	margin: 13px;
+    background-image: var(--bg-image);
+	-unity-background-image-tint-color: black;
 }
 
 .dialog-header {
 	font-size: 32px;
 	background-color: red;
 	padding: 10px 30px;
-	-unity-font-definition: var(--font-black);
+	-unity-font-style: bold;
 }
 
 .dialog-message {
-	font-size: 24px;
+	font-size: 26px;
 	padding: 30px;
 }
 
 .unity-button {
-	font-size: 24px;
 	padding: 10px 20px;
 	border-width: 2px;
-	border-color: rgba(255, 255, 255, 0.02);
-	flex-grow: 1;
 	flex-shrink: 0;
 }
 
 .dialog-buttons {
-	margin: 20px;
+	margin: 10px 20px 20px 20px;
 	flex-direction: row;
 	justify-content: flex-end;
 }

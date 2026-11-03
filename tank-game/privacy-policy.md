@@ -1,6 +1,6 @@
 # Privacy Policy
 
-**Last updated:** October 28, 2026
+**Last updated:** November 3, 2026
 **Game:** T.A.N.K.S.
 **Developer:** BEKZATKAZ
 **Contact:** bekzatkaz.games@gmail.com
@@ -15,7 +15,7 @@ Before sign-in, the Game retrieves this policy from GitHub. You can read it and 
 
 - **Accounts:** Unity Authentication creates a player identifier and manages credentials. Anonymous sign-in still creates a service account. The Game stores your chosen display name; local authentication credentials can restore your account on later launches.
 - **Multiplayer:** Unity Lobby and Relay process player identifiers, IP addresses, lobby membership and settings, and connection information. Other players see your display name and relevant lobby information. Gameplay actions and state are transmitted to synchronize sessions.
-- **Lobby chat:** Vivox processes user and device identifiers, truncated IP addresses, channel membership, display names, messages, and message metadata such as sender and time. Messages are visible to lobby participants. The Game loads recent channel history, which can expose earlier messages to players who join later. Avoid sharing sensitive information in chat. Current channels are text-only; the Game does not enable Vivox voice chat or microphone capture.
+- **Lobby chat:** Unity Lobby stores each member's latest message and message identifier in member-visible player data. Sending a message replaces that value. Connected players display new messages and keep their received transcript locally while the lobby chat is open; joining players do not load earlier messages. Messages are visible to lobby participants. Avoid sharing sensitive information in chat. The Game does not capture microphone audio.
 - **Diagnostics:** Unity engine diagnostics are enabled in the current project settings. Technical reports may contain device, operating system, installation identifier, and error information, depending on collection settings. Legacy Cloud Diagnostics crash reporting is disabled in this configuration. These are different Unity diagnostic features.
 - **Policy requests:** Every entry launch and retry downloads this document over HTTPS from raw.githubusercontent.com. GitHub and its delivery providers receive your IP address and connection/request information. The Game does not attach Unity credentials, player IDs, or messages to this request.
 - **Local agreement:** A SHA-256 fingerprint of the accepted policy is saved in local preferences. This is per installation, not an account-level cloud consent record; the Game does not upload it. Clearing local data may remove it.
@@ -33,12 +33,11 @@ Where a legal basis is required, we rely on performance of requested services fo
 
 ## 4. Third-Party Services
 
-Current providers are Unity (Authentication, Lobby, Relay, Vivox, and enabled engine diagnostics) and GitHub (policy hosting). They may use service providers to operate their services. Netcode for GameObjects synchronizes networked gameplay; it is software, not a separate hosted data-storage service.
+Current providers are Unity (Authentication, Lobby, Relay, and enabled engine diagnostics) and GitHub (policy hosting). They may use service providers to operate their services. Netcode for GameObjects synchronizes networked gameplay; it is software, not a separate hosted data-storage service.
 
 Official references:
 
 - [Unity Game Player and App User Privacy Policy](https://unity.com/legal/game-player-and-app-user-privacy-policy)
-- [Vivox privacy overview](https://docs.unity.com/en-us/vivox/privacy/privacy-overview)
 - [Unity Diagnostics privacy and consent](https://docs.unity.com/en-us/cloud/developer-data/privacy-and-consent)
 - [GitHub Privacy Statement](https://docs.github.com/en/site-policy/privacy-policies/github-general-privacy-statement)
 - Planned services: [Cloud Code privacy overview](https://docs.unity.com/en-us/cloud-code/3.0.0/privacy-overview) and [Cloud Save privacy overview](https://docs.unity.com/en-us/cloud-save/privacy-and-consent/overview).
@@ -53,7 +52,7 @@ We do not sell personal information or use it for targeted advertising. Provider
 
 Authentication data follows Unity Authentication's account retention and deletion procedures. Multiplayer logs and diagnostic information follow the relevant service settings and retention requirements. Game state is used during sessions.
 
-Unity documents default Vivox retention of up to 30 days for user IDs, device IDs, and truncated IP addresses. Text history is available for 7 days by default and configurable for up to 6 months. Actual availability depends on service configuration. Requesting only recent messages does not shorten server retention; leaving a lobby or closing the Game does not delete Vivox history.
+Each member's latest message remains in lobby player data until replaced or removed with the player or lobby. The Game does not request server-side chat history. The displayed transcript is held in memory and cleared when the chat closes. Provider logs and backups follow Unity's applicable retention practices.
 
 The local agreement fingerprint remains until replaced by a later acceptance or removed with local preferences. GitHub retains request information under its privacy practices. Privacy correspondence is kept as needed to resolve requests and satisfy applicable legal requirements. Cloud Code and Cloud Save are planned and do not currently retain player information for the Game.
 
@@ -65,7 +64,7 @@ We use reasonable measures intended to protect information, including HTTPS poli
 
 Depending on your location, you may have rights to access, correct, delete, or obtain a portable copy of information; object to or restrict processing; withdraw consent where applicable; and complain to your local data protection authority. Withdrawal does not affect earlier lawful processing.
 
-Contact **bekzatkaz.games@gmail.com**. Include your player identifier if available and relevant details, but never send passwords or authentication tokens. We may need reasonable identity verification. We coordinate requests with relevant providers, including Vivox support for chat access or deletion where necessary. Deleting an Authentication account does not automatically delete data held in other services. Legal retention exceptions may apply.
+Contact **bekzatkaz.games@gmail.com**. Include your player identifier if available and relevant details, but never send passwords or authentication tokens. We may need reasonable identity verification. We coordinate requests with relevant providers, including Unity support for lobby data access or deletion where necessary. Deleting an Authentication account does not automatically delete data held in other services. Legal retention exceptions may apply.
 
 You can decline by quitting before sign-in. Removing local acceptance causes a new prompt but does not delete server-side data. Contact us to withdraw consent or request deletion of already processed information. Losing local credentials can prevent recovery of an anonymous account.
 

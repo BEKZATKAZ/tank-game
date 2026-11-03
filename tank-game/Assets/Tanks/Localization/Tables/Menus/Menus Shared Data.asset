@@ -83,6 +83,10 @@ MonoBehaviour:
     m_Key: menu.settings.apply
     m_Metadata:
       m_Items: []
+  - m_Id: 33779992972713984
+    m_Key: menu.main.back
+    m_Metadata:
+      m_Items: []
   - m_Id: 3244510153236480
     m_Key: menu.main.tutorial
     m_Metadata:
@@ -93,6 +97,14 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 27659821056
     m_Key: menu.main.quit
+    m_Metadata:
+      m_Items: []
+  - m_Id: 33761256270159872
+    m_Key: menu.main.play
+    m_Metadata:
+      m_Items: []
+  - m_Id: 33762638788255744
+    m_Key: menu.main.extras
     m_Metadata:
       m_Items: []
   - m_Id: 3245362964291584
@@ -153,6 +165,10 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 6608185362702336
     m_Key: menu.find-lobby.search
+    m_Metadata:
+      m_Items: []
+  - m_Id: 34409516232040448
+    m_Key: menu.find-lobby.refresh
     m_Metadata:
       m_Items: []
   - m_Id: 6610305478516736

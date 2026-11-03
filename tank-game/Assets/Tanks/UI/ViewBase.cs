@@ -21,6 +21,7 @@ namespace Tanks.UI
     {
         [SerializeField] private bool _showOnPlay = true;
 
+        public abstract VisualElement Root { get; }
         public bool ShowOnPlay => _showOnPlay;
 
         public abstract void Show();
@@ -33,7 +34,7 @@ namespace Tanks.UI
         [Inject] private readonly IObjectResolver _resolver;
 
         public T ViewModel { get; private set; }
-        public VisualElement Root => GetRootElement();
+        public override VisualElement Root => GetRootElement();
         public bool IsVisible => Root.style.display != DisplayStyle.None;
 
         private bool _hasInitialized;

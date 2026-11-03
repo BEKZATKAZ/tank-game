@@ -8,8 +8,13 @@
     height: 100%;
     align-content: center;
     justify-content: center;
-    font-size: 72px;
     -unity-text-align: middle-center;
+}
+
+.game-title {
+    letter-spacing: -3px;
+    font-size: 74px;
+    -unity-font-style: bold;
 }
 
 .loading-progress {

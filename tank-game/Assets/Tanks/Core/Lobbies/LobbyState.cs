@@ -49,9 +49,21 @@ namespace Tanks.Core.Lobbies
         public BindableProperty<string> JoinCode { get; } = new();
         public BindableProperty<LobbyStatus> Status { get; } = new();
         public BindableProperty<SessionSettingsFromLobby> Settings { get; } = new();
-        public BindableProperty<bool> IsUpdatingSettings { get; } = new();
-        public SemaphoreSlim SettingsLock { get; } = new(1, 1);
         public BindableProperty<SessionSettings> ServerConfirmedSettings { get; } = new();
+
+        public bool AllPlayersReady
+        {
+            get
+            {
+                if (Players.Value is not { Count: > 0 }) return false;
+                foreach (LobbyPlayerState player in Players.Value.Values)
+                {
+                    if (player.IsReady == false) return false;
+                }
+
+                return true;
+            }
+        }
 
         public void Refresh()
         {
