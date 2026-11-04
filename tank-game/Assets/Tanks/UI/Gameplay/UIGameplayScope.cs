@@ -1,6 +1,7 @@
 using Tanks.Client.Bootstrap;
 using Tanks.Client.Input;
 using Tanks.Core.Common.Scenes;
+using Tanks.UI.Gameplay.Effects;
 using Tanks.UI.Gameplay.Eliminated;
 using Tanks.UI.Gameplay.GameStats;
 using Tanks.UI.Gameplay.Input;
@@ -32,6 +33,7 @@ namespace Tanks.UI.Gameplay
             builder.Register<PauseMenuViewModel>(Lifetime.Singleton);
             builder.Register<IMenuSectionService, PauseMenuSectionService>(Lifetime.Singleton);
             builder.Register<IGameplayExitService, GameplayExitService>(Lifetime.Singleton);
+
             builder.Register<DialogScreenViewModel>(Lifetime.Transient);
             builder.RegisterComponent(_pauseDialog).As<IDialogScreenService>();
             builder.RegisterSettings();
@@ -47,6 +49,7 @@ namespace Tanks.UI.Gameplay
             builder.Register<PlayerNamesViewModel>(Lifetime.Transient);
             builder.Register<PlayerAmmoViewModel>(Lifetime.Transient);
             builder.Register<PlayerStatsViewModel>(Lifetime.Transient);
+            builder.Register<EffectsViewModel>(Lifetime.Transient);
 
             builder.Register<GameStatsViewModel>(Lifetime.Transient);
             builder.Register<TimerViewModel>(Lifetime.Transient);

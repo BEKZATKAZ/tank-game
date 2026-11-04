@@ -79,7 +79,7 @@ namespace Tanks.Localization
             };
 
             try { Original.Add(key, variable); }
-            catch (OperationException ex) { Debug.LogException(ex); }
+            catch (OperationException) { }
         }
     }
 }

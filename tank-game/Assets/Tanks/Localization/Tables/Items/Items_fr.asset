@@ -35,7 +35,7 @@ MonoBehaviour:
       m_Items:
       - rid: 5824281740147687477
   - m_Id: 24639211494137856
-    m_Localized: "Un joueur choisi au hasard parmi tous les joueurs, vous y compris, aura la malchance de recevoir {damage} points de d\xE9g\xE2ts de nulle part."
+    m_Localized: "Un joueur choisi au hasard parmi tous les joueurs, vous y compris, subit {damage} d\xE9g\xE2ts de mani\xE8re inattendue. Il lui reste 1 point de vie si ces d\xE9g\xE2ts \xE9taient mortels."
     m_Metadata:
       m_Items:
       - rid: 5824281740147687477
@@ -202,7 +202,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 26194437552431104
-    m_Localized: "Une arme qui lance une seule bombe. \xC0 l'impact, la bombe explose, projetant de nombreux fragments dans une large zone. Chaque fragment inflige des d\xE9g\xE2ts mineurs. Cette arme ne peut tirer qu'une seule fois."
+    m_Localized: "Arme tirant une bombe. \xC0 l'impact, la bombe explose et projette une multitude d'\xE9clats. Chaque \xE9clat inflige de l\xE9gers d\xE9g\xE2ts."
     m_Metadata:
       m_Items: []
   - m_Id: 26196113726332928
@@ -214,9 +214,10 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 26441382044852224
-    m_Localized: "Cette arme n'inflige aucun d\xE9g\xE2t, mais lorsqu'elle touche sa cible, elle r\xE9duit consid\xE9rablement la vitesse et la cadence de tir du joueur pendant quelques secondes. Cette arme ne peut tirer qu'une seule fois."
+    m_Localized: "Cette arme n'inflige pas de d\xE9g\xE2ts. Le joueur touch\xE9 subit l'effet de statut {effect-frozen} pendant quelques secondes."
     m_Metadata:
-      m_Items: []
+      m_Items:
+      - rid: 5824281740147687477
   - m_Id: 26442908607930368
     m_Localized: "Vous n'infligez aucun d\xE9g\xE2t, mais vous immobilisez instantan\xE9ment toute personne touch\xE9e une fois."
     m_Metadata:
@@ -437,3 +438,4 @@ MonoBehaviour:
         - id: 35493227946008576
         - id: 35493227946008579
         - id: 35511987289415680
+        - id: 26441382044852224

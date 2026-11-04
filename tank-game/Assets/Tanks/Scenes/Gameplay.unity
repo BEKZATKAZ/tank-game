@@ -2380,6 +2380,7 @@ GameObject:
   - component: {fileID: 1821635265}
   - component: {fileID: 1821635264}
   - component: {fileID: 1821635266}
+  - component: {fileID: 1821635268}
   - component: {fileID: 1821635267}
   m_Layer: 0
   m_Name: UI
@@ -2470,6 +2471,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Tanks.UI::Tanks.UI.Gameplay.ItemDescription.ItemDescriptionView
   _showOnPlay: 1
+  _effectsConfig: {fileID: 11400000, guid: 4c772ee5d38c6d544a1c74b59af171e5, type: 2}
 --- !u!114 &1821635258
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2641,6 +2643,21 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Tanks.UI::Tanks.UI.Gameplay.PlayerNames.PlayerNamesView
   _showOnPlay: 1
+--- !u!114 &1821635268
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1821635251}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 32656af2e28bf2742a1e394b54d3ca7a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Tanks.UI::Tanks.UI.Gameplay.Effects.EffectsView
+  _showOnPlay: 1
+  _fullscreenMaterial: {fileID: -876546973899608171, guid: 8ffc5c2242a0bbe4fb5f41a1e93d795e, type: 3}
+  _config: {fileID: 11400000, guid: 4c772ee5d38c6d544a1c74b59af171e5, type: 2}
 --- !u!1 &2095325335
 GameObject:
   m_ObjectHideFlags: 0

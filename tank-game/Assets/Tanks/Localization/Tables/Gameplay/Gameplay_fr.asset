@@ -81,6 +81,18 @@ MonoBehaviour:
     m_Localized: Score
     m_Metadata:
       m_Items: []
+  - m_Id: 22504394505805824
+    m_Localized: "Br\xFBlant"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 22504394547748864
+    m_Localized: "Congel\xE9"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 22504394547748865
+    m_Localized: "Gu\xE9rison"
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:

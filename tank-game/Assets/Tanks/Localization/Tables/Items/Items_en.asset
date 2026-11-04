@@ -101,7 +101,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 24639211494137856
-    m_Localized: One random player among all players including you gets unlucky and takes {damage} damage out of the blue.
+    m_Localized: One random player among all players including you gets unlucky and takes {damage} damage out of the blue. The player is left with 1 HP if the damage would be lethal.
     m_Metadata:
       m_Items:
       - rid: 937747718553469026
@@ -180,7 +180,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 26194437552431104
-    m_Localized: Weapon that fires a bomb. When collision occurs, the bomb detonates launching a ton of shards around. Each shard deal small damage. This weapon may be fired only once.
+    m_Localized: Weapon that fires a bomb. On any impact the bomb detonates launching a ton of shards from the explosion. Each shard deals small damage.
     m_Metadata:
       m_Items: []
   - m_Id: 26196113726332928
@@ -192,9 +192,10 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 26441382044852224
-    m_Localized: This weapon doesn't deal damage, but when it hits a player, it significantly drops the speed and the rate of fire of the player for a couple of seconds. This weapon may be fired only once.
+    m_Localized: This weapon doesn't deal damage. The player you hit receives the {effect-frozen} status effect for a couple seconds.
     m_Metadata:
-      m_Items: []
+      m_Items:
+      - rid: 937747718553469026
   - m_Id: 26442908607930368
     m_Localized: Deal no damage, but freeze whoever you hit one time.
     m_Metadata:
@@ -444,3 +445,4 @@ MonoBehaviour:
         - id: 35493227946008576
         - id: 35493227946008579
         - id: 35511987289415680
+        - id: 26441382044852224

@@ -1,11 +1,14 @@
 ﻿using Cysharp.Threading.Tasks;
 using NaughtyAttributes;
+using LitMotion;
+using System;
 using Tanks.Audio;
 using Tanks.Client.Entities.Health;
 using Tanks.Client.Rendering;
 using Tanks.Client.Visuals;
 using Tanks.Shared;
 using Tanks.Shared.Adapters;
+using Tanks.Shared.Effects;
 using Tanks.Shared.Entities;
 using Tanks.Shared.Entities.Health;
 using UnityEngine;
@@ -13,7 +16,7 @@ using VContainer;
 
 namespace Tanks.Client.Entities.Runtime
 {
-    [RequireComponent(typeof(HealthBehaviour))]
+    [RequireComponent(typeof(HealthBehaviour), typeof(EffectOwnerBehaviour))]
     public sealed class EntityVisuals :
         MonoBehaviour,
         INetworkMessageHandler<HealthChangedFromServer>,
@@ -34,6 +37,8 @@ namespace Tanks.Client.Entities.Runtime
         private SpriteRenderer[] _bodySprites;
 
         private IHealthBehaviour _health;
+        private IEffectOwnerBehaviour _effectOwner;
+
         private IVisualService _visualService;
         private IAudioPlayer _audioPlayer;
         private IClientEntityService _entityService;
@@ -41,6 +46,7 @@ namespace Tanks.Client.Entities.Runtime
         private ICameraShakeService _cameraShake;
         private bool _hasPredictedDestroy;
         private float _lastHitTime;
+        private EffectVisualState[] _effectVisuals = Array.Empty<EffectVisualState>();
 
         private ITransform _hitParticleTransform;
         private ITransform _destroyParticleTransform;
@@ -231,6 +237,16 @@ namespace Tanks.Client.Entities.Runtime
             }
 
             _health = GetComponent<HealthBehaviour>();
+            _effectOwner = GetComponent<EffectOwnerBehaviour>();
+
+            EffectVisualSettings[] effects = _config.Effects;
+            _effectVisuals = new EffectVisualState[effects.Length];
+
+            for (int i = 0; i < effects.Length; i++)
+            {
+                _effectVisuals[i] = new EffectVisualState(effects[i]);
+            }
+
             _health.RegisterMessageHandler<HealthChangedFromPrediction>(this);
             _health.RegisterMessageHandler<HealthChangedFromServer>(this);
         }
@@ -246,11 +262,78 @@ namespace Tanks.Client.Entities.Runtime
             {
                 _destroyParticleTransform.WorldPosition = _health.Transform.WorldPosition;
             }
+
+            foreach (EffectVisualState effect in _effectVisuals)
+            {
+                effect.Update(_effectOwner.Effects.ContainsKey(effect.Type));
+            }
+
+            ApplyEffectIntensities();
+        }
+
+        private void ApplyEffectIntensities()
+        {
+            if (_bodySprites is null) return;
+
+            foreach (SpriteRenderer renderer in _bodySprites)
+            {
+                if (renderer == false) continue;
+
+                Material material = renderer.material;
+                foreach (EffectVisualState effect in _effectVisuals)
+                {
+                    if (material.HasProperty(effect.PropertyId) == false) continue;
+                    material.SetFloat(effect.PropertyId, effect.Intensity);
+                }
+            }
+        }
+
+        private void OnDisable()
+        {
+            foreach (EffectVisualState effect in _effectVisuals) effect.Reset();
+            ApplyEffectIntensities();
         }
 
         private void OnDestroy()
         {
+            foreach (EffectVisualState effect in _effectVisuals) effect.Reset();
             _hitSound?.Dispose();
+        }
+
+        private sealed class EffectVisualState
+        {
+            public EffectVisualState(EffectVisualSettings settings)
+            {
+                _settings = settings;
+                PropertyId = Shader.PropertyToID(settings.ShaderProperty);
+            }
+
+            public EffectType Type => _settings.Type;
+            public int PropertyId { get; }
+            public float Intensity { get; private set; }
+
+            private readonly EffectVisualSettings _settings;
+            private bool _isActive;
+            private MotionHandle _fade;
+
+            public void Update(bool isActive)
+            {
+                if (_isActive == isActive) return;
+                _isActive = isActive;
+                _fade.TryCancel();
+
+                float duration = isActive ? _settings.FadeInDuration : _settings.FadeOutDuration;
+                _fade = LMotion.Create(Intensity, isActive ? 1f : 0f, duration)
+                    .WithEase(Ease.OutSine)
+                    .Bind(value => Intensity = value);
+            }
+
+            public void Reset()
+            {
+                _fade.TryCancel();
+                _isActive = false;
+                Intensity = 0;
+            }
         }
     }
 }

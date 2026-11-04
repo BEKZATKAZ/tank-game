@@ -1,10 +1,18 @@
-﻿using Tanks.UI.Elements;
+﻿using NaughtyAttributes;
+using Tanks.Client.Effects;
+using Tanks.UI.Elements;
+using UnityEngine;
 using UnityEngine.UIElements;
 
 namespace Tanks.UI.Gameplay.ItemDescription
 {
     public sealed class ItemDescriptionView : ViewBase<ItemDescriptionViewModel>
     {
+        [Required]
+        [Expandable]
+        [SerializeField]
+        private EffectListConfig _effectsConfig;
+
         private VisualElement _container;
         private VisualElement _fill;
         private VisualElement _icon;
@@ -26,6 +34,8 @@ namespace Tanks.UI.Gameplay.ItemDescription
 
         protected override void Bind(ItemDescriptionViewModel viewModel)
         {
+            viewModel.SetConfig(_effectsConfig);
+
             viewModel.Name.Bind(x => _name.text = x);
             viewModel.Description.Bind(x => _description.text = x);
             viewModel.TierName.Bind(x => _tier.text = x);

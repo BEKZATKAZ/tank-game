@@ -284,7 +284,7 @@ SpriteRenderer:
   m_Size: {x: 1, y: 1}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
-  m_WasSpriteAssigned: 1
+  m_WasSpriteAssigned: 0
   m_SpriteSortPoint: 0
   m_BlendShapeWeights: []
 --- !u!1 &21685694
@@ -912,7 +912,7 @@ SpriteRenderer:
   m_Size: {x: 1, y: 1}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
-  m_WasSpriteAssigned: 1
+  m_WasSpriteAssigned: 0
   m_SpriteSortPoint: 0
   m_BlendShapeWeights: []
 --- !u!1 &127155707
@@ -1108,7 +1108,7 @@ SpriteRenderer:
   m_Size: {x: 1, y: 1}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
-  m_WasSpriteAssigned: 1
+  m_WasSpriteAssigned: 0
   m_SpriteSortPoint: 0
   m_BlendShapeWeights: []
 --- !u!1 &175272682
@@ -1498,7 +1498,7 @@ SpriteRenderer:
   m_Size: {x: 1, y: 1}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
-  m_WasSpriteAssigned: 1
+  m_WasSpriteAssigned: 0
   m_SpriteSortPoint: 0
   m_BlendShapeWeights: []
 --- !u!1 &253405765
@@ -2040,7 +2040,7 @@ SpriteRenderer:
   m_Size: {x: 1, y: 1}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
-  m_WasSpriteAssigned: 1
+  m_WasSpriteAssigned: 0
   m_SpriteSortPoint: 0
   m_BlendShapeWeights: []
 --- !u!1 &433140110
@@ -2623,7 +2623,7 @@ SpriteRenderer:
   m_Size: {x: 1, y: 1}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
-  m_WasSpriteAssigned: 1
+  m_WasSpriteAssigned: 0
   m_SpriteSortPoint: 0
   m_BlendShapeWeights: []
 --- !u!1 &644923460
@@ -3019,7 +3019,7 @@ TextMesh:
   m_FontSize: 50
   m_FontStyle: 0
   m_RichText: 1
-  m_Font: {fileID: 12800000, guid: 45f7b32b4f832744ebbabf86a666ecac, type: 3}
+  m_Font: {fileID: 12800000, guid: 259babead2a0afa499a3be50aede72dd, type: 3}
   m_Color:
     serializedVersion: 2
     rgba: 553648127
@@ -3048,7 +3048,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 45f7b32b4f832744ebbabf86a666ecac, type: 3}
+  - {fileID: 2100000, guid: 259babead2a0afa499a3be50aede72dd, type: 3}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -5037,7 +5037,7 @@ TextMesh:
   m_FontSize: 50
   m_FontStyle: 0
   m_RichText: 0
-  m_Font: {fileID: 12800000, guid: 45f7b32b4f832744ebbabf86a666ecac, type: 3}
+  m_Font: {fileID: 12800000, guid: 259babead2a0afa499a3be50aede72dd, type: 3}
   m_Color:
     serializedVersion: 2
     rgba: 452972861
@@ -5066,7 +5066,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 45f7b32b4f832744ebbabf86a666ecac, type: 3}
+  - {fileID: 2100000, guid: 259babead2a0afa499a3be50aede72dd, type: 3}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -5166,7 +5166,7 @@ TextMesh:
   m_FontSize: 50
   m_FontStyle: 0
   m_RichText: 0
-  m_Font: {fileID: 12800000, guid: 45f7b32b4f832744ebbabf86a666ecac, type: 3}
+  m_Font: {fileID: 12800000, guid: 259babead2a0afa499a3be50aede72dd, type: 3}
   m_Color:
     serializedVersion: 2
     rgba: 452984831
@@ -5195,7 +5195,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 45f7b32b4f832744ebbabf86a666ecac, type: 3}
+  - {fileID: 2100000, guid: 259babead2a0afa499a3be50aede72dd, type: 3}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -5529,7 +5529,7 @@ TextMesh:
   m_FontSize: 50
   m_FontStyle: 0
   m_RichText: 1
-  m_Font: {fileID: 12800000, guid: 45f7b32b4f832744ebbabf86a666ecac, type: 3}
+  m_Font: {fileID: 12800000, guid: 259babead2a0afa499a3be50aede72dd, type: 3}
   m_Color:
     serializedVersion: 2
     rgba: 553648127
@@ -5558,7 +5558,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 45f7b32b4f832744ebbabf86a666ecac, type: 3}
+  - {fileID: 2100000, guid: 259babead2a0afa499a3be50aede72dd, type: 3}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -6243,7 +6243,7 @@ TextMesh:
   m_FontSize: 50
   m_FontStyle: 0
   m_RichText: 1
-  m_Font: {fileID: 12800000, guid: 45f7b32b4f832744ebbabf86a666ecac, type: 3}
+  m_Font: {fileID: 12800000, guid: 259babead2a0afa499a3be50aede72dd, type: 3}
   m_Color:
     serializedVersion: 2
     rgba: 553648127
@@ -6272,7 +6272,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 45f7b32b4f832744ebbabf86a666ecac, type: 3}
+  - {fileID: 2100000, guid: 259babead2a0afa499a3be50aede72dd, type: 3}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -6392,6 +6392,7 @@ GameObject:
   - component: {fileID: 1530439014}
   - component: {fileID: 1530439013}
   - component: {fileID: 1530439015}
+  - component: {fileID: 1530439017}
   - component: {fileID: 1530439016}
   m_Layer: 0
   m_Name: Gameplay UI
@@ -6481,6 +6482,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Tanks.UI::Tanks.UI.Gameplay.ItemDescription.ItemDescriptionView
   _showOnPlay: 1
+  _effectsConfig: {fileID: 11400000, guid: 4c772ee5d38c6d544a1c74b59af171e5, type: 2}
 --- !u!114 &1530439010
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6612,6 +6614,21 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Tanks.UI::Tanks.UI.Gameplay.Timer.TimerView
   _showOnPlay: 1
+--- !u!114 &1530439017
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1530439003}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 32656af2e28bf2742a1e394b54d3ca7a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Tanks.UI::Tanks.UI.Gameplay.Effects.EffectsView
+  _showOnPlay: 1
+  _fullscreenMaterial: {fileID: -876546973899608171, guid: 8ffc5c2242a0bbe4fb5f41a1e93d795e, type: 3}
+  _config: {fileID: 11400000, guid: 4c772ee5d38c6d544a1c74b59af171e5, type: 2}
 --- !u!1 &1542355673
 GameObject:
   m_ObjectHideFlags: 0
@@ -111746,7 +111763,7 @@ SpriteRenderer:
   m_Size: {x: 1, y: 1}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
-  m_WasSpriteAssigned: 1
+  m_WasSpriteAssigned: 0
   m_SpriteSortPoint: 0
   m_BlendShapeWeights: []
 --- !u!1 &1829752332
@@ -111990,7 +112007,7 @@ SpriteRenderer:
   m_Size: {x: 1, y: 1}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
-  m_WasSpriteAssigned: 1
+  m_WasSpriteAssigned: 0
   m_SpriteSortPoint: 0
   m_BlendShapeWeights: []
 --- !u!1 &1911508920
@@ -112082,7 +112099,7 @@ SpriteRenderer:
   m_Size: {x: 1, y: 1}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
-  m_WasSpriteAssigned: 1
+  m_WasSpriteAssigned: 0
   m_SpriteSortPoint: 0
   m_BlendShapeWeights: []
 --- !u!1 &1935680521
@@ -112215,7 +112232,7 @@ SpriteRenderer:
   m_Size: {x: 1, y: 1}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
-  m_WasSpriteAssigned: 1
+  m_WasSpriteAssigned: 0
   m_SpriteSortPoint: 0
   m_BlendShapeWeights: []
 --- !u!1 &1947571519
@@ -112270,7 +112287,7 @@ TextMesh:
   m_FontSize: 50
   m_FontStyle: 0
   m_RichText: 0
-  m_Font: {fileID: 12800000, guid: 45f7b32b4f832744ebbabf86a666ecac, type: 3}
+  m_Font: {fileID: 12800000, guid: 259babead2a0afa499a3be50aede72dd, type: 3}
   m_Color:
     serializedVersion: 2
     rgba: 440221951
@@ -112299,7 +112316,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 45f7b32b4f832744ebbabf86a666ecac, type: 3}
+  - {fileID: 2100000, guid: 259babead2a0afa499a3be50aede72dd, type: 3}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0

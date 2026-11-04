@@ -1243,6 +1243,7 @@ GameObject:
   - component: {fileID: 7538523708768715558}
   - component: {fileID: 1217353675794160710}
   - component: {fileID: 5075868166914636794}
+  - component: {fileID: 2277372136857350510}
   - component: {fileID: 3623627063252432586}
   - component: {fileID: 2776071564906462077}
   m_Layer: 3
@@ -1357,7 +1358,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d5a57f767e5e46a458fc5d3c628d0cbb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Unity.Netcode.Runtime::Unity.Netcode.NetworkObject
-  GlobalObjectIdHash: 3075119985
+  GlobalObjectIdHash: 2482318861
   InScenePlacedSourceGlobalObjectIdHash: 0
   m_InScenePlacedDisabledByDefault: 0
   DeferredDespawnTick: 0
@@ -1495,8 +1496,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Tanks.Shared::Tanks.Shared.Player.PlayerMovementBehaviour
   ShowTopMostFoldoutHeaderGroup: 1
-  _defaultSpeed: 10
-  _rearSpeed: 7
   _leftTire: {fileID: 5982243282758008677}
   _rightTire: {fileID: 335969838374780508}
 --- !u!114 &9163817232548363890
@@ -1555,6 +1554,19 @@ MonoBehaviour:
   m_EditorClassIdentifier: Tanks.Shared::Tanks.Shared.Effects.EffectOwnerBehaviour
   ShowTopMostFoldoutHeaderGroup: 1
   Config: {fileID: 11400000, guid: d366b18758300954f91ad705d79b296c, type: 2}
+--- !u!114 &2277372136857350510
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7983979346145053049}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 042a9b8bceb53d0478ee8547bea2570e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Tanks.Shared::Tanks.Shared.Effects.EffectOwnerBehaviour
+  ShowTopMostFoldoutHeaderGroup: 1
 --- !u!114 &3623627063252432586
 MonoBehaviour:
   m_ObjectHideFlags: 0

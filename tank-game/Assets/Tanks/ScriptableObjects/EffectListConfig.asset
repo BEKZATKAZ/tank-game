@@ -1,0 +1,33 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b8386bd0aac37844783b9cd4e712aa0e, type: 3}
+  m_Name: EffectListConfig
+  m_EditorClassIdentifier: Tanks.Client::Tanks.Client.Effects.EffectListConfig
+  _effects:
+  - key: 0
+    value:
+      _entryName: gameplay.effect.burning
+      _localizedFormatName: effect-burning
+      _hexColor: ff5521
+      _icon: {fileID: 21300000, guid: 5f35f002c6a76d4488df19f169fd7ef6, type: 3}
+  - key: 1
+    value:
+      _entryName: gameplay.effect.frozen
+      _localizedFormatName: effect-frozen
+      _hexColor: 30e3ff
+      _icon: {fileID: 21300000, guid: 12abddaa63346db4ca9ac7d393159c43, type: 3}
+  - key: 2
+    value:
+      _entryName: gameplay.effect.healing
+      _localizedFormatName: effect-healing
+      _hexColor: 70ff73
+      _icon: {fileID: 21300000, guid: c26e14a0d7b57844a9576b17b08b96ac, type: 3}

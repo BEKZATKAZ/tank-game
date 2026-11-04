@@ -4,6 +4,7 @@ using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
+using Tanks.Client.Effects;
 using Tanks.Client.Items;
 using Tanks.Client.Items.Pickups;
 using Tanks.Localization;
@@ -56,6 +57,8 @@ namespace Tanks.UI.Gameplay.ItemDescription
         private readonly IClientItemDatabase _clientDatabase;
         private readonly IItemDatabase _sharedDatabase;
         private readonly IMessageBus _bus;
+
+        private IEffectListConfig _config;
         private ItemIdentifier _currentEnteredItemId;
 
         public void Dispose()
@@ -63,6 +66,11 @@ namespace Tanks.UI.Gameplay.ItemDescription
             _localization.LocaleChanged -= OnLocaleChanged;
             _bus.UnregisterHandler<PickupAreaEntered>(this);
             _bus.UnregisterHandler<PickupAreaLeft>(this);
+        }
+
+        public void SetConfig(IEffectListConfig config)
+        {
+            _config = config;
         }
 
         private void OnLocaleChanged(string locale)
@@ -135,6 +143,22 @@ namespace Tanks.UI.Gameplay.ItemDescription
             return value.ToLowerInvariant();
         }
 
+        private void FormatEffects(ILocalizedString description)
+        {
+            if (_config is null || _config.Effects is not { Count: > 0 } ) return;
+
+            foreach (EffectConfig effect in _config.Effects.Values)
+            {
+                _localization.TryGet(
+                    "Gameplay", effect.EntryName, out ILocalizedString effectName);
+
+                string effectNameText =
+                    $"<color=#{effect.Color}><b>«{effectName?.Get() ?? ""}»</b></color>";
+
+                description.AddVariable(effect.LocalizedFormatName, effectNameText);
+            }
+        }
+
         private void Reset(ItemIdentifier itemId)
         {
             IClientItemConfig clientConfig = _clientDatabase.Get(itemId);
@@ -150,6 +174,8 @@ namespace Tanks.UI.Gameplay.ItemDescription
             if (_localization.TryGet(
                 "Items", $"item.{idString}.description", out ILocalizedString description))
             {
+                FormatEffects(description);
+
                 foreach ((string statName, ItemStat stat) in sharedConfig.ItemStats)
                 {
                     FormatStat(statName, stat, description);

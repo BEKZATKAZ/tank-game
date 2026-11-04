@@ -1,6 +1,7 @@
 using NaughtyAttributes;
 using Tanks.Core.Lobbies.Sessions;
 using Tanks.Shared.Adapters;
+using Tanks.Shared.Effects;
 using Tanks.Shared.Stats;
 using Unity.Mathematics;
 using UnityEngine;
@@ -16,7 +17,7 @@ namespace Tanks.Shared.Driving
         void Tick(float throttle, float steering, float deltaTime);
     }
 
-    [RequireComponent(typeof(Rigidbody2D), typeof(StatOwnerBehaviour))]
+    [RequireComponent(typeof(Rigidbody2D), typeof(StatOwnerBehaviour), typeof(EffectOwnerBehaviour))]
     public sealed class TankDriveBehaviour : NetworkBehaviourExtended, ITankDriveBehaviour
     {
         [Required]
@@ -31,7 +32,8 @@ namespace Tanks.Shared.Driving
         private readonly ISessionSettingsService _settings;
 
         private readonly RaycastHit2D[] _hitBuffer = new RaycastHit2D[1];
-        private StatOwnerBehaviour _statOwner;
+        private IStatOwnerBehaviour _statOwner;
+        private IEffectOwnerBehaviour _effectOwner;
         private ArcadeDriver _driver;
 
         public float DefaultSpeed { get; private set; }
@@ -41,9 +43,12 @@ namespace Tanks.Shared.Driving
         protected override void Awake()
         {
             base.Awake();
+
             Rigidbody = GetComponent<Rigidbody2D>();
             Velocity = new UnityVelocity(Rigidbody);
+
             _statOwner = GetComponent<StatOwnerBehaviour>();
+            _effectOwner = GetComponent<EffectOwnerBehaviour>();
         }
 
         protected override void OnInitialize()
@@ -68,6 +73,14 @@ namespace Tanks.Shared.Driving
 
         public void Tick(float throttle, float steering, float deltaTime)
         {
+            if (_effectOwner.Effects.ContainsKey(EffectType.Frozen))
+            {
+                _driver.SetMaxAcceleration(0);
+                Velocity.Linear = default;
+                Velocity.Angular = default;
+                return;
+            }
+
             Velocity.Angular = _driver.Steer(steering);
 
             float2 linear = _driver.Drive(Transform.Right, throttle, deltaTime);

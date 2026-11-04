@@ -75,6 +75,18 @@ MonoBehaviour:
     m_Key: gameplay.stat.score
     m_Metadata:
       m_Items: []
+  - m_Id: 22504394505805824
+    m_Key: gameplay.effect.burning
+    m_Metadata:
+      m_Items: []
+  - m_Id: 22504394547748864
+    m_Key: gameplay.effect.frozen
+    m_Metadata:
+      m_Items: []
+  - m_Id: 22504394547748865
+    m_Key: gameplay.effect.healing
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:

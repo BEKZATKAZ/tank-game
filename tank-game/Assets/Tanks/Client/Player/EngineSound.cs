@@ -6,6 +6,7 @@ using Tanks.Client.Rendering;
 using Tanks.Core.Helpers;
 using Tanks.Shared;
 using Tanks.Shared.Driving;
+using Tanks.Shared.Effects;
 using Tanks.Shared.Entities;
 using Unity.Mathematics;
 
@@ -30,6 +31,7 @@ namespace Tanks.Client.Player
         private readonly IAudioFactory _audioFactory;
         private readonly ICameraMainService _cameraService;
         private readonly IClientEntityService _clientEntityService;
+        private IEffectOwnerBehaviour _effectOwner;
 
         private IAudioInstance _instance;
         private float2 _lastPosition;
@@ -46,6 +48,7 @@ namespace Tanks.Client.Player
 
         protected override void OnInitialize()
         {
+            _effectOwner = Behaviour.GetBehaviour<IEffectOwnerBehaviour>();
             _instance = _audioFactory.CreateInstance("event:/SFX/Engine/Engine_Default");
             _instance.SetVolume(0.5f);
 
@@ -74,6 +77,9 @@ namespace Tanks.Client.Player
 
             _intensity = math.lerp(_intensity, target, math.saturate(deltaTime * speed));
             _instance.SetParameter("EngineIntensity", _intensity);
+
+            bool isFrozen = _effectOwner.Effects.ContainsKey(EffectType.Frozen);
+            _instance.SetVolume(isFrozen ? 0 : 0.5f);
         }
 
         private void OnPossessedChanged(IEntityBehaviour previous, IEntityBehaviour current)
