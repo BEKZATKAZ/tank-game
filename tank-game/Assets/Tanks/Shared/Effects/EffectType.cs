@@ -4,6 +4,8 @@
     {
         Burning,
         Frozen,
-        Healing
+        Healing,
+        Noclip,
+        Flashed
     }
 }

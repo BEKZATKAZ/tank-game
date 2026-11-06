@@ -45,6 +45,15 @@ MonoBehaviour:
       value:
         Value: 30
         ValueType: 1
+  - _identifier: no-honor
+    _tier: 2
+    _onPickUpActions: []
+    _playerStats: []
+    _itemStats:
+    - key: increase
+      value:
+        Value: 35
+        ValueType: 1
   - _identifier: stats-light
     _tier: 2
     _onPickUpActions: []
@@ -92,6 +101,32 @@ MonoBehaviour:
     _tier: 2
     _onPickUpActions:
     - {fileID: 11400000, guid: 3858939155c585f49a14e3a4ef34f436, type: 2}
+    _playerStats: []
+    _itemStats: []
+  - _identifier: weapon_flashbang
+    _tier: 2
+    _onPickUpActions:
+    - {fileID: 11400000, guid: 3dfa791db1854eedb485bc8963db5bce, type: 2}
+    _playerStats: []
+    _itemStats:
+    - key: duration
+      value:
+        Value: 8
+        ValueType: 0
+    - key: radius
+      value:
+        Value: 10
+        ValueType: 0
+  - _identifier: weapon_freebie
+    _tier: 2
+    _onPickUpActions:
+    - {fileID: 11400000, guid: 17178cb79194f335d98df86d8d37d44a, type: 2}
+    _playerStats: []
+    _itemStats: []
+  - _identifier: weapon_ignited-balls
+    _tier: 2
+    _onPickUpActions:
+    - {fileID: 11400000, guid: 937b242f7727d05b4c88dd701270ee71, type: 2}
     _playerStats: []
     _itemStats: []
   - _identifier: weapon_twin-barrel
@@ -149,6 +184,26 @@ MonoBehaviour:
       value:
         Value: 5
         ValueType: 0
+  - _identifier: noclip
+    _tier: 4
+    _onPickUpActions: []
+    _playerStats:
+    - key: 1
+      value:
+        Duration: 10
+        Value: 5
+        ValueType: 0
+    _itemStats:
+    - key: duration
+      value:
+        Value: 8
+        ValueType: 0
+  - _identifier: weapon_fireball
+    _tier: 4
+    _onPickUpActions:
+    - {fileID: 11400000, guid: 57191586331b71bc92946c53926f8af1, type: 2}
+    _playerStats: []
+    _itemStats: []
   - _identifier: burst-of-adrenaline
     _tier: 1
     _onPickUpActions: []
@@ -170,6 +225,66 @@ MonoBehaviour:
       value:
         Value: 50
         ValueType: 1
+  - _identifier: chilling-couch
+    _tier: 1
+    _onPickUpActions: []
+    _playerStats: []
+    _itemStats:
+    - key: interval
+      value:
+        Value: 5
+        ValueType: 0
+    - key: increase
+      value:
+        Value: 4
+        ValueType: 0
+  - _identifier: flattering-flower
+    _tier: 1
+    _onPickUpActions: []
+    _playerStats: []
+    _itemStats:
+    - key: duration
+      value:
+        Value: 5
+        ValueType: 0
+  - _identifier: girls-bag
+    _tier: 1
+    _onPickUpActions: []
+    _playerStats:
+    - key: 0
+      value:
+        Duration: -1
+        Value: 2
+        ValueType: 0
+    - key: 1
+      value:
+        Duration: -1
+        Value: -2
+        ValueType: 0
+    - key: 2
+      value:
+        Duration: -1
+        Value: 2
+        ValueType: 0
+    - key: 3
+      value:
+        Duration: -1
+        Value: 2
+        ValueType: 0
+    - key: 4
+      value:
+        Duration: -1
+        Value: 2
+        ValueType: 0
+    _itemStats:
+    - key: increase
+      value:
+        Value: 2
+        ValueType: 0
+    - key: decrease
+      value:
+        Value: 2
+        ValueType: 0
   - _identifier: health-up
     _tier: 1
     _onPickUpActions: []
@@ -199,6 +314,15 @@ MonoBehaviour:
         Value: -16
         ValueType: 1
     _itemStats: []
+  - _identifier: hibernation
+    _tier: 1
+    _onPickUpActions: []
+    _playerStats: []
+    _itemStats:
+    - key: duration
+      value:
+        Value: 5
+        ValueType: 0
   - _identifier: random-teleport
     _tier: 1
     _onPickUpActions: []
@@ -296,6 +420,23 @@ MonoBehaviour:
         Value: -2
         ValueType: 0
     _itemStats: []
+  - _identifier: diminishing-returns
+    _tier: 3
+    _onPickUpActions: []
+    _playerStats: []
+    _itemStats:
+    - key: threshold
+      value:
+        Value: 60
+        ValueType: 0
+    - key: duration
+      value:
+        Value: 0.5
+        ValueType: 0
+    - key: increase
+      value:
+        Value: 200
+        ValueType: 1
   - _identifier: dna-reconstruction
     _tier: 3
     _onPickUpActions: []
@@ -341,6 +482,36 @@ MonoBehaviour:
       value:
         Value: -40
         ValueType: 1
+  - _identifier: like-a-diamond
+    _tier: 3
+    _onPickUpActions: []
+    _playerStats:
+    - key: 0
+      value:
+        Duration: -1
+        Value: 25
+        ValueType: 0
+    - key: 1
+      value:
+        Duration: -1
+        Value: 2
+        ValueType: 0
+    - key: 2
+      value:
+        Duration: -1
+        Value: 30
+        ValueType: 0
+    - key: 3
+      value:
+        Duration: -1
+        Value: 5
+        ValueType: 0
+    - key: 4
+      value:
+        Duration: -1
+        Value: 1
+        ValueType: 0
+    _itemStats: []
   - _identifier: missing-texture
     _tier: 3
     _onPickUpActions: []
@@ -402,6 +573,19 @@ MonoBehaviour:
     - key: interval
       value:
         Value: 5
+        ValueType: 0
+  - _identifier: retrofier
+    _tier: 3
+    _onPickUpActions: []
+    _playerStats: []
+    _itemStats:
+    - key: first
+      value:
+        Value: 100
+        ValueType: 0
+    - key: second
+      value:
+        Value: 35
         ValueType: 0
   - _identifier: self-conscious
     _tier: 3

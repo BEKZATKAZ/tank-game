@@ -31,6 +31,12 @@ MonoBehaviour:
     _onPickUpSound: event:/SFX/Items/PickUp/Uncommon
     _onSpawnSound: event:/SFX/Items/Spawn/Epic
     _accentColor: {r: 1, g: 0.2, b: 0.3019608, a: 1}
+  - _identifier: no-honor
+    _iconMaterial: {fileID: -876546973899608171, guid: 9680fbb573735774aaa7e0c722f9aad3, type: 3}
+    _icon: {fileID: 21300000, guid: 6ecfbaf758c27944390365ed7bc6fa41, type: 3}
+    _onPickUpSound: event:/SFX/Items/PickUp/Uncommon
+    _onSpawnSound: event:/SFX/Items/Spawn/Epic
+    _accentColor: {r: 1, g: 0.2, b: 0.3019608, a: 1}
   - _identifier: stats-light
     _iconMaterial: {fileID: -876546973899608171, guid: 9680fbb573735774aaa7e0c722f9aad3, type: 3}
     _icon: {fileID: 21300000, guid: 988ad0680f1a6724e990eb060db5d3d8, type: 3}
@@ -46,6 +52,24 @@ MonoBehaviour:
   - _identifier: weapon_bomb-launcher
     _iconMaterial: {fileID: -876546973899608171, guid: 9680fbb573735774aaa7e0c722f9aad3, type: 3}
     _icon: {fileID: 21300000, guid: 860819d1851fb2f43985a607ae12084a, type: 3}
+    _onPickUpSound: event:/SFX/Items/PickUp/Weapon_Equip
+    _onSpawnSound: event:/SFX/Items/Spawn/Epic
+    _accentColor: {r: 1, g: 0.2, b: 0.3019608, a: 1}
+  - _identifier: weapon_flashbang
+    _iconMaterial: {fileID: -876546973899608171, guid: 9680fbb573735774aaa7e0c722f9aad3, type: 3}
+    _icon: {fileID: 21300000, guid: a072e39e3d9f57942a57b37343e1544a, type: 3}
+    _onPickUpSound: event:/SFX/Items/PickUp/Weapon_Equip
+    _onSpawnSound: event:/SFX/Items/Spawn/Epic
+    _accentColor: {r: 1, g: 0.2, b: 0.3019608, a: 1}
+  - _identifier: weapon_freebie
+    _iconMaterial: {fileID: -876546973899608171, guid: 9680fbb573735774aaa7e0c722f9aad3, type: 3}
+    _icon: {fileID: 21300000, guid: b59355a6a5ed15644bfeb926475dc04a, type: 3}
+    _onPickUpSound: event:/SFX/Items/PickUp/Weapon_Equip
+    _onSpawnSound: event:/SFX/Items/Spawn/Epic
+    _accentColor: {r: 1, g: 0.2, b: 0.3019608, a: 1}
+  - _identifier: weapon_ignited-balls
+    _iconMaterial: {fileID: -876546973899608171, guid: 9680fbb573735774aaa7e0c722f9aad3, type: 3}
+    _icon: {fileID: 21300000, guid: 175d8660c2a9dbe46ade7eed7903b86e, type: 3}
     _onPickUpSound: event:/SFX/Items/PickUp/Weapon_Equip
     _onSpawnSound: event:/SFX/Items/Spawn/Epic
     _accentColor: {r: 1, g: 0.2, b: 0.3019608, a: 1}
@@ -67,9 +91,39 @@ MonoBehaviour:
     _onPickUpSound: 
     _onSpawnSound: event:/SFX/Items/Spawn/Legendary
     _accentColor: {r: 1, g: 0.6572338, b: 0, a: 1}
+  - _identifier: noclip
+    _iconMaterial: {fileID: -876546973899608171, guid: 9680fbb573735774aaa7e0c722f9aad3, type: 3}
+    _icon: {fileID: 21300000, guid: 0da42c16e8486ba458df02902fd89ad5, type: 3}
+    _onPickUpSound: 
+    _onSpawnSound: event:/SFX/Items/Spawn/Legendary
+    _accentColor: {r: 1, g: 0.65882355, b: 0, a: 1}
+  - _identifier: weapon_fireball
+    _iconMaterial: {fileID: -876546973899608171, guid: 9680fbb573735774aaa7e0c722f9aad3, type: 3}
+    _icon: {fileID: 21300000, guid: e27c2c25750e80d4fa2ab48e807cffac, type: 3}
+    _onPickUpSound: event:/SFX/Items/PickUp/Weapon_Equip
+    _onSpawnSound: event:/SFX/Items/Spawn/Legendary
+    _accentColor: {r: 1, g: 0.6572338, b: 0, a: 1}
   - _identifier: burst-of-adrenaline
     _iconMaterial: {fileID: -876546973899608171, guid: 9680fbb573735774aaa7e0c722f9aad3, type: 3}
     _icon: {fileID: 21300000, guid: e4d46da61accbc149974260341b93025, type: 3}
+    _onPickUpSound: event:/SFX/Items/PickUp/Uncommon
+    _onSpawnSound: event:/SFX/Items/Spawn/Rare
+    _accentColor: {r: 0.25490198, g: 0.4392157, b: 1, a: 1}
+  - _identifier: chilling-couch
+    _iconMaterial: {fileID: -876546973899608171, guid: 9680fbb573735774aaa7e0c722f9aad3, type: 3}
+    _icon: {fileID: 21300000, guid: 5c258a7d52793fe4ab354a9d13e2c34c, type: 3}
+    _onPickUpSound: event:/SFX/Items/PickUp/Uncommon
+    _onSpawnSound: event:/SFX/Items/Spawn/Rare
+    _accentColor: {r: 0.25490198, g: 0.4392157, b: 1, a: 1}
+  - _identifier: flattering-flower
+    _iconMaterial: {fileID: -876546973899608171, guid: 9680fbb573735774aaa7e0c722f9aad3, type: 3}
+    _icon: {fileID: 21300000, guid: 3a2ab2cc3171df6498fcb68ecff55ed0, type: 3}
+    _onPickUpSound: event:/SFX/Items/PickUp/Uncommon
+    _onSpawnSound: event:/SFX/Items/Spawn/Rare
+    _accentColor: {r: 0.25490198, g: 0.4392157, b: 1, a: 1}
+  - _identifier: girls-bag
+    _iconMaterial: {fileID: -876546973899608171, guid: 9680fbb573735774aaa7e0c722f9aad3, type: 3}
+    _icon: {fileID: 21300000, guid: 666776444ec44ed45a22bc425f57a53e, type: 3}
     _onPickUpSound: event:/SFX/Items/PickUp/Uncommon
     _onSpawnSound: event:/SFX/Items/Spawn/Rare
     _accentColor: {r: 0.25490198, g: 0.4392157, b: 1, a: 1}
@@ -82,6 +136,12 @@ MonoBehaviour:
   - _identifier: heavy-treads
     _iconMaterial: {fileID: -876546973899608171, guid: 9680fbb573735774aaa7e0c722f9aad3, type: 3}
     _icon: {fileID: 21300000, guid: f5aca9f7a54e7b3429d4cad2e20bf68e, type: 3}
+    _onPickUpSound: event:/SFX/Items/PickUp/Uncommon
+    _onSpawnSound: event:/SFX/Items/Spawn/Rare
+    _accentColor: {r: 0.25490198, g: 0.4392157, b: 1, a: 1}
+  - _identifier: hibernation
+    _iconMaterial: {fileID: -876546973899608171, guid: 9680fbb573735774aaa7e0c722f9aad3, type: 3}
+    _icon: {fileID: 21300000, guid: 99e53442037f1814db4763068744e296, type: 3}
     _onPickUpSound: event:/SFX/Items/PickUp/Uncommon
     _onSpawnSound: event:/SFX/Items/Spawn/Rare
     _accentColor: {r: 0.25490198, g: 0.4392157, b: 1, a: 1}
@@ -145,12 +205,24 @@ MonoBehaviour:
     _onPickUpSound: event:/SFX/Items/PickUp/Uncommon
     _onSpawnSound: 
     _accentColor: {r: 0.25490198, g: 1, b: 0.34901962, a: 1}
+  - _identifier: diminishing-returns
+    _iconMaterial: {fileID: -876546973899608171, guid: 9680fbb573735774aaa7e0c722f9aad3, type: 3}
+    _icon: {fileID: 21300000, guid: 0e3e360cd72a11f45b2cdac0c67fc5dd, type: 3}
+    _onPickUpSound: event:/SFX/Items/PickUp/Unstable
+    _onSpawnSound: event:/SFX/Items/Spawn/Unstable
+    _accentColor: {r: 1, g: 0.25471687, b: 0.9955319, a: 1}
   - _identifier: dna-reconstruction
     _iconMaterial: {fileID: -876546973899608171, guid: 9680fbb573735774aaa7e0c722f9aad3, type: 3}
     _icon: {fileID: 21300000, guid: b78cf296bfceba54bac3ee2c3fd8640f, type: 3}
     _onPickUpSound: event:/SFX/Items/PickUp/Unstable
     _onSpawnSound: event:/SFX/Items/Spawn/Unstable
     _accentColor: {r: 1, g: 0.25471687, b: 0.9955319, a: 1}
+  - _identifier: like-a-diamond
+    _iconMaterial: {fileID: -876546973899608171, guid: 9680fbb573735774aaa7e0c722f9aad3, type: 3}
+    _icon: {fileID: 21300000, guid: 3579b6830c52bee48b330fa315d694cb, type: 3}
+    _onPickUpSound: event:/SFX/Items/PickUp/Unstable
+    _onSpawnSound: event:/SFX/Items/Spawn/Unstable
+    _accentColor: {r: 1, g: 0.25490198, b: 0.99607843, a: 1}
   - _identifier: missing-texture
     _iconMaterial: {fileID: -876546973899608171, guid: 9680fbb573735774aaa7e0c722f9aad3, type: 3}
     _icon: {fileID: 21300000, guid: 70a7d93a82a4fef46adecb2a63139900, type: 3}
@@ -172,6 +244,12 @@ MonoBehaviour:
   - _identifier: re-reroll
     _iconMaterial: {fileID: -876546973899608171, guid: 9680fbb573735774aaa7e0c722f9aad3, type: 3}
     _icon: {fileID: 21300000, guid: 9dd84e52610d00d4880413fac5adb767, type: 3}
+    _onPickUpSound: event:/SFX/Items/PickUp/Unstable
+    _onSpawnSound: event:/SFX/Items/Spawn/Unstable
+    _accentColor: {r: 1, g: 0.25471687, b: 0.9955319, a: 1}
+  - _identifier: retrofier
+    _iconMaterial: {fileID: -876546973899608171, guid: 9680fbb573735774aaa7e0c722f9aad3, type: 3}
+    _icon: {fileID: 21300000, guid: d9c09e262dae29b48bb6167e1488a454, type: 3}
     _onPickUpSound: event:/SFX/Items/PickUp/Unstable
     _onSpawnSound: event:/SFX/Items/Spawn/Unstable
     _accentColor: {r: 1, g: 0.25471687, b: 0.9955319, a: 1}

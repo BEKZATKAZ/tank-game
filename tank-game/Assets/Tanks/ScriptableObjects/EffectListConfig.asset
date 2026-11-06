@@ -31,3 +31,15 @@ MonoBehaviour:
       _localizedFormatName: effect-healing
       _hexColor: 70ff73
       _icon: {fileID: 21300000, guid: c26e14a0d7b57844a9576b17b08b96ac, type: 3}
+  - key: 3
+    value:
+      _entryName: gameplay.effect.noclip
+      _localizedFormatName: effect-noclip
+      _hexColor: 3b3b3b
+      _icon: {fileID: 21300000, guid: 0da42c16e8486ba458df02902fd89ad5, type: 3}
+  - key: 4
+    value:
+      _entryName: gameplay.effect.flashed
+      _localizedFormatName: effect-flashed
+      _hexColor: f3ff0a
+      _icon: {fileID: 21300000, guid: a072e39e3d9f57942a57b37343e1544a, type: 3}

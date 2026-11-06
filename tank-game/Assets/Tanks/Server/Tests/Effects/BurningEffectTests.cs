@@ -5,6 +5,7 @@ using Tanks.Server.Effects;
 using Tanks.Shared.Effects;
 using Tanks.Shared.Entities;
 using Tanks.Shared.Entities.Health;
+using UnityEngine;
 
 namespace Tanks.Server.Tests.Effects
 {
@@ -30,14 +31,14 @@ namespace Tanks.Server.Tests.Effects
         [TestCase(0)]
         [TestCase(10)]
         [TestCase(20)]
-        public void Tick_BurningOnDamageTick_DealsTenDamageWithoutStats(int tick)
+        public void Tick_BurningOnDamageTick_DealsSixDamageWithoutStats(int tick)
         {
             IEntityBehaviour from = Substitute.For<IEntityBehaviour>();
             _effects[EffectType.Burning] = new EffectEntry(0, 30, from);
 
             _effect.Tick(tick, 0.1f);
 
-            _damageService.Received(1).Damage(10, _owner.Entity, from,
+            _damageService.Received(1).Damage(6, _owner.Entity, from,
                 HealthEventId.Create(_owner.GetType(), tick), includeStats: false);
         }
 
@@ -74,9 +75,9 @@ namespace Tanks.Server.Tests.Effects
             _effects[EffectType.Burning] = new EffectEntry(0, 40, next);
             _effect.Tick(20, 0.1f);
 
-            _damageService.Received(1).Damage(10, _owner.Entity, first,
+            _damageService.Received(1).Damage(6, _owner.Entity, first,
                 HealthEventId.Create(_owner.GetType(), 10), includeStats: false);
-            _damageService.Received(1).Damage(10, _owner.Entity, next,
+            _damageService.Received(1).Damage(6, _owner.Entity, next,
                 HealthEventId.Create(_owner.GetType(), 20), includeStats: false);
         }
 
@@ -91,6 +92,53 @@ namespace Tanks.Server.Tests.Effects
             _effect.Tick(20, 0.1f);
 
             Assert.That(_damageService.ReceivedCalls(), Is.Empty);
+        }
+
+        [Test]
+        public void Tick_ExpiredEffect_DoesNotDamage()
+        {
+            EffectOwnerBehaviour effects = new GameObject().AddComponent<EffectOwnerBehaviour>();
+            effects.AddEffect(EffectType.Burning, 1);
+            _owner.Effects.Returns(effects.Effects);
+
+            try
+            {
+                effects.OnTick(10, 0.1f);
+                _effect.Tick(10, 0.1f);
+
+                Assert.That(_damageService.ReceivedCalls(), Is.Empty);
+            }
+            finally { Object.DestroyImmediate(effects.gameObject); }
+        }
+
+        [Test]
+        public void OverlappingIds_DamageOnceAndCreditLatestActiveSource()
+        {
+            EffectOwnerBehaviour effects = new GameObject().AddComponent<EffectOwnerBehaviour>();
+            IEntityBehaviour first = Substitute.For<IEntityBehaviour>();
+            IEntityBehaviour latest = Substitute.For<IEntityBehaviour>();
+            _owner.Effects.Returns(effects.Effects);
+
+            try
+            {
+                effects.AddEffect(EffectType.Burning, 10, first);
+                effects.AddEffect(EffectType.Burning, 2, latest);
+                effects.OnTick(10, 0.1f);
+                _effect.Tick(10, 0.1f);
+
+                _damageService.Received(1).Damage(6, _owner.Entity, latest,
+                    HealthEventId.Create(_owner.GetType(), 10), includeStats: false);
+                _damageService.DidNotReceive().Damage(Arg.Any<uint>(), _owner.Entity, first,
+                    Arg.Any<HealthEventId>(), includeStats: false);
+
+                _damageService.ClearReceivedCalls();
+                effects.OnTick(20, 0.1f);
+                _effect.Tick(20, 0.1f);
+
+                _damageService.Received(1).Damage(6, _owner.Entity, first,
+                    HealthEventId.Create(_owner.GetType(), 20), includeStats: false);
+            }
+            finally { Object.DestroyImmediate(effects.gameObject); }
         }
     }
 }

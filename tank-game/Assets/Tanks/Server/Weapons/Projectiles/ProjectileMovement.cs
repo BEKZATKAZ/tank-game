@@ -35,7 +35,11 @@ namespace Tanks.Server.Weapons.Projectiles
 
             Behaviour.Simulate(new LaunchCallbacks
             {
-                OnRicochet = (_, _) => _ricochetedCount++,
+                OnRicochet = (point, normal) =>
+                {
+                    _ricochetedCount++;
+                    Behaviour.OnRicochet(point, normal);
+                },
                 OnDamageableHit = x => { Behaviour.OnDamageableHit(x); Done(); }
             }, Transform, tickDelta);
 

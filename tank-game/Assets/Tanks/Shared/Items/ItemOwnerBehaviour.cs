@@ -49,6 +49,18 @@ namespace Tanks.Shared.Items
         public SpriteRenderer Accent => _accent;
 
         private readonly List<ItemIdentifier> _items = new();
+        private readonly List<ItemBehaviourBase> _callbacks = new();
+
+        private void RebuildCallbacks()
+        {
+            _callbacks.Clear();
+
+            foreach (ItemBehaviourBase behaviour in GetAllBehaviours())
+            {
+                if (behaviour.OncePerOwner && _callbacks.Contains(behaviour)) continue;
+                _callbacks.Add(behaviour);
+            }
+        }
 
         public IEnumerable<ItemBehaviourBase> GetAllBehaviours()
         {
@@ -59,20 +71,14 @@ namespace Tanks.Shared.Items
         {
             if (message.Target != Entity) return;
 
-            foreach (ItemIdentifier item in _items)
+            foreach (ItemBehaviourBase behaviour in _callbacks)
             {
-                foreach (ItemBehaviourBase behaviour in _database.GetBehaviours(item))
+                try
                 {
-                    try
-                    {
-                        behaviour.OnHealthChanged(
-                            this, message.From, message.OldState, message.AuthoritativeState);
-                    }
-                    catch (Exception ex)
-                    {
-                        Debug.LogException(ex);
-                    }
+                    behaviour.OnHealthChanged(
+                        this, message.From, message.OldState, message.AuthoritativeState);
                 }
+                catch (Exception ex) { Debug.LogException(ex); }
             }
         }
 
@@ -80,19 +86,17 @@ namespace Tanks.Shared.Items
         {
             if (message.Owner.Entity != Entity) return;
 
-            foreach (ItemIdentifier item in _items)
+            foreach (ItemBehaviourBase behaviour in _callbacks)
             {
-                foreach (ItemBehaviourBase behaviour in _database.GetBehaviours(item))
-                {
-                    try { behaviour.OnFire(this, message); }
-                    catch (Exception ex) { Debug.LogException(ex); }
-                }
+                try { behaviour.OnFire(this, message); }
+                catch (Exception ex) { Debug.LogException(ex); }
             }
         }
 
         public void PickupItem(IItemConfig item, in PickupId pickupId)
         {
             _items.Add(item.Identifier);
+            RebuildCallbacks();
 
             ItemPickedUp message = new ItemPickedUp
             {
@@ -136,27 +140,32 @@ namespace Tanks.Shared.Items
             _bus?.UnregisterHandler<HealthChangedFromServer>(this);
             _bus?.UnregisterHandler<WeaponUsed>(this);
 
-            foreach (ItemIdentifier item in _items)
+            foreach (ItemBehaviourBase behaviour in _callbacks)
             {
-                foreach (ItemBehaviourBase behaviour in _database.GetBehaviours(item))
-                {
-                    try { behaviour.OnDestroy(this); }
-                    catch (Exception ex) { Debug.LogException(ex); }
-                }
+                try { behaviour.OnDestroy(this); }
+                catch (Exception ex) { Debug.LogException(ex); }
             }
 
             base.OnDestroy();
         }
 
+        public override void OnNetworkDespawn()
+        {
+            foreach (ItemBehaviourBase behaviour in _callbacks)
+            {
+                try { behaviour.OnDespawn(this); }
+                catch (Exception ex) { Debug.LogException(ex); }
+            }
+
+            base.OnNetworkDespawn();
+        }
+
         public override void OnTick(int tick, float tickDelta)
         {
-            foreach (ItemIdentifier item in _items)
+            foreach (ItemBehaviourBase behaviour in _callbacks)
             {
-                foreach (ItemBehaviourBase behaviour in _database.GetBehaviours(item))
-                {
-                    try { behaviour.OnTick(this, tick, tickDelta); }
-                    catch (Exception ex) { Debug.LogException(ex); }
-                }
+                try { behaviour.OnTick(this, tick, tickDelta); }
+                catch (Exception ex) { Debug.LogException(ex); }
             }
         }
     }

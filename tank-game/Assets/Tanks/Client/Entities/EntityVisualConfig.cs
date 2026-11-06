@@ -43,7 +43,9 @@ namespace Tanks.Client.Entities
         [SerializeField] private EffectVisualSettings[] _effects =
         {
             new(EffectType.Burning, "_BurningIntensity"),
-            new(EffectType.Frozen, "_FrozenIntensity")
+            new(EffectType.Frozen, "_FrozenIntensity"),
+            new(EffectType.Healing, "_HealingIntensity"),
+            new(EffectType.Noclip, "_NoclipIntensity")
         };
 
         public VisualType HitVisualType => _hitVisualType;

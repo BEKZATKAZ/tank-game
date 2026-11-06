@@ -63,6 +63,7 @@ namespace Tanks.Server.Items.Behaviours.OnPickup
         public override void OnPickup(IItemOwnerBehaviour owner)
         {
             if (_entries.Exists(x => x.TargetId == owner.Entity.Id)) return;
+
             _entries.Add(new StatsLightPlayerEntry { TargetId = owner.Entity.Id });
         }
 
@@ -70,6 +71,7 @@ namespace Tanks.Server.Items.Behaviours.OnPickup
         {
             int index = _entries.FindIndex(x => x.TargetId == owner.Entity.Id);
             if (index == -1) return;
+
             _entries.RemoveAt(index);
         }
 
@@ -86,19 +88,23 @@ namespace Tanks.Server.Items.Behaviours.OnPickup
                 float intervalSeconds = Config.GetStat("interval").Value;
 
                 if (elapsed < intervalSeconds) return;
-                IStatOwnerBehaviour statOwner = owner.GetBehaviour<IStatOwnerBehaviour>();
 
+                IStatOwnerBehaviour statOwner = owner.GetBehaviour<IStatOwnerBehaviour>();
                 if (statOwner is null) return;
+
                 StatType type = _types[entry.NextTypeIndex];
 
                 if (TryGetBoost(type, out ItemStat boost))
                 {
                     if (entry.ActiveStatId is StatId id) statOwner.RemoveStat(id);
-                    entry.ActiveStatId = statOwner.AddStat(type, boost.ValueType, boost.Value, intervalSeconds);
+
+                    entry.ActiveStatId = statOwner.AddStat(
+                        type, boost.ValueType, boost.Value, intervalSeconds);
                     entry.LastTick = tick;
                 }
 
                 if (++entry.NextTypeIndex < _types.Length) return;
+
                 entry.NextTypeIndex = 0;
 
                 return;

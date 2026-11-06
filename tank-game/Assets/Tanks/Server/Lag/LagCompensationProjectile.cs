@@ -17,7 +17,8 @@ namespace Tanks.Server.Lag
             ProjectileSnapshot snapshot = new ProjectileSnapshot(
                 Transform.WorldPosition,
                 Behaviour.Radius,
-                Behaviour.ElapsedSeconds);
+                Behaviour.ElapsedSeconds,
+                Transform.Right);
 
             ProjectileData data = new ProjectileData
             {

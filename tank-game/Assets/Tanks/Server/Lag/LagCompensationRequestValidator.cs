@@ -1,8 +1,8 @@
 ﻿using Tanks.Shared;
 using Tanks.Shared.Entities;
+using Tanks.Shared.Entities.Health;
 using Tanks.Shared.Lag;
 using Tanks.Shared.Weapons.Projectiles;
-using Tanks.Shared.Weapons.Projectiles.Modules;
 
 namespace Tanks.Server.Lag
 {
@@ -39,8 +39,12 @@ namespace Tanks.Server.Lag
 
             ProjectileData data = _service.GetProjectileData(message.ProjectileId);
 
-            var modules = data.Behaviour.GetBehaviour<IProjectileModuleList>();
-            modules.Call(module => module.HitEntity(target, data.Owner.Entity));
+            if (data.Behaviour.Id != projectileId) return;
+            IHealthBehaviour health = target.GetBehaviour<IHealthBehaviour>();
+            if (health == null) return;
+
+            ProjectileSnapshot snapshot = _service.GetProjectileSnapshot(projectileId, usedTick);
+            data.Behaviour.OnDamageableHit(health, snapshot.Position, snapshot.Direction);
 
             _projectilePool.ReturnProjectileClientRpc(projectileId);
             _projectilePool.Return(projectileId);

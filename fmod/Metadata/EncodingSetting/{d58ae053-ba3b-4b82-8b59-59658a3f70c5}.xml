@@ -2,13 +2,13 @@
 <objects serializationModel="Studio.02.03.00">
 	<object class="EncodingSetting" id="{d58ae053-ba3b-4b82-8b59-59658a3f70c5}">
 		<property name="encodingFormat">
-			<value>1</value>
+			<value>3</value>
 		</property>
 		<property name="quality">
-			<value>37</value>
+			<value>30</value>
 		</property>
 		<property name="sampleRate">
-			<value>22500</value>
+			<value>20500</value>
 		</property>
 		<relationship name="platform">
 			<destination>{15059197-07f6-4f30-8995-666045382faf}</destination>

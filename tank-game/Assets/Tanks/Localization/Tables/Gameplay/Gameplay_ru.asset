@@ -93,6 +93,10 @@ MonoBehaviour:
     m_Localized: "\u0418\u0441\u0446\u0435\u043B\u0435\u043D\u0438\u0435"
     m_Metadata:
       m_Items: []
+  - m_Id: 39000000000000001
+    m_Localized: "Ослеплён"
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:

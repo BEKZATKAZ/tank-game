@@ -71,7 +71,8 @@ namespace Tanks.Server.Items.Behaviours.HealthBased
                 {
                     StatType.Damage => GetBaseDamage(weapon),
                     StatType.Speed => entry.DriveBehaviour.DefaultSpeed,
-                    StatType.RateOfFire => weaponCooldown <= math.EPSILON ? 0 : 1f / weaponCooldown,
+                    StatType.RateOfFire =>
+                        weaponCooldown <= math.EPSILON ? 0 : 1f / weaponCooldown,
                     _ => 0
                 });
 

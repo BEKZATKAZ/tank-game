@@ -87,6 +87,10 @@ MonoBehaviour:
     m_Key: gameplay.effect.healing
     m_Metadata:
       m_Items: []
+  - m_Id: 39000000000000001
+    m_Key: gameplay.effect.flashed
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:

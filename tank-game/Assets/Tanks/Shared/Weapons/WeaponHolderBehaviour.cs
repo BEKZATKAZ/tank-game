@@ -3,6 +3,7 @@ using System.Runtime.InteropServices;
 using Tanks.Core.Helpers;
 using Tanks.Shared.Adapters;
 using Tanks.Shared.Entities;
+using Tanks.Shared.Effects;
 using Tanks.Shared.Messaging;
 using Tanks.Shared.Stats;
 using Tanks.Utils;
@@ -128,7 +129,9 @@ namespace Tanks.Shared.Weapons
         {
             if (deltaTime <= 0) return false;
 
-            bool used = _currentWeapon.Tick(this, isHoldingDown, deltaTime, id);
+            bool blocked = Entity.GetBehaviour<IEffectOwnerBehaviour>()?.Effects
+                .ContainsKey(EffectType.Noclip) ?? false;
+            bool used = _currentWeapon.Tick(this, isHoldingDown && blocked == false, deltaTime, id);
 
             // Unless we want 2 ticks on our current weapon
             if (_defaultWeapon == _currentWeapon) return used;

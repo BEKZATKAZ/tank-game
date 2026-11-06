@@ -46,6 +46,7 @@ namespace Tanks.Server.Items.Behaviours.OnPickup
                 IStatOwnerBehaviour statOwner = owner.GetBehaviour<IStatOwnerBehaviour>();
                 foreach (StatId id in entry.StatIds) statOwner?.RemoveStat(id);
             }
+
             _playerEntries.Remove(owner.Entity.Id);
         }
 
@@ -65,6 +66,7 @@ namespace Tanks.Server.Items.Behaviours.OnPickup
 
             IReadOnlyWeapon weapon = entry.WeaponOwner?.CurrentWeapon;
             if (weapon?.Cooldown is null || entry.DriveBehaviour is null) return;
+
             float weaponCooldown = weapon.Cooldown.DurationSeconds;
 
             Span<float> newStats = stackalloc float[_types.Length];
@@ -82,7 +84,8 @@ namespace Tanks.Server.Items.Behaviours.OnPickup
                 {
                     StatType.Damage => GetBaseDamage(weapon),
                     StatType.Speed => entry.DriveBehaviour.DefaultSpeed,
-                    StatType.RateOfFire => weaponCooldown <= math.EPSILON ? 0 : 1f / weaponCooldown,
+                    StatType.RateOfFire =>
+                        weaponCooldown <= math.EPSILON ? 0 : 1f / weaponCooldown,
                     _ => 0
                 };
 
@@ -99,7 +102,8 @@ namespace Tanks.Server.Items.Behaviours.OnPickup
             {
                 int index = shuffledIndices[i];
                 StatId id = entry.StatIds[index];
-                statOwner.OverrideStat(id, _types[index], StatValueType.Flat, newStats[i] - currentStats[index]);
+                statOwner.OverrideStat(
+                    id, _types[index], StatValueType.Flat, newStats[i] - currentStats[index]);
             }
         }
 

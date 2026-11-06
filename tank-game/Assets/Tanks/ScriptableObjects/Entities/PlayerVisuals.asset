@@ -19,3 +19,20 @@ MonoBehaviour:
   _destroyBySelfSoundPath: event:/SFX/Explosions/Explosion_Self
   _destroyByOtherSoundPath: event:/SFX/Explosions/Explosion_Other
   _destroyByPlayerSoundPath: event:/SFX/Explosions/Explosion_Killed
+  _effects:
+  - _type: 0
+    _shaderProperty: _BurningIntensity
+    _fadeInDuration: 0.3
+    _fadeOutDuration: 0.6
+  - _type: 1
+    _shaderProperty: _FrozenIntensity
+    _fadeInDuration: 0.3
+    _fadeOutDuration: 0.6
+  - _type: 2
+    _shaderProperty: _HealingIntensity
+    _fadeInDuration: 0.3
+    _fadeOutDuration: 0.6
+  - _type: 3
+    _shaderProperty: _NoclipIntensity
+    _fadeInDuration: 0.3
+    _fadeOutDuration: 0.6

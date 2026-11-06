@@ -18,6 +18,7 @@ namespace Tanks.UI.Gameplay.Effects
         }
 
         public BindableProperty<EffectType?> CurrentEffect { get; } = new();
+        public BindableProperty<float> FlashProgress { get; } = new(1);
         public BindableProperty<IReadOnlyList<EffectType>> ActiveEffects { get; } = new();
         public BindableProperty<IReadOnlyList<EffectType>> ExpiringEffects { get; } = new();
 
@@ -47,6 +48,7 @@ namespace Tanks.UI.Gameplay.Effects
             if (_owner is null || _owner.Effects.Count == 0 || _owner.Entity.IsValid == false)
             {
                 CurrentEffect.Value = null;
+                FlashProgress.Value = 1;
 
                 _effectBuffer.Clear();
                 PublishEffects(ActiveEffects, _activeEffects);
@@ -55,11 +57,30 @@ namespace Tanks.UI.Gameplay.Effects
                 return;
             }
 
+            EffectType? current = null;
+
             foreach (EffectType type in _owner.Effects.Keys)
             {
-                CurrentEffect.Value = type;
+                if (type is EffectType.Noclip or EffectType.Flashed) continue;
+                current = type;
                 break;
             }
+
+            CurrentEffect.Value = current;
+            float flashProgress = _owner.Effects.TryGetValue(EffectType.Flashed, out EffectEntry flash)
+                && flash.Duration > 0
+                ? UnityEngine.Mathf.Clamp01((_tick - flash.StartTick) * _tickDelta / flash.Duration)
+                : 1;
+
+            foreach (EffectEntry entry in _owner.Entries.Values)
+            {
+                if (entry.Type != EffectType.Flashed || entry.Duration <= 0) continue;
+
+                float progress = UnityEngine.Mathf.Clamp01((_tick - entry.StartTick) * _tickDelta / entry.Duration);
+                flashProgress = UnityEngine.Mathf.Min(flashProgress, progress);
+            }
+
+            FlashProgress.Value = flashProgress;
 
             UpdateActiveEffects();
             UpdateExpiringEffects();

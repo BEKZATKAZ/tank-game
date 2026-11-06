@@ -21,7 +21,8 @@ namespace Tanks.Server.Items.Behaviours.DamageBased
         }
 
         private readonly IDamageService _damageService;
-        private readonly Dictionary<IItemOwnerBehaviour, PlayerNegativeSpeedEntry> _entries = new();
+        private readonly Dictionary<IItemOwnerBehaviour, PlayerNegativeSpeedEntry> _entries =
+            new();
 
         public override void OnPickup(IItemOwnerBehaviour owner)
         {

@@ -11,6 +11,8 @@ namespace Tanks.Server.Effects
             _damageService = damageService;
         }
 
+        public const int Damage = 6;
+
         private readonly IDamageService _damageService;
 
         protected override void OnTick(int tick, float tickDelta)
@@ -21,7 +23,7 @@ namespace Tanks.Server.Effects
             if (tick % 10 != 0) return;
 
             HealthEventId eventId = HealthEventId.Create(Behaviour.GetType(), tick);
-            _damageService.Damage(10, Behaviour.Entity, effect.From, eventId, includeStats: false);
+            _damageService.Damage(Damage, Behaviour.Entity, effect.From, eventId, includeStats: false);
         }
     }
 }

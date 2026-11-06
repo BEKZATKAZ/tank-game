@@ -93,6 +93,10 @@ MonoBehaviour:
     m_Localized: Healing
     m_Metadata:
       m_Items: []
+  - m_Id: 39000000000000001
+    m_Localized: "Flashed"
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:

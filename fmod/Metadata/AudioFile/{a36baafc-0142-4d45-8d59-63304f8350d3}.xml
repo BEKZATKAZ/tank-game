@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<objects serializationModel="Studio.02.03.00">
+	<object class="AudioFile" id="{a36baafc-0142-4d45-8d59-63304f8350d3}">
+		<property name="assetPath">
+			<value>SFX/Weapons/IgnitedBalls/Fire.wav</value>
+		</property>
+		<property name="frequencyInKHz">
+			<value>44.0999985</value>
+		</property>
+		<property name="channelCount">
+			<value>1</value>
+		</property>
+		<property name="length">
+			<value>0.42857142857142855</value>
+		</property>
+		<relationship name="masterAssetFolder">
+			<destination>{7d808c64-ed2c-4260-95b8-2316dffdcfce}</destination>
+		</relationship>
+	</object>
+</objects>

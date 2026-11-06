@@ -98,7 +98,9 @@ namespace Tanks.Shared.Driving
 
             ContactFilter2D filter = new ContactFilter2D
             {
-                layerMask = ~(1 << gameObject.layer),
+                useLayerMask = true,
+                layerMask = ~(1 << gameObject.layer) &
+                    (_effectOwner.Effects.ContainsKey(EffectType.Noclip) ? ~1 : -1),
                 useTriggers = false
             };
 

@@ -108,13 +108,13 @@ namespace Tanks.Client.Weapons.Projectiles
 
         private void OnRicochetFull(float2 hitPoint, float2 surfaceNormal)
         {
+            Behaviour.OnRicochet(hitPoint, surfaceNormal);
             if (++_ricochetedCount > Behaviour.MaxRicochetCount)
             {
                 Done();
                 return;
             }
 
-            Behaviour.OnRicochet(hitPoint, surfaceNormal);
             _justRicocheted = true;
         }
 

@@ -21,6 +21,7 @@ namespace Tanks.UI.Gameplay.Effects
         private EffectListConfig _config;
 
         private VisualElement _root;
+        private VisualElement _flashOverlay;
         private MotionHandle _fade;
         private EffectType? _currentEffect;
         private readonly Dictionary<EffectType, EffectCircle> _circles = new();
@@ -30,7 +31,9 @@ namespace Tanks.UI.Gameplay.Effects
         protected override void Initialize(VisualElement root)
         {
             _root = root.Q("PlayerEffects");
+            _flashOverlay = root.Q("FlashOverlay");
             _fullscreenMaterial.SetFloat("_Opacity", 0);
+            UpdateFlash(1);
         }
 
         protected override void Bind(EffectsViewModel viewModel)
@@ -38,6 +41,7 @@ namespace Tanks.UI.Gameplay.Effects
             viewModel.ActiveEffects.Bind(UpdateEffects);
             viewModel.CurrentEffect.Bind(OnEffectChanged);
             viewModel.ExpiringEffects.Bind(UpdateExpiringEffects);
+            viewModel.FlashProgress.Bind(UpdateFlash);
         }
 
         protected override void Unbind(EffectsViewModel viewModel)
@@ -45,6 +49,7 @@ namespace Tanks.UI.Gameplay.Effects
             viewModel.ActiveEffects.Unbind(UpdateEffects);
             viewModel.CurrentEffect.Unbind(OnEffectChanged);
             viewModel.ExpiringEffects.Unbind(UpdateExpiringEffects);
+            viewModel.FlashProgress.Unbind(UpdateFlash);
             _circles.Clear();
             _root.Clear();
             ResetEffect();
@@ -153,6 +158,19 @@ namespace Tanks.UI.Gameplay.Effects
 
             if (_fullscreenMaterial == false) return;
             _fullscreenMaterial.SetFloat("_Opacity", 0);
+            UpdateFlash(1);
+        }
+
+        private void UpdateFlash(float progress)
+        {
+            _fullscreenMaterial.SetFloat("_FlashProgress", progress);
+            float hold = _fullscreenMaterial.GetFloat("_FlashWhiteout");
+            float fade = _fullscreenMaterial.GetFloat("_FlashFade");
+            float recovery = Mathf.Clamp01((progress - hold) / Mathf.Max(fade, 0.001f));
+            float opacity = 1 - Mathf.SmoothStep(0, 1, recovery);
+
+            _flashOverlay.style.opacity = opacity;
+            _flashOverlay.style.display = opacity > 0 ? DisplayStyle.Flex : DisplayStyle.None;
         }
 
         private sealed class EffectCircle

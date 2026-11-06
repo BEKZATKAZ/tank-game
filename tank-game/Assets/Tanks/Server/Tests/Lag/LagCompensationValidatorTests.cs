@@ -3,6 +3,7 @@ using NUnit.Framework;
 using System;
 using Tanks.Server.Lag;
 using Tanks.Shared.Entities;
+using Tanks.Shared.Entities.Health;
 using Tanks.Shared.Lag;
 using Tanks.Shared.Weapons;
 using Tanks.Shared.Weapons.Projectiles;
@@ -98,8 +99,8 @@ namespace Tanks.Server.Tests.Lag
 
             _component.Handle(message);
 
-            var modules = data.Behaviour.GetBehaviour<IProjectileModuleList>();
-            modules.Received(1).Call(Arg.Any<Action<ProjectileModuleBehaviourBase>>());
+            data.Behaviour.Received(1).OnDamageableHit(
+                target.GetBehaviour<IHealthBehaviour>(), snapshot.Position, snapshot.Direction);
 
             _projectilePool.Received(1).ReturnProjectileClientRpc(message.ProjectileId);
             _projectilePool.Received(1).Return(message.ProjectileId);

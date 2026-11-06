@@ -111,6 +111,8 @@ namespace Tanks.Shared.Stats
             return math.clamp(sum, parameters.MinValue, parameters.MaxValue);
         }
 
+        public float GetMaximum(StatType type) => Config.GetParameters(type).MaxValue;
+
         public void GetStatTimers(StatType type, List<StatTimer> results)
         {
             results.Clear();

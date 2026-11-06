@@ -88,5 +88,28 @@ namespace Tanks.Shared.Tests.Driving
 
             Assert.That(math.length(_drive.Velocity.Linear), Is.GreaterThan(0));
         }
+
+        [Test]
+        public void Tick_NoclipPassesThroughWalls()
+        {
+            _drive.gameObject.layer = 3;
+            _drive.gameObject.AddComponent<BoxCollider2D>();
+            _drive.Rigidbody.position = new Vector2(6000, 6000);
+            GameObject wall = new("noclip-drive-wall", typeof(BoxCollider2D));
+            wall.transform.position = new Vector3(6002, 6000, 0);
+            Physics2D.SyncTransforms();
+
+            try
+            {
+                _drive.Tick(1, 0, 0.5f);
+                Assert.That(_drive.Velocity.Linear.x, Is.Zero);
+
+                _effects.AddEffect(EffectType.Noclip, 6);
+                _drive.Tick(1, 0, 0.5f);
+
+                Assert.That(_drive.Velocity.Linear.x, Is.GreaterThan(0));
+            }
+            finally { Object.DestroyImmediate(wall); }
+        }
     }
 }

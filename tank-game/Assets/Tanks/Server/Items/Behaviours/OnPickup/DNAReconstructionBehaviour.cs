@@ -51,7 +51,8 @@ namespace Tanks.Server.Items.Behaviours.OnPickup
             }
 
             entry.StatIds.Add(statOwner.AddStat(_types[boostIndex], boost.ValueType, boost.Value));
-            entry.StatIds.Add(statOwner.AddStat(_types[penaltyIndex], penalty.ValueType, penalty.Value));
+            entry.StatIds.Add(statOwner.AddStat(
+                _types[penaltyIndex], penalty.ValueType, penalty.Value));
         }
 
         public override void OnDestroy(IItemOwnerBehaviour owner)

@@ -69,6 +69,8 @@ namespace Tanks.Infrastructure
             builder.Register<IProcessService, ProcessService>(Lifetime.Singleton);
             builder.Register<ISettingsLoader, JsonSettingsLoader>(Lifetime.Singleton);
             builder.Register<ISettingsService, JsonSettingsService>(Lifetime.Singleton);
+            builder.Register<IFrameRateController, UnityFrameRateController>(Lifetime.Singleton);
+            builder.Register<IFrameRateLimitService, FrameRateLimitService>(Lifetime.Singleton);
 
             builder.RegisterComponent(_sessionSettings).As<ISessionSettingsService>();
             builder.RegisterComponent(_sceneLoader).As<ISceneLoader>();

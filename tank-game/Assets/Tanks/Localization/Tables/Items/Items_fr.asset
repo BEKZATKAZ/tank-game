@@ -413,6 +413,162 @@ MonoBehaviour:
     m_Localized: "Le droit \xE0 l'erreur existe, existe..."
     m_Metadata:
       m_Items: []
+  - m_Id: 36000000000000000
+    m_Localized: Sac de fille
+    m_Metadata:
+      m_Items: []
+  - m_Id: 36000000000000001
+    m_Localized: "Contient tout le n\xE9cessaire. Augmente toutes vos stats sauf la vitesse de {increase}, mais diminue votre vitesse de {decrease}. Car il est lourd."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 36000000000000002
+    m_Localized: "Capacit\xE9 adapt\xE9e \xE0 toutes les occasions."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 36000000000000003
+    m_Localized: "Canap\xE9 cool"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 36000000000000004
+    m_Localized: "Toutes les {interval} secondes d'immobilit\xE9, votre stat la plus \xE9lev\xE9e augmente de {increase}. Si elle atteint son maximum, c'est la stat imm\xE9diatement sup\xE9rieure qui augmente. D\xE9placer ou faire pivoter le char r\xE9initialise le chronom\xE8tre."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 36000000000000005
+    m_Localized: "Asseyez-vous, d\xE9tendez-vous, pr\xE9parez-vous une tasse de th\xE9."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 36000000000000006
+    m_Localized: Noclip
+    m_Metadata:
+      m_Items: []
+  - m_Id: 36000000000000007
+    m_Localized: "Vous pouvez traverser les murs pendant {duration} secondes. Durant cet effet, vous ne pouvez pas tirer, mais vous pouvez subir des d\xE9g\xE2ts. Si vous vous trouvez \xE0 l'int\xE9rieur d'un mur \xE0 la fin de l'effet, vous serez instantan\xE9ment d\xE9truit."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 36000000000000008
+    m_Localized: Vous traversez les murs.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 36000000000000009
+    m_Localized: Comme un diamant
+    m_Metadata:
+      m_Items: []
+  - m_Id: 36000000000000010
+    m_Localized: Vous brillez de mille feux et attires l'attention des autres joueurs. Cependant, avec de telles stats, vous savez vous comporter avec eux.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 36000000000000011
+    m_Localized: Il m'est impossible de ne pas vous regarder.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 36000000000000012
+    m_Localized: Fleur des bienfaits
+    m_Metadata:
+      m_Items: []
+  - m_Id: 36000000000000013
+    m_Localized: "Fait preuve de bienveillance et applique {effect-healing} \xE0 tous les joueurs, y compris vous, pendant {duration} secondes."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 36000000000000014
+    m_Localized: "La paix \xE9tait une des options."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 36000000000000015
+    m_Localized: Sans honneur
+    m_Metadata:
+      m_Items: []
+  - m_Id: 36000000000000016
+    m_Localized: "Vous infligez {increase} plus de d\xE9g\xE2ts lorsque vous frappez un joueur dans le dos."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 36000000000000017
+    m_Localized: Soyez sur vos gardes.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 36000000000000018
+    m_Localized: Boule de feu
+    m_Metadata:
+      m_Items: []
+  - m_Id: 36000000000000019
+    m_Localized: "Lance une gigantesque boule de feu. Chaque impact provoque une puissante explosion infligeant des d\xE9g\xE2ts consid\xE9rables. Les joueurs proches de l'explosion subissent l'effet {effect-burning}."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 36000000000000020
+    m_Localized: Les choses vont chauffer ici.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 36000000000000021
+    m_Localized: Gratos
+    m_Metadata:
+      m_Items: []
+  - m_Id: 36000000000000022
+    m_Localized: "Cette arme n'inflige aucun d\xE9g\xE2t. \xC0 l'impact, elle fait appara\xEEtre un objet al\xE9atoire de niveau al\xE9atoire, \xE0 l'exclusion des objets rares et l\xE9gendaires."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 36000000000000023
+    m_Localized: "Tout doit \xEAtre vendu."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 36000000000000024
+    m_Localized: Boules chaudes
+    m_Metadata:
+      m_Items: []
+  - m_Id: 36000000000000025
+    m_Localized: "Cette arme tire de minuscules billes qui provoquent un effet de br\xFBlure \xE0 l'impact."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 36000000000000026
+    m_Localized: Petit mais tranchant.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 36000000000000027
+    m_Localized: Hibernation
+    m_Metadata:
+      m_Items: []
+  - m_Id: 36000000000000028
+    m_Localized: "Active l'effet {effect-frozen} pendant {duration} secondes. Ensuite, votre sant\xE9 est enti\xE8rement restaur\xE9e. D\xE9geler l'effet pr\xE9matur\xE9ment annule la gu\xE9rison."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 36000000000000029
+    m_Localized: Dors un peu.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 36000000000000030
+    m_Localized: "Diminution de l'\xE9quilibre"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 36000000000000031
+    m_Localized: "Tirer avec votre sant\xE9 au-dessus de {threshold} vous inflige l'effet {effect-burning} pendant {duration} secondes. Chaque deuxi\xE8me coup direct port\xE9 \xE0 un autre joueur inflige {incre} de d\xE9g\xE2ts suppl\xE9mentaires."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 36000000000000032
+    m_Localized: La douleur porte ses fruits.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 36000000000000033
+    m_Localized: Retrofire
+    m_Metadata:
+      m_Items: []
+  - m_Id: 36000000000000034
+    m_Localized: "Vous perdez des FPS, mais une stat augmente consid\xE9rablement. Vous ne pouvez ramasser cet objet que deux fois.\n\nPremi\xE8re fois\_: d\xE9fense {first}, FPS maximum.\nDeuxi\xE8me fois\_: d\xE9g\xE2ts {second}, FPS maximum.\nTroisi\xE8me fois\_: vous mourez."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 36000000000000035
+    m_Localized: "Avez-vous d\xE9j\xE0 vu \xE7a dans des jeux ?"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 38550435874512896
+    m_Localized: Grenade flash
+    m_Metadata:
+      m_Items: []
+  - m_Id: 38550435912261632
+    m_Localized: "Une arme qui tire une grenade flashbang. Tout impact provoque l'effet {effect-flashed} sur les joueurs, y compris vous. La grenade n'inflige pas de d\xE9g\xE2ts et n'aveugle pas les joueurs cach\xE9s derri\xE8re des obstacles."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 38550435912261633
+    m_Localized: Mais ne vous aveuglez pas.
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:
@@ -421,6 +577,7 @@ MonoBehaviour:
       data:
         m_Entries: 
         m_SharedEntries:
+        - id: 38550435912261632
         - id: 27924629891276800
         - id: 70680580677632
         - id: 25106182220242944

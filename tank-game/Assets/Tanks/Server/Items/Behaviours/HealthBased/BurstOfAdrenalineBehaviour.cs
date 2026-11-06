@@ -17,6 +17,7 @@ namespace Tanks.Server.Items.Behaviours.HealthBased
         {
             IHealthBehaviour health = owner.GetBehaviour<IHealthBehaviour>();
             if (health is null) return;
+
             TryActivate(owner, health.ServerState.Value);
         }
 
@@ -49,7 +50,9 @@ namespace Tanks.Server.Items.Behaviours.HealthBased
             ItemStat rateOfFire = Config.GetStat("rate-of-fire-boost");
 
             statOwner.AddStat(StatType.Speed, speed.ValueType, speed.Value, duration);
-            statOwner.AddStat(StatType.RateOfFire, rateOfFire.ValueType, rateOfFire.Value, duration);
+            statOwner.AddStat(
+                StatType.RateOfFire, rateOfFire.ValueType, rateOfFire.Value, duration);
+
             _activated.Add(owner.Entity.Id);
         }
     }

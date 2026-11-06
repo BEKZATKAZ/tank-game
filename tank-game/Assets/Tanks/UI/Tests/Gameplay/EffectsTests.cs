@@ -13,6 +13,7 @@ namespace Tanks.UI.Tests.Gameplay
         private IClientEntityService _clientEntityService;
         private IEntityBehaviour _player;
         private Dictionary<EffectType, EffectEntry> _effects;
+        private Dictionary<EffectId, EffectEntry> _entries;
 
         protected override EffectsViewModel CreateViewModel()
         {
@@ -27,9 +28,125 @@ namespace Tanks.UI.Tests.Gameplay
             };
 
             _player.GetBehaviour<IEffectOwnerBehaviour>().Effects.Returns(_effects);
+            _entries = new Dictionary<EffectId, EffectEntry>();
+            _player.GetBehaviour<IEffectOwnerBehaviour>().Entries.Returns(_entries);
             _player.GetBehaviour<IEffectOwnerBehaviour>().Entity.Returns(_player);
 
             return new EffectsViewModel(_clientEntityService);
+        }
+
+        [Test]
+        public void Flash_UsesIndependentProgressAndPreservesOtherFullscreenEffects()
+        {
+            _effects[EffectType.Flashed] = new EffectEntry(100, 5, null);
+
+            ViewModel.Tick(100, 0.1f);
+
+            Assert.That(ViewModel.CurrentEffect.Value, Is.EqualTo(EffectType.Burning));
+            Assert.That(ViewModel.FlashProgress.Value, Is.Zero);
+            Assert.That(ViewModel.ActiveEffects.Value, Does.Contain(EffectType.Flashed));
+
+            ViewModel.Tick(125, 0.1f);
+            Assert.That(ViewModel.FlashProgress.Value, Is.EqualTo(0.5f));
+
+            ViewModel.Tick(150, 0.1f);
+            Assert.That(ViewModel.FlashProgress.Value, Is.EqualTo(1));
+        }
+
+        [Test]
+        public void Flash_AloneDoesNotSelectLegacyFullscreenChannel()
+        {
+            _effects.Clear();
+            _effects[EffectType.Flashed] = new EffectEntry(0, 5, null);
+
+            ViewModel.Tick(10, 0.1f);
+
+            Assert.That(ViewModel.CurrentEffect.Value, Is.Null);
+            Assert.That(ViewModel.FlashProgress.Value, Is.EqualTo(0.2f).Within(0.001f));
+        }
+
+        [Test]
+        public void Flash_RestartResetsProgressEvenWhenTypeDoesNotChange()
+        {
+            _effects[EffectType.Flashed] = new EffectEntry(0, 5, null);
+            ViewModel.Tick(40, 0.1f);
+            Assert.That(ViewModel.FlashProgress.Value, Is.EqualTo(0.8f));
+
+            _effects[EffectType.Flashed] = new EffectEntry(40, 2.5f, null);
+            ViewModel.Tick(40, 0.1f);
+
+            Assert.That(ViewModel.FlashProgress.Value, Is.Zero);
+        }
+
+        [Test]
+        public void Flash_UsesStrongestEntryEvenWhenAnotherIdLastsLonger()
+        {
+            _effects[EffectType.Flashed] = new EffectEntry(0, 10, null);
+            _entries[new EffectId(1)] = new EffectEntry(EffectType.Flashed, 0, 10, null);
+            _entries[new EffectId(2)] = new EffectEntry(EffectType.Flashed, 75, 1, null);
+
+            ViewModel.Tick(80, 0.1f);
+
+            Assert.That(ViewModel.FlashProgress.Value, Is.EqualTo(0.5f).Within(0.001f));
+            Assert.That(ViewModel.ActiveEffects.Value, Has.Exactly(1).EqualTo(EffectType.Flashed));
+        }
+
+        [Test]
+        public void Flash_PossessionLostClearsImmediately()
+        {
+            _effects[EffectType.Flashed] = new EffectEntry(0, 5, null);
+            ViewModel.Tick(10, 0.1f);
+
+            _clientEntityService.Changed += Raise.Event<PossessedEntityChanged>(_player, null);
+
+            Assert.That(ViewModel.FlashProgress.Value, Is.EqualTo(1));
+        }
+
+        [TestCase(0)]
+        [TestCase(-1)]
+        public void Flash_InvalidDurationDoesNotBlind(float duration)
+        {
+            _effects[EffectType.Flashed] = new EffectEntry(0, duration, null);
+
+            ViewModel.Tick(10, 0.1f);
+
+            Assert.That(ViewModel.FlashProgress.Value, Is.EqualTo(1));
+        }
+
+        [Test]
+        public void Flash_RemovalAndInvalidOwnerClearProgress()
+        {
+            _effects[EffectType.Flashed] = new EffectEntry(0, 5, null);
+            ViewModel.Tick(10, 0.1f);
+
+            _effects.Remove(EffectType.Flashed);
+            ViewModel.Tick();
+            Assert.That(ViewModel.FlashProgress.Value, Is.EqualTo(1));
+
+            _effects[EffectType.Flashed] = new EffectEntry(0, 5, null);
+            ViewModel.Tick();
+            _player.IsValid.Returns(false);
+            ViewModel.Tick();
+
+            Assert.That(ViewModel.FlashProgress.Value, Is.EqualTo(1));
+        }
+
+        [Test]
+        public void Flash_PossessionSwitchReadsExistingProgress()
+        {
+            IEntityBehaviour next = Substitute.For<IEntityBehaviour>();
+            next.IsValid.Returns(true);
+            next.GetBehaviour<IEffectOwnerBehaviour>().Entity.Returns(next);
+            next.GetBehaviour<IEffectOwnerBehaviour>().Effects.Returns(
+                new Dictionary<EffectType, EffectEntry>
+                {
+                    [EffectType.Flashed] = new EffectEntry(100, 2, null)
+                });
+            ViewModel.Tick(110, 0.1f);
+
+            _clientEntityService.Changed += Raise.Event<PossessedEntityChanged>(_player, next);
+
+            Assert.That(ViewModel.FlashProgress.Value, Is.EqualTo(0.5f));
         }
 
         [Test]

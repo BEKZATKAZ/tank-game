@@ -1,5 +1,10 @@
 ﻿using System.Runtime.InteropServices;
+using System.Linq;
 using Tanks.Shared.Adapters;
+using Tanks.Shared.Entities;
+using Tanks.Shared.Items;
+using Tanks.Shared.Items.Behaviours;
+using Tanks.Shared.Teams;
 using Tanks.Shared.Entities.Health;
 using Tanks.Shared.Messaging;
 using Tanks.Shared.Weapons.Projectiles.Modules;
@@ -49,6 +54,7 @@ namespace Tanks.Shared.Weapons.Projectiles
         float Speed { get; }
         float LifeTime { get; }
         ushort MaxRicochetCount { get; }
+        IEntityBehaviour DirectHitTarget { get; }
 
         void Launch(IWeaponHolderBehaviour owner, in ProjectileId id);
         void Reconcile(ProjectileSnapshotFromServer snapshot);
@@ -56,6 +62,7 @@ namespace Tanks.Shared.Weapons.Projectiles
 
         void OnRicochet(float2 hitPoint, float2 surfaceNormal);
         void OnDamageableHit(IHealthBehaviour damageable);
+        void OnDamageableHit(IHealthBehaviour damageable, float2 impactPosition, float2 incomingDirection);
     }
 
     [RequireComponent(typeof(ProjectileModuleList))]
@@ -70,6 +77,9 @@ namespace Tanks.Shared.Weapons.Projectiles
         public IWeaponHolderBehaviour Owner { get; private set; }
         public ProjectileId Id { get; private set; }
         public float ElapsedSeconds { get; set; }
+        public IEntityBehaviour DirectHitTarget { get; private set; }
+        public float DirectHitDamageMultiplier { get; private set; } = 1;
+        public float2 ImpactPosition { get; private set; }
 
         public string Name => name;
         public float Radius => _radius;
@@ -79,6 +89,8 @@ namespace Tanks.Shared.Weapons.Projectiles
 
         private ProjectileMover _mover;
         private ProjectileModuleList _moduleList;
+        private bool _hasHitTarget;
+        private float2 _incomingDirection;
 
         public void Reconcile(ProjectileSnapshotFromServer snapshot)
         {
@@ -87,11 +99,49 @@ namespace Tanks.Shared.Weapons.Projectiles
 
         public void OnDamageableHit(IHealthBehaviour damageable)
         {
+            if (_hasHitTarget) return;
+            _hasHitTarget = true;
+            DirectHitTarget = damageable.Entity;
+            DirectHitDamageMultiplier = 1;
+
+            if (damageable.Entity != Owner.Entity && damageable.ServerState.Value.Current > 0 &&
+                damageable.Entity.GetBehaviour<ITeamParticipantBehaviour>()?.State != null)
+            {
+                IItemOwnerBehaviour items = Owner.Entity.GetBehaviour<IItemOwnerBehaviour>();
+                DirectHitContext context = new DirectHitContext
+                {
+                    ProjectileId = Id,
+                    Target = damageable.Entity,
+                    Direction = _incomingDirection,
+                    DamageMultiplier = 1
+                };
+
+                if (items != null)
+                {
+                    foreach (ItemBehaviourBase behaviour in items.GetAllBehaviours().Distinct())
+                    {
+                        try { behaviour.OnDirectHit(items, ref context); }
+                        catch (System.Exception ex) { Debug.LogException(ex); }
+                    }
+                }
+
+                DirectHitDamageMultiplier = context.DamageMultiplier;
+            }
+
             _moduleList.Call(module => module.HitEntity(damageable.Entity, Owner.Entity));
+        }
+
+        public void OnDamageableHit(IHealthBehaviour damageable, float2 impactPosition, float2 incomingDirection)
+        {
+            ImpactPosition = impactPosition;
+            _incomingDirection = incomingDirection;
+            OnDamageableHit(damageable);
         }
 
         public void OnRicochet(float2 hitPoint, float2 surfaceNormal)
         {
+            ImpactPosition = hitPoint;
+            if (MaxRicochetCount == 0) Transform.WorldPosition = hitPoint + surfaceNormal * 0.01f;
             EmitMessage(new ProjectileRicocheted
             {
                 HitPoint = hitPoint,
@@ -105,12 +155,26 @@ namespace Tanks.Shared.Weapons.Projectiles
         {
             Id = id;
             Owner = owner;
+            _hasHitTarget = false;
+            DirectHitTarget = null;
+            DirectHitDamageMultiplier = 1;
+            ImpactPosition = Transform.WorldPosition;
+            _incomingDirection = Transform.Right;
             EmitMessage(new ProjectileLaunched { Owner = owner });
         }
 
         public void Simulate(LaunchCallbacks callbacks, ITransform transform, float deltaTime)
         {
-            _mover.Simulate(callbacks, transform, _speed * deltaTime);
+            _incomingDirection = transform.Right;
+            _mover.Simulate(new LaunchCallbacks
+            {
+                OnDamageableHit = target =>
+                {
+                    ImpactPosition = transform.WorldPosition;
+                    callbacks.OnDamageableHit?.Invoke(target);
+                },
+                OnRicochet = callbacks.OnRicochet
+            }, transform, _speed * deltaTime);
         }
 
         protected override void OnDisable()

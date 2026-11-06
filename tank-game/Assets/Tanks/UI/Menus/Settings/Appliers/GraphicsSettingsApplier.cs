@@ -6,9 +6,10 @@ namespace Tanks.UI.Menus.Settings
 {
     public sealed class GraphicsSettingsApplier : IDisposable
     {
-        public GraphicsSettingsApplier(ISettingsService settings)
+        public GraphicsSettingsApplier(ISettingsService settings, IFrameRateLimitService frameRate)
         {
             _settings = settings;
+            _frameRate = frameRate;
             _settings.Bind(PlayerSetting.ScreenResolutionIndex, ApplyScreenResolution);
             _settings.Bind(PlayerSetting.FullscreenMode, ApplyFullscreenMode);
             _settings.Bind(PlayerSetting.VSync, ApplyVSync);
@@ -16,6 +17,7 @@ namespace Tanks.UI.Menus.Settings
         }
 
         private readonly ISettingsService _settings;
+        private readonly IFrameRateLimitService _frameRate;
 
         public void Dispose()
         {
@@ -45,19 +47,20 @@ namespace Tanks.UI.Menus.Settings
 
         private void ApplyVSync(int index)
         {
-            QualitySettings.vSyncCount = index;
+            _frameRate.SetVSync(index);
         }
 
         private void ApplyFrameRate(int index)
         {
-            Application.targetFrameRate = index switch
+            int value = index switch
             {
                 0 => 30,
                 1 => 60,
                 2 => 120,
                 3 => 240,
-                _ => Application.targetFrameRate
+                _ => -1
             };
+            if (value > 0) _frameRate.SetFrameRate(value);
         }
     }
 }

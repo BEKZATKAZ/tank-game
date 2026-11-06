@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<objects serializationModel="Studio.02.03.00">
+	<object class="AudioFile" id="{f9b3a7ff-b746-45aa-9769-d212fee34d2e}">
+		<property name="assetPath">
+			<value>SFX/Effects/Flashed.wav</value>
+		</property>
+		<property name="frequencyInKHz">
+			<value>44.0999985</value>
+		</property>
+		<property name="channelCount">
+			<value>1</value>
+		</property>
+		<property name="length">
+			<value>5.1428571428571432</value>
+		</property>
+		<relationship name="masterAssetFolder">
+			<destination>{7d808c64-ed2c-4260-95b8-2316dffdcfce}</destination>
+		</relationship>
+	</object>
+</objects>

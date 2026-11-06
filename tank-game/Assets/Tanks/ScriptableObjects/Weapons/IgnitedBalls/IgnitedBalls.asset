@@ -1,0 +1,21 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e65df12e201a90d46a5e80278588ce45, type: 3}
+  m_Name: IgnitedBalls
+  m_EditorClassIdentifier: Tanks.Shared::Tanks.Shared.Weapons.Data.WeaponConfig
+  _useMode: 1
+  _ammo: {fileID: 11400000, guid: e92110eda8c7ab2f221ef3b81ab55051, type: 2}
+  _cooldown: {fileID: 11400000, guid: 0c8abe3695b1ad2d66d3c15024b41f9e, type: 2}
+  _useAction: {fileID: 11400000, guid: bb9e905f704205947636c0efa8f98de3, type: 2}
+  _recoil:
+    _amount: 11.5
+    _durationSeconds: 0.5

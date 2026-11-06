@@ -60,8 +60,8 @@ namespace Tanks.Shared.Entities.Health
             float damage = fromStat?.GetStat(StatType.Damage, baseAmount) ?? baseAmount;
             float defense = targetStat?.GetStat(StatType.Defense, 0) ?? 0;
 
-            float multiplier = targetStat?.GetDiminishingReturns(StatType.Defense, defense) ?? 1;
-            float finalDamage = damage * multiplier;
+            float defenseMultiplier = targetStat?.GetDiminishingReturns(StatType.Defense, defense) ?? 1;
+            float finalDamage = damage * defenseMultiplier;
 
             if (target == from)
             {
@@ -80,7 +80,7 @@ namespace Tanks.Shared.Entities.Health
                 }
             }
 
-            OnDamage((uint)math.ceil(finalDamage), target, from, eventId);
+            OnDamage((uint)math.ceil(math.max(0, finalDamage)), target, from, eventId);
         }
 
         public void Heal(uint amount, IEntityBehaviour target)

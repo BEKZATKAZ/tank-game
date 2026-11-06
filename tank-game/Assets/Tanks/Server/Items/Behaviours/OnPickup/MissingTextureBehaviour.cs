@@ -19,6 +19,7 @@ namespace Tanks.Server.Items.Behaviours.OnPickup
         {
             int count = owner.Items.Count(x => x == Config.Identifier);
             if (count < 2) return;
+
             _damageService.Damage(uint.MaxValue, owner.Entity, owner.Entity, includeStats: false);
         }
     }

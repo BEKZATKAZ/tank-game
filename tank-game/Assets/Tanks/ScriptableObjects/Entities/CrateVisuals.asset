@@ -15,6 +15,24 @@ MonoBehaviour:
   _hitVisualType: 0
   _hitSoundPath: event:/SFX/Crates/Break
   _destroyVisualType: 0
+  _allowDestroyPrediction: 1
   _destroyBySelfSoundPath: event:/SFX/Crates/Destroy
   _destroyByOtherSoundPath: event:/SFX/Crates/Destroy
   _destroyByPlayerSoundPath: event:/SFX/Crates/Destroy
+  _effects:
+  - _type: 0
+    _shaderProperty: _BurningIntensity
+    _fadeInDuration: 0.3
+    _fadeOutDuration: 0.6
+  - _type: 1
+    _shaderProperty: _FrozenIntensity
+    _fadeInDuration: 0.3
+    _fadeOutDuration: 0.6
+  - _type: 2
+    _shaderProperty: _HealingIntensity
+    _fadeInDuration: 0.3
+    _fadeOutDuration: 0.6
+  - _type: 3
+    _shaderProperty: _NoclipIntensity
+    _fadeInDuration: 0.3
+    _fadeOutDuration: 0.6

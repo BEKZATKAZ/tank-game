@@ -9,6 +9,7 @@ namespace Tanks.Shared.Weapons.Projectiles.Modules
 
         public void Call(Action<ProjectileModuleBehaviourBase> action)
         {
+            _modules ??= GetComponentsInChildren<ProjectileModuleBehaviourBase>(true);
             if (_modules is not { Length: > 0 }) return;
 
             foreach (ProjectileModuleBehaviourBase module in _modules)

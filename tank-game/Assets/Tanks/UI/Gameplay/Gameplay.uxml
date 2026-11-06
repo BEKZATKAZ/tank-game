@@ -96,5 +96,6 @@
             </Bindings>
         </Tanks.UI.Elements.CustomButton>
     </ui:VisualElement>
+    <ui:VisualElement name="FlashOverlay" picking-mode="Ignore" class="flash-overlay"/>
     <ui:VisualElement name="TransitionOverlay" picking-mode="Ignore" class="transition-overlay"/>
 </ui:UXML>
