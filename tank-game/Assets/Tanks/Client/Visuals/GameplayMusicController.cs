@@ -111,11 +111,9 @@ namespace Tanks.Client.Visuals
             if (_currentMusicIndex < 0) _currentMusicIndex = 0;
 
             _music = _audioFactory.CreateInstance(_musicPaths[_currentMusicIndex]);
-            _music.SetVolume(0.8f);
-
             _currentMusicIndex = ++_currentMusicIndex % _musicPaths.Length;
-            _stress.ResetStress();
 
+            _stress.ResetStress();
             _music.Play();
         }
 

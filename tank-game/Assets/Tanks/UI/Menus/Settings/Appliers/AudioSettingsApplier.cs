@@ -28,9 +28,26 @@ namespace Tanks.UI.Menus.Settings.Appliers
             _settings.Unbind(PlayerSetting.UIVolume, ApplyUIVolume);
         }
 
-        private void ApplyMasterVolume(int volume) => _mixer.SetMasterVolume(volume * 0.01f);
-        private void ApplyMusicVolume(int volume) => _mixer.SetMusicVolume(volume * 0.01f);
-        private void ApplySPXVolume(int volume) => _mixer.SetSFXVolume(volume * 0.01f);
-        private void ApplyUIVolume(int volume) => _mixer.SetUIVolume(volume * 0.01f);
+        private void ApplyMasterVolume(int volume)
+        {
+            _mixer.SetMasterVolume(volume * 0.01f);
+        }
+
+        private void ApplyMusicVolume(int volume)
+        {
+            // -60% otherwise it's too loud
+            _mixer.SetMusicVolume(volume * 0.4f * 0.01f);
+        }
+
+        private void ApplySPXVolume(int volume)
+        {
+            // -10%
+            _mixer.SetSFXVolume(volume * 0.9f * 0.01f);
+        }
+
+        private void ApplyUIVolume(int volume)
+        {
+            _mixer.SetUIVolume(volume * 0.01f);
+        }
     }
 }
