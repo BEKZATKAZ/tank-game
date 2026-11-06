@@ -16,18 +16,31 @@ namespace Tanks.Server.Items.Behaviours.OnPickup
 
         public override void OnPickup(IItemOwnerBehaviour owner)
         {
+            float duration = Config.GetStat("duration").Value;
+            string producer = Config.Identifier.ToString();
+            bool hasEntities = false;
+
             foreach (IEntityBehaviour entity in _entities.GetAllEntities())
             {
+                hasEntities = true;
+
                 if (entity.GetBehaviour<ITeamParticipantBehaviour>()?.State == null) continue;
                 if (entity.GetBehaviour<IHealthBehaviour>()?.ServerState.Value.Current is not > 0)
                 {
                     continue;
                 }
 
-                entity.GetBehaviour<IEffectOwnerBehaviour>()?.ApplyEffect(
-                    EffectType.Healing, Config.GetStat("duration").Value,
-                    Config.Identifier.ToString(), owner.Entity);
+                IEffectOwnerBehaviour effectOwner = entity
+                    .GetBehaviour<IEffectOwnerBehaviour>();
+
+                effectOwner.ApplyEffect(EffectType.Healing, duration, producer, owner.Entity);
             }
+
+            if (hasEntities) return;
+
+            // In the Playground scene there is only the local player
+            IEffectOwnerBehaviour thisEffectOwner = owner.GetBehaviour<IEffectOwnerBehaviour>();
+            thisEffectOwner.ApplyEffect(EffectType.Healing, duration, producer, owner.Entity);
         }
     }
 }
