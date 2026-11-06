@@ -1,19 +1,24 @@
 using System;
 using System.Collections.Generic;
+using Tanks.Audio;
 using Tanks.Client.Entities;
 using Tanks.Shared.Effects;
 using Tanks.Shared.Entities;
 using Tanks.Utils;
+using Unity.Mathematics;
 
 namespace Tanks.UI.Gameplay.Effects
 {
     public sealed class EffectsViewModel : IViewModel, IDisposable
     {
-        public EffectsViewModel(IClientEntityService clientEntityService)
+        public EffectsViewModel(
+            IClientEntityService clientEntityService,
+            IAudioPlayer audioPlayer)
         {
             _clientEntityService = clientEntityService;
-            _clientEntityService.Changed += OnPossessed;
+            _audioPlayer = audioPlayer;
 
+            _clientEntityService.Changed += OnPossessed;
             OnPossessed(null, _clientEntityService.GetPossessedEntity());
         }
 
@@ -23,6 +28,7 @@ namespace Tanks.UI.Gameplay.Effects
         public BindableProperty<IReadOnlyList<EffectType>> ExpiringEffects { get; } = new();
 
         private readonly IClientEntityService _clientEntityService;
+        private readonly IAudioPlayer _audioPlayer;
         private readonly List<EffectType> _activeEffects = new();
         private readonly List<EffectType> _expiringEffects = new();
         private readonly List<EffectType> _effectBuffer = new();
@@ -49,11 +55,10 @@ namespace Tanks.UI.Gameplay.Effects
             {
                 CurrentEffect.Value = null;
                 FlashProgress.Value = 1;
-
                 _effectBuffer.Clear();
+
                 PublishEffects(ActiveEffects, _activeEffects);
                 PublishEffects(ExpiringEffects, _expiringEffects);
-
                 return;
             }
 
@@ -67,17 +72,25 @@ namespace Tanks.UI.Gameplay.Effects
             }
 
             CurrentEffect.Value = current;
-            float flashProgress = _owner.Effects.TryGetValue(EffectType.Flashed, out EffectEntry flash)
-                && flash.Duration > 0
-                ? UnityEngine.Mathf.Clamp01((_tick - flash.StartTick) * _tickDelta / flash.Duration)
+
+            bool isFlashed = _owner.Effects
+                .TryGetValue(EffectType.Flashed, out EffectEntry flash) && flash.Duration > 0;
+
+            float flashProgress = isFlashed
+                ? math.saturate((_tick - flash.StartTick) * _tickDelta / flash.Duration)
                 : 1;
+
+            if (isFlashed && _tick - flash.StartTick == 2)
+            {
+                _audioPlayer.PlayOneShot("event:/SFX/Flashed");
+            }
 
             foreach (EffectEntry entry in _owner.Entries.Values)
             {
                 if (entry.Type != EffectType.Flashed || entry.Duration <= 0) continue;
 
-                float progress = UnityEngine.Mathf.Clamp01((_tick - entry.StartTick) * _tickDelta / entry.Duration);
-                flashProgress = UnityEngine.Mathf.Min(flashProgress, progress);
+                float progress = math.saturate((_tick - entry.StartTick) * _tickDelta / entry.Duration);
+                flashProgress = math.min(flashProgress, progress);
             }
 
             FlashProgress.Value = flashProgress;

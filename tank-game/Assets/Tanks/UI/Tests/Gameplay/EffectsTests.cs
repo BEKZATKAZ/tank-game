@@ -1,6 +1,7 @@
 using NSubstitute;
 using NUnit.Framework;
 using System.Collections.Generic;
+using Tanks.Audio;
 using Tanks.Client.Entities;
 using Tanks.Shared.Effects;
 using Tanks.Shared.Entities;
@@ -11,6 +12,7 @@ namespace Tanks.UI.Tests.Gameplay
     public class EffectsTests : ViewModelTestBase<EffectsViewModel>
     {
         private IClientEntityService _clientEntityService;
+        private IAudioPlayer _audioPlayer;
         private IEntityBehaviour _player;
         private Dictionary<EffectType, EffectEntry> _effects;
         private Dictionary<EffectId, EffectEntry> _entries;
@@ -18,6 +20,8 @@ namespace Tanks.UI.Tests.Gameplay
         protected override EffectsViewModel CreateViewModel()
         {
             _clientEntityService = Substitute.For<IClientEntityService>();
+            _audioPlayer = Substitute.For<IAudioPlayer>();
+
             _player = Substitute.For<IEntityBehaviour>();
             _player.IsValid.Returns(true);
             _clientEntityService.GetPossessedEntity().Returns(_player);
@@ -32,7 +36,7 @@ namespace Tanks.UI.Tests.Gameplay
             _player.GetBehaviour<IEffectOwnerBehaviour>().Entries.Returns(_entries);
             _player.GetBehaviour<IEffectOwnerBehaviour>().Entity.Returns(_player);
 
-            return new EffectsViewModel(_clientEntityService);
+            return new EffectsViewModel(_clientEntityService, _audioPlayer);
         }
 
         [Test]
@@ -161,7 +165,7 @@ namespace Tanks.UI.Tests.Gameplay
         public void Initialize_NoPossession_HasNoEffect()
         {
             _clientEntityService.GetPossessedEntity().Returns((IEntityBehaviour)null);
-            using EffectsViewModel viewModel = new EffectsViewModel(_clientEntityService);
+            using EffectsViewModel viewModel = new EffectsViewModel(_clientEntityService, _audioPlayer);
 
             Assert.That(viewModel.CurrentEffect.Value, Is.Null);
             Assert.That(viewModel.ActiveEffects.Value, Is.Null);
@@ -172,7 +176,7 @@ namespace Tanks.UI.Tests.Gameplay
         {
             _player.IsValid.Returns(false);
 
-            using EffectsViewModel viewModel = new EffectsViewModel(_clientEntityService);
+            using EffectsViewModel viewModel = new EffectsViewModel(_clientEntityService, _audioPlayer);
 
             Assert.That(viewModel.CurrentEffect.Value, Is.Null);
             Assert.That(viewModel.ActiveEffects.Value, Is.Null);
