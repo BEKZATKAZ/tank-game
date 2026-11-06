@@ -1,5 +1,4 @@
-﻿using System;
-using Tanks.Audio;
+﻿using Tanks.Audio;
 using Tanks.Client.Entities;
 using Tanks.Client.Input;
 using Tanks.Client.Rendering;

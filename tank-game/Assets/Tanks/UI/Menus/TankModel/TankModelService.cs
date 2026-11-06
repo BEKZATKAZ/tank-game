@@ -32,6 +32,7 @@ namespace Tanks.UI.Menus.TankModel
         private readonly List<CurveEntry> _animations = new();
 
         public IReadOnlyList<TankModelEntry> Models => _models;
+        public bool IsDrivingInPlace => _targetSpeed > 0;
 
         private readonly List<TankModelEntry> _models = new();
         private Transform[] _tankModels;
@@ -133,8 +134,11 @@ namespace Tanks.UI.Menus.TankModel
             for (int i = 0; i < _tankModels.Length; i++)
             {
                 Vector3 position = new Vector3(-999, -999);
+
                 _tankModels[i] = Instantiate(_tankModelPrefab, position, Quaternion.identity);
+                _tankModels[i].GetComponentInChildren<TankModelEngineSound>().Initialize(this, i);
                 _tankModels[i].gameObject.SetActive(false);
+
                 _models.Add(new TankModelEntry(_tankModels[i]));
             }
 

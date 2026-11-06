@@ -6,6 +6,7 @@ namespace Tanks.UI.TankModel
     public interface ITankModelService
     {
         IReadOnlyList<TankModelEntry> Models { get; }
+        bool IsDrivingInPlace { get; }
 
         void SetDisplayName(int tankIndex, string displayName);
         void SetReady(int tankIndex, bool ready);
