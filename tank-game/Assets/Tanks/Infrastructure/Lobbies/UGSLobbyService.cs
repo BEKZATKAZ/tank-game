@@ -31,7 +31,7 @@ namespace Tanks.Infrastructure.Lobbies
 
         public event Action<LobbyPlayerState> PlayerJoined;
         public event Action<LobbyPlayerState> PlayerLeft;
-        public event Action LobbyDeleted;
+        public event Action<string> LobbyDeleted;
 
         private Unity.Services.Lobbies.ILobbyService Service => _service ?? LobbyService.Instance;
 
@@ -68,11 +68,11 @@ namespace Tanks.Infrastructure.Lobbies
         private async Task SubscribeToEventsAsync()
         {
             LobbyId id = CurrentLobbyState.Id.Value;
-
             if (id.Value is null) return;
-            LobbyEventCallbacks callbacks = new LobbyEventCallbacks();
 
+            LobbyEventCallbacks callbacks = new LobbyEventCallbacks();
             callbacks.LobbyChanged += OnLobbyChanged;
+            callbacks.LobbyDeleted += OnLobbyDeleted;
 
             _lobbyEvents = await Service.SubscribeToLobbyEventsAsync(id.Value, callbacks);
         }
@@ -86,10 +86,15 @@ namespace Tanks.Infrastructure.Lobbies
 
         private void OnLobbyDeleted()
         {
-            CurrentLobbyState.Id.Value = default;
+            if (_auth.CurrentProfile.UserId.Value != CurrentLobbyState.HostId.Value)
+            {
+                _ = UnsubscribeFromEventsAsync();
+            }
+
+            LobbyDeleted?.Invoke(CurrentLobbyState.HostId.Value);
             _lobby = null;
-            CurrentLobbyState.Players.Value = new Dictionary<string, LobbyPlayerState>();
-            LobbyDeleted?.Invoke();
+
+            CurrentLobbyState.Reset();
         }
 
         private void OnLobbyChanged(ILobbyChanges changes)
@@ -313,13 +318,8 @@ namespace Tanks.Infrastructure.Lobbies
                 StopHeartbeat();
                 await UnsubscribeFromEventsAsync();
 
-                CurrentLobbyState.Id.Value = default;
-                CurrentLobbyState.Settings.Value = default;
-                CurrentLobbyState.ServerConfirmedSettings.Value = default;
-                CurrentLobbyState.Status.Value = default;
-
                 _lobby = null;
-                CurrentLobbyState.Players.Value = new Dictionary<string, LobbyPlayerState>();
+                CurrentLobbyState.Reset();
 
                 return Result.Success();
             }

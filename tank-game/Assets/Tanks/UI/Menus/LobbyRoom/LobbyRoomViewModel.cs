@@ -40,13 +40,13 @@ namespace Tanks.UI.Menus.LobbyRoom
             Settings.CanEdit.Bind(OnCanEditChanged);
 
             _service.CurrentLobbyState.Players.Bind(OnPlayersChanged);
-            _service.CurrentLobbyState.HostId.Bind(OnHostChanged);
             _service.CurrentLobbyState.Id.Bind(OnLobbyChanged);
+
+            _service.LobbyDeleted += OnLobbyDeleted;
             _localization.LocaleChanged += OnLocaleChanged;
 
             _service.CurrentLobbyState.Status.Bind(OnStatusChanged);
             _service.CurrentLobbyState.ServerConfirmedSettings.Bind(OnConnectionAllowed);
-            _initialized = true;
             RefreshReadiness();
         }
 
@@ -71,7 +71,6 @@ namespace Tanks.UI.Menus.LobbyRoom
         private bool _isStarting;
         private bool _isUpdatingReady;
         private bool _startAttempted;
-        private bool _initialized;
         private bool _disposed;
 
         private void OnStatusChanged(LobbyStatus status)
@@ -99,9 +98,15 @@ namespace Tanks.UI.Menus.LobbyRoom
             RefreshReadiness();
         }
 
-        private void OnPlayersChanged(IDictionary<string, LobbyPlayerState> players) => RefreshReadiness();
-        private void OnHostChanged(string host) => RefreshReadiness();
-        private void OnLocaleChanged(string locale) => RefreshReadiness();
+        private void OnPlayersChanged(IDictionary<string, LobbyPlayerState> players)
+        {
+            RefreshReadiness();
+        }
+
+        private void OnLocaleChanged(string locale)
+        {
+            RefreshReadiness();
+        }
 
         private void OnLobbyChanged(LobbyId id)
         {
@@ -109,9 +114,17 @@ namespace Tanks.UI.Menus.LobbyRoom
             RefreshReadiness();
         }
 
+        private void OnLobbyDeleted(string hostId)
+        {
+            if (_auth.CurrentProfile.UserId.Value == hostId) return;
+            _dialog.ShowErrorFromCode("error.lobby", "lobby-disbanded");
+            _navigation.OpenSection(MenuSectionType.Main);
+        }
+
         private void RefreshReadiness()
         {
             LobbyState lobby = _service.CurrentLobbyState;
+            
             bool member = lobby.Players.Value.TryGetValue(_auth.CurrentProfile.UserId.Value ?? "", out var player);
             bool waiting = _disposed == false && _isStarting == false &&
                 string.IsNullOrEmpty(lobby.Id.Value.Value) == false &&
@@ -119,13 +132,14 @@ namespace Tanks.UI.Menus.LobbyRoom
 
             CanReady.Value = waiting && member && _isUpdatingReady == false;
             string entry = player.IsReady ? "unready" : "ready";
+
             _localization.TryGet("Menus", $"menu.lobby.{entry}", out var text);
             ReadyText.Value = text?.Get() ?? entry.ToUpperInvariant();
             CanStart.Value = waiting && Settings.CanEdit.Value && member &&
                 lobby.HostId.Value == _auth.CurrentProfile.UserId.Value && lobby.AllPlayersReady;
 
             if (lobby.AllPlayersReady == false) _startAttempted = false;
-            if (_initialized && CanStart.Value && _startAttempted == false) StartGameAsync().Forget();
+            if (CanStart.Value && _startAttempted == false) StartGameAsync().Forget();
         }
 
         public async UniTask ToggleReadyAsync()
@@ -139,9 +153,14 @@ namespace Tanks.UI.Menus.LobbyRoom
 
             try
             {
-                ResultType result = await _service.SetReadyAsync(!ready);
+                ResultType result = await _service.SetReadyAsync(ready == false);
+
                 if (_disposed || lobby.Id.Value.Value != id.Value) return;
-                if (result.IsSuccess == false) _dialog.ShowErrorFromCode("error.lobby", result.ErrorCode);
+
+                if (result.IsSuccess == false)
+                {
+                    _dialog.ShowErrorFromCode("error.lobby", result.ErrorCode);
+                }
             }
             catch (Exception)
             {
@@ -236,13 +255,15 @@ namespace Tanks.UI.Menus.LobbyRoom
 
             Settings.CanEdit.Unbind(OnCanEditChanged);
             _service.CurrentLobbyState.Players.Unbind(OnPlayersChanged);
-            _service.CurrentLobbyState.HostId.Unbind(OnHostChanged);
             _service.CurrentLobbyState.Id.Unbind(OnLobbyChanged);
+
+            _service.LobbyDeleted -= OnLobbyDeleted;
             _localization.LocaleChanged -= OnLocaleChanged;
-            Settings.Dispose();
 
             _service.CurrentLobbyState.Status.Unbind(OnStatusChanged);
             _service.CurrentLobbyState.ServerConfirmedSettings.Unbind(OnConnectionAllowed);
+
+            Settings.Dispose();
         }
 
         public void LeaveLobbyConfirmation()

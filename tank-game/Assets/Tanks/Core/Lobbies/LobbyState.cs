@@ -1,4 +1,5 @@
 using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.Threading;
 using Tanks.Core.Lobbies.Sessions;
@@ -79,6 +80,19 @@ namespace Tanks.Core.Lobbies
 
             TryDeserializeFromJson(Settings, settingsJson);
             TryDeserializeFromJson(ServerConfirmedSettings, serverSettingsJson);
+        }
+
+        public void Reset()
+        {
+            Id.Value = default;
+            Address.Value = default;
+            Settings.Value = default;
+            ServerConfirmedSettings.Value = default;
+            Status.Value = default;
+            HostId.Value = default;
+            MaxPlayerCount.Value = default;
+            Players.Value = new Dictionary<string, LobbyPlayerState>();
+            LobbyData.Clear();
         }
 
         private void TryDeserializeFromJson<T>(BindableProperty<T> destination, string json)

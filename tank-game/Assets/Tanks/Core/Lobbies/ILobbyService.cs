@@ -9,7 +9,7 @@ namespace Tanks.Core.Lobbies
     {
         event Action<LobbyPlayerState> PlayerJoined;
         event Action<LobbyPlayerState> PlayerLeft;
-        event Action LobbyDeleted;
+        event Action<string> LobbyDeleted;
 
         LobbyState CurrentLobbyState { get; }
 
