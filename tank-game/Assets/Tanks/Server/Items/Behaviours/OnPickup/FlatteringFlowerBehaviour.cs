@@ -18,12 +18,9 @@ namespace Tanks.Server.Items.Behaviours.OnPickup
         {
             float duration = Config.GetStat("duration").Value;
             string producer = Config.Identifier.ToString();
-            bool hasEntities = false;
 
             foreach (IEntityBehaviour entity in _entities.GetAllEntities())
             {
-                hasEntities = true;
-
                 if (entity.GetBehaviour<ITeamParticipantBehaviour>()?.State == null) continue;
                 if (entity.GetBehaviour<IHealthBehaviour>()?.ServerState.Value.Current is not > 0)
                 {
@@ -35,12 +32,6 @@ namespace Tanks.Server.Items.Behaviours.OnPickup
 
                 effectOwner.ApplyEffect(EffectType.Healing, duration, producer, owner.Entity);
             }
-
-            if (hasEntities) return;
-
-            // In the Playground scene there is only the local player
-            IEffectOwnerBehaviour thisEffectOwner = owner.GetBehaviour<IEffectOwnerBehaviour>();
-            thisEffectOwner.ApplyEffect(EffectType.Healing, duration, producer, owner.Entity);
         }
     }
 }

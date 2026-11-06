@@ -35,14 +35,14 @@ namespace Tanks.Server.Playground
 
             if (Physics2D.OverlapBox(center, size, angle: 0))
             {
-                _remainingAttemptsToSpawn = 2;
+                _remainingAttemptsToSpawn = 4;
                 return;
             }
 
             // Prevent spawning crates right after breaking
             if (--_remainingAttemptsToSpawn > 0) return;
 
-            if (Behaviour.CanRespawn) _remainingAttemptsToSpawn = 2;
+            if (Behaviour.CanRespawn) _remainingAttemptsToSpawn = 4;
 
             SpawnCrate();
         }
