@@ -8,15 +8,17 @@
 
 .health-warning__title {
 	color: #ff0f0f;
-	font-size: 48px;
+	font-size: 52px;
 	width: 100%;
-	padding: 0 0 0 18px;
+	padding: 0 0 0 14px;
+	-unity-text-align: upper-left;
 }
 
 .health-warning__content {
 	color: rgb(215, 215, 215);
 	font-size: 28px;
 	white-space: normal;
+	-unity-text-align: upper-left;
 }
 
 .fmod-logo {

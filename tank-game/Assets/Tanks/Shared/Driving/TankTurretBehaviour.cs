@@ -9,7 +9,6 @@ namespace Tanks.Shared.Driving
         void Tick(float2 lookAtDirection, float deltaTime);
     }
 
-    [UnityEngine.RequireComponent(typeof(EffectOwnerBehaviour))]
     public class TankTurretBehaviour : NetworkBehaviourExtended, ITankTurretBehaviour
     {
         private TankTurretRotation _rotation;
@@ -19,7 +18,7 @@ namespace Tanks.Shared.Driving
         {
             base.Awake();
             _rotation = new TankTurretRotation(Transform, Angle.FromDegrees(1200));
-            _effectOwner = GetComponent<EffectOwnerBehaviour>();
+            _effectOwner = GetComponentInParent<EffectOwnerBehaviour>();
         }
 
         public void Tick(float2 lookAtDirection, float deltaTime)
