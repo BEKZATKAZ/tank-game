@@ -4,6 +4,7 @@ using Tanks.Shared.Items;
 using Tanks.Shared.Items.Behaviours;
 using Tanks.Shared.Messaging;
 using Unity.Mathematics;
+using UnityEngine;
 
 namespace Tanks.Client.Items.Behaviours.OnPickup
 {
@@ -34,11 +35,12 @@ namespace Tanks.Client.Items.Behaviours.OnPickup
         {
             int wallWidth = _generated.Settings.WallWidth;
             int minDistance = wallWidth * 4;
+            int attempts = 0;
 
             float2 initialPosition = owner.Transform.WorldPosition;
-            float2 position;
+            float2 position = owner.Transform.WorldPosition;
 
-            while (true)
+            while (attempts++ < 100)
             {
                 float2 coords = new float2(
                     UnityEngine.Random.Range(0, _generated.Resolution.x),
@@ -47,7 +49,12 @@ namespace Tanks.Client.Items.Behaviours.OnPickup
                 position = coords * (wallWidth * 2) + wallWidth * 1.5f;
 
                 // Prevent teleporting too close or in place
-                if (math.distance(initialPosition, position) >= minDistance) break;
+                if (math.distance(initialPosition, position) < minDistance) continue;
+
+                float angle = owner.Transform.WorldRotation.Degrees;
+                if (Physics2D.OverlapBox(position, owner.Entity.Size * 1.5f, angle)) continue;
+
+                break;
             }
 
             owner.Transform.WorldPosition = position;
