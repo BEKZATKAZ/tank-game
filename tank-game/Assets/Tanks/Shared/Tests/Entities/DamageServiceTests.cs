@@ -3,6 +3,8 @@ using NUnit.Framework;
 using Tanks.Core.Helpers;
 using Tanks.Shared.Entities;
 using Tanks.Shared.Entities.Health;
+using Tanks.Shared.Items;
+using Tanks.Shared.Items.Behaviours;
 using Tanks.Shared.Stats;
 using Unity.Mathematics;
 
@@ -39,6 +41,17 @@ namespace Tanks.Shared.Tests.Entities
 
     public class DamageServiceTests
     {
+        private sealed class DamageBonus : ItemBehaviourBase
+        {
+            private readonly bool _oncePerOwner;
+
+            public DamageBonus(bool oncePerOwner) => _oncePerOwner = oncePerOwner;
+            public override bool OncePerOwner => _oncePerOwner;
+
+            public override void OnDealDamage(
+                IEntityBehaviour target, IItemOwnerBehaviour owner, ref float damage) => damage += 10;
+        }
+
         private TestDamageService _service;
         private IEntityBehaviour _target;
         private IStatOwnerBehaviour _targetStatOwner;
@@ -96,6 +109,27 @@ namespace Tanks.Shared.Tests.Entities
                 Assert.That(_service.Target, Is.EqualTo(_target));
                 Assert.That(_service.FullAmount, Is.EqualTo(amount));
             }
+        }
+
+        [TestCase(true, 120)]
+        [TestCase(false, 130)]
+        public void Damage_RespectsOncePerOwnerWithoutSkippingDistinctBehaviours(bool oncePerOwner, int expected)
+        {
+            IItemOwnerBehaviour owner = Substitute.For<IItemOwnerBehaviour>();
+            DamageBonus first = new(oncePerOwner);
+            DamageBonus second = new(oncePerOwner);
+            owner.GetAllBehaviours().Returns(new ItemBehaviourBase[] { first, first, second });
+            _from.GetBehaviour<IItemOwnerBehaviour>().Returns(owner);
+            _from.GetBehaviour<IStatOwnerBehaviour>().Returns((IStatOwnerBehaviour)null);
+            _target.GetBehaviour<IStatOwnerBehaviour>().Returns((IStatOwnerBehaviour)null);
+
+            _service.Damage(100, _target, _from);
+
+            Assert.That(_service.FullAmount, Is.EqualTo(expected));
+
+            _service.Damage(100, _target, _from);
+
+            Assert.That(_service.FullAmount, Is.EqualTo(expected));
         }
 
         private static float GetDiminishingReturns(float value, int diminishingBase)

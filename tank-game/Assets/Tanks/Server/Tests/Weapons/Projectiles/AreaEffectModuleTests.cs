@@ -146,7 +146,7 @@ namespace Tanks.Server.Tests.Weapons.Projectiles
         [TestCase(0, 1)]
         [TestCase(0, -1)]
         [TestCase(1, 1)]
-        public void WallCompletion_FlashesAndBurnsShooterWithoutReachingThroughWall(int x, int y)
+        public void WallCompletion_UsesSimulatedPositionAndBlocksEffectsThroughWall(int x, int y)
         {
             ProjectileBehaviour projectile = new GameObject().AddComponent<ProjectileBehaviour>();
             typeof(ProjectileBehaviour).GetMethod("Awake", BindingFlags.Instance | BindingFlags.NonPublic)
@@ -168,9 +168,12 @@ namespace Tanks.Server.Tests.Weapons.Projectiles
             try
             {
                 Physics2D.queriesStartInColliders = true;
+                float2 position = _center + normal * 0.5f;
+                projectile.Transform.WorldPosition = position;
                 projectile.OnRicochet(_center, normal);
-                float2 position = projectile.Transform.WorldPosition;
-                Assert.That(math.distance(position, _center + normal * 0.01f), Is.LessThan(0.001f));
+
+                Assert.That(math.distance(projectile.Transform.WorldPosition, position), Is.LessThan(0.001f));
+
                 _module.Projectile.Transform.WorldPosition.Returns(position);
                 _module.ProjectileDone();
                 explosion.ProjectileDone();

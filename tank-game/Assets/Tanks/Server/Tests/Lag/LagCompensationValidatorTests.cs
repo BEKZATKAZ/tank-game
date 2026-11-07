@@ -55,7 +55,7 @@ namespace Tanks.Server.Tests.Lag
 
             _service
                 .IsHitAtTick(message.TargetId, message.ProjectileId, message.ClientTick, out _)
-                .Returns(false);
+                .Returns(true);
 
             _entityService.GetById(message.TargetId).Returns(target);
             target.IsValid.Returns(false);
@@ -79,8 +79,6 @@ namespace Tanks.Server.Tests.Lag
                 Owner = Substitute.For<IWeaponHolderBehaviour>()
             };
 
-            ProjectileSnapshot snapshot = new ProjectileSnapshot(default, 0.5f, 2);
-
             _service
                 .IsHitAtTick(
                     message.TargetId, message.ProjectileId, message.ClientTick,
@@ -92,15 +90,13 @@ namespace Tanks.Server.Tests.Lag
                 });
 
             _service.GetProjectileData(message.ProjectileId).Returns(data);
-            _service.GetProjectileSnapshot(message.ProjectileId, 10).Returns(snapshot);
 
             _entityService.GetById(message.TargetId).Returns(target);
             target.IsValid.Returns(true);
 
             _component.Handle(message);
 
-            data.Behaviour.Received(1).OnDamageableHit(
-                target.GetBehaviour<IHealthBehaviour>(), snapshot.Position, snapshot.Direction);
+            data.Behaviour.Received(1).OnDamageableHit(target.GetBehaviour<IHealthBehaviour>());
 
             _projectilePool.Received(1).ReturnProjectileClientRpc(message.ProjectileId);
             _projectilePool.Received(1).Return(message.ProjectileId);

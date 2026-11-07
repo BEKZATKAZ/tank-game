@@ -482,7 +482,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 36000000000000016
-    m_Localized: "Vous infligez {increase} plus de d\xE9g\xE2ts lorsque vous frappez un joueur dans le dos."
+    m_Localized: "Infligez {increase} de d\u00E9g\u00E2ts suppl\u00E9mentaires \u00E0 un autre joueur lorsque vous \u00EAtes derri\u00E8re lui."
     m_Metadata:
       m_Items:
       - rid: 5824281740147687477
@@ -546,7 +546,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 36000000000000031
-    m_Localized: "Tirer avec votre sant\xE9 au-dessus de {threshold} vous inflige l'effet {effect-burning} pendant {duration}. Chaque deuxi\xE8me coup direct port\xE9 \xE0 un autre joueur inflige {incre} de d\xE9g\xE2ts suppl\xE9mentaires."
+    m_Localized: "Tirer avec plus de {threshold} PV vous inflige l'effet {effect-burning} pendant {duration}. Une fois sur deux, les d\u00E9g\u00E2ts que vous infligez \u00E0 un autre joueur sont augment\u00E9s de {increase}."
     m_Metadata:
       m_Items:
       - rid: 5824281740147687477

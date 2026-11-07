@@ -43,8 +43,7 @@ namespace Tanks.Server.Lag
             IHealthBehaviour health = target.GetBehaviour<IHealthBehaviour>();
             if (health == null) return;
 
-            ProjectileSnapshot snapshot = _service.GetProjectileSnapshot(projectileId, usedTick);
-            data.Behaviour.OnDamageableHit(health, snapshot.Position, snapshot.Direction);
+            data.Behaviour.OnDamageableHit(health);
 
             _projectilePool.ReturnProjectileClientRpc(projectileId);
             _projectilePool.Return(projectileId);

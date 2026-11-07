@@ -1,19 +1,21 @@
 using System.Collections.Generic;
 using System.Linq;
 using Tanks.Shared.Effects;
+using Tanks.Shared.Entities;
 using Tanks.Shared.Entities.Health;
 using Tanks.Shared.Items;
 using Tanks.Shared.Items.Behaviours;
+using Tanks.Shared.Teams;
 using Tanks.Shared.Weapons;
-using Tanks.Shared.Weapons.Projectiles;
 
 namespace Tanks.Server.Items.Behaviours.OnFire
 {
     [ItemBehaviour("diminishing-returns")]
     public sealed class DiminishingReturnsBehaviour : ItemBehaviourBase
     {
-        private readonly Dictionary<IItemOwnerBehaviour, int> _hits = new();
         public override bool OncePerOwner => true;
+
+        private readonly Dictionary<IItemOwnerBehaviour, int> _hits = new();
 
         public override void OnFire(IItemOwnerBehaviour owner, WeaponUsed message)
         {
@@ -27,15 +29,20 @@ namespace Tanks.Server.Items.Behaviours.OnFire
                 Config.Identifier.ToString(), owner.Entity);
         }
 
-        public override void OnDirectHit(IItemOwnerBehaviour owner, ref DirectHitContext context)
+        public override void OnDealDamage(
+            IEntityBehaviour target, IItemOwnerBehaviour owner, ref float damage)
         {
-            _hits.TryGetValue(owner, out int hits);
-            _hits[owner] = hits + 1;
+            if (target == owner.Entity || damage <= 0) return;
+            if (target.GetBehaviour<ITeamParticipantBehaviour>()?.State == null) return;
+            if (target.GetBehaviour<IHealthBehaviour>().ServerState.Value.Current <= 0) return;
 
-            if ((hits + 1) % 2 != 0) return;
+            _hits.TryGetValue(owner, out int hits);
+            _hits[owner] = (hits + 1) % 2;
+
+            if (_hits[owner] != 0) return;
 
             int copies = owner.Items.Count(x => x == Config.Identifier);
-            context.DamageMultiplier += Config.GetStat("increase").Value * 0.01f * copies;
+            damage += damage * Config.GetStat("increase").Value * 0.01f * copies;
         }
 
         public override void OnDestroy(IItemOwnerBehaviour owner) => _hits.Remove(owner);

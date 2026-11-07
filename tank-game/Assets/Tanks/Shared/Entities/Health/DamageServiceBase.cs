@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using Tanks.Core.Lobbies.Sessions;
 using Tanks.Shared.Items;
 using Tanks.Shared.Items.Behaviours;
@@ -73,8 +74,12 @@ namespace Tanks.Shared.Entities.Health
 
             if (fromItemOwner is not null)
             {
+                HashSet<ItemBehaviourBase> invoked = new();
+
                 foreach (ItemBehaviourBase behaviour in fromItemOwner.GetAllBehaviours())
                 {
+                    if (behaviour.OncePerOwner && invoked.Add(behaviour) == false) continue;
+
                     try { behaviour.OnDealDamage(target, fromItemOwner, ref finalDamage); }
                     catch (Exception ex) { Debug.LogException(ex); }
                 }

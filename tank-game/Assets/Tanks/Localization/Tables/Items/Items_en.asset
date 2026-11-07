@@ -489,7 +489,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 36000000000000016
-    m_Localized: Deal {increase} more damage when you land a shot on a player's back.
+    m_Localized: Deal {increase} more damage to another player while you are behind them.
     m_Metadata:
       m_Items:
       - rid: 937747718553469026
@@ -553,7 +553,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 36000000000000031
-    m_Localized: Shooting when above {threshold} HP causes the {effect-burning} status effect for {duration}. Every second direct hit you land on another player deals {increase} more damage.
+    m_Localized: Shooting when above {threshold} HP causes the {effect-burning} status effect for {duration}. Every second time you deal damage to another player, deal {increase} more damage.
     m_Metadata:
       m_Items:
       - rid: 937747718553469026

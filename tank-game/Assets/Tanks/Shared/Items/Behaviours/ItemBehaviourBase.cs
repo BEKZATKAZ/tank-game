@@ -3,7 +3,6 @@ using Tanks.Shared.Entities;
 using Tanks.Shared.Entities.Health;
 using Tanks.Shared.Items.Data;
 using Tanks.Shared.Weapons;
-using Tanks.Shared.Weapons.Projectiles;
 
 namespace Tanks.Shared.Items.Behaviours
 {
@@ -18,7 +17,6 @@ namespace Tanks.Shared.Items.Behaviours
         public virtual void OnDespawn(IItemOwnerBehaviour owner) { }
         public virtual void OnPickup(IItemOwnerBehaviour owner) { }
         public virtual void OnFire(IItemOwnerBehaviour owner, WeaponUsed message) { }
-        public virtual void OnDirectHit(IItemOwnerBehaviour owner, ref DirectHitContext context) { }
 
         public virtual void OnDealDamage(
             IEntityBehaviour target, IItemOwnerBehaviour owner, ref float damage) { }
