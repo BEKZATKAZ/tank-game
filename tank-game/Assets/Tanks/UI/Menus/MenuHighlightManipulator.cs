@@ -1,7 +1,13 @@
+using Tanks.UI.Menus.Settings.Elements;
 using UnityEngine.UIElements;
 
 namespace Tanks.UI.Menus
 {
+    public interface IMenuHighlightTarget
+    {
+        void SetHighlighted(bool highlighted);
+    }
+
     public sealed class MenuHighlightManipulator : Manipulator
     {
         private const string HighlightClass = "menu-highlighted";
@@ -30,16 +36,30 @@ namespace Tanks.UI.Menus
             target.UnregisterCallback<GeometryChangedEvent>(OnGeometryChanged);
         }
 
-        private void OnPointerMove(PointerMoveEvent evt) => UpdateHighlight(evt.target as VisualElement);
-        private void OnPointerOver(PointerOverEvent evt) => UpdateHighlight(evt.target as VisualElement);
-        private void OnPointerEnter(PointerEnterEvent evt) => UpdateHighlight(evt.target as VisualElement);
-        private void OnFocusIn(FocusInEvent evt) => UpdateHighlight(evt.target as VisualElement);
+        private void OnPointerMove(PointerMoveEvent evt)
+        {
+            UpdateHighlight(evt.target as VisualElement);
+        }
+
+        private void OnPointerOver(PointerOverEvent evt)
+        {
+            UpdateHighlight(evt.target as VisualElement);
+        }
+
+        private void OnPointerEnter(PointerEnterEvent evt)
+        {
+            UpdateHighlight(evt.target as VisualElement);
+        }
+
+        private void OnFocusIn(FocusInEvent evt)
+        {
+            UpdateHighlight(evt.target as VisualElement);
+        }
 
         private void OnPointerLeave(PointerLeaveEvent evt)
         {
-            target.RemoveFromClassList(HighlightClass);
-            target.Query(className: HighlightClass).ForEach(highlighted =>
-                highlighted.RemoveFromClassList(HighlightClass));
+            ClearHighlight(target);
+            target.Query(className: HighlightClass).ForEach(ClearHighlight);
         }
 
         private void OnAttachedToPanel(AttachToPanelEvent evt)
@@ -48,7 +68,10 @@ namespace Tanks.UI.Menus
             ConfigureTextFields();
         }
 
-        private void OnGeometryChanged(GeometryChangedEvent evt) => DisableScrollbarFocus();
+        private void OnGeometryChanged(GeometryChangedEvent evt)
+        {
+            DisableScrollbarFocus();
+        }
 
         private void ConfigureTextFields()
         {
@@ -73,30 +96,61 @@ namespace Tanks.UI.Menus
         {
             VisualElement control = GetControl(element);
             VisualElement panelRoot = target.panel?.visualTree;
+
             if (panelRoot is null) return;
 
             panelRoot.Query(className: HighlightClass).ForEach(highlighted =>
             {
-                if (highlighted != control) highlighted.RemoveFromClassList(HighlightClass);
+                if (highlighted != control) ClearHighlight(highlighted);
             });
 
             if (control != null && control.enabledInHierarchy)
             {
+                bool wasHighlighted = control.ClassListContains(HighlightClass);
                 control.AddToClassList(HighlightClass);
-                control.GetFirstAncestorOfType<Settings.Elements.SettingElementBase>()
-                    ?.AddToClassList(HighlightClass);
+
+                if (wasHighlighted == false && control is IMenuHighlightTarget highlightTarget)
+                {
+                    highlightTarget.SetHighlighted(true);
+                }
+
+                control
+                    .GetFirstAncestorOfType<SettingElementBase>()?
+                    .AddToClassList(HighlightClass);
             }
+        }
+
+        private static void ClearHighlight(VisualElement element)
+        {
+            if (element.ClassListContains(HighlightClass) == false) return;
+            element.RemoveFromClassList(HighlightClass);
+
+            if (element is not IMenuHighlightTarget highlightTarget) return;
+            highlightTarget.SetHighlighted(false);
         }
 
         private static VisualElement GetControl(VisualElement element)
         {
-            if (element is Scroller || element?.GetFirstAncestorOfType<Scroller>() != null) return null;
+            if (element is Scroller ||
+                element?.GetFirstAncestorOfType<Scroller>() != null) return null;
 
             while (element != null)
             {
-                if (element is Button || element is DropdownField || element is TextField) return element;
-                if ((element is SliderInt || element is Slider)
-                    && element.GetFirstAncestorOfType<Settings.Elements.SliderSetting>() != null) return element;
+                if (element is Button ||
+                    element is DropdownField ||
+                    element is TextField ||
+                    element is IMenuHighlightTarget)
+                {
+                    return element;
+                }
+
+                if ((element is SliderInt ||
+                    element is Slider) &&
+                    element.GetFirstAncestorOfType<SliderSetting>() != null)
+                {
+                    return element;
+                }
+
                 element = element.parent;
             }
 

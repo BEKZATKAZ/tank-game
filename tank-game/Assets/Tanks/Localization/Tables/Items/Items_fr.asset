@@ -420,7 +420,8 @@ MonoBehaviour:
   - m_Id: 36000000000000001
     m_Localized: "Contient tout le n\xE9cessaire. Augmente toutes vos stats sauf la vitesse de {increase}, mais diminue votre vitesse de {decrease}. Car il est lourd."
     m_Metadata:
-      m_Items: []
+      m_Items:
+      - rid: 5824281740147687477
   - m_Id: 36000000000000002
     m_Localized: "Capacit\xE9 adapt\xE9e \xE0 toutes les occasions."
     m_Metadata:
@@ -432,7 +433,8 @@ MonoBehaviour:
   - m_Id: 36000000000000004
     m_Localized: "Toutes les {interval} secondes d'immobilit\xE9, votre stat la plus \xE9lev\xE9e augmente de {increase}. Si elle atteint son maximum, c'est la stat imm\xE9diatement sup\xE9rieure qui augmente. D\xE9placer ou faire pivoter le char r\xE9initialise le chronom\xE8tre."
     m_Metadata:
-      m_Items: []
+      m_Items:
+      - rid: 5824281740147687477
   - m_Id: 36000000000000005
     m_Localized: "Asseyez-vous, d\xE9tendez-vous, pr\xE9parez-vous une tasse de th\xE9."
     m_Metadata:
@@ -444,7 +446,8 @@ MonoBehaviour:
   - m_Id: 36000000000000007
     m_Localized: "Vous pouvez traverser les murs pendant {duration} secondes. Durant cet effet, vous ne pouvez pas tirer, mais vous pouvez subir des d\xE9g\xE2ts. Si vous vous trouvez \xE0 l'int\xE9rieur d'un mur \xE0 la fin de l'effet, vous serez instantan\xE9ment d\xE9truit."
     m_Metadata:
-      m_Items: []
+      m_Items:
+      - rid: 5824281740147687477
   - m_Id: 36000000000000008
     m_Localized: Vous traversez les murs.
     m_Metadata:
@@ -468,7 +471,8 @@ MonoBehaviour:
   - m_Id: 36000000000000013
     m_Localized: "Fait preuve de bienveillance et applique {effect-healing} \xE0 tous les joueurs, y compris vous, pendant {duration} secondes."
     m_Metadata:
-      m_Items: []
+      m_Items:
+      - rid: 5824281740147687477
   - m_Id: 36000000000000014
     m_Localized: "La paix \xE9tait une des options."
     m_Metadata:
@@ -480,7 +484,8 @@ MonoBehaviour:
   - m_Id: 36000000000000016
     m_Localized: "Vous infligez {increase} plus de d\xE9g\xE2ts lorsque vous frappez un joueur dans le dos."
     m_Metadata:
-      m_Items: []
+      m_Items:
+      - rid: 5824281740147687477
   - m_Id: 36000000000000017
     m_Localized: Soyez sur vos gardes.
     m_Metadata:
@@ -492,7 +497,8 @@ MonoBehaviour:
   - m_Id: 36000000000000019
     m_Localized: "Lance une gigantesque boule de feu. Chaque impact provoque une puissante explosion infligeant des d\xE9g\xE2ts consid\xE9rables. Les joueurs proches de l'explosion subissent l'effet {effect-burning}."
     m_Metadata:
-      m_Items: []
+      m_Items:
+      - rid: 5824281740147687477
   - m_Id: 36000000000000020
     m_Localized: Les choses vont chauffer ici.
     m_Metadata:
@@ -516,7 +522,8 @@ MonoBehaviour:
   - m_Id: 36000000000000025
     m_Localized: "Cette arme tire de minuscules billes qui provoquent un effet de br\xFBlure \xE0 l'impact."
     m_Metadata:
-      m_Items: []
+      m_Items:
+      - rid: 5824281740147687477
   - m_Id: 36000000000000026
     m_Localized: Petit mais tranchant.
     m_Metadata:
@@ -528,7 +535,8 @@ MonoBehaviour:
   - m_Id: 36000000000000028
     m_Localized: "Active l'effet {effect-frozen} pendant {duration} secondes. Ensuite, votre sant\xE9 est enti\xE8rement restaur\xE9e. D\xE9geler l'effet pr\xE9matur\xE9ment annule la gu\xE9rison."
     m_Metadata:
-      m_Items: []
+      m_Items:
+      - rid: 5824281740147687477
   - m_Id: 36000000000000029
     m_Localized: Dors un peu.
     m_Metadata:
@@ -540,7 +548,8 @@ MonoBehaviour:
   - m_Id: 36000000000000031
     m_Localized: "Tirer avec votre sant\xE9 au-dessus de {threshold} vous inflige l'effet {effect-burning} pendant {duration} secondes. Chaque deuxi\xE8me coup direct port\xE9 \xE0 un autre joueur inflige {incre} de d\xE9g\xE2ts suppl\xE9mentaires."
     m_Metadata:
-      m_Items: []
+      m_Items:
+      - rid: 5824281740147687477
   - m_Id: 36000000000000032
     m_Localized: La douleur porte ses fruits.
     m_Metadata:
@@ -552,7 +561,8 @@ MonoBehaviour:
   - m_Id: 36000000000000034
     m_Localized: "Vous perdez des FPS, mais une stat augmente consid\xE9rablement. Vous ne pouvez ramasser cet objet que deux fois.\n\nPremi\xE8re fois\_: d\xE9fense {first}, FPS maximum.\nDeuxi\xE8me fois\_: d\xE9g\xE2ts {second}, FPS maximum.\nTroisi\xE8me fois\_: vous mourez."
     m_Metadata:
-      m_Items: []
+      m_Items:
+      - rid: 5824281740147687477
   - m_Id: 36000000000000035
     m_Localized: "Avez-vous d\xE9j\xE0 vu \xE7a dans des jeux ?"
     m_Metadata:
@@ -596,3 +606,13 @@ MonoBehaviour:
         - id: 35493227946008579
         - id: 35511987289415680
         - id: 26441382044852224
+        - id: 36000000000000028
+        - id: 36000000000000019
+        - id: 36000000000000001
+        - id: 36000000000000004
+        - id: 36000000000000007
+        - id: 36000000000000013
+        - id: 36000000000000016
+        - id: 36000000000000025
+        - id: 36000000000000031
+        - id: 36000000000000034

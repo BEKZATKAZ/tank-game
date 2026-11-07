@@ -151,6 +151,38 @@
         </Tanks.UI.Elements.CustomButton>
         <Tanks.UI.Elements.CopyrightNotice name="Notice"/>
     </ui:VisualElement>
+    <ui:VisualElement name="ItemBrowserSection" class="item-browser-section" style="display: none;">
+        <ui:VisualElement class="item-browser">
+            <ui:VisualElement class="item-browser__header">
+                <ui:Label class="game-title">
+                    <Bindings>
+                        <UnityEngine.Localization.LocalizedString property="text" table="GUID:34510603f8b6d1a44b1b2ffa9aa551c9" entry="Id(36568010776682496)"/>
+                    </Bindings>
+                </ui:Label>
+                <Tanks.UI.Elements.CustomButton name="BackButton" click-sound-path="event:/UI/Click_1">
+                    <Bindings>
+                        <UnityEngine.Localization.LocalizedString property="text" table="GUID:34510603f8b6d1a44b1b2ffa9aa551c9" entry="Id(33779992972713984)"/>
+                    </Bindings>
+                </Tanks.UI.Elements.CustomButton>
+            </ui:VisualElement>
+            <ui:VisualElement class="item-browser__body">
+                <ui:ScrollView class="item-browser__scroll" horizontal-scroller-visibility="Hidden">
+                    <ui:VisualElement name="ItemGrid" class="item-browser__grid"/>
+                </ui:ScrollView>
+                <ui:ScrollView class="item-browser__details-scroll" horizontal-scroller-visibility="Hidden">
+                    <ui:VisualElement name="ItemDetails" class="item-browser__details" style="visibility: hidden;">
+                        <ui:VisualElement name="Fill" picking-mode="Ignore" class="bg-fill"/>
+                        <ui:VisualElement class="item-browser__detail-header">
+                            <ui:VisualElement name="ItemIcon" class="item-browser__icon"/>
+                            <ui:Label name="ItemName" enable-rich-text="false" class="item-browser__name"/>
+                        </ui:VisualElement>
+                        <ui:Label name="ItemDescription" class="item-browser__description"/>
+                        <ui:Label name="ItemTier" enable-rich-text="false" class="item-browser__tier"/>
+                    </ui:VisualElement>
+                </ui:ScrollView>
+            </ui:VisualElement>
+        </ui:VisualElement>
+    </ui:VisualElement>
     <ui:VisualElement name="LobbyBrowserSection" class="lobby-browser-section" style="display: none;">
         <ui:VisualElement name="LobbyBrowser" class="lobby-browser">
             <ui:VisualElement name="Fill" class="bg-fill"/>

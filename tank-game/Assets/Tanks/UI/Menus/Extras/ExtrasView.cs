@@ -13,6 +13,7 @@ namespace Tanks.UI.Menus.Extras
             _root = root.Q("ExtrasSection");
             _root.AddManipulator(new MenuHighlightManipulator());
             _root.Q<Button>("BackButton").clicked += () => ViewModel.Back();
+            _root.Q<Button>("ItemsButton").clicked += () => ViewModel.OpenItems();
             _root.Q<Button>("LeaderboardsButton").clicked += () => ViewModel.OpenLeaderboards();
         }
     }

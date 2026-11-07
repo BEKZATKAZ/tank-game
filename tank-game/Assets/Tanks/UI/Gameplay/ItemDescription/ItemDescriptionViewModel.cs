@@ -1,9 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Globalization;
 using System.Linq;
-using System.Text;
-using System.Text.RegularExpressions;
 using Tanks.Client.Effects;
 using Tanks.Client.Items;
 using Tanks.Client.Items.Pickups;
@@ -13,7 +10,7 @@ using Tanks.Shared.Items;
 using Tanks.Shared.Items.Data;
 using Tanks.Shared.Items.Pickups;
 using Tanks.Shared.Messaging;
-using Tanks.Shared.Stats;
+using Tanks.UI.Items;
 using Tanks.Utils;
 using UnityEngine;
 
@@ -37,6 +34,7 @@ namespace Tanks.UI.Gameplay.ItemDescription
             _bus.RegisterHandler<PickupAreaEntered>(this);
             _bus.RegisterHandler<PickupAreaLeft>(this);
 
+            _formatter = new ItemDescriptionFormatter(localization);
             _localization = localization;
             _localization.LocaleChanged += OnLocaleChanged;
 
@@ -57,20 +55,21 @@ namespace Tanks.UI.Gameplay.ItemDescription
         private readonly IClientItemDatabase _clientDatabase;
         private readonly IItemDatabase _sharedDatabase;
         private readonly IMessageBus _bus;
+        private readonly ItemDescriptionFormatter _formatter;
 
-        private IEffectListConfig _config;
         private ItemIdentifier _currentEnteredItemId;
 
         public void Dispose()
         {
             _localization.LocaleChanged -= OnLocaleChanged;
+            _bus.UnregisterHandler<TilemapGenerated>(this);
             _bus.UnregisterHandler<PickupAreaEntered>(this);
             _bus.UnregisterHandler<PickupAreaLeft>(this);
         }
 
         public void SetConfig(IEffectListConfig config)
         {
-            _config = config;
+            _formatter.SetConfig(config);
         }
 
         private void OnLocaleChanged(string locale)
@@ -79,127 +78,24 @@ namespace Tanks.UI.Gameplay.ItemDescription
             Reset(_currentEnteredItemId);
         }
 
-        private void FormatStat(string name, ItemStat stat, ILocalizedString description)
-        {
-            string color = stat.Value switch
-            {
-                < 0 => "#f00",
-                _ => "#0f0"
-            };
-
-            string value = stat.Value.ToString("0.##;-0.##;0", CultureInfo.InvariantCulture);
-            if (stat.ValueType is StatValueType.Percent) value += '%';
-
-            string formatted = $"<color={color}><b>{value}</b></color>";
-            description.AddVariable(name, formatted);
-        }
-
-        private string FormatPlayerStats(IReadOnlyDictionary<StatType, PlayerStat> stats)
-        {
-            if (stats.Any() == false) return "";
-
-            StringBuilder builder = new StringBuilder();
-
-            foreach ((StatType type, PlayerStat stat) in stats)
-            {
-                if (builder.Length > 0) builder.Append('\n');
-
-                string color = stat.Value switch
-                {
-                    < 0 => "#f00",
-                    _ => "#0f0"
-                };
-
-                string statType = type.ToString();
-                string statEntry = $"stat.{ToKebabCase(statType)}";
-                string value = stat.Value.ToString("+0.##;-0.##;0", CultureInfo.InvariantCulture);
-
-                // For example +150%, -150%
-                if (stat.ValueType is StatValueType.Percent)
-                {
-                    value += '%';
-                }
-
-                _localization.TryGet("Stats", statEntry, out var statLocalization);
-                string formattedValue = $"<color={color}>{value}</color>";
-
-                statLocalization?.AddVariable("value", formattedValue);
-                builder.Append(statLocalization?.Get() ?? statType);
-
-                if (stat.Duration < 0 || _localization.TryGet(
-                    "Stats", "stat.duration-seconds", out var duration) == false) continue;
-
-                duration.AddVariable("seconds", stat.Duration);
-                builder.Append($" ({duration.Get()})");
-            }
-
-            return builder.ToString();
-        }
-
-        private static string ToKebabCase(string value)
-        {
-            value = Regex.Replace(value, @"([A-Z]+)([A-Z][a-z])", "$1-$2");
-            value = Regex.Replace(value, @"([a-z\d])([A-Z])", "$1-$2");
-            return value.ToLowerInvariant();
-        }
-
-        private void FormatEffects(ILocalizedString description)
-        {
-            if (_config is null || _config.Effects is not { Count: > 0 } ) return;
-
-            foreach (EffectConfig effect in _config.Effects.Values)
-            {
-                _localization.TryGet(
-                    "Gameplay", effect.EntryName, out ILocalizedString effectName);
-
-                string effectNameText =
-                    $"<color=#{effect.Color}><b>«{effectName?.Get() ?? ""}»</b></color>";
-
-                description.AddVariable(effect.LocalizedFormatName, effectNameText);
-            }
-        }
-
         private void Reset(ItemIdentifier itemId)
         {
             IClientItemConfig clientConfig = _clientDatabase.Get(itemId);
             IItemConfig sharedConfig = _sharedDatabase.Get(itemId);
 
-            string idString = itemId.ToString();
-            string tierString = sharedConfig.Tier.ToString().ToLower();
-            string playerStats = FormatPlayerStats(sharedConfig.PlayerStats);
-
-            _localization.TryGet("Items", $"item.{idString}.name", out ILocalizedString name);
-            _localization.TryGet("Items", $"item.tier.{tierString}", out ILocalizedString tier);
-
-            if (_localization.TryGet(
-                "Items", $"item.{idString}.description", out ILocalizedString description))
-            {
-                FormatEffects(description);
-
-                foreach ((string statName, ItemStat stat) in sharedConfig.ItemStats)
-                {
-                    FormatStat(statName, stat, description);
-                }
-
-                if (string.IsNullOrWhiteSpace(playerStats) == false)
-                {
-                    // Add empty lines for more visiblity
-                    playerStats = $"\n\n{playerStats}";
-                }
-            }
-
-            Name.Value = name?.Get() ?? "";
-            Description.Value = (description?.Get() ?? "") + playerStats;
-            TierName.Value = tier?.Get() ?? "";
-
-            Icon.Value = clientConfig.Icon;
-            AccentColor.Value = clientConfig.AccentColor;
+            ItemDescriptionData data = _formatter.Format(sharedConfig, clientConfig);
+            Name.Value = data.Name;
+            Description.Value = data.Description;
+            TierName.Value = data.TierName;
+            Icon.Value = data.ClientConfig.Icon;
+            AccentColor.Value = data.ClientConfig.AccentColor;
             Opacity.Value = 1;
         }
 
         public void Handle(TilemapGenerated message, IMessageSender sender)
         {
             _enteredPickups.Clear();
+            _currentEnteredItemId = default;
             Opacity.Value = 0;
         }
 
@@ -214,6 +110,7 @@ namespace Tanks.UI.Gameplay.ItemDescription
                 return;
             }
 
+            _currentEnteredItemId = default;
             Opacity.Value = 0;
         }
 

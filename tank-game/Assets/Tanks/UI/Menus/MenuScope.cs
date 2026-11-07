@@ -18,6 +18,7 @@ using VContainer;
 using VContainer.Unity;
 using Tanks.UI.Menus.Extras;
 using Tanks.UI.Menus.Leaderboards;
+using Tanks.UI.Menus.Items;
 
 namespace Tanks.UI.Menus
 {
@@ -48,6 +49,8 @@ namespace Tanks.UI.Menus
             builder.Register<PlayViewModel>(Lifetime.Transient);
             builder.Register<ExtrasViewModel>(Lifetime.Transient);
             builder.Register<LeaderboardsViewModel>(Lifetime.Transient);
+            builder.Register<ItemBrowserViewModel>(Lifetime.Transient);
+            builder.Register<IItemCatalog, ItemCatalog>(Lifetime.Singleton);
 
             builder.RegisterSettings();
             builder.Register<ICameraMainService, CameraMainService>(Lifetime.Singleton);

@@ -12,6 +12,7 @@ namespace Tanks.UI.Menus.Extras
         private readonly IMenuSectionService _navigation;
 
         public void Back() => _navigation.OpenSection(MenuSectionType.Main);
+        public void OpenItems() => _navigation.OpenSection(MenuSectionType.ItemBrowser);
         public void OpenLeaderboards() => _navigation.OpenSection(MenuSectionType.Leaderboards);
     }
 }

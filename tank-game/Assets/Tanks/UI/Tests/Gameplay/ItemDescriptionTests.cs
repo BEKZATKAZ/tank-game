@@ -133,6 +133,32 @@ namespace Tanks.UI.Tests.Gameplay
         }
 
         [Test]
+        public void Dispose_UnregistersAllMessageHandlers()
+        {
+            ViewModel.Dispose();
+
+            _bus.Received().UnregisterHandler<TilemapGenerated>(ViewModel);
+            _bus.Received().UnregisterHandler<PickupAreaEntered>(ViewModel);
+            _bus.Received().UnregisterHandler<PickupAreaLeft>(ViewModel);
+        }
+
+        [TestCase(false)]
+        [TestCase(true)]
+        public void Hidden_LocaleChange_DoesNotShowPreviousItem(bool resetRound)
+        {
+            ItemIdentifier id = new ItemIdentifier("test-id");
+            RegisterMockItem(id, "Test", "Description", ItemTier.Rare, Color.red);
+            ViewModel.Handle(new PickupAreaEntered { ItemId = id, PickupId = new(1) }, null);
+
+            if (resetRound) ViewModel.Handle(new TilemapGenerated(), null);
+            else ViewModel.Handle(new PickupAreaLeft { PickupId = new(1) }, null);
+
+            _localization.LocaleChanged += Raise.Event<LocaleChangedEventHandler>("fr");
+
+            Assert.AreEqual(0, ViewModel.Opacity.Value);
+        }
+
+        [Test]
         public void ResetRound_HidesImmediately()
         {
             ItemIdentifier id = new ItemIdentifier("id1");
