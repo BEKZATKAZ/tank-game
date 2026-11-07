@@ -14,11 +14,22 @@ namespace Tanks.Shared.Items.Data
         public StatValueType ValueType;
     }
 
+    public enum ItemStatType
+    {
+        Flat,
+        Percent,
+        Seconds
+    }
+
     [Serializable]
     public struct ItemStat
     {
         public float Value;
-        public StatValueType ValueType;
+        public ItemStatType Type;
+
+        public readonly StatValueType ValueType => Type is ItemStatType.Percent
+            ? StatValueType.Percent
+            : StatValueType.Flat;
     }
 
     public interface IItemConfig

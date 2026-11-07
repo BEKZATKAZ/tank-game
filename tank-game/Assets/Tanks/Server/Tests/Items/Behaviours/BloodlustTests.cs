@@ -18,7 +18,7 @@ namespace Tanks.Server.Tests.Items.Behaviours
         protected override void InitializeConfig()
         {
             AddItemStat("interval", new ItemStat { Value = 10 });
-            AddItemStat("damage", new ItemStat { Value = 15, ValueType = StatValueType.Percent });
+            AddItemStat("damage", new ItemStat { Value = 15, Type = ItemStatType.Percent });
         }
 
         protected override BloodlustBehaviour CreateBehaviour()

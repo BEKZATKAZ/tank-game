@@ -19,43 +19,43 @@ MonoBehaviour:
   - key: damage-boost
     value:
       Value: 60
-      ValueType: 1
+      Type: 1
   - key: damage-penalty
     value:
       Value: -40
-      ValueType: 1
+      Type: 1
   - key: speed-boost
     value:
       Value: 60
-      ValueType: 1
+      Type: 1
   - key: speed-penalty
     value:
       Value: -40
-      ValueType: 1
+      Type: 1
   - key: defense-boost
     value:
       Value: 25
-      ValueType: 0
+      Type: 0
   - key: defense-penalty
     value:
       Value: -20
-      ValueType: 0
+      Type: 0
   - key: resistance-boost
     value:
       Value: 10
-      ValueType: 0
+      Type: 0
   - key: resistance-penalty
     value:
       Value: -10
-      ValueType: 0
+      Type: 0
   - key: rate-of-fire-boost
     value:
       Value: 60
-      ValueType: 1
+      Type: 1
   - key: rate-of-fire-penalty
     value:
       Value: -40
-      ValueType: 1
+      Type: 1
   _onPickUpActions: []
   _iconMaterial: {fileID: -876546973899608171, guid: 9680fbb573735774aaa7e0c722f9aad3, type: 3}
   _icon: {fileID: 21300000, guid: b78cf296bfceba54bac3ee2c3fd8640f, type: 3}

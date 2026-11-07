@@ -18,25 +18,12 @@ MonoBehaviour:
   _itemStats:
   - key: damage
     value:
-      Name: 
       Value: 15
-      ValueType: 1
+      Type: 1
   - key: interval
     value:
-      Name: 
       Value: 10
-      ValueType: 0
-  _itemStatsa:
-  - key: damage
-    value:
-      Name: 
-      Value: 15
-      ValueType: 1
-  - key: interval
-    value:
-      Name: 
-      Value: 10
-      ValueType: 0
+      Type: 2
   _onPickUpActions: []
   _iconMaterial: {fileID: -876546973899608171, guid: 9680fbb573735774aaa7e0c722f9aad3, type: 3}
   _icon: {fileID: 21300000, guid: 9237fb9558d25364ca508ce282fefd6d, type: 3}

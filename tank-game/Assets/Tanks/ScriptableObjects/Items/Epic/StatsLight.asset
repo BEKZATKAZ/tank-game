@@ -19,27 +19,27 @@ MonoBehaviour:
   - key: damage-boost
     value:
       Value: 50
-      ValueType: 1
+      Type: 1
   - key: speed-boost
     value:
       Value: 30
-      ValueType: 1
+      Type: 1
   - key: defense-boost
     value:
       Value: 15
-      ValueType: 0
+      Type: 0
   - key: rate-of-fire-boost
     value:
       Value: 40
-      ValueType: 1
+      Type: 1
   - key: resistance-boost
     value:
       Value: 6
-      ValueType: 0
+      Type: 0
   - key: interval
     value:
       Value: 7.5
-      ValueType: 0
+      Type: 2
   _onPickUpActions: []
   _iconMaterial: {fileID: -876546973899608171, guid: 9680fbb573735774aaa7e0c722f9aad3, type: 3}
   _icon: {fileID: 21300000, guid: 988ad0680f1a6724e990eb060db5d3d8, type: 3}

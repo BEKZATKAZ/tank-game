@@ -19,15 +19,15 @@ MonoBehaviour:
   - key: threshold
     value:
       Value: 60
-      ValueType: 0
+      Type: 0
   - key: duration
     value:
       Value: 0.5
-      ValueType: 0
+      Type: 2
   - key: increase
     value:
       Value: 200
-      ValueType: 1
+      Type: 1
   _onPickUpActions: []
   _iconMaterial: {fileID: -876546973899608171, guid: 9680fbb573735774aaa7e0c722f9aad3, type: 3}
   _icon: {fileID: 21300000, guid: 0e3e360cd72a11f45b2cdac0c67fc5dd, type: 3}

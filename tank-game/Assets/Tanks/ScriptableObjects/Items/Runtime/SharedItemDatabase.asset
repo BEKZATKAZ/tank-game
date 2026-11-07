@@ -21,11 +21,11 @@ MonoBehaviour:
     - key: damage
       value:
         Value: 15
-        ValueType: 1
+        Type: 1
     - key: interval
       value:
         Value: 10
-        ValueType: 0
+        Type: 2
   - _identifier: jar-of-powder
     _tier: 2
     _onPickUpActions: []
@@ -44,7 +44,7 @@ MonoBehaviour:
     - key: damage
       value:
         Value: 30
-        ValueType: 1
+        Type: 1
   - _identifier: no-honor
     _tier: 2
     _onPickUpActions: []
@@ -53,7 +53,7 @@ MonoBehaviour:
     - key: increase
       value:
         Value: 35
-        ValueType: 1
+        Type: 1
   - _identifier: stats-light
     _tier: 2
     _onPickUpActions: []
@@ -62,27 +62,27 @@ MonoBehaviour:
     - key: damage-boost
       value:
         Value: 50
-        ValueType: 1
+        Type: 1
     - key: speed-boost
       value:
         Value: 30
-        ValueType: 1
+        Type: 1
     - key: defense-boost
       value:
         Value: 15
-        ValueType: 0
+        Type: 0
     - key: rate-of-fire-boost
       value:
         Value: 40
-        ValueType: 1
+        Type: 1
     - key: resistance-boost
       value:
         Value: 6
-        ValueType: 0
+        Type: 0
     - key: interval
       value:
         Value: 7.5
-        ValueType: 0
+        Type: 2
   - _identifier: thorns
     _tier: 2
     _onPickUpActions: []
@@ -96,7 +96,7 @@ MonoBehaviour:
     - key: damage
       value:
         Value: 25
-        ValueType: 1
+        Type: 0
   - _identifier: weapon_bomb-launcher
     _tier: 2
     _onPickUpActions:
@@ -108,15 +108,7 @@ MonoBehaviour:
     _onPickUpActions:
     - {fileID: 11400000, guid: 3dfa791db1854eedb485bc8963db5bce, type: 2}
     _playerStats: []
-    _itemStats:
-    - key: duration
-      value:
-        Value: 8
-        ValueType: 0
-    - key: radius
-      value:
-        Value: 10
-        ValueType: 0
+    _itemStats: []
   - _identifier: weapon_freebie
     _tier: 2
     _onPickUpActions:
@@ -183,7 +175,7 @@ MonoBehaviour:
     - key: duration
       value:
         Value: 5
-        ValueType: 0
+        Type: 2
   - _identifier: noclip
     _tier: 4
     _onPickUpActions: []
@@ -197,7 +189,7 @@ MonoBehaviour:
     - key: duration
       value:
         Value: 8
-        ValueType: 0
+        Type: 2
   - _identifier: weapon_fireball
     _tier: 4
     _onPickUpActions:
@@ -212,19 +204,19 @@ MonoBehaviour:
     - key: duration
       value:
         Value: 7.5
-        ValueType: 0
+        Type: 2
     - key: health-threshold
       value:
         Value: 20
-        ValueType: 0
+        Type: 0
     - key: speed-boost
       value:
         Value: 50
-        ValueType: 1
+        Type: 1
     - key: rate-of-fire-boost
       value:
         Value: 50
-        ValueType: 1
+        Type: 1
   - _identifier: chilling-couch
     _tier: 1
     _onPickUpActions: []
@@ -233,11 +225,11 @@ MonoBehaviour:
     - key: interval
       value:
         Value: 5
-        ValueType: 0
+        Type: 2
     - key: increase
       value:
         Value: 4
-        ValueType: 0
+        Type: 0
   - _identifier: flattering-flower
     _tier: 1
     _onPickUpActions: []
@@ -246,7 +238,7 @@ MonoBehaviour:
     - key: duration
       value:
         Value: 5
-        ValueType: 0
+        Type: 2
   - _identifier: girls-bag
     _tier: 1
     _onPickUpActions: []
@@ -280,11 +272,11 @@ MonoBehaviour:
     - key: increase
       value:
         Value: 2
-        ValueType: 0
+        Type: 0
     - key: decrease
       value:
         Value: 2
-        ValueType: 0
+        Type: 0
   - _identifier: health-up
     _tier: 1
     _onPickUpActions: []
@@ -293,7 +285,7 @@ MonoBehaviour:
     - key: health
       value:
         Value: 60
-        ValueType: 0
+        Type: 0
   - _identifier: heavy-treads
     _tier: 1
     _onPickUpActions: []
@@ -322,7 +314,7 @@ MonoBehaviour:
     - key: duration
       value:
         Value: 5
-        ValueType: 0
+        Type: 2
   - _identifier: random-teleport
     _tier: 1
     _onPickUpActions: []
@@ -336,11 +328,11 @@ MonoBehaviour:
     - key: increase
       value:
         Value: 3
-        ValueType: 0
+        Type: 0
     - key: decrease
       value:
         Value: -1.5
-        ValueType: 0
+        Type: 0
   - _identifier: weapon_freezing-gun
     _tier: 1
     _onPickUpActions:
@@ -361,11 +353,11 @@ MonoBehaviour:
     - key: damage
       value:
         Value: 15
-        ValueType: 1
+        Type: 1
     - key: threshold
       value:
         Value: 90
-        ValueType: 1
+        Type: 0
   - _identifier: health-up-mini
     _tier: 0
     _onPickUpActions: []
@@ -374,7 +366,7 @@ MonoBehaviour:
     - key: health
       value:
         Value: 20
-        ValueType: 0
+        Type: 0
   - _identifier: pillow-protection
     _tier: 0
     _onPickUpActions: []
@@ -428,15 +420,15 @@ MonoBehaviour:
     - key: threshold
       value:
         Value: 60
-        ValueType: 0
+        Type: 0
     - key: duration
       value:
         Value: 0.5
-        ValueType: 0
+        Type: 2
     - key: increase
       value:
         Value: 200
-        ValueType: 1
+        Type: 1
   - _identifier: dna-reconstruction
     _tier: 3
     _onPickUpActions: []
@@ -445,43 +437,43 @@ MonoBehaviour:
     - key: damage-boost
       value:
         Value: 60
-        ValueType: 1
+        Type: 1
     - key: damage-penalty
       value:
         Value: -40
-        ValueType: 1
+        Type: 1
     - key: speed-boost
       value:
         Value: 60
-        ValueType: 1
+        Type: 1
     - key: speed-penalty
       value:
         Value: -40
-        ValueType: 1
+        Type: 1
     - key: defense-boost
       value:
         Value: 25
-        ValueType: 0
+        Type: 0
     - key: defense-penalty
       value:
         Value: -20
-        ValueType: 0
+        Type: 0
     - key: resistance-boost
       value:
         Value: 10
-        ValueType: 0
+        Type: 0
     - key: resistance-penalty
       value:
         Value: -10
-        ValueType: 0
+        Type: 0
     - key: rate-of-fire-boost
       value:
         Value: 60
-        ValueType: 1
+        Type: 1
     - key: rate-of-fire-penalty
       value:
         Value: -40
-        ValueType: 1
+        Type: 1
   - _identifier: like-a-diamond
     _tier: 3
     _onPickUpActions: []
@@ -545,11 +537,11 @@ MonoBehaviour:
     - key: damage
       value:
         Value: 4
-        ValueType: 0
+        Type: 0
     - key: decrease
       value:
         Value: 90
-        ValueType: 1
+        Type: 1
   - _identifier: no-room-for-error
     _tier: 3
     _onPickUpActions: []
@@ -573,7 +565,7 @@ MonoBehaviour:
     - key: interval
       value:
         Value: 5
-        ValueType: 0
+        Type: 2
   - _identifier: retrofier
     _tier: 3
     _onPickUpActions: []
@@ -582,11 +574,11 @@ MonoBehaviour:
     - key: first
       value:
         Value: 100
-        ValueType: 0
+        Type: 0
     - key: second
       value:
         Value: 35
-        ValueType: 0
+        Type: 0
   - _identifier: self-conscious
     _tier: 3
     _onPickUpActions: []
@@ -600,7 +592,7 @@ MonoBehaviour:
     - key: damage
       value:
         Value: 100
-        ValueType: 1
+        Type: 1
   - _identifier: true-balance
     _tier: 3
     _onPickUpActions: []
@@ -619,7 +611,7 @@ MonoBehaviour:
     - key: heal
       value:
         Value: 5
-        ValueType: 0
+        Type: 0
   - _identifier: unlucky-shot
     _tier: 3
     _onPickUpActions: []
@@ -628,4 +620,4 @@ MonoBehaviour:
     - key: damage
       value:
         Value: 60
-        ValueType: 0
+        Type: 0

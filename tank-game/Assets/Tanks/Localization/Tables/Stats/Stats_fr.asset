@@ -20,7 +20,7 @@ MonoBehaviour:
     - rid: 5824281740147687480
   m_TableData:
   - m_Id: 1198144639950848
-    m_Localized: '{seconds}s'
+    m_Localized: '{seconds} s'
     m_Metadata:
       m_Items:
       - rid: 5824281740147687480
@@ -49,6 +49,21 @@ MonoBehaviour:
     m_Metadata:
       m_Items:
       - rid: 5824281740147687480
+  - m_Id: 14526252207349760
+    m_Localized: '{value} %'
+    m_Metadata:
+      m_Items:
+      - rid: 5824281740147687480
+  - m_Id: 14526252253487104
+    m_Localized: '{value} secondes'
+    m_Metadata:
+      m_Items:
+      - rid: 5824281740147687480
+  - m_Id: 14526252253487105
+    m_Localized: '{value} seconde'
+    m_Metadata:
+      m_Items:
+      - rid: 5824281740147687480
   references:
     version: 2
     RefIds:
@@ -63,3 +78,6 @@ MonoBehaviour:
         - id: 493271405518848
         - id: 494141786513408
         - id: 494276041990144
+        - id: 14526252207349760
+        - id: 14526252253487104
+        - id: 14526252253487105

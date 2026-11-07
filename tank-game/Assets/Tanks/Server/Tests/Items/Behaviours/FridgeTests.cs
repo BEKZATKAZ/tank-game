@@ -20,8 +20,8 @@ namespace Tanks.Server.Tests.Items.Behaviours
 
         protected override void InitializeConfig()
         {
-            AddItemStat("increase", new ItemStat { Value = 15, ValueType = StatValueType.Percent });
-            AddItemStat("decrease", new ItemStat { Value = -3, ValueType = StatValueType.Flat });
+            AddItemStat("increase", new ItemStat { Value = 15, Type = ItemStatType.Percent });
+            AddItemStat("decrease", new ItemStat { Value = -3, Type = ItemStatType.Flat });
         }
 
         public override void Setup()

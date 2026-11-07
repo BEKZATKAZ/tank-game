@@ -275,7 +275,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 34421328138690572
-    m_Localized: When below {health-threshold} HP, gain speed and rate of fire for {duration} seconds. Works only once per round.
+    m_Localized: When below {health-threshold} HP, gain speed and rate of fire for {duration}. Works only once per round.
     m_Metadata:
       m_Items:
       - rid: 937747718553469026
@@ -288,7 +288,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 34421328138690575
-    m_Localized: This thing shuffles your stats every {interval} seconds. Stats with a value of zero are ignored and not affected. Some stats might hit their cap.
+    m_Localized: This thing shuffles your stats every {interval}. Stats with a value of zero are ignored and not affected. Some stats might hit their cap.
     m_Metadata:
       m_Items:
       - rid: 937747718553469026
@@ -301,7 +301,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 34446604822339584
-    m_Localized: Every {interval} seconds, your stats increase one by one. Only one stat can be affected at a time, previous stats get back to normal. Once it passes the last stat, the cycle repeats from the first stat.
+    m_Localized: Every {interval}, your stats increase one by one. Only one stat can be affected at a time, previous stats get back to normal. Once it passes the last stat, the cycle repeats from the first stat.
     m_Metadata:
       m_Items:
       - rid: 937747718553469026
@@ -347,7 +347,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 35299638754369539
-    m_Localized: All your stats are maxed for {duration} seconds.
+    m_Localized: All your stats are maxed for {duration}.
     m_Metadata:
       m_Items:
       - rid: 937747718553469026
@@ -438,7 +438,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 36000000000000004
-    m_Localized: Every {interval} seconds of staying still, you increase your highest stat by {increase}. If the highest stat is at its limit, it increases the next highest stat. Moving or turning your tank resets the timer.
+    m_Localized: Every {interval} of staying still, you increase your highest stat by {increase}. If the highest stat is at its limit, it increases the next highest stat. Moving or turning your tank resets the timer.
     m_Metadata:
       m_Items:
       - rid: 937747718553469026
@@ -451,7 +451,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 36000000000000007
-    m_Localized: Pass through walls for {duration} seconds. During the effect you can't shoot, but you can still take damage. If you are inside a wall when the effect runs out, you'll be instantly eliminated.
+    m_Localized: Pass through walls for {duration}. During the effect you can't shoot, but you can still take damage. If you are inside a wall when the effect runs out, you'll be instantly eliminated.
     m_Metadata:
       m_Items:
       - rid: 937747718553469026
@@ -476,7 +476,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 36000000000000013
-    m_Localized: Shows a sign of kindness and gives every player the {effect-healing} status effect for {duration} seconds including you.
+    m_Localized: Shows a sign of kindness and gives every player the {effect-healing} status effect for {duration} including you.
     m_Metadata:
       m_Items:
       - rid: 937747718553469026
@@ -540,7 +540,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 36000000000000028
-    m_Localized: Triggers the {effect-frozen} status effect for {duration} seconds. After, you will be fully healed. Thawing early cancels the healing.
+    m_Localized: Triggers the {effect-frozen} status effect for {duration}. After, you will be fully healed. Thawing early cancels the healing.
     m_Metadata:
       m_Items:
       - rid: 937747718553469026
@@ -553,7 +553,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 36000000000000031
-    m_Localized: Shooting when above {threshold} HP causes the {effect-burning} status effect for {duration} seconds. Every second direct hit you land on another player deals {increase} more damage.
+    m_Localized: Shooting when above {threshold} HP causes the {effect-burning} status effect for {duration}. Every second direct hit you land on another player deals {increase} more damage.
     m_Metadata:
       m_Items:
       - rid: 937747718553469026

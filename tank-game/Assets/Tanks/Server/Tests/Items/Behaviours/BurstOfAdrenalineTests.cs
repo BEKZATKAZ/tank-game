@@ -18,8 +18,8 @@ namespace Tanks.Server.Tests.Items.Behaviours
         {
             AddItemStat("health-threshold", new ItemStat { Value = 20 });
             AddItemStat("duration", new ItemStat { Value = 7.5f });
-            AddItemStat("speed-boost", new ItemStat { Value = 50, ValueType = StatValueType.Percent });
-            AddItemStat("rate-of-fire-boost", new ItemStat { Value = 50, ValueType = StatValueType.Percent });
+            AddItemStat("speed-boost", new ItemStat { Value = 50, Type = ItemStatType.Percent });
+            AddItemStat("rate-of-fire-boost", new ItemStat { Value = 50, Type = ItemStatType.Percent });
         }
 
         [TestCase(1)]

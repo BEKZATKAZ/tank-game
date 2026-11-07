@@ -20,10 +20,10 @@ namespace Tanks.Server.Tests.Items.Behaviours
         protected override void InitializeConfig()
         {
             AddItemStat("interval", new ItemStat { Value = 9 });
-            AddItemStat("speed-boost", new ItemStat { Value = 25, ValueType = StatValueType.Percent });
-            AddItemStat("damage-boost", new ItemStat { Value = 50, ValueType = StatValueType.Percent });
+            AddItemStat("speed-boost", new ItemStat { Value = 25, Type = ItemStatType.Percent });
+            AddItemStat("damage-boost", new ItemStat { Value = 50, Type = ItemStatType.Percent });
             AddItemStat("defense-boost", new ItemStat { Value = 15 });
-            AddItemStat("rate-of-fire-boost", new ItemStat { Value = 40, ValueType = StatValueType.Percent });
+            AddItemStat("rate-of-fire-boost", new ItemStat { Value = 40, Type = ItemStatType.Percent });
             AddItemStat("resistance-boost", new ItemStat { Value = 5 });
         }
 

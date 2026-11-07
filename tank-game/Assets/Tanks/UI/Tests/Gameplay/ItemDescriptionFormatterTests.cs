@@ -64,13 +64,13 @@ namespace Tanks.UI.Tests.Gameplay
             Assert.AreSame(_client, result.ClientConfig);
         }
 
-        [TestCase(12.5f, StatValueType.Percent, "<color=#0f0><b>12.5%</b></color>")]
-        [TestCase(-2.25f, StatValueType.Flat, "<color=#f00><b>-2.25</b></color>")]
+        [TestCase(12.5f, ItemStatType.Percent, "<color=#0f0><b>12.5%</b></color>")]
+        [TestCase(-2.25f, ItemStatType.Flat, "<color=#f00><b>-2.25</b></color>")]
         public void Format_ItemStats_UsesSignedColorsAndInvariantNumbers(
-            float value, StatValueType type, string expected)
+            float value, ItemStatType type, string expected)
         {
             var description = Text("Items", "item.test.description", "Description");
-            _itemStats["amount"] = new ItemStat { Value = value, ValueType = type };
+            _itemStats["amount"] = new ItemStat { Value = value, Type = type };
 
             _formatter.Format(_config, _client);
 
@@ -81,16 +81,18 @@ namespace Tanks.UI.Tests.Gameplay
         public void Format_PlayerStats_AppendsLocalizedStatsAndDuration()
         {
             Text("Items", "item.test.description", "Description");
+
             var stat = Text("Stats", "stat.rate-of-fire", "Rate +25%");
             var duration = Text("Stats", "stat.duration-seconds", "3 seconds");
+
             _playerStats[StatType.RateOfFire] = new PlayerStat
             {
                 Value = 25, ValueType = StatValueType.Percent, Duration = 3
             };
 
             ItemDescriptionData result = _formatter.Format(_config, _client);
-
             Assert.AreEqual("Description\n\nRate +25% (3 seconds)", result.Description);
+
             stat.Received().AddVariable("value", "<color=#0f0>+25%</color>");
             duration.Received().AddVariable("seconds", 3f);
         }

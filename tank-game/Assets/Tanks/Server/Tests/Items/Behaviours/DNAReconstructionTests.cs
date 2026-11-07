@@ -21,16 +21,16 @@ namespace Tanks.Server.Tests.Items.Behaviours
 
         protected override void InitializeConfig()
         {
-            AddItemStat("damage-boost", new ItemStat { Value = 60, ValueType = StatValueType.Percent });
-            AddItemStat("damage-penalty", new ItemStat { Value = -40, ValueType = StatValueType.Percent });
-            AddItemStat("speed-boost", new ItemStat { Value = 60, ValueType = StatValueType.Percent });
-            AddItemStat("speed-penalty", new ItemStat { Value = -40, ValueType = StatValueType.Percent });
+            AddItemStat("damage-boost", new ItemStat { Value = 60, Type = ItemStatType.Percent });
+            AddItemStat("damage-penalty", new ItemStat { Value = -40, Type = ItemStatType.Percent });
+            AddItemStat("speed-boost", new ItemStat { Value = 60, Type = ItemStatType.Percent });
+            AddItemStat("speed-penalty", new ItemStat { Value = -40, Type = ItemStatType.Percent });
             AddItemStat("defense-boost", new ItemStat { Value = 25 });
             AddItemStat("defense-penalty", new ItemStat { Value = -20 });
             AddItemStat("resistance-boost", new ItemStat { Value = 10 });
             AddItemStat("resistance-penalty", new ItemStat { Value = -10 });
-            AddItemStat("rate-of-fire-boost", new ItemStat { Value = 60, ValueType = StatValueType.Percent });
-            AddItemStat("rate-of-fire-penalty", new ItemStat { Value = -40, ValueType = StatValueType.Percent });
+            AddItemStat("rate-of-fire-boost", new ItemStat { Value = 60, Type = ItemStatType.Percent });
+            AddItemStat("rate-of-fire-penalty", new ItemStat { Value = -40, Type = ItemStatType.Percent });
         }
 
         public override void Setup()
@@ -108,7 +108,7 @@ namespace Tanks.Server.Tests.Items.Behaviours
             Config.GetStat(Arg.Any<string>()).Returns(args => new ItemStat
             {
                 Value = ((string)args[0]).EndsWith("-boost") ? 123 : -77,
-                ValueType = StatValueType.Flat
+                Type = ItemStatType.Flat
             });
 
             Behaviour.OnPickup(MockOwner);

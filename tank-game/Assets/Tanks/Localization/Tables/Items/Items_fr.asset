@@ -275,7 +275,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 34421328138690572
-    m_Localized: "Lorsque vos points de vie sont inf\xE9rieurs \xE0 {health-threshold}, votre vitesse et votre cadence de tir augmentent pendant {duration} secondes. Cet effet ne s'applique qu'une seule fois par manche."
+    m_Localized: "Lorsque vos points de vie sont inf\xE9rieurs \xE0 {health-threshold}, votre vitesse et votre cadence de tir augmentent pendant {duration}. Cet effet ne s'applique qu'une seule fois par manche."
     m_Metadata:
       m_Items:
       - rid: 5824281740147687477
@@ -288,7 +288,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 34421328138690575
-    m_Localized: "Ce syst\xE8me m\xE9lange vos stats toutes les {interval} secondes. Les stats avec une valeur de z\xE9ro sont ignor\xE9es et ne sont pas affect\xE9es. Certaines peuvent atteindre la limite."
+    m_Localized: "Ce syst\xE8me m\xE9lange vos stats toutes les {interval}. Les stats avec une valeur de z\xE9ro sont ignor\xE9es et ne sont pas affect\xE9es. Certaines peuvent atteindre la limite."
     m_Metadata:
       m_Items:
       - rid: 5824281740147687477
@@ -301,7 +301,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 34446604822339584
-    m_Localized: "Toutes les {interval} secondes, vos stats augmentent tour \xE0 tour. Une seule stat peut \xEAtre active \xE0 la fois, les stats pr\xE9c\xE9dentes reviennent \xE0 leur \xE9tat initial. Apr\xE8s la derni\xE8re stat, le cycle recommence avec la premi\xE8re."
+    m_Localized: "Toutes les {interval}, vos stats augmentent tour \xE0 tour. Une seule stat peut \xEAtre active \xE0 la fois, les stats pr\xE9c\xE9dentes reviennent \xE0 leur \xE9tat initial. Apr\xE8s la derni\xE8re stat, le cycle recommence avec la premi\xE8re."
     m_Metadata:
       m_Items:
       - rid: 5824281740147687477
@@ -340,7 +340,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 35299638754369539
-    m_Localized: Toutes vos stats sont au maximum pendant {duration} secondes.
+    m_Localized: Toutes vos stats sont au maximum pendant {duration}.
     m_Metadata:
       m_Items:
       - rid: 5824281740147687477
@@ -431,7 +431,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 36000000000000004
-    m_Localized: "Toutes les {interval} secondes d'immobilit\xE9, votre stat la plus \xE9lev\xE9e augmente de {increase}. Si elle atteint son maximum, c'est la stat imm\xE9diatement sup\xE9rieure qui augmente. D\xE9placer ou faire pivoter le char r\xE9initialise le chronom\xE8tre."
+    m_Localized: "Toutes les {interval} d'immobilit\xE9, votre stat la plus \xE9lev\xE9e augmente de {increase}. Si elle atteint son maximum, c'est la stat imm\xE9diatement sup\xE9rieure qui augmente. D\xE9placer ou faire pivoter le char r\xE9initialise le chronom\xE8tre."
     m_Metadata:
       m_Items:
       - rid: 5824281740147687477
@@ -444,7 +444,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 36000000000000007
-    m_Localized: "Vous pouvez traverser les murs pendant {duration} secondes. Durant cet effet, vous ne pouvez pas tirer, mais vous pouvez subir des d\xE9g\xE2ts. Si vous vous trouvez \xE0 l'int\xE9rieur d'un mur \xE0 la fin de l'effet, vous serez instantan\xE9ment d\xE9truit."
+    m_Localized: "Vous pouvez traverser les murs pendant {duration}. Durant cet effet, vous ne pouvez pas tirer, mais vous pouvez subir des d\xE9g\xE2ts. Si vous vous trouvez \xE0 l'int\xE9rieur d'un mur \xE0 la fin de l'effet, vous serez instantan\xE9ment d\xE9truit."
     m_Metadata:
       m_Items:
       - rid: 5824281740147687477
@@ -469,7 +469,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 36000000000000013
-    m_Localized: "Fait preuve de bienveillance et applique {effect-healing} \xE0 tous les joueurs, y compris vous, pendant {duration} secondes."
+    m_Localized: "Fait preuve de bienveillance et applique {effect-healing} \xE0 tous les joueurs, y compris vous, pendant {duration}."
     m_Metadata:
       m_Items:
       - rid: 5824281740147687477
@@ -533,7 +533,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 36000000000000028
-    m_Localized: "Active l'effet {effect-frozen} pendant {duration} secondes. Ensuite, votre sant\xE9 est enti\xE8rement restaur\xE9e. D\xE9geler l'effet pr\xE9matur\xE9ment annule la gu\xE9rison."
+    m_Localized: "Active l'effet {effect-frozen} pendant {duration}. Ensuite, votre sant\xE9 est enti\xE8rement restaur\xE9e. D\xE9geler l'effet pr\xE9matur\xE9ment annule la gu\xE9rison."
     m_Metadata:
       m_Items:
       - rid: 5824281740147687477
@@ -546,7 +546,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 36000000000000031
-    m_Localized: "Tirer avec votre sant\xE9 au-dessus de {threshold} vous inflige l'effet {effect-burning} pendant {duration} secondes. Chaque deuxi\xE8me coup direct port\xE9 \xE0 un autre joueur inflige {incre} de d\xE9g\xE2ts suppl\xE9mentaires."
+    m_Localized: "Tirer avec votre sant\xE9 au-dessus de {threshold} vous inflige l'effet {effect-burning} pendant {duration}. Chaque deuxi\xE8me coup direct port\xE9 \xE0 un autre joueur inflige {incre} de d\xE9g\xE2ts suppl\xE9mentaires."
     m_Metadata:
       m_Items:
       - rid: 5824281740147687477

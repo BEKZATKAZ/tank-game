@@ -15,15 +15,7 @@ MonoBehaviour:
   _identifier: weapon_flashbang
   _tier: 2
   _playerStats: []
-  _itemStats:
-  - key: duration
-    value:
-      Value: 8
-      ValueType: 0
-  - key: radius
-    value:
-      Value: 10
-      ValueType: 0
+  _itemStats: []
   _onPickUpActions:
   - {fileID: 11400000, guid: 3dfa791db1854eedb485bc8963db5bce, type: 2}
   _iconMaterial: {fileID: -876546973899608171, guid: 9680fbb573735774aaa7e0c722f9aad3, type: 3}

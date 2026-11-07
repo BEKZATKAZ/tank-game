@@ -19,11 +19,11 @@ MonoBehaviour:
   - key: damage
     value:
       Value: 15
-      ValueType: 1
+      Type: 1
   - key: threshold
     value:
       Value: 90
-      ValueType: 1
+      Type: 0
   _onPickUpActions: []
   _iconMaterial: {fileID: -876546973899608171, guid: 9680fbb573735774aaa7e0c722f9aad3, type: 3}
   _icon: {fileID: 21300000, guid: bcb648925bd0b0c48b3bc2626615129d, type: 3}

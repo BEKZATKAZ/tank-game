@@ -39,6 +39,18 @@ MonoBehaviour:
     m_Key: stat.duration-seconds
     m_Metadata:
       m_Items: []
+  - m_Id: 14526252207349760
+    m_Key: stat.percent
+    m_Metadata:
+      m_Items: []
+  - m_Id: 14526252253487104
+    m_Key: stat.seconds-plural
+    m_Metadata:
+      m_Items: []
+  - m_Id: 14526252253487105
+    m_Key: stat.seconds-singular
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:
