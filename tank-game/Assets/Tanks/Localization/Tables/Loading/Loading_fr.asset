@@ -57,7 +57,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 12075842715213824
-    m_Localized: "En avan\xE7ant et en tirant vers l'arri\xE8re, vous pouvez vous propulser vers l'avant beaucoup plus vite qu'en conduisant."
+    m_Localized: "En avan\xE7ant et en tirant en arri\xE8re, vous pouvez vous propulser vers l'avant beaucoup plus vite qu'en conduisant."
     m_Metadata:
       m_Items: []
   - m_Id: 10569631883264
@@ -82,6 +82,22 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 12075842715213825
     m_Localized: "Vous n'aimez pas les d\xE9g\xE2ts que vous vous infligez, ou vous en voulez davantage\_? Vous pouvez les ajuster dans les param\xE8tres du lobby."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 14972056504147968
+    m_Localized: "Vous avez oubli\xE9 \xE0 quoi servent les objets\_? La section \xAB\_Objets\_\xBB des menus peut vous aider \xE0 vous en souvenir."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 14972056541896704
+    m_Localized: "Les effets de statut Br\xFBlure et Gel s'annulent mutuellement, oui ce jeu est r\xE9aliste."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 14972056541896705
+    m_Localized: "L'effet de gu\xE9rison est plus puissant que l'effet de br\xFBlure, utilisez-le pour att\xE9nuer les d\xE9g\xE2ts caus\xE9s par le feu."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 14972056541896706
+    m_Localized: Lorsqu'il y a plus de 2 joueurs, il est parfois plus facile d'attendre qu'ils s'entretuent.
     m_Metadata:
       m_Items: []
   references:

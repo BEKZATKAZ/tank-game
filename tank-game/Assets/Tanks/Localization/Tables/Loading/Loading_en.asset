@@ -84,6 +84,22 @@ MonoBehaviour:
     m_Localized: Don't like self-damage, or want more? You can adjust it in the lobby settings.
     m_Metadata:
       m_Items: []
+  - m_Id: 14972056504147968
+    m_Localized: Forgot what items do? The Items section in the menus can help you to figure things out.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 14972056541896704
+    m_Localized: The Burning and Frozen status effects cancel each other, this game has realism.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 14972056541896705
+    m_Localized: The Healing effect is stronger than the Burning effect, use it to bear the damage from the fire.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 14972056541896706
+    m_Localized: When there are more than 2 players, sometimes it's easier to wait until they kill each other.
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds: []

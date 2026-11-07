@@ -79,6 +79,22 @@ MonoBehaviour:
     m_Key: loading.tip.self-damage-setting
     m_Metadata:
       m_Items: []
+  - m_Id: 14972056504147968
+    m_Key: loading.tip.items-section
+    m_Metadata:
+      m_Items: []
+  - m_Id: 14972056541896704
+    m_Key: loading.tip-conflicting-effects
+    m_Metadata:
+      m_Items: []
+  - m_Id: 14972056541896705
+    m_Key: loading.tip.healing-over-burning
+    m_Metadata:
+      m_Items: []
+  - m_Id: 14972056541896706
+    m_Key: loading.tip.doing-nothing
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:
