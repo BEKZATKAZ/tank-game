@@ -107,6 +107,14 @@ MonoBehaviour:
     m_Key: menu.main.extras
     m_Metadata:
       m_Items: []
+  - m_Id: 36568010776682496
+    m_Key: menu.main.items
+    m_Metadata:
+      m_Items: []
+  - m_Id: 36568010814431232
+    m_Key: menu.main.leaderboards
+    m_Metadata:
+      m_Items: []
   - m_Id: 3245362964291584
     m_Key: menu.main.host-lobby
     m_Metadata:
@@ -305,6 +313,86 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 41000000000000020
     m_Key: menu.lobby.settings.backwards-movement-speed
+    m_Metadata:
+      m_Items: []
+  - m_Id: 42000000000000000
+    m_Key: menu.leaderboards.title
+    m_Metadata:
+      m_Items: []
+  - m_Id: 42000000000000001
+    m_Key: menu.leaderboards.category
+    m_Metadata:
+      m_Items: []
+  - m_Id: 42000000000000002
+    m_Key: menu.leaderboards.eliminations
+    m_Metadata:
+      m_Items: []
+  - m_Id: 42000000000000003
+    m_Key: menu.leaderboards.items
+    m_Metadata:
+      m_Items: []
+  - m_Id: 42000000000000004
+    m_Key: menu.leaderboards.total
+    m_Metadata:
+      m_Items: []
+  - m_Id: 42000000000000005
+    m_Key: menu.leaderboards.weekly
+    m_Metadata:
+      m_Items: []
+  - m_Id: 42000000000000006
+    m_Key: menu.leaderboards.daily
+    m_Metadata:
+      m_Items: []
+  - m_Id: 42000000000000007
+    m_Key: menu.leaderboards.rank
+    m_Metadata:
+      m_Items: []
+  - m_Id: 42000000000000008
+    m_Key: menu.leaderboards.player
+    m_Metadata:
+      m_Items: []
+  - m_Id: 42000000000000009
+    m_Key: menu.leaderboards.score
+    m_Metadata:
+      m_Items: []
+  - m_Id: 42000000000000010
+    m_Key: menu.leaderboards.you
+    m_Metadata:
+      m_Items: []
+  - m_Id: 42000000000000011
+    m_Key: menu.leaderboards.previous
+    m_Metadata:
+      m_Items: []
+  - m_Id: 42000000000000012
+    m_Key: menu.leaderboards.next
+    m_Metadata:
+      m_Items: []
+  - m_Id: 42000000000000013
+    m_Key: menu.leaderboards.refresh
+    m_Metadata:
+      m_Items: []
+  - m_Id: 42000000000000014
+    m_Key: menu.leaderboards.back
+    m_Metadata:
+      m_Items: []
+  - m_Id: 42000000000000015
+    m_Key: menu.leaderboards.loading
+    m_Metadata:
+      m_Items: []
+  - m_Id: 42000000000000016
+    m_Key: menu.leaderboards.empty
+    m_Metadata:
+      m_Items: []
+  - m_Id: 42000000000000017
+    m_Key: menu.leaderboards.error
+    m_Metadata:
+      m_Items: []
+  - m_Id: 42000000000000018
+    m_Key: menu.leaderboards.unnamed
+    m_Metadata:
+      m_Items: []
+  - m_Id: 42000000000000019
+    m_Key: menu.leaderboards.unranked
     m_Metadata:
       m_Items: []
   m_Metadata:

@@ -316,6 +316,94 @@ MonoBehaviour:
     m_Localized: "\u041E\u0411\u041D\u041E\u0412\u0418\u0422\u042C"
     m_Metadata:
       m_Items: []
+  - m_Id: 36568010776682496
+    m_Localized: "\u041F\u0420\u0415\u0414\u041C\u0415\u0422\u042B"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 36568010814431232
+    m_Localized: "\u0422\u0410\u0411\u041B\u0418\u0426\u042B \u041B\u0418\u0414\u0415\u0420\u041E\u0412"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 42000000000000000
+    m_Localized: "Таблицы лидеров"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 42000000000000001
+    m_Localized: "Категория"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 42000000000000002
+    m_Localized: "Устранения"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 42000000000000003
+    m_Localized: "Подобранные предметы"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 42000000000000004
+    m_Localized: "Всё время"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 42000000000000005
+    m_Localized: "За неделю"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 42000000000000006
+    m_Localized: "За день"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 42000000000000007
+    m_Localized: "Место"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 42000000000000008
+    m_Localized: "Игрок"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 42000000000000009
+    m_Localized: "Счёт"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 42000000000000010
+    m_Localized: "Ваш результат"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 42000000000000011
+    m_Localized: "НАЗАД"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 42000000000000012
+    m_Localized: "ДАЛЕЕ"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 42000000000000013
+    m_Localized: "ОБНОВИТЬ"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 42000000000000014
+    m_Localized: "НАЗАД"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 42000000000000015
+    m_Localized: "Загрузка..."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 42000000000000016
+    m_Localized: "Пока нет результатов."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 42000000000000017
+    m_Localized: "Не удалось загрузить результаты. Попробуйте обновить."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 42000000000000018
+    m_Localized: "Игрок"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 42000000000000019
+    m_Localized: "Без места"
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:

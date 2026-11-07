@@ -1,6 +1,8 @@
 ﻿using NaughtyAttributes;
 using System;
 using Tanks.Core;
+using Tanks.Core.Leaderboards;
+using Tanks.Infrastructure.Leaderboards;
 using Tanks.Core.Common.Processes;
 using Tanks.Core.Common.Scenes;
 using Tanks.Core.Lobbies;
@@ -31,9 +33,7 @@ namespace Tanks.Infrastructure
 
         [Header("Environments")]
         [SerializeField] private EnvironmentSettings _production;
-#if DEBUG
         [SerializeField] private EnvironmentSettings _development;
-#endif
 
         private void AddUseCases(IContainerBuilder builder)
         {
@@ -52,6 +52,8 @@ namespace Tanks.Infrastructure
 
             builder.Register<ILobbyService, UGSLobbyService>(Lifetime.Singleton);
             builder.Register<IAuthService, UGSAuthService>(Lifetime.Singleton);
+            builder.Register<ICountryService, IpCountryService>(Lifetime.Singleton);
+            builder.Register<ILeaderboardService, UGSLeaderboardService>(Lifetime.Singleton);
 
             if (role is MultiplayerRoleFlags.Client)
             {
@@ -78,12 +80,10 @@ namespace Tanks.Infrastructure
 
         protected override void Configure(IContainerBuilder builder)
         {
-            EnvironmentSettings env;
-#if DEBUG
-            env = _development;
-#else
-            env = _production;
-#endif
+            EnvironmentSettings env = EnvironmentSettings.Select(
+                _production, _development, Application.isEditor, Debug.isDebugBuild);
+
+            builder.RegisterInstance(env);
 
             CcdManager.EnvironmentName = env.EnvironmentName;
             CcdManager.BucketId = env.GetBucketId();

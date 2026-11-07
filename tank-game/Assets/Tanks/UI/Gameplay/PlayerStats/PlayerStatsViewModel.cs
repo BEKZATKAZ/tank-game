@@ -58,7 +58,7 @@ namespace Tanks.UI.Gameplay.PlayerStats
 
         public void Update()
         {
-            if (_statOwner is null) return;
+            if (_statOwner is null || _weaponHolder is null) return;
 
             if (_currentWeapon != _weaponHolder.CurrentWeapon)
             {
@@ -67,7 +67,7 @@ namespace Tanks.UI.Gameplay.PlayerStats
             }
 
             bool hasChanged = false;
-            float weaponCooldown = _weaponHolder.CurrentWeapon.Cooldown.DurationSeconds;
+            float weaponCooldown = _currentWeapon?.Cooldown.DurationSeconds ?? 0;
 
             foreach ((StatType type, StatChanges changes) in _lastStats.Value)
             {

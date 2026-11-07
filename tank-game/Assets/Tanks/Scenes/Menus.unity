@@ -1132,6 +1132,10 @@ MonoBehaviour:
     value: {fileID: 690515186}
   - key: 3
     value: {fileID: 690515185}
+  - key: 4
+    value: {fileID: 690515192}
+  - key: 8
+    value: {fileID: 690515193}
   - key: 5
     value: {fileID: 690515188}
   - key: 6
@@ -1147,13 +1151,15 @@ GameObject:
   - component: {fileID: 690515183}
   - component: {fileID: 690515182}
   - component: {fileID: 690515184}
-  - component: {fileID: 690515185}
   - component: {fileID: 690515186}
+  - component: {fileID: 690515192}
+  - component: {fileID: 690515185}
   - component: {fileID: 690515187}
   - component: {fileID: 690515188}
   - component: {fileID: 690515189}
   - component: {fileID: 690515190}
   - component: {fileID: 690515191}
+  - component: {fileID: 690515193}
   m_Layer: 0
   m_Name: Menus
   m_TagString: Untagged
@@ -1303,6 +1309,33 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Tanks.UI::Tanks.UI.Menus.TankModel.MenuPlayerNamesView
   _showOnPlay: 1
+--- !u!114 &690515192
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 690515181}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 97555098574feab43bdb9f7c06bb3995, type: 3}
+  m_Name:
+  m_EditorClassIdentifier: Tanks.UI::Tanks.UI.Menus.Extras.ExtrasView
+  _showOnPlay: 0
+--- !u!114 &690515193
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 690515181}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 31005737cbca4dd7bd68213803e653bd, type: 3}
+  m_Name:
+  m_EditorClassIdentifier: Tanks.UI::Tanks.UI.Menus.Leaderboards.LeaderboardsView
+  _showOnPlay: 0
+  _flags: {fileID: 11400000, guid: e3a597eefd95402a9acca93094b72ab2, type: 2}
 --- !u!1 &702713357
 GameObject:
   m_ObjectHideFlags: 0

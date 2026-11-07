@@ -87,6 +87,18 @@ namespace Tanks.Shared.Bootstrap
             RequestReadyConfirmationClientRpc(secretHandle, p);
         }
 
+        public void SendLeaderboardResult(ulong clientId, LeaderboardMatchResult result)
+        {
+            if (IsServer == false) return;
+            LeaderboardResultClientRpc(result, RpcTarget.Single(clientId, RpcTargetUse.Temp));
+        }
+
+        [Rpc(SendTo.SpecifiedInParams, InvokePermission = RpcInvokePermission.Server)]
+        private void LeaderboardResultClientRpc(LeaderboardMatchResult result, RpcParams p = default)
+        {
+            EmitMessage(result);
+        }
+
         public void DespawnAllPlayers()
         {
             foreach (NetworkClient client in NetworkManager.ConnectedClients.Values)

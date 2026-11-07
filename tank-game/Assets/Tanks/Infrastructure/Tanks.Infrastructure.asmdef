@@ -2,6 +2,8 @@
     "name": "Tanks.Infrastructure",
     "rootNamespace": "",
     "references": [
+        "GUID:70ea675efa2644cef98c7ece24158333",
+        "GUID:2073209246492244c9ad62c89d8d37bb",
         "GUID:776d03a35f1b52c4a9aed9f56d7b4229",
         "GUID:2d8ca1202255a4243a9ebca3a433072c",
         "GUID:3f93f6c48cdbd804796618c781f92e56",

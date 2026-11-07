@@ -13,6 +13,13 @@ namespace Tanks.Infrastructure
 
         public string EnvironmentName => _environmentName;
 
+        public static EnvironmentSettings Select(
+            EnvironmentSettings production, EnvironmentSettings development,
+            bool isEditor, bool isDevelopmentBuild)
+        {
+            return isEditor || isDevelopmentBuild ? development : production;
+        }
+
         public string GetBucketId()
         {
 #if UNITY_STANDALONE_WIN

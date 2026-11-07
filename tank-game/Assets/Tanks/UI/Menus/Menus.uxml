@@ -128,14 +128,30 @@
             </ui:VisualElement>
         </ui:VisualElement>
     </ui:VisualElement>
-    <ui:VisualElement name="ExtrasSection" style="flex-grow: 1; display: none;">
-        <Tanks.UI.Elements.CustomButton name="BackButton">
+    <ui:VisualElement name="ExtrasSection" class="main-buttons" style="flex-grow: 1; display: none;">
+        <ui:Label name="GameTitle" class="game-title">
+            <Bindings>
+                <UnityEngine.Localization.LocalizedString property="text" table="GUID:34510603f8b6d1a44b1b2ffa9aa551c9" entry="Id(33762638788255744)"/>
+            </Bindings>
+        </ui:Label>
+        <Tanks.UI.Elements.CustomButton name="ItemsButton" click-sound-path="event:/UI/Click_1">
+            <Bindings>
+                <UnityEngine.Localization.LocalizedString property="text" table="GUID:34510603f8b6d1a44b1b2ffa9aa551c9" entry="Id(36568010776682496)"/>
+            </Bindings>
+        </Tanks.UI.Elements.CustomButton>
+        <Tanks.UI.Elements.CustomButton name="LeaderboardsButton" click-sound-path="event:/UI/Click_1">
+            <Bindings>
+                <UnityEngine.Localization.LocalizedString property="text" table="GUID:34510603f8b6d1a44b1b2ffa9aa551c9" entry="Id(36568010814431232)"/>
+            </Bindings>
+        </Tanks.UI.Elements.CustomButton>
+        <Tanks.UI.Elements.CustomButton name="BackButton" click-sound-path="event:/UI/Click_1">
             <Bindings>
                 <UnityEngine.Localization.LocalizedString property="text" table="GUID:34510603f8b6d1a44b1b2ffa9aa551c9" entry="Id(33779992972713984)"/>
             </Bindings>
         </Tanks.UI.Elements.CustomButton>
+        <Tanks.UI.Elements.CopyrightNotice name="Notice"/>
     </ui:VisualElement>
-    <ui:VisualElement name="LobbyBrowserSection" class="lobby-browser-section" style="display: flex;">
+    <ui:VisualElement name="LobbyBrowserSection" class="lobby-browser-section" style="display: none;">
         <ui:VisualElement name="LobbyBrowser" class="lobby-browser">
             <ui:VisualElement name="Fill" class="bg-fill"/>
             <ui:VisualElement name="Header" class="lobby-browser__header">
@@ -196,6 +212,72 @@
                 <Tanks.UI.Elements.CustomButton name="SendButton" class="lobby-chat__send">
                     <Bindings>
                         <UnityEngine.Localization.LocalizedString property="text" table="GUID:34510603f8b6d1a44b1b2ffa9aa551c9" entry="Id(5086135213056000)"/>
+                    </Bindings>
+                </Tanks.UI.Elements.CustomButton>
+            </ui:VisualElement>
+        </ui:VisualElement>
+    </ui:VisualElement>
+    <ui:VisualElement name="LeaderboardsSection" class="leaderboards-section" style="display: flex;">
+        <ui:VisualElement name="Leaderboards" class="leaderboards">
+            <ui:VisualElement name="LeaderboardFill" picking-mode="Ignore" class="bg-fill"/>
+            <ui:VisualElement class="leaderboards__selectors">
+                <ui:DropdownField name="LeaderboardMetric" label="" choices="" class="leaderboards__metric">
+                    <Bindings>
+                        <UnityEngine.Localization.LocalizedString property="tooltip" table="GUID:34510603f8b6d1a44b1b2ffa9aa551c9" entry="Id(42000000000000000)"/>
+                    </Bindings>
+                </ui:DropdownField>
+                <ui:DropdownField name="LeaderboardCategory" class="leaderboards__category">
+                    <Bindings>
+                        <UnityEngine.Localization.LocalizedString property="tooltip" table="GUID:34510603f8b6d1a44b1b2ffa9aa551c9" entry="Id(42000000000000001)"/>
+                    </Bindings>
+                </ui:DropdownField>
+            </ui:VisualElement>
+            <ui:VisualElement class="leaderboards__row leaderboards__headings">
+                <ui:Label name="RankHeader">
+                    <Bindings>
+                        <UnityEngine.Localization.LocalizedString property="text" table="GUID:34510603f8b6d1a44b1b2ffa9aa551c9" entry="Id(42000000000000007)"/>
+                    </Bindings>
+                </ui:Label>
+                <ui:VisualElement class="leaderboards__flag"/>
+                <ui:Label name="PlayerHeader">
+                    <Bindings>
+                        <UnityEngine.Localization.LocalizedString property="text" table="GUID:34510603f8b6d1a44b1b2ffa9aa551c9" entry="Id(42000000000000008)"/>
+                    </Bindings>
+                </ui:Label>
+                <ui:Label name="ScoreHeader">
+                    <Bindings>
+                        <UnityEngine.Localization.LocalizedString property="text" table="GUID:34510603f8b6d1a44b1b2ffa9aa551c9" entry="Id(42000000000000009)"/>
+                    </Bindings>
+                </ui:Label>
+            </ui:VisualElement>
+            <ui:Label name="LeaderboardStatus" class="leaderboards__status"/>
+            <ui:ScrollView name="LeaderboardEntries" horizontal-scroller-visibility="Hidden" class="leaderboards__entries"/>
+            <ui:Label name="OwnEntryLabel" class="leaderboards__own-label">
+                <Bindings>
+                    <UnityEngine.Localization.LocalizedString property="text" table="GUID:34510603f8b6d1a44b1b2ffa9aa551c9" entry="Id(42000000000000010)"/>
+                </Bindings>
+            </ui:Label>
+            <ui:VisualElement name="OwnEntry" class="leaderboards__own"/>
+            <ui:VisualElement class="leaderboards__footer">
+                <Tanks.UI.Elements.CustomButton name="PreviousPageButton">
+                    <Bindings>
+                        <UnityEngine.Localization.LocalizedString property="text" table="GUID:34510603f8b6d1a44b1b2ffa9aa551c9" entry="Id(42000000000000011)"/>
+                    </Bindings>
+                </Tanks.UI.Elements.CustomButton>
+                <ui:Label name="LeaderboardPage" class="leaderboards__page"/>
+                <Tanks.UI.Elements.CustomButton name="NextPageButton">
+                    <Bindings>
+                        <UnityEngine.Localization.LocalizedString property="text" table="GUID:34510603f8b6d1a44b1b2ffa9aa551c9" entry="Id(42000000000000012)"/>
+                    </Bindings>
+                </Tanks.UI.Elements.CustomButton>
+                <Tanks.UI.Elements.CustomButton name="RefreshButton">
+                    <Bindings>
+                        <UnityEngine.Localization.LocalizedString property="text" table="GUID:34510603f8b6d1a44b1b2ffa9aa551c9" entry="Id(42000000000000013)"/>
+                    </Bindings>
+                </Tanks.UI.Elements.CustomButton>
+                <Tanks.UI.Elements.CustomButton name="BackButton">
+                    <Bindings>
+                        <UnityEngine.Localization.LocalizedString property="text" table="GUID:34510603f8b6d1a44b1b2ffa9aa551c9" entry="Id(42000000000000014)"/>
                     </Bindings>
                 </Tanks.UI.Elements.CustomButton>
             </ui:VisualElement>

@@ -8,6 +8,8 @@
         Settings,
         Extras,
         LobbyBrowser,
-        LobbyRoom
+        LobbyRoom,
+        ItemBrowser,
+        Leaderboards
     }
 }

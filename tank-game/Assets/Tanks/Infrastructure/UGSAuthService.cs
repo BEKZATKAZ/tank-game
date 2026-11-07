@@ -4,19 +4,34 @@ using Tanks.Core;
 using Tanks.Core.Common;
 using Unity.Services.Authentication;
 using Unity.Services.Core;
+using Unity.Services.Core.Environments;
 using UnityEngine;
+using VContainer;
 
 namespace Tanks.Infrastructure
 {
     public sealed class UGSAuthService : IAuthService
     {
+        [Inject]
+        public UGSAuthService(EnvironmentSettings environment)
+            : this(environment, options => UnityServices.InitializeAsync(options).AsUniTask()) { }
+
+        public UGSAuthService(EnvironmentSettings environment, Func<InitializationOptions, UniTask> initialize)
+        {
+            _environment = environment;
+            _initialize = initialize;
+        }
+
         public PlayerProfileState CurrentProfile { get; private set; } = new();
+
+        private readonly EnvironmentSettings _environment;
+        private readonly Func<InitializationOptions, UniTask> _initialize;
 
         private IAuthenticationService Service => AuthenticationService.Instance;
 
         public UniTask InitializeAsync()
         {
-            return UnityServices.InitializeAsync().AsUniTask();
+            return _initialize(new InitializationOptions().SetEnvironmentName(_environment.EnvironmentName));
         }
 
         public async UniTask<ResultType<string>> GenerateSignInCodeAsync(string identifier)
