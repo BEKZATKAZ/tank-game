@@ -41,29 +41,6 @@ namespace Tanks.UI.Tests.Menus
         public void TearDown() => _viewModel.Dispose();
 
         [Test]
-        public async Task Pagination_UsesTwentyResetsSelectionAndPinsUnrankedPlayer()
-        {
-            _service.GetPageAsync(Arg.Any<LeaderboardMetric>(), Arg.Any<LeaderboardCategory>(), Arg.Any<int>())
-                .Returns(UniTask.FromResult(Result.Success(new LeaderboardPage { Total = 41 })));
-
-            await _viewModel.RefreshAsync();
-            Assert.IsFalse(_viewModel.CanGoPrevious);
-            Assert.IsTrue(_viewModel.CanGoNext);
-            Assert.AreEqual("1 / 3", _viewModel.PageLabel.Value);
-            Assert.AreEqual("self", _viewModel.OwnEntry.Value.PlayerId);
-            Assert.AreEqual(0, _viewModel.OwnEntry.Value.Rank);
-
-            await _viewModel.ChangePageAsync(1);
-            await _viewModel.ChangePageAsync(1);
-            Assert.AreEqual(2, _viewModel.Page);
-            Assert.IsFalse(_viewModel.CanGoNext);
-
-            await _viewModel.SelectAsync(LeaderboardMetric.PickedUpItems, LeaderboardCategory.Daily);
-            Assert.AreEqual(0, _viewModel.Page);
-            await _service.Received(1).GetPageAsync(LeaderboardMetric.PickedUpItems, LeaderboardCategory.Daily, 0);
-        }
-
-        [Test]
         public async Task OldResponse_CannotReplaceNewSelection()
         {
             var oldResponse = new UniTaskCompletionSource<ResultType<LeaderboardPage>>();

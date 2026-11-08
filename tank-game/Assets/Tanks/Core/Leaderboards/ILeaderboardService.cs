@@ -42,7 +42,7 @@ namespace Tanks.Core.Leaderboards
 
     public static class LeaderboardSettings
     {
-        public const int PageSize = 20;
+        public const int PageSize = 10;
 
         public static string GetId(LeaderboardMetric metric, LeaderboardCategory category)
         {
