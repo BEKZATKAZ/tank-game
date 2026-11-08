@@ -127,8 +127,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Tanks.Shared::Tanks.Shared.Weapons.Projectiles.Modules.DirectDamageModule
   ShowTopMostFoldoutHeaderGroup: 1
-  NearDamage: 10
-  FarDamage: 5
+  NearDamage: 4
+  FarDamage: 2
   MinTime: 1
   MaxTime: 10
 --- !u!212 &6219840235481289347

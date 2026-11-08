@@ -183,7 +183,7 @@ MonoBehaviour:
     - key: 1
       value:
         Duration: 10
-        Value: 5
+        Value: 4
         ValueType: 0
     _itemStats:
     - key: duration
@@ -423,11 +423,11 @@ MonoBehaviour:
         Type: 0
     - key: duration
       value:
-        Value: 0.5
+        Value: 1.5
         Type: 2
     - key: increase
       value:
-        Value: 200
+        Value: 150
         Type: 1
   - _identifier: dna-reconstruction
     _tier: 3
@@ -482,7 +482,7 @@ MonoBehaviour:
       value:
         Duration: -1
         Value: 25
-        ValueType: 0
+        ValueType: 1
     - key: 1
       value:
         Duration: -1
@@ -491,18 +491,18 @@ MonoBehaviour:
     - key: 2
       value:
         Duration: -1
-        Value: 30
+        Value: 20
         ValueType: 0
     - key: 3
       value:
         Duration: -1
-        Value: 5
+        Value: 4
         ValueType: 0
     - key: 4
       value:
         Duration: -1
-        Value: 1
-        ValueType: 0
+        Value: 15
+        ValueType: 1
     _itemStats: []
   - _identifier: missing-texture
     _tier: 3
@@ -573,12 +573,12 @@ MonoBehaviour:
     _itemStats:
     - key: first
       value:
-        Value: 100
+        Value: 125
         Type: 0
     - key: second
       value:
         Value: 35
-        Type: 0
+        Type: 1
   - _identifier: self-conscious
     _tier: 3
     _onPickUpActions: []

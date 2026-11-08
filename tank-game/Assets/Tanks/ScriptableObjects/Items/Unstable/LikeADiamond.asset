@@ -19,7 +19,7 @@ MonoBehaviour:
     value:
       Duration: -1
       Value: 25
-      ValueType: 0
+      ValueType: 1
   - key: 1
     value:
       Duration: -1
@@ -28,18 +28,18 @@ MonoBehaviour:
   - key: 2
     value:
       Duration: -1
-      Value: 30
+      Value: 20
       ValueType: 0
   - key: 3
     value:
       Duration: -1
-      Value: 5
+      Value: 4
       ValueType: 0
   - key: 4
     value:
       Duration: -1
-      Value: 1
-      ValueType: 0
+      Value: 15
+      ValueType: 1
   _itemStats: []
   _onPickUpActions: []
   _iconMaterial: {fileID: -876546973899608171, guid: 9680fbb573735774aaa7e0c722f9aad3, type: 3}

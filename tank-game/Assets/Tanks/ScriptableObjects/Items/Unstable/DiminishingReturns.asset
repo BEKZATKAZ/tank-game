@@ -22,11 +22,11 @@ MonoBehaviour:
       Type: 0
   - key: duration
     value:
-      Value: 0.5
+      Value: 1.5
       Type: 2
   - key: increase
     value:
-      Value: 200
+      Value: 150
       Type: 1
   _onPickUpActions: []
   _iconMaterial: {fileID: -876546973899608171, guid: 9680fbb573735774aaa7e0c722f9aad3, type: 3}
