@@ -1,4 +1,5 @@
-﻿using Tanks.Shared.Adapters;
+﻿using System.Collections.Generic;
+using Tanks.Shared.Adapters;
 using Tanks.Shared.Entities.Health;
 using Unity.Mathematics;
 using UnityEngine;
@@ -13,6 +14,40 @@ namespace Tanks.Shared.Weapons.Projectiles
         }
 
         private readonly float _radius;
+        private readonly List<Collider2D> _colliders = new();
+
+        public IHealthBehaviour ResolveLaunch(ITransform transform)
+        {
+            float2 origin = transform.WorldPosition;
+            float2 position = origin;
+            float2 direction = transform.Right;
+            float radius = math.cmax(math.abs(transform.WorldScale)) * _radius;
+
+            ContactFilter2D filter = new ContactFilter2D
+            {
+                useLayerMask = true,
+                layerMask = 1 << 0,
+                useTriggers = false
+            };
+
+            int steps = 0;
+
+            while (Physics2D.OverlapCircle(position, radius, filter, _colliders) > 0)
+            {
+                position = origin - direction * (++steps * 0.01f);
+            }
+
+            transform.WorldPosition = position;
+            filter.layerMask = 1 << 3;
+            Physics2D.OverlapCircle(position, radius, filter, _colliders);
+
+            foreach (Collider2D collider in _colliders)
+            {
+                if (collider.TryGetComponent(out IHealthBehaviour health)) return health;
+            }
+
+            return null;
+        }
 
         public void Simulate(
             LaunchCallbacks callbacks, ITransform transform, float distance)
@@ -20,7 +55,7 @@ namespace Tanks.Shared.Weapons.Projectiles
             int mask = (1 << 0) | (1 << 3); // Only walls & entities
 
             float2 position = transform.WorldPosition;
-            float radius = math.cmax(transform.WorldScale) * _radius;
+            float radius = math.cmax(math.abs(transform.WorldScale)) * _radius;
 
             RaycastHit2D hit = Physics2D.Raycast(position, transform.Right, radius + distance, mask);
 

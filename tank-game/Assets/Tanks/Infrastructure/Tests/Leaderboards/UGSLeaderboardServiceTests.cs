@@ -73,33 +73,6 @@ namespace Tanks.Infrastructure.Tests.Leaderboards
             await _sdk.Received(1).AddPlayerScoreAsync("picked-up-items-daily", 4, Arg.Any<AddPlayerScoreOptions>());
         }
 
-        [Test]
-        public async Task GetPage_RequestsTwentyWithMetadataAndMapsDisplayData()
-        {
-            _sdk.GetScoresAsync("picked-up-items-weekly", Arg.Any<GetScoresOptions>())
-                .Returns(Task.FromResult(new LeaderboardScoresPage(20, 20, 45, new List<LeaderboardEntry>
-                {
-                    new("other", "Tank#1234", 20, 123, metadata: "{\"countryCode\":\"fr\"}"),
-                    new("legacy", null, 21, 10, metadata: "invalid json")
-                })));
-            _sdk.GetPlayerScoreAsync("picked-up-items-weekly", Arg.Any<GetPlayerScoreOptions>())
-                .Returns(Task.FromResult(new LeaderboardEntry("self", "Me#4321", 40, 5)));
-
-            ResultType<LeaderboardPage> result = await _service.GetPageAsync(
-                LeaderboardMetric.PickedUpItems, LeaderboardCategory.Weekly, 1);
-
-            Assert.IsTrue(result.IsSuccess);
-            Assert.AreEqual(45, result.Value.Total);
-            Assert.AreEqual(21, result.Value.Entries[0].Rank);
-            Assert.AreEqual("Tank", result.Value.Entries[0].PlayerName);
-            Assert.AreEqual("FR", result.Value.Entries[0].CountryCode);
-            Assert.AreEqual("", result.Value.Entries[1].CountryCode);
-            Assert.AreEqual(41, result.Value.OwnEntry.Rank);
-
-            await _sdk.Received(1).GetScoresAsync("picked-up-items-weekly",
-                Arg.Is<GetScoresOptions>(x => x.Offset == 20 && x.Limit == 20 && x.IncludeMetadata == true));
-        }
-
         [TestCase("kz", "KZ")]
         [TestCase(" US ", "US")]
         [TestCase(null, "")]

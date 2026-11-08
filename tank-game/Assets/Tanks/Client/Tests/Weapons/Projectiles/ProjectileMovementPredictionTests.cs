@@ -26,6 +26,7 @@ namespace Tanks.Client.Tests.Weapons.Projectiles
             _behaviour = Substitute.For<IProjectileBehaviour>();
             _healthBehaviour = Substitute.For<IHealthBehaviour>();
             _lagCompensation = Substitute.For<ILagCompensationGateway>();
+            _behaviour.ResolveLaunch(Arg.Any<ITransform>()).Returns((IHealthBehaviour)null);
 
             _component = new ProjectileMovementPrediction(_pool, _lagCompensation);
             _component.Initialize(_behaviour);
@@ -101,10 +102,94 @@ namespace Tanks.Client.Tests.Weapons.Projectiles
 
             _component.Handle(new ProjectileLaunched());
 
+            Assert.That(_component.SimulatedTransform.WorldPosition, Is.EqualTo(new float2(10, 20)));
+            Assert.That(_component.SimulatedTransform.WorldRotation, Is.EqualTo(Angle.FromRadians(2)));
+            _behaviour.Received(1).ResolveLaunch(_component.SimulatedTransform);
+            _behaviour.DidNotReceive().OnDamageableHit(Arg.Any<IHealthBehaviour>());
+            _pool.DidNotReceive().Return(_behaviour.Id);
+
             _behaviour.DidNotReceiveWithAnyArgs().Simulate(
                 Arg.Any<LaunchCallbacks>(),
                 Arg.Any<ITransform>(),
                 Arg.Any<float>());
+        }
+
+        [Test]
+        public void Handle_Launch_CopiesCorrectedPositionBeforeDamageAndReturn()
+        {
+            float2 correctedPosition = new float2(7, 20);
+            _component.Transform.WorldPosition.Returns(new float2(10, 20));
+
+            _behaviour.ResolveLaunch(_component.SimulatedTransform).Returns(_ =>
+            {
+                _component.SimulatedTransform.WorldPosition = correctedPosition;
+                return _healthBehaviour;
+            });
+
+            _component.Handle(new ProjectileLaunched());
+
+            ProjectileId id = _behaviour.Id;
+
+            Received.InOrder(() =>
+            {
+                _component.Transform.WorldPosition = correctedPosition;
+                _behaviour.OnDamageableHit(_healthBehaviour);
+                _pool.Return(id);
+            });
+
+            _behaviour.Received(1).OnDamageableHit(Arg.Any<IHealthBehaviour>());
+            _pool.Received(1).Return(_behaviour.Id);
+            _lagCompensation.Received(1).RequestHitServerRpc(Arg.Is<HitRequest>(x =>
+                x.ProjectileId == _behaviour.Id &&
+                x.TargetId == _healthBehaviour.Entity.Id));
+        }
+
+        [Test]
+        public void Handle_Launch_SeedsReconciliationWithCorrectedPosition()
+        {
+            _behaviour.LifeTime.Returns(10);
+            _component.Tick(10, 0.1f);
+            _component.Transform.WorldPosition.Returns(new float2(10, 20));
+
+            float2 correctedPosition = new float2(0, 20);
+
+            _behaviour.ResolveLaunch(_component.SimulatedTransform).Returns(_ =>
+            {
+                _component.SimulatedTransform.WorldPosition = correctedPosition;
+                return null;
+            });
+
+            _component.Handle(new ProjectileLaunched());
+            _component.Handle(new ProjectileSnapshotFromServer
+            {
+                ServerTick = 10,
+                ServerPosition = correctedPosition
+            });
+
+            _component.Transform.Received(1).WorldPosition = correctedPosition;
+            Assert.That(_component.SimulatedTransform.WorldPosition, Is.EqualTo(correctedPosition));
+        }
+
+        [Test]
+        public void Handle_Launch_AfterPreviousHit_UsesFreshCorrectionWithoutDamage()
+        {
+            _behaviour.ResolveLaunch(_component.SimulatedTransform).Returns(_healthBehaviour);
+            _component.Handle(new ProjectileLaunched());
+
+            float2 correctedPosition = new float2(7, 20);
+
+            _behaviour.ResolveLaunch(_component.SimulatedTransform).Returns(_ =>
+            {
+                _component.SimulatedTransform.WorldPosition = correctedPosition;
+                return null;
+            });
+
+            _component.Handle(new ProjectileLaunched());
+
+            Assert.That(_component.SimulatedTransform.WorldPosition, Is.EqualTo(correctedPosition));
+            _component.Transform.Received().WorldPosition = correctedPosition;
+            _behaviour.Received(1).OnDamageableHit(_healthBehaviour);
+            _pool.Received(1).Return(_behaviour.Id);
         }
 
         [Test]

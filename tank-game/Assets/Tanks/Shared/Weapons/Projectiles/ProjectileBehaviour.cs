@@ -1,4 +1,5 @@
-﻿using System.Runtime.InteropServices;
+﻿using NSubstitute;
+using System.Runtime.InteropServices;
 using Tanks.Shared.Adapters;
 using Tanks.Shared.Entities.Health;
 using Tanks.Shared.Messaging;
@@ -52,6 +53,7 @@ namespace Tanks.Shared.Weapons.Projectiles
 
         void Launch(IWeaponHolderBehaviour owner, in ProjectileId id);
         void Reconcile(ProjectileSnapshotFromServer snapshot);
+        IHealthBehaviour ResolveLaunch(ITransform transform);
         void Simulate(LaunchCallbacks callbacks, ITransform transform, float deltaTime);
 
         void OnRicochet(float2 hitPoint, float2 surfaceNormal);
@@ -106,6 +108,11 @@ namespace Tanks.Shared.Weapons.Projectiles
             Id = id;
             Owner = owner;
             EmitMessage(new ProjectileLaunched { Owner = owner });
+        }
+
+        public IHealthBehaviour ResolveLaunch(ITransform transform)
+        {
+            return _mover.ResolveLaunch(transform);
         }
 
         public void Simulate(LaunchCallbacks callbacks, ITransform transform, float deltaTime)

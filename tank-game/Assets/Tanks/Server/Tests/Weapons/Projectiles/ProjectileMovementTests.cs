@@ -23,10 +23,59 @@ namespace Tanks.Server.Tests.Weapons.Projectiles
             _behaviour = Substitute.For<IProjectileBehaviour>();
             _healthBehaviour = Substitute.For<IHealthBehaviour>();
             _transform = Substitute.For<ITransform>();
+            _behaviour.ResolveLaunch(Arg.Any<ITransform>()).Returns((IHealthBehaviour)null);
 
             _component = new ProjectileMovement(_pool);
             _component.Initialize(_behaviour);
             _component.Transform.Returns(_transform);
+        }
+
+        [Test]
+        public void Launch_WithClearResult_DoesNotDamageOrReturnProjectile()
+        {
+            Launch();
+
+            _behaviour.Received(1).ResolveLaunch(_transform);
+            _behaviour.DidNotReceive().OnDamageableHit(Arg.Any<IHealthBehaviour>());
+            _behaviour.DidNotReceive().OnRicochet(Arg.Any<float2>(), Arg.Any<float2>());
+            _pool.DidNotReceive().Return(_behaviour.Id);
+        }
+
+        [Test]
+        public void Launch_WithTankOverlap_HitsActualTargetAndReturnsOnce()
+        {
+            _transform.IsValid.Returns(true);
+            _behaviour.LifeTime.Returns(10);
+            _behaviour.ResolveLaunch(_transform).Returns(_healthBehaviour);
+
+            Launch();
+            Tick();
+
+            _behaviour.Received(1).OnDamageableHit(_healthBehaviour);
+            _behaviour.Received(1).OnDamageableHit(Arg.Any<IHealthBehaviour>());
+            _pool.Received(1).Return(_behaviour.Id);
+            _behaviour.DidNotReceive().Simulate(
+                Arg.Any<LaunchCallbacks>(), Arg.Any<ITransform>(), Arg.Any<float>());
+            _pool.DidNotReceive().RequestReconciliation(
+                Arg.Any<IProjectileBehaviour>(), Arg.Any<ProjectileSnapshotFromServer>());
+        }
+
+        [Test]
+        public void Launch_AfterPreviousLaunchHit_ResumesSimulation()
+        {
+            _transform.IsValid.Returns(true);
+            _behaviour.LifeTime.Returns(10);
+            _behaviour.ResolveLaunch(_transform).Returns(_healthBehaviour);
+            Launch();
+
+            _behaviour.ResolveLaunch(_transform).Returns((IHealthBehaviour)null);
+            Launch();
+            Tick();
+
+            _behaviour.Received(2).ResolveLaunch(_transform);
+            _behaviour.Received(1).OnDamageableHit(_healthBehaviour);
+            _behaviour.Received(1).Simulate(Arg.Any<LaunchCallbacks>(), _transform, 0.1f);
+            _pool.Received(1).Return(_behaviour.Id);
         }
 
         [Test]
@@ -140,6 +189,9 @@ namespace Tanks.Server.Tests.Weapons.Projectiles
 
             _behaviour.Received(1).OnDamageableHit(_healthBehaviour);
             _pool.Received(1).Return(_behaviour.Id);
+
+            _pool.DidNotReceive().RequestReconciliation(
+                Arg.Any<IProjectileBehaviour>(), Arg.Any<ProjectileSnapshotFromServer>());
         }
 
         private void Launch()

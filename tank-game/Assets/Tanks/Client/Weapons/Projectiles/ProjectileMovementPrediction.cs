@@ -38,8 +38,15 @@ namespace Tanks.Client.Weapons.Projectiles
             SimulatedTransform.WorldRotation = Transform.WorldRotation;
             Behaviour.ElapsedSeconds = 0;
 
-            _reconciliation.Reset(_currentTick, SimulatedTransform);
             _ricochetedCount = 0;
+            _justRicocheted = false;
+
+            IHealthBehaviour target = Behaviour.ResolveLaunch(SimulatedTransform);
+            Transform.WorldPosition = SimulatedTransform.WorldPosition;
+            _reconciliation.Reset(_currentTick, SimulatedTransform);
+
+            if (target == null) return;
+            OnDamageableHit(target);
         }
 
         public void Handle(ProjectileSnapshotFromServer message)

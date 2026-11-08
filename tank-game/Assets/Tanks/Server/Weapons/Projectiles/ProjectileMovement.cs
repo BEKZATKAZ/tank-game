@@ -1,4 +1,5 @@
 ﻿using Tanks.Shared;
+using Tanks.Shared.Entities.Health;
 using Tanks.Shared.Weapons.Projectiles;
 
 namespace Tanks.Server.Weapons.Projectiles
@@ -20,7 +21,14 @@ namespace Tanks.Server.Weapons.Projectiles
         {
             _isActive = true;
             _ricochetedCount = 0;
+
             Behaviour.ElapsedSeconds = 0;
+
+            IHealthBehaviour target = Behaviour.ResolveLaunch(Transform);
+            if (target == null) return;
+
+            Behaviour.OnDamageableHit(target);
+            Done();
         }
 
         protected override void OnTick(int tick, float tickDelta)
@@ -42,6 +50,8 @@ namespace Tanks.Server.Weapons.Projectiles
                 },
                 OnDamageableHit = x => { Behaviour.OnDamageableHit(x); Done(); }
             }, Transform, tickDelta);
+
+            if (_isActive == false) return;
 
             if (_ricochetedCount > Behaviour.MaxRicochetCount)
             {
