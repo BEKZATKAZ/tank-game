@@ -1,4 +1,4 @@
-﻿using Cysharp.Threading.Tasks;
+using Cysharp.Threading.Tasks;
 using FMODUnity;
 using System;
 using UnityEngine;
@@ -17,6 +17,13 @@ namespace Tanks.UI.Menus.Dialogs
         {
             _view.Show();
             _view.ViewModel.ShowConfirmation(code, onYes, onNo);
+            MusicCutoffAsync().Forget();
+        }
+
+        public void ShowPurchaseConfirmation(string item, string currency, int price, Action onYes)
+        {
+            _view.Show();
+            _view.ViewModel.ShowPurchaseConfirmation(item, currency, price, onYes);
             MusicCutoffAsync().Forget();
         }
 

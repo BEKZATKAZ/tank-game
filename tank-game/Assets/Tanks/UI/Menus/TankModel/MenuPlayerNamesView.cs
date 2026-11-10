@@ -8,9 +8,11 @@ namespace Tanks.UI.Menus.TankModel
     [DefaultExecutionOrder(1000)]
     public sealed class MenuPlayerNamesView : ViewBase<MenuPlayerNamesViewModel>
     {
-        private VisualElement _root;
         private readonly List<Label> _labels = new();
+        private readonly List<Label> _levels = new();
+        private readonly List<VisualElement> _nameRows = new();
         private readonly List<VisualElement> _readyChecks = new();
+        private VisualElement _root;
 
         protected override VisualElement GetRootElement() => _root;
 
@@ -23,6 +25,8 @@ namespace Tanks.UI.Menus.TankModel
         {
             _root.Clear();
             _labels.Clear();
+            _levels.Clear();
+            _nameRows.Clear();
             _readyChecks.Clear();
         }
 
@@ -36,7 +40,9 @@ namespace Tanks.UI.Menus.TankModel
 
             while (_labels.Count > ViewModel.Entries.Count)
             {
-                _labels[^1].RemoveFromHierarchy();
+                _nameRows[^1].RemoveFromHierarchy();
+                _nameRows.RemoveAt(_nameRows.Count - 1);
+                _levels.RemoveAt(_levels.Count - 1);
                 _labels.RemoveAt(_labels.Count - 1);
                 _readyChecks[^1].RemoveFromHierarchy();
                 _readyChecks.RemoveAt(_readyChecks.Count - 1);
@@ -52,7 +58,7 @@ namespace Tanks.UI.Menus.TankModel
                         enableRichText = false
                     };
 
-                    VisualElement check = new VisualElement { pickingMode = PickingMode.Ignore };
+                    VisualElement check = new() { pickingMode = PickingMode.Ignore };
                     check.AddToClassList("player-ready-check");
                     check.generateVisualContent += context =>
                     {
@@ -67,8 +73,16 @@ namespace Tanks.UI.Menus.TankModel
                     };
 
                     created.AddToClassList("player-name");
-                    _root.Add(created);
                     _root.Add(check);
+                    Label createdLevel = new Label { pickingMode = PickingMode.Ignore };
+                    createdLevel.AddToClassList("menu-player-level");
+                    VisualElement row = new() { pickingMode = PickingMode.Ignore };
+                    row.AddToClassList("menu-player-name-row");
+                    row.Add(createdLevel);
+                    row.Add(created);
+                    _root.Add(row);
+                    _nameRows.Add(row);
+                    _levels.Add(createdLevel);
                     _labels.Add(created);
                     _readyChecks.Add(check);
                 }
@@ -78,15 +92,19 @@ namespace Tanks.UI.Menus.TankModel
                 VisualElement readyCheck = _readyChecks[i];
                 readyCheck.style.display = entry.IsVisible && ViewModel.IsReady(i)
                     ? DisplayStyle.Flex : DisplayStyle.None;
-                DisplayStyle display = entry.IsVisible ? DisplayStyle.Flex : DisplayStyle.None;
+                DisplayStyle display = entry.IsVisible
+                    ? DisplayStyle.Flex : DisplayStyle.None;
 
-                if (label.style.display.value != display) label.style.display = display;
+                VisualElement nameRow = _nameRows[i];
+                if (nameRow.style.display.value != display) nameRow.style.display = display;
                 if (entry.IsVisible == false) continue;
                 if (label.text != entry.DisplayName) label.text = entry.DisplayName;
 
                 Vector2 local = ToLocalPosition(entry.ScreenPosition);
-                label.style.left = local.x;
-                label.style.top = local.y;
+                nameRow.style.left = local.x;
+                nameRow.style.top = local.y;
+                Label level = _levels[i];
+                level.text = ViewModel.GetLevel(i).ToString();
 
                 if (ViewModel.IsReady(i))
                 {
@@ -99,7 +117,9 @@ namespace Tanks.UI.Menus.TankModel
 
         private Vector2 ToLocalPosition(Vector2 position)
         {
-            Vector2 screen = Vector2.Scale(position, new Vector2(Screen.width, Screen.height));
+            Vector2 screen = Vector2.Scale(position,
+                new Vector2(Screen.width, Screen.height));
+
             Vector2 panel = RuntimePanelUtils.ScreenToPanel(_root.panel, screen);
             return _root.WorldToLocal(panel);
         }

@@ -2,6 +2,11 @@
     font-size: 22px;
 }
 
+.reward-card #RewardTitle {
+    white-space: normal;
+    flex-grow: 1;
+}
+
 .item-browser-section {
     flex-grow: 1;
     align-items: center;
@@ -301,6 +306,7 @@
     justify-content: center;
     align-self: center;
     min-width: 400px;
+    padding-bottom: 40px;
 }
 
 .main-buttons * {
@@ -318,9 +324,12 @@
 }
 
 .notice {
+    position: absolute;
     opacity: 0.2;
-    top: 5px;
-    font-size: 22px;
+    bottom: 0;
+    left: 0;
+    margin: 15px 30px;
+    font-size: 20px;
 }
 
 .settings-section {
@@ -627,4 +636,282 @@
     width: 100%;
     height: 100%;
     position: absolute;
+}
+
+.menu-balances {
+    position: absolute;
+    right: 24px;
+    top: 20px;
+    align-items: flex-end;
+}
+
+.balance-row {
+    flex-direction: row;
+}
+
+.currency-box {
+    flex-direction: row;
+    align-items: center;
+    padding: 12px 20px;
+    margin-left: 12px;
+    min-width: 220px;
+}
+
+.currency-box > .unity-label {
+    font-size: 38px;
+}
+
+.currency-icon {
+    width: 48px;
+    height: 48px;
+    margin-right: 16px;
+    flex-shrink: 0;
+    -unity-background-scale-mode: scale-to-fit;
+    -unity-background-image-tint-color: white;
+}
+
+.currency-icon--parts,
+.balance--parts .currency-icon {
+    background-image: url("project://database/Assets/Tanks/Art/UI/Currency_SpareParts.png?fileID=21300000&guid=b48e5d3accfca7b4d897682a2d9a1621&type=3#Currency_SpareParts");
+}
+
+.currency-icon--pride,
+.balance--pride .currency-icon {
+    background-image: url("project://database/Assets/Tanks/Art/UI/Currency_Pride.png?fileID=21300000&guid=2f3f2e60e0041804ea2557bace082df8&type=3#Currency_Pride");
+}
+
+.currency-tooltip {
+    position: absolute;
+    top: 100%;
+    right: 0;
+    width: 450px;
+    margin-top: 12px;
+    padding: 20px 30px;
+}
+
+.currency-tooltip__title {
+    -unity-text-align: upper-left;
+    font-size: 28px;
+    margin-bottom: 12px;
+}
+
+.currency-tooltip__description {
+    white-space: normal;
+    -unity-text-align: upper-left;
+    margin-bottom: 6px;
+}
+
+.store-section {
+    position: absolute;
+    left: 32px;
+    right: 32px;
+    top: 100px;
+    bottom: 16px;
+}
+
+.store-header {
+    height: 64px;
+    flex-shrink: 0;
+    flex-direction: row;
+    align-items: center;
+}
+
+.store-title {
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    font-size: 40px;
+}
+
+.rewards-row {
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 80px;
+    flex-direction: row;
+    justify-content: center;
+}
+
+.reward-card {
+    width: 340px;
+    padding: 16px;
+    margin-left: 8px;
+    margin-right: 8px;
+}
+
+.reward-timer {
+    margin-top: 8px;
+    margin-bottom: 12px;
+    font-size: 32px;
+}
+
+.claim-button {
+    -unity-background-image-tint-color: rgb(190, 30, 30);
+    margin-top: auto;
+}
+
+.claim-button:disabled {
+    -unity-background-image-tint-color: rgb(90, 90, 90);
+    color: rgb(170, 170, 170);
+}
+
+.claim-button.menu-highlighted:enabled {
+    -unity-background-image-tint-color: rgb(255, 50, 50);
+    color: white;
+}
+
+.store-cosmetics {
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+}
+
+.cosmetic-tabs {
+    flex-direction: row;
+    justify-content: center;
+    margin-bottom: 12px;
+}
+
+.cosmetic-tabs .unity-button {
+    padding: 8px 20px;
+    margin-left: 8px;
+    margin-right: 8px;
+    font-size: 30px;
+}
+
+.cosmetic-tabs .selected-tab {
+    -unity-background-image-tint-color: rgb(170, 150, 50);
+}
+
+.cosmetic-scroll {
+    height: 304px;
+    flex-grow: 0;
+    flex-shrink: 0;
+}
+
+.cosmetic-grid {
+    height: 280px;
+    flex-shrink: 0;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    align-items: stretch;
+}
+
+.cosmetic-scroll .unity-scroll-view__content-container {
+    flex-direction: row;
+    align-items: flex-start;
+}
+
+.cosmetic-card {
+    width: 280px;
+    min-width: 280px;
+    height: 280px;
+    flex-shrink: 0;
+    padding: 12px;
+    margin-left: 6px;
+    margin-right: 6px;
+    background-color: rgba(0, 0, 0, 0);
+}
+
+.cosmetic-card .unity-label {
+    white-space: nowrap;
+    letter-spacing: 0;
+    word-spacing: 0;
+}
+
+.cosmetic-title {
+    height: 34px;
+    -unity-text-align: middle-center;
+    font-size: 30px;
+}
+
+.cosmetic-preview {
+    flex-grow: 1;
+    min-height: 80px;
+    margin-top: 8px;
+    margin-bottom: 12px;
+}
+
+.cosmetic-actions {
+    min-height: 104px;
+    flex-shrink: 0;
+    justify-content: flex-end;
+    margin-top: auto;
+}
+
+.cosmetic-card .unity-button {
+    filter: none;
+    min-height: 48px;
+    padding: 8px 10px;
+    margin: 0;
+    flex-shrink: 0;
+    font-size: 26px;
+    letter-spacing: 0;
+    word-spacing: 0;
+    white-space: nowrap;
+}
+
+.purchase-column {
+    flex-direction: column;
+    flex-wrap: nowrap;
+    flex-shrink: 0;
+}
+
+.cosmetic-card .purchase-button--spaced {
+    margin-top: 4px;
+}
+
+.cosmetic-card .purchase-button {
+    flex-grow: 1;
+    flex-basis: auto;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+}
+
+.purchase-button .currency-icon {
+    width: 36px;
+    height: 36px;
+    min-width: 36px;
+    flex-shrink: 0;
+    margin-right: 8px;
+}
+
+.cosmetic-card .purchase-price {
+    flex-shrink: 0;
+    font-size: 26px;
+    white-space: nowrap;
+}
+
+.cosmetic-card .purchase-original-price {
+    flex-shrink: 0;
+    margin-right: 6px;
+    font-size: 18px;
+    color: var(--text-secondary-color);
+    white-space: nowrap;
+}
+
+.purchase-button.menu-highlighted:enabled .purchase-price {
+    color: black;
+}
+
+.cosmetic-card #Discount {
+    position: absolute;
+    top: 12px;
+    right: 12px;
+    font-size: 22px;
+    color: yellow;
+}
+
+.catalog-error {
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+}
+
+.catalog-error .unity-label {
+    white-space: normal;
 }

@@ -98,6 +98,54 @@ MonoBehaviour:
     m_Localized: "Saisissez un message contenant entre 1 et 500 caract\xE8res."
     m_Metadata:
       m_Items: []
+  - m_Id: 44000000000000000
+    m_Localized: "Cette apparence est d\u00e9j\u00e0 d\u00e9bloqu\u00e9e."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 44000000000000001
+    m_Localized: "Vous ne disposez pas de suffisamment de monnaie."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 44000000000000002
+    m_Localized: "D\u00e9bloquez cette apparence avant de l\u2019\u00e9quiper."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 44000000000000003
+    m_Localized: "Cette r\u00e9compense n\u2019est pas encore disponible."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 44000000000000004
+    m_Localized: "Cet article est indisponible. Actualisez la boutique."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 44000000000000005
+    m_Localized: "Cette apparence n\u2019est plus disponible."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 44000000000000006
+    m_Localized: "Cette apparence ne peut pas \u00eatre achet\u00e9e."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 44000000000000007
+    m_Localized: "Impossible de mettre \u00e0 jour les donn\u00e9es du joueur. R\u00e9essayez."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 44000000000000008
+    m_Localized: "Reconnectez-vous pour utiliser la boutique."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 44000000000000009
+    m_Localized: "Le prix a chang\u00e9. V\u00e9rifiez le nouveau prix avant d\u2019acheter."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 45000000000000000
+    m_Localized: "Les donn\u0413\u00a9es du joueur ont chang\u0413\u00a9. R\u0413\u00a9essayez."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 45000000000000001
+    m_Localized: "Trop de requ\u0413\u0404tes. R\u0413\u00a9essayez dans un instant."
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds: []

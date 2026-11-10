@@ -1,4 +1,4 @@
-﻿using Tanks.UI.Menus.Sections;
+using Tanks.UI.Menus.Sections;
 using UnityEngine.UIElements;
 
 namespace Tanks.UI.Menus.Main
@@ -16,6 +16,7 @@ namespace Tanks.UI.Menus.Main
             _root.Q<Button>("QuitButton").clicked += OnQuitClicked;
 
             BindButton(_root.Q<Button>("PlayButton"), MenuSectionType.Play);
+            BindButton(_root.Q<Button>("StoreButton"), MenuSectionType.Store);
             BindButton(_root.Q<Button>("SettingsButton"), MenuSectionType.Settings);
             BindButton(_root.Q<Button>("ExtrasButton"), MenuSectionType.Extras);
         }

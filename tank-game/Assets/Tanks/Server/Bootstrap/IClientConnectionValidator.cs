@@ -1,4 +1,4 @@
-﻿using Newtonsoft.Json;
+using Newtonsoft.Json;
 using System.Text;
 using Tanks.Core;
 using Tanks.Shared.Bootstrap;
@@ -40,6 +40,12 @@ namespace Tanks.Server.Bootstrap
             if (payload.DisplayName.Length > 25)
             {
                 return Result.Failure<ClientConnectionPayload>("username-too-long");
+            }
+
+            if (Encoding.UTF8.GetByteCount(payload.Equipped.Body ?? "") > 61 ||
+                Encoding.UTF8.GetByteCount(payload.Equipped.Turret ?? "") > 61)
+            {
+                return Result.Failure<ClientConnectionPayload>("invalid-cosmetics");
             }
 
             return Result.Success(payload);

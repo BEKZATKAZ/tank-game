@@ -1,4 +1,4 @@
-﻿using Unity.Collections;
+using Unity.Collections;
 using Unity.Netcode;
 
 namespace Tanks.Shared.Teams
@@ -8,5 +8,7 @@ namespace Tanks.Shared.Teams
         public TeamId BelongsTo;
         public ulong OwnerPlayerId;
         public FixedString128Bytes DisplayName;
+        public FixedString64Bytes Body;
+        public FixedString64Bytes Turret;
     }
 }

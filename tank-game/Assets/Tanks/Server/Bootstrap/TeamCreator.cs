@@ -1,4 +1,4 @@
-﻿using Tanks.Shared;
+using Tanks.Shared;
 using Tanks.Shared.Bootstrap;
 using Tanks.Shared.Teams;
 
@@ -27,17 +27,20 @@ namespace Tanks.Server.Bootstrap
 
             foreach (ulong playerId in _clientService.GetConnectedClientIds())
             {
-                string displayName = _clientService.GetClientData(playerId).DisplayName;
+                ClientData data = _clientService.GetClientData(playerId);
+                string displayName = data.DisplayName;
                 TeamId id = new TeamId((ushort)(playerId + 100));
 
                 _teamService.CreateTeamEveryoneRpc(id);
-                _teamService.GetTeam(id).AddPlayer(playerId, displayName);
+                _teamService.GetTeam(id).AddPlayer(playerId, displayName, data.Equipped);
 
                 _teamService.AddPlayerClientRpc(new AddPlayerPayload
                 {
                     BelongsTo = id,
                     OwnerPlayerId = playerId,
-                    DisplayName = displayName
+                    DisplayName = displayName,
+                    Body = data.Equipped.Body ?? "v3-body",
+                    Turret = data.Equipped.Turret ?? "v3-turret"
                 });
             }
         }

@@ -9,6 +9,8 @@ namespace Tanks.UI.Gameplay.Pause
             _pause = pause;
         }
 
+        public MenuSectionType Current { get; private set; }
+
         private readonly PauseMenuViewModel _pause;
 
         public void OpenSection(MenuSectionType type, bool instant = false)

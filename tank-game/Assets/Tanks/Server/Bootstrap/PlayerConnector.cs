@@ -1,4 +1,4 @@
-﻿using Tanks.Core;
+using Tanks.Core;
 using Tanks.Core.Lobbies.Sessions;
 using Tanks.Shared;
 using Tanks.Shared.Bootstrap;
@@ -66,7 +66,7 @@ namespace Tanks.Server.Bootstrap
 
             if (result.IsSuccess)
             {
-                ClientData data = new ClientData(result.Value.DisplayName);
+                ClientData data = new ClientData(result.Value.DisplayName, result.Value.Equipped);
                 _clientService.AddClient(request.ClientNetworkId, data);
 
                 response.Approved = true;

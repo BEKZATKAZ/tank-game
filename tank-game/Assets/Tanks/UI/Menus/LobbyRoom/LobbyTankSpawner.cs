@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using Tanks.Core;
+using Tanks.Core.Players;
 using Tanks.Core.Lobbies;
 using Tanks.UI.TankModel;
 using UnityEngine;
@@ -12,6 +13,7 @@ namespace Tanks.UI.Menus.LobbyRoom
         [Inject] private readonly ITankModelService _tankModelService;
         [Inject] private readonly ILobbyService _lobbyService;
         [Inject] private readonly IAuthService _auth;
+        [Inject] private readonly ILocalPlayerService _player;
 
         private readonly Dictionary<string, int> _tankIndices = new();
         private readonly Stack<int> _availableIndices = new();
@@ -21,18 +23,30 @@ namespace Tanks.UI.Menus.LobbyRoom
         private void Start()
         {
             _auth.CurrentProfile.DisplayName.Bind(OnDisplayNameChanged);
+            _player.LocalPlayer.Revision.Bind(OnPlayerDataChanged);
             _lobbyService.CurrentLobbyState.Players.Bind(OnPlayersChanged);
         }
 
         private void OnDestroy()
         {
             _auth.CurrentProfile.DisplayName.Unbind(OnDisplayNameChanged);
+            _player.LocalPlayer.Revision.Unbind(OnPlayerDataChanged);
             _lobbyService.CurrentLobbyState.Players.Unbind(OnPlayersChanged);
         }
 
         private void OnDisplayNameChanged(string displayName)
         {
-            _tankModelService.SetDisplayName(0, displayName);
+            _tankModelService.SetPlayerData(0, new PlayerDisplayData
+            {
+                DisplayName = displayName,
+                Level = _player.LocalPlayer.Level.Value.Value,
+                Equipped = _player.LocalPlayer.Equipped.Value
+            });
+        }
+
+        private void OnPlayerDataChanged(int revision)
+        {
+            OnDisplayNameChanged(_auth.CurrentProfile.DisplayName.Value);
         }
 
         private void OnPlayersChanged(IDictionary<string, LobbyPlayerState> players)
@@ -81,7 +95,7 @@ namespace Tanks.UI.Menus.LobbyRoom
             {
                 if (player.UserId == _auth.CurrentProfile.UserId.Value)
                 {
-                    _tankModelService.SetDisplayName(0, player.DisplayName);
+                    OnDisplayNameChanged(player.DisplayName);
                     _tankModelService.SetReady(0, player.IsReady);
                     continue;
                 }
@@ -95,7 +109,7 @@ namespace Tanks.UI.Menus.LobbyRoom
                     _tankModelService.DriveByCurve(index, index, instant);
                 }
 
-                _tankModelService.SetDisplayName(index, player.DisplayName);
+                _tankModelService.SetPlayerData(index, player.DisplayData);
                 _tankModelService.SetReady(index, player.IsReady);
             }
         }

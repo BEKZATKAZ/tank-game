@@ -1,11 +1,13 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
+using Tanks.Core.Players;
+using Tanks.Client.Player;
 using Tanks.Client.Rendering;
-using Tanks.Shared.Adapters;
 using Tanks.UI.TankModel;
 using Unity.Mathematics;
 using UnityEngine;
 using UnityEngine.Splines;
 using VContainer;
+using Tanks.UI.Menus.Sections;
 
 namespace Tanks.UI.Menus.TankModel
 {
@@ -22,12 +24,8 @@ namespace Tanks.UI.Menus.TankModel
         [SerializeField] private float _movementSpeed = 10;
         [SerializeField] private float _backgroundSizeUnits = 128;
         [SerializeField] private Transform _background;
-        [SerializeField] private Transform _mainCameraCenter;
-        [SerializeField] private Transform _lobbyCameraCenter;
         [SerializeField] private Transform _tankModelPrefab;
         [SerializeField] private SplineContainer _splineContainer;
-
-        [Inject] private readonly ICameraFollowService _cameraFollow;
 
         private readonly List<CurveEntry> _animations = new();
 
@@ -35,15 +33,42 @@ namespace Tanks.UI.Menus.TankModel
         public bool IsDrivingInPlace => _targetSpeed > 0;
 
         private readonly List<TankModelEntry> _models = new();
+        private readonly Dictionary<int, EquippedCosmetics> _cosmeticPreviews = new();
         private Transform[] _tankModels;
         private float3 _splineOffset;
 
         private float _targetSpeed;
         private float _currentSpeed;
 
-        public void SetDisplayName(int tankIndex, string displayName)
+        public void SetPlayerData(int tankIndex, PlayerDisplayData data)
         {
-            _models[tankIndex].DisplayName = displayName ?? "";
+            _models[tankIndex].DisplayName = data.DisplayName ?? "";
+            _models[tankIndex].Level = data.Level;
+            _models[tankIndex].Equipped = data.Equipped;
+            ApplyCosmetics(tankIndex);
+        }
+
+        public void PreviewCosmetics(int tankIndex, EquippedCosmetics cosmetics)
+        {
+            _cosmeticPreviews[tankIndex] = cosmetics;
+            ApplyCosmetics(tankIndex);
+        }
+
+        public void ClearCosmeticPreview(int tankIndex)
+        {
+            _cosmeticPreviews.Remove(tankIndex);
+            ApplyCosmetics(tankIndex);
+        }
+
+        private void ApplyCosmetics(int tankIndex)
+        {
+            if (_tankModels == null || tankIndex < 0 || tankIndex >= _tankModels.Length ||
+                _tankModels[tankIndex] == false || tankIndex >= _models.Count) return;
+
+            EquippedCosmetics cosmetics = _cosmeticPreviews.TryGetValue(tankIndex, out var preview)
+                ? preview : _models[tankIndex].Equipped;
+
+            _tankModels[tankIndex].GetComponent<CosmeticApplier>()?.Apply(cosmetics);
         }
 
         public void SetReady(int tankIndex, bool ready)
@@ -53,6 +78,7 @@ namespace Tanks.UI.Menus.TankModel
 
         public void Return(int tankIndex)
         {
+            ClearCosmeticPreview(tankIndex);
             SetReady(tankIndex, false);
             Transform model = _tankModels[tankIndex];
 
@@ -65,23 +91,17 @@ namespace Tanks.UI.Menus.TankModel
 
             if (tankIndex == 0)
             {
-                _cameraFollow.SetFollowTarget(new UnityTransform(_mainCameraCenter), instant: false);
                 model.SetPositionAndRotation(new Vector3(0, -8.5f), Quaternion.identity);
                 return;
             }
 
-            SetDisplayName(tankIndex, "");
+            SetPlayerData(tankIndex, default);
             model.position = new Vector3(-999, -999);
             model.gameObject.SetActive(false);
         }
 
         public void DriveByCurve(int tankIndex, int curveIndex, bool instant)
         {
-            if (instant == false)
-            {
-                _cameraFollow.SetFollowTarget(new UnityTransform(_lobbyCameraCenter), instant: false);
-            }
-
             Transform model = _tankModels[tankIndex];
             model.gameObject.SetActive(true);
 
@@ -145,13 +165,6 @@ namespace Tanks.UI.Menus.TankModel
             _tankModels[0].position = new Vector3(0, -8.5f);
             _tankModels[0].gameObject.SetActive(true);
             _splineOffset = _splineContainer.transform.position;
-        }
-
-        private void Start()
-        {
-            _cameraFollow.SetBounds(new Bounds(default, new Vector3(256, 256)));
-            _cameraFollow.SetFollowTarget(
-                new UnityTransform(_mainCameraCenter), instant: true);
         }
 
         private void Update()

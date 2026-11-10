@@ -9,7 +9,7 @@ namespace Tanks.UI.Menus.TankModel
 {
     public sealed class MenuPlayerNamesViewModel : IViewModel
     {
-        private const float NameHeight = 1.4f;
+        private const float NameHeight = 1.1f;
 
         public MenuPlayerNamesViewModel(ITankModelService tankModels, ICameraMainService camera)
         {
@@ -22,6 +22,8 @@ namespace Tanks.UI.Menus.TankModel
         private readonly ITankModelService _tankModels;
         private readonly ICameraMainService _camera;
         private readonly List<PlayerNameEntry> _entries = new();
+
+        public int GetLevel(int index) => _tankModels.Models[index].Level;
 
         public bool IsReady(int index) => _tankModels.Models[index].IsReady;
 

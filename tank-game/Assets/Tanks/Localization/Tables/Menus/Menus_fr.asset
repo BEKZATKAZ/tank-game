@@ -404,6 +404,96 @@ MonoBehaviour:
     m_Localized: "Non classé"
     m_Metadata:
       m_Items: []
+  - m_Id: 43000000000000000
+    m_Localized: "BOUTIQUE"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 43000000000000001
+    m_Localized: "RETOUR"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 43000000000000002
+    m_Localized: "CH\u00c2SSIS"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 43000000000000003
+    m_Localized: "TOURELLES"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 43000000000000004
+    m_Localized: "\u00c9QUIPER"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 43000000000000005
+    m_Localized: "\u00c9QUIP\u00c9"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 43000000000000006
+    m_Localized: "Noir"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 43000000000000007
+    m_Localized: "Chargement des apparences..."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 43000000000000008
+    m_Localized: "Impossible de charger les apparences."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 43000000000000009
+    m_Localized: "Impossible de charger les donn\u00e9es du joueur."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 43000000000000010
+    m_Localized: "R\u00c9ESSAYER"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 43000000000000011
+    m_Localized: "QUITTER"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 43000000000000012
+    m_Localized: "CONFIRMER L\u2019ACHAT"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 43000000000000013
+    m_Localized: "D\u00e9bloquer {item} pour {price} {currency} ?"
+    m_Metadata:
+      m_Items:
+      - rid: 5824281740147687470
+  - m_Id: 43000000000000014
+    m_Localized: "R\u00c9COMPENSE DE TROIS HEURES"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 43000000000000015
+    m_Localized: "R\u00c9COMPENSE QUOTIDIENNE"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 43000000000000016
+    m_Localized: "{hour}h {minutes}m {seconds}s"
+    m_Metadata:
+      m_Items:
+      - rid: 5824281740147687470
+  - m_Id: 43000000000000017
+    m_Localized: "R\u00c9CUP\u00c9RER"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 43000000000000018
+    m_Localized: "Pi\u00e8ces"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 43000000000000019
+    m_Localized: "Obtenues en <b><color=#0f0>\u00e9liminant des joueurs</color></b>."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 43000000000000020
+    m_Localized: "Points de fiert\u00e9"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 43000000000000021
+    m_Localized: "Obtenus gr\u00e2ce aux <b><color=#ff0>victoires</color></b> et aux <b><color=#ff0>manches gagn\u00e9es</color></b>."
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:
@@ -417,3 +507,5 @@ MonoBehaviour:
         - id: 5429100515123200
         - id: 5429284712177664
         - id: 6608482260705280
+        - id: 43000000000000016
+        - id: 43000000000000013

@@ -1,6 +1,7 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using Tanks.Utils;
+using Tanks.Core.Players;
 
 namespace Tanks.Shared.Teams
 {
@@ -23,9 +24,9 @@ namespace Tanks.Shared.Teams
             return _players[ownerClientId];
         }
 
-        public PlayerState AddPlayer(ulong ownerClientId, string displayName)
+        public PlayerState AddPlayer(ulong ownerClientId, string displayName, EquippedCosmetics equipped = default)
         {
-            PlayerState state = new PlayerState(ownerClientId, displayName, Id);
+            PlayerState state = new PlayerState(ownerClientId, displayName, Id, equipped);
             _players.Add(ownerClientId, state);
 
             PlayerJoined?.Invoke(state);

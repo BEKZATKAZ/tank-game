@@ -5,6 +5,7 @@ using System.Threading;
 using Tanks.Core.Lobbies.Sessions;
 using Tanks.Core.Lobbies.Sessions.DTOs;
 using Tanks.Utils;
+using Tanks.Core.Players;
 
 namespace Tanks.Core.Lobbies
 {
@@ -12,11 +13,35 @@ namespace Tanks.Core.Lobbies
     {
         public readonly string DisplayName
         {
-            get => Data.TryGetValue("username", out string username) ? username : UserId;
+            get => Data != null && Data.TryGetValue("username", out string username) ? username : UserId;
         }
 
         public readonly bool IsReady => Data != null &&
             Data.TryGetValue("ready", out string ready) && bool.TryParse(ready, out bool value) && value;
+
+        public readonly PlayerDisplayData DisplayData
+        {
+            get
+            {
+                int level = 0;
+                string body = "v3-body";
+                string turret = "v3-turret";
+
+                if (Data != null)
+                {
+                    if (Data.TryGetValue("level", out string value)) int.TryParse(value, out level);
+                    if (Data.TryGetValue("body", out string bodyId)) body = bodyId;
+                    if (Data.TryGetValue("turret", out string turretId)) turret = turretId;
+                }
+
+                return new PlayerDisplayData
+                {
+                    DisplayName = DisplayName,
+                    Level = Math.Max(0, level),
+                    Equipped = new EquippedCosmetics { Body = body, Turret = turret }
+                };
+            }
+        }
 
         public string UserId;
         public IDictionary<string, string> Data;

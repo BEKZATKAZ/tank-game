@@ -54,3 +54,12 @@
     white-space: normal;
     -unity-text-align: upper-center;
 }
+
+.menu-load-error {
+    position: absolute;
+    left: 20%;
+    right: 20%;
+    top: 45%;
+    padding: 24px;
+    background-color: rgb(24, 24, 24);
+}

@@ -1,9 +1,10 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
 using Tanks.Core;
+using Tanks.Core.Players;
 using Tanks.Core.Common;
 using Tanks.Core.Lobbies;
 using Tanks.Core.Lobbies.Payloads;
@@ -18,10 +19,12 @@ namespace Tanks.Infrastructure.Lobbies
 {
     public sealed class UGSLobbyService : Core.Lobbies.ILobbyService, IDisposable
     {
-        public UGSLobbyService(IAuthService auth, ISessionSettingsService settings)
+        public UGSLobbyService(IAuthService auth, ISessionSettingsService settings, ILocalPlayerService player = null)
         {
             _auth = auth;
             _settings = settings;
+            _player = player;
+            _player?.LocalPlayer.Revision.Bind(OnLocalPlayerChanged);
 
             CurrentLobbyState.Id.Bind(OnLobbyIdChanged);
             Application.quitting += Dispose;
@@ -35,6 +38,7 @@ namespace Tanks.Infrastructure.Lobbies
 
         private Unity.Services.Lobbies.ILobbyService Service => _service ?? LobbyService.Instance;
 
+        private readonly ILocalPlayerService _player;
         private readonly IAuthService _auth;
         private readonly ISessionSettingsService _settings;
         private readonly Func<TimeSpan, CancellationToken, Task> _heartbeatDelay = Task.Delay;
@@ -57,6 +61,7 @@ namespace Tanks.Infrastructure.Lobbies
             Application.quitting -= Dispose;
             CurrentLobbyState.Id.Unbind(OnLobbyIdChanged);
             StopHeartbeat();
+            _player?.LocalPlayer.Revision.Unbind(OnLocalPlayerChanged);
         }
 
         private void OnLobbyIdChanged(LobbyId id)
@@ -209,16 +214,50 @@ namespace Tanks.Infrastructure.Lobbies
             }
         }
 
+        private async void OnLocalPlayerChanged(int revision)
+        {
+            string lobbyId = CurrentLobbyState.Id.Value.Value;
+            if (_disposed || string.IsNullOrEmpty(lobbyId)) return;
+            int generation = _generation;
+
+            try
+            {
+                var updated = await Service.UpdatePlayerAsync(lobbyId, _auth.CurrentProfile.UserId.Value,
+                    new UpdatePlayerOptions { Data = CreateAppearanceData() });
+
+                if (_disposed || generation != _generation) return;
+
+                if (_lobby == null || updated.Version >= _lobby.Version)
+                {
+                    _lobby = updated;
+                    UGSLobbyMapper.MapLobby(updated, CurrentLobbyState);
+                }
+            }
+            catch (Exception ex) { Debug.LogException(ex); }
+        }
+
+        private Dictionary<string, PlayerDataObject> CreateAppearanceData()
+        {
+            EquippedCosmetics equipped = _player?.LocalPlayer.Equipped.Value ?? EquippedCosmetics.Default;
+
+            return new()
+            {
+                ["level"] = new(VisibilityOptions.Member, (_player?.LocalPlayer.Level.Value.Value ?? 0).ToString()),
+                ["body"] = new(VisibilityOptions.Member, equipped.Body),
+                ["turret"] = new(VisibilityOptions.Member, equipped.Turret)
+            };
+        }
+
         private Player CreatePlayerData()
         {
             PlayerProfileState profile = _auth.CurrentProfile;
 
-            return new Player(id: profile.UserId.Value, data: new()
-            {
-                ["username"] = new(VisibilityOptions.Member, profile.DisplayName.Value),
-                ["ready"] = new(VisibilityOptions.Member, bool.FalseString),
-                ["LastMessage"] = new(VisibilityOptions.Member, "")
-            });
+            var data = CreateAppearanceData();
+            data["username"] = new(VisibilityOptions.Member, profile.DisplayName.Value);
+            data["ready"] = new(VisibilityOptions.Member, bool.FalseString);
+            data["LastMessage"] = new(VisibilityOptions.Member, "");
+            return new Player(id: profile.UserId.Value, data: data);
+
         }
 
         public Task<ResultType<IEnumerable<LobbySearchState>>> FindLobbiesAsync(string name = null)

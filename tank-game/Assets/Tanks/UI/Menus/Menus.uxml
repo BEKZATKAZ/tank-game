@@ -3,11 +3,17 @@
     <Style src="project://database/Assets/Tanks/UI/Menus/MainMenu.uss?fileID=7433441132597879392&amp;guid=76ab9fd928853eb4c9b47cc8f03d4988&amp;type=3#MainMenu"/>
     <Style src="project://database/Assets/Tanks/UI/PlayerNames.uss?fileID=7433441132597879392&amp;guid=d709c0e2e2f94a7b81703dd81f41caf6&amp;type=3#PlayerNames"/>
     <ui:VisualElement name="MenuPlayerNames" picking-mode="Ignore" class="player-names"/>
-    <ui:VisualElement name="MainSection" picking-mode="Ignore" class="main-buttons" style="display: none;">
+    <Tanks.UI.Elements.CopyrightNotice name="Notice"/>
+    <ui:VisualElement name="MainSection" picking-mode="Ignore" class="main-buttons" style="display: flex;">
         <ui:Label text="T.A.N.K.S." name="GameTitle" class="game-title"/>
         <Tanks.UI.Elements.CustomButton name="PlayButton" click-sound-path="event:/UI/Click_1">
             <Bindings>
                 <UnityEngine.Localization.LocalizedString property="text" table="GUID:34510603f8b6d1a44b1b2ffa9aa551c9" entry="Id(33761256270159872)"/>
+            </Bindings>
+        </Tanks.UI.Elements.CustomButton>
+        <Tanks.UI.Elements.CustomButton name="StoreButton" click-sound-path="event:/UI/Click_1">
+            <Bindings>
+                <UnityEngine.Localization.LocalizedString property="text" table="Menus" entry="menu.store.title"/>
             </Bindings>
         </Tanks.UI.Elements.CustomButton>
         <Tanks.UI.Elements.CustomButton name="SettingsButton" click-sound-path="event:/UI/Click_1">
@@ -25,7 +31,6 @@
                 <UnityEngine.Localization.LocalizedString property="text" table="GUID:34510603f8b6d1a44b1b2ffa9aa551c9" entry="Id(27659821056)"/>
             </Bindings>
         </Tanks.UI.Elements.CustomButton>
-        <Tanks.UI.Elements.CopyrightNotice name="Notice"/>
     </ui:VisualElement>
     <ui:VisualElement name="PlaySection" picking-mode="Ignore" class="main-buttons" style="display: none;">
         <ui:Label name="GameTitle" class="game-title">
@@ -53,7 +58,6 @@
                 <UnityEngine.Localization.LocalizedString property="text" table="GUID:34510603f8b6d1a44b1b2ffa9aa551c9" entry="Id(33779992972713984)"/>
             </Bindings>
         </Tanks.UI.Elements.CustomButton>
-        <Tanks.UI.Elements.CopyrightNotice name="Notice"/>
     </ui:VisualElement>
     <ui:VisualElement name="SettingsSection" class="settings-section" style="display: none;">
         <ui:VisualElement name="Settings" class="settings">
@@ -149,39 +153,6 @@
                 <UnityEngine.Localization.LocalizedString property="text" table="GUID:34510603f8b6d1a44b1b2ffa9aa551c9" entry="Id(33779992972713984)"/>
             </Bindings>
         </Tanks.UI.Elements.CustomButton>
-        <Tanks.UI.Elements.CopyrightNotice name="Notice"/>
-    </ui:VisualElement>
-    <ui:VisualElement name="ItemBrowserSection" class="item-browser-section" style="display: none;">
-        <ui:VisualElement class="item-browser">
-            <ui:VisualElement class="item-browser__header">
-                <ui:Label class="game-title">
-                    <Bindings>
-                        <UnityEngine.Localization.LocalizedString property="text" table="GUID:34510603f8b6d1a44b1b2ffa9aa551c9" entry="Id(36568010776682496)"/>
-                    </Bindings>
-                </ui:Label>
-                <Tanks.UI.Elements.CustomButton name="BackButton" click-sound-path="event:/UI/Click_1">
-                    <Bindings>
-                        <UnityEngine.Localization.LocalizedString property="text" table="GUID:34510603f8b6d1a44b1b2ffa9aa551c9" entry="Id(33779992972713984)"/>
-                    </Bindings>
-                </Tanks.UI.Elements.CustomButton>
-            </ui:VisualElement>
-            <ui:VisualElement class="item-browser__body">
-                <ui:ScrollView class="item-browser__scroll" horizontal-scroller-visibility="Hidden">
-                    <ui:VisualElement name="ItemGrid" class="item-browser__grid"/>
-                </ui:ScrollView>
-                <ui:ScrollView class="item-browser__details-scroll" horizontal-scroller-visibility="Hidden">
-                    <ui:VisualElement name="ItemDetails" class="item-browser__details" style="visibility: hidden;">
-                        <ui:VisualElement name="Fill" picking-mode="Ignore" class="bg-fill"/>
-                        <ui:VisualElement class="item-browser__detail-header">
-                            <ui:VisualElement name="ItemIcon" class="item-browser__icon"/>
-                            <ui:Label name="ItemName" enable-rich-text="false" class="item-browser__name"/>
-                        </ui:VisualElement>
-                        <ui:Label name="ItemDescription" class="item-browser__description"/>
-                        <ui:Label name="ItemTier" enable-rich-text="false" class="item-browser__tier"/>
-                    </ui:VisualElement>
-                </ui:ScrollView>
-            </ui:VisualElement>
-        </ui:VisualElement>
     </ui:VisualElement>
     <ui:VisualElement name="LobbyBrowserSection" class="lobby-browser-section" style="display: none;">
         <ui:VisualElement name="LobbyBrowser" class="lobby-browser">
@@ -249,7 +220,115 @@
             </ui:VisualElement>
         </ui:VisualElement>
     </ui:VisualElement>
-    <ui:VisualElement name="LeaderboardsSection" class="leaderboards-section" style="display: flex;">
+    <ui:VisualElement name="MenuBalances" picking-mode="Ignore" class="menu-balances" style="display: flex;">
+        <ui:VisualElement picking-mode="Ignore" class="balance-row">
+            <Tanks.UI.Elements.BalanceElement name="PartsBalance" border-color="#808080" class="balance--parts"/>
+            <Tanks.UI.Elements.BalanceElement name="PrideBalance" border-color="#FFFF00" class="balance--pride"/>
+        </ui:VisualElement>
+    </ui:VisualElement>
+    <ui:VisualElement name="StoreSection" picking-mode="Ignore" class="store-section" style="display: none;">
+        <ui:VisualElement picking-mode="Ignore" class="store-header">
+            <Tanks.UI.Elements.CustomButton name="BackButton">
+                <Bindings>
+                    <UnityEngine.Localization.LocalizedString property="text" table="Menus" entry="menu.store.back"/>
+                </Bindings>
+            </Tanks.UI.Elements.CustomButton>
+            <ui:Label picking-mode="Ignore" class="store-title">
+                <Bindings>
+                    <UnityEngine.Localization.LocalizedString property="text" table="Menus" entry="menu.store.title"/>
+                </Bindings>
+            </ui:Label>
+        </ui:VisualElement>
+        <ui:VisualElement name="StoreRewards" picking-mode="Ignore" class="rewards-row" style="display: none;">
+            <ui:VisualElement name="PlaytimeReward" class="reward-card">
+                <ui:VisualElement picking-mode="Ignore" class="bg-fill"/>
+                <ui:Label name="RewardTitle"/>
+                <ui:Label name="RewardTimer" class="reward-timer"/>
+                <Tanks.UI.Elements.CustomButton name="ClaimButton" class="claim-button">
+                    <Bindings>
+                        <UnityEngine.Localization.LocalizedString property="text" table="Menus" entry="menu.reward.claim"/>
+                    </Bindings>
+                </Tanks.UI.Elements.CustomButton>
+            </ui:VisualElement>
+            <ui:VisualElement name="DailyReward" class="reward-card">
+                <ui:VisualElement picking-mode="Ignore" class="bg-fill"/>
+                <ui:Label name="RewardTitle"/>
+                <ui:Label name="RewardTimer" class="reward-timer"/>
+                <Tanks.UI.Elements.CustomButton name="ClaimButton" class="claim-button">
+                    <Bindings>
+                        <UnityEngine.Localization.LocalizedString property="text" table="Menus" entry="menu.reward.claim"/>
+                    </Bindings>
+                </Tanks.UI.Elements.CustomButton>
+            </ui:VisualElement>
+        </ui:VisualElement>
+        <ui:VisualElement picking-mode="Ignore" class="store-cosmetics">
+            <ui:VisualElement class="cosmetic-tabs">
+                <Tanks.UI.Elements.CustomButton name="BodyTab">
+                    <Bindings>
+                        <UnityEngine.Localization.LocalizedString property="text" table="Menus" entry="menu.store.bodies"/>
+                    </Bindings>
+                </Tanks.UI.Elements.CustomButton>
+                <Tanks.UI.Elements.CustomButton name="TurretTab">
+                    <Bindings>
+                        <UnityEngine.Localization.LocalizedString property="text" table="Menus" entry="menu.store.turrets"/>
+                    </Bindings>
+                </Tanks.UI.Elements.CustomButton>
+            </ui:VisualElement>
+            <ui:Label name="CatalogLoading" style="display: none;">
+                <Bindings>
+                    <UnityEngine.Localization.LocalizedString property="text" table="Menus" entry="menu.store.loading"/>
+                </Bindings>
+            </ui:Label>
+            <ui:VisualElement name="CatalogError" class="catalog-error" style="display: none;">
+                <ui:Label>
+                    <Bindings>
+                        <UnityEngine.Localization.LocalizedString property="text" table="Menus" entry="menu.store.catalog-error"/>
+                    </Bindings>
+                </ui:Label>
+                <Tanks.UI.Elements.CustomButton name="RetryCatalog">
+                    <Bindings>
+                        <UnityEngine.Localization.LocalizedString property="text" table="Menus" entry="menu.store.retry"/>
+                    </Bindings>
+                </Tanks.UI.Elements.CustomButton>
+            </ui:VisualElement>
+            <ui:ScrollView mode="Horizontal" horizontal-scroller-visibility="Auto" vertical-scroller-visibility="Hidden" class="cosmetic-scroll">
+                <ui:VisualElement name="CosmeticGrid" class="cosmetic-grid"/>
+            </ui:ScrollView>
+        </ui:VisualElement>
+    </ui:VisualElement>
+    <ui:VisualElement name="ItemBrowserSection" class="item-browser-section" style="display: none;">
+        <ui:VisualElement class="item-browser">
+            <ui:VisualElement class="item-browser__header">
+                <ui:Label class="game-title">
+                    <Bindings>
+                        <UnityEngine.Localization.LocalizedString property="text" table="GUID:34510603f8b6d1a44b1b2ffa9aa551c9" entry="Id(36568010776682496)"/>
+                    </Bindings>
+                </ui:Label>
+                <Tanks.UI.Elements.CustomButton name="BackButton" click-sound-path="event:/UI/Click_1">
+                    <Bindings>
+                        <UnityEngine.Localization.LocalizedString property="text" table="GUID:34510603f8b6d1a44b1b2ffa9aa551c9" entry="Id(33779992972713984)"/>
+                    </Bindings>
+                </Tanks.UI.Elements.CustomButton>
+            </ui:VisualElement>
+            <ui:VisualElement class="item-browser__body">
+                <ui:ScrollView horizontal-scroller-visibility="Hidden" class="item-browser__scroll">
+                    <ui:VisualElement name="ItemGrid" class="item-browser__grid"/>
+                </ui:ScrollView>
+                <ui:ScrollView horizontal-scroller-visibility="Hidden" class="item-browser__details-scroll">
+                    <ui:VisualElement name="ItemDetails" class="item-browser__details" style="visibility: hidden;">
+                        <ui:VisualElement name="Fill" picking-mode="Ignore" class="bg-fill"/>
+                        <ui:VisualElement class="item-browser__detail-header">
+                            <ui:VisualElement name="ItemIcon" class="item-browser__icon"/>
+                            <ui:Label name="ItemName" enable-rich-text="false" class="item-browser__name"/>
+                        </ui:VisualElement>
+                        <ui:Label name="ItemDescription" class="item-browser__description"/>
+                        <ui:Label name="ItemTier" enable-rich-text="false" class="item-browser__tier"/>
+                    </ui:VisualElement>
+                </ui:ScrollView>
+            </ui:VisualElement>
+        </ui:VisualElement>
+    </ui:VisualElement>
+    <ui:VisualElement name="LeaderboardsSection" class="leaderboards-section" style="display: none;">
         <ui:VisualElement name="Leaderboards" class="leaderboards">
             <ui:VisualElement name="LeaderboardFill" picking-mode="Ignore" class="bg-fill"/>
             <ui:VisualElement class="leaderboards__selectors">
@@ -315,5 +394,5 @@
             </ui:VisualElement>
         </ui:VisualElement>
     </ui:VisualElement>
-    <ui:Label name="LoadingLabel" picking-mode="Ignore" class="loading-label"/>
+    <ui:Label name="LoadingLabel" picking-mode="Ignore" class="loading-label" style="display: none;"/>
 </ui:UXML>

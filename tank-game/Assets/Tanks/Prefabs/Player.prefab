@@ -1229,6 +1229,7 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
+  - component: {fileID: 900000000000000001}
   - component: {fileID: 2254764853037302780}
   - component: {fileID: 954765486864109878}
   - component: {fileID: 1374316434624295161}
@@ -1874,3 +1875,15 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 3834544968657796977, guid: 0f7cc6b0d2dabe74eb0f295160f46d68, type: 3}
   m_PrefabInstance: {fileID: 5973704660751886864}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &900000000000000001
+MonoBehaviour:
+  m_GameObject: {fileID: 7983979346145053049}
+  m_Enabled: 1
+  m_Script: {fileID: 11500000, guid: 035004f38a92576fbe4857e53f7743a9, type: 3}
+  m_Name:
+  m_EditorClassIdentifier: Tanks.Client::Tanks.Client.Player.CosmeticApplier
+  _bodySprite: {fileID: 998581430350831358}
+  _turretSprite: {fileID: 6982754619946961884}
+  _database: {fileID: 11400000, guid: 944a76525fd732d469a9b64ff6e8082e, type: 2}
+  _defaultBody: {fileID: 11400000, guid: eeda3558e2693ea4e960e2ae2d5b85a2, type: 2}
+  _defaultTurret: {fileID: 11400000, guid: b38527120af100c45af3a5b8fb00606a, type: 2}

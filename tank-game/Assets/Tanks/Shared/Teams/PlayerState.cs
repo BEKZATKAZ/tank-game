@@ -1,4 +1,5 @@
-﻿using System;
+using System;
+using Tanks.Core.Players;
 
 namespace Tanks.Shared.Teams
 {
@@ -11,15 +12,17 @@ namespace Tanks.Shared.Teams
 
     public class PlayerState
     {
-        public PlayerState(ulong playerId, string displayName, TeamId teamId)
+        public PlayerState(ulong playerId, string displayName, TeamId teamId, EquippedCosmetics equipped = default)
         {
             PlayerId = playerId;
             DisplayName = displayName;
             BelongsTo = teamId;
+            Equipped = equipped;
         }
 
         public event Action<PlayerState> Updated;
 
+        public EquippedCosmetics Equipped { get; }
         public ulong PlayerId { get; }
         public string DisplayName { get; }
         public TeamId BelongsTo { get; }

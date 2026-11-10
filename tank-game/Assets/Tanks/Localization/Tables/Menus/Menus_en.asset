@@ -404,6 +404,96 @@ MonoBehaviour:
     m_Localized: "Unranked"
     m_Metadata:
       m_Items: []
+  - m_Id: 43000000000000000
+    m_Localized: "STORE"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 43000000000000001
+    m_Localized: "BACK"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 43000000000000002
+    m_Localized: "BODIES"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 43000000000000003
+    m_Localized: "TURRETS"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 43000000000000004
+    m_Localized: "EQUIP"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 43000000000000005
+    m_Localized: "EQUIPPED"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 43000000000000006
+    m_Localized: "Black"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 43000000000000007
+    m_Localized: "Loading cosmetics..."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 43000000000000008
+    m_Localized: "Could not load cosmetics."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 43000000000000009
+    m_Localized: "Could not load player data."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 43000000000000010
+    m_Localized: "RETRY"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 43000000000000011
+    m_Localized: "QUIT"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 43000000000000012
+    m_Localized: "CONFIRM PURCHASE"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 43000000000000013
+    m_Localized: "Unlock {item} for {price} {currency}?"
+    m_Metadata:
+      m_Items:
+      - rid: 6704992630869852538
+  - m_Id: 43000000000000014
+    m_Localized: "THREE-HOUR REWARD"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 43000000000000015
+    m_Localized: "DAILY REWARD"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 43000000000000016
+    m_Localized: "{hour}h {minutes}m {seconds}s"
+    m_Metadata:
+      m_Items:
+      - rid: 6704992630869852538
+  - m_Id: 43000000000000017
+    m_Localized: "CLAIM"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 43000000000000018
+    m_Localized: "Parts"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 43000000000000019
+    m_Localized: "Collected by <b><color=#0f0>eliminating players</color></b>."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 43000000000000020
+    m_Localized: "Pride points"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 43000000000000021
+    m_Localized: "Collected from <b><color=#ff0>victories</color></b> and <b><color=#ff0>winning rounds</color></b>."
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:
@@ -417,3 +507,5 @@ MonoBehaviour:
         - id: 5429100515123200
         - id: 5429284712177664
         - id: 6919344674529280
+        - id: 43000000000000016
+        - id: 43000000000000013

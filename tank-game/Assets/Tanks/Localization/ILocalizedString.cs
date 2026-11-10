@@ -78,7 +78,11 @@ namespace Tanks.Localization
                 _ => throw new NotImplementedException($"Type '{typeof(T).Name}' is not supported")
             };
 
-            try { Original.Add(key, variable); }
+            try
+            {
+                if (Original.ContainsKey(key)) Original[key] = variable;
+                else Original.Add(key, variable);
+            }
             catch (OperationException) { }
         }
     }

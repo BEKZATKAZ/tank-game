@@ -3,6 +3,7 @@ using NUnit.Framework;
 using System.Collections.Generic;
 using System.Reflection;
 using Tanks.Core;
+using Tanks.Core.Players;
 using Tanks.Core.Common;
 using Tanks.Core.Lobbies;
 using Tanks.UI.Menus.LobbyRoom;
@@ -18,6 +19,7 @@ namespace Tanks.UI.Tests.Menus.LobbyRoom
         private ITankModelService _models;
         private PlayerProfileState _profile;
         private LobbyState _lobby;
+        private LocalPlayer _playerData;
 
         [SetUp]
         public void Setup()
@@ -38,6 +40,10 @@ namespace Tanks.UI.Tests.Menus.LobbyRoom
             SetField("_tankModelService", _models);
             SetField("_auth", auth);
             SetField("_lobbyService", service);
+            var player = Substitute.For<ILocalPlayerService>();
+            _playerData = new LocalPlayer();
+            player.LocalPlayer.Returns(_playerData);
+            SetField("_player", player);
             typeof(LobbyTankSpawner).GetMethod("Start", BindingFlags.Instance | BindingFlags.NonPublic).Invoke(_spawner, null);
         }
 
@@ -50,10 +56,10 @@ namespace Tanks.UI.Tests.Menus.LobbyRoom
         [Test]
         public void ProfileName_IsShownOutsideLobbyAndRefreshes()
         {
-            _models.Received().SetDisplayName(0, "Local");
+            _models.Received().SetPlayerData(0, Arg.Is<PlayerDisplayData>(data => data.DisplayName == "Local"));
 
             _profile.DisplayName.Value = "Renamed";
-            _models.Received().SetDisplayName(0, "Renamed");
+            _models.Received().SetPlayerData(0, Arg.Is<PlayerDisplayData>(data => data.DisplayName == "Renamed"));
         }
 
         [Test]
@@ -61,13 +67,13 @@ namespace Tanks.UI.Tests.Menus.LobbyRoom
         {
             SetPlayers(Player("local", "Lobby Local"), Player("remote", "Remote"));
 
-            _models.Received().SetDisplayName(0, "Lobby Local");
-            _models.Received().SetDisplayName(1, "Remote");
+            _models.Received().SetPlayerData(0, Arg.Is<PlayerDisplayData>(data => data.DisplayName == "Lobby Local"));
+            _models.Received().SetPlayerData(1, Arg.Is<PlayerDisplayData>(data => data.DisplayName == "Remote"));
             _models.Received(1).DriveByCurve(1, 1, true);
 
             SetPlayers(Player("local", "Lobby Local"), Player("remote", "Renamed"));
 
-            _models.Received().SetDisplayName(1, "Renamed");
+            _models.Received().SetPlayerData(1, Arg.Is<PlayerDisplayData>(data => data.DisplayName == "Renamed"));
             _models.ReceivedWithAnyArgs(1).DriveByCurve(default, default, default);
         }
 
@@ -120,7 +126,7 @@ namespace Tanks.UI.Tests.Menus.LobbyRoom
             SetPlayers(Player("local", "Local"), Player("second", "Second"), Player("third", "Third"));
 
             _models.Received().DriveByCurve(1, 1, false);
-            _models.Received().SetDisplayName(1, "Third");
+            _models.Received().SetPlayerData(1, Arg.Is<PlayerDisplayData>(data => data.DisplayName == "Third"));
         }
 
         [Test]
@@ -132,13 +138,13 @@ namespace Tanks.UI.Tests.Menus.LobbyRoom
             _models.Received().Return(0);
             _models.Received().Return(1);
             _models.Received().Return(2);
-            _models.Received().SetDisplayName(0, "Local");
+            _models.Received().SetPlayerData(0, Arg.Is<PlayerDisplayData>(data => data.DisplayName == "Local"));
 
             _models.ClearReceivedCalls();
             SetPlayers(Player("local", "Local"), Player("second", "Second"));
 
             _models.Received().DriveByCurve(1, 1, true);
-            _models.Received().SetDisplayName(1, "Second");
+            _models.Received().SetPlayerData(1, Arg.Is<PlayerDisplayData>(data => data.DisplayName == "Second"));
             SetPlayers();
 
             _models.Received().Return(1);
@@ -154,7 +160,21 @@ namespace Tanks.UI.Tests.Menus.LobbyRoom
             _profile.DisplayName.Value = "After";
             SetPlayers(Player("local", "After"));
 
-            _models.DidNotReceiveWithAnyArgs().SetDisplayName(default, default);
+            _models.DidNotReceiveWithAnyArgs().SetPlayerData(default, default);
+        }
+
+        [Test]
+        public void PlayerData_RefreshesLocalLevelAndCosmetics()
+        {
+            _playerData.Apply(new PlayerSnapshot
+            {
+                Level = new PlayerLevel { Value = 7 },
+                Equipped = new EquippedCosmetics { Body = "v4-body", Turret = "kr1-turret" }
+            });
+
+            _models.Received().SetPlayerData(0, Arg.Is<PlayerDisplayData>(data =>
+                data.DisplayName == "Local" && data.Level == 7 &&
+                data.Equipped.Body == "v4-body" && data.Equipped.Turret == "kr1-turret"));
         }
 
         private void SetField(string name, object value)

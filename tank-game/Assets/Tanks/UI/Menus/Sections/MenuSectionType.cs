@@ -1,4 +1,4 @@
-﻿namespace Tanks.UI.Menus.Sections
+namespace Tanks.UI.Menus.Sections
 {
     public enum MenuSectionType
     {
@@ -10,6 +10,7 @@
         LobbyBrowser,
         LobbyRoom,
         ItemBrowser,
-        Leaderboards
+        Leaderboards,
+        Store
     }
 }

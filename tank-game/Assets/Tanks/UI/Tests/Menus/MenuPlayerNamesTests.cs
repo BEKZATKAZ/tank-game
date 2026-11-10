@@ -2,6 +2,7 @@ using NSubstitute;
 using NUnit.Framework;
 using System.Collections.Generic;
 using Tanks.Client.Rendering;
+using Tanks.Core.Players;
 using Tanks.UI.Menus.TankModel;
 using Tanks.UI.TankModel;
 using Unity.Mathematics;
@@ -30,9 +31,9 @@ namespace Tanks.UI.Tests.Menus
 
             _tankModels = Substitute.For<ITankModelService>();
             _tankModels.Models.Returns(_models);
-            _tankModels.When(x => x.SetDisplayName(Arg.Any<int>(), Arg.Any<string>())).Do(x =>
-                typeof(TankModelEntry).GetProperty(nameof(TankModelEntry.DisplayName)).SetValue(_models[x.ArgAt<int>(0)], x.ArgAt<string>(1)));
-            _tankModels.SetDisplayName(0, "Local");
+            _tankModels.When(x => x.SetPlayerData(Arg.Any<int>(), Arg.Any<PlayerDisplayData>())).Do(x =>
+                typeof(TankModelEntry).GetProperty(nameof(TankModelEntry.DisplayName)).SetValue(_models[x.ArgAt<int>(0)], x.ArgAt<PlayerDisplayData>(1).DisplayName));
+            _tankModels.SetPlayerData(0, new PlayerDisplayData { DisplayName = "Local" });
 
             _camera = Substitute.For<ICamera>();
             _camera.ViewportRect.Returns(new Rect(0, 0, 1, 1));
@@ -76,7 +77,7 @@ namespace Tanks.UI.Tests.Menus
             Assert.IsFalse(ViewModel.Entries[0].IsVisible);
 
             _sprite.enabled = true;
-            _tankModels.SetDisplayName(0, "");
+            _tankModels.SetPlayerData(0, default);
             ViewModel.Tick();
             Assert.IsFalse(ViewModel.Entries[0].IsVisible);
         }

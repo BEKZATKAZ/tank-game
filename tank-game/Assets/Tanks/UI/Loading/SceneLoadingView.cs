@@ -1,4 +1,4 @@
-﻿using Cysharp.Threading.Tasks;
+using Cysharp.Threading.Tasks;
 using LitMotion;
 using System;
 using System.Threading;
@@ -20,6 +20,7 @@ namespace Tanks.UI.Loading
         private Label _title;
         private Label _tip;
         private CancellationTokenSource _tipCancellation;
+        private VisualElement _menuError;
 
         protected override VisualElement GetRootElement() => _root;
 
@@ -59,18 +60,23 @@ namespace Tanks.UI.Loading
 
             _tip = _tipContainer.Q<Label>("Tip");
             _tip.text = "";
+            _menuError = _root.Q("MenuLoadError");
+            _menuError.Q<Button>("RetryButton").clicked += () => ViewModel?.RetryMenus();
+            _menuError.Q<Button>("QuitButton").clicked += Quit;
         }
 
         protected override void Bind(SceneLoadingViewModel viewModel)
         {
             viewModel.Progress.Bind(OnProgressChanged);
             viewModel.IsLoading.Bind(OnLoadingChanged);
+            viewModel.HasMenuError.Bind(OnMenuError);
         }
 
         protected override void Unbind(SceneLoadingViewModel viewModel)
         {
             viewModel.Progress.Unbind(OnProgressChanged);
             viewModel.IsLoading.Unbind(OnLoadingChanged);
+            viewModel.HasMenuError.Unbind(OnMenuError);
             StopTips();
         }
 
@@ -82,6 +88,19 @@ namespace Tanks.UI.Loading
         }
 
         private void OnProgressChanged(float progress) => _progress.value = progress;
+
+        private void OnMenuError(bool hasError)
+        {
+            _menuError.style.display = hasError ? DisplayStyle.Flex : DisplayStyle.None;
+        }
+
+        private void Quit()
+        {
+            Application.Quit();
+#if UNITY_EDITOR
+            UnityEditor.EditorApplication.isPlaying = false;
+#endif
+        }
 
         private void OnLoadingChanged(bool isLoading)
         {

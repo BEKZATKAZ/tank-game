@@ -395,6 +395,94 @@ MonoBehaviour:
     m_Key: menu.leaderboards.unranked
     m_Metadata:
       m_Items: []
+  - m_Id: 43000000000000000
+    m_Key: menu.store.title
+    m_Metadata:
+      m_Items: []
+  - m_Id: 43000000000000001
+    m_Key: menu.store.back
+    m_Metadata:
+      m_Items: []
+  - m_Id: 43000000000000002
+    m_Key: menu.store.bodies
+    m_Metadata:
+      m_Items: []
+  - m_Id: 43000000000000003
+    m_Key: menu.store.turrets
+    m_Metadata:
+      m_Items: []
+  - m_Id: 43000000000000004
+    m_Key: menu.store.equip
+    m_Metadata:
+      m_Items: []
+  - m_Id: 43000000000000005
+    m_Key: menu.store.equipped
+    m_Metadata:
+      m_Items: []
+  - m_Id: 43000000000000006
+    m_Key: menu.store.black
+    m_Metadata:
+      m_Items: []
+  - m_Id: 43000000000000007
+    m_Key: menu.store.loading
+    m_Metadata:
+      m_Items: []
+  - m_Id: 43000000000000008
+    m_Key: menu.store.catalog-error
+    m_Metadata:
+      m_Items: []
+  - m_Id: 43000000000000009
+    m_Key: menu.store.load-error
+    m_Metadata:
+      m_Items: []
+  - m_Id: 43000000000000010
+    m_Key: menu.store.retry
+    m_Metadata:
+      m_Items: []
+  - m_Id: 43000000000000011
+    m_Key: menu.store.quit
+    m_Metadata:
+      m_Items: []
+  - m_Id: 43000000000000012
+    m_Key: menu.store.confirm-title
+    m_Metadata:
+      m_Items: []
+  - m_Id: 43000000000000013
+    m_Key: menu.store.confirm-message
+    m_Metadata:
+      m_Items: []
+  - m_Id: 43000000000000014
+    m_Key: menu.reward.playtime
+    m_Metadata:
+      m_Items: []
+  - m_Id: 43000000000000015
+    m_Key: menu.reward.daily
+    m_Metadata:
+      m_Items: []
+  - m_Id: 43000000000000016
+    m_Key: menu.reward.timer
+    m_Metadata:
+      m_Items: []
+  - m_Id: 43000000000000017
+    m_Key: menu.reward.claim
+    m_Metadata:
+      m_Items: []
+  - m_Id: 43000000000000018
+    m_Key: currency.parts.name
+    m_Metadata:
+      m_Items: []
+  - m_Id: 43000000000000019
+    m_Key: currency.parts.description
+    m_Metadata:
+      m_Items: []
+  - m_Id: 43000000000000020
+    m_Key: currency.pride.name
+    m_Metadata:
+      m_Items: []
+  - m_Id: 43000000000000021
+    m_Key: currency.pride.description
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:

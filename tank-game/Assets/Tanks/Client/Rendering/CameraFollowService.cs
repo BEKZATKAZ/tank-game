@@ -7,9 +7,8 @@ namespace Tanks.Client.Rendering
 {
     public sealed class CameraFollowService : MonoBehaviour, ICameraFollowService
     {
-        [Range(0.5f, 10)]
         [SerializeField]
-        private float _positionSpeed = 5;
+        private float2 _positionSpeed = 5;
 
         private ICameraMainService _cameraMain;
         private ITransform _target;

@@ -95,6 +95,54 @@ MonoBehaviour:
     m_Key: error.lobby.chat-invalid-message
     m_Metadata:
       m_Items: []
+  - m_Id: 44000000000000000
+    m_Key: store.already-unlocked
+    m_Metadata:
+      m_Items: []
+  - m_Id: 44000000000000001
+    m_Key: store.insufficient-funds
+    m_Metadata:
+      m_Items: []
+  - m_Id: 44000000000000002
+    m_Key: store.not-unlocked
+    m_Metadata:
+      m_Items: []
+  - m_Id: 44000000000000003
+    m_Key: store.already-claimed
+    m_Metadata:
+      m_Items: []
+  - m_Id: 44000000000000004
+    m_Key: store.invalid-data
+    m_Metadata:
+      m_Items: []
+  - m_Id: 44000000000000005
+    m_Key: store.not-found
+    m_Metadata:
+      m_Items: []
+  - m_Id: 44000000000000006
+    m_Key: store.unpurchasable-item
+    m_Metadata:
+      m_Items: []
+  - m_Id: 44000000000000007
+    m_Key: store.unknown
+    m_Metadata:
+      m_Items: []
+  - m_Id: 44000000000000008
+    m_Key: store.unauthorized
+    m_Metadata:
+      m_Items: []
+  - m_Id: 44000000000000009
+    m_Key: store.price-changed
+    m_Metadata:
+      m_Items: []
+  - m_Id: 45000000000000000
+    m_Key: store.conflict
+    m_Metadata:
+      m_Items: []
+  - m_Id: 45000000000000001
+    m_Key: store.rate-limited
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:

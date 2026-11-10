@@ -1,9 +1,10 @@
-﻿using Cysharp.Threading.Tasks;
+using Cysharp.Threading.Tasks;
 using Newtonsoft.Json;
 using System.Linq;
 using System.Text;
 using Tanks.Client.Items;
 using Tanks.Core;
+using Tanks.Core.Players;
 using Tanks.Core.Common.Processes;
 using Tanks.Core.Common.Scenes;
 using Tanks.Core.Lobbies;
@@ -25,6 +26,7 @@ namespace Tanks.Client.Bootstrap
     public sealed class ClientConnector : MonoBehaviour
     {
         [Inject] private readonly IAuthService _auth;
+        [Inject] private readonly ILocalPlayerService _player;
         [Inject] private readonly ILobbyService _lobbyService;
         [Inject] private readonly ISessionSettingsService _settings;
         [Inject] private readonly IClientCommunicationService _client;
@@ -139,7 +141,8 @@ namespace Tanks.Client.Bootstrap
 
             string json = JsonConvert.SerializeObject(new ClientConnectionPayload
             {
-                DisplayName = GetDisplayName()
+                DisplayName = GetDisplayName(),
+                Equipped = _player.LocalPlayer.Equipped.Value
             });
 
             NetworkManager manager = NetworkManager.Singleton;

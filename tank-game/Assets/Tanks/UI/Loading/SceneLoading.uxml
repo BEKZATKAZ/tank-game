@@ -8,4 +8,15 @@
     <ui:VisualElement name="Bottom" class="loading-bottom">
         <ui:Label text="Projectiles ricochet off the walls, don&apos;t fire for no reason unless you see an enemy." name="Tip" class="tip-text"/>
     </ui:VisualElement>
+    <ui:VisualElement name="MenuLoadError" class="menu-load-error" style="display: none;">
+        <ui:Label>
+            <Bindings><UnityEngine.Localization.LocalizedString property="text" table="Menus" entry="menu.store.load-error"/></Bindings>
+        </ui:Label>
+        <Tanks.UI.Elements.CustomButton name="RetryButton">
+            <Bindings><UnityEngine.Localization.LocalizedString property="text" table="Menus" entry="menu.store.retry"/></Bindings>
+        </Tanks.UI.Elements.CustomButton>
+        <Tanks.UI.Elements.CustomButton name="QuitButton">
+            <Bindings><UnityEngine.Localization.LocalizedString property="text" table="Menus" entry="menu.store.quit"/></Bindings>
+        </Tanks.UI.Elements.CustomButton>
+    </ui:VisualElement>
 </ui:UXML>

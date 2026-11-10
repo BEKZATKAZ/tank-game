@@ -27,3 +27,31 @@
 }
 
 
+
+.menu-player-name-row {
+    position: absolute;
+    translate: -50% -100%;
+    flex-direction: row;
+    align-items: center;
+    padding-bottom: 8px;
+}
+
+.menu-player-name-row .player-name {
+    position: relative;
+    translate: 0 0;
+    padding-bottom: 0;
+    min-width: 0;
+    flex-shrink: 1;
+}
+
+.menu-player-level {
+    flex-shrink: 0;
+    margin-right: 12px;
+    min-width: 36px;
+    padding: 4px 6px;
+    background-color: rgb(24, 24, 24);
+    border-color: yellow;
+    border-width: 2px;
+    font-size: 24px;
+    letter-spacing: 0;
+}

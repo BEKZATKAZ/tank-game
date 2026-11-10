@@ -1,6 +1,8 @@
-﻿using NaughtyAttributes;
+using NaughtyAttributes;
 using System;
 using Tanks.Core;
+using Tanks.Core.Players;
+using Tanks.Core.Store;
 using Tanks.Core.Leaderboards;
 using Tanks.Infrastructure.Leaderboards;
 using Tanks.Core.Common.Processes;
@@ -52,6 +54,10 @@ namespace Tanks.Infrastructure
 
             builder.Register<ILobbyService, UGSLobbyService>(Lifetime.Singleton);
             builder.Register<IAuthService, UGSAuthService>(Lifetime.Singleton);
+            builder.Register<ICloudCodeCaller, UGSCloudCodeCaller>(Lifetime.Singleton);
+            builder.Register<IServerClock, ServerClock>(Lifetime.Singleton);
+            builder.Register<UGSPlayerService>(Lifetime.Singleton).AsImplementedInterfaces();
+            builder.Register<MenuLoadingState>(Lifetime.Singleton);
             builder.Register<ICountryService, IpCountryService>(Lifetime.Singleton);
             builder.Register<ILeaderboardService, UGSLeaderboardService>(Lifetime.Singleton);
 

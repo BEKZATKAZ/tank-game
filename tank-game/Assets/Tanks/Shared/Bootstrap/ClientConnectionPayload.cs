@@ -1,7 +1,10 @@
-﻿namespace Tanks.Shared.Bootstrap
+using Tanks.Core.Players;
+
+namespace Tanks.Shared.Bootstrap
 {
     public struct ClientConnectionPayload
     {
         public string DisplayName;
+        public EquippedCosmetics Equipped;
     }
 }

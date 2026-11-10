@@ -398,7 +398,7 @@ MonoBehaviour:
       Data4: 2053728540
     Path: event:/Music/MainMenuLoop
   Event: 
-  EventPlayTrigger: 1
+  EventPlayTrigger: 0
   EventStopTrigger: 2
   AllowFadeout: 1
   TriggerOnce: 0
@@ -1042,6 +1042,37 @@ Transform:
   m_Children: []
   m_Father: {fileID: 598789040}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &598086846
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 598086847}
+  m_Layer: 0
+  m_Name: Store
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &598086847
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 598086846}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: -8, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1359330241}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &598789039
 GameObject:
   m_ObjectHideFlags: 0
@@ -1142,6 +1173,15 @@ MonoBehaviour:
     value: {fileID: 690515188}
   - key: 6
     value: {fileID: 690515189}
+  - key: 9
+    value: {fileID: 690515195}
+  _cameraCenters:
+  - key: 1
+    value: {fileID: 283334469}
+  - key: 6
+    value: {fileID: 954435425}
+  - key: 9
+    value: {fileID: 598086847}
 --- !u!1 &690515181
 GameObject:
   m_ObjectHideFlags: 0
@@ -1163,6 +1203,9 @@ GameObject:
   - component: {fileID: 690515191}
   - component: {fileID: 690515193}
   - component: {fileID: 690515194}
+  - component: {fileID: 690515195}
+  - component: {fileID: 690515196}
+  - component: {fileID: 690515197}
   m_Layer: 0
   m_Name: Menus
   m_TagString: Untagged
@@ -1322,7 +1365,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 97555098574feab43bdb9f7c06bb3995, type: 3}
-  m_Name:
+  m_Name: 
   m_EditorClassIdentifier: Tanks.UI::Tanks.UI.Menus.Extras.ExtrasView
   _showOnPlay: 0
 --- !u!114 &690515193
@@ -1335,7 +1378,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 31005737cbca4dd7bd68213803e653bd, type: 3}
-  m_Name:
+  m_Name: 
   m_EditorClassIdentifier: Tanks.UI::Tanks.UI.Menus.Leaderboards.LeaderboardsView
   _showOnPlay: 0
   _flags: {fileID: 11400000, guid: e3a597eefd95402a9acca93094b72ab2, type: 2}
@@ -1349,10 +1392,50 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 713d9bf3c91459a22c1bb20d7ef94a01, type: 3}
-  m_Name:
+  m_Name: 
   m_EditorClassIdentifier: Tanks.UI::Tanks.UI.Menus.Items.ItemBrowserView
   _showOnPlay: 0
   _effectsConfig: {fileID: 11400000, guid: 4c772ee5d38c6d544a1c74b59af171e5, type: 2}
+--- !u!114 &690515195
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 690515181}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ff31e12110fb5c20afe0b433ad7c5f67, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Tanks.UI::Tanks.UI.Menus.Store.StoreView
+  _showOnPlay: 0
+  _rewardsView: {fileID: 690515197}
+--- !u!114 &690515196
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 690515181}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f6df9181715a5ffa8d6d24d686a5cb64, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Tanks.UI::Tanks.UI.Menus.Store.MenuEconomyView
+  _showOnPlay: 1
+--- !u!114 &690515197
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 690515181}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 59ae8cb489865bfdbb597ee967201852, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Tanks.UI::Tanks.UI.Menus.Rewards.RewardsView
+  _showOnPlay: 0
 --- !u!1 &702713357
 GameObject:
   m_ObjectHideFlags: 0
@@ -1672,6 +1755,7 @@ MonoBehaviour:
   _dialogService: {fileID: 1129964425}
   _tankModelService: {fileID: 1834685604}
   _cameraFollow: {fileID: 2013555116}
+  _cosmetics: {fileID: 11400000, guid: 944a76525fd732d469a9b64ff6e8082e, type: 2}
 --- !u!4 &985489086
 Transform:
   m_ObjectHideFlags: 0
@@ -1954,6 +2038,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Tanks.UI::Tanks.UI.Menus.Transitions.FadeTransitionView
   _showOnPlay: 1
+  _music: {fileID: 355716855}
 --- !u!114 &1159608700
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2069,6 +2154,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 283334469}
+  - {fileID: 598086847}
   - {fileID: 954435425}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -2509,8 +2595,6 @@ MonoBehaviour:
   _movementSpeed: 10
   _backgroundSizeUnits: 256
   _background: {fileID: 1847361571}
-  _mainCameraCenter: {fileID: 283334469}
-  _lobbyCameraCenter: {fileID: 954435425}
   _tankModelPrefab: {fileID: 2254764853037302780, guid: a362846b83153c64d9da98c9340b596e, type: 3}
   _splineContainer: {fileID: 448376922}
 --- !u!1 &1847361570
@@ -2641,7 +2725,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0fa12cd603fa68f4fa6811506017f16a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Tanks.Client::Tanks.Client.Rendering.CameraFollowService
-  _positionSpeed: 1
+  _positionSpeed:
+    x: 1
+    y: 4
 --- !u!1 &2030310349
 GameObject:
   m_ObjectHideFlags: 0

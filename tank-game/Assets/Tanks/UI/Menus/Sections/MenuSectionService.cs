@@ -1,23 +1,33 @@
-﻿using Cysharp.Threading.Tasks;
 using LitMotion;
 using System.Collections.Generic;
+using Tanks.Client.Rendering;
+using Tanks.Core.Players;
+using Tanks.Shared.Adapters;
 using UnityEngine;
+using VContainer;
 
 namespace Tanks.UI.Menus.Sections
 {
     public sealed class MenuSectionService : MonoBehaviour, IMenuSectionService
     {
         [SerializeField] private Dictionary<MenuSectionType, ViewBase> _sections;
+        [SerializeField] private Dictionary<MenuSectionType, Transform> _cameraCenters;
 
-        private MenuSectionType _current;
+        [Inject] private readonly ICameraFollowService _cameraFollow;
+        [Inject] private readonly MenuLoadingState _loading;
+
         private MotionHandle _motion;
+
+        public MenuSectionType Current { get; private set; }
 
         public async void OpenSection(MenuSectionType type, bool instant = false)
         {
-            _sections.TryGetValue(_current, out ViewBase currentSection);
+            if (_loading.IsReady.Value == false) return;
+
+            _sections.TryGetValue(Current, out ViewBase currentSection);
             _sections.TryGetValue(type, out ViewBase newSection);
 
-            _current = type;
+            Current = type;
             _motion.TryCancel();
 
             if (currentSection)
@@ -36,10 +46,15 @@ namespace Tanks.UI.Menus.Sections
                 currentSection.Hide();
             }
 
-            if (newSection == false || _current != type) return;
+            if (newSection == false || Current != type) return;
 
             newSection.Show();
             newSection.Root.enabledSelf = true;
+
+            if (_cameraCenters.TryGetValue(type, out Transform cameraCenter))
+            {
+                _cameraFollow.SetFollowTarget(new UnityTransform(cameraCenter), instant);
+            }
 
             if (instant == false)
             {
@@ -52,10 +67,20 @@ namespace Tanks.UI.Menus.Sections
             newSection.Root.style.opacity = 1;
         }
 
-        private async void Start()
+        private void Start()
         {
-            await UniTask.Delay(2000);
-            OpenSection(MenuSectionType.Main);
+            _cameraFollow.SetBounds(new Bounds(default, new Vector3(256, 256)));
+            _loading.IsReady.Bind(OnReady);
+        }
+
+        private void OnReady(bool ready)
+        {
+            if (ready) OpenSection(MenuSectionType.Main);
+        }
+
+        private void OnDestroy()
+        {
+            _loading.IsReady.Unbind(OnReady);
         }
     }
 }

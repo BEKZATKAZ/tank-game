@@ -1,4 +1,5 @@
 using Tanks.Shared;
+using Tanks.Core.Players;
 using Tanks.Shared.Teams;
 
 namespace Tanks.Client.Teams
@@ -12,7 +13,11 @@ namespace Tanks.Client.Teams
         {
             string displayName = message.DisplayName.ToString();
             Team team = Behaviour.GetTeam(message.BelongsTo);
-            team.AddPlayer(message.OwnerPlayerId, displayName);
+            team.AddPlayer(message.OwnerPlayerId, displayName, new EquippedCosmetics
+            {
+                Body = message.Body.ToString(),
+                Turret = message.Turret.ToString()
+            });
         }
 
         public void Handle(UpdatePlayerPointsPayload message)

@@ -1,9 +1,10 @@
-﻿using Cysharp.Threading.Tasks;
+using Cysharp.Threading.Tasks;
 using System;
 using System.Linq;
 using Tanks.Core.Common.Scenes;
 using Tanks.Localization;
 using Tanks.Utils;
+using Tanks.Core.Players;
 using UnityEngine;
 
 namespace Tanks.UI.Loading
@@ -12,9 +13,10 @@ namespace Tanks.UI.Loading
     {
         public SceneLoadingViewModel(
             ILocalizationDatabase localization,
-            ISceneLoader loader)
+            ISceneLoader loader, MenuLoadingState menuLoading = null)
         {
             _loader = loader;
+            _menuLoading = menuLoading ?? new MenuLoadingState();
 
             _allTips = localization
                 .GetAllFromTable("Loading")
@@ -30,6 +32,11 @@ namespace Tanks.UI.Loading
         public BindableProperty<float> Progress { get; } = new();
         public BindableProperty<bool> IsLoading { get; } = new(true);
         public bool WithTips => _loader.WithTips;
+        public BindableProperty<bool> HasMenuError => _menuLoading.HasError;
+
+        public void RetryMenus() => _menuLoading.Retry();
+
+        private readonly MenuLoadingState _menuLoading;
 
         private readonly ISceneLoader _loader;
         private readonly ILocalizedString[] _allTips;

@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using Tanks.Localization;
 using Tanks.Utils;
 using UnityEngine;
@@ -54,6 +54,20 @@ namespace Tanks.UI.Menus.Dialogs
             Type.Value = DialogType.Confirmation;
             Header.Value = header?.Get() ?? "";
             Message.Value = message?.Get() ?? "";
+        }
+
+        public void ShowPurchaseConfirmation(string item, string currency, int price, Action onYes)
+        {
+            _yes = onYes;
+            _no = null;
+            _localization.TryGet("Menus", "menu.store.confirm-title", out var title);
+            _localization.TryGet("Menus", "menu.store.confirm-message", out var message);
+            message?.AddVariable("item", item);
+            message?.AddVariable("currency", currency);
+            message?.AddVariable("price", price);
+            Header.Value = title?.Get() ?? "";
+            Message.Value = message?.Get() ?? "";
+            Type.Value = DialogType.Confirmation;
         }
 
         public void ShowErrorFromCode(string prefix, string errorCode)

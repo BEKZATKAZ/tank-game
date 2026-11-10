@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using Tanks.Core.Players;
 using Tanks.UI.Menus.TankModel;
 
 namespace Tanks.UI.TankModel
@@ -8,7 +9,9 @@ namespace Tanks.UI.TankModel
         IReadOnlyList<TankModelEntry> Models { get; }
         bool IsDrivingInPlace { get; }
 
-        void SetDisplayName(int tankIndex, string displayName);
+        void SetPlayerData(int tankIndex, PlayerDisplayData data);
+        void PreviewCosmetics(int tankIndex, EquippedCosmetics cosmetics);
+        void ClearCosmeticPreview(int tankIndex);
         void SetReady(int tankIndex, bool ready);
         void StartDrivingInPlace();
         void DriveByCurve(int tankIndex, int curveIndex, bool instant);
