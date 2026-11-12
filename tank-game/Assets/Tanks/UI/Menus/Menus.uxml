@@ -2,6 +2,7 @@
     <Style src="project://database/Assets/Tanks/UI/MainStyle.uss?fileID=7433441132597879392&amp;guid=77478ecc0cc878b408414e9bc657328f&amp;type=3#MainStyle"/>
     <Style src="project://database/Assets/Tanks/UI/Menus/MainMenu.uss?fileID=7433441132597879392&amp;guid=76ab9fd928853eb4c9b47cc8f03d4988&amp;type=3#MainMenu"/>
     <Style src="project://database/Assets/Tanks/UI/PlayerNames.uss?fileID=7433441132597879392&amp;guid=d709c0e2e2f94a7b81703dd81f41caf6&amp;type=3#PlayerNames"/>
+    <Style src="project://database/Assets/Tanks/UI/Menus/Debriefing/Debriefing.uss?fileID=7433441132597879392&amp;guid=3d5672bf45054b32903a52166dd926b5&amp;type=3#Debriefing"/>
     <ui:VisualElement name="MenuPlayerNames" picking-mode="Ignore" class="player-names"/>
     <Tanks.UI.Elements.CopyrightNotice name="Notice"/>
     <ui:VisualElement name="MainSection" picking-mode="Ignore" class="main-buttons" style="display: flex;">
@@ -395,4 +396,43 @@
         </ui:VisualElement>
     </ui:VisualElement>
     <ui:Label name="LoadingLabel" picking-mode="Ignore" class="loading-label" style="display: none;"/>
+    <ui:VisualElement name="DebriefingSection" class="debriefing-section" style="display: flex;">
+        <ui:VisualElement class="debriefing-panel">
+            <ui:Label name="DebriefingTitle" class="debriefing-title">
+                <Bindings>
+                    <UnityEngine.Localization.LocalizedString property="text" table="Menus" entry="debriefing.title"/>
+                </Bindings>
+            </ui:Label>
+            <ui:Label name="DebriefingError" class="debriefing-error">
+                <Bindings>
+                    <UnityEngine.Localization.LocalizedString property="text" table="Menus" entry="debriefing.unavailable"/>
+                </Bindings>
+            </ui:Label>
+            <ui:VisualElement name="DebriefingContent" class="debriefing-content">
+                <ui:ScrollView name="DebriefingStats" horizontal-scroller-visibility="Hidden" class="debriefing-stats">
+                    <ui:VisualElement name="DebriefingRows"/>
+                </ui:ScrollView>
+                <ui:VisualElement class="debriefing-progress-block">
+                    <ui:VisualElement class="debriefing-levels">
+                        <ui:Label name="DebriefingCurrentLevel"/>
+                        <ui:Label name="DebriefingNextLevel"/>
+                    </ui:VisualElement>
+                    <ui:ProgressBar name="DebriefingProgress" low-value="0" high-value="1" focusable="false" picking-mode="Ignore" class="debriefing-progress"/>
+                    <ui:Label name="DebriefingXP" class="debriefing-xp"/>
+                </ui:VisualElement>
+            </ui:VisualElement>
+            <ui:VisualElement class="debriefing-buttons">
+                <Tanks.UI.Elements.CustomButton name="DebriefingSkip" click-sound-path="event:/UI/Click_1">
+                    <Bindings>
+                        <UnityEngine.Localization.LocalizedString property="text" table="Menus" entry="debriefing.skip"/>
+                    </Bindings>
+                </Tanks.UI.Elements.CustomButton>
+                <Tanks.UI.Elements.CustomButton name="DebriefingClose" click-sound-path="event:/UI/Click_1">
+                    <Bindings>
+                        <UnityEngine.Localization.LocalizedString property="text" table="Menus" entry="debriefing.close"/>
+                    </Bindings>
+                </Tanks.UI.Elements.CustomButton>
+            </ui:VisualElement>
+        </ui:VisualElement>
+    </ui:VisualElement>
 </ui:UXML>

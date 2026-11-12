@@ -494,6 +494,66 @@ MonoBehaviour:
     m_Localized: "Obtenus gr\u00e2ce aux <b><color=#ff0>victoires</color></b> et aux <b><color=#ff0>manches gagn\u00e9es</color></b>."
     m_Metadata:
       m_Items: []
+  - m_Id: 44000000000000000
+    m_Localized: "BILAN DE LA PARTIE"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 44000000000000001
+    m_Localized: "{name} : {value}"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 44000000000000002
+    m_Localized: "Éliminations"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 44000000000000003
+    m_Localized: "Assistances"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 44000000000000004
+    m_Localized: "Morts"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 44000000000000005
+    m_Localized: "Score"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 44000000000000006
+    m_Localized: "VICTOIRE"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 44000000000000007
+    m_Localized: "DÉFAITE"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 44000000000000008
+    m_Localized: "{current:N0} / {required:N0} XP"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 44000000000000009
+    m_Localized: "{sign}{value:N0} XP"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 44000000000000010
+    m_Localized: "PASSER"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 44000000000000011
+    m_Localized: "FERMER"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 44000000000000012
+    m_Localized: "Le bilan de la partie est indisponible. Les récompenses ne sont pas confirmées. Votre progression sera actualisée dès que possible."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 44000000000000013
+    m_Localized: "{sign}{value:N0}"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 44000000000000014
+    m_Localized: "{value:N0}"
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:
@@ -502,6 +562,11 @@ MonoBehaviour:
       data:
         m_Entries: 
         m_SharedEntries:
+        - id: 44000000000000013
+        - id: 44000000000000014
+        - id: 44000000000000009
+        - id: 44000000000000008
+        - id: 44000000000000001
         - id: 5433757098532864
         - id: 6919344674529280
         - id: 5429100515123200

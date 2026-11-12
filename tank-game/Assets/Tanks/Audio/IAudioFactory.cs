@@ -14,6 +14,7 @@ namespace Tanks.Audio
         public IAudioInstance CreateInstance(string path)
         {
             EventInstance instance = RuntimeManager.CreateInstance(path);
+
             instance.set3DAttributes(RuntimeUtils.To3DAttributes(Vector3.zero));
             return new FMODAudioInstance(instance);
         }

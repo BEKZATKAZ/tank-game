@@ -144,7 +144,7 @@ Transform:
   m_GameObject: {fileID: 169934237}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: -10}
+  m_LocalPosition: {x: 0, y: 20, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -1175,6 +1175,8 @@ MonoBehaviour:
     value: {fileID: 690515189}
   - key: 9
     value: {fileID: 690515195}
+  - key: 10
+    value: {fileID: 690515198}
   _cameraCenters:
   - key: 1
     value: {fileID: 283334469}
@@ -1206,6 +1208,7 @@ GameObject:
   - component: {fileID: 690515195}
   - component: {fileID: 690515196}
   - component: {fileID: 690515197}
+  - component: {fileID: 690515198}
   m_Layer: 0
   m_Name: Menus
   m_TagString: Untagged
@@ -1436,6 +1439,22 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Tanks.UI::Tanks.UI.Menus.Rewards.RewardsView
   _showOnPlay: 0
+--- !u!114 &690515198
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 690515181}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f3da60e958c84e08a2e88f28dd4c1e29, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Tanks.UI::Tanks.UI.Menus.Debriefing.DebriefingView
+  _showOnPlay: 0
+  _statCountingSoundPath: event:/UI/XPGain
+  _levelUpSoundPath: event:/UI/LevelUp
+  _maxPitch: 1.5
 --- !u!1 &702713357
 GameObject:
   m_ObjectHideFlags: 0

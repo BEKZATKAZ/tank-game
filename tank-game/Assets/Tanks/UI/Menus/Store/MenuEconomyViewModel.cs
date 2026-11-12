@@ -45,9 +45,10 @@ namespace Tanks.UI.Menus.Store
 
         public void Tick()
         {
-            Opacity.Value = _navigation.Current is
-                MenuSectionType.None or MenuSectionType.LobbyRoom
-                ? 0 : 1;
+            bool hidden = _navigation.Current is MenuSectionType.None or
+                MenuSectionType.LobbyRoom or MenuSectionType.Debriefing;
+
+            Opacity.Value = hidden ? 0 : 1;
         }
 
         private void OnPlayerChanged(int revision)

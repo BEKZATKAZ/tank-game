@@ -1,17 +1,19 @@
 using NaughtyAttributes;
 using System;
 using Tanks.Core;
-using Tanks.Core.Players;
-using Tanks.Core.Store;
-using Tanks.Core.Leaderboards;
-using Tanks.Infrastructure.Leaderboards;
 using Tanks.Core.Common.Processes;
 using Tanks.Core.Common.Scenes;
+using Tanks.Core.Debriefing;
+using Tanks.Core.Leaderboards;
 using Tanks.Core.Lobbies;
 using Tanks.Core.Lobbies.Sessions;
 using Tanks.Core.Lobbies.UseCases;
+using Tanks.Core.Players;
 using Tanks.Core.Repositories;
 using Tanks.Core.Settings;
+using Tanks.Core.Store;
+using Tanks.Infrastructure.Debriefing;
+using Tanks.Infrastructure.Leaderboards;
 using Tanks.Infrastructure.Lobbies;
 using Tanks.Infrastructure.Processes;
 using Tanks.Infrastructure.Repositories;
@@ -54,7 +56,20 @@ namespace Tanks.Infrastructure
 
             builder.Register<ILobbyService, UGSLobbyService>(Lifetime.Singleton);
             builder.Register<IAuthService, UGSAuthService>(Lifetime.Singleton);
+            builder.Register<GameplaySessionService>(Lifetime.Singleton);
             builder.Register<ICloudCodeCaller, UGSCloudCodeCaller>(Lifetime.Singleton);
+            builder.Register<IDebriefingService,
+                UGSDebriefingService>(Lifetime.Singleton);
+
+            builder.Register<IPendingDebriefingService, PendingDebriefingService>(
+                Lifetime.Singleton);
+
+            builder.Register<IDebriefingClockService,
+                DebriefingClockService>(Lifetime.Singleton);
+
+            builder.Register<IPlayerLevelService, PlayerLevelService>(
+                Lifetime.Singleton);
+
             builder.Register<IServerClock, ServerClock>(Lifetime.Singleton);
             builder.Register<UGSPlayerService>(Lifetime.Singleton).AsImplementedInterfaces();
             builder.Register<MenuLoadingState>(Lifetime.Singleton);

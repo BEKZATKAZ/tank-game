@@ -3,6 +3,8 @@ using Tanks.Client.Rendering;
 using Tanks.Core.Cosmetics;
 using Tanks.Core.Players;
 using Tanks.Localization;
+using Tanks.UI.Menus.Debriefing;
+using Tanks.UI.Menus.Debriefing.Services;
 using Tanks.UI.Menus.Dialogs;
 using Tanks.UI.Menus.Extras;
 using Tanks.UI.Menus.Items;
@@ -55,7 +57,17 @@ namespace Tanks.UI.Menus
             builder.Register<ExtrasViewModel>(Lifetime.Transient);
             builder.Register<LeaderboardsViewModel>(Lifetime.Transient);
             builder.Register<ItemBrowserViewModel>(Lifetime.Transient);
+
+            builder.Register<IDebriefingAnimationService,
+                DebriefingAnimationService>(Lifetime.Transient);
+
+            builder.Register<DebriefingViewModel>(Lifetime.Transient);
+
+            builder.Register<IDebriefingAudioService,
+                DebriefingAudioService>(Lifetime.Transient);
+
             builder.Register<StoreViewModel>(Lifetime.Transient);
+
             builder.Register<Tanks.Core.Store.IStoreService,
                 Tanks.Core.Store.StoreService>(Lifetime.Singleton);
 
@@ -65,7 +77,9 @@ namespace Tanks.UI.Menus
             builder.Register<IItemCatalog, ItemCatalog>(Lifetime.Singleton);
 
             builder.RegisterSettings();
-            builder.Register<ICameraMainService, CameraMainService>(Lifetime.Singleton);
+
+            builder.Register<ICameraMainService,
+                CameraMainService>(Lifetime.Singleton);
 
             builder.Register<LobbyBrowserViewModel>(Lifetime.Transient);
             builder.Register<LobbyRoomViewModel>(Lifetime.Transient);
@@ -76,7 +90,9 @@ namespace Tanks.UI.Menus
             {
                 resolver.Resolve<MenuLoadingState>().Reset();
                 // Leave the previous session completely
-                if (NetworkManager.Singleton) Destroy(NetworkManager.Singleton.gameObject);
+
+                if (NetworkManager.Singleton) Destroy(
+                    NetworkManager.Singleton.gameObject);
             });
         }
     }

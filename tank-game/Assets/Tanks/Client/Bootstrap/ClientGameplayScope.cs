@@ -1,5 +1,6 @@
 ﻿using NaughtyAttributes;
 using Tanks.Audio;
+using Tanks.Client.Connection;
 using Tanks.Client.Entities;
 using Tanks.Client.Entities.Health;
 using Tanks.Client.Input;
@@ -43,6 +44,8 @@ namespace Tanks.Client.Bootstrap
             base.Configure(builder);
 
             builder.RegisterAudio(Lifetime.Singleton);
+            builder.Register<ClientConnectionRecoveryService>(Lifetime.Singleton);
+            builder.Register<ClientLocalhostService>(Lifetime.Singleton);
             builder.RegisterLocalization(Lifetime.Singleton);
 
             builder.Register<

@@ -20,7 +20,6 @@ namespace Tanks.UI.Menus.Leaderboards
                 {
                     string code = sprite.name.Trim().ToUpperInvariant();
                     _lookup[code] = sprite;
-                    Debug.Log(name);
                 }
             }
 

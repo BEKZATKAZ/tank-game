@@ -9,13 +9,13 @@ public sealed class RewardDefinitionService
     {
         [TimedRewardType.Playtime] =
         [
-            new RewardClaim(CurrencyType.SpareParts, 150, 400),
-            new RewardClaim(CurrencyType.PridePoints, 20, 40)
+            new RewardClaim(CurrencyType.SpareParts, 100, 300),
+            new RewardClaim(CurrencyType.PridePoints, 10, 30)
         ],
         [TimedRewardType.Daily] =
         [
-            new RewardClaim(CurrencyType.SpareParts, 700, 1500),
-            new RewardClaim(CurrencyType.PridePoints, 80, 200)
+            new RewardClaim(CurrencyType.SpareParts, 500, 1000),
+            new RewardClaim(CurrencyType.PridePoints, 40, 100)
         ],
     };
 

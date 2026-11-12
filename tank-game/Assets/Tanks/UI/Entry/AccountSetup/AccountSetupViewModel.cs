@@ -185,7 +185,7 @@ namespace Tanks.UI.Entry.AccountSetup
             if (_authenticated == false || _cancellationToken.IsCancellationRequested) return;
 
             _resourceLoader.InitializeAsync().Forget();
-            _sceneLoader.StartLoading(new LoadMenus(), withTips: false, loadUntil: 1);
+            _sceneLoader.StartLoading(new LoadMenus(), withTips: false, loadUntil: 0.8f);
         }
     }
 }

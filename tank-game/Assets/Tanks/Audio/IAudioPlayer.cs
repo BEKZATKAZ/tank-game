@@ -1,4 +1,4 @@
-﻿using FMODUnity;
+using FMODUnity;
 using Tanks.Shared.Adapters;
 using Unity.Mathematics;
 using UnityEngine;
@@ -9,7 +9,10 @@ namespace Tanks.Audio
     {
         void SetDefault(ITransform target);
         void PlayOneShot(string path, float2 position = default);
-        void PlayOneShotAttached(string path, ITransform target, bool useDefault = false);
+        void PlayOneShotAttached(
+            string path,
+            ITransform target,
+            bool useDefault = false);
     }
 
     public sealed class FMODAudioPlayer : IAudioPlayer
@@ -28,12 +31,16 @@ namespace Tanks.Audio
             RuntimeManager.PlayOneShot(path, (Vector2)position);
         }
 
-        public void PlayOneShotAttached(string path, ITransform target, bool useDefault = false)
+        public void PlayOneShotAttached(
+            string path,
+            ITransform target,
+            bool useDefault = false)
         {
             if (useDefault)
             {
                 if (Default) RuntimeManager.PlayOneShotAttached(path, Default);
                 else PlayOneShot(path);
+
                 return;
             }
 
@@ -47,4 +54,3 @@ namespace Tanks.Audio
         }
     }
 }
-

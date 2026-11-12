@@ -8,7 +8,7 @@
 			<value>30</value>
 		</property>
 		<property name="sampleRate">
-			<value>20500</value>
+			<value>22500</value>
 		</property>
 		<relationship name="platform">
 			<destination>{15059197-07f6-4f30-8995-666045382faf}</destination>

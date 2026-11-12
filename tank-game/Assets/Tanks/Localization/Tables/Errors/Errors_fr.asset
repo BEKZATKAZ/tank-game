@@ -18,6 +18,18 @@ MonoBehaviour:
   m_Metadata:
     m_Items: []
   m_TableData:
+  - m_Id: 46000000000000001
+    m_Localized: Connexion impossible. Verifiez que le serveur fonctionne et reessayez.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 46000000000000002
+    m_Localized: Ce compte est deja connecte. Utilisez un compte different pour chaque client.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 46000000000000003
+    m_Localized: La partie a deja commence. Rejoignez une autre session.
+    m_Metadata:
+      m_Items: []
   - m_Id: 8684789760
     m_Localized: "Une erreur s'est produite. Veuillez r\xE9essayer."
     m_Metadata:

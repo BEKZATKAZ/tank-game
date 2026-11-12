@@ -1,3 +1,4 @@
+using System.Linq;
 using Tanks.Core;
 using Tanks.Core.Lobbies.Sessions;
 using Tanks.Shared;
@@ -37,7 +38,9 @@ namespace Tanks.Server.Bootstrap
 
             NetworkManager.Singleton.ConnectionApprovalCallback += ApprovalCheck;
             NetworkManager.Singleton.OnClientConnectedCallback += OnClientConnected;
-            NetworkManager.Singleton.OnClientDisconnectCallback += OnClientDisconnected;
+
+            NetworkManager.Singleton
+                .OnClientDisconnectCallback += OnClientDisconnected;
         }
 
         protected override void OnDestroy()
@@ -46,7 +49,9 @@ namespace Tanks.Server.Bootstrap
 
             NetworkManager.Singleton.ConnectionApprovalCallback -= ApprovalCheck;
             NetworkManager.Singleton.OnClientConnectedCallback -= OnClientConnected;
-            NetworkManager.Singleton.OnClientDisconnectCallback -= OnClientDisconnected;
+
+            NetworkManager.Singleton
+                .OnClientDisconnectCallback -= OnClientDisconnected;
         }
 
         public void ApprovalCheck(
@@ -62,18 +67,37 @@ namespace Tanks.Server.Bootstrap
                 return;
             }
 
-            ResultType<ClientConnectionPayload> result = _validator.Validate(request.Payload);
+            ResultType<ClientConnectionPayload> result = _validator.Validate(
+                request.Payload);
 
             if (result.IsSuccess)
             {
-                ClientData data = new ClientData(result.Value.DisplayName, result.Value.Equipped);
+                if (_clientService.GetConnectedClientIds().Any(id =>
+                    _clientService.GetClientData(
+                        id).PlayerId == result.Value.PlayerId))
+                {
+                    response.Reason = "duplicate-player-id";
+                    response.Approved = false;
+                    return;
+                }
+
+                bool directSceneTest = false;
+#if UNITY_EDITOR
+                directSceneTest = result.Value.IsDirectSceneTest;
+#endif
+
+                ClientData data = new ClientData(result.Value.DisplayName,
+                    result.Value.Equipped, result.Value.PlayerId, directSceneTest);
+
                 _clientService.AddClient(request.ClientNetworkId, data);
 
                 response.Approved = true;
                 return;
             }
 
-            Debug.LogWarningFormat("Client rejected, reason: '{0}'", result.ErrorCode);
+            Debug.LogWarningFormat("Client rejected, reason: '{0}'",
+                result.ErrorCode);
+
             response.Reason = result.ErrorCode;
             response.Approved = false;
         }
@@ -84,7 +108,9 @@ namespace Tanks.Server.Bootstrap
             if (clientId == 0) return;
 
             int currentCount = _clientService.ConnectedClientCount;
-            if (currentCount < _sessionSettings.GetSettings().DesiredPlayerCount) return;
+
+            if (currentCount < _sessionSettings.GetSettings(
+                ).DesiredPlayerCount) return;
 
             _allPlayersConnected = true;
             _lifetime.TrySetStep(GameStep.Session);
@@ -98,8 +124,7 @@ namespace Tanks.Server.Bootstrap
             if (clientId == 0)
             {
                 Debug.Log("Host left, shutting down");
-                NetworkManager.Singleton.Shutdown();
-                Application.Quit();
+                _lifetime.RequestShutdown();
                 return;
             }
 
@@ -111,9 +136,7 @@ namespace Tanks.Server.Bootstrap
             }
 
             if (_clientService.ConnectedClientCount > 0) return;
-            if (NetworkManager.Singleton) NetworkManager.Singleton.Shutdown();
-
-            Application.Quit();
+            _lifetime.RequestShutdown();
         }
     }
 }

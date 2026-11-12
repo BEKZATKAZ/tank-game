@@ -81,6 +81,27 @@ namespace Tanks.Server.Tests.Bootstrap
             Assert.False(response.Approved, "Should reject");
         }
 
+        [Test]
+        public void DuplicateBackendIdentity_IsRejectedBeforeClientRegistration()
+        {
+            _clientService.GetConnectedClientIds().Returns(new[] { 1UL });
+            _clientService.GetClientData(1).Returns(new ClientData("Existing",
+                playerId: "same-player"));
+
+            _validator.Validate(Arg.Any<byte[]>()).Returns(Result.Success(
+                new ClientConnectionPayload { DisplayName = "Other", PlayerId = "same-player" }));
+
+            NetworkManager.ConnectionApprovalResponse response = new();
+            _component.ApprovalCheck(new NetworkManager.ConnectionApprovalRequest
+            {
+                ClientNetworkId = 2
+            }, response);
+
+            Assert.That(response.Approved, Is.False);
+            Assert.That(response.Reason, Is.EqualTo("duplicate-player-id"));
+            _clientService.DidNotReceive().AddClient(Arg.Any<ulong>(), Arg.Any<ClientData>());
+        }
+
         [TestCase(1ul)]
         [TestCase(5ul)]
         [TestCase(10ul)]

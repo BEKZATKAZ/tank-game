@@ -1,4 +1,5 @@
-﻿using NaughtyAttributes;
+using NaughtyAttributes;
+using Tanks.Server.Debriefing;
 using Tanks.Server.Entities;
 using Tanks.Server.Generation;
 using Tanks.Server.Generation.Crates;
@@ -27,6 +28,8 @@ namespace Tanks.Server.Bootstrap
         [SerializeField]
         private CrateSpawner _crateSpawner;
 
+        [SerializeField] private MatchDebriefingSettings _debriefing = new();
+
         protected override void Configure(IContainerBuilder builder)
         {
 #if UNITY_EDITOR
@@ -35,6 +38,10 @@ namespace Tanks.Server.Bootstrap
 #endif
 
             base.Configure(builder);
+
+            builder.RegisterInstance(_debriefing);
+            builder.Register<IMatchDebriefingSubmissionService,
+                MatchDebriefingSubmissionService>(Lifetime.Singleton);
 
             builder.RegisterComponent(_lifetime).As<IServerLifetimeService>();
             builder.RegisterComponent(_pickupSpawner).As<IPickupSpawnBehaviour>();

@@ -18,6 +18,18 @@ MonoBehaviour:
   m_Metadata:
     m_Items: []
   m_TableData:
+  - m_Id: 46000000000000001
+    m_Localized: Could not connect. Check that the server is running and try joining again.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 46000000000000002
+    m_Localized: This account is already connected. Use a different account for each client.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 46000000000000003
+    m_Localized: The match has already started. Join another session.
+    m_Metadata:
+      m_Items: []
   - m_Id: 8684789760
     m_Localized: Something went wrong. Please try again.
     m_Metadata:

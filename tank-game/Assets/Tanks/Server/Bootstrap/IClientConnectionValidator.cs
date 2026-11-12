@@ -48,6 +48,11 @@ namespace Tanks.Server.Bootstrap
                 return Result.Failure<ClientConnectionPayload>("invalid-cosmetics");
             }
 
+            if (string.IsNullOrWhiteSpace(payload.PlayerId) || payload.PlayerId.Length > 128)
+            {
+                return Result.Failure<ClientConnectionPayload>("invalid-player-id");
+            }
+
             return Result.Success(payload);
         }
     }

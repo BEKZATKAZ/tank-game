@@ -112,9 +112,7 @@ namespace Tanks.UI.Menus.Play
             if (result.IsSuccess)
             {
                 _tankModelService.DriveByCurve(0, 0, instant: false);
-                await UniTask.Delay(2000);
-
-                _navigation.OpenSection(MenuSectionType.LobbyRoom);
+                _navigation.OpenSection(MenuSectionType.LobbyRoom, instant: true, menuDelay: 2.5f);
                 return;
             }
 

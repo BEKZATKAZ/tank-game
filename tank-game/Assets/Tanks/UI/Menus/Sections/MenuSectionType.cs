@@ -11,6 +11,7 @@ namespace Tanks.UI.Menus.Sections
         LobbyRoom,
         ItemBrowser,
         Leaderboards,
-        Store
+        Store,
+        Debriefing
     }
 }

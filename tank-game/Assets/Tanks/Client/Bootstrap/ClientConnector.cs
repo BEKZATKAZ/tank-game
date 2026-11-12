@@ -2,15 +2,14 @@ using Cysharp.Threading.Tasks;
 using Newtonsoft.Json;
 using System.Linq;
 using System.Text;
+using Tanks.Client.Connection;
 using Tanks.Client.Items;
 using Tanks.Core;
-using Tanks.Core.Players;
 using Tanks.Core.Common.Processes;
 using Tanks.Core.Common.Scenes;
 using Tanks.Core.Lobbies;
-using Tanks.Core.Lobbies.Payloads;
-using Tanks.Core.Lobbies.Responses;
 using Tanks.Core.Lobbies.Sessions;
+using Tanks.Core.Players;
 using Tanks.Shared.Bootstrap;
 using Tanks.Shared.Items;
 using Unity.Multiplayer.PlayMode;
@@ -33,60 +32,32 @@ namespace Tanks.Client.Bootstrap
         [Inject] private readonly ISceneLoader _sceneLoader;
         [Inject] private readonly IItemDatabase _sharedItemDatabase;
         [Inject] private readonly IClientItemDatabase _clientItemDatabase;
+        [Inject] private readonly GameplaySessionService _session;
+        [Inject] private readonly ClientConnectionRecoveryService _recovery;
+        [Inject] private readonly ClientLocalhostService _localhost;
+
+        private bool _connected;
 
         public async UniTask SetupRelayAsync(LoadGameplay data)
         {
             _settings.SetSettings(data.Settings);
 
             NetworkManager manager = NetworkManager.Singleton;
+
             JoinAllocation allocation = await RelayService.Instance
                 .JoinAllocationAsync(data.JoinCode);
 
             if (Application.isPlaying == false) return;
 
             UnityTransport transport = manager.GetComponent<UnityTransport>();
+
             transport.SetRelayServerData(allocation.ToRelayServerData("dtls"));
-        }
-
-        private async UniTask SetupLocalhost()
-        {
-#if UNITY_EDITOR
-            if (_client.IsConnected == false) _client.Reinitialize();
-
-            if (CurrentPlayer.IsMainEditor)
-            {
-                await _client.SendRequestAsync(new LoadSceneRequest
-                {
-                    Scene = RequestedServerScene.Gameplay
-                });
-
-                // Fire and forget
-                _ = _client.SendRequestAsync<PrepareServerRequest, ServerStandBy>(
-                    new PrepareServerRequest
-                    {
-                        IsLocalhost = true,
-                        Settings = SessionSettingsMapper.FromDefaultToLobby(_settings.DefaultSettings)
-                    });
-            }
-
-            SessionSettings defaultSettings = SessionSettingsMapper
-                .FromLobby(default, _settings.DefaultSettings);
-
-            _settings.SetSettings(defaultSettings);
-#endif
-
-            NetworkManager manager = NetworkManager.Singleton;
-            UnityTransport oldTransport = manager.GetComponent<UnityTransport>();
-            Destroy(oldTransport);
-
-            UnityTransport newTransport = manager.gameObject.AddComponent<UnityTransport>();
-            newTransport.MaxPacketQueueSize = 1024;
-            manager.NetworkConfig.NetworkTransport = newTransport;
         }
 
         private string GetDisplayName()
         {
-            string displayName = _auth.CurrentProfile?.DisplayName?.Value;
+            string displayName = _session.IsDirectSceneTest ? null :
+                _auth.CurrentProfile?.DisplayName?.Value;
 
 #if UNITY_EDITOR
             if (string.IsNullOrWhiteSpace(displayName))
@@ -100,9 +71,21 @@ namespace Tanks.Client.Bootstrap
 
         private void OnConnectionEvent(NetworkManager manager, ConnectionEventData e)
         {
+            if (e.EventType == ConnectionEvent.ClientConnected)
+            {
+                _connected = true;
+                return;
+            }
+
             if (e.EventType != ConnectionEvent.ClientDisconnected) return;
-            if (_sceneLoader.IsLoading) return;
-            _sceneLoader.StartLoading(new LoadMenus(), withTips: false);
+
+            string reason = string.IsNullOrWhiteSpace(manager.DisconnectReason)
+                ? "connection-failed" : manager.DisconnectReason;
+
+            if (_connected == false) Debug.LogWarning(
+                "Connection failed: " + reason);
+
+            _recovery.ReturnToMenus(_connected ? null : reason);
         }
 
         private UniTask InitializeItemsAsync()
@@ -114,17 +97,23 @@ namespace Tanks.Client.Bootstrap
 
         private async void Start()
         {
+            bool directSceneTest = false;
 #if UNITY_EDITOR
             if (_sceneLoader.IsLoading == false)
             {
-                _sceneLoader.StartLoading(new LoadGameplay(), loadActualScene: false);
+                directSceneTest = true;
+                _sceneLoader.StartLoading(
+                    new LoadGameplay(), loadActualScene: false);
             }
 
             _client.Reinitialize();
 #endif
 
-            // Prevent stale lobbies
-            if (string.IsNullOrWhiteSpace(_lobbyService.CurrentLobbyState.Id.Value.Value) == false)
+            _session.Begin(directSceneTest,
+                directSceneTest ? null : _auth.CurrentProfile?.UserId.Value);
+
+            if (directSceneTest == false && string.IsNullOrWhiteSpace(
+                _lobbyService.CurrentLobbyState.Id.Value.Value) == false)
             {
                 _ = _lobbyService.LeaveLobbyAsync();
             }
@@ -134,13 +123,17 @@ namespace Tanks.Client.Bootstrap
 
             LoadGameplay data = _sceneLoader.GetLoadingParameters<LoadGameplay>();
 
-            if (string.IsNullOrWhiteSpace(data.JoinCode)) await SetupLocalhost();
-            else await SetupRelayAsync(data);
+            UniTask setup = string.IsNullOrWhiteSpace(data.JoinCode)
+                ? _localhost.SetupAsync() : SetupRelayAsync(data);
+
+            await setup;
 
             _sceneLoader.Progress = 0.7f;
 
             string json = JsonConvert.SerializeObject(new ClientConnectionPayload
             {
+                PlayerId = _session.PlayerId,
+                IsDirectSceneTest = _session.IsDirectSceneTest,
                 DisplayName = GetDisplayName(),
                 Equipped = _player.LocalPlayer.Equipped.Value
             });
@@ -149,7 +142,11 @@ namespace Tanks.Client.Bootstrap
             manager.OnConnectionEvent += OnConnectionEvent;
 
             manager.NetworkConfig.ConnectionData = Encoding.UTF8.GetBytes(json);
-            manager.StartClient();
+
+            if (manager.StartClient() == false)
+            {
+                _recovery.ReturnToMenus("connection-failed");
+            }
         }
 
         private void OnDestroy()

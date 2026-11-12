@@ -11,5 +11,7 @@ namespace Tanks.Server.Bootstrap
         bool IsTimedOut { get; }
 
         void TrySetStep(GameStep value);
+        void HoldShutdown(System.Threading.Tasks.Task completion);
+        void RequestShutdown();
     }
 }

@@ -1,11 +1,11 @@
+using Newtonsoft.Json;
 using NUnit.Framework;
 using System.Text;
-using Tanks.Core.Players;
-using Tanks.Shared.Teams;
-using Newtonsoft.Json;
-using Tanks.Shared.Bootstrap;
 using Tanks.Core;
+using Tanks.Core.Players;
 using Tanks.Server.Bootstrap;
+using Tanks.Shared.Bootstrap;
+using Tanks.Shared.Teams;
 
 namespace Tanks.Server.Tests.Bootstrap
 {
@@ -24,7 +24,7 @@ namespace Tanks.Server.Tests.Bootstrap
         public void Validate_ValidDisplayName_Approves(string name)
         {
             ResultType result = _validator.Validate(
-                CreatePayload($"{{ \"DisplayName\": \"{name}\" }}"));
+                CreatePayload($"{{ \"PlayerId\": \"backend-player\", \"DisplayName\": \"{name}\" }}"));
 
             Assert.True(result.IsSuccess);
         }
@@ -35,7 +35,7 @@ namespace Tanks.Server.Tests.Bootstrap
         public void Validate_InvalidDisplayName_Rejects(string name)
         {
             ResultType result = _validator.Validate(
-                CreatePayload($"{{ \"DisplayName\": \"{name}\" }}"));
+                CreatePayload($"{{ \"PlayerId\": \"backend-player\", \"DisplayName\": \"{name}\" }}"));
 
             Assert.False(result.IsSuccess);
         }
@@ -55,7 +55,7 @@ namespace Tanks.Server.Tests.Bootstrap
         public void Appearance_SurvivesConnectionAndTeamState()
         {
             var equipped = new EquippedCosmetics { Body = "v4-body", Turret = "kr1-black-turret" };
-            string json = JsonConvert.SerializeObject(new ClientConnectionPayload { DisplayName = "Player", Equipped = equipped });
+            string json = JsonConvert.SerializeObject(new ClientConnectionPayload { PlayerId = "backend-player", DisplayName = "Player", Equipped = equipped });
             var result = _validator.Validate(CreatePayload(json));
             Assert.True(result.IsSuccess);
 
@@ -75,6 +75,20 @@ namespace Tanks.Server.Tests.Bootstrap
             });
 
             Assert.That(_validator.Validate(CreatePayload(json)).ErrorCode, Is.EqualTo("invalid-cosmetics"));
+        }
+
+        [TestCase(null)]
+        [TestCase("")]
+        [TestCase(" ")]
+        public void MissingBackendIdentity_IsRejected(string playerId)
+        {
+            string json = JsonConvert.SerializeObject(new ClientConnectionPayload
+            {
+                DisplayName = "Player", PlayerId = playerId
+            });
+
+            Assert.That(_validator.Validate(CreatePayload(json)).ErrorCode,
+                Is.EqualTo("invalid-player-id"));
         }
 
         private byte[] CreatePayload(string json)

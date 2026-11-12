@@ -39,7 +39,7 @@ namespace Tanks.UI.Menus.Transitions
         {
             _music.Play();
 
-            await UniTask.Delay(1200, cancellationToken: destroyCancellationToken);
+            await UniTask.Delay(500, cancellationToken: destroyCancellationToken);
             _fill.pickingMode = PickingMode.Ignore;
 
             await LMotion.Create(1f, 0f, duration: 2.5f)

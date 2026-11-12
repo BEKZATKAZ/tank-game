@@ -483,6 +483,66 @@ MonoBehaviour:
     m_Key: currency.pride.description
     m_Metadata:
       m_Items: []
+  - m_Id: 44000000000000000
+    m_Key: debriefing.title
+    m_Metadata:
+      m_Items: []
+  - m_Id: 44000000000000001
+    m_Key: debriefing.statistic
+    m_Metadata:
+      m_Items: []
+  - m_Id: 44000000000000002
+    m_Key: debriefing.eliminations
+    m_Metadata:
+      m_Items: []
+  - m_Id: 44000000000000003
+    m_Key: debriefing.assists
+    m_Metadata:
+      m_Items: []
+  - m_Id: 44000000000000004
+    m_Key: debriefing.deaths
+    m_Metadata:
+      m_Items: []
+  - m_Id: 44000000000000005
+    m_Key: debriefing.score
+    m_Metadata:
+      m_Items: []
+  - m_Id: 44000000000000006
+    m_Key: debriefing.victory
+    m_Metadata:
+      m_Items: []
+  - m_Id: 44000000000000007
+    m_Key: debriefing.defeat
+    m_Metadata:
+      m_Items: []
+  - m_Id: 44000000000000008
+    m_Key: debriefing.progress
+    m_Metadata:
+      m_Items: []
+  - m_Id: 44000000000000009
+    m_Key: debriefing.xp-reward
+    m_Metadata:
+      m_Items: []
+  - m_Id: 44000000000000010
+    m_Key: debriefing.skip
+    m_Metadata:
+      m_Items: []
+  - m_Id: 44000000000000011
+    m_Key: debriefing.close
+    m_Metadata:
+      m_Items: []
+  - m_Id: 44000000000000012
+    m_Key: debriefing.unavailable
+    m_Metadata:
+      m_Items: []
+  - m_Id: 44000000000000013
+    m_Key: debriefing.reward
+    m_Metadata:
+      m_Items: []
+  - m_Id: 44000000000000014
+    m_Key: debriefing.level
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:

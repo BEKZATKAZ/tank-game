@@ -107,6 +107,7 @@ namespace Tanks.UI.Tests.Menus
         [TestCase(MenuSectionType.Store, 1)]
         [TestCase(MenuSectionType.None, 0)]
         [TestCase(MenuSectionType.LobbyRoom, 0)]
+        [TestCase(MenuSectionType.Debriefing, 0)]
         public void Navigation_ControlsBalanceVisibility(
             MenuSectionType section,
             int opacity)

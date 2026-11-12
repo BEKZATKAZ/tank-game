@@ -1,0 +1,127 @@
+.debriefing-section {
+    position: absolute;
+    left: 0;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    align-items: center;
+    justify-content: center;
+    background-color: rgba(0, 0, 0, 0.75);
+}
+
+.debriefing-panel {
+    width: 90%;
+    max-width: 1400px;
+    height: 90%;
+    max-height: 92%;
+    min-height: 0;
+    padding: 24px;
+}
+
+.debriefing-title {
+    font-size: 44px;
+    -unity-text-align: middle-left;
+    margin-bottom: 24px;
+    flex-shrink: 0;
+}
+
+.debriefing-content, .debriefing-stats {
+    flex-grow: 1;
+    flex-shrink: 1;
+    min-height: 0;
+}
+
+.debriefing-progress-block {
+    flex-shrink: 0;
+}
+
+.debriefing-row {
+    flex-direction: row;
+    align-items: center;
+    min-height: 72px;
+    flex-shrink: 0;
+}
+
+.debriefing-statistic {
+    flex-grow: 1;
+    min-width: 220px;
+    -unity-text-align: middle-left;
+    font-size: 32px;
+    white-space: normal;
+}
+
+.debriefing-rewards {
+    flex-direction: row;
+    align-items: center;
+    justify-content: flex-end;
+    flex-wrap: wrap;
+    flex-shrink: 1;
+}
+
+.debriefing-reward {
+    flex-direction: row;
+    align-items: center;
+    margin-left: 24px;
+}
+
+.debriefing-reward .unity-label, .debriefing-xp-reward {
+    font-size: 28px;
+    -unity-text-align: middle-left;
+}
+
+.debriefing-reward .currency-icon {
+    width: 32px;
+    height: 32px;
+    margin-left: 8px;
+    margin-right: 0;
+}
+
+.debriefing-xp-reward {
+    margin-left: 24px;
+}
+
+.debriefing-levels {
+    flex-direction: row;
+    justify-content: space-between;
+    margin-top: 24px;
+}
+
+.debriefing-levels .unity-label, .debriefing-xp {
+    font-size: 28px;
+    -unity-text-align: middle-left;
+}
+
+.debriefing-progress {
+    height: 30px;
+    margin: 8px 0;
+}
+
+.debriefing-progress .unity-progress-bar__title {
+    display: none;
+}
+
+.debriefing-progress .unity-progress-bar__background {
+    background-color: rgb(35, 35, 35);
+}
+
+.debriefing-progress .unity-progress-bar__progress {
+    background-color: rgb(220, 190, 40);
+}
+
+.debriefing-buttons {
+    flex-direction: row;
+    margin-top: 24px;
+    flex-shrink: 0;
+}
+
+.debriefing-buttons .unity-button {
+    flex-grow: 1;
+    margin: 0 8px;
+}
+
+.debriefing-error {
+    flex-grow: 1;
+    white-space: normal;
+    -unity-text-align: middle-left;
+    font-size: 28px;
+}

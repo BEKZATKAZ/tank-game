@@ -17,6 +17,7 @@
   <Project Path="Tanks.Infrastructure.Tests.Runtime.csproj" />
   <Project Path="Tanks.Utils.Tests.csproj" />
   <Project Path="Tanks.UI.Tests.csproj" />
+  <Project Path="Assembly-CSharp-Editor.csproj" />
   <Project Path="Tanks.Shared.Tests.Runtime.csproj" />
   <Project Path="Tanks.Utils.csproj" />
   <Project Path="FMODUnityResonance.csproj" />

@@ -1,4 +1,4 @@
-﻿using FMOD.Studio;
+using FMOD.Studio;
 using FMODUnity;
 using System;
 using Tanks.Shared.Adapters;
@@ -10,6 +10,7 @@ namespace Tanks.Audio
         void Play();
         void Stop(bool fadeOut = true);
         void SetVolume(float volume);
+        void SetPitch(float pitch);
 
         void AttachTo(ITransform target);
         void SetParameter(string name, float value);
@@ -41,7 +42,9 @@ namespace Tanks.Audio
         public void AttachTo(ITransform target)
         {
             if (target is not UnityTransform transform) return;
-            RuntimeManager.AttachInstanceToGameObject(_instance, transform.Transform.gameObject);
+
+            RuntimeManager.AttachInstanceToGameObject(_instance,
+                transform.Transform.gameObject);
         }
 
         public void SetParameter(string name, float value)
@@ -52,6 +55,11 @@ namespace Tanks.Audio
         public void SetVolume(float volume)
         {
             _instance.setVolume(volume);
+        }
+
+        public void SetPitch(float pitch)
+        {
+            _instance.setPitch(pitch);
         }
     }
 }

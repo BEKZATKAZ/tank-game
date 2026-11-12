@@ -23,11 +23,28 @@ public sealed class CloudSaveService : ICloudSaveService
     private readonly IGameApiClient _client;
     private readonly ILogger<CloudSaveService>? _logger;
 
+    public Task<ApiResult<CloudItems>> LoadItemsAsync(
+        IExecutionContext context,
+        List<string> keys)
+    {
+        return LoadItemsAsync(context, context.PlayerId ?? "", keys);
+    }
+
+    public Task<ApiResult> SaveItemsAsync(
+        IExecutionContext context,
+        CloudItems value)
+    {
+        return SaveItemsAsync(context, context.PlayerId ?? "", value);
+    }
+
     public async Task<ApiResult<CloudItems>> LoadItemsAsync(
         IExecutionContext context,
-        params List<string> keys)
+        string playerId,
+        List<string> keys)
     {
-        if (string.IsNullOrWhiteSpace(context.PlayerId))
+        if (string.IsNullOrWhiteSpace(playerId) ||
+            (playerId != context.PlayerId &&
+                string.IsNullOrWhiteSpace(context.ServiceToken)))
         {
             return ApiResult.Fail<CloudItems>("unauthorized");
         }
@@ -36,7 +53,10 @@ public sealed class CloudSaveService : ICloudSaveService
         {
             ApiResponse<GetItemsResponse> response = await
                 _client.CloudSaveData.GetProtectedItemsAsync(
-                context, context.AccessToken, context.ProjectId, context.PlayerId, keys);
+                context,
+                    playerId == context.PlayerId ? context.AccessToken : context
+                        .ServiceToken,
+                context.ProjectId, playerId, keys);
 
             return ApiResult.Ok(new CloudItems(response.Data.Results));
         }
@@ -49,9 +69,10 @@ public sealed class CloudSaveService : ICloudSaveService
 
     public async Task<ApiResult> SaveItemsAsync(
         IExecutionContext context,
+        string playerId,
         CloudItems value)
     {
-        if (string.IsNullOrWhiteSpace(context.PlayerId) ||
+        if (string.IsNullOrWhiteSpace(playerId) ||
             string.IsNullOrWhiteSpace(context.ServiceToken))
         {
             return ApiResult.Fail("unauthorized");
@@ -60,7 +81,7 @@ public sealed class CloudSaveService : ICloudSaveService
         try
         {
             await _client.CloudSaveData.SetProtectedItemBatchAsync(
-                context, context.ServiceToken, context.ProjectId, context.PlayerId,
+                context, context.ServiceToken, context.ProjectId, playerId,
                 new SetItemBatchBody(value.GetSetters()));
 
             return ApiResult.Ok();

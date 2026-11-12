@@ -17,7 +17,7 @@ public sealed class LastClaimedTimes
         (DateTimeOffset last, int hours) = type switch
         {
             TimedRewardType.Playtime => (Playtime, 3),
-            TimedRewardType.Daily => (Daily, 24),
+            TimedRewardType.Daily => (Daily, 12),
             _ => (DateTimeOffset.MaxValue, 0)
         };
 
@@ -31,7 +31,7 @@ public sealed class LastClaimedTimes
         (DateTimeOffset last, int desiredHours) = type switch
         {
             TimedRewardType.Playtime => (Playtime, 3),
-            TimedRewardType.Daily => (Daily, 24),
+            TimedRewardType.Daily => (Daily, 12),
             _ => (DateTimeOffset.MaxValue, int.MaxValue)
         };
 

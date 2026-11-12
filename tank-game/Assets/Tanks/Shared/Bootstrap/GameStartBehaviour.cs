@@ -1,4 +1,5 @@
-﻿using NaughtyAttributes;
+using NaughtyAttributes;
+using System;
 using Tanks.Shared.Generation;
 using Tanks.Shared.Messaging;
 using Tanks.Shared.Teams;
@@ -24,9 +25,12 @@ namespace Tanks.Shared.Bootstrap
 
         [Inject] private readonly IObjectResolver _container;
         [Inject] private readonly IMessageBus _bus;
+        private string _matchId;
 
         [Rpc(SendTo.SpecifiedInParams)]
-        private void RequestReadyConfirmationClientRpc(int secretHandle, RpcParams p = default)
+        private void RequestReadyConfirmationClientRpc(
+            int secretHandle,
+            RpcParams p = default)
         {
             EmitMessage(new PlayerReadyRequested { SecretHandle = secretHandle });
         }
@@ -69,14 +73,24 @@ namespace Tanks.Shared.Bootstrap
         [Rpc(SendTo.Everyone, InvokePermission = RpcInvokePermission.Server)]
 		public void StartGameEveryoneRpc(GameStartedFromServer message)
         {
+            if (IsServer && _matchId == null) _matchId = Guid.NewGuid().ToString("N");
             EmitMessage(message);
             _bus.Publish(message, this);
         }
 
-        [Rpc(SendTo.Everyone, InvokePermission = RpcInvokePermission.Server)]
         public void EndGameEveryoneRpc(TeamId winningTeamId)
         {
-            EndGameFromServer message = new EndGameFromServer { WinningTeamId = winningTeamId };
+            EndGameResultEveryoneRpc(winningTeamId, _matchId);
+        }
+
+        [Rpc(SendTo.Everyone, InvokePermission = RpcInvokePermission.Server)]
+        private void EndGameResultEveryoneRpc(TeamId winningTeamId, string matchId)
+        {
+            EndGameFromServer message = new EndGameFromServer
+            {
+                WinningTeamId = winningTeamId,
+                MatchId = matchId
+            };
             EmitMessage(message);
             _bus.Publish(message, this);
         }
@@ -93,8 +107,36 @@ namespace Tanks.Shared.Bootstrap
             LeaderboardResultClientRpc(result, RpcTarget.Single(clientId, RpcTargetUse.Temp));
         }
 
+        public void SendDebriefing(ulong clientId, string matchId, string json)
+        {
+            DebriefingClientRpc(matchId, json, RpcTarget.Single(clientId, RpcTargetUse.Temp));
+        }
+
         [Rpc(SendTo.SpecifiedInParams, InvokePermission = RpcInvokePermission.Server)]
-        private void LeaderboardResultClientRpc(LeaderboardMatchResult result, RpcParams p = default)
+        private void DebriefingClientRpc(
+            string matchId,
+            string json,
+            RpcParams p = default)
+        {
+            EmitMessage(new DebriefingDelivered { MatchId = matchId, Json = json });
+        }
+
+        [Rpc(SendTo.Server)]
+        public void AcknowledgeDebriefingServerRpc(
+            string matchId,
+            RpcParams rpcParams = default)
+        {
+            EmitMessage(new DebriefingAcknowledged
+            {
+                MatchId = matchId,
+                ClientId = rpcParams.Receive.SenderClientId
+            });
+        }
+
+        [Rpc(SendTo.SpecifiedInParams, InvokePermission = RpcInvokePermission.Server)]
+        private void LeaderboardResultClientRpc(
+            LeaderboardMatchResult result,
+            RpcParams p = default)
         {
             EmitMessage(result);
         }

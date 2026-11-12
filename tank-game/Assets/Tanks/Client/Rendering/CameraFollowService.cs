@@ -79,6 +79,15 @@ namespace Tanks.Client.Rendering
             _previousTargetPosition = playerPosition;
         }
 
+        private void Start()
+        {
+            ICamera camera = _cameraMain.Get();
+            if (camera is null) return;
+
+            _previousTargetPosition = camera.BodyTransform.WorldPosition;
+            _cameraNextPosition = _previousTargetPosition;
+        }
+
         private void LateUpdate()
         {
             ICamera camera = _cameraMain.Get();

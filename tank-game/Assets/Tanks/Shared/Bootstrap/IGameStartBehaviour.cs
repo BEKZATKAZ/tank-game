@@ -1,9 +1,9 @@
-﻿using Tanks.Shared.Generation;
+using Tanks.Shared.Generation;
 using Tanks.Shared.Teams;
 using Tanks.Utils;
 using Unity.Mathematics;
-using UnityEngine;
 using Unity.Netcode;
+using UnityEngine;
 
 namespace Tanks.Shared.Bootstrap
 {
@@ -13,6 +13,7 @@ namespace Tanks.Shared.Bootstrap
     public struct EndGameFromServer
     {
         public TeamId WinningTeamId;
+        public string MatchId;
     }
 
     public struct LeaderboardMatchResult : INetworkSerializeByMemcpy
@@ -41,6 +42,8 @@ namespace Tanks.Shared.Bootstrap
 
         void EndGameEveryoneRpc(TeamId winningTeamId);
         void SendLeaderboardResult(ulong clientId, LeaderboardMatchResult result);
+        void SendDebriefing(ulong clientId, string matchId, string json);
+        void AcknowledgeDebriefingServerRpc(string matchId, RpcParams rpcParams = default);
         void StartGameEveryoneRpc(GameStartedFromServer message);
 
         void SpawnPlayer(ulong clientId, float2 position);

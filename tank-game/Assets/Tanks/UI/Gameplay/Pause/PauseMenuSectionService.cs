@@ -13,7 +13,7 @@ namespace Tanks.UI.Gameplay.Pause
 
         private readonly PauseMenuViewModel _pause;
 
-        public void OpenSection(MenuSectionType type, bool instant = false)
+        public void OpenSection(MenuSectionType type, bool instant = false, float menuDelay = 0)
         {
             if (type is MenuSectionType.Main && _pause.Section.Value is PauseMenuSection.Settings)
                 _pause.Toggle();
