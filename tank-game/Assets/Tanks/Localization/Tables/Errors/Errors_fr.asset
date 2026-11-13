@@ -19,15 +19,15 @@ MonoBehaviour:
     m_Items: []
   m_TableData:
   - m_Id: 46000000000000001
-    m_Localized: Connexion impossible. Verifiez que le serveur fonctionne et reessayez.
+    m_Localized: "Connexion impossible. V\u00e9rifiez que le serveur fonctionne et r\u00e9essayez."
     m_Metadata:
       m_Items: []
   - m_Id: 46000000000000002
-    m_Localized: Ce compte est deja connecte. Utilisez un compte different pour chaque client.
+    m_Localized: "Ce compte est d\u00e9j\u00e0 connect\u00e9. Utilisez un compte diff\u00e9rent pour chaque client."
     m_Metadata:
       m_Items: []
   - m_Id: 46000000000000003
-    m_Localized: La partie a deja commence. Rejoignez une autre session.
+    m_Localized: "La partie a d\u00e9j\u00e0 commenc\u00e9. Rejoignez une autre session."
     m_Metadata:
       m_Items: []
   - m_Id: 8684789760
@@ -151,11 +151,11 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 45000000000000000
-    m_Localized: "Les donn\u0413\u00a9es du joueur ont chang\u0413\u00a9. R\u0413\u00a9essayez."
+    m_Localized: "Les donn\u00e9es du joueur ont chang\u00e9. R\u00e9essayez."
     m_Metadata:
       m_Items: []
   - m_Id: 45000000000000001
-    m_Localized: "Trop de requ\u0413\u0404tes. R\u0413\u00a9essayez dans un instant."
+    m_Localized: "Trop de requ\u00eates. R\u00e9essayez dans un instant."
     m_Metadata:
       m_Items: []
   references:

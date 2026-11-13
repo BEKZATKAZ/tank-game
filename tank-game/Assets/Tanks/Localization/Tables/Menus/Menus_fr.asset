@@ -77,7 +77,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 3641288212045824
-    m_Localized: REVENIR
+    m_Localized: "ANNULER"
     m_Metadata:
       m_Items: []
   - m_Id: 3638901065867264
@@ -301,7 +301,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 33779992972713984
-    m_Localized: DOS
+    m_Localized: "RETOUR"
     m_Metadata:
       m_Items: []
   - m_Id: 41000000000000019
@@ -499,7 +499,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 44000000000000001
-    m_Localized: "{name} : {value}"
+    m_Localized: "{name} : {value:N0}"
     m_Metadata:
       m_Items: []
   - m_Id: 44000000000000002

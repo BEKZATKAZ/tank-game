@@ -53,7 +53,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 8203172012032
-    m_Localized: "Chaque \xE9l\xE9ment appartient \xE0 un niveau. Ils se distinguent par leur son et leur couleur caract\xE9ristiques."
+    m_Localized: "Chaque objet appartient \u00e0 un niveau. Les niveaux se distinguent par leur son et leur couleur caract\u00e9ristiques."
     m_Metadata:
       m_Items: []
   - m_Id: 12075842715213824
@@ -65,7 +65,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 7943608060043264
-    m_Localized: "Les caisses peuvent contenir des objets instables, mais il y a une faible probabilit\xE9."
+    m_Localized: "Les caisses ont une faible probabilit\u00e9 de contenir des objets instables."
     m_Metadata:
       m_Items: []
   - m_Id: 12074306069028864

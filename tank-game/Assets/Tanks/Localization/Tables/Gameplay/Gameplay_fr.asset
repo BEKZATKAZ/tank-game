@@ -25,7 +25,7 @@ MonoBehaviour:
       m_Items:
       - rid: 5824281740147687475
   - m_Id: 3952752743374848
-    m_Localized: Statistiques - Tour {round}
+    m_Localized: "Statistiques - Manche {round}"
     m_Metadata:
       m_Items:
       - rid: 5824281740147687475
@@ -82,7 +82,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 22504394505805824
-    m_Localized: "Br\xFBlant"
+    m_Localized: "En feu"
     m_Metadata:
       m_Items: []
   - m_Id: 22504394547748864

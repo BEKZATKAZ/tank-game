@@ -25,12 +25,12 @@ MonoBehaviour:
       m_Items:
       - rid: 5824281740147687477
   - m_Id: 70680580677632
-    m_Localized: "Vous restaurez {health} unit\xE9s de sant\xE9."
+    m_Localized: "Vous r\u00e9cup\u00e9rez {health} points de vie."
     m_Metadata:
       m_Items:
       - rid: 5824281740147687477
   - m_Id: 25106182220242944
-    m_Localized: "Vous restaurez {health} unit\xE9s de sant\xE9."
+    m_Localized: "Vous r\u00e9cup\u00e9rez {health} points de vie."
     m_Metadata:
       m_Items:
       - rid: 5824281740147687477
@@ -40,17 +40,17 @@ MonoBehaviour:
       m_Items:
       - rid: 5824281740147687477
   - m_Id: 25751396253392896
-    m_Localized: "Pour chaque {interval} de sant\xE9 manquante, vous subissez {damage} points de d\xE9g\xE2ts. Cependant, cet objet ne peut \xEAtre ramass\xE9 qu'une seule fois, sinon vous mourrez."
+    m_Localized: "Pour chaque tranche de {interval} points de vie manquants, vous infligez {damage} d\u00e9g\u00e2ts suppl\u00e9mentaires. Cependant, cet objet ne peut \u00eatre ramass\u00e9 qu'une seule fois, sinon vous mourrez."
     m_Metadata:
       m_Items:
       - rid: 5824281740147687477
   - m_Id: 26924559217680384
-    m_Localized: "\xC0 chaque tir, tous les joueurs, sauf vous, r\xE9cup\xE8rent {heal} points de vie. Les joueurs \xE9quip\xE9s de cet objet ne sont pas affect\xE9s. Votre cadence de tir est doubl\xE9e. Veillez \xE0 infliger plus de d\xE9g\xE2ts que vous n'en ratez."
+    m_Localized: "\u00c0 chaque tir, tous les joueurs, sauf vous, r\u00e9cup\u00e8rent {heal} points de vie. Les joueurs \u00e9quip\u00e9s de cet objet ne sont pas affect\u00e9s. Votre cadence de tir est doubl\u00e9e. Veillez \u00e0 infliger plus de d\u00e9g\u00e2ts que vous ne rendez de points de vie \u00e0 vos adversaires."
     m_Metadata:
       m_Items:
       - rid: 5824281740147687477
   - m_Id: 75812378730496
-    m_Localized: Inhabituel
+    m_Localized: "Peu commun"
     m_Metadata:
       m_Items: []
   - m_Id: 75907253886976
@@ -70,7 +70,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 1898613006336
-    m_Localized: "Pas de droit \xE0 l'erreur"
+    m_Localized: "Pas le droit \u00e0 l'erreur"
     m_Metadata:
       m_Items: []
   - m_Id: 2067794452480
@@ -106,11 +106,11 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 74540846112768
-    m_Localized: "Une \xE9vasion qui a un hic. Un hic accidentel, en r\xE9alit\xE9."
+    m_Localized: "Une fuite avec une petite surprise. Une destination al\u00e9atoire, en fait."
     m_Metadata:
       m_Items: []
   - m_Id: 71503196938240
-    m_Localized: Arme automatique
+    m_Localized: "Mitrailleuse"
     m_Metadata:
       m_Items: []
   - m_Id: 71606984990720
@@ -142,7 +142,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 24646271011086336
-    m_Localized: Coffres jumeaux
+    m_Localized: "Double canon"
     m_Metadata:
       m_Items: []
   - m_Id: 24646440532271104
@@ -158,11 +158,11 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 25158317096001536
-    m_Localized: "Plus vous infligez de d\xE9g\xE2ts, plus vous utilisez de poudre !"
+    m_Localized: "Plus de poudre, plus de d\u00e9g\u00e2ts !"
     m_Metadata:
       m_Items: []
   - m_Id: 25158649037414400
-    m_Localized: Marches lourdes
+    m_Localized: "Chenilles lourdes"
     m_Metadata:
       m_Items: []
   - m_Id: 25158904093040640
@@ -178,7 +178,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 25372714284310528
-    m_Localized: Armure d'abeille
+    m_Localized: "Armure en cire d'abeille"
     m_Metadata:
       m_Items: []
   - m_Id: 25372870668935168
@@ -235,7 +235,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 34421328096747520
-    m_Localized: Protection du coussin
+    m_Localized: "Coussin de protection"
     m_Metadata:
       m_Items: []
   - m_Id: 34421328138690560
@@ -301,7 +301,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 34446604822339584
-    m_Localized: "Toutes les {interval}, vos stats augmentent tour \xE0 tour. Une seule stat peut \xEAtre active \xE0 la fois, les stats pr\xE9c\xE9dentes reviennent \xE0 leur \xE9tat initial. Apr\xE8s la derni\xE8re stat, le cycle recommence avec la premi\xE8re."
+    m_Localized: "Toutes les {interval}, vos stats augmentent tour \u00e0 tour. Une seule stat peut \u00eatre augment\u00e9e \u00e0 la fois, les stats pr\u00e9c\u00e9dentes reviennent \u00e0 leur \u00e9tat initial. Apr\u00e8s la derni\u00e8re stat, le cycle recommence avec la premi\u00e8re."
     m_Metadata:
       m_Items:
       - rid: 5824281740147687477
@@ -314,7 +314,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 34446604822339587
-    m_Localized: "Augmente une stat al\xE9atoire et diminue une autre.\n\nD\xE9g\xE2ts, vitesse et cadence de tir\_: {damage-boost} / {damage-penalty}.\nD\xE9fense\_: {defense-boost} / {defense-penalty}.\nR\xE9sistance\_: {resistance-boost} / {resistance-penalty}."
+    m_Localized: "Augmente une stat al\u00e9atoire et en diminue une autre.\n\nD\u00e9g\u00e2ts, vitesse et cadence de tir : {damage-boost} / {damage-penalty}.\nD\u00e9fense : +{defense-boost} / {defense-penalty}.\nR\u00e9sistance : +{resistance-boost} / {resistance-penalty}."
     m_Metadata:
       m_Items:
       - rid: 5824281740147687477
@@ -323,11 +323,11 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 35240567506427904
-    m_Localized: "Fournitures dans le r\xE9frig\xE9rateur"
+    m_Localized: "Provisions dans le r\u00e9frig\u00e9rateur"
     m_Metadata:
       m_Items: []
   - m_Id: 35240567560953856
-    m_Localized: "Chaque fois que vous gagnez des points de vie, votre stat la plus basse augmente {increase} et votre stat la plus \xE9lev\xE9e diminue {decrease}."
+    m_Localized: "Chaque fois que vous gagnez des points de vie, votre stat la plus basse augmente de {increase} et votre stat la plus \u00e9lev\u00e9e est modifi\u00e9e de {decrease}."
     m_Metadata:
       m_Items:
       - rid: 5824281740147687477
@@ -384,7 +384,7 @@ MonoBehaviour:
       m_Items:
       - rid: 5824281740147687477
   - m_Id: 35493227946008580
-    m_Localized: "Tech r\xE9trograde - Meilleure tech."
+    m_Localized: "La marche arri\u00e8re, la meilleure technique."
     m_Metadata:
       m_Items: []
   - m_Id: 35508022451593216
@@ -405,12 +405,12 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 35511987289415680
-    m_Localized: "Vous tirez \xE0 une vitesse incroyable, mais les d\xE9g\xE2ts que vous vous infligez sont augment\xE9s par {damage}."
+    m_Localized: "Vous tirez \u00e0 une vitesse incroyable, mais les d\u00e9g\u00e2ts que vous vous infligez sont augment\u00e9s de {damage}."
     m_Metadata:
       m_Items:
       - rid: 5824281740147687477
   - m_Id: 35511987289415681
-    m_Localized: "Le droit \xE0 l'erreur existe, existe..."
+    m_Localized: "Vous avez encore le droit \u00e0 l'erreur... pour le moment."
     m_Metadata:
       m_Items: []
   - m_Id: 36000000000000000
@@ -423,7 +423,7 @@ MonoBehaviour:
       m_Items:
       - rid: 5824281740147687477
   - m_Id: 36000000000000002
-    m_Localized: "Capacit\xE9 adapt\xE9e \xE0 toutes les occasions."
+    m_Localized: "De quoi parer \u00e0 toute \u00e9ventualit\u00e9."
     m_Metadata:
       m_Items: []
   - m_Id: 36000000000000003
@@ -431,7 +431,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 36000000000000004
-    m_Localized: "Toutes les {interval} d'immobilit\xE9, votre stat la plus \xE9lev\xE9e augmente de {increase}. Si elle atteint son maximum, c'est la stat imm\xE9diatement sup\xE9rieure qui augmente. D\xE9placer ou faire pivoter le char r\xE9initialise le chronom\xE8tre."
+    m_Localized: "Toutes les {interval} d'immobilit\u00e9, votre stat la plus \u00e9lev\u00e9e augmente de {increase}. Si elle est d\u00e9j\u00e0 au maximum, c'est la suivante dans l'ordre d\u00e9croissant qui augmente. D\u00e9placer ou faire pivoter le char r\u00e9initialise le chronom\u00e8tre."
     m_Metadata:
       m_Items:
       - rid: 5824281740147687477
@@ -457,11 +457,11 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 36000000000000010
-    m_Localized: Vous brillez de mille feux et attires l'attention des autres joueurs. Cependant, avec de telles stats, vous savez vous comporter avec eux.
+    m_Localized: "Vous brillez de mille feux et attirez l'attention des autres joueurs. Cependant, avec de telles stats, vous savez leur faire face."
     m_Metadata:
       m_Items: []
   - m_Id: 36000000000000011
-    m_Localized: Il m'est impossible de ne pas vous regarder.
+    m_Localized: "Impossible de passer inaper\u00e7u."
     m_Metadata:
       m_Items: []
   - m_Id: 36000000000000012
@@ -508,7 +508,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 36000000000000022
-    m_Localized: "Cette arme n'inflige aucun d\xE9g\xE2t. \xC0 l'impact, elle fait appara\xEEtre un objet al\xE9atoire de niveau al\xE9atoire, \xE0 l'exclusion des objets rares et l\xE9gendaires."
+    m_Localized: "Cette arme n'inflige aucun d\u00e9g\u00e2t. \u00c0 l'impact, elle fait appara\u00eetre un objet al\u00e9atoire de niveau al\u00e9atoire, \u00e0 l'exclusion des niveaux Peu commun et L\u00e9gendaire."
     m_Metadata:
       m_Items: []
   - m_Id: 36000000000000023
@@ -520,12 +520,12 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 36000000000000025
-    m_Localized: "Cette arme tire de minuscules billes qui provoquent un effet de br\xFBlure \xE0 l'impact."
+    m_Localized: "Cette arme tire de minuscules billes qui appliquent l'effet {effect-burning} \u00e0 l'impact."
     m_Metadata:
       m_Items:
       - rid: 5824281740147687477
   - m_Id: 36000000000000026
-    m_Localized: Petit mais tranchant.
+    m_Localized: "Petites, mais br\u00fblantes."
     m_Metadata:
       m_Items: []
   - m_Id: 36000000000000027
@@ -533,16 +533,16 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 36000000000000028
-    m_Localized: "Active l'effet {effect-frozen} pendant {duration}. Ensuite, votre sant\xE9 est enti\xE8rement restaur\xE9e. D\xE9geler l'effet pr\xE9matur\xE9ment annule la gu\xE9rison."
+    m_Localized: "Active l'effet {effect-frozen} pendant {duration}. Ensuite, votre sant\u00e9 est enti\u00e8rement restaur\u00e9e. Si vous d\u00e9gelez avant la fin de l'effet, la gu\u00e9rison est annul\u00e9e."
     m_Metadata:
       m_Items:
       - rid: 5824281740147687477
   - m_Id: 36000000000000029
-    m_Localized: Dors un peu.
+    m_Localized: "Dormez un peu."
     m_Metadata:
       m_Items: []
   - m_Id: 36000000000000030
-    m_Localized: "Diminution de l'\xE9quilibre"
+    m_Localized: "Rendements d\u00e9croissants"
     m_Metadata:
       m_Items: []
   - m_Id: 36000000000000031
@@ -559,7 +559,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 36000000000000034
-    m_Localized: "Vous perdez des FPS, mais une stat augmente consid\xE9rablement. Vous ne pouvez ramasser cet objet que deux fois.\n\nPremi\xE8re fois\_: d\xE9fense {first}, FPS maximum.\nDeuxi\xE8me fois\_: d\xE9g\xE2ts {second}, FPS maximum.\nTroisi\xE8me fois\_: vous mourez."
+    m_Localized: "Vous perdez des FPS, mais une stat augmente consid\u00e9rablement. Vous ne pouvez ramasser cet objet que deux fois.\n\nPremi\u00e8re fois : d\u00e9fense {first}, limite de 20 FPS.\nDeuxi\u00e8me fois : d\u00e9g\u00e2ts {second}, limite de 15 FPS.\nTroisi\u00e8me fois : vous mourez."
     m_Metadata:
       m_Items:
       - rid: 5824281740147687477
@@ -572,7 +572,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 38550435912261632
-    m_Localized: "Une arme qui tire une grenade flashbang. Tout impact provoque l'effet {effect-flashed} sur les joueurs, y compris vous. La grenade n'inflige pas de d\xE9g\xE2ts et n'aveugle pas les joueurs cach\xE9s derri\xE8re des obstacles."
+    m_Localized: "Une arme qui tire une grenade flash. Tout impact provoque l'effet {effect-flashed} sur les joueurs \u00e0 proximit\u00e9, y compris vous. La grenade n'inflige pas de d\u00e9g\u00e2ts et n'aveugle pas les joueurs cach\u00e9s derri\u00e8re des obstacles."
     m_Metadata:
       m_Items: []
   - m_Id: 38550435912261633

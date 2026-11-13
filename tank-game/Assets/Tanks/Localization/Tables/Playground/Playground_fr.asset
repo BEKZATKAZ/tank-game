@@ -43,7 +43,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 5560089403394
-    m_Localized: "R\xE9fl\xE9chissez-y \xE0 deux fois avant de choisir des objets de ce niveau. Ils pourraient ruiner votre partie ou celle des autres. Vous pouvez passer \xE0 autre chose, ou\u2026"
+    m_Localized: "R\u00e9fl\u00e9chissez-y \u00e0 deux fois avant de ramasser des objets de ce niveau. Ils pourraient ruiner votre partie ou celle des autres. Vous pouvez passer votre chemin, ou\u2026"
     m_Metadata:
       m_Items: []
   - m_Id: 13200479707136
