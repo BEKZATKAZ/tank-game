@@ -334,7 +334,7 @@ namespace Tanks.Client.Input
                     ""name"": ""TurnInPlace"",
                     ""type"": ""Button"",
                     ""id"": ""e66a9beb-763d-48d7-9516-a23f034de944"",
-                    ""expectedControlType"": ""Button"",
+                    ""expectedControlType"": """",
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false,
@@ -369,7 +369,7 @@ namespace Tanks.Client.Input
                     ""path"": ""<Keyboard>/w"",
                     ""interactions"": """",
                     ""processors"": ""directionDeadzone"",
-                    ""groups"": """",
+                    ""groups"": "";Keyboard & Mouse"",
                     ""action"": ""Direction"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": true
@@ -380,7 +380,7 @@ namespace Tanks.Client.Input
                     ""path"": ""<Keyboard>/upArrow"",
                     ""interactions"": """",
                     ""processors"": ""directionDeadzone"",
-                    ""groups"": """",
+                    ""groups"": "";Keyboard & Mouse"",
                     ""action"": ""Direction"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": true
@@ -391,7 +391,7 @@ namespace Tanks.Client.Input
                     ""path"": ""<Gamepad>/leftStick/up"",
                     ""interactions"": """",
                     ""processors"": ""directionDeadzone"",
-                    ""groups"": """",
+                    ""groups"": "";Gamepad"",
                     ""action"": ""Direction"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": true
@@ -402,7 +402,7 @@ namespace Tanks.Client.Input
                     ""path"": ""<Gamepad>/dpad/up"",
                     ""interactions"": """",
                     ""processors"": ""directionDeadzone"",
-                    ""groups"": """",
+                    ""groups"": "";Gamepad"",
                     ""action"": ""Direction"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": true
@@ -413,7 +413,7 @@ namespace Tanks.Client.Input
                     ""path"": ""<Keyboard>/s"",
                     ""interactions"": """",
                     ""processors"": ""directionDeadzone"",
-                    ""groups"": """",
+                    ""groups"": "";Keyboard & Mouse"",
                     ""action"": ""Direction"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": true
@@ -424,7 +424,7 @@ namespace Tanks.Client.Input
                     ""path"": ""<Keyboard>/downArrow"",
                     ""interactions"": """",
                     ""processors"": ""directionDeadzone"",
-                    ""groups"": """",
+                    ""groups"": "";Keyboard & Mouse"",
                     ""action"": ""Direction"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": true
@@ -435,7 +435,7 @@ namespace Tanks.Client.Input
                     ""path"": ""<Gamepad>/leftStick/down"",
                     ""interactions"": """",
                     ""processors"": ""directionDeadzone"",
-                    ""groups"": """",
+                    ""groups"": "";Gamepad"",
                     ""action"": ""Direction"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": true
@@ -446,7 +446,7 @@ namespace Tanks.Client.Input
                     ""path"": ""<Gamepad>/dpad/down"",
                     ""interactions"": """",
                     ""processors"": ""directionDeadzone"",
-                    ""groups"": """",
+                    ""groups"": "";Gamepad"",
                     ""action"": ""Direction"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": true
@@ -457,7 +457,7 @@ namespace Tanks.Client.Input
                     ""path"": ""<Keyboard>/a"",
                     ""interactions"": """",
                     ""processors"": ""directionDeadzone"",
-                    ""groups"": """",
+                    ""groups"": "";Keyboard & Mouse"",
                     ""action"": ""Direction"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": true
@@ -468,7 +468,7 @@ namespace Tanks.Client.Input
                     ""path"": ""<Keyboard>/leftArrow"",
                     ""interactions"": """",
                     ""processors"": ""directionDeadzone"",
-                    ""groups"": """",
+                    ""groups"": "";Keyboard & Mouse"",
                     ""action"": ""Direction"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": true
@@ -479,7 +479,7 @@ namespace Tanks.Client.Input
                     ""path"": ""<Gamepad>/leftStick/left"",
                     ""interactions"": """",
                     ""processors"": ""directionDeadzone"",
-                    ""groups"": """",
+                    ""groups"": "";Gamepad"",
                     ""action"": ""Direction"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": true
@@ -490,7 +490,7 @@ namespace Tanks.Client.Input
                     ""path"": ""<Gamepad>/dpad/left"",
                     ""interactions"": """",
                     ""processors"": ""directionDeadzone"",
-                    ""groups"": """",
+                    ""groups"": "";Gamepad"",
                     ""action"": ""Direction"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": true
@@ -501,7 +501,7 @@ namespace Tanks.Client.Input
                     ""path"": ""<Keyboard>/d"",
                     ""interactions"": """",
                     ""processors"": ""directionDeadzone"",
-                    ""groups"": """",
+                    ""groups"": "";Keyboard & Mouse"",
                     ""action"": ""Direction"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": true
@@ -512,7 +512,7 @@ namespace Tanks.Client.Input
                     ""path"": ""<Keyboard>/rightArrow"",
                     ""interactions"": """",
                     ""processors"": ""directionDeadzone"",
-                    ""groups"": """",
+                    ""groups"": "";Keyboard & Mouse"",
                     ""action"": ""Direction"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": true
@@ -523,7 +523,7 @@ namespace Tanks.Client.Input
                     ""path"": ""<Gamepad>/leftStick/right"",
                     ""interactions"": """",
                     ""processors"": ""directionDeadzone"",
-                    ""groups"": """",
+                    ""groups"": "";Gamepad"",
                     ""action"": ""Direction"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": true
@@ -534,7 +534,7 @@ namespace Tanks.Client.Input
                     ""path"": ""<Gamepad>/dpad/right"",
                     ""interactions"": """",
                     ""processors"": ""directionDeadzone"",
-                    ""groups"": """",
+                    ""groups"": "";Gamepad"",
                     ""action"": ""Direction"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": true
@@ -545,7 +545,7 @@ namespace Tanks.Client.Input
                     ""path"": ""<Keyboard>/space"",
                     ""interactions"": """",
                     ""processors"": """",
-                    ""groups"": """",
+                    ""groups"": "";Keyboard & Mouse"",
                     ""action"": ""TurnInPlace"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
@@ -564,10 +564,10 @@ namespace Tanks.Client.Input
                 {
                     ""name"": """",
                     ""id"": ""71947317-3b81-48f9-b562-8eb8423c86bd"",
-                    ""path"": ""<Gamepad>/leftTrigger"",
+                    ""path"": ""<Gamepad>/buttonSouth"",
                     ""interactions"": """",
                     ""processors"": """",
-                    ""groups"": """",
+                    ""groups"": "";Gamepad"",
                     ""action"": ""TurnInPlace"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
@@ -589,7 +589,7 @@ namespace Tanks.Client.Input
                     ""path"": ""<Keyboard>/leftShift"",
                     ""interactions"": """",
                     ""processors"": """",
-                    ""groups"": """",
+                    ""groups"": "";Keyboard & Mouse"",
                     ""action"": ""ToggleReverse"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
@@ -608,10 +608,10 @@ namespace Tanks.Client.Input
                 {
                     ""name"": """",
                     ""id"": ""238a21a3-85cd-4cbe-8f34-be049d3b8d3e"",
-                    ""path"": ""<Gamepad>/leftShoulder"",
+                    ""path"": ""<Gamepad>/leftTrigger"",
                     ""interactions"": """",
                     ""processors"": """",
-                    ""groups"": """",
+                    ""groups"": "";Gamepad"",
                     ""action"": ""ToggleReverse"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
@@ -761,7 +761,7 @@ namespace Tanks.Client.Input
                     ""name"": ""PreviousSpectatorTarget"",
                     ""type"": ""Button"",
                     ""id"": ""c74d3876-a620-455e-9217-90dc051f1bac"",
-                    ""expectedControlType"": ""Button"",
+                    ""expectedControlType"": """",
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false,
@@ -771,7 +771,7 @@ namespace Tanks.Client.Input
                     ""name"": ""NextSpectatorTarget"",
                     ""type"": ""Button"",
                     ""id"": ""a6ce6096-4941-427f-be34-5055dcd6d174"",
-                    ""expectedControlType"": ""Button"",
+                    ""expectedControlType"": """",
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false,
