@@ -16,10 +16,13 @@ namespace Tanks.UI.Menus.Items
             AddToClassList("item-browser__box");
 
             _fill = new VisualElement { pickingMode = PickingMode.Ignore };
+            _fill.style.opacity = 0;
             _fill.AddToClassList("bg-fill");
 
             Add(_fill);
-            _fill.SetSpriteBorderColor(item.ClientConfig.AccentColor);
+
+            _fill.SetSpriteColors(
+                item.ClientConfig.AccentColor, null, revealWhenReady: true);
 
             VisualElement icon = new VisualElement { pickingMode = PickingMode.Ignore };
             icon.AddToClassList("item-browser__icon");

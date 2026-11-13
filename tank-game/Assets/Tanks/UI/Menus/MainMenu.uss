@@ -70,6 +70,7 @@
 }
 
 .item-browser__details-scroll {
+    flex-basis: 0;
     flex-grow: 1;
     flex-shrink: 1;
     min-width: 0;
@@ -87,7 +88,10 @@
 }
 
 .item-browser__name {
+    flex-basis: 0;
+    flex-grow: 1;
     flex-shrink: 1;
+    min-width: 0;
     margin-left: 20px;
     font-size: 34px;
     letter-spacing: 2px;

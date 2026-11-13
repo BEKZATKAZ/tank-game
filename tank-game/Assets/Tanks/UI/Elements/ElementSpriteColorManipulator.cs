@@ -25,6 +25,7 @@ namespace Tanks.UI.Elements
         protected override void RegisterCallbacksOnTarget()
         {
             target.RegisterCallback<CustomStyleResolvedEvent>(OnStyle);
+            target.RegisterCallback<GeometryChangedEvent>(OnGeometryChanged);
             target.RegisterCallback<AttachToPanelEvent>(OnAttach);
             target.RegisterCallback<DetachFromPanelEvent>(OnDetach);
             if (target.panel != null) Schedule();
@@ -33,12 +34,14 @@ namespace Tanks.UI.Elements
         protected override void UnregisterCallbacksFromTarget()
         {
             target.UnregisterCallback<CustomStyleResolvedEvent>(OnStyle);
+            target.UnregisterCallback<GeometryChangedEvent>(OnGeometryChanged);
             target.UnregisterCallback<AttachToPanelEvent>(OnAttach);
             target.UnregisterCallback<DetachFromPanelEvent>(OnDetach);
             Cancel();
         }
 
         private void OnStyle(CustomStyleResolvedEvent value) => Apply();
+        private void OnGeometryChanged(GeometryChangedEvent value) => Apply();
         private void OnAttach(AttachToPanelEvent value) => Schedule();
 
         private void OnDetach(DetachFromPanelEvent value)
