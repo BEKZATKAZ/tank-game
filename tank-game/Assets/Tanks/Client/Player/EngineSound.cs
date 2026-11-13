@@ -1,6 +1,6 @@
-﻿using Tanks.Audio;
+using Tanks.Audio;
 using Tanks.Client.Entities;
-using Tanks.Client.Input;
+using Tanks.Client.Input.Driving;
 using Tanks.Client.Rendering;
 using Tanks.Core.Helpers;
 using Tanks.Shared;
@@ -14,7 +14,7 @@ namespace Tanks.Client.Player
     public sealed class EngineSound : NetworkComponent<ITankDriveBehaviour>
     {
         public EngineSound(
-            IInputService<ManualDriveInput> input,
+            DriveCommandService input,
             IAudioFactory audioFactory,
             ICameraMainService cameraService,
             IClientEntityService clientEntityService)
@@ -26,7 +26,7 @@ namespace Tanks.Client.Player
             _clientEntityService.Changed += OnPossessedChanged;
         }
 
-        private readonly IInputService<ManualDriveInput> _input;
+        private readonly DriveCommandService _input;
         private readonly IAudioFactory _audioFactory;
         private readonly ICameraMainService _cameraService;
         private readonly IClientEntityService _clientEntityService;
@@ -62,8 +62,7 @@ namespace Tanks.Client.Player
 
             if (Behaviour.IsLocalPlayer)
             {
-                ManualDriveInput input = _input.Read();
-                target = math.abs(input.Throttle);
+                target = math.abs(_input.Current.Throttle);
             }
             else
             {

@@ -2,6 +2,7 @@ using NSubstitute;
 using NUnit.Framework;
 using System;
 using Tanks.Core.Settings;
+using Tanks.Client.Input.Bindings;
 using Tanks.UI.Menus.Sections;
 using Tanks.UI.Menus.Settings;
 
@@ -16,7 +17,11 @@ namespace Tanks.UI.Tests.Menus
         {
             _service = Substitute.For<ISettingsService>();
             _navigation = Substitute.For<IMenuSectionService>();
-            return new SettingsViewModel(_service, _navigation);
+            IControlBindingService bindings = Substitute.For<IControlBindingService>();
+
+            bindings.Apply().Returns(true);
+            bindings.Reset().Returns(true);
+            return new SettingsViewModel(_service, _navigation, bindings);
         }
 
         [Test]

@@ -1,4 +1,4 @@
-﻿using Tanks.Core.Helpers;
+using Tanks.Core.Helpers;
 using Tanks.Shared.Adapters;
 using Unity.Mathematics;
 
@@ -18,6 +18,8 @@ namespace Tanks.Shared.Driving
 
         private readonly ArcadeDriverSettings _settings;
         private float _acceleration;
+
+        public float TurnRate => _settings.SteeringSpeed.Degrees;
 
         public void SetMaxAcceleration(PositiveFloatOrZero limit)
         {

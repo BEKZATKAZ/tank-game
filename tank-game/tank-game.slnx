@@ -17,7 +17,6 @@
   <Project Path="Tanks.Infrastructure.Tests.Runtime.csproj" />
   <Project Path="Tanks.Utils.Tests.csproj" />
   <Project Path="Tanks.UI.Tests.csproj" />
-  <Project Path="Assembly-CSharp-Editor.csproj" />
   <Project Path="Tanks.Shared.Tests.Runtime.csproj" />
   <Project Path="Tanks.Utils.csproj" />
   <Project Path="FMODUnityResonance.csproj" />
@@ -29,5 +28,6 @@
   <Project Path="FMODUnityResonanceEditor.csproj" />
   <Project Path="Tanks.Localization.Tests.csproj" />
   <Project Path="FMODUnityHaptics.csproj" />
+  <Project Path="Tanks.Client.Editor.csproj" />
   <Project Path="Tanks.Editor.TestHelpers.csproj" />
 </Solution>

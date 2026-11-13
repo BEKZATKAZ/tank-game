@@ -1,9 +1,11 @@
-﻿using NaughtyAttributes;
+using NaughtyAttributes;
 using Tanks.Audio;
 using Tanks.Client.Connection;
 using Tanks.Client.Entities;
 using Tanks.Client.Entities.Health;
 using Tanks.Client.Input;
+using Tanks.Client.Input.Bindings;
+using Tanks.Client.Input.Driving;
 using Tanks.Client.Items;
 using Tanks.Client.Player;
 using Tanks.Client.Rendering;
@@ -42,6 +44,11 @@ namespace Tanks.Client.Bootstrap
 #endif
 
             base.Configure(builder);
+
+            builder.Register<IControlBindingService,
+                ControlBindingService>(Lifetime.Singleton);
+            builder.Register<DirectionalDriveResolverService>(Lifetime.Singleton);
+            builder.Register<DriveCommandService>(Lifetime.Singleton);
 
             builder.RegisterAudio(Lifetime.Singleton);
             builder.Register<ClientConnectionRecoveryService>(Lifetime.Singleton);

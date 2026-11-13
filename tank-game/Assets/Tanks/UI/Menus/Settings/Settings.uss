@@ -1,0 +1,152 @@
+.settings-section .settings {
+    width: 1100px;
+    max-width: 90%;
+    min-width: 0;
+    max-height: 90%;
+}
+
+.settings .unity-scroll-view {
+    min-height: 0;
+    flex-shrink: 1;
+}
+
+.settings .setting,
+.settings .settings-bottom {
+    flex-shrink: 0;
+}
+
+.settings-category {
+    margin: 32px 0 16px;
+    padding: 0;
+    flex-shrink: 0;
+    background-image: none;
+    background-color: transparent;
+    border-width: 0;
+    font-size: 42px;
+    -unity-text-align: middle-left;
+    -unity-font-style: bold;
+}
+
+.settings .setting__label {
+    width: 400px;
+    max-width: 40%;
+    flex-shrink: 0;
+}
+
+.settings .setting-dropdown__value {
+    flex: 1 1 0;
+    width: 0;
+    min-width: 0;
+}
+
+.settings .setting-dropdown__previous-button,
+.settings .setting-dropdown__next-button {
+    width: 64px;
+    min-width: 64px;
+    margin: 0 4px;
+    padding: 0;
+    flex-shrink: 0;
+}
+
+.settings .setting .unity-base-slider .unity-base-slider__input {
+    min-width: 0;
+}
+
+.binding-status {
+    white-space: normal;
+    font-size: 18px;
+    margin: 8px 0;
+    -unity-text-align: middle-left;
+    flex-shrink: 0;
+    color: rgb(255, 220, 100);
+}
+
+.control-row {
+    flex-direction: row;
+    flex-wrap: nowrap;
+    flex-shrink: 0;
+    align-items: center;
+    min-height: 72px;
+    margin-top: 8px;
+}
+
+.control-row__label {
+    width: 22%;
+    flex-shrink: 0;
+    white-space: normal;
+    -unity-text-align: middle-left;
+    font-size: 22px;
+}
+
+.binding-field,
+.control-column-header {
+    width: 16.5%;
+    min-width: 0;
+    padding-left: 8px;
+    flex-shrink: 0;
+    flex-direction: row;
+}
+
+.control-column-header {
+    white-space: normal;
+    font-size: 18px;
+    -unity-text-align: middle-center;
+}
+
+.binding-field .unity-button {
+    height: 64px;
+    margin: 0;
+    padding: 4px;
+    border-width: 0;
+    background-color: transparent;
+}
+
+.binding-field__capture {
+    flex-grow: 1;
+    flex-shrink: 1;
+    min-width: 0;
+    justify-content: center;
+    align-items: center;
+}
+
+.binding-field__glyph {
+    width: 48px;
+    height: 48px;
+    flex-shrink: 0;
+}
+
+.binding-field__name {
+    white-space: normal;
+    font-size: 18px;
+}
+
+.binding-field__capture.menu-highlighted .binding-field__name {
+    color: black;
+}
+
+.binding-field .unity-button:focus,
+.binding-field .unity-button:hover,
+.binding-field--capturing .binding-field__capture {
+    border-width: 2px;
+    border-color: var(--text-color);
+}
+
+.control-row__label,
+.control-column-header,
+.binding-field__name,
+.binding-status {
+    letter-spacing: 0;
+    word-spacing: 0;
+}
+
+.control-row__clear {
+    width: 12%;
+    min-width: 0;
+    height: 64px;
+    flex-shrink: 0;
+    padding: 4px;
+    font-size: 18px;
+    white-space: normal;
+    letter-spacing: 0;
+    word-spacing: 0;
+}

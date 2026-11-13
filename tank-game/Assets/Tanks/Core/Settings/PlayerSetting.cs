@@ -1,4 +1,4 @@
-﻿namespace Tanks.Core.Settings
+namespace Tanks.Core.Settings
 {
     // Jumping from 1 to 100 to make room for new settings
     public enum PlayerSetting
@@ -13,7 +13,9 @@
         SFXVolume = 102,
         UIVolume = 103,
 
-        Language = 200
+        Language = 200,
+
+        ControlsMode = 300
     }
 
     public enum GameLanguage

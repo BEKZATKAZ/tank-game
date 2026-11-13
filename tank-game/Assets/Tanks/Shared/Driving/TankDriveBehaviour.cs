@@ -12,6 +12,7 @@ namespace Tanks.Shared.Driving
     public interface ITankDriveBehaviour : INetworkBehaviourExtended
     {
         float DefaultSpeed { get; }
+        float TurnRate { get; }
 
         void EmitTireTracks(bool left, bool right);
         void Tick(float throttle, float steering, float deltaTime);
@@ -37,6 +38,7 @@ namespace Tanks.Shared.Driving
         private ArcadeDriver _driver;
 
         public float DefaultSpeed { get; private set; }
+        public float TurnRate => _driver?.TurnRate ?? 0;
         public Rigidbody2D Rigidbody { get; private set; }
         public IVelocity Velocity { get; private set; }
 

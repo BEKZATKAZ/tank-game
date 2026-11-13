@@ -1,0 +1,38 @@
+.binding-dialog-overlay {
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.85);
+    justify-content: center;
+    align-items: center;
+}
+
+.binding-dialog {
+    width: 850px;
+    max-width: 90%;
+    background-image: var(--bg-image);
+    -unity-background-image-tint-color: red;
+}
+
+.binding-dialog__fill {
+    margin: 13px;
+    background-image: var(--bg-image);
+    -unity-background-image-tint-color: black;
+}
+
+.binding-dialog__header {
+    font-size: 32px;
+    background-color: red;
+    padding: 10px 30px;
+    -unity-font-style: bold;
+}
+
+.binding-dialog__prompt {
+    font-size: 26px;
+    padding: 30px;
+    white-space: normal;
+    letter-spacing: 0;
+    word-spacing: 0;
+}

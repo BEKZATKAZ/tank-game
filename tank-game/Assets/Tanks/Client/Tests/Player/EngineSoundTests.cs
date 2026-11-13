@@ -3,6 +3,7 @@ using NUnit.Framework;
 using Tanks.Audio;
 using Tanks.Client.Entities;
 using Tanks.Client.Input;
+using Tanks.Client.Input.Driving;
 using Tanks.Client.Player;
 using Tanks.Client.Rendering;
 using Tanks.Shared.Adapters;
@@ -14,7 +15,7 @@ namespace Tanks.Client.Tests.Player
 {
     public class EngineSoundTests
     {
-        private IInputService<ManualDriveInput> _input;
+        private DriveCommandService _input;
         private IAudioFactory _audioFactory;
         private ICameraMainService _cameraService;
         private IAudioInstance _mockAudioInstance;
@@ -24,7 +25,7 @@ namespace Tanks.Client.Tests.Player
         [SetUp]
         public void Setup()
         {
-            _input = Substitute.For<IInputService<ManualDriveInput>>();
+            _input = new DriveCommandService();
             _audioFactory = Substitute.For<IAudioFactory>();
             _cameraService = Substitute.For<ICameraMainService>();
             _clientEntityService = Substitute.For<IClientEntityService>();
@@ -55,7 +56,7 @@ namespace Tanks.Client.Tests.Player
         public void Throttle_LocalPlayer_Accelerates(float throttleInput)
         {
             _component.Behaviour.IsLocalPlayer.Returns(true);
-            _input.Read().Returns(new ManualDriveInput { Throttle = throttleInput });
+            _input.Current = new ManualDriveInput { Throttle = throttleInput };
             _component.Update(1);
 
             _mockAudioInstance
@@ -63,7 +64,7 @@ namespace Tanks.Client.Tests.Player
                 .SetParameter(Arg.Any<string>(), math.abs(throttleInput));
 
             // Reset
-            _input.Read().Returns(new ManualDriveInput { Throttle = 0 });
+            _input.Current = new ManualDriveInput { Throttle = 0 };
             _mockAudioInstance.ClearReceivedCalls();
 
             _component.Update(1);

@@ -1,4 +1,6 @@
 <ui:UXML xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
+    <Style src="Settings.uss"/>
+    <Style src="BindingCaptureDialog.uss"/>
     <ui:VisualElement name="SettingsSection" class="settings-section" style="display: none;">
         <ui:VisualElement name="Settings" class="settings">
             <ui:ScrollView name="" horizontal-scroller-visibility="Hidden">
@@ -7,6 +9,7 @@
                         <UnityEngine.Localization.LocalizedString property="Label" table="GUID:34510603f8b6d1a44b1b2ffa9aa551c9" entry="Id(4793871635013632)"/>
                     </Bindings>
                 </Tanks.UI.Menus.Settings.Elements.SettingDropdown>
+                <ui:Label class="settings-category"><Bindings><UnityEngine.Localization.LocalizedString property="text" table="GUID:34510603f8b6d1a44b1b2ffa9aa551c9" entry="menu.settings.display"/></Bindings></ui:Label>
                 <Tanks.UI.Menus.Settings.Elements.SettingScreenResolution name="ScreenResolution" type="ScreenResolutionIndex">
                     <Bindings>
                         <UnityEngine.Localization.LocalizedString property="Label" table="GUID:34510603f8b6d1a44b1b2ffa9aa551c9" entry="Id(3717298093776896)"/>
@@ -27,6 +30,7 @@
                         <UnityEngine.Localization.LocalizedString property="Label" table="GUID:34510603f8b6d1a44b1b2ffa9aa551c9" entry="Id(3713258257604608)"/>
                     </Bindings>
                 </Tanks.UI.Menus.Settings.Elements.SettingDropdown>
+                <ui:Label class="settings-category"><Bindings><UnityEngine.Localization.LocalizedString property="text" table="GUID:34510603f8b6d1a44b1b2ffa9aa551c9" entry="menu.settings.audio"/></Bindings></ui:Label>
                 <Tanks.UI.Menus.Settings.Elements.SliderSetting type="MasterVolume" name="MasterVolume" enable-instant-preview="true">
                     <Bindings>
                         <UnityEngine.Localization.LocalizedString property="Label" table="GUID:34510603f8b6d1a44b1b2ffa9aa551c9" entry="Id(3337205144051712)"/>
@@ -47,6 +51,12 @@
                         <UnityEngine.Localization.LocalizedString property="Label" table="GUID:34510603f8b6d1a44b1b2ffa9aa551c9" entry="Id(3337773761650688)"/>
                     </Bindings>
                 </Tanks.UI.Menus.Settings.Elements.SliderSetting>
+                <ui:Label class="settings-category"><Bindings><UnityEngine.Localization.LocalizedString property="text" table="GUID:34510603f8b6d1a44b1b2ffa9aa551c9" entry="menu.settings.controls"/></Bindings></ui:Label>
+                <Tanks.UI.Menus.Settings.Elements.SettingDropdown name="ControlsMode" localize-choices="true" choice-keys="modern,classic" type="ControlsMode">
+                    <Bindings><UnityEngine.Localization.LocalizedString property="Label" table="GUID:34510603f8b6d1a44b1b2ffa9aa551c9" entry="menu.settings.controls"/></Bindings>
+                </Tanks.UI.Menus.Settings.Elements.SettingDropdown>
+                <ui:Label name="BindingStatus" class="binding-status"/>
+                <ui:VisualElement name="ControlMappings"/>
             </ui:ScrollView>
             <ui:VisualElement name="Bottom" class="settings-bottom">
                 <Tanks.UI.Elements.CustomButton name="ApplyButton">
@@ -69,6 +79,16 @@
                         <UnityEngine.Localization.LocalizedString property="text" table="GUID:34510603f8b6d1a44b1b2ffa9aa551c9" entry="Id(33779992972713984)"/>
                     </Bindings>
                 </Tanks.UI.Elements.CustomButton>
+            </ui:VisualElement>
+        </ui:VisualElement>
+        <ui:VisualElement name="BindingCaptureOverlay" class="binding-dialog-overlay" style="display: none;">
+            <ui:VisualElement class="binding-dialog">
+                <ui:VisualElement class="binding-dialog__fill">
+                    <ui:Label class="binding-dialog__header">
+                        <Bindings><UnityEngine.Localization.LocalizedString property="text" table="Menus" entry="menu.settings.controls"/></Bindings>
+                    </ui:Label>
+                    <ui:Label name="BindingCapturePrompt" class="binding-dialog__prompt"/>
+                </ui:VisualElement>
             </ui:VisualElement>
         </ui:VisualElement>
     </ui:VisualElement>

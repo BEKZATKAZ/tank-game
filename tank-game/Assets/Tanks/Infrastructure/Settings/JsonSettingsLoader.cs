@@ -1,4 +1,4 @@
-﻿using Newtonsoft.Json;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -30,7 +30,8 @@ namespace Tanks.Infrastructure.Settings
                 { PlayerSetting.SFXVolume, 80 },
                 { PlayerSetting.UIVolume, 80 },
 
-                { PlayerSetting.Language, GetDefaultLanguage() }
+                { PlayerSetting.Language, GetDefaultLanguage() },
+                { PlayerSetting.ControlsMode, (int)ControlsMode.Modern }
             };
 
         private readonly IFileSystem _fileSystem;

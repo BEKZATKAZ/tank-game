@@ -85,5 +85,26 @@ namespace Tanks.Infrastructure.Tests.Settings
                 Assert.AreEqual(expected, actual, $"Invalid value at setting '{setting}'");
             }
         }
+        [Test]
+        public void LegacyFileDefaultsToModernAndSavedClassicSurvivesReload()
+        {
+            const string PATH = "controls-settings.json";
+            string saved = "{\"Language\":0}";
+
+            _fileSystem.Exists(PATH).Returns(true);
+            _fileSystem.ReadAllText(PATH).Returns(_ => saved);
+            _fileSystem.When(x => x.WriteAllText(PATH, Arg.Any<string>()))
+                .Do(x => saved = x.ArgAt<string>(1));
+
+            Dictionary<PlayerSetting, int> loaded = _loader.Load(PATH);
+
+            Assert.That(loaded[PlayerSetting.ControlsMode],
+                Is.EqualTo((int)ControlsMode.Modern));
+            loaded[PlayerSetting.ControlsMode] = (int)ControlsMode.Classic;
+            _loader.Save(PATH, loaded);
+
+            Assert.That(_loader.Load(PATH)[PlayerSetting.ControlsMode],
+                Is.EqualTo((int)ControlsMode.Classic));
+        }
     }
 }

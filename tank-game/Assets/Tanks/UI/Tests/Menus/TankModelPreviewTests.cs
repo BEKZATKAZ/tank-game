@@ -33,18 +33,18 @@ namespace Tanks.UI.Tests.Menus
             _tank = new GameObject("Tank").transform;
             _tank.SetParent(_root.transform);
             _body = _tank.gameObject.AddComponent<SpriteRenderer>();
+
             var turretObject = new GameObject("Turret");
             turretObject.transform.SetParent(_tank);
             _turret = turretObject.AddComponent<SpriteRenderer>();
             var applier = _tank.gameObject.AddComponent<CosmeticApplier>();
+
             Set(applier, "_database", _database);
             Set(applier, "_bodySprite", _body);
             Set(applier, "_turretSprite", _turret);
             Set(applier, "_defaultBody", _database.Find("v3-body", CosmeticType.Body));
             Set(applier, "_defaultTurret", _database.Find("v3-turret", CosmeticType.Turret));
-            Set(_service, "_tankModels", new[] { _tank });
-            Set(_service, "_mainCameraCenter", _root.transform);
-            Set(_service, "_cameraFollow", Substitute.For<ICameraFollowService>());
+
             ((List<TankModelEntry>)_service.Models).Add(new TankModelEntry(_tank));
             _service.SetPlayerData(0, new PlayerDisplayData
             {
@@ -91,7 +91,9 @@ namespace Tanks.UI.Tests.Menus
 
         private static void Set(object target, string field, object value)
         {
-            target.GetType().GetField(field, BindingFlags.Instance | BindingFlags.NonPublic).SetValue(target, value);
+            target.GetType()
+                .GetField(field, BindingFlags.Instance | BindingFlags.NonPublic)
+                .SetValue(target, value);
         }
     }
 }

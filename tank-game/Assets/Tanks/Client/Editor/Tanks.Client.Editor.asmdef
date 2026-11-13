@@ -1,0 +1,6 @@
+{
+    "name": "Tanks.Client.Editor",
+    "references": ["Tanks.Client", "Unity.InputSystem"],
+    "includePlatforms": ["Editor"],
+    "autoReferenced": false
+}

@@ -1,13 +1,10 @@
 using System.Collections.Generic;
 using Tanks.Core.Players;
 using Tanks.Client.Player;
-using Tanks.Client.Rendering;
 using Tanks.UI.TankModel;
 using Unity.Mathematics;
 using UnityEngine;
 using UnityEngine.Splines;
-using VContainer;
-using Tanks.UI.Menus.Sections;
 
 namespace Tanks.UI.Menus.TankModel
 {
@@ -40,6 +37,23 @@ namespace Tanks.UI.Menus.TankModel
         private float _targetSpeed;
         private float _currentSpeed;
 
+        private void ApplyCosmetics(int tankIndex)
+        {
+            if (_tankModels == null || tankIndex < 0 || tankIndex >= _tankModels.Length ||
+                _tankModels[tankIndex] == false || tankIndex >= _models.Count) return;
+
+            EquippedCosmetics cosmetics = _cosmeticPreviews.TryGetValue(tankIndex, out var preview)
+                ? preview : _models[tankIndex].Equipped;
+
+            _tankModels[tankIndex].GetComponent<CosmeticApplier>().Apply(cosmetics);
+        }
+
+        public void PrepareLocalPlayerTank()
+        {
+            _tankModels[0].position = new Vector3(0, -8.5f);
+            _tankModels[0].gameObject.SetActive(true);
+        }
+
         public void SetPlayerData(int tankIndex, PlayerDisplayData data)
         {
             _models[tankIndex].DisplayName = data.DisplayName ?? "";
@@ -58,17 +72,6 @@ namespace Tanks.UI.Menus.TankModel
         {
             _cosmeticPreviews.Remove(tankIndex);
             ApplyCosmetics(tankIndex);
-        }
-
-        private void ApplyCosmetics(int tankIndex)
-        {
-            if (_tankModels == null || tankIndex < 0 || tankIndex >= _tankModels.Length ||
-                _tankModels[tankIndex] == false || tankIndex >= _models.Count) return;
-
-            EquippedCosmetics cosmetics = _cosmeticPreviews.TryGetValue(tankIndex, out var preview)
-                ? preview : _models[tankIndex].Equipped;
-
-            _tankModels[tankIndex].GetComponent<CosmeticApplier>()?.Apply(cosmetics);
         }
 
         public void SetReady(int tankIndex, bool ready)
@@ -162,8 +165,6 @@ namespace Tanks.UI.Menus.TankModel
                 _models.Add(new TankModelEntry(_tankModels[i]));
             }
 
-            _tankModels[0].position = new Vector3(0, -8.5f);
-            _tankModels[0].gameObject.SetActive(true);
             _splineOffset = _splineContainer.transform.position;
         }
 

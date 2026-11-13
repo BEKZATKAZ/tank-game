@@ -1,4 +1,5 @@
 using Tanks.Client.Input;
+using Tanks.Client.Input.Bindings;
 
 namespace Tanks.UI.Gameplay.Input
 {
@@ -12,12 +13,24 @@ namespace Tanks.UI.Gameplay.Input
 
     public sealed class UIGameplayInputService : InputServiceBase<UIGameplayInput>
     {
-        public override UIGameplayInput Read() => new UIGameplayInput
+        public UIGameplayInputService(IControlBindingService bindings = null)
+            : base(bindings) { }
+
+        protected override void EnableMaps() => Controls.UI.Enable();
+
+        public override UIGameplayInput Read()
         {
-            Pause = Controls.UI.Pause.WasPressedThisFrame(),
-            GameStatsOpen = Controls.UI.GameStats.IsPressed(),
-            PreviousSpectatorTarget = Controls.UI.PreviousSpectatorTarget.WasPressedThisFrame(),
-            NextSpectatorTarget = Controls.UI.NextSpectatorTarget.WasPressedThisFrame()
-        };
+            if (IsEnabled == false || IsSuspended) return default;
+
+            return new UIGameplayInput
+            {
+                Pause = Controls.UI.Pause.WasPressedThisFrame(),
+                GameStatsOpen = Controls.UI.GameStats.IsPressed(),
+                PreviousSpectatorTarget = Controls.UI.PreviousSpectatorTarget
+                    .WasPressedThisFrame(),
+                NextSpectatorTarget = Controls.UI.NextSpectatorTarget
+                    .WasPressedThisFrame()
+            };
+        }
     }
 }

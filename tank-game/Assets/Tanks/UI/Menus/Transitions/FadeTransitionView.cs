@@ -1,14 +1,14 @@
 using Cysharp.Threading.Tasks;
-using FMODUnity;
 using LitMotion;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.UIElements;
 
 namespace Tanks.UI.Menus.Transitions
 {
     public sealed class FadeTransitionView : ViewBase<FadeTransitionViewModel>
     {
-        [SerializeField] private StudioEventEmitter _music;
+        [SerializeField] private UnityEvent _onFadeOut;
 
         private VisualElement _fill;
 
@@ -37,7 +37,7 @@ namespace Tanks.UI.Menus.Transitions
 
         private async UniTask FadeAsync()
         {
-            _music.Play();
+            _onFadeOut?.Invoke();
 
             await UniTask.Delay(500, cancellationToken: destroyCancellationToken);
             _fill.pickingMode = PickingMode.Ignore;

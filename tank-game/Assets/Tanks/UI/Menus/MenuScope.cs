@@ -1,5 +1,6 @@
 using Tanks.Audio;
 using Tanks.Client.Rendering;
+using Tanks.Client.Input.Bindings;
 using Tanks.Core.Cosmetics;
 using Tanks.Core.Players;
 using Tanks.Localization;
@@ -75,6 +76,9 @@ namespace Tanks.UI.Menus
             builder.Register<MenuEconomyViewModel>(Lifetime.Transient);
             builder.RegisterInstance(_cosmetics);
             builder.Register<IItemCatalog, ItemCatalog>(Lifetime.Singleton);
+
+            builder.Register<IControlBindingService,
+                ControlBindingService>(Lifetime.Singleton);
 
             builder.RegisterSettings();
 

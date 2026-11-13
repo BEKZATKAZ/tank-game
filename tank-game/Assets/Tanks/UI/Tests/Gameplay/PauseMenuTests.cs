@@ -3,6 +3,7 @@ using NSubstitute;
 using NUnit.Framework;
 using System;
 using Tanks.Client.Input;
+using Tanks.Client.Input.Bindings;
 using Tanks.Core;
 using Tanks.Core.Common.Scenes;
 using Tanks.Core.Settings;
@@ -101,7 +102,8 @@ namespace Tanks.UI.Tests.Gameplay
         {
             ISettingsService settings = Substitute.For<ISettingsService>();
             PauseMenuSectionService navigation = new(ViewModel);
-            SettingsViewModel settingsViewModel = new(settings, navigation);
+            IControlBindingService bindings = Substitute.For<IControlBindingService>();
+            SettingsViewModel settingsViewModel = new(settings, navigation, bindings);
             ViewModel.Open();
             ViewModel.OpenSettings();
 

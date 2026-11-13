@@ -1,0 +1,635 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8e2a7e2eef10de74999dbc21aee95ae7, type: 3}
+  m_Name: InputGlyphDatabase
+  m_EditorClassIdentifier: Tanks.Client::Tanks.Client.Input.Glyphs.InputGlyphDatabase
+  _glyphs:
+  - key: Keyboard & Mouse/mouse_scroll_vertical_outline
+    value: {fileID: 21300000, guid: 008d23fe70ffe28479c5f0807d76dd84, type: 3}
+  - key: Keyboard & Mouse/keyboard_h_outline
+    value: {fileID: 21300000, guid: 012cb6f79060711488267f41c488d0a9, type: 3}
+  - key: Gamepad/xbox_dpad_vertical_outline
+    value: {fileID: 21300000, guid: 0272bfe76f9fab04eb5f8b17ff1d6a3f, type: 3}
+  - key: Keyboard & Mouse/keyboard_t_outline
+    value: {fileID: 21300000, guid: 034e36923534f904fbddd9c0b4e5fe57, type: 3}
+  - key: Keyboard & Mouse/keyboard_x_outline
+    value: {fileID: 21300000, guid: 0400ea8e49bd7184c97b72409b4709b4, type: 3}
+  - key: Keyboard & Mouse/keyboard_f12
+    value: {fileID: 21300000, guid: 096acc03fa399994b85487fa9a965071, type: 3}
+  - key: Gamepad/xbox_stick_l_press
+    value: {fileID: 21300000, guid: 09b56d086ad79c04fb3eab58e0dd5895, type: 3}
+  - key: Gamepad/xbox_rb
+    value: {fileID: 21300000, guid: 0a4c770778fcd3a4496c0eee423eb7e4, type: 3}
+  - key: Keyboard & Mouse/keyboard_plus_outline
+    value: {fileID: 21300000, guid: 0a98510763142c04d9782ab0b38bf04b, type: 3}
+  - key: Keyboard & Mouse/keyboard_printscreen
+    value: {fileID: 21300000, guid: 0b3c347d2c774ac4fac3f948a2b540cb, type: 3}
+  - key: Keyboard & Mouse/keyboard_colon
+    value: {fileID: 21300000, guid: 0b591247a0292154985681eaebd38f5b, type: 3}
+  - key: Keyboard & Mouse/keyboard_k_outline
+    value: {fileID: 21300000, guid: 0bc403552c1134d4dadd0bd385e92802, type: 3}
+  - key: Keyboard & Mouse/keyboard_j
+    value: {fileID: 21300000, guid: 0d55bac9a26d84a48903601a687f058a, type: 3}
+  - key: Keyboard & Mouse/keyboard_5_outline
+    value: {fileID: 21300000, guid: 0e1dd937e8f134f49b66efa656732b30, type: 3}
+  - key: Keyboard & Mouse/keyboard_q_outline
+    value: {fileID: 21300000, guid: 0e8a8739538b3264b85e120b86954906, type: 3}
+  - key: Keyboard & Mouse/keyboard_o
+    value: {fileID: 21300000, guid: 0f4d63f76e65f084596c0479695f6883, type: 3}
+  - key: Keyboard & Mouse/keyboard_capslock_outline
+    value: {fileID: 21300000, guid: 0f6964a693a54d646a80e207fdf55121, type: 3}
+  - key: Gamepad/xbox_rb_outline
+    value: {fileID: 21300000, guid: 0f8e2bfb033a0da49a9bccd0595634c7, type: 3}
+  - key: Keyboard & Mouse/keyboard_arrows_up
+    value: {fileID: 21300000, guid: 106b64aabe293e84b9b2cbaa70785199, type: 3}
+  - key: Keyboard & Mouse/keyboard_function
+    value: {fileID: 21300000, guid: 10eed09ab1b0afb4ea9569a392a21532, type: 3}
+  - key: Gamepad/xbox_lb
+    value: {fileID: 21300000, guid: 13ef35a71274b464581a64c716be05e8, type: 3}
+  - key: Keyboard & Mouse/keyboard_insert
+    value: {fileID: 21300000, guid: 1614a3553c3dc974ba5654522315aa37, type: 3}
+  - key: Keyboard & Mouse/keyboard_shift_icon
+    value: {fileID: 21300000, guid: 1663da217ac707348a0666f412dc2b1d, type: 3}
+  - key: Gamepad/xbox_dpad_round_all
+    value: {fileID: 21300000, guid: 16cb2d8c2c75aef4ab111a58e1cc1c18, type: 3}
+  - key: Gamepad/xbox_stick_r_right
+    value: {fileID: 21300000, guid: 16efa62d402047445956636676740529, type: 3}
+  - key: Gamepad/xbox_dpad_all
+    value: {fileID: 21300000, guid: 16f2f1f1eced77d4991fd3ea923878b8, type: 3}
+  - key: Keyboard & Mouse/keyboard_x
+    value: {fileID: 21300000, guid: 178dfa59e9eccdb40908df0113cc61f7, type: 3}
+  - key: Keyboard & Mouse/mouse_scroll
+    value: {fileID: 21300000, guid: 17df57138d0f3d9478145b1114810884, type: 3}
+  - key: Keyboard & Mouse/keyboard_delete_outline
+    value: {fileID: 21300000, guid: 181b63c7f4ec545429e0227e9e2dee47, type: 3}
+  - key: Gamepad/xbox_lt_outline
+    value: {fileID: 21300000, guid: 19bd5f268b8df9d4ea3c900d0404e136, type: 3}
+  - key: Keyboard & Mouse/keyboard_f8_outline
+    value: {fileID: 21300000, guid: 1a2af83e6dd65eb4d9007c31b9723756, type: 3}
+  - key: Keyboard & Mouse/keyboard_f3
+    value: {fileID: 21300000, guid: 1ab538120e8d37c42802054351c04a4b, type: 3}
+  - key: Gamepad/xbox_stick_r_horizontal
+    value: {fileID: 21300000, guid: 1b20dba2a2f8e1c4e9ef5433cf74658d, type: 3}
+  - key: Keyboard & Mouse/keyboard_bracket_open_outline
+    value: {fileID: 21300000, guid: 1b59054667ceb824e9503dc59dd80ac8, type: 3}
+  - key: Keyboard & Mouse/keyboard_k
+    value: {fileID: 21300000, guid: 1c5da6c3971245f40a118cd2cf0eb8d3, type: 3}
+  - key: Keyboard & Mouse/keyboard_f11
+    value: {fileID: 21300000, guid: 1c67c0aaecd86134ea874420ddf3f137, type: 3}
+  - key: Keyboard & Mouse/keyboard_backspace_outline
+    value: {fileID: 21300000, guid: 1cc1e666a61a58043a9f01eb0ac9abc6, type: 3}
+  - key: Keyboard & Mouse/keyboard_slash_back_outline
+    value: {fileID: 21300000, guid: 1d6ec89e06f14f341bb27f02b8c0b4c1, type: 3}
+  - key: Gamepad/xbox_button_view
+    value: {fileID: 21300000, guid: 1e38dd2f80ec552478aa499c9df0c99d, type: 3}
+  - key: Keyboard & Mouse/keyboard_question_outline
+    value: {fileID: 21300000, guid: 1e5c4a6c758d581488aeae9d27f6e3fa, type: 3}
+  - key: Gamepad/xbox_dpad_up
+    value: {fileID: 21300000, guid: 209c7164a2c6daa4283f64bc08533951, type: 3}
+  - key: Keyboard & Mouse/keyboard_quote
+    value: {fileID: 21300000, guid: 21e6bbd7e5e9d2a4990f0855391acae9, type: 3}
+  - key: Keyboard & Mouse/keyboard_escape_outline
+    value: {fileID: 21300000, guid: 22378102c84ebac4ba4c71af547eb6bb, type: 3}
+  - key: Keyboard & Mouse/keyboard_j_outline
+    value: {fileID: 21300000, guid: 227256938a321844897c315e593e8c3e, type: 3}
+  - key: Gamepad/xbox_ls
+    value: {fileID: 21300000, guid: 2490fe4c4375b28418e37f6be60e8b5a, type: 3}
+  - key: Keyboard & Mouse/keyboard_r_outline
+    value: {fileID: 21300000, guid: 254c16b60d50c1a489f6e4e429f991a2, type: 3}
+  - key: Keyboard & Mouse/keyboard_comma_outline
+    value: {fileID: 21300000, guid: 26d7c3c2c8ac268498e8513ce8176037, type: 3}
+  - key: Keyboard & Mouse/keyboard_arrows_none
+    value: {fileID: 21300000, guid: 272a7d256d8f22744b62ef558f6c73dc, type: 3}
+  - key: Keyboard & Mouse/keyboard_f2_outline
+    value: {fileID: 21300000, guid: 2893c193033568140b4d3fb71cdfe6df, type: 3}
+  - key: Gamepad/xbox_button_color_b_outline
+    value: {fileID: 21300000, guid: 28d8a19d0a7f2c84c97e46149743fa74, type: 3}
+  - key: Keyboard & Mouse/keyboard_v_outline
+    value: {fileID: 21300000, guid: 28f3d2494503a234fa0b1d22307ad023, type: 3}
+  - key: Keyboard & Mouse/keyboard_f7_outline
+    value: {fileID: 21300000, guid: 291d67105f10ec14dada324d980f6f79, type: 3}
+  - key: Keyboard & Mouse/keyboard_a_outline
+    value: {fileID: 21300000, guid: 29bc1f4dae500d044b6c4205565514e7, type: 3}
+  - key: Keyboard & Mouse/keyboard_b
+    value: {fileID: 21300000, guid: 2b06f681bb0cab948b772d7bee9b7eb2, type: 3}
+  - key: Keyboard & Mouse/keyboard_enter_outline
+    value: {fileID: 21300000, guid: 2b368d0ba8c994742984e51a7399dfe7, type: 3}
+  - key: Gamepad/xbox_stick_side_l
+    value: {fileID: 21300000, guid: 2da4d1a88c8f58f419c83b277c73864f, type: 3}
+  - key: Gamepad/xbox_stick_l
+    value: {fileID: 21300000, guid: 2e525edc09b01ac4dbdac29460bc3878, type: 3}
+  - key: Keyboard & Mouse/keyboard_numlock_outline
+    value: {fileID: 21300000, guid: 2ef66854c4f00ea43bae71f544a33b98, type: 3}
+  - key: Keyboard & Mouse/keyboard_asterisk
+    value: {fileID: 21300000, guid: 2fdbe936e1ec82946ba7f999479a1622, type: 3}
+  - key: Keyboard & Mouse/keyboard_bracket_less
+    value: {fileID: 21300000, guid: 3088d1bee2493c841b0b5034d0fa3706, type: 3}
+  - key: Keyboard & Mouse/keyboard_i
+    value: {fileID: 21300000, guid: 30afc546e4287ab4ba4179d61ea1fd87, type: 3}
+  - key: Keyboard & Mouse/keyboard_arrows_horizontal
+    value: {fileID: 21300000, guid: 30c6f078125c7d648a5370392e3e4735, type: 3}
+  - key: Keyboard & Mouse/keyboard_tilde
+    value: {fileID: 21300000, guid: 31a170ababf155f42b6559b97937a365, type: 3}
+  - key: Keyboard & Mouse/keyboard_i_outline
+    value: {fileID: 21300000, guid: 333fbe173aec21e4c975ab736701c8f2, type: 3}
+  - key: Gamepad/xbox_button_b_outline
+    value: {fileID: 21300000, guid: 3450defb653e1fa4fa0066653aa81ddd, type: 3}
+  - key: Keyboard & Mouse/mouse_scroll_down_outline
+    value: {fileID: 21300000, guid: 34c24a9c1095ef64f982bce6d83a4cfb, type: 3}
+  - key: Keyboard & Mouse/keyboard_7_outline
+    value: {fileID: 21300000, guid: 352120ff83426914484e1fa97d8a1782, type: 3}
+  - key: Gamepad/xbox_dpad
+    value: {fileID: 21300000, guid: 3530899984432174fae8b4461c58047c, type: 3}
+  - key: Keyboard & Mouse/keyboard_f_outline
+    value: {fileID: 21300000, guid: 359ecfb4a35b9724c821cd04995c4d62, type: 3}
+  - key: Keyboard & Mouse/keyboard_arrow_down
+    value: {fileID: 21300000, guid: 35adc11390bfebd40bb56794832da2ef, type: 3}
+  - key: Keyboard & Mouse/keyboard_numpad_plus_outline
+    value: {fileID: 21300000, guid: 35b624780306895489fe8d856d97c8fb, type: 3}
+  - key: Keyboard & Mouse/keyboard_numpad_enter_outline
+    value: {fileID: 21300000, guid: 373289cf77a2e40448212c29cdcb6f2a, type: 3}
+  - key: Keyboard & Mouse/mouse
+    value: {fileID: 21300000, guid: 37380ae714ae3f047a9d37947b1ae1a2, type: 3}
+  - key: Keyboard & Mouse/keyboard_option
+    value: {fileID: 21300000, guid: 3802a7f95f021974986bbc65c1feb1a4, type: 3}
+  - key: Gamepad/xbox_dpad_up_outline
+    value: {fileID: 21300000, guid: 38fa93afc62ea9a44b00750c8be979e7, type: 3}
+  - key: Gamepad/xbox_button_x_outline
+    value: {fileID: 21300000, guid: 3a54081a3fe2ad245bf52eeae063d47b, type: 3}
+  - key: Keyboard & Mouse/keyboard_y_outline
+    value: {fileID: 21300000, guid: 3b593a534fd24d646893afe687108715, type: 3}
+  - key: Keyboard & Mouse/keyboard_bracket_greater_outline
+    value: {fileID: 21300000, guid: 3b6202fc37048264a9ec3d012c39da0b, type: 3}
+  - key: Keyboard & Mouse/keyboard_minus
+    value: {fileID: 21300000, guid: 3c154dbc120762b4599dd84fa5eb7425, type: 3}
+  - key: Keyboard & Mouse/keyboard_home
+    value: {fileID: 21300000, guid: 3dbd9013abacf564f832980bf58a265f, type: 3}
+  - key: Gamepad/xbox_button_b
+    value: {fileID: 21300000, guid: 3dc0d38d81e578849b788754eae0d29c, type: 3}
+  - key: Gamepad/xbox_button_menu
+    value: {fileID: 21300000, guid: 3ef6739d14cb5e548b54f60799d5d6ee, type: 3}
+  - key: Keyboard & Mouse/keyboard_delete
+    value: {fileID: 21300000, guid: 3fdf38caf609f9d4cab7a83bf243290f, type: 3}
+  - key: Keyboard & Mouse/keyboard_escape
+    value: {fileID: 21300000, guid: 40e1e3c6ab672c1499dc8dbe76f2f8d3, type: 3}
+  - key: Keyboard & Mouse/keyboard_9_outline
+    value: {fileID: 21300000, guid: 412621d84f8f85a4a98cfd74debc80cb, type: 3}
+  - key: Keyboard & Mouse/keyboard_0
+    value: {fileID: 21300000, guid: 41bcc6c7da1d67e46bd354c2933a9cb0, type: 3}
+  - key: Keyboard & Mouse/mouse_scroll_up
+    value: {fileID: 21300000, guid: 422c839a3284f8e4780773f768ef158b, type: 3}
+  - key: Keyboard & Mouse/keyboard_u
+    value: {fileID: 21300000, guid: 43a8e066627eed14a9f769046ee2ace3, type: 3}
+  - key: Keyboard & Mouse/keyboard_f10_outline
+    value: {fileID: 21300000, guid: 450f7ff1ed06cf14c9a2120a85259ee4, type: 3}
+  - key: Keyboard & Mouse/keyboard_apostrophe_outline
+    value: {fileID: 21300000, guid: 4553923254f0c6941b4d61dc2300c9c3, type: 3}
+  - key: Keyboard & Mouse/keyboard_f6
+    value: {fileID: 21300000, guid: 4585e6c1bc48d7149bfa3405a1f38df6, type: 3}
+  - key: Keyboard & Mouse/keyboard_f5_outline
+    value: {fileID: 21300000, guid: 46712c876c4be1e4bbfaf9ee12f4f048, type: 3}
+  - key: Keyboard & Mouse/keyboard_slash_forward_outline
+    value: {fileID: 21300000, guid: 472c44af54d3f4e489bb9f858c9885fe, type: 3}
+  - key: Keyboard & Mouse/keyboard_alt_outline
+    value: {fileID: 21300000, guid: 4736394f4078ada42bd4fa04416e1c02, type: 3}
+  - key: Keyboard & Mouse/keyboard_capslock
+    value: {fileID: 21300000, guid: 47ab3ccc9eeff0b41806d4626815acca, type: 3}
+  - key: Gamepad/xbox_dpad_down_outline
+    value: {fileID: 21300000, guid: 48e9336b185d3a84b9e8a2028310eaba, type: 3}
+  - key: Keyboard & Mouse/keyboard_4_outline
+    value: {fileID: 21300000, guid: 49ba03d706694164ebfec61004caf7c6, type: 3}
+  - key: Keyboard & Mouse/keyboard_z_outline
+    value: {fileID: 21300000, guid: 4b224bef9acae7c4794307ef05c69e53, type: 3}
+  - key: Keyboard & Mouse/keyboard_n
+    value: {fileID: 21300000, guid: 4b7142f28186c304fb239398c81a8c71, type: 3}
+  - key: Keyboard & Mouse/keyboard_win_outline
+    value: {fileID: 21300000, guid: 4c399f20e6a99864fba6432da4f905aa, type: 3}
+  - key: Keyboard & Mouse/keyboard_function_outline
+    value: {fileID: 21300000, guid: 4c4caebd58e177546a01ab999adb8f89, type: 3}
+  - key: Gamepad/xbox_dpad_horizontal_outline
+    value: {fileID: 21300000, guid: 4c832b2c171a3064196ca9c381235fcf, type: 3}
+  - key: Keyboard & Mouse/keyboard_p
+    value: {fileID: 21300000, guid: 4d914e159ddc08042ab0e07556d1153a, type: 3}
+  - key: Keyboard & Mouse/keyboard_l_outline
+    value: {fileID: 21300000, guid: 4dfce95c1708b334fa487fb87b7b3f00, type: 3}
+  - key: Keyboard & Mouse/keyboard_comma
+    value: {fileID: 21300000, guid: 4f99e0cdea694ae45835a4bdabf40c73, type: 3}
+  - key: Gamepad/xbox_stick_l_vertical
+    value: {fileID: 21300000, guid: 4fe012202715cbc47921ea4a5b66fb78, type: 3}
+  - key: Keyboard & Mouse/keyboard_arrows_vertical_outline
+    value: {fileID: 21300000, guid: 5173f59960d63cc4ea4d6cac2a5cf3ed, type: 3}
+  - key: Keyboard & Mouse/keyboard_o_outline
+    value: {fileID: 21300000, guid: 525f52a1b033fe14ca9467a44cb95009, type: 3}
+  - key: Keyboard & Mouse/keyboard_apostrophe
+    value: {fileID: 21300000, guid: 52cb3f1759970b2439084953aea0283e, type: 3}
+  - key: Keyboard & Mouse/keyboard_option_outline
+    value: {fileID: 21300000, guid: 532edfd06c1fc804bbed30c42870e8b4, type: 3}
+  - key: Keyboard & Mouse/keyboard_f12_outline
+    value: {fileID: 21300000, guid: 53bce5635d38faa408d03243b924a46a, type: 3}
+  - key: Keyboard & Mouse/keyboard_6
+    value: {fileID: 21300000, guid: 541e4ae33fe252744af079dc4d04602e, type: 3}
+  - key: Keyboard & Mouse/keyboard_g
+    value: {fileID: 21300000, guid: 563ae024bac89be4dadabc1a16df6f54, type: 3}
+  - key: Keyboard & Mouse/keyboard_f6_outline
+    value: {fileID: 21300000, guid: 56769e0c327af6d4faabfa1b31442965, type: 3}
+  - key: Keyboard & Mouse/keyboard_arrows_down
+    value: {fileID: 21300000, guid: 568bf028c4f76d94398ea0b6393d6e9b, type: 3}
+  - key: Gamepad/xbox_stick_r_up
+    value: {fileID: 21300000, guid: 5690225b6da09d34e876ad749f1f95af, type: 3}
+  - key: Keyboard & Mouse/keyboard_3_outline
+    value: {fileID: 21300000, guid: 56948dbe1c5c4bf438700537f36fe2b4, type: 3}
+  - key: Gamepad/xbox_stick_r_press
+    value: {fileID: 21300000, guid: 56a17656fb3ecc849bad33aac09822de, type: 3}
+  - key: Gamepad/xbox_stick_r
+    value: {fileID: 21300000, guid: 57b55d164856d414cb06bd9186e052fb, type: 3}
+  - key: Gamepad/xbox_button_color_y
+    value: {fileID: 21300000, guid: 58e362cadc9ca1c4198c15ca9b062a7d, type: 3}
+  - key: Keyboard & Mouse/keyboard_f8
+    value: {fileID: 21300000, guid: 5bec0c754edab0843af557655110decd, type: 3}
+  - key: Keyboard & Mouse/keyboard_arrows_down_outline
+    value: {fileID: 21300000, guid: 5c119db8115be8f40a2746f45e3994a8, type: 3}
+  - key: Keyboard & Mouse/keyboard_f9
+    value: {fileID: 21300000, guid: 5c80979ea70970942941ff1c063f7b02, type: 3}
+  - key: Keyboard & Mouse/mouse_left_outline
+    value: {fileID: 21300000, guid: 5d720073e2f108742a75aff227434539, type: 3}
+  - key: Gamepad/xbox_button_y_outline
+    value: {fileID: 21300000, guid: 5de34cc82b0135d4ab6a44811b90f567, type: 3}
+  - key: Gamepad/xbox_dpad_right_outline
+    value: {fileID: 21300000, guid: 5f0d0e7f0e91f72419ee91fb716f0a5d, type: 3}
+  - key: Keyboard & Mouse/keyboard_numpad_enter
+    value: {fileID: 21300000, guid: 6008c03ecf73b4d4a9659a08fe624d44, type: 3}
+  - key: Keyboard & Mouse/keyboard_arrow_left_outline
+    value: {fileID: 21300000, guid: 61b45b209e108cd46a47a29aca65a92f, type: 3}
+  - key: Keyboard & Mouse/mouse_move
+    value: {fileID: 21300000, guid: 62cbd4b6c0dd08946900fb8a235e2c1f, type: 3}
+  - key: Gamepad/xbox_stick_l_right
+    value: {fileID: 21300000, guid: 64cceb0edcefb0047b944b05f4c616e2, type: 3}
+  - key: Gamepad/xbox_button_color_a_outline
+    value: {fileID: 21300000, guid: 65ca80778ade89949953b745301fd4cc, type: 3}
+  - key: Keyboard & Mouse/keyboard_backspace_icon_outline
+    value: {fileID: 21300000, guid: 668434cf41af4ac489c31480b7ab61d5, type: 3}
+  - key: Keyboard & Mouse/keyboard_v
+    value: {fileID: 21300000, guid: 66c89921f179ce248a0327f10b940a65, type: 3}
+  - key: Keyboard & Mouse/keyboard_arrows_right_outline
+    value: {fileID: 21300000, guid: 67866b89a0c56864393b6aeae8b8bdcb, type: 3}
+  - key: Keyboard & Mouse/mouse_horizontal
+    value: {fileID: 21300000, guid: 6a54870530f876f4fa617ec909dfe30b, type: 3}
+  - key: Keyboard & Mouse/keyboard_bracket_less_outline
+    value: {fileID: 21300000, guid: 6ae52be04ea209a4a9f86e6f179ab4b6, type: 3}
+  - key: Keyboard & Mouse/keyboard_caret_outline
+    value: {fileID: 21300000, guid: 6b09f61e1eced7e4ab07ced3b841ce1e, type: 3}
+  - key: Keyboard & Mouse/keyboard_arrows_horizontal_outline
+    value: {fileID: 21300000, guid: 6d6d757205ed16a4194bb042ab1337de, type: 3}
+  - key: Keyboard & Mouse/keyboard_printscreen_outline
+    value: {fileID: 21300000, guid: 6e20ecf40719b8d4386e36a783c12e92, type: 3}
+  - key: Keyboard & Mouse/keyboard_period_outline
+    value: {fileID: 21300000, guid: 6e712412ca2c80b4fa80234de4d3868b, type: 3}
+  - key: Keyboard & Mouse/keyboard_end
+    value: {fileID: 21300000, guid: 6f3b4e050c76fde45bdf74c7817c8cc9, type: 3}
+  - key: Keyboard & Mouse/keyboard_space_outline
+    value: {fileID: 21300000, guid: 70616ced81674df4d8a8d659e9a241dc, type: 3}
+  - key: Keyboard & Mouse/keyboard_page_down
+    value: {fileID: 21300000, guid: 70a704e4bc8e8a640a6e3e181fe10f20, type: 3}
+  - key: Gamepad/xbox_rs
+    value: {fileID: 21300000, guid: 710fb74404d045b4fb42ccc645faabf3, type: 3}
+  - key: Keyboard & Mouse/keyboard_shift_icon_outline
+    value: {fileID: 21300000, guid: 722a2cb2d1f97d84a8aa8383584b9a3e, type: 3}
+  - key: Keyboard & Mouse/keyboard_caret
+    value: {fileID: 21300000, guid: 72fad9723482ba24dada0887c336c718, type: 3}
+  - key: Keyboard & Mouse/keyboard_arrow_down_outline
+    value: {fileID: 21300000, guid: 737195225ce983f40a80605d22f1f872, type: 3}
+  - key: Keyboard & Mouse/keyboard_quote_outline
+    value: {fileID: 21300000, guid: 76125cc576cf74d4d804e2a70914b94c, type: 3}
+  - key: Keyboard & Mouse/keyboard_shift
+    value: {fileID: 21300000, guid: 76a21268d31a51a48b45c771772963c3, type: 3}
+  - key: Gamepad/xbox_dpad_left
+    value: {fileID: 21300000, guid: 76c0bcbac2977544ba00dce4e5afe887, type: 3}
+  - key: Gamepad/xbox_button_share_outline
+    value: {fileID: 21300000, guid: 77031003e2c2bc648a7a15e2abbf9750, type: 3}
+  - key: Keyboard & Mouse/key_tab_icon_outline
+    value: {fileID: 21300000, guid: 783521f5b03c39b438dd3bba9770ef80, type: 3}
+  - key: Keyboard & Mouse/keyboard_page_up_outline
+    value: {fileID: 21300000, guid: 78efc03edbe25dc47af2a628dd2b33f0, type: 3}
+  - key: Keyboard & Mouse/keyboard_page_up
+    value: {fileID: 21300000, guid: 79690af5986322b43a037285e465220d, type: 3}
+  - key: Gamepad/xbox_button_a
+    value: {fileID: 21300000, guid: 79b8f5b2a4e11a04f92dcd76d224588c, type: 3}
+  - key: Gamepad/xbox_button_x
+    value: {fileID: 21300000, guid: 79c10f60f57ec574789cf5df82dc9e59, type: 3}
+  - key: Keyboard & Mouse/keyboard_tilde_outline
+    value: {fileID: 21300000, guid: 7a4de6fcdb1c4b745919c92f4cf57673, type: 3}
+  - key: Keyboard & Mouse/keyboard_f3_outline
+    value: {fileID: 21300000, guid: 7a716c06b7e7aa94990980efbe3f0571, type: 3}
+  - key: Gamepad/xbox_stick_r_vertical
+    value: {fileID: 21300000, guid: 7c29a80f4a129654e9bfdc4e390ee6f2, type: 3}
+  - key: Gamepad/xbox_rt
+    value: {fileID: 21300000, guid: 7d4f4ba9db113b045a695b534e3c70ee, type: 3}
+  - key: Keyboard & Mouse/keyboard_d_outline
+    value: {fileID: 21300000, guid: 7ea7f730adbf3e54c9279ac69cf2c9af, type: 3}
+  - key: Gamepad/xbox_button_color_y_outline
+    value: {fileID: 21300000, guid: 7ec7dde3cb7dec84c951a40efb99cccb, type: 3}
+  - key: Keyboard & Mouse/keyboard_f10
+    value: {fileID: 21300000, guid: 7f650c10a4a430248964126f80524416, type: 3}
+  - key: Keyboard & Mouse/keyboard_w
+    value: {fileID: 21300000, guid: 801b0f9a253c98a499d7108e83271970, type: 3}
+  - key: Keyboard & Mouse/keyboard_p_outline
+    value: {fileID: 21300000, guid: 81449d7b19d388b40a3371ec7469eb6f, type: 3}
+  - key: Keyboard & Mouse/mouse_right_outline
+    value: {fileID: 21300000, guid: 81d35068fba060d47b7f97b9e696a50b, type: 3}
+  - key: Keyboard & Mouse/keyboard_arrows_left
+    value: {fileID: 21300000, guid: 8230099e5660aa846805acc7a171a4aa, type: 3}
+  - key: Keyboard & Mouse/keyboard_3
+    value: {fileID: 21300000, guid: 839599ee09b4f5443bc3ed16999f3319, type: 3}
+  - key: Gamepad/xbox_dpad_round_vertical
+    value: {fileID: 21300000, guid: 840d1842d5295b940b68cc15328aeb35, type: 3}
+  - key: Keyboard & Mouse/keyboard_period
+    value: {fileID: 21300000, guid: 8554afd78e19a474e9c96750b80ca021, type: 3}
+  - key: Keyboard & Mouse/keyboard_1
+    value: {fileID: 21300000, guid: 8659bc3fa43e9cf4a93f4ffac030c9c0, type: 3}
+  - key: Keyboard & Mouse/keyboard_d
+    value: {fileID: 21300000, guid: 86a0ef986985e5e419e2c4f1d9fe7d99, type: 3}
+  - key: Keyboard & Mouse/mouse_scroll_down
+    value: {fileID: 21300000, guid: 86abc3979b05fce499788eb99aab5d10, type: 3}
+  - key: Keyboard & Mouse/keyboard_w_outline
+    value: {fileID: 21300000, guid: 87229ca94695bc842bda616cb94e5d74, type: 3}
+  - key: Keyboard & Mouse/keyboard_f4
+    value: {fileID: 21300000, guid: 8865ffa44b4c9ab4bbd99f8216ea5327, type: 3}
+  - key: Gamepad/xbox_button_color_x
+    value: {fileID: 21300000, guid: 886fba71f9304d34f8b87bf55451276d, type: 3}
+  - key: Gamepad/xbox_button_a_outline
+    value: {fileID: 21300000, guid: 88a7524a50bc4384c9ebb43b7f3f7c3b, type: 3}
+  - key: Keyboard & Mouse/keyboard_6_outline
+    value: {fileID: 21300000, guid: 890cde035cb9c5542b8547591ea846b2, type: 3}
+  - key: Keyboard & Mouse/keyboard_l
+    value: {fileID: 21300000, guid: 89b39847adab177498d6d83d9297396b, type: 3}
+  - key: Keyboard & Mouse/keyboard_b_outline
+    value: {fileID: 21300000, guid: 8a2057796f2969f41956d471228de276, type: 3}
+  - key: Gamepad/xbox_dpad_round
+    value: {fileID: 21300000, guid: 8cb3f9bcb9a6a6b4a89e88015fcf2976, type: 3}
+  - key: Keyboard & Mouse/keyboard_n_outline
+    value: {fileID: 21300000, guid: 8ddb581d91785e04a8b9ed2b498c2466, type: 3}
+  - key: Gamepad/xbox_dpad_round_left
+    value: {fileID: 21300000, guid: 8e3a965ef3e36aa4bb79f16be74e6c9d, type: 3}
+  - key: Keyboard & Mouse/keyboard_backspace_icon
+    value: {fileID: 21300000, guid: 8e6a6a843bca7d94e8a1dc0ccdf17161, type: 3}
+  - key: Keyboard & Mouse/keyboard_8
+    value: {fileID: 21300000, guid: 8edbf9c0fcfb4a4469bdddb378459171, type: 3}
+  - key: Keyboard & Mouse/keyboard_arrows_all
+    value: {fileID: 21300000, guid: 904b06a21f20b3747b01226927154c82, type: 3}
+  - key: Gamepad/xbox_stick_l_up
+    value: {fileID: 21300000, guid: 91404cd72b153104c8f9aa5d24272e38, type: 3}
+  - key: Keyboard & Mouse/keyboard_e
+    value: {fileID: 21300000, guid: 9186ef63ce230a04298b3e93c6c1a1e4, type: 3}
+  - key: Keyboard & Mouse/keyboard_s_outline
+    value: {fileID: 21300000, guid: 91a90d327df546345a51767a0aa39d31, type: 3}
+  - key: Keyboard & Mouse/mouse_scroll_up_outline
+    value: {fileID: 21300000, guid: 9440467c3096c23468c76ad6f1120a4d, type: 3}
+  - key: Keyboard & Mouse/keyboard_f
+    value: {fileID: 21300000, guid: 9469f2f2faa109242b03aa5ec1606735, type: 3}
+  - key: Keyboard & Mouse/keyboard_c
+    value: {fileID: 21300000, guid: 9547b0f42a7a61a44bc2570a70378f86, type: 3}
+  - key: Keyboard & Mouse/keyboard_ctrl_outline
+    value: {fileID: 21300000, guid: 95b3cdf4a0e80f945be5571d360cdb0b, type: 3}
+  - key: Keyboard & Mouse/key_tab_outline
+    value: {fileID: 21300000, guid: 95bc29f71381d9e4d824da63e4982adf, type: 3}
+  - key: Keyboard & Mouse/keyboard_win
+    value: {fileID: 21300000, guid: 98dc2090aa9b07e4084ccc0d04d619d2, type: 3}
+  - key: Keyboard & Mouse/keyboard_g_outline
+    value: {fileID: 21300000, guid: 99052a4faaefbd54da9336cf616a36c6, type: 3}
+  - key: Keyboard & Mouse/mouse_scroll_vertical
+    value: {fileID: 21300000, guid: 9913e032b46138e4e8ca21c132509bfa, type: 3}
+  - key: Gamepad/xbox_lt
+    value: {fileID: 21300000, guid: 9962b842c75d05f4a8bd794d87d8c106, type: 3}
+  - key: Keyboard & Mouse/keyboard_z
+    value: {fileID: 21300000, guid: 9afc2cd973ef1ee4e8bf0c9822556e9d, type: 3}
+  - key: Keyboard & Mouse/keyboard_a
+    value: {fileID: 21300000, guid: 9b0098c60a73b9f4c80a6c0bd53fe9fa, type: 3}
+  - key: Keyboard & Mouse/keyboard_bracket_greater
+    value: {fileID: 21300000, guid: 9b65146e87806d74484187cbc913ec2a, type: 3}
+  - key: Gamepad/xbox_button_y
+    value: {fileID: 21300000, guid: 9c2e826fa5ce8e648b45634cc4445091, type: 3}
+  - key: Keyboard & Mouse/keyboard_7
+    value: {fileID: 21300000, guid: 9d4b3cb2fd50e604eaf29e7b3f57cca7, type: 3}
+  - key: Keyboard & Mouse/keyboard_exclamation_outline
+    value: {fileID: 21300000, guid: 9dd505cb8ccd4294abd7b8a52cf0a160, type: 3}
+  - key: Gamepad/xbox_ls_outline
+    value: {fileID: 21300000, guid: 9e8448e2696dbd243b8f93530d7df95a, type: 3}
+  - key: Keyboard & Mouse/keyboard_semicolon
+    value: {fileID: 21300000, guid: 9e906330479e6dc4ea336f9428007cdb, type: 3}
+  - key: Keyboard & Mouse/key_tab
+    value: {fileID: 21300000, guid: 9f132fd04d37f104ea24d01619963e42, type: 3}
+  - key: Gamepad/xbox_dpad_round_horizontal
+    value: {fileID: 21300000, guid: a2271615d1803de4c8cbcb440fcc3bb2, type: 3}
+  - key: Keyboard & Mouse/keyboard_slash_back
+    value: {fileID: 21300000, guid: a37db0e147ae23e418a35cab10332309, type: 3}
+  - key: Keyboard & Mouse/keyboard_c_outline
+    value: {fileID: 21300000, guid: a39fb9c13399e19498851ea89286027f, type: 3}
+  - key: Keyboard & Mouse/keyboard_shift_outline
+    value: {fileID: 21300000, guid: a4a15f246cf5f8741bb302f50bf74d66, type: 3}
+  - key: Keyboard & Mouse/keyboard_plus
+    value: {fileID: 21300000, guid: a5981ccf275f303459f3e2e8cca43bf6, type: 3}
+  - key: Keyboard & Mouse/keyboard_numpad_plus
+    value: {fileID: 21300000, guid: a65ad29cc1b748c459f406388a13b9a2, type: 3}
+  - key: Keyboard & Mouse/keyboard_bracket_close_outline
+    value: {fileID: 21300000, guid: a6ec4f296045e7c4db4c578601de35da, type: 3}
+  - key: Keyboard & Mouse/keyboard_insert_outline
+    value: {fileID: 21300000, guid: a971942957d1aee419065b45c1ed5be9, type: 3}
+  - key: Keyboard & Mouse/keyboard_f11_outline
+    value: {fileID: 21300000, guid: aad1b528f5e6d0b4aad2b8f468bf6050, type: 3}
+  - key: Keyboard & Mouse/mouse_right
+    value: {fileID: 21300000, guid: ab0f6a82b698d304caae95663a3aab82, type: 3}
+  - key: Keyboard & Mouse/keyboard_u_outline
+    value: {fileID: 21300000, guid: acb9735349e8a4942ac10f26205c0a02, type: 3}
+  - key: Keyboard & Mouse/key_command
+    value: {fileID: 21300000, guid: b13fd11dda32f3943a310b5391d3bca2, type: 3}
+  - key: Keyboard & Mouse/keyboard_5
+    value: {fileID: 21300000, guid: b25c0a75bb58b0843af2d280cc9b20fb, type: 3}
+  - key: Gamepad/xbox_button_view_outline
+    value: {fileID: 21300000, guid: b2c8033fbd1374740bee1f694ef49206, type: 3}
+  - key: Keyboard & Mouse/keyboard_2_outline
+    value: {fileID: 21300000, guid: b318bd85ad5b91046a8f98f7888f008b, type: 3}
+  - key: Gamepad/xbox_dpad_round_right
+    value: {fileID: 21300000, guid: b4262566da4dbcb459b51031db1540df, type: 3}
+  - key: Keyboard & Mouse/keyboard_alt
+    value: {fileID: 21300000, guid: b4c4439c42a7d9a419c3c679b5f951cd, type: 3}
+  - key: Keyboard & Mouse/keyboard_h
+    value: {fileID: 21300000, guid: b64cb509a5e735640bacf87982454710, type: 3}
+  - key: Keyboard & Mouse/mouse_scroll_outline
+    value: {fileID: 21300000, guid: b66fd690dff008f4b8ff72d622cc6d6c, type: 3}
+  - key: Keyboard & Mouse/keyboard_s
+    value: {fileID: 21300000, guid: b700b21c85031184a9a2fc2c0d30f5db, type: 3}
+  - key: Keyboard & Mouse/key_command_outline
+    value: {fileID: 21300000, guid: b87ef9253f65711408758c20c9dee581, type: 3}
+  - key: Keyboard & Mouse/keyboard_arrow_up
+    value: {fileID: 21300000, guid: b8dfdc923ce8ee14eae433ca0022bad1, type: 3}
+  - key: Keyboard & Mouse/keyboard_arrows_vertical
+    value: {fileID: 21300000, guid: b9c6c7487442ded41973b1fbe4e3b2a1, type: 3}
+  - key: Keyboard & Mouse/keyboard_question
+    value: {fileID: 21300000, guid: b9d369fb9d051e948bfc48f738266d3b, type: 3}
+  - key: Keyboard & Mouse/keyboard_arrow_up_outline
+    value: {fileID: 21300000, guid: b9f51eefd999e0b479d1dea547c08670, type: 3}
+  - key: Keyboard & Mouse/keyboard_2
+    value: {fileID: 21300000, guid: bac202c658f0e6f46bf9f33242dfe0c1, type: 3}
+  - key: Keyboard & Mouse/keyboard_0_outline
+    value: {fileID: 21300000, guid: bac5306128d105344a923fa1413eb85d, type: 3}
+  - key: Gamepad/xbox_rt_outline
+    value: {fileID: 21300000, guid: bb67e2bb26dd12140b354c2ac5c05458, type: 3}
+  - key: Gamepad/xbox_stick_l_horizontal
+    value: {fileID: 21300000, guid: bd111fe3a1b031b49ae428cc4a8405e2, type: 3}
+  - key: Keyboard & Mouse/keyboard_arrows_up_outline
+    value: {fileID: 21300000, guid: bd7e7b1cde2a93344bfefcfc1c230d11, type: 3}
+  - key: Keyboard & Mouse/keyboard_end_outline
+    value: {fileID: 21300000, guid: bea85c8091cbe7b4092aa81cfbf73865, type: 3}
+  - key: Gamepad/xbox_button_menu_outline
+    value: {fileID: 21300000, guid: bfa3fe56f00468045ba2f9544412d8a8, type: 3}
+  - key: Keyboard & Mouse/keyboard_return_outline
+    value: {fileID: 21300000, guid: bfd813dc74d3b2a4ca9ad2a31284f059, type: 3}
+  - key: Keyboard & Mouse/keyboard_page_down_outline
+    value: {fileID: 21300000, guid: c1910ef4c39ee2f4f801ffcb283895e2, type: 3}
+  - key: Gamepad/xbox_stick_l_left
+    value: {fileID: 21300000, guid: c1a93c7e1585ce24aa5d4acd33565c78, type: 3}
+  - key: Keyboard & Mouse/keyboard_f1_outline
+    value: {fileID: 21300000, guid: c2a2008674478ac42a64134704c84bf0, type: 3}
+  - key: Keyboard & Mouse/keyboard_9
+    value: {fileID: 21300000, guid: c32c46b2e61a0fa42af9ecd3e3e81658, type: 3}
+  - key: Gamepad/xbox_dpad_horizontal
+    value: {fileID: 21300000, guid: c33bcaa6e85a323429f2babf3beb0825, type: 3}
+  - key: Keyboard & Mouse/keyboard_bracket_close
+    value: {fileID: 21300000, guid: c377a9238fbcc9b43a0c2d3534b1c0db, type: 3}
+  - key: Gamepad/xbox_stick_top_r
+    value: {fileID: 21300000, guid: c53b05ddae365cc4c84b4d3138474a65, type: 3}
+  - key: Keyboard & Mouse/keyboard_backspace
+    value: {fileID: 21300000, guid: c53b92dac7649ee4fbf5f950c8f81148, type: 3}
+  - key: Keyboard & Mouse/keyboard_arrows_right
+    value: {fileID: 21300000, guid: c66351b39240bfb48b96fa6d51d51b8f, type: 3}
+  - key: Keyboard & Mouse/keyboard_capslock_icon
+    value: {fileID: 21300000, guid: c7d919bbac7299641a8788fba10d2704, type: 3}
+  - key: Keyboard & Mouse/keyboard_colon_outline
+    value: {fileID: 21300000, guid: c8743fb820aacc9498fc6d4055bb185d, type: 3}
+  - key: Keyboard & Mouse/keyboard_arrows_left_outline
+    value: {fileID: 21300000, guid: c8faeb81f4aae55448adc01f2577bc38, type: 3}
+  - key: Keyboard & Mouse/keyboard_r
+    value: {fileID: 21300000, guid: ca2f8c203fbe7ae46b876d210ba11447, type: 3}
+  - key: Keyboard & Mouse/keyboard_enter
+    value: {fileID: 21300000, guid: ca9d30de9a59c9c4ab17e4055bdd1682, type: 3}
+  - key: Gamepad/xbox_dpad_none
+    value: {fileID: 21300000, guid: cb0ae23d189db7143857acba0d5dd5d3, type: 3}
+  - key: Keyboard & Mouse/keyboard_m
+    value: {fileID: 21300000, guid: cb49aab0bd7fa9944bfb3891165d017f, type: 3}
+  - key: Gamepad/xbox_rs_outline
+    value: {fileID: 21300000, guid: cb75731d14d51c243ae75635942a4bb6, type: 3}
+  - key: Keyboard & Mouse/keyboard_return
+    value: {fileID: 21300000, guid: cc739636c7c28fa468fa72251536a3cb, type: 3}
+  - key: Keyboard & Mouse/keyboard_arrows
+    value: {fileID: 21300000, guid: cc7e528b34131c940aefdb586cd6ddb9, type: 3}
+  - key: Keyboard & Mouse/keyboard_bracket_open
+    value: {fileID: 21300000, guid: cf80f3a1f9c97f843af0087f138608b9, type: 3}
+  - key: Keyboard & Mouse/keyboard_4
+    value: {fileID: 21300000, guid: cfbf315acf862764e970844804a537ab, type: 3}
+  - key: Gamepad/xbox_button_color_x_outline
+    value: {fileID: 21300000, guid: d0fa54d9cea6d2a48b6fe4e27846a76c, type: 3}
+  - key: Gamepad/xbox_stick_r_down
+    value: {fileID: 21300000, guid: d156b7d7eb588ed45b54dd285e763728, type: 3}
+  - key: Keyboard & Mouse/keyboard_f2
+    value: {fileID: 21300000, guid: d273428a1312da64cbf0251e9a035a42, type: 3}
+  - key: Gamepad/xbox_button_color_a
+    value: {fileID: 21300000, guid: d2cf6dd542f6fd24aaf1c2836dad6bc7, type: 3}
+  - key: Keyboard & Mouse/keyboard_f1
+    value: {fileID: 21300000, guid: d39f2be7a3fe7f343bb2fb679a8f7d4f, type: 3}
+  - key: Keyboard & Mouse/keyboard_ctrl
+    value: {fileID: 21300000, guid: d3fc0f1cb6641e848b4d8e7c8124d6a7, type: 3}
+  - key: Keyboard & Mouse/keyboard_minus_outline
+    value: {fileID: 21300000, guid: d40869ec06b93a34988a11c72e7f9027, type: 3}
+  - key: Keyboard & Mouse/keyboard_e_outline
+    value: {fileID: 21300000, guid: d5242de17ceced140a09f456e75b81ca, type: 3}
+  - key: Keyboard & Mouse/keyboard_arrow_left
+    value: {fileID: 21300000, guid: d5583ba67e88d59488e7357b5f626af4, type: 3}
+  - key: Gamepad/xbox_button_share
+    value: {fileID: 21300000, guid: d5b65e4f59c4244448a1c694302f91d3, type: 3}
+  - key: Keyboard & Mouse/keyboard_t
+    value: {fileID: 21300000, guid: d600ef894b9f55f4c992daacf2cdfdf2, type: 3}
+  - key: Keyboard & Mouse/keyboard_slash_forward
+    value: {fileID: 21300000, guid: d62ac24c65f756b4a8673e847224c34e, type: 3}
+  - key: Gamepad/xbox_lb_outline
+    value: {fileID: 21300000, guid: d6e208e3784c982418297927dac65ae2, type: 3}
+  - key: Keyboard & Mouse/keyboard_capslock_icon_outline
+    value: {fileID: 21300000, guid: d773175ba928272489326aa5bed1c629, type: 3}
+  - key: Keyboard & Mouse/keyboard_f9_outline
+    value: {fileID: 21300000, guid: d902f5a73d85dc74eb14cf984ecb7511, type: 3}
+  - key: Keyboard & Mouse/keyboard_any
+    value: {fileID: 21300000, guid: da401709b372a6b4593451a1a35c3c66, type: 3}
+  - key: Keyboard & Mouse/keyboard_exclamation
+    value: {fileID: 21300000, guid: da4a093cc8e35e141a1b7f47158c08ed, type: 3}
+  - key: Keyboard & Mouse/mouse_vertical
+    value: {fileID: 21300000, guid: da8c379c94c9e2f4cad7e6474d1ef478, type: 3}
+  - key: Gamepad/xbox_stick_r_left
+    value: {fileID: 21300000, guid: dafb3e17e23703a41ad0e8336a66f3de, type: 3}
+  - key: Keyboard & Mouse/keyboard_q
+    value: {fileID: 21300000, guid: ddd7997bb6c540444b2dbd03037bed20, type: 3}
+  - key: Gamepad/xbox_dpad_round_up
+    value: {fileID: 21300000, guid: dffc1631b9837b44f9b3722209721326, type: 3}
+  - key: Keyboard & Mouse/keyboard_f7
+    value: {fileID: 21300000, guid: e00d60e07fdec254d80a84f9ca7ac685, type: 3}
+  - key: Keyboard & Mouse/keyboard_m_outline
+    value: {fileID: 21300000, guid: e03fda61441b0ae4f88bb9a8bfb8957a, type: 3}
+  - key: Keyboard & Mouse/keyboard_numlock
+    value: {fileID: 21300000, guid: e2299d3fedfc7e847858f7ed216dc723, type: 3}
+  - key: Gamepad/xbox_dpad_down
+    value: {fileID: 21300000, guid: e344bf5402e84ba4d81769d3d7c796df, type: 3}
+  - key: Keyboard & Mouse/keyboard_1_outline
+    value: {fileID: 21300000, guid: e3d5b0987d251c542b70f220843e7d85, type: 3}
+  - key: Keyboard & Mouse/keyboard_f5
+    value: {fileID: 21300000, guid: e6be67df8ebce744c98627f8443873bb, type: 3}
+  - key: Keyboard & Mouse/mouse_left
+    value: {fileID: 21300000, guid: e6ec5e14f6c128e4a9dd6fe7a1264f53, type: 3}
+  - key: Keyboard & Mouse/keyboard_space
+    value: {fileID: 21300000, guid: e9cc0b1290d4b1543bc137d52c35523d, type: 3}
+  - key: Gamepad/xbox_dpad_right
+    value: {fileID: 21300000, guid: eaad80b075e09744698e90db2a8718a6, type: 3}
+  - key: Keyboard & Mouse/keyboard_arrow_right
+    value: {fileID: 21300000, guid: ec0354ecadac27749ae16d19b181a930, type: 3}
+  - key: Keyboard & Mouse/keyboard_arrow_right_outline
+    value: {fileID: 21300000, guid: ec9fb3e32b9b0a84ebbb0eabe27511ea, type: 3}
+  - key: Gamepad/xbox_dpad_round_down
+    value: {fileID: 21300000, guid: edcbcda8aa49b3b4fada4ee3939afac0, type: 3}
+  - key: Keyboard & Mouse/keyboard_f4_outline
+    value: {fileID: 21300000, guid: f0a7bddbfd3d013438215584198c1703, type: 3}
+  - key: Keyboard & Mouse/mouse_outline
+    value: {fileID: 21300000, guid: f0bdeaf78caf06844910690bbf6905bb, type: 3}
+  - key: Keyboard & Mouse/keyboard_y
+    value: {fileID: 21300000, guid: f0e736f49ce2ce6468ede73727200dca, type: 3}
+  - key: Keyboard & Mouse/keyboard_semicolon_outline
+    value: {fileID: 21300000, guid: f11e1f2a530516e45b19bc744c3a21c0, type: 3}
+  - key: Keyboard & Mouse/key_tab_icon
+    value: {fileID: 21300000, guid: f1d5d2830642791418dfb6e06fbfbbd4, type: 3}
+  - key: Keyboard & Mouse/keyboard_any_outline
+    value: {fileID: 21300000, guid: f485753fbecacde45a05b9a9608995ad, type: 3}
+  - key: Keyboard & Mouse/mouse_small
+    value: {fileID: 21300000, guid: f631e7518366967428d720c3d643400c, type: 3}
+  - key: Gamepad/xbox_button_color_b
+    value: {fileID: 21300000, guid: f89f35599b6694f41b44e969f8fdd5a9, type: 3}
+  - key: Keyboard & Mouse/keyboard_home_outline
+    value: {fileID: 21300000, guid: f93ddb550f0c6c544a192e0675469d07, type: 3}
+  - key: Gamepad/xbox_stick_top_l
+    value: {fileID: 21300000, guid: f9da1d8cc29a431428cd7f9f8645fdae, type: 3}
+  - key: Gamepad/xbox_stick_l_down
+    value: {fileID: 21300000, guid: fac53465b67e2784dba2b4ffd2695f78, type: 3}
+  - key: Keyboard & Mouse/keyboard_8_outline
+    value: {fileID: 21300000, guid: fad988cf9590c274e9441f81681d3dbb, type: 3}
+  - key: Keyboard & Mouse/keyboard_asterisk_outline
+    value: {fileID: 21300000, guid: fae7db039a1082646927c6b6d9377a09, type: 3}
+  - key: Gamepad/xbox_dpad_left_outline
+    value: {fileID: 21300000, guid: fcb43b9b8ababf94288a04e60426ac28, type: 3}
+  - key: Gamepad/xbox_dpad_vertical
+    value: {fileID: 21300000, guid: ff2f0da1c8415a24080aa364de81fdac, type: 3}
+  - key: Gamepad/xbox_stick_side_r
+    value: {fileID: 21300000, guid: ff8e141dd498e2f4d8837cc7c306471e, type: 3}

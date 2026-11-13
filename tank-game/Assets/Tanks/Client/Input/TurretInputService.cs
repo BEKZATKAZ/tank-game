@@ -1,4 +1,5 @@
-﻿using Unity.Mathematics;
+using Tanks.Client.Input.Bindings;
+using Unity.Mathematics;
 using UnityEngine;
 
 namespace Tanks.Client.Input
@@ -12,8 +13,15 @@ namespace Tanks.Client.Input
 
     public sealed class TurretInputService : InputServiceBase<TurretInput>
     {
+        public TurretInputService(IControlBindingService bindings = null)
+            : base(bindings) { }
+
+        protected override void EnableMaps() => Controls.Turret.Enable();
+
         public override TurretInput Read()
         {
+            if (IsEnabled == false || IsSuspended) return default;
+
             Vector2 turn = Controls.Turret.Turn.ReadValue<Vector2>();
 
             return new TurretInput
