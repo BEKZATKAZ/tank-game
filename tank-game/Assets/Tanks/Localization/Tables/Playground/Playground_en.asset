@@ -50,14 +50,6 @@ MonoBehaviour:
     m_Localized: Great! Drive forward until the next point.
     m_Metadata:
       m_Items: []
-  - m_Id: 17125819768832
-    m_Localized: WASD - DRIVE
-    m_Metadata:
-      m_Items: []
-  - m_Id: 17125828157440
-    m_Localized: LMB - FIRE
-    m_Metadata:
-      m_Items: []
   - m_Id: 24958305001472
     m_Localized: EXIT
     m_Metadata:

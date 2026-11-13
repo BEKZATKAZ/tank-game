@@ -15,14 +15,6 @@ MonoBehaviour:
   m_TableCollectionName: Playground
   m_TableCollectionNameGuidString: 12dab06b313a1ba45af24c6919d43810
   m_Entries:
-  - m_Id: 17125819768832
-    m_Key: tutorial.drive-controls
-    m_Metadata:
-      m_Items: []
-  - m_Id: 17125828157440
-    m_Key: tutorial.turret-controls
-    m_Metadata:
-      m_Items: []
   - m_Id: 225882628096
     m_Key: tutorial.regular-crates-plural
     m_Metadata:
