@@ -15,7 +15,7 @@ MonoBehaviour:
   m_DefaultGroup: 6faca6bb3a3558944bb2b3c119c01a49
   m_currentHash:
     serializedVersion: 2
-    Hash: 2ff80f7910cfeb3b67bb15856fae7c9f
+    Hash: 00000000000000000000000000000000
   m_ExtractTypeTreeData: 0
   m_DisableWriteTypeTree: 0
   m_OptimizeCatalogSize: 0
@@ -92,7 +92,7 @@ MonoBehaviour:
       - m_Id: 70c3946bfd9a1f5408fa9c2fabea5591
         m_Value: https://fbefba5d-b81a-4c54-95f9-ef85b666d0d1.client-api.unity3dusercontent.com/client_api/v1/environments/{CcdManager.EnvironmentName}/buckets/{CcdManager.BucketId}/release_by_badge/release-[UnityEditor.PlayerSettings.bundleVersion]/entry_by_path/content/?path=
       - m_Id: 921ae08af0669bb4ca7634a2aac0e807
-        m_Value: CCDBuildData/[EnvironmentName]/release-[UnityEditor.PlayerSettings.bundleVersion]
+        m_Value: 'CCDBuildData/[EnvironmentName]/release-[UnityEditor.PlayerSettings.bundleVersion]'
     - m_InheritedParent: 
       m_Id: a9b38f509d9f6144ca015be6a79bc057
       m_ProfileName: Production
@@ -108,7 +108,7 @@ MonoBehaviour:
       - m_Id: 70c3946bfd9a1f5408fa9c2fabea5591
         m_Value: https://fbefba5d-b81a-4c54-95f9-ef85b666d0d1.client-api.unity3dusercontent.com/client_api/v1/environments/{CcdManager.EnvironmentName}/buckets/{CcdManager.BucketId}/release_by_badge/release-[UnityEditor.PlayerSettings.bundleVersion]/entry_by_path/content/?path=
       - m_Id: 921ae08af0669bb4ca7634a2aac0e807
-        m_Value: CCDBuildData/[EnvironmentName]/release-[UnityEditor.PlayerSettings.bundleVersion]
+        m_Value: 'CCDBuildData/[EnvironmentName]/release-[UnityEditor.PlayerSettings.bundleVersion]'
     m_ProfileEntryNames:
     - m_Id: 327e5339c756a884b89ef19790a1cacd
       m_Name: Local.BuildPath

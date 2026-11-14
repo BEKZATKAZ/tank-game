@@ -309,11 +309,16 @@ MonoBehaviour:
   - _identifier: hibernation
     _tier: 1
     _onPickUpActions: []
-    _playerStats: []
+    _playerStats:
+    - key: 2
+      value:
+        Duration: 4
+        Value: 300
+        ValueType: 0
     _itemStats:
     - key: duration
       value:
-        Value: 5
+        Value: 4
         Type: 2
   - _identifier: random-teleport
     _tier: 1

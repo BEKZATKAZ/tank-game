@@ -14,11 +14,16 @@ MonoBehaviour:
   m_EditorClassIdentifier: Tanks.Editor::Tanks.Editor.Items.EditorItemConfig
   _identifier: hibernation
   _tier: 1
-  _playerStats: []
+  _playerStats:
+  - key: 2
+    value:
+      Duration: 4
+      Value: 300
+      ValueType: 0
   _itemStats:
   - key: duration
     value:
-      Value: 5
+      Value: 4
       Type: 2
   _onPickUpActions: []
   _iconMaterial: {fileID: -876546973899608171, guid: 9680fbb573735774aaa7e0c722f9aad3, type: 3}
