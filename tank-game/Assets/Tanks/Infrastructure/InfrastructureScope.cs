@@ -108,7 +108,7 @@ namespace Tanks.Infrastructure
 
             CcdManager.EnvironmentName = env.EnvironmentName;
             CcdManager.BucketId = env.GetBucketId();
-            CcdManager.Badge = "latest";
+            CcdManager.Badge = $"release-{Application.version.Replace('.', '-')}";
 
             AddServices(builder);
             AddUseCases(builder);
