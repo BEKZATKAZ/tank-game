@@ -36,7 +36,7 @@ MonoBehaviour:
   m_EnableJsonCatalog: 0
   m_NonRecursiveBuilding: 1
   m_AllowNestedBundleFolders: 0
-  m_CCDEnabled: 0
+  m_CCDEnabled: 1
   m_maxConcurrentWebRequests: 3
   m_UseUWRForLocalBundles: 0
   m_BundleTimeout: 0
@@ -90,9 +90,9 @@ MonoBehaviour:
       - m_Id: 66861b0a3aa0f684abc4304609b2ea87
         m_Value: development
       - m_Id: 70c3946bfd9a1f5408fa9c2fabea5591
-        m_Value: https://fbefba5d-b81a-4c54-95f9-ef85b666d0d1.client-api.unity3dusercontent.com/client_api/v1/environments/{CcdManager.EnvironmentName}/buckets/{CcdManager.BucketId}/release_by_badge/release-[UnityEditor.PlayerSettings.bundleVersion]/entry_by_path/content/?path=
+        m_Value: https://fbefba5d-b81a-4c54-95f9-ef85b666d0d1.client-api.unity3dusercontent.com/client_api/v1/environments/{CcdManager.EnvironmentName}/buckets/{CcdManager.BucketId}/release_by_badge/{CcdManager.Badge}/entry_by_path/content/?path=
       - m_Id: 921ae08af0669bb4ca7634a2aac0e807
-        m_Value: 'CCDBuildData/[EnvironmentName]/release-[UnityEditor.PlayerSettings.bundleVersion]'
+        m_Value: CCDBuildData/ManagedEnvironment/ManagedBucket/ManagedBadge
     - m_InheritedParent: 
       m_Id: a9b38f509d9f6144ca015be6a79bc057
       m_ProfileName: Production
@@ -106,9 +106,9 @@ MonoBehaviour:
       - m_Id: 66861b0a3aa0f684abc4304609b2ea87
         m_Value: production
       - m_Id: 70c3946bfd9a1f5408fa9c2fabea5591
-        m_Value: https://fbefba5d-b81a-4c54-95f9-ef85b666d0d1.client-api.unity3dusercontent.com/client_api/v1/environments/{CcdManager.EnvironmentName}/buckets/{CcdManager.BucketId}/release_by_badge/release-[UnityEditor.PlayerSettings.bundleVersion]/entry_by_path/content/?path=
+        m_Value: https://fbefba5d-b81a-4c54-95f9-ef85b666d0d1.client-api.unity3dusercontent.com/client_api/v1/environments/{CcdManager.EnvironmentName}/buckets/{CcdManager.BucketId}/release_by_badge/{CcdManager.Badge}/entry_by_path/content/?path=
       - m_Id: 921ae08af0669bb4ca7634a2aac0e807
-        m_Value: 'CCDBuildData/[EnvironmentName]/release-[UnityEditor.PlayerSettings.bundleVersion]'
+        m_Value: CCDBuildData/ManagedEnvironment/ManagedBucket/ManagedBadge
     m_ProfileEntryNames:
     - m_Id: 327e5339c756a884b89ef19790a1cacd
       m_Name: Local.BuildPath
