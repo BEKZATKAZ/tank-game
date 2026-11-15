@@ -293,6 +293,18 @@
     -unity-text-align: middle-left;
 }
 
+.game-stats__player-name--local {
+    color: yellow;
+}
+
+.game-stats__player-name--eliminated {
+    color: #8B0000;
+}
+
+.game-stats__player-name--local.game-stats__player-name--eliminated {
+    color: #8B8000;
+}
+
 .stats {
     position: absolute;
     left: 0;

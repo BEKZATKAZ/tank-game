@@ -6,6 +6,36 @@ namespace Tanks.Shared.Tests.Teams
     public sealed class PlayerStateTests
     {
         [Test]
+        public void SetEliminated_NotifiesOnlyOnStateChanges()
+        {
+            PlayerState player = new PlayerState(1, "Player", new TeamId(1));
+            int updates = 0;
+            bool eliminated = false;
+
+            player.Updated += state =>
+            {
+                updates++;
+                eliminated = state.IsEliminated;
+            };
+
+            player.SetEliminated(false);
+
+            Assert.That(updates, Is.Zero);
+
+            PlayerState result = player.SetEliminated(true);
+
+            Assert.That(result, Is.SameAs(player));
+            Assert.That(eliminated, Is.True);
+
+            player.SetEliminated(true);
+            player.SetEliminated(false);
+
+            Assert.That(updates, Is.EqualTo(2));
+            Assert.That(eliminated, Is.False);
+            Assert.That(player.IsEliminated, Is.False);
+        }
+
+        [Test]
         public void SetPing_UpdatesValueAndNotifiesOnlyWhenChanged()
         {
             PlayerState player = new PlayerState(1, "Player", new TeamId(1));

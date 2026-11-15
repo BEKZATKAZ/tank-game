@@ -41,6 +41,12 @@ namespace Tanks.UI.Gameplay.GameStats
         private readonly ILocalizationDatabase _localization;
         private readonly Team[] _showingTeams;
 
+        public string FormatDisplayName(PlayerState player)
+        {
+            return player.IsEliminated
+                ? $"<s>{player.DisplayName}</s>" : player.DisplayName;
+        }
+
         public string FormatPing(ulong milliseconds)
         {
             if (_localization.TryGet(

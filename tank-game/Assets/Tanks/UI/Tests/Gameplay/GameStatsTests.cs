@@ -35,6 +35,28 @@ namespace Tanks.UI.Tests.Gameplay
             return new GameStatsViewModel(_settings, _teamService, _localization);
         }
 
+        [TestCase(false)]
+        [TestCase(true)]
+        public void FormatDisplayName_TracksEliminationAndRestoration(bool local)
+        {
+            PlayerState player = _team.AddPlayer(5, "Player");
+
+            player.SetLocalPlayer(local);
+
+            Assert.That(ViewModel.FormatDisplayName(player),
+                Is.EqualTo(player.DisplayName));
+
+            player.SetEliminated(true);
+
+            Assert.That(ViewModel.FormatDisplayName(player),
+                Is.EqualTo($"<s>{player.DisplayName}</s>"));
+
+            player.SetEliminated(false);
+
+            Assert.That(ViewModel.FormatDisplayName(player),
+                Is.EqualTo(player.DisplayName));
+        }
+
         [Test]
         public void FormatPing_UsesLocalizedFormatAndCurrentValue()
         {

@@ -65,7 +65,10 @@ namespace Tanks.UI.Gameplay.GameStats
             foreach (PlayerState player in _lastPlayerList)
             {
                 PlayerElement element = new PlayerElement();
-                element.Set(player, _teamService.GetTeam(player.BelongsTo));
+
+                element.Set(player, _teamService.GetTeam(player.BelongsTo),
+                    ViewModel.FormatDisplayName(player));
+
                 element.SetPing(ViewModel.FormatPing(player.PingMilliseconds));
 
                 _playerList.Add(element);

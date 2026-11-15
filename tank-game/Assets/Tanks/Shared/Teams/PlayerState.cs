@@ -45,7 +45,10 @@ namespace Tanks.Shared.Teams
 
         public PlayerState SetEliminated(bool value)
         {
+            if (IsEliminated == value) return this;
+
             IsEliminated = value;
+            Updated?.Invoke(this);
             return this;
         }
 

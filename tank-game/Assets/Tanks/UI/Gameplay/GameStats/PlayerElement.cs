@@ -1,5 +1,4 @@
 using Tanks.Shared.Teams;
-using UnityEngine;
 using UnityEngine.UIElements;
 
 namespace Tanks.UI.Gameplay.GameStats
@@ -9,7 +8,12 @@ namespace Tanks.UI.Gameplay.GameStats
     {
         public PlayerElement()
         {
-            _displayName = new Label("Example Name") { name = "DisplayName" };
+            _displayName = new Label("Example Name")
+            {
+                name = "DisplayName",
+                enableRichText = true
+            };
+
             _displayName.AddToClassList("game-stats__player-name");
 
             _eliminations = new Label("0") { name = "Eliminations" };
@@ -46,15 +50,20 @@ namespace Tanks.UI.Gameplay.GameStats
 
         public void SetPing(string text) => _ping.text = text;
 
-        public void Set(PlayerState state, Team team)
+        public void Set(PlayerState state, Team team, string displayName)
         {
             _eliminations.text = state.Eliminations.ToString();
             _assistance.text = state.Assistance.ToString();
             _deaths.text = state.Deaths.ToString();
             _victories.text = team.Score.Value.ToString();
 
-            _displayName.text = state.DisplayName;
-            if (state.IsLocalPlayer) _displayName.style.color = Color.yellow;
+            _displayName.text = displayName;
+
+            _displayName.EnableInClassList(
+                "game-stats__player-name--local", state.IsLocalPlayer);
+
+            _displayName.EnableInClassList(
+                "game-stats__player-name--eliminated", state.IsEliminated);
         }
     }
 }
