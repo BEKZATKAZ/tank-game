@@ -48,14 +48,6 @@
     margin: 0 12px;
     padding: 12px 24px;
     font-size: 24px;
-    background-color: rgba(0, 0, 0, 0.75);
-    border-color: var(--text-color);
-    border-width: 2px;
-    border-radius: 6px;
-}
-
-.spectator-controls__button:hover {
-    background-color: rgba(70, 70, 70, 0.9);
 }
 
 .spectator-controls__button:disabled {
