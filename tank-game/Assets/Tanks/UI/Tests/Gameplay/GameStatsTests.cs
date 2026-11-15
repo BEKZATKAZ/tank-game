@@ -1,4 +1,4 @@
-﻿using NSubstitute;
+using NSubstitute;
 using NUnit.Framework;
 using System.Collections.Generic;
 using Tanks.Core.Lobbies.Sessions;
@@ -33,6 +33,59 @@ namespace Tanks.UI.Tests.Gameplay
 
             _localization = Substitute.For<ILocalizationDatabase>();
             return new GameStatsViewModel(_settings, _teamService, _localization);
+        }
+
+        [Test]
+        public void FormatPing_UsesLocalizedFormatAndCurrentValue()
+        {
+            ILocalizedString ping = Substitute.For<ILocalizedString>();
+
+            _localization.TryGet(
+                "Gameplay", "gameplay.stat.ping-value",
+                out Arg.Any<ILocalizedString>())
+                .Returns(args =>
+                {
+                    args[2] = ping;
+                    return true;
+                });
+
+            ping.Get().Returns("localized latency");
+
+            string first = ViewModel.FormatPing(42);
+            string second = ViewModel.FormatPing(87);
+
+            Assert.That(first, Is.EqualTo("localized latency"));
+            Assert.That(second, Is.EqualTo("localized latency"));
+
+
+            Received.InOrder(() =>
+            {
+                ping.AddVariable("value", 42UL);
+                ping.Get();
+                ping.AddVariable("value", 87UL);
+                ping.Get();
+            });
+        }
+
+        [Test]
+        public void FormatPing_MissingLocalization_ReturnsEmpty()
+        {
+            Assert.That(ViewModel.FormatPing(42), Is.Empty);
+        }
+
+        [Test]
+        public void LocaleChanged_RefreshesPlayerFormatting()
+        {
+            int refreshes = 0;
+
+            ViewModel.Players.Bind(_ => refreshes++);
+
+            int before = refreshes;
+
+            _localization.LocaleChanged += Raise.Event<LocaleChangedEventHandler>(
+                "ru");
+
+            Assert.That(refreshes, Is.EqualTo(before + 1));
         }
 
         [Test]

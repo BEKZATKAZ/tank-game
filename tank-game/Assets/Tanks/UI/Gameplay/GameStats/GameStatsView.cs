@@ -66,6 +66,7 @@ namespace Tanks.UI.Gameplay.GameStats
             {
                 PlayerElement element = new PlayerElement();
                 element.Set(player, _teamService.GetTeam(player.BelongsTo));
+                element.SetPing(ViewModel.FormatPing(player.PingMilliseconds));
 
                 _playerList.Add(element);
                 player.Updated += OnPlayerStateModified;

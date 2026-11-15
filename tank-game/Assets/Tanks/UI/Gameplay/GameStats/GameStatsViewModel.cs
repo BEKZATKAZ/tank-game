@@ -23,6 +23,7 @@ namespace Tanks.UI.Gameplay.GameStats
             _teamService.CurrentRound.Bind(OnRoundChanged);
 
             Players.Value = _showingTeams.SelectMany(x => x.Players).ToList();
+            _localization.LocaleChanged += OnLocaleChanged;
 
             foreach (Team team in _showingTeams)
             {
@@ -40,6 +41,16 @@ namespace Tanks.UI.Gameplay.GameStats
         private readonly ILocalizationDatabase _localization;
         private readonly Team[] _showingTeams;
 
+        public string FormatPing(ulong milliseconds)
+        {
+            if (_localization.TryGet(
+                "Gameplay", "gameplay.stat.ping-value", out ILocalizedString ping)
+                == false) return string.Empty;
+
+            ping.AddVariable("value", milliseconds);
+            return ping.Get();
+        }
+
         public void Dispose()
         {
             foreach (Team team in _showingTeams)
@@ -50,7 +61,10 @@ namespace Tanks.UI.Gameplay.GameStats
             }
 
             _teamService.CurrentRound.Unbind(OnRoundChanged);
+            _localization.LocaleChanged -= OnLocaleChanged;
         }
+
+        private void OnLocaleChanged(string _) => Players.ForceRefresh();
 
         private void OnTeamScoreChanged(int score)
         {

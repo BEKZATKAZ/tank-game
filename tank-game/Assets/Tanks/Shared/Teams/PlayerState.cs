@@ -33,6 +33,15 @@ namespace Tanks.Shared.Teams
         public int Eliminations { get; private set; }
         public int Assistance { get; private set; }
         public int Deaths { get; private set; }
+        public ulong PingMilliseconds { get; private set; }
+
+        public void SetPing(ulong milliseconds)
+        {
+            if (PingMilliseconds == milliseconds) return;
+
+            PingMilliseconds = milliseconds;
+            Updated?.Invoke(this);
+        }
 
         public PlayerState SetEliminated(bool value)
         {

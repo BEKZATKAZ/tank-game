@@ -24,11 +24,15 @@ namespace Tanks.UI.Gameplay.GameStats
             _victories = new Label("0") { name = "Victories" };
             _victories.AddToClassList("game-stats__player-victories");
 
+            _ping = new Label { name = "Ping" };
+            _ping.AddToClassList("game-stats__player-ping");
+
             Add(_displayName);
             Add(_eliminations);
             Add(_assistance);
             Add(_deaths);
             Add(_victories);
+            Add(_ping);
 
             AddToClassList("game-stats__player");
         }
@@ -38,6 +42,9 @@ namespace Tanks.UI.Gameplay.GameStats
         private readonly Label _assistance;
         private readonly Label _deaths;
         private readonly Label _victories;
+        private readonly Label _ping;
+
+        public void SetPing(string text) => _ping.text = text;
 
         public void Set(PlayerState state, Team team)
         {

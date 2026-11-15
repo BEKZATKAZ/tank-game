@@ -4,7 +4,7 @@ using Unity.Netcode;
 
 namespace Tanks.Shared.Teams
 {
-    public sealed class TeamBehaviourService :
+    public sealed partial class TeamBehaviourService :
        NetworkBehaviourExtended, ITeamBehaviourService
     {
         public IReadOnlyBindableProperty<int> CurrentRound => _currentRound;

@@ -97,6 +97,15 @@ MonoBehaviour:
     m_Localized: "Ослеплён"
     m_Metadata:
       m_Items: []
+  - m_Id: 39000000000000002
+    m_Localized: "Пинг"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 39000000000000003
+    m_Localized: "{value} мс"
+    m_Metadata:
+      m_Items:
+      - rid: 937747157883289970
   references:
     version: 2
     RefIds:
@@ -107,3 +116,4 @@ MonoBehaviour:
         m_SharedEntries:
         - id: 155103748096
         - id: 3952752743374848
+        - id: 39000000000000003

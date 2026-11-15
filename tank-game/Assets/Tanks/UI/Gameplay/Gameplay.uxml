@@ -77,6 +77,11 @@
                         <UnityEngine.Localization.LocalizedString property="text" table="GUID:be3c65f295ea4a545a8406a0bc7b68e6" entry="Id(22050365615071234)"/>
                     </Bindings>
                 </ui:Label>
+                <ui:Label name="Ping">
+                    <Bindings>
+                        <UnityEngine.Localization.LocalizedString property="text" table="GUID:be3c65f295ea4a545a8406a0bc7b68e6" entry="Id(39000000000000002)"/>
+                    </Bindings>
+                </ui:Label>
             </ui:VisualElement>
             <ui:ScrollView name="PlayerList">
                 <Tanks.UI.Gameplay.GameStats.PlayerElement/>

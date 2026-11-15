@@ -282,7 +282,8 @@
 .game-stats__player-eliminations,
 .game-stats__player-assistance,
 .game-stats__player-deaths,
-.game-stats__player-victories {
+.game-stats__player-victories,
+.game-stats__player-ping {
     width: 120px;
     -unity-text-align: middle-center;
 }
