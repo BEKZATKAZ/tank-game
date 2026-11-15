@@ -27,16 +27,18 @@ namespace Tanks.Server.Tests.Effects
         }
 
         [TestCase(0)]
-        [TestCase(5)]
         [TestCase(10)]
+        [TestCase(20)]
         public void Tick_HealingOnHealTick_HealsOwnerByFive(int tick)
         {
             _effects[EffectType.Healing] = new EffectEntry(0, 30, null);
-
             _effect.Tick(tick, 0.1f);
 
             _damageService.Received(1).Heal(5, _owner.Entity);
-            _damageService.DidNotReceiveWithAnyArgs().Damage(default, default, default, default, default);
+
+            _damageService
+                .DidNotReceiveWithAnyArgs()
+                .Damage(default, default, default, default, default);
         }
 
         [TestCase(1)]
@@ -72,20 +74,20 @@ namespace Tanks.Server.Tests.Effects
         }
 
         [Test]
-        public void Tick_ConsecutiveHealTicks_HealsEveryFiveTicks()
+        public void Tick_ConsecutiveHealTicks_Heals()
         {
             _effects[EffectType.Healing] = new EffectEntry(0, 30, null);
 
             for (int tick = 1; tick <= 60; tick++) _effect.Tick(tick, 0.1f);
 
-            _damageService.Received(12).Heal(5, _owner.Entity);
+            _damageService.Received(6).Heal(5, _owner.Entity);
         }
 
         [Test]
         public void Tick_RemovedEffect_StopsHealing()
         {
             _effects[EffectType.Healing] = new EffectEntry(0, 30, null);
-            _effect.Tick(5, 0.1f);
+            _effect.Tick(10, 0.1f);
             _damageService.Received(1).Heal(5, _owner.Entity);
             _damageService.ClearReceivedCalls();
 

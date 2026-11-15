@@ -45,7 +45,7 @@ namespace Tanks.Server.Items.Behaviours.DamageBased
 
             PlayerNegativeSpeedEntry entry = Calculate(owner);
 
-            if (tick % 5 != 0) return;
+            if (tick % 10 != 0) return;
 
             if (entry.ShouldDamage)
             {

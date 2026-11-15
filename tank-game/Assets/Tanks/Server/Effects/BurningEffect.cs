@@ -20,7 +20,7 @@ namespace Tanks.Server.Effects
             if (Behaviour.Effects.TryGetValue(
                 EffectType.Burning, out EffectEntry effect) == false) return;
 
-            if (tick % 10 != 0) return;
+            if (tick % 20 != 0) return;
 
             HealthEventId eventId = HealthEventId.Create(Behaviour.GetType(), tick);
             _damageService.Damage(Damage, Behaviour.Entity, effect.From, eventId, includeStats: false);

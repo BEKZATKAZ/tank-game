@@ -16,7 +16,7 @@ namespace Tanks.Server.Effects
         protected override void OnTick(int tick, float tickDelta)
         {
             if (Behaviour.Effects.ContainsKey(EffectType.Healing) == false) return;
-            if (tick % 5 != 0) return;
+            if (tick % 10 != 0) return;
 
             _damageService.Heal(5, Behaviour.Entity);
         }

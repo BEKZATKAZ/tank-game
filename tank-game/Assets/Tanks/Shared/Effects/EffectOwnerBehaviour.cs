@@ -259,7 +259,6 @@ namespace Tanks.Shared.Effects
         public override void OnTick(int tick, float tickDelta)
         {
             _lastTick = tick;
-            bool timingChanged = _tickDelta != tickDelta;
             _tickDelta = tickDelta;
 
             int toRemoveCount = 0;
@@ -284,11 +283,6 @@ namespace Tanks.Shared.Effects
                 {
                     RemoveEffectClientRpc(id, EffectEndReason.Expired);
                 }
-            }
-
-            if (timingChanged)
-            {
-                foreach (EffectType type in Enum.GetValues(typeof(EffectType))) UpdateEffect(type);
             }
         }
 

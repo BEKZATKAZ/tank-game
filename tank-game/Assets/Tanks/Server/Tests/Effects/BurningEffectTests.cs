@@ -29,8 +29,8 @@ namespace Tanks.Server.Tests.Effects
         }
 
         [TestCase(0)]
-        [TestCase(10)]
         [TestCase(20)]
+        [TestCase(40)]
         public void Tick_BurningOnDamageTick_DealsSixDamageWithoutStats(int tick)
         {
             IEntityBehaviour from = Substitute.For<IEntityBehaviour>();
@@ -70,15 +70,15 @@ namespace Tanks.Server.Tests.Effects
             IEntityBehaviour first = Substitute.For<IEntityBehaviour>();
             IEntityBehaviour next = Substitute.For<IEntityBehaviour>();
             _effects[EffectType.Burning] = new EffectEntry(0, 30, first);
-            _effect.Tick(10, 0.1f);
-
-            _effects[EffectType.Burning] = new EffectEntry(0, 40, next);
             _effect.Tick(20, 0.1f);
 
+            _effects[EffectType.Burning] = new EffectEntry(0, 40, next);
+            _effect.Tick(40, 0.1f);
+
             _damageService.Received(1).Damage(6, _owner.Entity, first,
-                HealthEventId.Create(_owner.GetType(), 10), includeStats: false);
-            _damageService.Received(1).Damage(6, _owner.Entity, next,
                 HealthEventId.Create(_owner.GetType(), 20), includeStats: false);
+            _damageService.Received(1).Damage(6, _owner.Entity, next,
+                HealthEventId.Create(_owner.GetType(), 40), includeStats: false);
         }
 
         [Test]
@@ -123,20 +123,23 @@ namespace Tanks.Server.Tests.Effects
             {
                 effects.AddEffect(EffectType.Burning, 10, first);
                 effects.AddEffect(EffectType.Burning, 2, latest);
-                effects.OnTick(10, 0.1f);
-                _effect.Tick(10, 0.1f);
+
+                effects.OnTick(20, 0.05f);
+                _effect.Tick(20, 0.05f);
 
                 _damageService.Received(1).Damage(6, _owner.Entity, latest,
-                    HealthEventId.Create(_owner.GetType(), 10), includeStats: false);
+                    HealthEventId.Create(_owner.GetType(), 20), includeStats: false);
+
                 _damageService.DidNotReceive().Damage(Arg.Any<uint>(), _owner.Entity, first,
                     Arg.Any<HealthEventId>(), includeStats: false);
 
                 _damageService.ClearReceivedCalls();
-                effects.OnTick(20, 0.1f);
-                _effect.Tick(20, 0.1f);
+                effects.OnTick(40, 0.05f);
+
+                _effect.Tick(40, 0.05f);
 
                 _damageService.Received(1).Damage(6, _owner.Entity, first,
-                    HealthEventId.Create(_owner.GetType(), 20), includeStats: false);
+                    HealthEventId.Create(_owner.GetType(), 40), includeStats: false);
             }
             finally { Object.DestroyImmediate(effects.gameObject); }
         }
