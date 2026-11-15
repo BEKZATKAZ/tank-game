@@ -23,6 +23,7 @@ namespace Tanks.UI.Gameplay.Effects
         private VisualElement _root;
         private VisualElement _flashOverlay;
         private MotionHandle _fade;
+        private MotionHandle _retrofierFade;
         private EffectType? _currentEffect;
         private readonly Dictionary<EffectType, EffectCircle> _circles = new();
 
@@ -33,6 +34,7 @@ namespace Tanks.UI.Gameplay.Effects
             _root = root.Q("PlayerEffects");
             _flashOverlay = root.Q("FlashOverlay");
             _fullscreenMaterial.SetFloat("_Opacity", 0);
+            _fullscreenMaterial.SetFloat("_RetrofierOpacity", 0);
             UpdateFlash(1);
         }
 
@@ -42,6 +44,7 @@ namespace Tanks.UI.Gameplay.Effects
             viewModel.CurrentEffect.Bind(OnEffectChanged);
             viewModel.ExpiringEffects.Bind(UpdateExpiringEffects);
             viewModel.FlashProgress.Bind(UpdateFlash);
+            viewModel.RetrofierOpacity.Bind(UpdateRetrofier);
         }
 
         protected override void Unbind(EffectsViewModel viewModel)
@@ -50,6 +53,7 @@ namespace Tanks.UI.Gameplay.Effects
             viewModel.CurrentEffect.Unbind(OnEffectChanged);
             viewModel.ExpiringEffects.Unbind(UpdateExpiringEffects);
             viewModel.FlashProgress.Unbind(UpdateFlash);
+            viewModel.RetrofierOpacity.Unbind(UpdateRetrofier);
             _circles.Clear();
             _root.Clear();
             ResetEffect();
@@ -127,6 +131,23 @@ namespace Tanks.UI.Gameplay.Effects
                 .Bind(x => _fullscreenMaterial.SetFloat("_Opacity", x));
         }
 
+        private void UpdateRetrofier(float opacity)
+        {
+            _retrofierFade.TryCancel();
+
+            if (opacity <= 0)
+            {
+                _fullscreenMaterial.SetFloat("_RetrofierOpacity", 0);
+                return;
+            }
+
+            float current = _fullscreenMaterial.GetFloat("_RetrofierOpacity");
+
+            _retrofierFade = LMotion.Create(current, opacity, duration: 1)
+                .WithEase(Ease.OutSine)
+                .Bind(x => _fullscreenMaterial.SetFloat("_RetrofierOpacity", x));
+        }
+
         private void LateUpdate()
         {
             NetworkManager network = NetworkManager.Singleton;
@@ -154,10 +175,12 @@ namespace Tanks.UI.Gameplay.Effects
         private void ResetEffect()
         {
             _fade.TryCancel();
+            _retrofierFade.TryCancel();
             _currentEffect = null;
 
             if (_fullscreenMaterial == false) return;
             _fullscreenMaterial.SetFloat("_Opacity", 0);
+            _fullscreenMaterial.SetFloat("_RetrofierOpacity", 0);
             UpdateFlash(1);
         }
 
@@ -171,30 +194,6 @@ namespace Tanks.UI.Gameplay.Effects
 
             _flashOverlay.style.opacity = opacity;
             _flashOverlay.style.display = opacity > 0 ? DisplayStyle.Flex : DisplayStyle.None;
-        }
-
-        private sealed class EffectCircle
-        {
-            public EffectCircle(VisualElement element) => _element = element;
-
-            private readonly VisualElement _element;
-            private bool _expiring;
-            private float _elapsed;
-
-            public void SetExpiring(bool expiring)
-            {
-                if (_expiring == expiring) return;
-                _expiring = expiring;
-                _elapsed = 0;
-                _element.style.opacity = 1;
-            }
-
-            public void Tick(float deltaTime)
-            {
-                if (_expiring == false) return;
-                _elapsed = Mathf.Repeat(_elapsed + deltaTime, 0.5f);
-                _element.style.opacity = 1 - Mathf.PingPong(_elapsed * 4, 1);
-            }
         }
     }
 }

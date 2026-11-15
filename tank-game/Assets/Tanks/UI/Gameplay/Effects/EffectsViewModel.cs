@@ -1,9 +1,11 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using Tanks.Audio;
 using Tanks.Client.Entities;
 using Tanks.Shared.Effects;
 using Tanks.Shared.Entities;
+using Tanks.Shared.Items;
 using Tanks.Utils;
 using Unity.Mathematics;
 
@@ -23,6 +25,7 @@ namespace Tanks.UI.Gameplay.Effects
         }
 
         public BindableProperty<EffectType?> CurrentEffect { get; } = new();
+        public BindableProperty<float> RetrofierOpacity { get; } = new();
         public BindableProperty<float> FlashProgress { get; } = new(1);
         public BindableProperty<IReadOnlyList<EffectType>> ActiveEffects { get; } = new();
         public BindableProperty<IReadOnlyList<EffectType>> ExpiringEffects { get; } = new();
@@ -33,6 +36,8 @@ namespace Tanks.UI.Gameplay.Effects
         private readonly List<EffectType> _expiringEffects = new();
         private readonly List<EffectType> _effectBuffer = new();
 
+        private IEntityBehaviour _possessed;
+        private IItemOwnerBehaviour _itemOwner;
         private IEffectOwnerBehaviour _owner;
         private int _tick;
         private float _tickDelta;
@@ -40,6 +45,7 @@ namespace Tanks.UI.Gameplay.Effects
         public void Dispose()
         {
             _clientEntityService.Changed -= OnPossessed;
+            RetrofierOpacity.Value = 0;
         }
 
         public void Tick(int tick, float tickDelta)
@@ -51,6 +57,10 @@ namespace Tanks.UI.Gameplay.Effects
 
         public void Tick()
         {
+            RetrofierOpacity.Value = _possessed is { IsValid: true } &&
+                _itemOwner?.Items.Contains(new ItemIdentifier("retrofier")) == true
+                ? 1 : 0;
+
             if (_owner is null || _owner.Effects.Count == 0 || _owner.Entity.IsValid == false)
             {
                 CurrentEffect.Value = null;
@@ -156,6 +166,12 @@ namespace Tanks.UI.Gameplay.Effects
 
         private void OnPossessed(IEntityBehaviour previous, IEntityBehaviour current)
         {
+            RetrofierOpacity.Value = 0;
+            _possessed = current;
+            _itemOwner = current is { IsValid: true }
+                ? current.GetBehaviour<IItemOwnerBehaviour>()
+                : null;
+
             _owner = current is { IsValid: true }
                 ? current.GetBehaviour<IEffectOwnerBehaviour>()
                 : null;
