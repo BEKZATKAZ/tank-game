@@ -1,5 +1,4 @@
 using System;
-using System.Linq;
 using UnityEngine.InputSystem;
 using UnityEngine.Localization;
 using UnityEngine.Localization.SmartFormat.PersistentVariables;
@@ -18,22 +17,25 @@ namespace Tanks.UI.Menus.Settings.Elements
         public static LocalizedString Display(string path)
         {
             if (string.IsNullOrEmpty(path))
+            {
                 return new LocalizedString("Menus", "menu.settings.unassigned");
+            }
 
             string control = path[(path.IndexOf('/') + 1)..];
             string key = "menu.settings.input." + control;
             LocalizedString result = new("Menus", key);
 
             // Device layouts can expose names outside the translated catalog.
-            if (KnownControl(control) == false)
+            if (KnownControl(control)) return result;
+
+            result = new LocalizedString("Menus", "menu.settings.binding-name")
             {
-                result = new LocalizedString("Menus", "menu.settings.binding-name");
-                result["value"] = new StringVariable
+                ["value"] = new StringVariable
                 {
                     Value = InputControlPath.ToHumanReadableString(path,
                         InputControlPath.HumanReadableStringOptions.OmitDevice)
-                };
-            }
+                }
+            };
 
             return result;
         }

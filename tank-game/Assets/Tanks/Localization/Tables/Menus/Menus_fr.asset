@@ -77,7 +77,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 3641288212045824
-    m_Localized: "ANNULER"
+    m_Localized: ANNULER
     m_Metadata:
       m_Items: []
   - m_Id: 3638901065867264
@@ -301,7 +301,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 33779992972713984
-    m_Localized: "RETOUR"
+    m_Localized: RETOUR
     m_Metadata:
       m_Items: []
   - m_Id: 41000000000000019
@@ -325,131 +325,131 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 42000000000000000
-    m_Localized: "Classements"
+    m_Localized: Classements
     m_Metadata:
       m_Items: []
   - m_Id: 42000000000000001
-    m_Localized: "Catégorie"
+    m_Localized: "Cat\xE9gorie"
     m_Metadata:
       m_Items: []
   - m_Id: 42000000000000002
-    m_Localized: "Éliminations"
+    m_Localized: "\xC9liminations"
     m_Metadata:
       m_Items: []
   - m_Id: 42000000000000003
-    m_Localized: "Objets ramassés"
+    m_Localized: "Objets ramass\xE9s"
     m_Metadata:
       m_Items: []
   - m_Id: 42000000000000004
-    m_Localized: "Total"
+    m_Localized: Total
     m_Metadata:
       m_Items: []
   - m_Id: 42000000000000005
-    m_Localized: "Hebdomadaire"
+    m_Localized: Hebdomadaire
     m_Metadata:
       m_Items: []
   - m_Id: 42000000000000006
-    m_Localized: "Quotidien"
+    m_Localized: Quotidien
     m_Metadata:
       m_Items: []
   - m_Id: 42000000000000007
-    m_Localized: "Rang"
+    m_Localized: Rang
     m_Metadata:
       m_Items: []
   - m_Id: 42000000000000008
-    m_Localized: "Joueur"
+    m_Localized: Joueur
     m_Metadata:
       m_Items: []
   - m_Id: 42000000000000009
-    m_Localized: "Score"
+    m_Localized: Score
     m_Metadata:
       m_Items: []
   - m_Id: 42000000000000010
-    m_Localized: "Votre score"
+    m_Localized: Votre score
     m_Metadata:
       m_Items: []
   - m_Id: 42000000000000011
-    m_Localized: "PRÉCÉDENT"
+    m_Localized: "PR\xC9C\xC9DENT"
     m_Metadata:
       m_Items: []
   - m_Id: 42000000000000012
-    m_Localized: "SUIVANT"
+    m_Localized: SUIVANT
     m_Metadata:
       m_Items: []
   - m_Id: 42000000000000013
-    m_Localized: "ACTUALISER"
+    m_Localized: ACTUALISER
     m_Metadata:
       m_Items: []
   - m_Id: 42000000000000014
-    m_Localized: "RETOUR"
+    m_Localized: RETOUR
     m_Metadata:
       m_Items: []
   - m_Id: 42000000000000015
-    m_Localized: "Chargement..."
+    m_Localized: Chargement...
     m_Metadata:
       m_Items: []
   - m_Id: 42000000000000016
-    m_Localized: "Aucun score pour le moment."
+    m_Localized: Aucun score pour le moment.
     m_Metadata:
       m_Items: []
   - m_Id: 42000000000000017
-    m_Localized: "Impossible de charger les scores. Actualisez."
+    m_Localized: Impossible de charger les scores. Actualisez.
     m_Metadata:
       m_Items: []
   - m_Id: 42000000000000018
-    m_Localized: "Joueur"
+    m_Localized: Joueur
     m_Metadata:
       m_Items: []
   - m_Id: 42000000000000019
-    m_Localized: "Non classé"
+    m_Localized: "Non class\xE9"
     m_Metadata:
       m_Items: []
   - m_Id: 43000000000000000
-    m_Localized: "BOUTIQUE"
+    m_Localized: BOUTIQUE
     m_Metadata:
       m_Items: []
   - m_Id: 43000000000000001
-    m_Localized: "RETOUR"
+    m_Localized: RETOUR
     m_Metadata:
       m_Items: []
   - m_Id: 43000000000000002
-    m_Localized: "CH\u00c2SSIS"
+    m_Localized: "CH\xC2SSIS"
     m_Metadata:
       m_Items: []
   - m_Id: 43000000000000003
-    m_Localized: "TOURELLES"
+    m_Localized: TOURELLES
     m_Metadata:
       m_Items: []
   - m_Id: 43000000000000004
-    m_Localized: "\u00c9QUIPER"
+    m_Localized: "\xC9QUIPER"
     m_Metadata:
       m_Items: []
   - m_Id: 43000000000000005
-    m_Localized: "\u00c9QUIP\u00c9"
+    m_Localized: "\xC9QUIP\xC9"
     m_Metadata:
       m_Items: []
   - m_Id: 43000000000000006
-    m_Localized: "Noir"
+    m_Localized: Noir
     m_Metadata:
       m_Items: []
   - m_Id: 43000000000000007
-    m_Localized: "Chargement des apparences..."
+    m_Localized: Chargement des apparences...
     m_Metadata:
       m_Items: []
   - m_Id: 43000000000000008
-    m_Localized: "Impossible de charger les apparences."
+    m_Localized: Impossible de charger les apparences.
     m_Metadata:
       m_Items: []
   - m_Id: 43000000000000009
-    m_Localized: "Impossible de charger les donn\u00e9es du joueur."
+    m_Localized: "Impossible de charger les donn\xE9es du joueur."
     m_Metadata:
       m_Items: []
   - m_Id: 43000000000000010
-    m_Localized: "R\u00c9ESSAYER"
+    m_Localized: "R\xC9ESSAYER"
     m_Metadata:
       m_Items: []
   - m_Id: 43000000000000011
-    m_Localized: "QUITTER"
+    m_Localized: QUITTER
     m_Metadata:
       m_Items: []
   - m_Id: 43000000000000012
@@ -457,793 +457,793 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 43000000000000013
-    m_Localized: "D\u00e9bloquer {item} pour {price} {currency} ?"
+    m_Localized: "D\xE9bloquer {item} pour {price} {currency} ?"
     m_Metadata:
       m_Items:
       - rid: 5824281740147687470
   - m_Id: 43000000000000014
-    m_Localized: "R\u00c9COMPENSE DE TROIS HEURES"
+    m_Localized: "R\xC9COMPENSE DE TROIS HEURES"
     m_Metadata:
       m_Items: []
   - m_Id: 43000000000000015
-    m_Localized: "R\u00c9COMPENSE QUOTIDIENNE"
+    m_Localized: "R\xC9COMPENSE QUOTIDIENNE"
     m_Metadata:
       m_Items: []
   - m_Id: 43000000000000016
-    m_Localized: "{hour}h {minutes}m {seconds}s"
+    m_Localized: '{hour}h {minutes}m {seconds}s'
     m_Metadata:
       m_Items:
       - rid: 5824281740147687470
   - m_Id: 43000000000000017
-    m_Localized: "R\u00c9CUP\u00c9RER"
+    m_Localized: "R\xC9CUP\xC9RER"
     m_Metadata:
       m_Items: []
   - m_Id: 43000000000000018
-    m_Localized: "Pi\u00e8ces"
+    m_Localized: "Pi\xE8ces d\xE9tach\xE9es"
     m_Metadata:
       m_Items: []
   - m_Id: 43000000000000019
-    m_Localized: "Obtenues en <b><color=#0f0>\u00e9liminant des joueurs</color></b>."
+    m_Localized: "Obtenues en <b><color=#0f0>\xE9liminant des joueurs</color></b>."
     m_Metadata:
       m_Items: []
   - m_Id: 43000000000000020
-    m_Localized: "Points de fiert\u00e9"
+    m_Localized: "Points de fiert\xE9"
     m_Metadata:
       m_Items: []
   - m_Id: 43000000000000021
-    m_Localized: "Obtenus gr\u00e2ce aux <b><color=#ff0>victoires</color></b> et aux <b><color=#ff0>manches gagn\u00e9es</color></b>."
+    m_Localized: "Obtenus gr\xE2ce aux <b><color=#ff0>victoires</color></b> et aux <b><color=#ff0>manches gagn\xE9es</color></b>."
     m_Metadata:
       m_Items: []
   - m_Id: 44000000000000000
-    m_Localized: "BILAN DE LA PARTIE"
+    m_Localized: BILAN DE LA PARTIE
     m_Metadata:
       m_Items: []
   - m_Id: 44000000000000001
-    m_Localized: "{name} : {value:N0}"
+    m_Localized: '{name} : {value:N0}'
     m_Metadata:
       m_Items: []
   - m_Id: 44000000000000002
-    m_Localized: "Éliminations"
+    m_Localized: "\xC9liminations"
     m_Metadata:
       m_Items: []
   - m_Id: 44000000000000003
-    m_Localized: "Assistances"
+    m_Localized: Assistances
     m_Metadata:
       m_Items: []
   - m_Id: 44000000000000004
-    m_Localized: "Morts"
+    m_Localized: Morts
     m_Metadata:
       m_Items: []
   - m_Id: 44000000000000005
-    m_Localized: "Score"
+    m_Localized: Score
     m_Metadata:
       m_Items: []
   - m_Id: 44000000000000006
-    m_Localized: "VICTOIRE"
+    m_Localized: VICTOIRE
     m_Metadata:
       m_Items: []
   - m_Id: 44000000000000007
-    m_Localized: "DÉFAITE"
+    m_Localized: "D\xC9FAITE"
     m_Metadata:
       m_Items: []
   - m_Id: 44000000000000008
-    m_Localized: "{current:N0} / {required:N0} XP"
+    m_Localized: '{current:N0} / {required:N0} XP'
     m_Metadata:
       m_Items: []
   - m_Id: 44000000000000009
-    m_Localized: "{sign}{value:N0} XP"
+    m_Localized: '{sign}{value:N0} XP'
     m_Metadata:
       m_Items: []
   - m_Id: 44000000000000010
-    m_Localized: "PASSER"
+    m_Localized: PASSER
     m_Metadata:
       m_Items: []
   - m_Id: 44000000000000011
-    m_Localized: "FERMER"
+    m_Localized: FERMER
     m_Metadata:
       m_Items: []
   - m_Id: 44000000000000012
-    m_Localized: "Le bilan de la partie est indisponible. Les récompenses ne sont pas confirmées. Votre progression sera actualisée dès que possible."
+    m_Localized: "Le bilan de la partie est indisponible. Les r\xE9compenses ne sont pas confirm\xE9es. Votre progression sera actualis\xE9e d\xE8s que possible."
     m_Metadata:
       m_Items: []
   - m_Id: 44000000000000013
-    m_Localized: "{sign}{value:N0}"
+    m_Localized: '{sign}{value:N0}'
     m_Metadata:
       m_Items: []
   - m_Id: 44000000000000014
-    m_Localized: "{value:N0}"
+    m_Localized: '{value:N0}'
     m_Metadata:
       m_Items: []
   - m_Id: 45000000000000100
-    m_Localized: "Affichage"
+    m_Localized: Affichage
     m_Metadata:
       m_Items: []
   - m_Id: 45000000000000101
-    m_Localized: "Audio"
+    m_Localized: Audio
     m_Metadata:
       m_Items: []
   - m_Id: 45000000000000102
-    m_Localized: "Commandes"
+    m_Localized: Commandes
     m_Metadata:
       m_Items: []
   - m_Id: 45000000000000103
-    m_Localized: "Simplifié"
+    m_Localized: "Simplifi\xE9"
     m_Metadata:
       m_Items: []
   - m_Id: 45000000000000104
-    m_Localized: "Classique"
+    m_Localized: Classique
     m_Metadata:
       m_Items: []
   - m_Id: 45000000000000105
-    m_Localized: "Action"
+    m_Localized: Action
     m_Metadata:
       m_Items: []
   - m_Id: 45000000000000106
-    m_Localized: "Clavier/Souris 1"
+    m_Localized: Clavier/Souris 1
     m_Metadata:
       m_Items: []
   - m_Id: 45000000000000107
-    m_Localized: "Clavier/Souris 2"
+    m_Localized: Clavier/Souris 2
     m_Metadata:
       m_Items: []
   - m_Id: 45000000000000108
-    m_Localized: "Manette 1"
+    m_Localized: Manette 1
     m_Metadata:
       m_Items: []
   - m_Id: 45000000000000109
-    m_Localized: "Manette 2"
+    m_Localized: Manette 2
     m_Metadata:
       m_Items: []
   - m_Id: 45000000000000111
-    m_Localized: "Non attribué"
+    m_Localized: "Non attribu\xE9"
     m_Metadata:
       m_Items: []
   - m_Id: 45000000000000112
-    m_Localized: "Appuyez sur une touche ou un bouton de souris. Échap annule."
+    m_Localized: "Appuyez sur une touche ou un bouton de souris. \xC9chap \xE0 annuler."
     m_Metadata:
       m_Items: []
   - m_Id: 45000000000000113
-    m_Localized: "Appuyez sur un bouton ou inclinez un stick. Échap annule."
+    m_Localized: "Appuyez sur un bouton ou inclinez un stick. \xC9chap \xE0 annuler."
     m_Metadata:
       m_Items: []
   - m_Id: 45000000000000114
-    m_Localized: "Impossible d’enregistrer les commandes. Vos modifications sont conservées ; réessayez Appliquer."
+    m_Localized: "Impossible d\u2019enregistrer les commandes. Vos modifications sont conserv\xE9es ; r\xE9essayez Appliquer."
     m_Metadata:
       m_Items: []
   - m_Id: 45000000000000116
-    m_Localized: "{value}"
+    m_Localized: '{value}'
     m_Metadata:
       m_Items: []
   - m_Id: 45000000000000118
-    m_Localized: "Tirer"
+    m_Localized: Tirer
     m_Metadata:
       m_Items: []
   - m_Id: 45000000000000119
-    m_Localized: "Haut (simplifié)"
+    m_Localized: "Haut (simplifi\xE9)"
     m_Metadata:
       m_Items: []
   - m_Id: 45000000000000120
-    m_Localized: "Bas (simplifié)"
+    m_Localized: "Bas (simplifi\xE9)"
     m_Metadata:
       m_Items: []
   - m_Id: 45000000000000121
-    m_Localized: "Gauche (simplifié)"
+    m_Localized: "Gauche (simplifi\xE9)"
     m_Metadata:
       m_Items: []
   - m_Id: 45000000000000122
-    m_Localized: "Droite (simplifié)"
+    m_Localized: "Droite (simplifi\xE9)"
     m_Metadata:
       m_Items: []
   - m_Id: 45000000000000123
-    m_Localized: "Frein à main (simplifié)"
+    m_Localized: "Frein \xE0 main (simplifi\xE9)"
     m_Metadata:
       m_Items: []
   - m_Id: 45000000000000124
-    m_Localized: "Marche arrière (simplifié)"
+    m_Localized: "Marche arri\xE8re (simplifi\xE9)"
     m_Metadata:
       m_Items: []
   - m_Id: 45000000000000125
-    m_Localized: "Avancer (classique)"
+    m_Localized: Avancer (classique)
     m_Metadata:
       m_Items: []
   - m_Id: 45000000000000126
-    m_Localized: "Reculer (classique)"
+    m_Localized: Reculer (classique)
     m_Metadata:
       m_Items: []
   - m_Id: 45000000000000127
-    m_Localized: "Tourner à gauche (classique)"
+    m_Localized: "Tourner \xE0 gauche (classique)"
     m_Metadata:
       m_Items: []
   - m_Id: 45000000000000128
-    m_Localized: "Tourner à droite (classique)"
+    m_Localized: "Tourner \xE0 droite (classique)"
     m_Metadata:
       m_Items: []
   - m_Id: 45000000000000129
-    m_Localized: "Espace"
+    m_Localized: Espace
     m_Metadata:
       m_Items: []
   - m_Id: 45000000000000130
-    m_Localized: "Maj gauche"
+    m_Localized: Maj gauche
     m_Metadata:
       m_Items: []
   - m_Id: 45000000000000131
-    m_Localized: "Maj droite"
+    m_Localized: Maj droite
     m_Metadata:
       m_Items: []
   - m_Id: 45000000000000132
-    m_Localized: "Bouton gauche de souris"
+    m_Localized: Bouton gauche de souris
     m_Metadata:
       m_Items: []
   - m_Id: 45000000000000133
-    m_Localized: "Bouton droit de souris"
+    m_Localized: Bouton droit de souris
     m_Metadata:
       m_Items: []
   - m_Id: 45000000000000134
-    m_Localized: "Bouton central de souris"
+    m_Localized: Bouton central de souris
     m_Metadata:
       m_Items: []
   - m_Id: 45000000000000135
-    m_Localized: "Gâchette gauche"
+    m_Localized: "G\xE2chette gauche"
     m_Metadata:
       m_Items: []
   - m_Id: 45000000000000136
-    m_Localized: "Gâchette droite"
+    m_Localized: "G\xE2chette droite"
     m_Metadata:
       m_Items: []
   - m_Id: 45000000000000137
-    m_Localized: "Bouton supérieur gauche"
+    m_Localized: "Bouton sup\xE9rieur gauche"
     m_Metadata:
       m_Items: []
   - m_Id: 45000000000000138
-    m_Localized: "Bouton supérieur droit"
+    m_Localized: "Bouton sup\xE9rieur droit"
     m_Metadata:
       m_Items: []
   - m_Id: 45000000000000139
-    m_Localized: "Flèche haut"
+    m_Localized: "Fl\xE8che haut"
     m_Metadata:
       m_Items: []
   - m_Id: 45000000000000140
-    m_Localized: "Stick gauche haut"
+    m_Localized: Stick gauche haut
     m_Metadata:
       m_Items: []
   - m_Id: 45000000000000141
-    m_Localized: "Croix directionnelle haut"
+    m_Localized: Croix directionnelle haut
     m_Metadata:
       m_Items: []
   - m_Id: 45000000000000142
-    m_Localized: "Flèche bas"
+    m_Localized: "Fl\xE8che bas"
     m_Metadata:
       m_Items: []
   - m_Id: 45000000000000143
-    m_Localized: "Stick gauche bas"
+    m_Localized: Stick gauche bas
     m_Metadata:
       m_Items: []
   - m_Id: 45000000000000144
-    m_Localized: "Croix directionnelle bas"
+    m_Localized: Croix directionnelle bas
     m_Metadata:
       m_Items: []
   - m_Id: 45000000000000145
-    m_Localized: "Flèche gauche"
+    m_Localized: "Fl\xE8che gauche"
     m_Metadata:
       m_Items: []
   - m_Id: 45000000000000146
-    m_Localized: "Stick gauche gauche"
+    m_Localized: Stick gauche gauche
     m_Metadata:
       m_Items: []
   - m_Id: 45000000000000147
-    m_Localized: "Croix directionnelle gauche"
+    m_Localized: Croix directionnelle gauche
     m_Metadata:
       m_Items: []
   - m_Id: 45000000000000148
-    m_Localized: "Flèche droite"
+    m_Localized: "Fl\xE8che droite"
     m_Metadata:
       m_Items: []
   - m_Id: 45000000000000149
-    m_Localized: "Stick gauche droite"
+    m_Localized: Stick gauche droite
     m_Metadata:
       m_Items: []
   - m_Id: 45000000000000150
-    m_Localized: "Croix directionnelle droite"
+    m_Localized: Croix directionnelle droite
     m_Metadata:
       m_Items: []
   - m_Id: 45000000000000151
-    m_Localized: "A"
+    m_Localized: A
     m_Metadata:
       m_Items: []
   - m_Id: 45000000000000152
-    m_Localized: "B"
+    m_Localized: B
     m_Metadata:
       m_Items: []
   - m_Id: 45000000000000153
-    m_Localized: "C"
+    m_Localized: C
     m_Metadata:
       m_Items: []
   - m_Id: 45000000000000154
-    m_Localized: "D"
+    m_Localized: D
     m_Metadata:
       m_Items: []
   - m_Id: 45000000000000155
-    m_Localized: "E"
+    m_Localized: E
     m_Metadata:
       m_Items: []
   - m_Id: 45000000000000156
-    m_Localized: "F"
+    m_Localized: F
     m_Metadata:
       m_Items: []
   - m_Id: 45000000000000157
-    m_Localized: "G"
+    m_Localized: G
     m_Metadata:
       m_Items: []
   - m_Id: 45000000000000158
-    m_Localized: "H"
+    m_Localized: H
     m_Metadata:
       m_Items: []
   - m_Id: 45000000000000159
-    m_Localized: "I"
+    m_Localized: I
     m_Metadata:
       m_Items: []
   - m_Id: 45000000000000160
-    m_Localized: "J"
+    m_Localized: J
     m_Metadata:
       m_Items: []
   - m_Id: 45000000000000161
-    m_Localized: "K"
+    m_Localized: K
     m_Metadata:
       m_Items: []
   - m_Id: 45000000000000162
-    m_Localized: "L"
+    m_Localized: L
     m_Metadata:
       m_Items: []
   - m_Id: 45000000000000163
-    m_Localized: "M"
+    m_Localized: M
     m_Metadata:
       m_Items: []
   - m_Id: 45000000000000164
-    m_Localized: "N"
+    m_Localized: N
     m_Metadata:
       m_Items: []
   - m_Id: 45000000000000165
-    m_Localized: "O"
+    m_Localized: O
     m_Metadata:
       m_Items: []
   - m_Id: 45000000000000166
-    m_Localized: "P"
+    m_Localized: P
     m_Metadata:
       m_Items: []
   - m_Id: 45000000000000167
-    m_Localized: "Q"
+    m_Localized: Q
     m_Metadata:
       m_Items: []
   - m_Id: 45000000000000168
-    m_Localized: "R"
+    m_Localized: R
     m_Metadata:
       m_Items: []
   - m_Id: 45000000000000169
-    m_Localized: "S"
+    m_Localized: S
     m_Metadata:
       m_Items: []
   - m_Id: 45000000000000170
-    m_Localized: "T"
+    m_Localized: T
     m_Metadata:
       m_Items: []
   - m_Id: 45000000000000171
-    m_Localized: "U"
+    m_Localized: U
     m_Metadata:
       m_Items: []
   - m_Id: 45000000000000172
-    m_Localized: "V"
+    m_Localized: V
     m_Metadata:
       m_Items: []
   - m_Id: 45000000000000173
-    m_Localized: "W"
+    m_Localized: W
     m_Metadata:
       m_Items: []
   - m_Id: 45000000000000174
-    m_Localized: "X"
+    m_Localized: X
     m_Metadata:
       m_Items: []
   - m_Id: 45000000000000175
-    m_Localized: "Y"
+    m_Localized: Y
     m_Metadata:
       m_Items: []
   - m_Id: 45000000000000176
-    m_Localized: "Z"
+    m_Localized: Z
     m_Metadata:
       m_Items: []
   - m_Id: 45000000000000177
-    m_Localized: "0"
+    m_Localized: 0
     m_Metadata:
       m_Items: []
   - m_Id: 45000000000000178
-    m_Localized: "1"
+    m_Localized: 1
     m_Metadata:
       m_Items: []
   - m_Id: 45000000000000179
-    m_Localized: "2"
+    m_Localized: 2
     m_Metadata:
       m_Items: []
   - m_Id: 45000000000000180
-    m_Localized: "3"
+    m_Localized: 3
     m_Metadata:
       m_Items: []
   - m_Id: 45000000000000181
-    m_Localized: "4"
+    m_Localized: 4
     m_Metadata:
       m_Items: []
   - m_Id: 45000000000000182
-    m_Localized: "5"
+    m_Localized: 5
     m_Metadata:
       m_Items: []
   - m_Id: 45000000000000183
-    m_Localized: "6"
+    m_Localized: 6
     m_Metadata:
       m_Items: []
   - m_Id: 45000000000000184
-    m_Localized: "7"
+    m_Localized: 7
     m_Metadata:
       m_Items: []
   - m_Id: 45000000000000185
-    m_Localized: "8"
+    m_Localized: 8
     m_Metadata:
       m_Items: []
   - m_Id: 45000000000000186
-    m_Localized: "9"
+    m_Localized: 9
     m_Metadata:
       m_Items: []
   - m_Id: 45000000000000300
-    m_Localized: "Retour arrière"
+    m_Localized: "Retour arri\xE8re"
     m_Metadata:
       m_Items: []
   - m_Id: 45000000000000301
-    m_Localized: "Entrée"
+    m_Localized: "Entr\xE9e"
     m_Metadata:
       m_Items: []
   - m_Id: 45000000000000302
-    m_Localized: "Tabulation"
+    m_Localized: Tabulation
     m_Metadata:
       m_Items: []
   - m_Id: 45000000000000303
-    m_Localized: "Verr. maj."
+    m_Localized: Verr. maj.
     m_Metadata:
       m_Items: []
   - m_Id: 45000000000000304
-    m_Localized: "Échap"
+    m_Localized: "\xC9chap"
     m_Metadata:
       m_Items: []
   - m_Id: 45000000000000305
-    m_Localized: "Ctrl gauche"
+    m_Localized: Ctrl gauche
     m_Metadata:
       m_Items: []
   - m_Id: 45000000000000306
-    m_Localized: "Ctrl droit"
+    m_Localized: Ctrl droit
     m_Metadata:
       m_Items: []
   - m_Id: 45000000000000307
-    m_Localized: "Alt gauche"
+    m_Localized: Alt gauche
     m_Metadata:
       m_Items: []
   - m_Id: 45000000000000308
-    m_Localized: "Alt droit"
+    m_Localized: Alt droit
     m_Metadata:
       m_Items: []
   - m_Id: 45000000000000309
-    m_Localized: "Windows/Commande gauche"
+    m_Localized: Windows/Commande gauche
     m_Metadata:
       m_Items: []
   - m_Id: 45000000000000310
-    m_Localized: "Windows/Commande droite"
+    m_Localized: Windows/Commande droite
     m_Metadata:
       m_Items: []
   - m_Id: 45000000000000311
-    m_Localized: "Menu contextuel"
+    m_Localized: Menu contextuel
     m_Metadata:
       m_Items: []
   - m_Id: 45000000000000312
-    m_Localized: "Inser."
+    m_Localized: Inser.
     m_Metadata:
       m_Items: []
   - m_Id: 45000000000000313
-    m_Localized: "Suppr."
+    m_Localized: Suppr.
     m_Metadata:
       m_Items: []
   - m_Id: 45000000000000314
-    m_Localized: "Début"
+    m_Localized: "D\xE9but"
     m_Metadata:
       m_Items: []
   - m_Id: 45000000000000315
-    m_Localized: "Fin"
+    m_Localized: Fin
     m_Metadata:
       m_Items: []
   - m_Id: 45000000000000316
-    m_Localized: "Page précédente"
+    m_Localized: "Page pr\xE9c\xE9dente"
     m_Metadata:
       m_Items: []
   - m_Id: 45000000000000317
-    m_Localized: "Page suivante"
+    m_Localized: Page suivante
     m_Metadata:
       m_Items: []
   - m_Id: 45000000000000318
-    m_Localized: "Impr. écran"
+    m_Localized: "Impr. \xE9cran"
     m_Metadata:
       m_Items: []
   - m_Id: 45000000000000319
-    m_Localized: "Arrêt défil."
+    m_Localized: "Arr\xEAt d\xE9fil."
     m_Metadata:
       m_Items: []
   - m_Id: 45000000000000320
-    m_Localized: "Pause"
+    m_Localized: Pause
     m_Metadata:
       m_Items: []
   - m_Id: 45000000000000321
-    m_Localized: "Verr. num."
+    m_Localized: Verr. num.
     m_Metadata:
       m_Items: []
   - m_Id: 45000000000000322
-    m_Localized: "Accent grave"
+    m_Localized: Accent grave
     m_Metadata:
       m_Items: []
   - m_Id: 45000000000000323
-    m_Localized: "Apostrophe"
+    m_Localized: Apostrophe
     m_Metadata:
       m_Items: []
   - m_Id: 45000000000000324
-    m_Localized: "Point-virgule"
+    m_Localized: Point-virgule
     m_Metadata:
       m_Items: []
   - m_Id: 45000000000000325
-    m_Localized: "Virgule"
+    m_Localized: Virgule
     m_Metadata:
       m_Items: []
   - m_Id: 45000000000000326
-    m_Localized: "Point"
+    m_Localized: Point
     m_Metadata:
       m_Items: []
   - m_Id: 45000000000000327
-    m_Localized: "Barre oblique"
+    m_Localized: Barre oblique
     m_Metadata:
       m_Items: []
   - m_Id: 45000000000000328
-    m_Localized: "Barre oblique inverse"
+    m_Localized: Barre oblique inverse
     m_Metadata:
       m_Items: []
   - m_Id: 45000000000000329
-    m_Localized: "Crochet gauche"
+    m_Localized: Crochet gauche
     m_Metadata:
       m_Items: []
   - m_Id: 45000000000000330
-    m_Localized: "Crochet droit"
+    m_Localized: Crochet droit
     m_Metadata:
       m_Items: []
   - m_Id: 45000000000000331
-    m_Localized: "Moins"
+    m_Localized: Moins
     m_Metadata:
       m_Items: []
   - m_Id: 45000000000000332
-    m_Localized: "Égal"
+    m_Localized: "\xC9gal"
     m_Metadata:
       m_Items: []
   - m_Id: 45000000000000333
-    m_Localized: "Entrée du pavé numérique"
+    m_Localized: "Entr\xE9e du pav\xE9 num\xE9rique"
     m_Metadata:
       m_Items: []
   - m_Id: 45000000000000334
-    m_Localized: "Pavé numérique +"
+    m_Localized: "Pav\xE9 num\xE9rique +"
     m_Metadata:
       m_Items: []
   - m_Id: 45000000000000335
-    m_Localized: "Pavé numérique −"
+    m_Localized: "Pav\xE9 num\xE9rique \u2212"
     m_Metadata:
       m_Items: []
   - m_Id: 45000000000000336
-    m_Localized: "Pavé numérique ×"
+    m_Localized: "Pav\xE9 num\xE9rique \xD7"
     m_Metadata:
       m_Items: []
   - m_Id: 45000000000000337
-    m_Localized: "Pavé numérique /"
+    m_Localized: "Pav\xE9 num\xE9rique /"
     m_Metadata:
       m_Items: []
   - m_Id: 45000000000000338
-    m_Localized: "Décimale du pavé numérique"
+    m_Localized: "D\xE9cimale du pav\xE9 num\xE9rique"
     m_Metadata:
       m_Items: []
   - m_Id: 45000000000000339
-    m_Localized: "Pavé numérique ="
+    m_Localized: "Pav\xE9 num\xE9rique ="
     m_Metadata:
       m_Items: []
   - m_Id: 45000000000000340
-    m_Localized: "Bouton suivant de souris"
+    m_Localized: Bouton suivant de souris
     m_Metadata:
       m_Items: []
   - m_Id: 45000000000000341
-    m_Localized: "Bouton précédent de souris"
+    m_Localized: "Bouton pr\xE9c\xE9dent de souris"
     m_Metadata:
       m_Items: []
   - m_Id: 45000000000000342
-    m_Localized: "Bouton inférieur"
+    m_Localized: "Bouton inf\xE9rieur"
     m_Metadata:
       m_Items: []
   - m_Id: 45000000000000343
-    m_Localized: "Bouton supérieur"
+    m_Localized: "Bouton sup\xE9rieur"
     m_Metadata:
       m_Items: []
   - m_Id: 45000000000000344
-    m_Localized: "Bouton gauche"
+    m_Localized: Bouton gauche
     m_Metadata:
       m_Items: []
   - m_Id: 45000000000000345
-    m_Localized: "Bouton droit"
+    m_Localized: Bouton droit
     m_Metadata:
       m_Items: []
   - m_Id: 45000000000000346
-    m_Localized: "Clic du stick gauche"
+    m_Localized: Clic du stick gauche
     m_Metadata:
       m_Items: []
   - m_Id: 45000000000000347
-    m_Localized: "Clic du stick droit"
+    m_Localized: Clic du stick droit
     m_Metadata:
       m_Items: []
   - m_Id: 45000000000000348
-    m_Localized: "Démarrer"
+    m_Localized: "D\xE9marrer"
     m_Metadata:
       m_Items: []
   - m_Id: 45000000000000349
-    m_Localized: "Sélectionner"
+    m_Localized: "S\xE9lectionner"
     m_Metadata:
       m_Items: []
   - m_Id: 45000000000000350
-    m_Localized: "F1"
+    m_Localized: F1
     m_Metadata:
       m_Items: []
   - m_Id: 45000000000000351
-    m_Localized: "F2"
+    m_Localized: F2
     m_Metadata:
       m_Items: []
   - m_Id: 45000000000000352
-    m_Localized: "F3"
+    m_Localized: F3
     m_Metadata:
       m_Items: []
   - m_Id: 45000000000000353
-    m_Localized: "F4"
+    m_Localized: F4
     m_Metadata:
       m_Items: []
   - m_Id: 45000000000000354
-    m_Localized: "F5"
+    m_Localized: F5
     m_Metadata:
       m_Items: []
   - m_Id: 45000000000000355
-    m_Localized: "F6"
+    m_Localized: F6
     m_Metadata:
       m_Items: []
   - m_Id: 45000000000000356
-    m_Localized: "F7"
+    m_Localized: F7
     m_Metadata:
       m_Items: []
   - m_Id: 45000000000000357
-    m_Localized: "F8"
+    m_Localized: F8
     m_Metadata:
       m_Items: []
   - m_Id: 45000000000000358
-    m_Localized: "F9"
+    m_Localized: F9
     m_Metadata:
       m_Items: []
   - m_Id: 45000000000000359
-    m_Localized: "F10"
+    m_Localized: F10
     m_Metadata:
       m_Items: []
   - m_Id: 45000000000000360
-    m_Localized: "F11"
+    m_Localized: F11
     m_Metadata:
       m_Items: []
   - m_Id: 45000000000000361
-    m_Localized: "F12"
+    m_Localized: F12
     m_Metadata:
       m_Items: []
   - m_Id: 45000000000000362
-    m_Localized: "F13"
+    m_Localized: F13
     m_Metadata:
       m_Items: []
   - m_Id: 45000000000000363
-    m_Localized: "F14"
+    m_Localized: F14
     m_Metadata:
       m_Items: []
   - m_Id: 45000000000000364
-    m_Localized: "F15"
+    m_Localized: F15
     m_Metadata:
       m_Items: []
   - m_Id: 45000000000000365
-    m_Localized: "F16"
+    m_Localized: F16
     m_Metadata:
       m_Items: []
   - m_Id: 45000000000000366
-    m_Localized: "F17"
+    m_Localized: F17
     m_Metadata:
       m_Items: []
   - m_Id: 45000000000000367
-    m_Localized: "F18"
+    m_Localized: F18
     m_Metadata:
       m_Items: []
   - m_Id: 45000000000000368
-    m_Localized: "F19"
+    m_Localized: F19
     m_Metadata:
       m_Items: []
   - m_Id: 45000000000000369
-    m_Localized: "F20"
+    m_Localized: F20
     m_Metadata:
       m_Items: []
   - m_Id: 45000000000000370
-    m_Localized: "F21"
+    m_Localized: F21
     m_Metadata:
       m_Items: []
   - m_Id: 45000000000000371
-    m_Localized: "F22"
+    m_Localized: F22
     m_Metadata:
       m_Items: []
   - m_Id: 45000000000000372
-    m_Localized: "F23"
+    m_Localized: F23
     m_Metadata:
       m_Items: []
   - m_Id: 45000000000000373
-    m_Localized: "F24"
+    m_Localized: F24
     m_Metadata:
       m_Items: []
   - m_Id: 45000000000000374
-    m_Localized: "Pavé numérique 0"
+    m_Localized: "Pav\xE9 num\xE9rique 0"
     m_Metadata:
       m_Items: []
   - m_Id: 45000000000000375
-    m_Localized: "Pavé numérique 1"
+    m_Localized: "Pav\xE9 num\xE9rique 1"
     m_Metadata:
       m_Items: []
   - m_Id: 45000000000000376
-    m_Localized: "Pavé numérique 2"
+    m_Localized: "Pav\xE9 num\xE9rique 2"
     m_Metadata:
       m_Items: []
   - m_Id: 45000000000000377
-    m_Localized: "Pavé numérique 3"
+    m_Localized: "Pav\xE9 num\xE9rique 3"
     m_Metadata:
       m_Items: []
   - m_Id: 45000000000000378
-    m_Localized: "Pavé numérique 4"
+    m_Localized: "Pav\xE9 num\xE9rique 4"
     m_Metadata:
       m_Items: []
   - m_Id: 45000000000000379
-    m_Localized: "Pavé numérique 5"
+    m_Localized: "Pav\xE9 num\xE9rique 5"
     m_Metadata:
       m_Items: []
   - m_Id: 45000000000000380
-    m_Localized: "Pavé numérique 6"
+    m_Localized: "Pav\xE9 num\xE9rique 6"
     m_Metadata:
       m_Items: []
   - m_Id: 45000000000000381
-    m_Localized: "Pavé numérique 7"
+    m_Localized: "Pav\xE9 num\xE9rique 7"
     m_Metadata:
       m_Items: []
   - m_Id: 45000000000000382
-    m_Localized: "Pavé numérique 8"
+    m_Localized: "Pav\xE9 num\xE9rique 8"
     m_Metadata:
       m_Items: []
   - m_Id: 45000000000000383
-    m_Localized: "Pavé numérique 9"
+    m_Localized: "Pav\xE9 num\xE9rique 9"
     m_Metadata:
       m_Items: []
   - m_Id: 45000000000000384
-    m_Localized: "Stick droit haut"
+    m_Localized: Stick droit haut
     m_Metadata:
       m_Items: []
   - m_Id: 45000000000000385
-    m_Localized: "Stick droit bas"
+    m_Localized: Stick droit bas
     m_Metadata:
       m_Items: []
   - m_Id: 45000000000000386
-    m_Localized: "Stick droit gauche"
+    m_Localized: Stick droit gauche
     m_Metadata:
       m_Items: []
   - m_Id: 45000000000000387
-    m_Localized: "Stick droit droite"
+    m_Localized: Stick droit droite
     m_Metadata:
       m_Items: []
   - m_Id: 45000000000000400
-    m_Localized: "Effacer"
+    m_Localized: Effacer
     m_Metadata:
       m_Items: []
   references:
