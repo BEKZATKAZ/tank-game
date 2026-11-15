@@ -362,7 +362,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Tanks.UI::Tanks.UI.SplashScreen.DelayedSceneLoader
   _sceneName: ClientBoot
-  _delaySeconds: 7
+  _delaySeconds: 8
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0

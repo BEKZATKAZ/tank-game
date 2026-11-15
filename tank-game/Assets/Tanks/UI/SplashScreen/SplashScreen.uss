@@ -1,22 +1,28 @@
-.health-warning {
-	width: 100%;
-	height: 100%;
-	padding: 100px 300px;
-	align-items: center;
+:root {
+	background-color: black;
 	justify-content: center;
+	align-items: center;
 }
 
-.health-warning__title {
-	color: #ff0f0f;
-	font-size: 52px;
+.screen {
 	width: 100%;
-	padding: 0 0 0 14px;
+	padding: 100px 420px;
+	align-items: center;
+	justify-content: center;
+	flex-shrink: 0;
+}
+
+.screen__title {
+	color: #ff0f0f;
+	font-size: 48px;
+	width: 100%;
 	-unity-text-align: upper-left;
 }
 
-.health-warning__content {
+.screen__content {
+	width: 100%;
 	color: rgb(215, 215, 215);
-	font-size: 28px;
+	font-size: 24px;
 	white-space: normal;
 	-unity-text-align: upper-left;
 }
@@ -25,8 +31,8 @@
 	position: absolute;
 	bottom: 0;
 	right: 0;
-	width: 128px;
-	height: 32px;
+	width: 96px;
+	height: 24px;
 	margin: 40px 30px;
 	-unity-background-image-tint-color: rgb(245, 245, 245);
 }
