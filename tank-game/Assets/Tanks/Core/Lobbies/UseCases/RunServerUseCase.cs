@@ -63,7 +63,11 @@ namespace Tanks.Core.Lobbies.UseCases
             try
             {
                 if (_lastServerProcessId != -1) _service.KillById(_lastServerProcessId);
-                _lastServerProcessId = _service.Launch(SERVER_PATH, SERVER_ARGUMENTS);
+
+                string arguments = SERVER_ARGUMENTS + " " +
+                    HostProcessService.GetCurrentArguments();
+
+                _lastServerProcessId = _service.Launch(SERVER_PATH, arguments);
             }
             catch (Exception ex)
             {

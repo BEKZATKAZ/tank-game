@@ -56,7 +56,9 @@ namespace Tanks.Core.Tests.Lobbies.UseCases
 
             _service
                 .Received(1)
-                .Launch(RunServerUseCase.SERVER_PATH, RunServerUseCase.SERVER_ARGUMENTS);
+                .Launch(RunServerUseCase.SERVER_PATH,
+                    RunServerUseCase.SERVER_ARGUMENTS + " " +
+                    HostProcessService.GetCurrentArguments());
 
             await _client
                 .DidNotReceiveWithAnyArgs()
@@ -76,7 +78,9 @@ namespace Tanks.Core.Tests.Lobbies.UseCases
 
             _service
                 .Received(1)
-                .Launch(RunServerUseCase.SERVER_PATH, RunServerUseCase.SERVER_ARGUMENTS);
+                .Launch(RunServerUseCase.SERVER_PATH,
+                    RunServerUseCase.SERVER_ARGUMENTS + " " +
+                    HostProcessService.GetCurrentArguments());
 
             _auth.Received(1).ConfirmCodeAsync("test").Forget();
         }
