@@ -1014,7 +1014,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0fa12cd603fa68f4fa6811506017f16a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Tanks.Client::Tanks.Client.Rendering.CameraFollowService
-  _positionSpeed: 5
+  _positionSpeed:
+    x: 5
+    y: 5
 --- !u!4 &824819785
 Transform:
   m_ObjectHideFlags: 0
@@ -1634,6 +1636,9 @@ MonoBehaviour:
   _lifetime: {fileID: 2095325337}
   _pickupSpawner: {fileID: 415803224}
   _crateSpawner: {fileID: 210262175}
+  _debriefing:
+    SubmissionTimeoutSeconds: 30
+    AcknowledgmentTimeoutSeconds: 2
 --- !u!1 &1358940920
 GameObject:
   m_ObjectHideFlags: 0
@@ -2658,6 +2663,84 @@ MonoBehaviour:
   _showOnPlay: 1
   _fullscreenMaterial: {fileID: -876546973899608171, guid: 8ffc5c2242a0bbe4fb5f41a1e93d795e, type: 3}
   _config: {fileID: 11400000, guid: 4c772ee5d38c6d544a1c74b59af171e5, type: 2}
+--- !u!1 &2051649887
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2051649889}
+  - component: {fileID: 2051649888}
+  - component: {fileID: 2051649890}
+  m_Layer: 0
+  m_Name: Network Simulator
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &2051649888
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2051649887}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 98d9db9626104da59357651088226725, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Unity.Multiplayer.Tools.NetworkSimulator.Runtime::Unity.Multiplayer.Tools.NetworkSimulator.Runtime.NetworkSimulator
+  m_PresetAsset: {fileID: 0}
+  m_PresetReference:
+    rid: 7439202559245157310
+  m_Scenario:
+    rid: -2
+  m_IsScenarioSettingsFolded: 0
+  AutoRunScenario: 0
+  references:
+    version: 2
+    RefIds:
+    - rid: -2
+      type: {class: , ns: , asm: }
+    - rid: 7439202559245157310
+      type: {class: NetworkSimulatorPreset, ns: Unity.Multiplayer.Tools.NetworkSimulator.Runtime, asm: Unity.Multiplayer.Tools.NetworkSimulator.Runtime}
+      data:
+        <Name>k__BackingField: 'Home DSL [ADSL or VDSL]'
+        <Description>k__BackingField: Average scenario for desktop and console platforms. Good ping, good jitter and no packet loss.
+        <PacketDelayMs>k__BackingField: 30
+        <PacketJitterMs>k__BackingField: 10
+        <PacketLossInterval>k__BackingField: 0
+        <PacketLossPercent>k__BackingField: 0
+--- !u!4 &2051649889
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2051649887}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &2051649890
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2051649887}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5fc366a2ef4634141bb56b9b1a8ff75a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Tanks.Utils::Tanks.Utils.EditorOnlyComponent
 --- !u!1 &2095325335
 GameObject:
   m_ObjectHideFlags: 0
@@ -2757,3 +2840,4 @@ SceneRoots:
   - {fileID: 208528453}
   - {fileID: 1015993410}
   - {fileID: 893424076}
+  - {fileID: 2051649889}

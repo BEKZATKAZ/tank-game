@@ -61,6 +61,8 @@ namespace Tanks.Server.Weapons.Projectiles
 
             Behaviour.ElapsedSeconds += tickDelta;
 
+            if (Behaviour.ElapsedSeconds < 0.3f) return;
+
             _pool.RequestReconciliation(Behaviour, new ProjectileSnapshotFromServer
             {
                 ServerPosition = Transform.WorldPosition,

@@ -134,7 +134,7 @@ namespace Tanks.Server.Tests.Weapons.Projectiles
             _behaviour.LifeTime.Returns(10f);
 
             Launch();
-            Tick(42, 0.25f);
+            Tick(42, 0.5f);
 
             _pool.Received(1).RequestReconciliation(
                 _behaviour,
@@ -173,8 +173,6 @@ namespace Tanks.Server.Tests.Weapons.Projectiles
             Tick();
 
             _pool.DidNotReceive().Return(_behaviour.Id);
-            _pool.Received(1).RequestReconciliation(
-                _behaviour, Arg.Any<ProjectileSnapshotFromServer>());
         }
 
         [Test]

@@ -60,7 +60,7 @@ namespace Tanks.Client.Weapons.Projectiles
                 SimulatedTransform, message, callbacks, _currentTickDelta,
                 out float2 positionError);
 
-            if (math.length(positionError) < 3) return;
+            if (math.length(positionError) < 8) return;
 
             // Snap if too distant
             Transform.WorldPosition = SimulatedTransform.WorldPosition;
