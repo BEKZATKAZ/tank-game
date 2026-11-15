@@ -138,9 +138,12 @@ namespace Tanks.Server.Tests.Items.Behaviours
                 new BindableProperty<HealthState>(new HealthState(health, 100)));
 
             Behaviour.OnFire(MockOwner, default);
+            string producer = Config.Identifier.ToString();
 
-            MockOwner.Entity.GetBehaviour<IEffectOwnerBehaviour>().Received(applications)
-                .ApplyEffect(EffectType.Burning, 6, Config.Identifier.ToString(), MockOwner.Entity);
+            MockOwner.Entity
+                .GetBehaviour<IEffectOwnerBehaviour>()
+                .Received(applications)
+                .ApplyEffect(EffectType.Burning, 6, producer, MockOwner.Entity, restart: true);
         }
 
         [Test]

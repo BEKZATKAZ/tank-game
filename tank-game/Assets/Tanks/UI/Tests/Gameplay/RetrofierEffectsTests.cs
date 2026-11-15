@@ -114,8 +114,8 @@ namespace Tanks.UI.Tests.Gameplay
             ViewModel.Tick();
 
             _entities.Changed += Raise.Event<PossessedEntityChanged>(_player, null);
-
             Assert.That(ViewModel.RetrofierOpacity.Value, Is.Zero);
+
             ViewModel.Tick();
             Assert.That(ViewModel.RetrofierOpacity.Value, Is.Zero);
         }

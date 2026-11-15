@@ -20,13 +20,16 @@ namespace Tanks.Server.Items.Behaviours.OnFire
         public override void OnFire(IItemOwnerBehaviour owner, WeaponUsed message)
         {
             IHealthBehaviour health = owner.Entity.GetBehaviour<IHealthBehaviour>();
-            if (health.ServerState.Value.Current <= Config.GetStat("threshold").Value) return;
 
+            if (health.ServerState.Value.Current <= Config.GetStat("threshold").Value) return;
             int copies = owner.Items.Count(x => x == Config.Identifier);
 
-            owner.Entity.GetBehaviour<IEffectOwnerBehaviour>()?.ApplyEffect(
-                EffectType.Burning, Config.GetStat("duration").Value * copies,
-                Config.Identifier.ToString(), owner.Entity);
+            IEffectOwnerBehaviour effectOwner = owner.Entity.GetBehaviour<IEffectOwnerBehaviour>();
+            float duration = Config.GetStat("duration").Value * copies;
+            string producer = Config.Identifier.ToString();
+
+            effectOwner.ApplyEffect(
+                EffectType.Burning, duration, producer, owner.Entity, restart: true);
         }
 
         public override void OnDealDamage(
