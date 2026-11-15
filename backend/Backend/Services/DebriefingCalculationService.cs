@@ -9,8 +9,8 @@ public sealed class DebriefingCalculationService : IDebriefingCalculationService
 {
     public static readonly StatDebriefing EliminationReward = new(XP: 20, SpareParts: 100);
     public static readonly StatDebriefing AssistReward = new(XP: 10, SpareParts: 10);
-    public static readonly StatDebriefing DeathPenalty = new(PridePoints: -5);
-    public static readonly StatDebriefing ScoreReward = new(XP: 100, PridePoints: 20);
+    public static readonly StatDebriefing DeathPenalty = new(PridePoints: -2);
+    public static readonly StatDebriefing ScoreReward = new(XP: 100, PridePoints: 50);
     public static readonly StatDebriefing VictoryReward = new(XP: 500, PridePoints: 200);
 
     public PlayerDebriefing Calculate(
