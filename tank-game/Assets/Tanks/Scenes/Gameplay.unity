@@ -528,38 +528,6 @@ MonoBehaviour:
     EpicRadius: 2
     RareCrateDensity: 10
     MinSingleCrateDistance: 30
---- !u!1 &223801261
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 223801262}
-  m_Layer: 0
-  m_Name: Server Services
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &223801262
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 223801261}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children:
-  - {fileID: 2095325336}
-  m_Father: {fileID: 450927606}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &253405765
 GameObject:
   m_ObjectHideFlags: 0
@@ -819,7 +787,6 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 819411462}
-  - {fileID: 223801262}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1652712579 &450927607
@@ -1625,7 +1592,6 @@ MonoBehaviour:
   autoRun: 1
   autoInjectGameObjects:
   - {fileID: 71442778}
-  - {fileID: 2095325335}
   - {fileID: 1563795402}
   - {fileID: 995560637}
   - {fileID: 415803222}
@@ -1633,7 +1599,6 @@ MonoBehaviour:
   _projectilePool: {fileID: 315083342}
   _teamService: {fileID: 1421461476}
   _lagCompensation: {fileID: 253405767}
-  _lifetime: {fileID: 2095325337}
   _pickupSpawner: {fileID: 415803224}
   _crateSpawner: {fileID: 210262175}
   _debriefing:
@@ -2741,52 +2706,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5fc366a2ef4634141bb56b9b1a8ff75a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Tanks.Utils::Tanks.Utils.EditorOnlyComponent
---- !u!1 &2095325335
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 2095325336}
-  - component: {fileID: 2095325337}
-  m_Layer: 0
-  m_Name: Session Lifetime
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &2095325336
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2095325335}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 223801262}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &2095325337
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2095325335}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 283ff7d918cbc184e9700a2b1e33a648, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Tanks.Server::Tanks.Server.Bootstrap.UnityServerLifetimeService
-  _sessionLifetimeSeconds: 7200
-  _endLifetimeSeconds: 5
 --- !u!1 &2109703089
 GameObject:
   m_ObjectHideFlags: 0

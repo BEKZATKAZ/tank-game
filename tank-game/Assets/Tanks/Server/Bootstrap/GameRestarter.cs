@@ -17,21 +17,18 @@ namespace Tanks.Server.Bootstrap
             IMessageBus bus,
             IProjectilePoolService pool,
             ITeamBehaviourService teamService,
-            ISessionSettingsService settings,
-            IServerLifetimeService lifetime)
+            ISessionSettingsService settings)
         {
             _bus = bus;
             _pool = pool;
             _teamService = teamService;
             _settings = settings;
-            _lifetime = lifetime;
         }
 
         private readonly IMessageBus _bus;
         private readonly IProjectilePoolService _pool;
         private readonly ITeamBehaviourService _teamService;
         private readonly ISessionSettingsService _settings;
-        private readonly IServerLifetimeService _lifetime;
 
         private int _currentTick;
         private int _lastDiedTick = -1;
@@ -82,8 +79,6 @@ namespace Tanks.Server.Bootstrap
                 if (winningTeam.Score.Value >= _settings.GetSettings().MaxScore)
                 {
                     _isEndingGame = true;
-                    _lifetime.TrySetStep(GameStep.End);
-
                     Behaviour.EndGameEveryoneRpc(winningTeam.Id);
                     return;
                 }

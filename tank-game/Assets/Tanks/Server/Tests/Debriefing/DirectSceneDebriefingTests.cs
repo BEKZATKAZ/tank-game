@@ -2,7 +2,6 @@ using Newtonsoft.Json;
 using NSubstitute;
 using NUnit.Framework;
 using System.Text;
-using System.Threading.Tasks;
 using Tanks.Core.Common.Scenes;
 using Tanks.Core.Debriefing;
 using Tanks.Core.Lobbies.Sessions;
@@ -24,7 +23,6 @@ namespace Tanks.Server.Tests.Debriefing
         {
             ITeamBehaviourService teams = Substitute.For<ITeamBehaviourService>();
             IDebriefingService backend = Substitute.For<IDebriefingService>();
-            var lifetime = Substitute.For<IServerLifetimeService>();
             IMessageBus bus = Substitute.For<IMessageBus>();
             IGameStartBehaviour behaviour = Substitute.For<IGameStartBehaviour>();
             var settings = Substitute.For<ISessionSettingsService>();
@@ -37,7 +35,7 @@ namespace Tanks.Server.Tests.Debriefing
             teams.GetAllTeams().Returns(new[] { team });
 
             PlayerConnector connector = new(new ClientConnectionValidator(),
-                clients, settings, lifetime, teams);
+                clients, settings, teams);
 
             for (ulong id = 1; id <= 2; id++)
             {
@@ -69,7 +67,7 @@ namespace Tanks.Server.Tests.Debriefing
             MatchDebriefingSubmissionService submission = new(backend, clock);
 
             MatchDebriefingResults component = new(bus, teams, clients,
-                submission, clock, lifetime, debriefingSettings);
+                submission, clock, debriefingSettings);
 
             component.Initialize(behaviour);
             component.Handle(new GameStartedFromServer(), null);
@@ -77,8 +75,6 @@ namespace Tanks.Server.Tests.Debriefing
 
             Assert.That(clients.ConnectedClientCount, Is.EqualTo(2));
             Assert.That(backend.ReceivedCalls(), Is.Empty);
-
-            lifetime.DidNotReceive().HoldShutdown(Arg.Any<Task>());
 
             behaviour.DidNotReceive().SendDebriefing(
                 Arg.Any<ulong>(), Arg.Any<string>(), Arg.Any<string>());

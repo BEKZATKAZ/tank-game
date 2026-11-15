@@ -1,3 +1,4 @@
+using Cysharp.Threading.Tasks;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
@@ -26,7 +27,6 @@ namespace Tanks.Server.Debriefing
             IConnectedClientService clients,
             IMatchDebriefingSubmissionService submission,
             IDebriefingClockService clock,
-            IServerLifetimeService lifetime,
             MatchDebriefingSettings settings)
         {
             _bus = bus;
@@ -34,7 +34,6 @@ namespace Tanks.Server.Debriefing
             _clients = clients;
             _submission = submission;
             _clock = clock;
-            _lifetime = lifetime;
             _settings = settings;
         }
 
@@ -43,7 +42,6 @@ namespace Tanks.Server.Debriefing
         private readonly IConnectedClientService _clients;
         private readonly IMatchDebriefingSubmissionService _submission;
         private readonly IDebriefingClockService _clock;
-        private readonly IServerLifetimeService _lifetime;
         private readonly MatchDebriefingSettings _settings;
         private readonly List<MatchDebriefingParticipant> _roster = new();
         private readonly HashSet<ulong> _awaiting = new();
@@ -97,7 +95,7 @@ namespace Tanks.Server.Debriefing
                 .Select(entry => CreatePayload(entry, message.WinningTeamId))
                 .ToArray();
 
-            _lifetime.HoldShutdown(FinishAsync(players));
+            FinishAsync(players).Forget();
         }
 
         public void Handle(DebriefingAcknowledged message)
@@ -105,7 +103,7 @@ namespace Tanks.Server.Debriefing
             if (message.MatchId == _matchId) _awaiting.Remove(message.ClientId);
         }
 
-        private async Task FinishAsync(PlayerDebriefingPayload[] players)
+        private async UniTaskVoid FinishAsync(PlayerDebriefingPayload[] players)
         {
             try
             {

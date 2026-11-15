@@ -18,10 +18,6 @@ namespace Tanks.Server.Bootstrap
     {
         [Required]
         [SerializeField]
-        private UnityServerLifetimeService _lifetime;
-
-        [Required]
-        [SerializeField]
         private PickupSpawnBehaviour _pickupSpawner;
 
         [Required]
@@ -43,7 +39,6 @@ namespace Tanks.Server.Bootstrap
             builder.Register<IMatchDebriefingSubmissionService,
                 MatchDebriefingSubmissionService>(Lifetime.Singleton);
 
-            builder.RegisterComponent(_lifetime).As<IServerLifetimeService>();
             builder.RegisterComponent(_pickupSpawner).As<IPickupSpawnBehaviour>();
             builder.RegisterComponent(_crateSpawner).As<ICrateSpawner>();
 

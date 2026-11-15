@@ -239,6 +239,12 @@ namespace Tanks.Client.Entities.Runtime
             _health = GetComponent<HealthBehaviour>();
             _effectOwner = GetComponent<EffectOwnerBehaviour>();
 
+            _health.RegisterMessageHandler<HealthChangedFromPrediction>(this);
+            _health.RegisterMessageHandler<HealthChangedFromServer>(this);
+        }
+
+        private void Start()
+        {
             EffectVisualSettings[] effects = _config.Effects;
             _effectVisuals = new EffectVisualState[effects.Length];
 
@@ -246,9 +252,6 @@ namespace Tanks.Client.Entities.Runtime
             {
                 _effectVisuals[i] = new EffectVisualState(effects[i]);
             }
-
-            _health.RegisterMessageHandler<HealthChangedFromPrediction>(this);
-            _health.RegisterMessageHandler<HealthChangedFromServer>(this);
         }
 
         private void LateUpdate()

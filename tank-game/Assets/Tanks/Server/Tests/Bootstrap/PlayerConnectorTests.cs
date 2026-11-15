@@ -14,7 +14,6 @@ namespace Tanks.Server.Tests.Bootstrap
         private IClientConnectionValidator _validator;
         private IConnectedClientService _clientService;
         private ISessionSettingsService _settings;
-        private IServerLifetimeService _lifetime;
         private ITeamBehaviourService _teamService;
         private PlayerConnector _component;
 
@@ -24,11 +23,10 @@ namespace Tanks.Server.Tests.Bootstrap
             _validator = Substitute.For<IClientConnectionValidator>();
             _clientService = Substitute.For<IConnectedClientService>();
             _settings = Substitute.For<ISessionSettingsService>();
-            _lifetime = Substitute.For<IServerLifetimeService>();
             _teamService = Substitute.For<ITeamBehaviourService>();
 
             _component = new PlayerConnector(
-                _validator, _clientService, _settings, _lifetime, _teamService);
+                _validator, _clientService, _settings, _teamService);
 
             _component.Initialize(Substitute.For<IGameStartBehaviour>());
         }
@@ -117,8 +115,6 @@ namespace Tanks.Server.Tests.Bootstrap
 
             _component.Behaviour.DidNotReceiveWithAnyArgs().PrepareGame();
             _component.OnClientConnected(desiredCount + 1);
-
-            _lifetime.Received(1).TrySetStep(GameStep.Session);
             _component.Behaviour.Received(1).PrepareGame();
         }
 

@@ -15,14 +15,12 @@ namespace Tanks.Server.Tests.Bootstrap
     {
         private ITeamBehaviourService _teamService;
         private ISessionSettingsService _settings;
-        private IServerLifetimeService _lifetime;
         private GameRestarter _component;
 
         [SetUp]
         public void Setup()
         {
             _teamService = Substitute.For<ITeamBehaviourService>();
-            _lifetime = Substitute.For<IServerLifetimeService>();
 
             _settings = Substitute.For<ISessionSettingsService>();
             _settings.GetSettings().MaxScore.Returns(30);
@@ -30,7 +28,7 @@ namespace Tanks.Server.Tests.Bootstrap
             _component = new GameRestarter(
                 Substitute.For<IMessageBus>(),
                 Substitute.For<IProjectilePoolService>(),
-                _teamService, _settings, _lifetime);
+                _teamService, _settings);
 
             _component.Initialize(Substitute.For<IGameStartBehaviour>());
         }
@@ -106,7 +104,6 @@ namespace Tanks.Server.Tests.Bootstrap
             _component.Tick(tick: 10, tickDelta: 500);
             _component.Tick(tick: 11, tickDelta: 600);
 
-            _lifetime.Received(1).TrySetStep(GameStep.End);
             _component.Behaviour.Received(1).EndGameEveryoneRpc(winningTeam.Id);
             _component.Behaviour.DidNotReceiveWithAnyArgs().PrepareGame();
         }

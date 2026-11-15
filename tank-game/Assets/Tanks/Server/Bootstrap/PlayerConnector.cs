@@ -15,20 +15,17 @@ namespace Tanks.Server.Bootstrap
             IClientConnectionValidator validator,
             IConnectedClientService clientService,
             ISessionSettingsService sessionSettings,
-            IServerLifetimeService lifetime,
             ITeamBehaviourService teamService)
         {
             _validator = validator;
             _clientService = clientService;
             _sessionSettings = sessionSettings;
-            _lifetime = lifetime;
             _teamService = teamService;
         }
 
         private readonly IClientConnectionValidator _validator;
         private readonly IConnectedClientService _clientService;
         private readonly ISessionSettingsService _sessionSettings;
-        private readonly IServerLifetimeService _lifetime;
         private readonly ITeamBehaviourService _teamService;
         private bool _allPlayersConnected;
 
@@ -113,8 +110,6 @@ namespace Tanks.Server.Bootstrap
                 ).DesiredPlayerCount) return;
 
             _allPlayersConnected = true;
-            _lifetime.TrySetStep(GameStep.Session);
-
             Behaviour.PrepareGame();
         }
 
@@ -124,7 +119,7 @@ namespace Tanks.Server.Bootstrap
             if (clientId == 0)
             {
                 Debug.Log("Host left, shutting down");
-                _lifetime.RequestShutdown();
+                Application.Quit(0);
                 return;
             }
 
@@ -136,7 +131,7 @@ namespace Tanks.Server.Bootstrap
             }
 
             if (_clientService.ConnectedClientCount > 0) return;
-            _lifetime.RequestShutdown();
+            Application.Quit(0);
         }
     }
 }
